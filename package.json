@@ -1,0 +1,10 @@
+{
+    "name": "@tea/workspace",
+	"author": "neil molina <neil@tea.xyz>",
+    "private": true,
+    "workspaces": {
+        "packages": [
+            "packages/*"
+        ]
+    }
+}
