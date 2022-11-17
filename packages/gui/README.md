@@ -1,6 +1,8 @@
 # @tea/gui
 Desktop app of [tea](https://tea.xyz) for installing packages/softwares
 
+More interesting and possibly updated documentations are at this [NOTION](https://www.notion.so/teaxyz/tea-gui-fdd9f50aa980432fa370b2cf6a03cb50) page. It is ideal to review it also, probably its more updated. 
+
 ## Developing
 
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
