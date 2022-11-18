@@ -8,9 +8,10 @@ More interesting and possibly updated documentations are at this [NOTION](https:
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
 ```bash
+# use if you need interaction with the rust handlers
 pnpm tauri dev
 
-# or start the server and open the app in a new browser tab
+# or if ui dev only
 pnpm run dev -- --open
 ```
 
