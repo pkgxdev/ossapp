@@ -1,6 +1,6 @@
 <script lang="ts">
     import { invoke } from '@tauri-apps/api/tauri'
-    import Button from '../../elements/button.svelte';
+    import Button from '../../elements/Button/Button.svelte';
     let pkg = '';
     async function installPackage(){
         await invoke('install_package', { package: pkg });
@@ -9,5 +9,5 @@
 
 <h1>Others</h1>
 <input bind:value={pkg}>
-<Button on:click={installPackage}>install package</Button>
+<Button on:click={installPackage} label="install package"></Button>
 <a href="/">Back</a>
