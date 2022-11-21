@@ -13,6 +13,11 @@
     "dev": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
+  "files": [
+    "src/**/*",
+    "tsconfig.json",
+    "tailwind.config.cjs"
+  ],
   "devDependencies": {
     "@playwright/test": "1.25.0",
     "@storybook/addon-essentials": "^7.0.0-alpha.51",

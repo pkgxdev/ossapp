@@ -4,7 +4,7 @@
   /**
    * Is this the principal call to action on the page?
    */
-  export let primary = false;
+  export let primary:boolean = false;
 
   /**
    * What background color to use
@@ -19,7 +19,7 @@
    */
   export let label:string = '';
 
-  $: mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+  $: mode = primary ? 'storybook-button--primary bg-primary' : 'storybook-button--secondary';
 
   $: style = backgroundColor ? `background-color: ${backgroundColor}` : '';
 

@@ -19,7 +19,7 @@
 </script>
 
 <a href="/others">Go to install package</a>
-<Button  on:click={loadPackages} label="Load Packages"></Button>
+<Button primary={true}  on:click={loadPackages} label="Load Packages"></Button>
 <ul>
     {#each packages as p}
         <li>{p.full_name}</li>
