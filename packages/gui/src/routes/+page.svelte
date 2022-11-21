@@ -2,7 +2,7 @@
     import "../app.css";
     import { get } from '../libs/api';
     import type { S3Package } from '../libs/types';
-    import Button from '../elements/Button/Button.svelte';
+    import Button from '@tea/ui/Button/Button.svelte';
 
     let packages: S3Package[] = []
     async function loadPackages(){

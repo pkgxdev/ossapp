@@ -15,11 +15,6 @@ pnpm tauri dev
 pnpm run dev -- --open
 ```
 
-Element developmenr
-```bash
-pnpm storybook
-```
-
 ## Building
 
 To create a production version of your app:

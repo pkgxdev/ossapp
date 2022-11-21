@@ -16,3 +16,4 @@ $ pnpm install
 Refer to each package README.md for instructions on how to setup and contribue to them:
 
 * [tea/gui](./packages/gui/README.md)
+* [tea/ui](./packages/ui/README.md)

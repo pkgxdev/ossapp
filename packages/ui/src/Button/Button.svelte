@@ -9,11 +9,11 @@
   /**
    * What background color to use
    */
-  export let backgroundColor = undefined;
+  export let backgroundColor:string = '';
   /**
    * How large should the button be?
    */
-  export let size = 'medium';
+  export let size:string = 'medium';
   /**
    * Button contents
    */
@@ -28,14 +28,14 @@
   /**
    * Optional click handler
    */
-  export let onClick = (event) => {
+  export let onClick = (event: any) => {
     dispatch('click', event);
   };
 </script>
 
 <button
   type="button"
-  class={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
+  class={['storybook-button', `storybook-button--${size}`, 'hover:font-light', mode].join(' ')}
   {style}
   on:click={onClick}
 >

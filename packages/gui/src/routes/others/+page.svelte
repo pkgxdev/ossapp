@@ -1,6 +1,6 @@
 <script lang="ts">
     import { invoke } from '@tauri-apps/api/tauri'
-    import Button from '../../elements/Button/Button.svelte';
+    import Button from '@tea/ui/Button/Button.svelte';
     let pkg = '';
     async function installPackage(){
         await invoke('install_package', { package: pkg });
