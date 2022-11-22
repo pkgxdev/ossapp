@@ -46,6 +46,15 @@ jobs:
           toolchain: stable
       - name: install app dependencies and build it
         run: pnpm install && pnpm --filter gui build
+
+
+      - name: Update comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: 557858210
+          body: |
+            **Edit:** Some additional info
+          reactions: eyes
       
   build_tauri:
     needs: changes
@@ -80,37 +89,44 @@ jobs:
     - name: install app dependencies
       run: pnpm install
 
-    - name: Cache Tauri Target
-      uses: actions/cache@v3
-      with:
-        path: |
-          ./packages/gui/src-tauri/target
-        key: ${{ matrix.platform }}-build-target
-        restore-keys: |
-          ${{ matrix.platform }}-build-target
+    # - name: Cache Tauri Target
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: |
+    #       ./packages/gui/src-tauri/target
+    #     key: ${{ matrix.platform }}-build-target
+    #     restore-keys: |
+    #       ${{ matrix.platform }}-build-target
 
-    - name: test build tauri
-      run: pnpm --filter gui tauri build
+    # - name: test build tauri
+    #   run: pnpm --filter gui tauri build
 
     - uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-  
-    - name: mac-os cp package images from prod to preview bucket
-      if: matrix.platform == 'macos-latest'
-      run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/macos/gui.app \
-          "s3://preview.gui.tea.xyz/$GITHUB_REF_SLUG_URL/gui.app"
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
-          "s3://preview.gui.tea.xyz/$GITHUB_REF_SLUG_URL/gui.dmg"
-  
     - name: ubuntu cp package images from prod to preview bucket
       if: matrix.platform == 'ubuntu-latest'
+      env:
+        folder: ${{env.GITHUB_REF_SLUG_URL}}
       run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
-          "s3://preview.gui.tea.xyz/$GITHUB_REF_SLUG_URL/gui.deb"
+        aws s3 cp ./README.md \
+          s3://preview.gui.tea.xyz/$folder/README.md
+
+    # - name: mac-os cp package images from prod to preview bucket
+    #   if: matrix.platform == 'macos-latest'
+    #   run: |
+    #     aws s3 cp ./packages/gui/src-tauri/target/release/bundle/macos/gui.app \
+    #       "s3://preview.gui.tea.xyz/$GITHUB_REF_SLUG_URL/gui.app"
+    #     aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
+    #       "s3://preview.gui.tea.xyz/$GITHUB_REF_SLUG_URL/gui.dmg"
+  
+    # - name: ubuntu cp package images from prod to preview bucket
+    #   if: matrix.platform == 'ubuntu-latest'
+    #   run: |
+    #     aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
+    #       "s3://preview.gui.tea.xyz/$GITHUB_REF_SLUG_URL/gui.deb"
 
     # - name: comment install ubuntu
     #   uses: mshick/add-pr-comment@v2
