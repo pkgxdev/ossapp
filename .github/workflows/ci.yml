@@ -97,12 +97,19 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-    - run: echo "test $GITHUB_REF_URL"
+    - name: get s3 folder
+      id: prefix
+      run: |
+        prefix=$(echo $GITHUB_REF_NAME | sed -e 's/\//-/g')
+        echo "prefix=$prefix" >> $GITHUB_OUTPUT
+
     - name: ubuntu cp package images from prod to preview bucket
       if: matrix.platform == 'ubuntu-latest'
+      env:
+        prefix: ${{ steps.prefix.outputs.prefix }}
       run: |
         aws s3 cp ./README.md \
-          "s3://preview.gui.tea.xyz/$GITHUB_REF_NAME/README.md"
+          "s3://preview.gui.tea.xyz/$prefix/README.md"
 
     # - name: mac-os cp package images from prod to preview bucket
     #   if: matrix.platform == 'macos-latest'
