@@ -112,21 +112,21 @@ jobs:
         aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
           "s3://preview.gui.tea.xyz/$GITHUB_REF_SLUG_URL/gui.deb"
 
-    - name: comment install ubuntu
-      uses: mshick/add-pr-comment@v2
-      if: matrix.platform == 'ubuntu-latest'
-      with:
-        message-id: ${{ matrix.platform }}-comment
-        message: |
-          **installer for ${{ matrix.platform }} is at**
-          "http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{GITHUB_REF_SLUG_URL}}/gui.deb"
+    # - name: comment install ubuntu
+    #   uses: mshick/add-pr-comment@v2
+    #   if: matrix.platform == 'ubuntu-latest'
+    #   with:
+    #     message-id: ${{ matrix.platform }}-comment
+    #     message: |
+    #       **installer for ${{ matrix.platform }} is at**
+    #       "http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{GITHUB_REF_SLUG_URL}}/gui.deb"
   
-    - name: comment install mac-os
-      uses: mshick/add-pr-comment@v2
-      if: matrix.platform == 'macos-latest'
-      with:
-        message-id: ${{ matrix.platform }}-comment
-        message: |
-          **installer for ${{ matrix.platform }} is at**
-          "http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{GITHUB_REF_SLUG_URL}}/gui.app"
-          "http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{GITHUB_REF_SLUG_URL}}/gui.dmg"
+    # - name: comment install mac-os
+    #   uses: mshick/add-pr-comment@v2
+    #   if: matrix.platform == 'macos-latest'
+    #   with:
+    #     message-id: ${{ matrix.platform }}-comment
+    #     message: |
+    #       **installer for ${{ matrix.platform }} is at**
+    #       "http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{GITHUB_REF_SLUG_URL}}/gui.app"
+    #       "http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{GITHUB_REF_SLUG_URL}}/gui.dmg"
