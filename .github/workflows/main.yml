@@ -1,0 +1,97 @@
+name: "deploy"
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      svelte: ${{steps.svelte.outputs.src}}
+      tauri: ${{steps.tauri.outputs.src}}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: dorny/paths-filter@v2
+      id: svelte
+      with:
+        filters: |
+          src:
+            - 'packages/gui/src/**'
+            - 'packages/ui/**'
+    - uses: dorny/paths-filter@v2
+      id: tauri
+      with:
+        filters: |
+          src:
+            - 'packages/gui/src-tauri/**'
+  build_svelte:
+    needs: changes
+    if: needs.changes.outputs.svelte == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
+      - name: install Rust stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: install app dependencies and build it
+        run: pnpm install && pnpm --filter gui build
+      
+  build_tauri:
+    needs: changes
+    if: needs.changes.outputs.tauri == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-latest, windows-latest ]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 7
+    - name: setup node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+        cache: 'pnpm'
+        cache-dependency-path: pnpm-lock.yaml
+    - name: install Rust stable
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+    - name: install dependencies (ubuntu only)
+      if: matrix.platform == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+    - name: install app dependencies
+      run: pnpm install
+
+    - name: Cache Tauri Target
+      uses: actions/cache@v3
+      with:
+        path: |
+          ./packages/gui/src-tauri/target
+        key: ${{ matrix.platform }}-build-target-prod
+        restore-keys: |
+          ${{ matrix.platform }}-build-target-prod
+
+    - name: test build tauri
+      run: pnpm --filter gui tauri build
