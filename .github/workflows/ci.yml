@@ -97,7 +97,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-    - run: echo "test $GITHUB_REF_NAME"
+    - run: echo "test $GITHUB_REF_URL"
     - name: ubuntu cp package images from prod to preview bucket
       if: matrix.platform == 'ubuntu-latest'
       run: |
