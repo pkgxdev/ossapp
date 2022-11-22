@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       svelte: ${{steps.svelte.outputs.src}}
-      tauri: ${{steps.sls.outputs.sls}}
+      tauri: ${{steps.tauri.outputs.src}}
     steps:
     - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
@@ -21,7 +21,7 @@ jobs:
       id: tauri
       with:
         filters: |
-          sls:
+          src:
             - 'src/packages/gui/src-tauri/**'
   build_svelte:
     needs: changes
