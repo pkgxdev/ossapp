@@ -15,7 +15,17 @@
       "http": {
         "all": true,
         "request": true,
-        "scope": ["https://api.tea.xyz/v1/*"]
+        "scope": [
+          "https://api.tea.xyz/v1/*",
+          "https://github.com/*"
+        ]
+      },
+      "shell": {
+        "all": false,
+        "execute": false,
+        "open": true,
+        "scope": [],
+        "sidecar": false
       }
     },
     "bundle": {
