@@ -97,15 +97,36 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
+  
+    - name: mac-os cp package images from prod to preview bucket
+      if: matrix.platform == 'macos-latest'
+      run: |
+        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/macos/gui.app \
+          s3://preview.gui.tea.xyz/$GITHUB_REF/gui.app
+        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
+          s3://preview.gui.tea.xyz/$GITHUB_REF/gui.dmg
+  
+    - name: ubuntu cp package images from prod to preview bucket
+      if: matrix.platform == 'ubuntu-latest'
+      run: |
+        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
+          s3://preview.gui.tea.xyz/$GITHUB_REF/gui.deb
 
-    - uses: mshick/add-pr-comment@v2
+    - name: comment install ubuntu
+      uses: mshick/add-pr-comment@v2
+      if: matrix.platform == 'ubuntu-latest'
       with:
         message-id: ${{ matrix.platform }}-comment
         message: |
-          **comment for: ${{ matrix.platform }}**
-          🌏
-          !
-    # - name: cp package images from prod to preview bucket
-    #   run: |
-    #     aws s3 cp s3://www.tea.xyz/Images/packages \
-    #       s3://preview.gui.tea.xyz/Images/packages
+          **installer for ${{ matrix.platform }} is at**
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/$GITHUB_REF/gui.deb
+  
+    - name: comment install mac-os
+      uses: mshick/add-pr-comment@v2
+      if: matrix.platform == 'macos-latest'
+      with:
+        message-id: ${{ matrix.platform }}-comment
+        message: |
+          **installer for ${{ matrix.platform }} is at**
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/$GITHUB_REF/gui.app
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/$GITHUB_REF/gui.dmg
