@@ -1,0 +1,146 @@
+name: "test"
+on: [pull_request]
+
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      svelte: ${{steps.svelte.outputs.src}}
+      tauri: ${{steps.tauri.outputs.src}}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: dorny/paths-filter@v2
+      id: svelte
+      with:
+        filters: |
+          src:
+            - 'packages/gui/src/**'
+            - 'packages/ui/**'
+    - uses: dorny/paths-filter@v2
+      id: tauri
+      with:
+        filters: |
+          src:
+            - 'packages/gui/src-tauri/**'
+  build_svelte:
+    needs: changes
+    if: needs.changes.outputs.svelte == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
+      - name: install Rust stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: install app dependencies and build it
+        run: pnpm install && pnpm --filter gui build
+      
+  build_tauri:
+    needs: changes
+    if: needs.changes.outputs.tauri == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-latest]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 7
+    - name: setup node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+        cache: 'pnpm'
+        cache-dependency-path: pnpm-lock.yaml
+    - name: install Rust stable
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+    - name: install dependencies (ubuntu only)
+      if: matrix.platform == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+    - name: install app dependencies
+      run: pnpm install
+
+    - name: Cache Tauri Target
+      uses: actions/cache@v3
+      with:
+        path: |
+          ./packages/gui/src-tauri/target
+        key: ${{ matrix.platform }}-build-target
+        restore-keys: |
+          ${{ matrix.platform }}-build-target
+
+    - name: test build tauri
+      run: pnpm --filter gui tauri build
+
+    - uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: get s3 folder
+      id: prefix
+      run: |
+        prefix=$(echo $GITHUB_REF_NAME | sed -e 's/\//-/g')
+        echo "prefix=$prefix" >> $GITHUB_OUTPUT
+
+    - name: mac-os cp package images from prod to preview bucket
+      if: matrix.platform == 'macos-latest'
+      env:
+        prefix: ${{ steps.prefix.outputs.prefix }}
+      run: |
+        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
+          "s3://preview.gui.tea.xyz/$prefix/gui.dmg"
+  
+    - name: ubuntu cp package images from prod to preview bucket
+      if: matrix.platform == 'ubuntu-latest'
+      env:
+        prefix: ${{ steps.prefix.outputs.prefix }}
+      run: |
+        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
+          "s3://preview.gui.tea.xyz/$prefix/gui.deb"
+
+    - name: comment install ubuntu
+      uses: mshick/add-pr-comment@v2
+      if: matrix.platform == 'ubuntu-latest'
+      with:
+        message-id: ${{ matrix.platform }}-comment-${{steps.prefix.outputs.prefix}}
+        message: |
+          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb)
+          ```bash
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb
+          ```
+          copy-paste into a browser to download
+
+  
+    - name: comment install mac-os
+      uses: mshick/add-pr-comment@v2
+      if: matrix.platform == 'macos-latest'
+      with:
+        message-id: ${{ matrix.platform }}-comment-${{steps.prefix.outputs.prefix}}
+        message: |
+          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg)
+          ```bash
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg
+          ```
+          copy-paste into a browser to download
