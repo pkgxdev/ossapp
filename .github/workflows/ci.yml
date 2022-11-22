@@ -25,7 +25,7 @@ jobs:
             - 'packages/gui/src-tauri/**'
   build_svelte:
     needs: changes
-    if: needs.validation.outputs.svelte == 'true'
+    if: needs.changes.outputs.svelte == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -54,7 +54,7 @@ jobs:
       
   build_tauri:
     needs: changes
-    if: needs.validation.outputs.tauri == 'true'
+    if: needs.changes.outputs.tauri == 'true'
     strategy:
       fail-fast: false
       matrix:
