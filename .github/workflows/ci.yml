@@ -15,14 +15,14 @@ jobs:
       with:
         filters: |
           src:
-            - 'src/packages/gui/src/**'
-            - 'src/packages/ui/**'
+            - 'packages/gui/src/**'
+            - 'packages/ui/**'
     - uses: dorny/paths-filter@v2
       id: tauri
       with:
         filters: |
           src:
-            - 'src/packages/gui/src-tauri/**'
+            - 'packages/gui/src-tauri/**'
   build_svelte:
     needs: changes
     if: needs.validation.outputs.svelte == 'true'
