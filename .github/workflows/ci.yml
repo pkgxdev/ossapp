@@ -126,8 +126,8 @@ jobs:
       with:
         message-id: ${{ matrix.platform }}-comment
         message: |
-          **installer for ${{ matrix.platform }} is at**
-          "http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb"
+          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb){target="_blank"}
+
   
     - name: comment install mac-os
       uses: mshick/add-pr-comment@v2
@@ -135,5 +135,4 @@ jobs:
       with:
         message-id: ${{ matrix.platform }}-comment
         message: |
-          **installer for ${{ matrix.platform }} is at**
-          "http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg"
+          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg){target="_blank"}
