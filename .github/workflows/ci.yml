@@ -124,15 +124,21 @@ jobs:
       uses: mshick/add-pr-comment@v2
       if: matrix.platform == 'ubuntu-latest'
       with:
-        message-id: ${{ matrix.platform }}-comment
+        message-id: ${{ matrix.platform }}-comment-${{steps.prefix.outputs.prefix}}
         message: |
-          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb){target="_blank"}
+          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb)
+          ```bash
+          $ curl http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb
+          ```
 
   
     - name: comment install mac-os
       uses: mshick/add-pr-comment@v2
       if: matrix.platform == 'macos-latest'
       with:
-        message-id: ${{ matrix.platform }}-comment
+        message-id: ${{ matrix.platform }}-comment-${{steps.prefix.outputs.prefix}}
         message: |
-          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg){target="_blank"}
+          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg)
+          ```bash
+          $ curl http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg
+          ```
