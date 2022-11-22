@@ -35,12 +35,11 @@ jobs:
     - name: install app dependencies and build it
       run: pnpm install && pnpm --filter gui build
 
-    - name: test build tauri
-      run: pnpm --filter gui tauri build
+    # - name: test build tauri
+    #   run: pnpm --filter gui tauri build
 
-    # - uses: tauri-apps/tauri-action@v0
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   with:
-    #     projectPath: ./packages/gui
-    #     configPath: ./packages/gui/src-tauri/tauri.conf.json
+    - uses: tauri-apps/tauri-action@v0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        projectPath: ./packages/gui
