@@ -128,8 +128,9 @@ jobs:
         message: |
           **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb)
           ```bash
-          $ curl http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb
           ```
+          copy-paste into a browser to download
 
   
     - name: comment install mac-os
@@ -140,5 +141,6 @@ jobs:
         message: |
           **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg)
           ```bash
-          $ curl http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg
           ```
+          copy-paste into a browser to download
