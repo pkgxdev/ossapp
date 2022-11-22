@@ -109,8 +109,6 @@ jobs:
       env:
         prefix: ${{ steps.prefix.outputs.prefix }}
       run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/macos/gui.app \
-          "s3://preview.gui.tea.xyz/$prefix/gui.app"
         aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
           "s3://preview.gui.tea.xyz/$prefix/gui.dmg"
   
@@ -138,5 +136,4 @@ jobs:
         message-id: ${{ matrix.platform }}-comment
         message: |
           **installer for ${{ matrix.platform }} is at**
-          "http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.app"
           "http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg"
