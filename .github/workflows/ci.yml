@@ -53,15 +53,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform:
-        - os: macos-11
-          build-id: darwin+x86-64
-        - os: ubuntu-latest
-          build-id: linux+x86-64
-        - os: [self-hosted, macOS, ARM64]
-          build-id: darwin+aarch64
-        - os: [self-hosted, linux, ARM64]
-          build-id: linux+aarch64
+        platform: [macos-latest, ubuntu-latest]
+
     runs-on: ${{ matrix.platform }}
     steps:
     - uses: actions/checkout@v2
@@ -92,9 +85,9 @@ jobs:
       with:
         path: |
           ./packages/gui/src-tauri/target
-        key: ${{ matrix.platform.build-id }}-build-target
+        key: ${{ matrix.platform }}-build-target
         restore-keys: |
-          ${{ matrix.platform.build-id }}-build-target
+          ${{ matrix.platform }}-build-target
 
     - name: test build tauri
       run: pnpm --filter gui tauri build
