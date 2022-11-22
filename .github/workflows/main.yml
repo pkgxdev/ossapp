@@ -103,8 +103,6 @@ jobs:
     - name: mac-os cp package images from prod to gui bucket
       if: matrix.platform == 'macos-latest'
       run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/macos/gui.app \
-          s3://preview.gui.tea.xyz/release/gui_${{ steps.date.outputs.date }}.app
         aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
           s3://preview.gui.tea.xyz/release/gui_${{ steps.date.outputs.date }}.dmg
   
