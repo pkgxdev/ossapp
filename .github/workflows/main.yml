@@ -95,3 +95,21 @@ jobs:
 
     - name: test build tauri
       run: pnpm --filter gui tauri build
+
+    - name: Get current date
+      id: date
+      run: echo "date=date::$(date +'%Y-%m-%dT%H:%M:%S')" >> >> $GITHUB_OUTPUT
+
+    - name: mac-os cp package images from prod to gui bucket
+      if: matrix.platform == 'macos-latest'
+      run: |
+        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/macos/gui.app \
+          s3://preview.gui.tea.xyz/release/gui_${{ steps.date.outputs.date }}.app
+        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
+          s3://preview.gui.tea.xyz/release/gui_${{ steps.date.outputs.date }}.dmg
+  
+    - name: ubuntu cp package images from prod to gui bucket
+      if: matrix.platform == 'ubuntu-latest'
+      run: |
+        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
+          s3://preview.gui.tea.xyz/release/gui_${{ steps.date.outputs.date }}.deb
