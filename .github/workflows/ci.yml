@@ -35,7 +35,7 @@ jobs:
     - name: install app dependencies and build it
       run: pnpm install && pnpm --filter gui build
 
-    - name: install app dependencies and build it
+    - name: test build tauri
       run: pnpm --filter gui tauri build
 
     # - uses: tauri-apps/tauri-action@v0
