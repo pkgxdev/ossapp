@@ -7,7 +7,6 @@
 #   create cloudfront distribution
 # echo cloudfront_domain=domain >> $GITHUB_OUTPUT
 prefix=$1
-rm ./test.json
 echo $(aws cloudfront list-distributions --output json) >> ./test.json
 
 data=$(cat ./test.json)
