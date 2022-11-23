@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
   font-family: "pp-neue-machina";
   src: url("../static/fonts/PPNeueMachina-InktrapLight.woff");
