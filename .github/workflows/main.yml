@@ -106,7 +106,11 @@ jobs:
     - name: Get current unix ts - seconds
       id: date
       run: echo "unix_seconds=$(date +'%s')" >> $GITHUB_OUTPUT
-
+    - uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
     - name: mac-os cp package images from prod to gui bucket
       if: matrix.platform == 'macos-latest'
       run: |
