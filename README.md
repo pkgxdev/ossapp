@@ -1,6 +1,8 @@
 # Tea UI Workspace
 This repository includes the tea GUI/Desktop App.
 
+For better documentation checkout this [notion](https://www.notion.so/teaxyz/tea-gui-fdd9f50aa980432fa370b2cf6a03cb50).
+
 # Requirements
 * [pnpm@^7.8](https://pnpm.io/)
 * [node@16](https://github.com/tj/n)
