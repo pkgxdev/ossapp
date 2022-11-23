@@ -86,6 +86,7 @@ jobs:
         # The prefix cache key, this can be changed to start a new cache manually.
         # default: "v0-rust"
         prefix-key: ${{ matrix.platform }}
+        shared-key: ci
         cache-targets: false
     - name: install app dependencies
       run: pnpm install
