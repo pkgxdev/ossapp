@@ -1,4 +1,4 @@
-# Tea UI
+# @tea/ui
 Isolated set of UI elements/components that can be reused across all svelte related apps of tea. Components here have to be maintained as much as possible as a [dumb/presentational components](https://medium.com/@thejasonfile/dumb-components-and-smart-components-e7b33a698d43). 
 
 ## Developing

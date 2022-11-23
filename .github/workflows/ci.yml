@@ -63,6 +63,22 @@ jobs:
         run: |
           aws s3 sync ./packages/gui/build \
             "s3://preview.gui.tea.xyz/$prefix"
+      - name: setup preview
+        uses: getneil/jq-action@v1
+        id: preview_setup
+        with:
+          cmd: .github/create-invalidate-preview.sh ${{ needs.changes.outputs.preview_folder }}
+      - name: comment preview site
+        uses: mshick/add-pr-comment@v2
+        with:
+          message-id: preview-comment-${{needs.changes.outputs.preview_folder}}
+          message: |
+            **preview is at**: [https://${{steps.preview_setup.outputs.domain}}](https://${{steps.preview_setup.outputs.domain}})
+            ```bash
+            https://${{steps.preview_setup.outputs.domain}}
+            ```
+            copy-paste into a browser to view
+
   build_tauri:
     needs: changes
     if: needs.changes.outputs.tauri == 'true'

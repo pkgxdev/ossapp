@@ -1,0 +1,83 @@
+{
+    "Comment": "{{prefix}}",
+    "CacheBehaviors": {
+        "Quantity": 0
+    },
+    "Origins": {
+        "Items": [
+            {
+                "Id": "preview.gui.tea.xyz.s3-website.us-east-1.amazonaws.com-{{prefix}}",
+                "DomainName": "preview.gui.tea.xyz.s3-website.us-east-1.amazonaws.com",
+                "OriginPath": "/{{prefix}}",
+                "CustomHeaders": {
+                    "Quantity": 0
+                },
+                "CustomOriginConfig": {
+                    "HTTPPort": 80,
+                    "HTTPSPort": 443,
+                    "OriginProtocolPolicy": "http-only",
+                    "OriginSslProtocols": {
+                        "Quantity": 1,
+                        "Items": [
+                            "TLSv1.2"
+                        ]
+                    },
+                    "OriginReadTimeout": 30,
+                    "OriginKeepaliveTimeout": 5
+                },
+                "ConnectionAttempts": 3,
+                "ConnectionTimeout": 10,
+                "OriginShield": {
+                    "Enabled": false
+                }
+            }
+        ],
+        "Quantity": 1
+    },
+    "DefaultRootObject": "index.html",
+    "PriceClass": "PriceClass_All",
+    "Enabled": true,
+    "DefaultCacheBehavior": {
+        "TrustedSigners": {
+            "Enabled": false,
+            "Quantity": 0
+        },
+        "TargetOriginId": "preview.gui.tea.xyz.s3-website.us-east-1.amazonaws.com-{{prefix}}",
+        "ViewerProtocolPolicy": "allow-all",
+        "ForwardedValues": {
+            "Headers": {
+                "Quantity": 0
+            },
+            "Cookies": {
+                "Forward": "none"
+            },
+            "QueryString": false
+        },
+        "SmoothStreaming": false,
+        "AllowedMethods": {
+            "Items": [
+                "GET",
+                "HEAD"
+            ],
+            "Quantity": 2
+        },
+        "MinTTL": 0
+    },
+    "CallerReference": "{{caller_reference}}",
+    "ViewerCertificate": {
+        "CloudFrontDefaultCertificate": true
+    },
+    "CustomErrorResponses": {
+        "Quantity": 0
+    },
+    "Restrictions": {
+        "GeoRestriction": {
+            "RestrictionType": "none",
+            "Quantity": 0
+        }
+    },
+    "Aliases": {
+        "Quantity": 0
+    }
+}
+        
