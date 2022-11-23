@@ -8,6 +8,7 @@ jobs:
     outputs:
       svelte: ${{steps.svelte.outputs.src}}
       tauri: ${{steps.tauri.outputs.src}}
+      preview_folder: ${{steps.preview.outputs.folder}}
     steps:
     - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
@@ -23,6 +24,11 @@ jobs:
         filters: |
           src:
             - 'packages/gui/src-tauri/**'
+    - name: get s3 preview folder
+      id: preview
+      run: |
+        preview=$(echo $GITHUB_REF_NAME | sed -e 's/\//-/g')
+        echo "folder=$preview" >> $GITHUB_OUTPUT
   build_svelte:
     needs: changes
     if: needs.changes.outputs.svelte == 'true'
@@ -51,6 +57,12 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+      - name: sync web files into preview folder
+        env:
+          prefix: ${{ needs.changes.outputs.preview_folder }}
+        run: |
+          aws s3 sync ./packages/gui/build \
+            "s3://preview.gui.tea.xyz/$prefix"
   build_tauri:
     needs: changes
     if: needs.changes.outputs.tauri == 'true'
@@ -109,16 +121,10 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - name: get s3 folder
-      id: prefix
-      run: |
-        prefix=$(echo $GITHUB_REF_NAME | sed -e 's/\//-/g')
-        echo "prefix=$prefix" >> $GITHUB_OUTPUT
-
     - name: mac-os cp package images from prod to preview bucket
       if: matrix.platform == 'macos-latest'
       env:
-        prefix: ${{ steps.prefix.outputs.prefix }}
+        prefix: ${{ needs.changes.outputs.preview_folder }}
       run: |
         aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
           "s3://preview.gui.tea.xyz/$prefix/gui.dmg"
@@ -126,7 +132,7 @@ jobs:
     - name: ubuntu cp package images from prod to preview bucket
       if: matrix.platform == 'ubuntu-latest'
       env:
-        prefix: ${{ steps.prefix.outputs.prefix }}
+        prefix: ${{ needs.changes.outputs.preview_folder }}
       run: |
         aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
           "s3://preview.gui.tea.xyz/$prefix/gui.deb"
@@ -139,7 +145,7 @@ jobs:
         message: |
           **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb)
           ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui.deb
           ```
           copy-paste into a browser to download
 
@@ -152,6 +158,6 @@ jobs:
         message: |
           **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg)
           ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui.dmg
           ```
           copy-paste into a browser to download
