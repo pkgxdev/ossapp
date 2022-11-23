@@ -76,6 +76,12 @@ jobs:
       uses: actions-rs/toolchain@v1
       with:
         toolchain: stable
+    - uses: Swatinem/rust-cache@v2
+      with:
+        # The prefix cache key, this can be changed to start a new cache manually.
+        # default: "v0-rust"
+        prefix-key: ${{ matrix.platform }}
+        cache-targets: false
     - name: install dependencies (ubuntu only)
       if: matrix.platform == 'ubuntu-latest'
       run: |
