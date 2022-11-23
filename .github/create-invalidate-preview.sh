@@ -11,6 +11,7 @@ echo $(aws cloudfront list-distributions --output json) >> ./test.json
 
 data=$(cat ./test.json)
 distribution_id="NONE"
+domain=""
 for row in $(jq '.DistributionList.Items[] | @base64' < './test.json'); do
     _jq() {
         echo $row | tr -d '"' | base64 --decode | jq -r "${1}" | tr -d '"'
@@ -19,12 +20,9 @@ for row in $(jq '.DistributionList.Items[] | @base64' < './test.json'); do
     if [[ $comment = $prefix ]]
     then
         distribution_id=$(_jq '.Id')
+        domain=$(_jq '.DomainName')
     fi
 done
-
-# echo $distribution_id
-
-domain=""
 
 if [[ $distribution_id = NONE ]]
 then
