@@ -81,6 +81,7 @@ jobs:
         # The prefix cache key, this can be changed to start a new cache manually.
         # default: "v0-rust"
         prefix-key: ${{ matrix.platform }}
+        shared-key: prod
         cache-targets: false
     - name: install dependencies (ubuntu only)
       if: matrix.platform == 'ubuntu-latest'
@@ -102,18 +103,18 @@ jobs:
     - name: test build tauri
       run: pnpm --filter gui tauri build
 
-    - name: Get current date
+    - name: Get current unix ts - seconds
       id: date
-      run: echo "date=date::$(date +'%Y-%m-%dT%H:%M:%S')" >> >> $GITHUB_OUTPUT
+      run: echo "unix_seconds=$(date +'%s')" >> $GITHUB_OUTPUT
 
     - name: mac-os cp package images from prod to gui bucket
       if: matrix.platform == 'macos-latest'
       run: |
         aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
-          s3://preview.gui.tea.xyz/release/gui_${{ steps.date.outputs.date }}.dmg
+          s3://preview.gui.tea.xyz/release/gui_${{ steps.date.outputs.unix_seconds }}.dmg
   
     - name: ubuntu cp package images from prod to gui bucket
       if: matrix.platform == 'ubuntu-latest'
       run: |
         aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
-          s3://preview.gui.tea.xyz/release/gui_${{ steps.date.outputs.date }}.deb
+          s3://preview.gui.tea.xyz/release/gui_${{ steps.date.outputs.unix_seconds }}.deb
