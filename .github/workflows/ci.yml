@@ -64,8 +64,7 @@ jobs:
           aws s3 sync ./packages/gui/build \
             "s3://preview.gui.tea.xyz/$prefix"
       - name: Install package
-        run: |
-          sudo apt-get -y jq coreutils
+        run: sudo apt-get install -y jq coreutils
       - name: setup preview
         id: preview_setup
         run: .github/create-invalidate-preview.sh ${{ needs.changes.outputs.preview_folder }}
