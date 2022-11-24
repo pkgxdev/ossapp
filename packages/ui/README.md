@@ -12,7 +12,6 @@ $ pnpm dev
 
 ## Todo
 [] setup a scaffolding script to make it easier making elements
-[] unit tests
 
 ## Design System
 

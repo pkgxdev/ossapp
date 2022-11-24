@@ -9,11 +9,7 @@ jobs:
     steps:
       - name: inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
-      - name: get s3 preview folder
-        id: preview
-        run: |
-          preview=$(echo $GITHUB_REF_NAME | sed -e 's/\//-/g')
-          echo "folder=$preview" >> $GITHUB_OUTPUT
+
       - uses: actions/checkout@v3
 
       - uses: actions/setup-node@v3
@@ -27,7 +23,7 @@ jobs:
           aws-region: us-east-1
 
       - name: remove distribution preview
-        run: .github/remove-distribution.sh ${{ steps.preview.outputs.folder }}
+        run: .github/remove-distribution.sh "${{ github.event.number }}-merge"
 
       # consider to rm the folder later, maybe someone might need to download the installer 
       # - name: remove s3 folder 
