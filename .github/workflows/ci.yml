@@ -24,11 +24,24 @@ jobs:
         filters: |
           src:
             - 'packages/gui/src-tauri/**'
+            - 'packages/gui/src/**'
+            - 'packages/ui/src/**'
     - name: get s3 preview folder
       id: preview
       run: |
         preview=$(echo $GITHUB_REF_NAME | sed -e 's/\//-/g')
         echo "folder=$preview" >> $GITHUB_OUTPUT
+  no_preview:
+    needs: changes
+    if: needs.changes.outputs.svelte == 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - name: comment preview site
+        uses: mshick/add-pr-comment@v2
+        with:
+          message-id: preview-comment-${{needs.changes.outputs.preview_folder}}
+          message: |
+            no preview or changes related to UI
   build_svelte:
     needs: changes
     if: needs.changes.outputs.svelte == 'true'
