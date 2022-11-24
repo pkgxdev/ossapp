@@ -1,6 +1,5 @@
 #!/bin/bash
-rm ./test.json
-rm ./final.json
+
 prefix=$1
 
 echo $(aws cloudfront list-distributions --output json) >> ./test.json
