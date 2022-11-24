@@ -10,6 +10,9 @@ $ pnpm install # assuming you have not done so
 $ pnpm dev
 ```
 
+## Todo
+[] setup a scaffolding script to make it easier making elements
+
 ## Design System
 
 This library is dependent on the following
