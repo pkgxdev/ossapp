@@ -1,0 +1,8 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+		"paths": {
+			"@api": ["src/lib/api_cli.ts"],
+		}
+	},
+}

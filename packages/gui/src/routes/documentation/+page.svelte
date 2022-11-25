@@ -1,17 +1,20 @@
 <script>
     import "$appcss";
-
-    import NavBar from '$components/NavBar/NavBar.svelte';
-    import { page } from '$app/stores';
-    /** @type {import('./$types').PageData} */
-    export let data;
+    import PageHeader from "$components/PageHeader/PageHeader.svelte";
+    import Placeholder from "$components/Placeholder/Placeholder.svelte";
+    import { backLink } from '$libs/stores';
+    backLink.set('/');
 </script>
 
-<section class="flex">
-    <nav>
-        <NavBar/>
-    </nav>
-    <div>
-        <h1>Documentation</h1>
-    </div>
-</section>
+
+<div>
+    <PageHeader>Documentation</PageHeader>
+
+    <header>
+        <Placeholder label="featured courses"/>
+    </header>
+
+    <section class="mt-8">
+        <Placeholder label="Essential workshops"/>
+    </section>
+</div>
