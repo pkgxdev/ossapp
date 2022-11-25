@@ -2,6 +2,7 @@
 const primary = '#00ffd0';
 const black = '#1a1a1a';
 const white = '#fff';
+const gray = '#949494';
 
 module.exports = {
   content: ['./src/**/*.{html,js,svelte,ts}'],
@@ -11,6 +12,7 @@ module.exports = {
       green: primary,
       black,
       white,
+      gray,
     },
     extend: {
       fontFamily: {
