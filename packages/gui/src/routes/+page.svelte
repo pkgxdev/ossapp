@@ -11,7 +11,7 @@
     <header>
         <Placeholder label="featured packages"/>
     </header>
-    <section class="pt-8">
+    <section class="mt-8">
         <Placeholder label="Getting started with tea"/>
     </section>
 </div>
