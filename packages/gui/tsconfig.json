@@ -12,6 +12,7 @@
 		"paths": {
 			"$appcss": ["src/app.css"],
 			"$libs/*": ["src/lib/*"],
+			"@api": ["src/lib/api.ts"],
 			"$components/*": ["src/components/*"],
 			"@tea/ui": ["../ui/src/*"],
 		}
