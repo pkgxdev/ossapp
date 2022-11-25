@@ -2,20 +2,20 @@
 <script lang="ts">
     import "$appcss";
     import { backLink } from '$libs/stores';
-    import Placeholder from "$components/Placeholder/Placeholder.svelte";
     import PageHeader from "$components/PageHeader/PageHeader.svelte";
-
+    import FeaturedPackages from "$components/FeaturedPackages/FeaturedPackages.svelte";
+    import GettingStarted from "$components/GettingStarted/GettingStarted.svelte";
     backLink.set('');
 </script>
 
 
 <div>
     <PageHeader>Discover</PageHeader>
-    <header>
-        <Placeholder label="featured packages"/>
-    </header>
+    <section>
+        <FeaturedPackages/>
+    </section>
     <section class="mt-8">
-        <Placeholder label="Getting started with tea"/>
+        <GettingStarted/>
     </section>
 </div>
 

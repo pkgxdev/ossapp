@@ -2,6 +2,10 @@
     import "$appcss";
     import PageHeader from "$components/PageHeader/PageHeader.svelte";
     import Placeholder from "$components/Placeholder/Placeholder.svelte";
+    import ProfileBanner from "$components/ProfileBanner/ProfileBanner.svelte";
+    import Preflight from "$components/Preflight/Preflight.svelte";
+    import Badges from "$components/Badges/Badges.svelte";
+    import InstalledPackages from "$components/InstalledPackages/InstalledPackages.svelte";
     import { backLink } from '$libs/stores';
     backLink.set('/');
 </script>
@@ -10,21 +14,21 @@
 <div>
     <PageHeader>PROFILE</PageHeader>
 
-    <header>
-        <Placeholder label="github username and wallet address"/>
-    </header>
+    <section>
+        <ProfileBanner/>
+    </section>
 
     <section class="mt-8 grid grid-cols-2 gap-8">
         <div>
-            <Placeholder label="pre-flight"/>
+            <Preflight/>
         </div>
         <div>
-            <Placeholder label="badges"/>
+            <Badges/>
         </div>
     </section>
 
     <section class="mt-8">
-        <Placeholder label="my installs"/>
+        <InstalledPackages/>
     </section>
 
 </div>

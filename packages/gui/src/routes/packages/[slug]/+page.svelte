@@ -1,9 +1,9 @@
 <script>
     import "$appcss";
     import PageHeader from "$components/PageHeader/PageHeader.svelte";
-    import Placeholder from "$components/Placeholder/Placeholder.svelte";
-    import { page } from '$app/stores';
     import { backLink } from '$libs/stores';
+    import PackageBanner from '$components/PackageBanner/PackageBanner.svelte';
+    import PackageReviews from '$components/PackageReviews/PackageReviews.svelte';
     backLink.set('/packages');
 
     /** @type {import('./$types').PageData} */
@@ -13,9 +13,9 @@
 <div>
     <PageHeader>{data.title}</PageHeader>
     <section>
-        <Placeholder label="package cover w/ copy link" />
+        <PackageBanner/>
     </section>
     <section class="mt-8">
-        <Placeholder label="reviews" />
+        <PackageReviews/>
     </section>
 </div>
