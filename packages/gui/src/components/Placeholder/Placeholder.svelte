@@ -4,6 +4,7 @@
 
 <section>
     <header>{label}</header>
+    <slot></slot>
 </section>
 
 <style>

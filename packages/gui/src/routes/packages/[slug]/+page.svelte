@@ -1,17 +1,21 @@
 <script>
     import "$appcss";
-
-    import NavBar from '$components/NavBar/NavBar.svelte';
+    import PageHeader from "$components/PageHeader/PageHeader.svelte";
+    import Placeholder from "$components/Placeholder/Placeholder.svelte";
     import { page } from '$app/stores';
+    import { backLink } from '$libs/stores';
+    backLink.set('/packages');
+
     /** @type {import('./$types').PageData} */
     export let data;
 </script>
 
-<section class="flex">
-    <nav>
-        <NavBar/>
-    </nav>
-    <div>
-        <h1>{data.title}: {$page.params.slug}</h1>
-    </div>
-</section>
+<div>
+    <PageHeader>{data.title}</PageHeader>
+    <section>
+        <Placeholder label="package cover w/ copy link" />
+    </section>
+    <section class="mt-8">
+        <Placeholder label="reviews" />
+    </section>
+</div>

@@ -35,5 +35,6 @@
 <style>
     #NavBar {
         height: 100vh;
+        width: 100%;
     }
 </style>

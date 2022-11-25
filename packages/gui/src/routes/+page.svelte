@@ -1,8 +1,11 @@
 <!-- home / discover / welcome page -->
 <script lang="ts">
     import "$appcss";
+    import { backLink } from '$libs/stores';
     import Placeholder from "$components/Placeholder/Placeholder.svelte";
     import PageHeader from "$components/PageHeader/PageHeader.svelte";
+
+    backLink.set('');
 </script>
 
 
