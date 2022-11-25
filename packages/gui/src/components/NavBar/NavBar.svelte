@@ -112,6 +112,7 @@
 
     @layer components {
         .nav_button {
+            transition: all .3s;
             color: theme('colors.white');
             padding: theme('spacing.4') theme('spacing.2');
         }
