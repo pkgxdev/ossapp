@@ -37,7 +37,7 @@ then
     aws cloudfront wait distribution-deployed --id $distribution_id
 else
     echo "invalidating distribution_id: $distribution_id"
-    invalidation_id=$(aws cloudfront create-invalidation --distribution-id $distribution_id --paths /* | jq '.Invalidation.Id' | tr -d '"') 
+    invalidation_id=$(aws cloudfront create-invalidation --distribution-id $distribution_id --paths "/*" | jq '.Invalidation.Id' | tr -d '"') 
     
     echo "invalidation_id: $invalidation_id"
     aws cloudfront wait invalidation-completed --distribution-id $distribution_id --id $invalidation_id
