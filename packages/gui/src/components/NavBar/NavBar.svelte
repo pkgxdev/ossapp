@@ -5,9 +5,9 @@
     }
 </script>
 
-<ul id="NavBar" class="bg-primary">
+<ul id="NavBar">
     <li>
-        <a href="/">Home / Tea Icon</a>
+        <a href="/">Home</a>
     </li>
     <li>
         <input type="search" placeholder="search" />
