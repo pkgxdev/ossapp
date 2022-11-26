@@ -14,12 +14,12 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "devDependencies": {
-    "@tea/ui": "workspace:*",
     "@playwright/test": "1.25.0",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/adapter-static": "1.0.0-next.48",
     "@sveltejs/kit": "next",
     "@tauri-apps/cli": "1.2.0",
+    "@tea/ui": "workspace:*",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
     "autoprefixer": "^10.4.13",

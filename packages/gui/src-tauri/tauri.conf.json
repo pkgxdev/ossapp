@@ -26,6 +26,38 @@
         "open": true,
         "scope": [],
         "sidecar": false
+      },
+      "window": {
+        "all": true,
+        "center": true,
+        "close": true,
+        "create": true,
+        "hide": true,
+        "maximize": true,
+        "minimize": true,
+        "print": true,
+        "requestUserAttention": true,
+        "setAlwaysOnTop": true,
+        "setCursorGrab": true,
+        "setCursorIcon": true,
+        "setCursorPosition": true,
+        "setCursorVisible": true,
+        "setDecorations": true,
+        "setFocus": true,
+        "setFullscreen": true,
+        "setIcon": true,
+        "setIgnoreCursorEvents": true,
+        "setMaxSize": true,
+        "setMinSize": true,
+        "setPosition": true,
+        "setResizable": true,
+        "setSize": true,
+        "setSkipTaskbar": true,
+        "setTitle": true,
+        "show": true,
+        "startDragging": true,
+        "unmaximize": true,
+        "unminimize": true
       }
     },
     "bundle": {
@@ -73,7 +105,8 @@
         "height": 600,
         "resizable": true,
         "title": "gui",
-        "width": 800
+        "width": 800,
+        "decorations": false
       }
     ]
   }

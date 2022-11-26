@@ -11,7 +11,7 @@
     });
 </script>
 
-<div>
+<div id="main-layout">
     <nav class="">
         <NavBar/>
     </nav>
@@ -22,12 +22,14 @@
             </header>
         {/if}
         <figure></figure>
-        <slot></slot>
+        <div>
+            <slot></slot>
+        </div>
     </section>
 </div>
 
 <style>
-    div {
+    #main-layout {
         width: 100vh;
         height: 100vh;
     }
@@ -44,6 +46,7 @@
     }
     figure {
         position: absolute;
+        z-index: 0;
         top: 180px;
         left: 0px;
         right: 0px;
@@ -57,5 +60,13 @@
         width: 100%;
         height: 50px;
         border-bottom: #CCC 1px solid;
+    }
+
+    slot {
+        z-index: 1;
+    }
+
+    div {
+        position: relative;
     }
 </style>

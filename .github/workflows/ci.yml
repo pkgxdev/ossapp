@@ -28,9 +28,7 @@ jobs:
             - 'packages/ui/src/**'
     - name: get s3 preview folder
       id: preview
-      run: |
-        preview=$(echo $GITHUB_REF_NAME | sed -e 's/\//-/g')
-        echo "folder=$preview" >> $GITHUB_OUTPUT
+      run: echo "folder=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
   no_preview:
     needs: changes
     if: needs.changes.outputs.svelte == 'false'
