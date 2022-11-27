@@ -11,9 +11,7 @@ const config: UserConfig = {
 			'@tea/ui/*': path.resolve('../ui/src/*'),
 			// this dynamic-ish static importing is followed by the svelte build
 			// but for vscode editing intellisense tsconfig.json is being used
-			'@api': isMock ?
-				path.resolve('src/libs/api/mock.ts') :
-				path.resolve('src/libs/api/tauri.ts'),
+			'@api': isMock ? path.resolve('src/libs/api/mock.ts') : path.resolve('src/libs/api/tauri.ts'),
 			$components: path.resolve('./src/components'),
 			$libs: path.resolve('./src/libs'),
 			$appcss: path.resolve('./src/app.css')
