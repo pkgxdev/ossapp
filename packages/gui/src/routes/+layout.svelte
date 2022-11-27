@@ -1,72 +1,72 @@
 <!-- home / discover / welcome page -->
 <script lang="ts">
-    import "$appcss";
-    import NavBar from '$components/NavBar/NavBar.svelte';
+	import '$appcss';
+	import NavBar from '$components/NavBar/NavBar.svelte';
 
-    import { backLink as backLinkStore } from '$libs/stores';
+	import { backLink as backLinkStore } from '$libs/stores';
 
-    let backLink: string = '';
-    backLinkStore.subscribe((v) => {
-        backLink = v;
-    });
+	let backLink = '';
+	backLinkStore.subscribe((v) => {
+		backLink = v;
+	});
 </script>
 
 <div id="main-layout">
-    <nav class="">
-        <NavBar/>
-    </nav>
-    <section class="px-16 pt-24">
-        {#if backLink}
-            <header>
-                <a href={backLink}>back</a>
-            </header>
-        {/if}
-        <figure></figure>
-        <div>
-            <slot></slot>
-        </div>
-    </section>
+	<nav class="">
+		<NavBar />
+	</nav>
+	<section class="px-16 pt-24">
+		{#if backLink}
+			<header>
+				<a href={backLink}>back</a>
+			</header>
+		{/if}
+		<figure />
+		<div>
+			<slot />
+		</div>
+	</section>
 </div>
 
 <style>
-    #main-layout {
-        width: 100vh;
-        height: 100vh;
-    }
-    nav {
-        position: fixed;
-        width: 240px;
-    }
-    section {
-        position: fixed;
-        left: 240px;
-        right: 0px;
-        height: 100vh;
-        overflow-y: scroll;
-    }
-    figure {
-        position: absolute;
-        z-index: 0;
-        top: 180px;
-        left: 0px;
-        right: 0px;
-        bottom: 0px;
-        background-image: url('/images/footer-grid-element.svg');
-    }
-    header {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 50px;
-        border-bottom: #CCC 1px solid;
-    }
+	#main-layout {
+		width: 100vh;
+		height: 100vh;
+	}
+	nav {
+		position: fixed;
+		width: 240px;
+	}
+	section {
+		position: fixed;
+		left: 240px;
+		right: 0px;
+		height: 100vh;
+		overflow-y: scroll;
+	}
+	figure {
+		position: absolute;
+		z-index: 0;
+		top: 180px;
+		left: 0px;
+		right: 0px;
+		bottom: 0px;
+		background-image: url('/images/footer-grid-element.svg');
+	}
+	header {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 50px;
+		border-bottom: #ccc 1px solid;
+	}
 
-    slot {
-        z-index: 1;
-    }
+	slot {
+		z-index: 1;
+	}
 
-    div {
-        position: relative;
-    }
+	div {
+		position: relative;
+	}
 </style>

@@ -1,21 +1,20 @@
 <script>
-    import "$appcss";
-    import PageHeader from "$components/PageHeader/PageHeader.svelte";
-    import CliBanner from "$components/CliBanner/CliBanner.svelte";
-    import BigBlackSpace from "$components/BigBlackSpace/BigBlackSpace.svelte";
-    import { backLink } from '$libs/stores';
-    backLink.set('/');
+	import '$appcss';
+	import PageHeader from '$components/PageHeader/PageHeader.svelte';
+	import CliBanner from '$components/CliBanner/CliBanner.svelte';
+	import BigBlackSpace from '$components/BigBlackSpace/BigBlackSpace.svelte';
+	import { backLink } from '$libs/stores';
+	backLink.set('/');
 </script>
 
-
 <div>
-    <PageHeader>INSTALL TEA</PageHeader>
+	<PageHeader>INSTALL TEA</PageHeader>
 
-    <section>
-        <CliBanner/>
-    </section>
+	<section>
+		<CliBanner />
+	</section>
 
-    <section class="mt-8">
-        <BigBlackSpace/>
-    </section>
+	<section class="mt-8">
+		<BigBlackSpace />
+	</section>
 </div>
