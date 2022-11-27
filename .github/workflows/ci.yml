@@ -40,6 +40,26 @@ jobs:
           message-id: preview-comment-${{needs.changes.outputs.preview_folder}}
           message: |
             no preview or changes related to UI
+  test:
+    needs: changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
+      - name: install app dependencies
+        run: pnpm install
+      - name: lint
+        run: pnpm -r lint
   build_svelte:
     needs: changes
     if: needs.changes.outputs.svelte == 'true'
@@ -62,6 +82,8 @@ jobs:
         with:
           toolchain: stable
       - name: install app dependencies and build it
+        env:
+          BUILD_FOR: preview
         run: pnpm install && pnpm --filter gui build
       - uses: aws-actions/configure-aws-credentials@v1
         with:

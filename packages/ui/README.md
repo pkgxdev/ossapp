@@ -1,5 +1,6 @@
 # @tea/ui
-Isolated set of UI elements/components that can be reused across all svelte related apps of tea. Components here have to be maintained as much as possible as a [dumb/presentational components](https://medium.com/@thejasonfile/dumb-components-and-smart-components-e7b33a698d43). 
+
+Isolated set of UI elements/components that can be reused across all svelte related apps of tea. Components here have to be maintained as much as possible as a [dumb/presentational components](https://medium.com/@thejasonfile/dumb-components-and-smart-components-e7b33a698d43).
 
 ## Developing
 
@@ -11,10 +12,12 @@ $ pnpm dev
 ```
 
 ## Todo
+
 [] setup a scaffolding script to make it easier making elements
 
 ## Design System
 
 This library is dependent on the following
+
 - [svelte](https://svelte.dev/)
 - [tailwind](https://tailwindcss.com/)

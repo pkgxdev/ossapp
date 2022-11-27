@@ -7,17 +7,17 @@ const config = {
 	// for more information about preprocessors
 	preprocess: [
 		preprocess({
-			postcss: true,
+			postcss: true
 		})
 	],
 	kit: {
 		adapter: adapter({
 			pages: 'build',
 			assets: 'build',
-			fallback: 'app.html',
+			fallback: 'app.html'
 		}),
 		alias: {
-			'@tea/ui/*': '../ui/src/*',
+			'@tea/ui/*': '../ui/src/*'
 		}
 		// ssr: false,
 		// hydrate the <div id="svelte"> element in src/app.html

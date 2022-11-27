@@ -12,11 +12,11 @@
 		"paths": {
 			"$appcss": ["src/app.css"],
 			"$libs/*": ["src/libs/*"],
-			"@api": ["src/lib/api.ts"],
+			"@api": ["src/lib/api/tauri.ts"],
 			"$components/*": ["src/components/*"],
-			"@tea/ui": ["../ui/src/*"],
+			"@tea/ui": ["../ui/src/*"]
 		}
-	},
+	}
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//
 	// If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes
