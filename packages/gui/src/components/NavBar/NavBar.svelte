@@ -54,6 +54,10 @@
 			routes[0].active = false;
 		}
 	});
+
+	const onSearch = (term: string) => {
+		console.log('navbar search:', term);
+	};
 </script>
 
 <ul id="NavBar">
@@ -74,7 +78,7 @@
 		</a>
 	</nav>
 
-	<SearchInput size="small" />
+	<SearchInput size="small" {onSearch} />
 
 	{#each routes as route}
 		<li class={route.active ? 'nav_button active' : 'nav_button'}>

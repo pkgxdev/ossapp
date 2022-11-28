@@ -2,13 +2,23 @@
 	import './SearchInput.css';
 
 	export let size: 'small' | 'medium' | 'large' = 'small';
+	export let onSearch: (text: string) => void;
+
+	let timer: NodeJS.Timeout;
+	const onChange = (e: KeyboardEvent) => {
+		const t = e.target as HTMLInputElement;
+		clearTimeout(timer);
+		timer = setTimeout(() => {
+			onSearch && onSearch(t.value);
+		}, 300);
+	};
 </script>
 
 <section class={`flex items-center ${size}`}>
 	<div class="icon">
 		<i class="icon-search-icon" />
 	</div>
-	<input type="search" placeholder="search_" />
+	<input type="search" placeholder="search_" on:keyup={onChange} />
 </section>
 
 <!-- <input type="search" class="w-full bg-black h-12 p-4 border border-x-0 border-gray"/> -->
