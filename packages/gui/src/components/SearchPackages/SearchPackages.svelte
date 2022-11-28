@@ -42,14 +42,6 @@
 			packages = allPackages;
 		}
 	};
-
-	function getMatchScore(term: string, pkg: Package) {
-		// provide higher value with name
-		const { full_name, desc } = pkg;
-		const nameScore = stringSimilarity.compareTwoStrings(full_name, term);
-		const descriptionScore = stringSimilarity.compareTwoStrings(desc, term);
-		return nameScore * 80 + descriptionScore * 20;
-	}
 </script>
 
 <div class="bg-black border border-gray">
