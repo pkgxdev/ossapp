@@ -150,6 +150,5 @@ const packages: Package[] = [
 ];
 
 export async function getPackages(): Promise<Package[]> {
-
 	return packages;
 }

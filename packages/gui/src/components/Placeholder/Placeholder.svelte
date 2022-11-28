@@ -2,7 +2,7 @@
 	export let label = '';
 </script>
 
-<section>
+<section class="p-8 bg-gray">
 	<header>{label}</header>
 	<slot />
 </section>
@@ -14,7 +14,7 @@
 		height: 100%;
 		width: 100%;
 		min-width: 100%;
-		background-color: #ccc;
+		/* background-color: #ccc; */
 		display: flex;
 	}
 	header {

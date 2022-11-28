@@ -1,9 +1,11 @@
 <script type="ts">
 	import '$appcss';
-	import Placeholder from '$components/Placeholder/Placeholder.svelte';
 
 	import { packages as packagesStore, initializePackages } from '$libs/stores';
-	import type { Package } from '$libs/types';
+
+	import type { Package } from '@tea/ui/types';
+	import PackageCard from '@tea/ui/PackageCard/PackageCard.svelte';
+
 	import { onMount } from 'svelte';
 
 	let packages: Package[] = [];
@@ -25,11 +27,9 @@
 		<h2>Filter Packages</h2>
 		<input type="search" class="text-white bg-black border border-gray" />
 	</section>
-	<ul class="grid grid-cols-3 gap-8 mt-8">
+	<ul class="grid grid-cols-3 mt-8">
 		{#each packages as pkg}
-			<li>
-				<a href={`/packages/${pkg.slug}`}><Placeholder label={pkg.name} /></a>
-			</li>
+			<PackageCard {pkg} link={`/packages/${pkg.full_name}`} />
 		{/each}
 	</ul>
 </div>

@@ -4,3 +4,4 @@
 </script>
 
 <Placeholder label="FeaturedCourses" />
+<h1>test</h1>
