@@ -1,0 +1,62 @@
+<script type="ts">
+	import './SearchInput.css';
+
+	export let size: 'small' | 'medium' | 'large' = 'small';
+</script>
+
+<section class={`flex items-center ${size}`}>
+	<div class="icon">
+		<i class="icon-search-icon" />
+	</div>
+	<input type="search" placeholder="search_" />
+</section>
+
+<!-- <input type="search" class="w-full bg-black h-12 p-4 border border-x-0 border-gray"/> -->
+<style>
+	.icon-search-icon {
+		font-size: 30px;
+		color: #949494;
+		margin-right: 20px;
+		position: relative;
+		top: 2px;
+	}
+
+	section {
+		padding: 0px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	section.medium {
+		height: 75px;
+	}
+	section.large {
+		height: 150px;
+	}
+
+	section input {
+		font-family: 'pp-neue-machina', sans-serif;
+		color: #00ffd0;
+		text-transform: uppercase;
+		margin-bottom: -5px;
+		min-width: 60%;
+		padding: 0px;
+		background-color: #1a1a1a !important;
+		border: none;
+		color: #00ffd0;
+		outline: none;
+		border-radius: 0px;
+	}
+
+	section.medium input {
+		font-size: 24px;
+	}
+	section.large input {
+		font-size: 32px;
+	}
+	section input::placeholder {
+		/* Chrome, Firefox, Opera, Safari 10.1+ */
+		color: #949494;
+		opacity: 1; /* Firefox */
+	}
+</style>

@@ -23,7 +23,7 @@
 			{/if}
 		</article>
 	</figure>
-	<footer class="flex mt-4 justify-between">
+	<footer class="flex mt-4 justify-between items-center">
 		<div>
 			<p>
 				<span>V&NonBreakingSpace;{pkg.version}</span>
@@ -33,6 +33,7 @@
         <span class="package-install-no">>{{- .installs -}}&nbsp;installs</span> -->
 			</p>
 		</div>
+		<!-- TODO: move this button into its own reusable component -->
 		<a href={link}>
 			<button class="detail-btn"><i class="icon-enter-arrow" />details</button>
 		</a>
@@ -101,7 +102,7 @@
 		padding-top: 0.279vw;
 		text-decoration: none;
 		text-transform: uppercase;
-		width: 134px;
+		width: 100px;
 		height: 2.232vw;
 		min-height: 34px;
 		transition: 0.1s linear;

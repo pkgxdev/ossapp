@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { open } from '@tauri-apps/api/shell';
 	import { appWindow } from '@tauri-apps/api/window';
+	import SearchInput from '@tea/ui/SearchInput/SearchInput.svelte';
 
 	import { beforeUpdate } from 'svelte';
 
@@ -73,11 +74,7 @@
 		</a>
 	</nav>
 
-	<input
-		class="w-full bg-black h-12 p-4 border border-x-0 border-gray"
-		type="search"
-		placeholder="search"
-	/>
+	<SearchInput size="small" />
 
 	{#each routes as route}
 		<li class={route.active ? 'nav_button active' : 'nav_button'}>
