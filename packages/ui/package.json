@@ -11,7 +11,8 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"dev": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"build-storybook": "storybook build",
+		"update-icons": "node scripts/update-icons.js"
 	},
 	"files": [
 		"src/**/*",

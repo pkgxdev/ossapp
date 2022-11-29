@@ -1,5 +1,5 @@
 <script type="ts">
-	import './PackageCard.css';
+	import '../app.css';
 	import type { Package } from '../types';
 	export let pkg: Package;
 	export let link: string;
