@@ -41,7 +41,8 @@
 	"type": "module",
 	"dependencies": {
 		"@tauri-apps/api": "^1.2.0",
-		"buffer": "^6.0.3"
+		"buffer": "^6.0.3",
+		"fuse.js": "^6.6.2"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [

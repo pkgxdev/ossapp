@@ -23,6 +23,7 @@
 		{/if}
 		<figure />
 		<div>
+			<!-- all pages get inserted in this slot -->
 			<slot />
 		</div>
 	</section>

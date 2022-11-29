@@ -102,7 +102,7 @@
 				"height": 600,
 				"resizable": true,
 				"title": "gui",
-				"width": 800,
+				"width": 1024,
 				"decorations": false
 			}
 		]
