@@ -1,5 +1,4 @@
 <script type="ts">
-
 	import '../app.css';
 	import type { Package } from '../types';
 	export let pkg: Package;
@@ -52,7 +51,6 @@
 		position: relative;
 	}
 
-
 	img {
 		box-shadow: 0px 0px 12px #0c0c0c !important;
 		width: 100%;
@@ -84,7 +82,7 @@
 
 	.card-thumb-label h4 {
 		color: black;
-		font-size: .9vw;
+		font-size: 0.9vw;
 		line-height: 1vw;
 		margin: 0px;
 		padding: 0px;
