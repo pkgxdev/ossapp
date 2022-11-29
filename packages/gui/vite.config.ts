@@ -16,6 +16,11 @@ const config: UserConfig = {
 			$libs: path.resolve('./src/libs'),
 			$appcss: path.resolve('./src/app.css')
 		}
+	},
+	server: {
+		fs: {
+			allow: ['..']
+		}
 	}
 };
 

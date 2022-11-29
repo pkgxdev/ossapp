@@ -1,5 +1,5 @@
 <script type="ts">
-	import './SearchInput.css';
+	import '../app.css';
 
 	export let size: 'small' | 'medium' | 'large' = 'small';
 	export let onSearch: (text: string) => void;
@@ -14,29 +14,26 @@
 	};
 </script>
 
-<section class={`flex items-center ${size}`}>
-	<div class="icon">
+<section class={`flex py-2 items-center ${size}`}>
+	<div class="icon pl-4">
 		<i class="icon-search-icon" />
 	</div>
-	<input type="search" placeholder="search_" on:keyup={onChange} />
+	<input type="search" class="pb-2" placeholder="search_" on:keyup={onChange} />
 </section>
 
 <!-- <input type="search" class="w-full bg-black h-12 p-4 border border-x-0 border-gray"/> -->
 <style>
 	.icon-search-icon {
-		font-size: 30px;
 		color: #949494;
 		margin-right: 20px;
 		position: relative;
 		top: 2px;
 	}
 
-	section {
-		padding: 0px;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+	section.medium .icon-search-icon {
+		font-size: 30px;
 	}
+
 	section.medium {
 		height: 75px;
 	}

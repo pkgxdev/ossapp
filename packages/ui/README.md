@@ -11,6 +11,12 @@ $ pnpm install # assuming you have not done so
 $ pnpm dev
 ```
 
+### How to update icons
+
+1. update fontastic.me tea-icons, you would probably need tom's credentials
+2. run `pnpm update-icons`
+3. stage and commit the changes
+
 ## Todo
 
 [] setup a scaffolding script to make it easier making elements
@@ -21,3 +27,4 @@ This library is dependent on the following
 
 - [svelte](https://svelte.dev/)
 - [tailwind](https://tailwindcss.com/)
+- [fontastic](https://fontastic.me)
