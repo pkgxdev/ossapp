@@ -1,8 +1,8 @@
 <script type="ts">
 	import '../app.css';
 
-	export let rating: number = 0;
-	export let maxRating: number = 5;
+	export let rating = 0;
+	export let maxRating = 5;
 
 	let stars: string[] = [];
 	for (let i = 1; i <= maxRating; i++) {

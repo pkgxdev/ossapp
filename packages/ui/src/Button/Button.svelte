@@ -1,10 +1,10 @@
 <script type="ts">
-	let clazz: string = '';
+	let clazz: string;
 	export { clazz as class };
 
-	export let size: 'large' | 'medium' | 'small' = 'medium';
+	// export let size: 'large' | 'medium' | 'small' = 'medium';
 
-	export let onClick: () => void;
+	export let onClick: undefined | (() => void) = undefined;
 </script>
 
 <button

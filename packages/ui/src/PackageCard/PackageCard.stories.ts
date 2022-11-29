@@ -23,7 +23,7 @@ export default {
 	tags: ['docsPage'],
 	render: ({ pkg, link }: { pkg: Package; link: string }) => ({
 		Component: PackageCard,
-		props: { pkg }
+		props: { pkg, link }
 	}),
 	argTypes: {
 		pkg: {

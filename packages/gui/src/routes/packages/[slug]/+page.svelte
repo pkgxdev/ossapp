@@ -9,7 +9,7 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	import { packages as packagesStore, initializePackages } from '$libs/stores';
+	import { packages as packagesStore } from '$libs/stores';
 
 	import type { Package } from '@tea/ui/types';
 
