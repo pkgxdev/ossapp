@@ -19,17 +19,10 @@ const downloadFileTo = async (uri, path) => {
 	});
 };
 
-const getFontURIs = (version) => {
-	const exts = ['eot', 'woff', 'ttf', 'svg'];
-	return exts.map(
-		(ext) => `https://file.myfontastic.com/Fd33ifaooDVpESwnDXETgR/fonts/${version}.${ext}`
-	);
-};
-
 async function main() {
 	const tmpIconsCss = './scripts/icons.css';
 	const iconsFolder = './src/icons/';
-	// await downloadFileTo(fontasticDownloadURI, tmpIconsCss); // works
+	await downloadFileTo(fontasticDownloadURI, tmpIconsCss); // works
 
 	const cssFile = fs.readFileSync(tmpIconsCss, 'utf-8');
 
