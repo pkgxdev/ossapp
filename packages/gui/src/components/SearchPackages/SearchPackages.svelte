@@ -55,7 +55,7 @@
 	</section>
 	<ul class="grid grid-cols-3">
 		{#each packages as pkg}
-			<PackageCard {pkg} link={`/packages/${pkg.full_name}`} />
+			<PackageCard {pkg} link={`/packages/${pkg.slug}`} />
 		{/each}
 	</ul>
 </div>

@@ -1,44 +1,29 @@
 <script type="ts">
-	import './button.css';
-	import { createEventDispatcher } from 'svelte';
+	let clazz: string = '';
+	export { clazz as class };
 
-	/**
-	 * Is this the principal call to action on the page?
-	 */
-	export let primary = false;
-
-	/**
-	 * What background color to use
-	 */
-	export let backgroundColor = '';
-	/**
-	 * How large should the button be?
-	 */
 	export let size: 'large' | 'medium' | 'small' = 'medium';
-	/**
-	 * Button contents
-	 */
-	export let label = '';
 
-	$: mode = primary ? 'storybook-button--primary bg-primary' : 'storybook-button--secondary';
-
-	$: style = backgroundColor ? `background-color: ${backgroundColor}` : '';
-
-	const dispatch = createEventDispatcher();
-
-	/**
-	 * Optional click handler
-	 */
-	export let onClick = (event: any) => {
-		dispatch('click', event);
-	};
+	export let onClick: () => void;
 </script>
 
 <button
-	type="button"
-	class={['storybook-button', `storybook-button--${size}`, 'hover:font-light', mode].join(' ')}
-	{style}
-	on:click={onClick}
+	type="button font-sans"
+	class={`p-2 font-machina bg-black text-gray ${clazz}`}
+	id="liveToastBtn"
+	on:click={() => onClick && onClick()}
 >
-	{label}
+	<slot />
 </button>
+
+<style>
+	button {
+		min-width: 100px;
+		transition: 0.2s ease-in-out !important;
+	}
+	button:hover {
+		box-shadow: inset 0px 0px 0px 5px #1a1a1a !important;
+		background-color: #00ffd0 !important;
+		color: #1a1a1a !important;
+	}
+</style>

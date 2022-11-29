@@ -16,7 +16,7 @@
 	let pkg: Package;
 
 	packagesStore.subscribe((allPackages) => {
-		const foundPackage = allPackages.find(({ full_name }) => full_name === data?.title) as Package;
+		const foundPackage = allPackages.find(({ slug }) => slug === data?.slug) as Package;
 		if (foundPackage) {
 			pkg = foundPackage;
 		}
