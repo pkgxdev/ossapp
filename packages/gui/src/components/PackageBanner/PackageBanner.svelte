@@ -8,6 +8,13 @@
 	export let pkg: Package;
 
 	let packageRating = 0;
+	let copyButtonText = 'COPY';
+	const copyValue = `sh <(curl tea.xyz ) +${pkg.full_name}`;
+
+	const onCopy = () => {
+		copyButtonText = 'COPIED!';
+		navigator.clipboard.writeText(copyValue);
+	};
 </script>
 
 <section class="border-gray border bg-black mt-4">
@@ -27,13 +34,9 @@
 		</article>
 	</header>
 	<footer class="flex text-white border-gray border-t h-20">
-		<input
-			class="flex-grow bg-black pl-4"
-			disabled
-			value={`sh <(curl tea.xyz ) +${pkg.full_name}`}
-		/>
-		<Button class="text-sm border-0 border-l-2" onClick={() => console.log('copy')}>COPY</Button>
-		<Button class="text-sm border-0 border-l-2" onClick={() => console.log('copy')}
+		<input class="flex-grow bg-black pl-4" disabled value={copyValue} />
+		<Button class="text-sm border-0 border-l-2 w-16" onClick={onCopy}>{copyButtonText}</Button>
+		<Button class="text-sm border-0 border-l-2 w-56" onClick={() => console.log('cli')}
 			>OPEN IN TERMINAL</Button
 		>
 	</footer>

@@ -3,6 +3,7 @@
 	import { open } from '@tauri-apps/api/shell';
 	import { appWindow } from '@tauri-apps/api/window';
 	import SearchInput from '@tea/ui/SearchInput/SearchInput.svelte';
+	import Button from '@tea/ui/Button/Button.svelte';
 
 	import { beforeUpdate } from 'svelte';
 
@@ -82,11 +83,13 @@
 
 	{#each routes as route}
 		<li class={route.active ? 'nav_button active' : 'nav_button'}>
-			<a href={route.path}>{route.label}</a>
+			<a href={route.path}>
+				<Button class="h-16 text-left pl-4 text-white" active={route.active}>{route.label}</Button>
+			</a>
 		</li>
 	{/each}
 	<li class="nav_button">
-		<button on:click={openGithub}>VIEW ON GITHUB</button>
+		<Button class="h-16 text-left pl-4 text-white" onClick={openGithub}>VIEW ON GITHUB</Button>
 	</li>
 
 	<footer class="border border-x-0 border-gray w-full">
@@ -112,7 +115,10 @@
 		.nav_button {
 			transition: all 0.3s;
 			color: theme('colors.white');
-			padding: theme('spacing.4') theme('spacing.2');
+			/* padding: theme('spacing.4') theme('spacing.2'); */
+		}
+		.nav_button button {
+			text-align: left;
 		}
 		.nav_button:hover {
 			color: theme('colors.black');
