@@ -26,7 +26,7 @@
 	<footer class="flex mt-4 justify-between items-center">
 		<div>
 			<p>
-				<span>V&NonBreakingSpace;{pkg.version}</span>
+				<span class="text-xs">V&NonBreakingSpace;{pkg.version}</span>
 				<!--
         TODO: uncomment once install counts improve
         <br>
@@ -51,12 +51,6 @@
 		position: relative;
 	}
 
-	.detail-btn {
-		position: relative;
-		float: right !important;
-		right: 0;
-	}
-
 	img {
 		box-shadow: 0px 0px 12px #0c0c0c !important;
 		width: 100%;
@@ -64,6 +58,7 @@
 	}
 	.card-thumb-label i {
 		font-size: 1.5vw;
+		color: black;
 	}
 
 	.card-thumb-label h3 {
@@ -87,13 +82,16 @@
 
 	.card-thumb-label h4 {
 		color: black;
-		font-size: 1.5vw;
-		line-height: 1.5vw;
+		font-size: 0.9vw;
+		line-height: 1vw;
 		margin: 0px;
 		padding: 0px;
 	}
 
 	.detail-btn {
+		position: relative;
+		float: right;
+		right: 0;
 		display: inline-block;
 		font-family: 'pp-neue-machina', sans-serif;
 		background-color: #1a1a1a;
@@ -102,7 +100,7 @@
 		padding-top: 0.279vw;
 		text-decoration: none;
 		text-transform: uppercase;
-		width: 100px;
+		width: 120px;
 		height: 2.232vw;
 		min-height: 34px;
 		transition: 0.1s linear;
