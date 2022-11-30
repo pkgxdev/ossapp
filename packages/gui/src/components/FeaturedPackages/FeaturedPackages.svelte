@@ -15,9 +15,9 @@
 	let width = 0;
 	let styleFeaturedPackages: string;
 
-	function getFeaturedStyle() {
+	function resetFeaturedStyle() {
 		const position = pkgFocus * width;
-		return `
+		styleFeaturedPackages = `
 			width: ${featuredPackages.length * width}px;
 			left: -${position}px;
 			transition: left 0.6s ease-in;
@@ -26,16 +26,22 @@
 
 	function handleContainerResize(node: HTMLElement) {
 		width = node.clientWidth;
-		styleFeaturedPackages = getFeaturedStyle();
+		resetFeaturedStyle();
 	}
 
-	const loop = setInterval(() => {
-		pkgFocus++;
-		if (pkgFocus === featuredPackages.length) {
-			pkgFocus = 0;
-		}
-		styleFeaturedPackages = getFeaturedStyle();
-	}, 3000);
+	let loop: NodeJS.Timer;
+
+	function resetLoop() {
+		if (loop) clearInterval(loop);
+		loop = setInterval(() => {
+			pkgFocus++;
+			if (pkgFocus === featuredPackages.length) {
+				pkgFocus = 0;
+			}
+			resetFeaturedStyle();
+		}, 3000);
+		resetFeaturedStyle();
+	}
 
 	featuredPackagesStore.subscribe((v) => {
 		featuredPackages = v;
@@ -46,6 +52,7 @@
 		if (!featuredPackages.length) {
 			initializeFeaturedPackages();
 		}
+		resetLoop();
 	});
 </script>
 
@@ -55,7 +62,11 @@
 		<p>FEATURED PACKAGES</p>
 		<ul class="flex gap-2">
 			{#each featuredPackages as pkg, i}
-				<li
+				<button
+					on:click={() => {
+						pkgFocus = i;
+						resetLoop();
+					}}
 					class={`border-white border-2 w-4 h-4 rounded-lg bg-purple transition-colors ${
 						i === pkgFocus ? 'bg-purple-900' : ''
 					}`}

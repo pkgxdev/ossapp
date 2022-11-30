@@ -9,18 +9,21 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	import { packages as packagesStore } from '$libs/stores';
+	import { packages, featuredPackages } from '$libs/stores';
 
 	import type { Package } from '@tea/ui/types';
 
 	let pkg: Package;
 
-	packagesStore.subscribe((allPackages) => {
-		const foundPackage = allPackages.find(({ slug }) => slug === data?.slug) as Package;
-		if (foundPackage) {
+	const setPkg = (pkgs: Package[]) => {
+		const foundPackage = pkgs.find(({ slug }) => slug === data?.slug) as Package;
+		if (!pkg && foundPackage) {
 			pkg = foundPackage;
 		}
-	});
+	};
+
+	packages.subscribe(setPkg);
+	featuredPackages.subscribe(setPkg);
 </script>
 
 <div>
