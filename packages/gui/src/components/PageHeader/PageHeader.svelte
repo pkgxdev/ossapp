@@ -1,3 +1,3 @@
-<header class="text-primary text-6xl font-machina uppercase">
+<header class="text-primary text-6xl font-machina uppercase mb-8">
 	<slot />
 </header>

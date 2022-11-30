@@ -12,7 +12,7 @@
 		"paths": {
 			"$appcss": ["src/app.css"],
 			"$libs/*": ["src/libs/*"],
-			"@api": ["src/lib/api/tauri.ts"],
+			"@api": ["src/libs/api/tauri.ts"],
 			"$components/*": ["src/components/*"],
 			"@tea/ui/*": ["../ui/src/*"]
 		}

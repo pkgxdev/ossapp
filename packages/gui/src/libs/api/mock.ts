@@ -152,3 +152,7 @@ const packages: Package[] = [
 export async function getPackages(): Promise<Package[]> {
 	return packages;
 }
+
+export async function getFeaturedPackages(): Promise<Package[]> {
+	return packages.slice(0, 4);
+}
