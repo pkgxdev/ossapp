@@ -48,7 +48,7 @@
 	figure {
 		position: absolute;
 		z-index: 0;
-		top: 180px;
+		top: 220px;
 		left: 0px;
 		right: 0px;
 		bottom: 0px;

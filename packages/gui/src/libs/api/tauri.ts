@@ -13,6 +13,7 @@
 import { getClient } from '@tauri-apps/api/http';
 import { Buffer } from 'buffer';
 import type { Package } from '../types';
+import * as mock from './mock';
 
 const username = 'user';
 const password = 'password';
@@ -47,5 +48,10 @@ const join = function (...paths: string[]) {
 
 export async function getPackages(): Promise<Package[]> {
 	const packages = await get<Package[]>('packages');
+	return packages;
+}
+
+export async function getFeaturedPackages(): Promise<Package[]> {
+	const packages = await mock.getFeaturedPackages();
 	return packages;
 }
