@@ -39,7 +39,7 @@ async function main() {
 
 	const newCssFile = cssFile
 		.replaceAll('https://file.myfontastic.com/Fd33ifaooDVpESwnDXETgR/', '')
-		.replaceAll('1669684803', 'tea-icons');
+		.replaceAll(fileVersion, 'tea-icons');
 	await fs.writeFileSync(path.join(iconsFolder, 'icons.css'), newCssFile, { encoding: 'utf-8' });
 }
 
