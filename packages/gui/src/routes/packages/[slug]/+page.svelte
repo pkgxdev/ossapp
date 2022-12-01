@@ -9,16 +9,23 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	import { packages, featuredPackages } from '$libs/stores';
+	import { packages, featuredPackages, packagesReviewStore } from '$libs/stores';
 
-	import type { Package } from '@tea/ui/types';
+	import type { Package, Review } from '@tea/ui/types';
 
 	let pkg: Package;
+
+	let reviews: Review[];
 
 	const setPkg = (pkgs: Package[]) => {
 		const foundPackage = pkgs.find(({ slug }) => slug === data?.slug) as Package;
 		if (!pkg && foundPackage) {
 			pkg = foundPackage;
+		}
+		if (!reviews && pkg) {
+			packagesReviewStore.subscribe(pkg.full_name, (updatedReviews) => {
+				reviews = updatedReviews;
+			});
 		}
 	};
 
@@ -32,6 +39,6 @@
 		<PackageBanner {pkg} />
 	</section>
 	<section class="mt-8">
-		<PackageReviews />
+		<PackageReviews reviews={reviews || []} />
 	</section>
 </div>
