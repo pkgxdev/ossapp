@@ -19,6 +19,7 @@
 	const searchLimit = 5;
 
 	const setPackages = (pkgs: Package[]) => {
+		console.log('pkgs sub', pkgs);
 		packages = pkgs.sort((a, b) => {
 			if (sortBy === 'popularity') {
 				const aPop = +a.dl_count + a.installs;
@@ -36,9 +37,12 @@
 	packagesStore.subscribe((v) => {
 		allPackages = v;
 		setPackages(allPackages);
-		packagesIndex = new Fuse(allPackages, {
-			keys: ['name', 'full_name', 'desc']
-		});
+		if (!packagesIndex) {
+			// dont remove or this can get crazy
+			packagesIndex = new Fuse(allPackages, {
+				keys: ['name', 'full_name', 'desc']
+			});
+		}
 	});
 
 	onMount(async () => {

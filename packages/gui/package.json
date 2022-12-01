@@ -43,6 +43,8 @@
 		"@tauri-apps/api": "^1.2.0",
 		"buffer": "^6.0.3",
 		"fuse.js": "^6.6.2",
+		"lodash": "^4.17.21",
+		"lorem-ipsum": "^2.0.8",
 		"svelte-watch-resize": "^1.0.3"
 	},
 	"pnpm": {

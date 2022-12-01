@@ -1,3 +1,9 @@
+export interface Review {
+	title: string;
+	comment: string;
+	rating: number;
+	created_at?: Date | string;
+}
 export interface Package {
 	slug: string;
 	version: string;
@@ -11,4 +17,5 @@ export interface Package {
 	desc: string;
 	dl_count: number;
 	installs: number;
+	reviews?: Review[];
 }

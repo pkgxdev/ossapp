@@ -12,7 +12,7 @@
  */
 import { getClient } from '@tauri-apps/api/http';
 import { Buffer } from 'buffer';
-import type { Package } from '../types';
+import type { Package, Review } from '../types';
 import * as mock from './mock';
 
 const username = 'user';
@@ -54,4 +54,11 @@ export async function getPackages(): Promise<Package[]> {
 export async function getFeaturedPackages(): Promise<Package[]> {
 	const packages = await mock.getFeaturedPackages();
 	return packages;
+}
+
+export async function getPackageReviews(full_name: string): Promise<Review[]> {
+	console.log(`getting reviews for ${full_name}`);
+	const reviews: Review[] = await mock.getPackageReviews(full_name);
+
+	return reviews;
 }

@@ -5,7 +5,10 @@
  * TODO:
  *  * make cors work with api.tea.xyz/v1
  */
-import type { Package } from '../types';
+import type { Package, Review } from '@tea/ui/types';
+import { loremIpsum } from 'lorem-ipsum';
+import _ from 'lodash';
+
 const packages: Package[] = [
 	{
 		slug: 'mesonbuild_com',
@@ -155,4 +158,42 @@ export async function getPackages(): Promise<Package[]> {
 
 export async function getFeaturedPackages(): Promise<Package[]> {
 	return packages.slice(0, 4);
+}
+
+export async function getPackageReviews(full_name: string): Promise<Review[]> {
+	console.log(`generating reviews for ${full_name}`);
+
+	const reviewCount = _.random(7, 21);
+	const reviews: Review[] = [];
+
+	for (let i = 0; i < reviewCount; i++) {
+		const title = loremIpsum({
+			count: _.random(2, 5),
+			format: 'plain',
+			paragraphLowerBound: 3,
+			paragraphUpperBound: 7,
+			random: Math.random,
+			sentenceLowerBound: 5,
+			sentenceUpperBound: 15,
+			units: 'words'
+		});
+		const comment = loremIpsum({
+			count: 2,
+			format: 'plain',
+			paragraphLowerBound: 3,
+			paragraphUpperBound: 7,
+			random: Math.random,
+			sentenceLowerBound: 5,
+			sentenceUpperBound: 15,
+			units: 'sentences'
+		});
+		const rating = _.random(0, 5);
+		reviews.push({
+			title,
+			comment,
+			rating
+		});
+	}
+
+	return reviews;
 }
