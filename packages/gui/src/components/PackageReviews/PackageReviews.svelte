@@ -3,4 +3,4 @@
 	import Placeholder from '$components/Placeholder/Placeholder.svelte';
 </script>
 
-<Placeholder label="PackageReviews" />
+<Placeholder label="PackageReviews list" />
