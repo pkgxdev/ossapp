@@ -12,3 +12,10 @@ export interface Package {
 	dl_count: number;
 	installs: number;
 }
+
+export interface Review {
+	title: string;
+	comment: string;
+	rating: number;
+	created_at?: Date | string;
+}
