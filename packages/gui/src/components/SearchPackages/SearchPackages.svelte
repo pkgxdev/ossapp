@@ -22,9 +22,8 @@
 
 	const searchLimit = 5;
 
-	const setPackages = (pkgs: GUIPackage[]) => {
-		console.log('pkgs sub', pkgs);
-		packages = pkgs.sort((a, b) => {
+	const setPackages = (pkgs: GUIPackage[], isSearch?: boolean) => {
+		packages = isSearch ? pkgs : pkgs.sort((a, b) => {
 			if (sortBy === 'popularity') {
 				const aPop = +a.dl_count + a.installs;
 				const bPop = +b.dl_count + b.installs;
@@ -59,14 +58,13 @@
 	const onSearch = (term: string) => {
 		if (term !== '' && term.length > 1) {
 			const res = packagesIndex.search(term);
-			const matchingPackages = [];
+			const matchingPackages: GUIPackage[] = [];
 			for (let i = 0; i < searchLimit; i++) {
 				if (res[i]) {
 					matchingPackages.push(res[i].item);
 				}
 			}
-			console.log(res, matchingPackages)
-			setPackages(matchingPackages);
+			setPackages(matchingPackages, true);
 		} else {
 			setPackages(allPackages);
 		}
