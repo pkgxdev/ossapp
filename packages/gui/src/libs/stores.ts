@@ -28,7 +28,7 @@ interface PackagesReview {
 }
 
 function initPackagesReviewStore() {
-	const { set, update, subscribe } = writable<PackagesReview>({});
+	const { update, subscribe } = writable<PackagesReview>({});
 
 	let packagesReviews: PackagesReview = {};
 

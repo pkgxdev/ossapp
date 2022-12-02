@@ -3,19 +3,19 @@
 	import PageHeader from '$components/PageHeader/PageHeader.svelte';
 	import { backLink } from '$libs/stores';
 	import PackageBanner from '$components/PackageBanner/PackageBanner.svelte';
-	import PackageReviews from '$components/PackageReviews/PackageReviews.svelte';
+	// import PackageReviews from '$components/PackageReviews/PackageReviews.svelte';
 	backLink.set('/packages');
 
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	import { packages, featuredPackages, packagesReviewStore } from '$libs/stores';
+	import { packages, featuredPackages } from '$libs/stores';
 
-	import type { Package, Review } from '@tea/ui/types';
+	import type { Package } from '@tea/ui/types';
 
 	let pkg: Package;
 
-	let reviews: Review[];
+	// let reviews: Review[];
 
 	const setPkg = (pkgs: Package[]) => {
 		const foundPackage = pkgs.find(({ slug }) => slug === data?.slug) as Package;

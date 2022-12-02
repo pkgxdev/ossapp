@@ -6,6 +6,7 @@
 	import type { Package } from '@tea/ui/types';
 	import PackageCard from '@tea/ui/PackageCard/PackageCard.svelte';
 	import SearchInput from '@tea/ui/SearchInput/SearchInput.svelte';
+	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import { onMount } from 'svelte';
 
 	let allPackages: Package[] = [];
@@ -74,8 +75,8 @@
 	};
 </script>
 
-<div class="bg-black border border-gray">
-	<section class="flex justify-between items-center">
+<div class="border border-gray bg-black">
+	<section class="flex items-center justify-between">
 		<div>
 			<SearchInput size="medium" {onSearch} />
 		</div>
@@ -86,8 +87,16 @@
 		</div>
 	</section>
 	<ul class="grid grid-cols-3">
-		{#each packages as pkg}
-			<PackageCard {pkg} link={`/packages/${pkg.slug}`} />
-		{/each}
+		{#if packages.length}
+			{#each packages as pkg}
+				<PackageCard {pkg} link={`/packages/${pkg.slug}`} />
+			{/each}
+		{:else}
+			{#each Array(12) as _}
+				<section class="h-50 border border-gray p-4">
+					<Preloader />
+				</section>
+			{/each}
+		{/if}
 	</ul>
 </div>

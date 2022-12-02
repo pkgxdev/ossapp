@@ -26,10 +26,10 @@
 </script>
 
 <section class="border border-gray p-4">
-	<header class=" text-primary text-lg">{review.title}</header>
-	<div class="flex mt-2 text-xs">
+	<header class=" text-lg text-primary">{review.title}</header>
+	<div class="mt-2 flex text-xs">
 		<i class={`${getStarType()} text-primary`} />
-		<span class="text-gray pl-2">{getStarLabel()}</span>
+		<span class="pl-2 text-gray">{getStarLabel()}</span>
 	</div>
 	<p class="mt-2 text-sm">{review.comment}</p>
 </section>

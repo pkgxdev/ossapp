@@ -3,6 +3,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { watchResize } from 'svelte-watch-resize';
 	import type { Package } from '@tea/ui/types';
+	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import FeaturedPackage from './FeaturedPackage.svelte';
 	import {
 		featuredPackages as featuredPackagesStore,
@@ -56,9 +57,9 @@
 	});
 </script>
 
-<section class="bg-black w-full h-96" use:watchResize={handleContainerResize}>
+<section class="h-96 w-full bg-black" use:watchResize={handleContainerResize}>
 	<!-- <Placeholder label="FeaturedPackages" /> -->
-	<header class="bg-accent h-12 flex justify-between px-2 items-center">
+	<header class="flex h-12 items-center justify-between bg-accent px-2">
 		<p>FEATURED PACKAGES</p>
 		<ul class="flex gap-2">
 			{#each featuredPackages as pkg, i}
@@ -67,22 +68,26 @@
 						pkgFocus = i;
 						resetLoop();
 					}}
-					class={`border-white border-2 w-4 h-4 rounded-lg bg-purple transition-colors ${
+					class={`bg-purple h-4 w-4 rounded-lg border-2 border-white transition-colors ${
 						i === pkgFocus ? 'bg-purple-900' : ''
 					}`}
 				/>
 			{/each}
 		</ul>
 	</header>
-	<figure class="overflow-hidden absolute bottom-0 top-12 left-0 right-0">
-		<section class="flex absolute top-0 h-full" style={styleFeaturedPackages}>
-			{#each featuredPackages as pkg}
-				<div class="h-full" style={`width:${width}px`}>
-					<a href={`/packages/${pkg.slug}`}>
-						<FeaturedPackage {pkg} />
-					</a>
-				</div>
-			{/each}
-		</section>
+	<figure class="absolute bottom-0 top-12 left-0 right-0 overflow-hidden">
+		{#if featuredPackages.length}
+			<section class="absolute top-0 flex h-full" style={styleFeaturedPackages}>
+				{#each featuredPackages as pkg}
+					<div class="h-full" style={`width:${width}px`}>
+						<a href={`/packages/${pkg.slug}`}>
+							<FeaturedPackage {pkg} {width} />
+						</a>
+					</div>
+				{/each}
+			</section>
+		{:else}
+			<Preloader />
+		{/if}
 	</figure>
 </section>

@@ -153,10 +153,12 @@ const packages: Package[] = [
 ];
 
 export async function getPackages(): Promise<Package[]> {
+	await delay(2000);
 	return packages;
 }
 
 export async function getFeaturedPackages(): Promise<Package[]> {
+	await delay(2000);
 	return packages.slice(0, 4);
 }
 
@@ -195,5 +197,10 @@ export async function getPackageReviews(full_name: string): Promise<Review[]> {
 		});
 	}
 
+	await delay(2000);
 	return reviews;
+}
+
+function delay(ms: number) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
 }

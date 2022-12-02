@@ -24,21 +24,21 @@
 	// ideally they should work like metro-ui to not have extreme height diff between columns
 </script>
 
-<header class="text-primary bg-black border border-gray p-4">REVIEWS ({reviews.length})</header>
-<section class="flex flex-wrap bg-black flex-row font-machina">
-	<div class="border-gray border-0 border-l-2 p-4 w-1/3">
+<header class="border border-gray bg-black p-4 text-primary">REVIEWS ({reviews.length})</header>
+<section class="flex flex-row flex-wrap bg-black font-machina">
+	<div class="w-1/3 border-0 border-l-2 border-gray p-4">
 		{#each col1 as review}
 			<ReviewCard {review} />
 			<div class="mt-4" />
 		{/each}
 	</div>
-	<div class="border-gray border-0 border-l-2 p-4 w-1/3">
+	<div class="w-1/3 border-0 border-l-2 border-gray p-4">
 		{#each col2 as review}
 			<ReviewCard {review} />
 			<div class="mt-4" />
 		{/each}
 	</div>
-	<div class="border-gray border-0 p-4 border-x-2 w-1/3">
+	<div class="w-1/3 border-0 border-x-2 border-gray p-4">
 		{#each col3 as review}
 			<ReviewCard {review} />
 			<div class="mt-4" />
