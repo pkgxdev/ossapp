@@ -23,18 +23,20 @@
 	const searchLimit = 5;
 
 	const setPackages = (pkgs: GUIPackage[], isSearch?: boolean) => {
-		packages = isSearch ? pkgs : pkgs.sort((a, b) => {
-			if (sortBy === 'popularity') {
-				const aPop = +a.dl_count + a.installs;
-				const bPop = +b.dl_count + b.installs;
-				return sortDirection === 'asc' ? aPop - bPop : bPop - aPop;
-			} else {
-				// most recent
-				const aDate = new Date(a.last_modified);
-				const bDate = new Date(b.last_modified);
-				return sortDirection === 'asc' ? +aDate - +bDate : +bDate - +aDate;
-			}
-		});
+		packages = isSearch
+			? pkgs
+			: pkgs.sort((a, b) => {
+					if (sortBy === 'popularity') {
+						const aPop = +a.dl_count + a.installs;
+						const bPop = +b.dl_count + b.installs;
+						return sortDirection === 'asc' ? aPop - bPop : bPop - aPop;
+					} else {
+						// most recent
+						const aDate = new Date(a.last_modified);
+						const bDate = new Date(b.last_modified);
+						return sortDirection === 'asc' ? +aDate - +bDate : +bDate - +aDate;
+					}
+			  });
 	};
 
 	packagesStore.subscribe((v) => {
