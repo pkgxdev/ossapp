@@ -92,17 +92,26 @@ async function installPackageCommand(full_name: string) {
 		const teaInstallCommand = new Command('tea-install', [`+${full_name}`, 'true']);
 		teaInstallCommand.on('error', reject);
 
-		const handleLineOutput = async (line: string) => {
+		const handleLineOutput = async (line: string | any) => {
 			const c = await child;
-			if (line.includes('installed:')) {
+			if (line?.code === 0 || line.includes('installed:')) {
 				c.kill();
 				resolve(c.pid);
+			} else if (line?.code === 1) {
+				reject();
 			}
 		};
 
 		teaInstallCommand.stdout.on('data', handleLineOutput);
 		teaInstallCommand.stderr.on('data', handleLineOutput);
-
+		teaInstallCommand.on('close', (line: string) => {
+			console.log('command closed!');
+			handleLineOutput(line || '');
+		});
+		teaInstallCommand.on('error', (line: string) => {
+			console.log('command error!', line);
+			handleLineOutput(line || '');
+		});
 		const child = teaInstallCommand.spawn();
 	});
 }

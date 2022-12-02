@@ -20,7 +20,7 @@
 	let sortBy = 'popularity';
 	let sortDirection: 'asc' | 'desc' = 'desc';
 
-	const searchLimit = 5;
+	const searchLimit = 10;
 
 	const setPackages = (pkgs: GUIPackage[], isSearch?: boolean) => {
 		packages = isSearch
@@ -42,7 +42,7 @@
 	packagesStore.subscribe((v) => {
 		allPackages = v;
 		setPackages(allPackages);
-		if (!packagesIndex) {
+		if (!packagesIndex && allPackages.length) {
 			// dont remove or this can get crazy
 			packagesIndex = new Fuse(allPackages, {
 				keys: ['name', 'full_name', 'desc']
