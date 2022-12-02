@@ -65,6 +65,7 @@
 					matchingPackages.push(res[i].item);
 				}
 			}
+			console.log(res, matchingPackages)
 			setPackages(matchingPackages);
 		} else {
 			setPackages(allPackages);
