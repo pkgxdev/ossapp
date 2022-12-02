@@ -6,6 +6,8 @@
  *  * make cors work with api.tea.xyz/v1
  */
 import type { Package, Review } from '@tea/ui/types';
+import type { GUIPackage } from '../types';
+import { PackageStates } from '../types';
 import { loremIpsum } from 'lorem-ipsum';
 import _ from 'lodash';
 
@@ -152,9 +154,14 @@ const packages: Package[] = [
 	}
 ];
 
-export async function getPackages(): Promise<Package[]> {
+export async function getPackages(): Promise<GUIPackage[]> {
 	await delay(2000);
-	return packages;
+	return packages.map((pkg) => {
+		return {
+			...pkg,
+			state: PackageStates.AVAILABLE
+		};
+	});
 }
 
 export async function getFeaturedPackages(): Promise<Package[]> {
@@ -199,6 +206,11 @@ export async function getPackageReviews(full_name: string): Promise<Review[]> {
 
 	await delay(2000);
 	return reviews;
+}
+
+export async function installPackage(full_name: string) {
+	console.log('installing: ', full_name);
+	await delay(10000);
 }
 
 function delay(ms: number) {

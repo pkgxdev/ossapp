@@ -3,15 +3,18 @@
 	import Fuse from 'fuse.js';
 	import { packages as packagesStore, initializePackages } from '$libs/stores';
 	import SortingButtons from './SortingButtons.svelte';
-	import type { Package } from '@tea/ui/types';
+	import type { GUIPackage } from '$libs/types';
+	import { PackageStates } from '$libs/types';
 	import PackageCard from '@tea/ui/PackageCard/PackageCard.svelte';
 	import SearchInput from '@tea/ui/SearchInput/SearchInput.svelte';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import { onMount } from 'svelte';
 
-	let allPackages: Package[] = [];
-	let packagesIndex: Fuse<Package>;
-	let packages: Package[] = [];
+	import { installPackage } from '@api';
+
+	let allPackages: GUIPackage[] = [];
+	let packagesIndex: Fuse<GUIPackage>;
+	let packages: GUIPackage[] = [];
 	let initialized = false;
 
 	let sortBy = 'popularity';
@@ -19,7 +22,7 @@
 
 	const searchLimit = 5;
 
-	const setPackages = (pkgs: Package[]) => {
+	const setPackages = (pkgs: GUIPackage[]) => {
 		console.log('pkgs sub', pkgs);
 		packages = pkgs.sort((a, b) => {
 			if (sortBy === 'popularity') {
@@ -54,7 +57,7 @@
 	});
 
 	const onSearch = (term: string) => {
-		if (term !== '' && term.length > 3) {
+		if (term !== '' && term.length > 1) {
 			const res = packagesIndex.search(term);
 			const matchingPackages = [];
 			for (let i = 0; i < searchLimit; i++) {
@@ -73,6 +76,15 @@
 		sortDirection = dir;
 		setPackages(packages);
 	};
+
+	const getCTALabel = (state: PackageStates): string => {
+		return {
+			[PackageStates.AVAILABLE]: 'INSTALL',
+			[PackageStates.INSTALLED]: 'INSTALLED',
+			[PackageStates.INSTALLING]: 'INSTALLING',
+			[PackageStates.UNINSTALLED]: 'RE-INSTALL'
+		}[state];
+	};
 </script>
 
 <div class="border border-gray bg-black">
@@ -87,9 +99,24 @@
 		</div>
 	</section>
 	<ul class="grid grid-cols-3">
-		{#if packages.length}
+		{#if packages.length > 0}
 			{#each packages as pkg}
-				<PackageCard {pkg} link={`/packages/${pkg.slug}`} />
+				<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
+					<PackageCard
+						{pkg}
+						link={`/packages/${pkg.slug}`}
+						ctaLabel={getCTALabel(pkg.state)}
+						onClickCTA={async () => {
+							try {
+								pkg.state = PackageStates.INSTALLING;
+								await installPackage(pkg.full_name);
+								pkg.state = PackageStates.INSTALLED;
+							} catch (error) {
+								console.error(error);
+							}
+						}}
+					/>
+				</div>
 			{/each}
 		{:else}
 			{#each Array(12) as _}

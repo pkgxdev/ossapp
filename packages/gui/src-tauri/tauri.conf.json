@@ -18,10 +18,26 @@
 				"scope": ["https://api.tea.xyz/v1/*", "https://github.com/*"]
 			},
 			"shell": {
-				"all": false,
-				"execute": false,
+				"all": true,
+				"execute": true,
 				"open": true,
-				"scope": [],
+				"scope": [
+					{
+						"name": "tea-install",
+						"cmd": "tea",
+						"args": [{ "validator": "\\S+" }, "true"]
+					},
+					{
+						"name": "node",
+						"cmd": "node",
+						"args": ["--version"]
+					},
+					{
+						"name": "list-packages",
+						"cmd": "ls",
+						"args": ["-R ~/.tea/tea.xyz/var/www | grep 'xz\\|gz'"]
+					}
+				],
 				"sidecar": false
 			},
 			"window": {
@@ -55,6 +71,13 @@
 				"startDragging": true,
 				"unmaximize": true,
 				"unminimize": true
+			},
+			"fs": {
+				"readDir": true,
+				"scope": [
+					"$HOME/.tea/*",
+					"$APPDATA/*"
+				]
 			}
 		},
 		"bundle": {

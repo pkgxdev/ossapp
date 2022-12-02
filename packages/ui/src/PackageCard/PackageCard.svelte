@@ -2,29 +2,37 @@
 	import '../app.css';
 	import type { Package } from '../types';
 	import ImgLoader from '../ImgLoader/ImgLoader.svelte';
+
 	export let pkg: Package;
 	export let link: string;
+	export let ctaLabel: string;
+
+	export let onClickCTA = () => {
+		console.log('do nothing');
+	};
 </script>
 
 <section class="package-card border border-gray p-4">
-	<figure>
-		<ImgLoader
-			class="pkg-image"
-			src={!pkg.thumb_image_url.includes('https://tea.xyz')
-				? 'https://tea.xyz/Images/package-thumb-nolabel4.jpg'
-				: pkg.thumb_image_url}
-			alt={pkg.name}
-		/>
-		<article class="card-thumb-label">
-			<i class="icon-tea-logo-iconasset-1">
-				<!-- TODO: replace with icon.svg -->
-			</i>
-			<h3>{pkg.name}</h3>
-			{#if pkg.maintainer}
-				<h4>&#x2022;&nbsp;{pkg.maintainer}</h4>
-			{/if}
-		</article>
-	</figure>
+	<a href={link}>
+		<figure>
+			<ImgLoader
+				class="pkg-image"
+				src={!pkg.thumb_image_url.includes('https://tea.xyz')
+					? 'https://tea.xyz/Images/package-thumb-nolabel4.jpg'
+					: pkg.thumb_image_url}
+				alt={pkg.name}
+			/>
+			<article class="card-thumb-label">
+				<i class="icon-tea-logo-iconasset-1">
+					<!-- TODO: replace with icon.svg -->
+				</i>
+				<h3>{pkg.name}</h3>
+				{#if pkg.maintainer}
+					<h4>&#x2022;&nbsp;{pkg.maintainer}</h4>
+				{/if}
+			</article>
+		</figure>
+	</a>
 	<footer class="mt-4 flex items-center justify-between">
 		<div>
 			<p>
@@ -35,10 +43,7 @@
         <span class="package-install-no">>{{- .installs -}}&nbsp;installs</span> -->
 			</p>
 		</div>
-		<!-- TODO: move this button into its own reusable component -->
-		<a href={link}>
-			<button class="detail-btn"><i class="icon-enter-arrow" />details</button>
-		</a>
+		<button class="p-2 font-machina" on:click={onClickCTA}>{ctaLabel}</button>
 	</footer>
 </section>
 
@@ -91,40 +96,18 @@
 		padding: 0px;
 	}
 
-	.detail-btn {
-		position: relative;
-		float: right;
-		right: 0;
-		display: inline-block;
-		font-family: 'pp-neue-machina', sans-serif;
+	button {
 		background-color: #1a1a1a;
 		border: 0.5px solid #ffffff;
 		color: #fff;
-		padding-top: 0.279vw;
 		text-decoration: none;
 		text-transform: uppercase;
-		width: 120px;
-		height: 2.232vw;
-		min-height: 34px;
+		min-width: 120px;
 		transition: 0.1s linear;
 	}
 
-	.detail-btn:hover {
+	button:hover {
 		background-color: #8000ff;
 		box-shadow: inset 0vw 0vw 0vw 0.223vw #1a1a1a !important;
-	}
-
-	/* Icon Styling */
-
-	.detail-btn .icon-enter-arrow {
-		display: inline-block;
-		position: relative;
-		margin-right: 0.558vw;
-		transition: 0.2s ease-in-out;
-	}
-
-	.detail-btn:hover .icon-enter-arrow {
-		display: inline-block;
-		transform: rotate(-45deg) !important;
 	}
 </style>

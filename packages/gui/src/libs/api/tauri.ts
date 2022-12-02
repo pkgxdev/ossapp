@@ -11,9 +11,14 @@
  *  - connect to a local platform api and returns a data
  */
 import { getClient } from '@tauri-apps/api/http';
+// import { invoke } from '@tauri-apps/api';
+import { Command } from '@tauri-apps/api/shell';
+import { readDir, BaseDirectory } from '@tauri-apps/api/fs';
 import { Buffer } from 'buffer';
-import type { Package, Review } from '../types';
+import type { Package, Review } from '@tea/ui/types';
+import type { GUIPackage } from '../types';
 import * as mock from './mock';
+import { PackageStates } from '../types';
 
 const username = 'user';
 const password = 'password';
@@ -46,9 +51,20 @@ const join = function (...paths: string[]) {
 		.join('/');
 };
 
-export async function getPackages(): Promise<Package[]> {
-	const packages = await get<Package[]>('packages');
-	return packages;
+export async function getPackages(): Promise<GUIPackage[]> {
+	const [packages, installedPackages] = await Promise.all([
+		get<Package[]>('packages'),
+		getInstalledPackages()
+	]);
+
+	return packages.map((pkg) => {
+		const found = installedPackages.find((p) => p.full_name === pkg.full_name);
+		return {
+			...pkg,
+			state: found ? PackageStates.INSTALLED : PackageStates.AVAILABLE,
+			installed_version: found ? found.version : ''
+		};
+	});
 }
 
 export async function getFeaturedPackages(): Promise<Package[]> {
@@ -61,4 +77,51 @@ export async function getPackageReviews(full_name: string): Promise<Review[]> {
 	const reviews: Review[] = await mock.getPackageReviews(full_name);
 
 	return reviews;
+}
+
+export async function installPackage(full_name: string) {
+	try {
+		await installPackageCommand(full_name);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+async function installPackageCommand(full_name: string) {
+	return new Promise((resolve, reject) => {
+		const teaInstallCommand = new Command('tea-install', [`+${full_name}`, 'true']);
+		teaInstallCommand.on('error', reject);
+
+		const handleLineOutput = async (line: string) => {
+			const c = await child;
+			if (line.includes('installed:')) {
+				c.kill();
+				resolve(c.pid);
+			}
+		};
+
+		teaInstallCommand.stdout.on('data', handleLineOutput);
+		teaInstallCommand.stderr.on('data', handleLineOutput);
+
+		const child = teaInstallCommand.spawn();
+	});
+}
+
+async function getInstalledPackages() {
+	const entries = await readDir('.tea/tea.xyz/var/www', {
+		dir: BaseDirectory.Home,
+		recursive: false
+	});
+	const packages = entries
+		.filter((o) => o.path.match('^(.*).(g|x)z$'))
+		.map((o) => {
+			const [pkg_version] = (o?.name || '').split('+');
+			const version = pkg_version.split('-').pop();
+			const full_name = pkg_version.replace(`-${version}`, '');
+			return {
+				full_name,
+				version
+			};
+		});
+	return packages;
 }
