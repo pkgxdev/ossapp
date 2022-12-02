@@ -4,7 +4,7 @@
 </script>
 
 <div class="card social-box" style="width: 100%; float:right;">
-	<header class="text-primary border-b border-gray pt-7 pb-7 ps-5">PRE-FLIGHT</header>
+	<header class="text-primary border-b border-gray pt-7 pb-7 pl-5">PRE-FLIGHT</header>
 	<div class="listbox-item border-b border-gray p-5">
 		<p>Install Tea</p>
 	</div>
