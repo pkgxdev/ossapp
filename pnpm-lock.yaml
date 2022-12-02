@@ -25,8 +25,9 @@ importers:
       lodash: ^4.17.21
       lorem-ipsum: ^2.0.8
       postcss: ^8.4.19
-      prettier: ^2.6.2
+      prettier: ^2.7.1
       prettier-plugin-svelte: ^2.7.0
+      prettier-plugin-tailwindcss: ^0.2.0
       svelte: ^3.49.0
       svelte-check: ^2.8.0
       svelte-preprocess: ^4.10.7
@@ -59,6 +60,7 @@ importers:
       postcss: 8.4.19
       prettier: 2.7.1
       prettier-plugin-svelte: 2.8.0_nryolsexf6k3znhuh4uzpugsem
+      prettier-plugin-tailwindcss: 0.2.0_prettier@2.7.1
       svelte: 3.53.1
       svelte-check: 2.9.2_mocwzvuqzrhb37u7s4hjvvzl3i
       svelte-preprocess: 4.10.7_mvbmsfnr3ibpjsbee6imjcb33m
@@ -89,8 +91,9 @@ importers:
       eslint-plugin-storybook: ^0.6.7
       eslint-plugin-svelte3: ^4.0.0
       postcss: ^8.4.19
-      prettier: ^2.6.2
+      prettier: ^2.7.1
       prettier-plugin-svelte: ^2.7.0
+      prettier-plugin-tailwindcss: ^0.2.0
       storybook: ^7.0.0-alpha.51
       svelte: ^3.44.0
       svelte-check: ^2.7.1
@@ -122,6 +125,7 @@ importers:
       postcss: 8.4.19
       prettier: 2.7.1
       prettier-plugin-svelte: 2.8.0_nryolsexf6k3znhuh4uzpugsem
+      prettier-plugin-tailwindcss: 0.2.0_prettier@2.7.1
       storybook: 7.0.0-alpha.51_typescript@4.9.3
       svelte: 3.53.1
       svelte-check: 2.9.2_mocwzvuqzrhb37u7s4hjvvzl3i
@@ -1943,7 +1947,7 @@ packages:
       '@storybook/components': 7.0.0-alpha.51
       '@storybook/csf-plugin': 7.0.0-alpha.51
       '@storybook/csf-tools': 7.0.0-alpha.51
-      '@storybook/mdx2-csf': 0.1.0-next.6
+      '@storybook/mdx2-csf': 0.1.0-next.7
       '@storybook/node-logger': 7.0.0-alpha.51
       '@storybook/postinstall': 7.0.0-alpha.51
       '@storybook/preview-web': 7.0.0-alpha.51
@@ -2357,7 +2361,7 @@ packages:
       '@storybook/client-api': 7.0.0-alpha.51
       '@storybook/client-logger': 7.0.0-alpha.51
       '@storybook/core-common': 7.0.0-alpha.51_typescript@4.9.3
-      '@storybook/mdx2-csf': 0.1.0-next.6
+      '@storybook/mdx2-csf': 0.1.0-next.7
       '@storybook/node-logger': 7.0.0-alpha.51
       '@storybook/preview-web': 7.0.0-alpha.51
       '@storybook/source-loader': 7.0.0-alpha.51
@@ -2886,8 +2890,8 @@ packages:
     resolution: {integrity: sha512-SgjcpweoAWnKvbZ1uINCGcSU1BtNJP2xR0x9obNw+qp6pi0OsOo1iA1DTgB0gJM0vc3BgrKgCMlJ76v/wlRB+Q==}
     dev: true
 
-  /@storybook/mdx2-csf/0.1.0-next.6:
-    resolution: {integrity: sha512-FDBPTDHG9BcI27Zp5kwkqjsv2A3s8aUahtKeHOsmTicOBS8uWqUZ3jmL7vg6N7SpiUUBAft9/vTQfttNLeHO7w==}
+  /@storybook/mdx2-csf/0.1.0-next.7:
+    resolution: {integrity: sha512-ahwV2A4aS/D79WWum8fmrFhhbC28/f4XlEKtNG1s0EkCVwCSU17bthEBRY5/Y3IBR5jfeN/oApizNQMLh7mqAA==}
     dependencies:
       loader-utils: 2.0.4
     dev: true
@@ -8494,6 +8498,15 @@ packages:
     dependencies:
       prettier: 2.7.1
       svelte: 3.53.1
+    dev: true
+
+  /prettier-plugin-tailwindcss/0.2.0_prettier@2.7.1:
+    resolution: {integrity: sha512-Ruqig/mdWCSpqdq9WK44nrmqM4BFWTzBPhPGwC5NK3coV9eZntEQPB84MGZbjAg0XQU02jVRHXNRPREBzxvM+A==}
+    engines: {node: '>=12.17.0'}
+    peerDependencies:
+      prettier: '>=2.2.0'
+    dependencies:
+      prettier: 2.7.1
     dev: true
 
   /prettier/2.7.1:

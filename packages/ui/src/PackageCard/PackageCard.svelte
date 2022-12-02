@@ -1,13 +1,15 @@
 <script type="ts">
 	import '../app.css';
 	import type { Package } from '../types';
+	import ImgLoader from '../ImgLoader/ImgLoader.svelte';
 	export let pkg: Package;
 	export let link: string;
 </script>
 
-<section class="p-4 border border-gray">
+<section class="package-card border border-gray p-4">
 	<figure>
-		<img
+		<ImgLoader
+			class="pkg-image"
 			src={!pkg.thumb_image_url.includes('https://tea.xyz')
 				? 'https://tea.xyz/Images/package-thumb-nolabel4.jpg'
 				: pkg.thumb_image_url}
@@ -23,7 +25,7 @@
 			{/if}
 		</article>
 	</figure>
-	<footer class="flex mt-4 justify-between items-center">
+	<footer class="mt-4 flex items-center justify-between">
 		<div>
 			<p>
 				<span class="text-xs">V&NonBreakingSpace;{pkg.version}</span>
@@ -49,9 +51,10 @@
 
 	figure {
 		position: relative;
+		min-height: 150px;
 	}
 
-	img {
+	.package-card :global(.pkg-image) {
 		box-shadow: 0px 0px 12px #0c0c0c !important;
 		width: 100%;
 		height: 100%;

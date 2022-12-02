@@ -84,15 +84,15 @@
 	{#each routes as route}
 		<li class={route.active ? 'nav_button active' : 'nav_button'}>
 			<a href={route.path}>
-				<Button class="h-16 text-left pl-4 text-white" active={route.active}>{route.label}</Button>
+				<Button class="h-16 pl-4 text-left text-white" active={route.active}>{route.label}</Button>
 			</a>
 		</li>
 	{/each}
 	<li class="nav_button">
-		<Button class="h-16 text-left pl-4 text-white" onClick={openGithub}>VIEW ON GITHUB</Button>
+		<Button class="h-16 pl-4 text-left text-white" onClick={openGithub}>VIEW ON GITHUB</Button>
 	</li>
 
-	<footer class="border border-x-0 border-gray w-full">
+	<footer class="w-full border border-x-0 border-gray">
 		<a href="/profile">
 			<section class="flex">
 				<img width="40" height="40" src="/images/bored-ape.png" alt="profile" />

@@ -14,7 +14,7 @@
 	};
 </script>
 
-<section class={`flex py-2 items-center ${size}`}>
+<section class={`flex items-center py-2 ${size}`}>
 	<div class="icon pl-4">
 		<i class="icon-search-icon" />
 	</div>
