@@ -22,11 +22,12 @@
 		if (!pkg && foundPackage) {
 			pkg = foundPackage;
 		}
-		if (!reviews && pkg) {
-			packagesReviewStore.subscribe(pkg.full_name, (updatedReviews) => {
-				reviews = updatedReviews;
-			});
-		}
+		// TODO: uncomment when api is ready
+		// if (!reviews && pkg) {
+		// 	packagesReviewStore.subscribe(pkg.full_name, (updatedReviews) => {
+		// 		reviews = updatedReviews;
+		// 	});
+		// }
 	};
 
 	packages.subscribe(setPkg);
@@ -38,7 +39,10 @@
 	<section>
 		<PackageBanner {pkg} />
 	</section>
+	<!-- 
+	TODO: uncomment when api is ready	
 	<section class="mt-8">
 		<PackageReviews reviews={reviews || []} />
 	</section>
+	-->
 </div>
