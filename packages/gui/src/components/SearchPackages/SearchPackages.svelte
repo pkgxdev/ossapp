@@ -59,13 +59,9 @@
 
 	const onSearch = (term: string) => {
 		if (term !== '' && term.length > 1) {
-			const res = packagesIndex.search(term);
-			const matchingPackages: GUIPackage[] = [];
-			for (let i = 0; i < searchLimit; i++) {
-				if (res[i]) {
-					matchingPackages.push(res[i].item);
-				}
-			}
+			const res = packagesIndex.search(term, { limit: searchLimit });
+			const matchingPackages: GUIPackage[] = res.map((v) => v.item);
+
 			setPackages(matchingPackages, true);
 		} else {
 			setPackages(allPackages);
