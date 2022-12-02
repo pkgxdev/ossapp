@@ -4,12 +4,14 @@
 </script>
 
 <div class="card social-box" style="width: 100%; float:right;">
-	<header class="text-primary border-b border-gray p-5">PRE-FLIGHT</header>
+	<header class="text-primary border-b border-gray pt-7 pb-7 ps-5">PRE-FLIGHT</header>
 	<div class="listbox-item border-b border-gray p-5">
 		<p>Install Tea</p>
 	</div>
 	<div class="listbox-item border-b border-gray p-5">
-		<p>Authenticate</p>
+		<div>
+			<p>Authenticate</p>
+		</div>
 	</div>
 	<div class="listbox-item p-5">
 		<p>Give tea a star</p>
@@ -17,14 +19,12 @@
 </div>
 
 <style>
+	.card {
+		border: 2px solid #949494;
+		background-color: #1a1a1a;
+	}
 
-.card{
-	border: 2px solid #949494;
-	background-color: #1a1a1a;
-}
-
-.listbox-item{
-	height: 75px;
-}
-
+	.listbox-item {
+		height: 75px;
+	}
 </style>
