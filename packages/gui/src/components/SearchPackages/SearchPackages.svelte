@@ -3,42 +3,46 @@
 	import Fuse from 'fuse.js';
 	import { packages as packagesStore, initializePackages } from '$libs/stores';
 	import SortingButtons from './SortingButtons.svelte';
-	import type { Package } from '@tea/ui/types';
+	import type { GUIPackage } from '$libs/types';
+	import { PackageStates } from '$libs/types';
 	import PackageCard from '@tea/ui/PackageCard/PackageCard.svelte';
 	import SearchInput from '@tea/ui/SearchInput/SearchInput.svelte';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import { onMount } from 'svelte';
 
-	let allPackages: Package[] = [];
-	let packagesIndex: Fuse<Package>;
-	let packages: Package[] = [];
+	import { installPackage } from '@api';
+
+	let allPackages: GUIPackage[] = [];
+	let packagesIndex: Fuse<GUIPackage>;
+	let packages: GUIPackage[] = [];
 	let initialized = false;
 
 	let sortBy = 'popularity';
 	let sortDirection: 'asc' | 'desc' = 'desc';
 
-	const searchLimit = 5;
+	const searchLimit = 10;
 
-	const setPackages = (pkgs: Package[]) => {
-		console.log('pkgs sub', pkgs);
-		packages = pkgs.sort((a, b) => {
-			if (sortBy === 'popularity') {
-				const aPop = +a.dl_count + a.installs;
-				const bPop = +b.dl_count + b.installs;
-				return sortDirection === 'asc' ? aPop - bPop : bPop - aPop;
-			} else {
-				// most recent
-				const aDate = new Date(a.last_modified);
-				const bDate = new Date(b.last_modified);
-				return sortDirection === 'asc' ? +aDate - +bDate : +bDate - +aDate;
-			}
-		});
+	const setPackages = (pkgs: GUIPackage[], isSearch?: boolean) => {
+		packages = isSearch
+			? pkgs
+			: pkgs.sort((a, b) => {
+					if (sortBy === 'popularity') {
+						const aPop = +a.dl_count + a.installs;
+						const bPop = +b.dl_count + b.installs;
+						return sortDirection === 'asc' ? aPop - bPop : bPop - aPop;
+					} else {
+						// most recent
+						const aDate = new Date(a.last_modified);
+						const bDate = new Date(b.last_modified);
+						return sortDirection === 'asc' ? +aDate - +bDate : +bDate - +aDate;
+					}
+			  });
 	};
 
 	packagesStore.subscribe((v) => {
 		allPackages = v;
 		setPackages(allPackages);
-		if (!packagesIndex) {
+		if (!packagesIndex && allPackages.length) {
 			// dont remove or this can get crazy
 			packagesIndex = new Fuse(allPackages, {
 				keys: ['name', 'full_name', 'desc']
@@ -54,15 +58,11 @@
 	});
 
 	const onSearch = (term: string) => {
-		if (term !== '' && term.length > 3) {
-			const res = packagesIndex.search(term);
-			const matchingPackages = [];
-			for (let i = 0; i < searchLimit; i++) {
-				if (res[i]) {
-					matchingPackages.push(res[i].item);
-				}
-			}
-			setPackages(matchingPackages);
+		if (term !== '' && term.length > 1) {
+			const res = packagesIndex.search(term, { limit: searchLimit });
+			const matchingPackages: GUIPackage[] = res.map((v) => v.item);
+
+			setPackages(matchingPackages, true);
 		} else {
 			setPackages(allPackages);
 		}
@@ -72,6 +72,15 @@
 		sortBy = opt;
 		sortDirection = dir;
 		setPackages(packages);
+	};
+
+	const getCTALabel = (state: PackageStates): string => {
+		return {
+			[PackageStates.AVAILABLE]: 'INSTALL',
+			[PackageStates.INSTALLED]: 'INSTALLED',
+			[PackageStates.INSTALLING]: 'INSTALLING',
+			[PackageStates.UNINSTALLED]: 'RE-INSTALL'
+		}[state];
 	};
 </script>
 
@@ -87,9 +96,24 @@
 		</div>
 	</section>
 	<ul class="grid grid-cols-3">
-		{#if packages.length}
+		{#if packages.length > 0}
 			{#each packages as pkg}
-				<PackageCard {pkg} link={`/packages/${pkg.slug}`} />
+				<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
+					<PackageCard
+						{pkg}
+						link={`/packages/${pkg.slug}`}
+						ctaLabel={getCTALabel(pkg.state)}
+						onClickCTA={async () => {
+							try {
+								pkg.state = PackageStates.INSTALLING;
+								await installPackage(pkg.full_name);
+								pkg.state = PackageStates.INSTALLED;
+							} catch (error) {
+								console.error(error);
+							}
+						}}
+					/>
+				</div>
 			{/each}
 		{:else}
 			{#each Array(12) as _}
