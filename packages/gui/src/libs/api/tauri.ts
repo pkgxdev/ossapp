@@ -92,12 +92,15 @@ async function installPackageCommand(full_name: string) {
 		const teaInstallCommand = new Command('tea-install', [`+${full_name}`, 'true']);
 		teaInstallCommand.on('error', reject);
 
-		const handleLineOutput = async (line: string | any) => {
+		const handleLineOutput = async (line: string | { code: number }) => {
 			const c = await child;
-			if (line?.code === 0 || line.includes('installed:')) {
+			if (
+				(typeof line === 'string' && line.includes('installed:')) ||
+				(typeof line !== 'string' && line?.code === 0)
+			) {
 				c.kill();
 				resolve(c.pid);
-			} else if (line?.code === 1) {
+			} else if (typeof line !== 'string' && line?.code === 1) {
 				reject();
 			}
 		};
