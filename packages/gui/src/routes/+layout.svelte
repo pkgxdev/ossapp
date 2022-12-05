@@ -12,13 +12,13 @@
 </script>
 
 <div id="main-layout">
-	<nav class="">
+	<nav class="border border-t-0 border-l-0 border-b-0 border-gray">
 		<NavBar />
 	</nav>
 	<section class="px-16 pt-24">
 		{#if backLink}
-			<header>
-				<a href={backLink}>back</a>
+			<header class="px-16 py-2 text-3xl text-gray hover:text-primary">
+				<a href={backLink}>&#8592</a>
 			</header>
 		{/if}
 		<figure />

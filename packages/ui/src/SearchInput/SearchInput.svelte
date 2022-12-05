@@ -1,6 +1,8 @@
 <script type="ts">
 	import '../app.css';
 
+	let clazz = '';
+	export { clazz as class };
 	export let size: 'small' | 'medium' | 'large' = 'small';
 	export let onSearch: (text: string) => void;
 
@@ -14,7 +16,7 @@
 	};
 </script>
 
-<section class={`flex items-center py-2 ${size}`}>
+<section class={`flex items-center py-2 ${size} ${clazz}`}>
 	<div class="icon pl-4">
 		<i class="icon-search-icon" />
 	</div>

@@ -79,7 +79,7 @@
 		</a>
 	</nav>
 
-	<SearchInput size="small" {onSearch} />
+	<SearchInput class="border border-gray py-4" size="small" {onSearch} />
 
 	{#each routes as route}
 		<li class={route.active ? 'nav_button active' : 'nav_button'}>
