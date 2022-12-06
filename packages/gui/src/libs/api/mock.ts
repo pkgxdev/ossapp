@@ -241,3 +241,13 @@ export async function getFeaturedCourses(): Promise<Course[]> {
 
 	return mockCourses;
 }
+
+export async function getTopPackages(): Promise<GUIPackage[]> {
+	await delay(500);
+	return packages.slice(0, 9).map((pkg) => {
+		return {
+			...pkg,
+			state: PackageStates.AVAILABLE
+		};
+	});
+}

@@ -15,7 +15,7 @@
 	<nav class="border border-t-0 border-l-0 border-b-0 border-gray">
 		<NavBar />
 	</nav>
-	<section class="px-16 pt-24">
+	<section class="px-16 pt-24 pb-24">
 		{#if backLink}
 			<header class="px-16 py-2 text-3xl text-gray hover:text-primary">
 				<a href={backLink}>&#8592</a>
@@ -46,10 +46,10 @@
 		overflow-y: scroll;
 	}
 	figure {
-		position: absolute;
+		position: fixed;
 		z-index: 0;
 		top: 220px;
-		left: 0px;
+		left: 240px;
 		right: 0px;
 		bottom: 0px;
 		background-image: url('/images/footer-grid-element.svg');

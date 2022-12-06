@@ -142,3 +142,8 @@ export async function getFeaturedCourses(): Promise<Course[]> {
 	const courses = await mock.getFeaturedCourses();
 	return courses;
 }
+
+export async function getTopPackages(): Promise<GUIPackage[]> {
+	const packages = await mock.getTopPackages();
+	return packages;
+}
