@@ -20,10 +20,10 @@
 	};
 </script>
 
-<section class="sorting-container font-machina bg-black text-white">
+<section class="sorting-container bg-black font-machina text-white">
 	<div class="dropdown">
 		<div class="dropdown-title">SORT ORDER</div>
-		<ul class="dropdown-content flex column">
+		<ul class="dropdown-content column flex">
 			{#each sortOptions as option}
 				<li class="flex items-center">
 					<button

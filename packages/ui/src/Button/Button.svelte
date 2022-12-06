@@ -10,7 +10,7 @@
 
 <button
 	type="button font-sans"
-	class={`p-2 font-machina text-gray w-full ${clazz} ${active ? 'active' : ''}`}
+	class={`w-full p-2 font-machina text-gray ${clazz} ${active ? 'active' : ''}`}
 	on:click={() => onClick && onClick()}
 >
 	<slot />

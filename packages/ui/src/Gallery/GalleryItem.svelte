@@ -1,29 +1,35 @@
 <script lang="ts">
 	import '$appcss';
-	import type { Package } from '@tea/ui/types';
-	export let pkg: Package;
+	import ImgLoader from '../ImgLoader/ImgLoader.svelte';
+
+	export let width = 0;
+	export let imageUrl = '';
+	export let title = '';
+	export let subTitle = '';
 </script>
 
-<figure class="w-full h-full relative">
-	<img
-		src={!pkg.thumb_image_url.includes('https://tea.xyz')
+<figure class="gallery-item relative h-full w-full" style={`width:${width}px`}>
+	<ImgLoader
+		class="featured-img"
+		src={!imageUrl.includes('https://tea.xyz')
 			? 'https://tea.xyz/Images/package-thumb-nolabel4.jpg'
-			: pkg.thumb_image_url}
-		alt={pkg.name}
+			: imageUrl}
+		alt={title}
 	/>
+
 	<article class="card-thumb-label">
 		<i class="icon-tea-logo-iconasset-1">
 			<!-- TODO: replace with icon.svg -->
 		</i>
-		<h3 class="text-3xl">{pkg.name}</h3>
-		{#if pkg.maintainer}
-			<h4 class="text-lg mt-2">&#x2022;&nbsp;{pkg.maintainer}</h4>
+		<h3 class="text-3xl">{title}</h3>
+		{#if subTitle}
+			<h4 class="mt-2 text-lg">&#x2022;&nbsp;{subTitle}</h4>
 		{/if}
 	</article>
 </figure>
 
 <style>
-	img {
+	.gallery-item :global(.featured-img) {
 		box-shadow: 0px 0px 12px #0c0c0c !important;
 		width: 100%;
 		height: 100%;

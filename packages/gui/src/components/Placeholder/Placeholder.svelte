@@ -2,7 +2,7 @@
 	export let label = '';
 </script>
 
-<section class="p-8 bg-gray">
+<section class="bg-gray p-8">
 	<header>{label}</header>
 	<slot />
 </section>

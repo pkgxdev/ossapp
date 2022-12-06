@@ -7,8 +7,8 @@
 	};
 </script>
 
-<header class="text-primary bg-black border border-gray p-4">GETTING STARTED WITH TEA</header>
-<section class="grid bg-black grid-cols-3">
+<header class="border border-gray bg-black p-4 text-primary">GETTING STARTED WITH TEA</header>
+<section class="grid grid-cols-3 bg-black">
 	<div class="border border-gray p-4">
 		<ArticleCard
 			content={{

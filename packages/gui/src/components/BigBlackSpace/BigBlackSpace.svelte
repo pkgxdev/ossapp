@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '$appcss';
-	import Placeholder from '$components/Placeholder/Placeholder.svelte';
 </script>
 
-<Placeholder label="BigBlackSpace" />
+<section class="h-56 border border-gray bg-black" />

@@ -17,26 +17,26 @@
 	};
 </script>
 
-<section class="border-gray border bg-black mt-4">
+<section class="mt-4 border border-gray bg-black">
 	<header class="flex p-2">
-		<figure class="w-1/3 grow-1">
+		<figure class="grow-1 w-1/3">
 			<img width={260} src={pkg.thumb_image_url} alt={pkg.full_name} />
 		</figure>
 		<article class="w-2/3 p-4">
-			<h3 class="text-primary text-5xl">{pkg.full_name}</h3>
+			<h3 class="text-5xl text-primary">{pkg.full_name}</h3>
 			{#if pkg.maintainer}
 				<h3>* {pkg.maintainer}</h3>
 			{/if}
 			<div class="mt-4">
 				<StarRating maxRating={5} rating={packageRating} />
 			</div>
-			<p class="font-sono mt-4 text-sm">{pkg.desc}</p>
+			<p class="mt-4 font-sono text-sm">{pkg.desc}</p>
 		</article>
 	</header>
-	<footer class="flex text-white border-gray border-t h-20">
+	<footer class="flex h-20 border-t border-gray text-white">
 		<input class="flex-grow bg-black pl-4" disabled value={copyValue} />
-		<Button class="text-sm border-0 border-l-2 w-16" onClick={onCopy}>{copyButtonText}</Button>
-		<Button class="text-sm border-0 border-l-2 w-56" onClick={() => console.log('cli')}
+		<Button class="w-16 border-0 border-l-2 text-sm" onClick={onCopy}>{copyButtonText}</Button>
+		<Button class="w-56 border-0 border-l-2 text-sm" onClick={() => console.log('cli')}
 			>OPEN IN TERMINAL</Button
 		>
 	</footer>

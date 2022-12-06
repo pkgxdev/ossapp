@@ -1,13 +1,13 @@
 import { writable } from 'svelte/store';
 import type { Package, Review } from '@tea/ui/types';
-
+import type { GUIPackage } from '$libs/types';
 // TODO: figure out a better structure for managing states maybe turn them into models?
 
 import { getPackages, getFeaturedPackages, getPackageReviews } from '@api';
 
 export const backLink = writable<string>('/');
 
-export const packages = writable<Package[]>([]);
+export const packages = writable<GUIPackage[]>([]);
 
 export const featuredPackages = writable<Package[]>([]);
 
@@ -28,7 +28,7 @@ interface PackagesReview {
 }
 
 function initPackagesReviewStore() {
-	const { set, update, subscribe } = writable<PackagesReview>({});
+	const { update, subscribe } = writable<PackagesReview>({});
 
 	let packagesReviews: PackagesReview = {};
 
