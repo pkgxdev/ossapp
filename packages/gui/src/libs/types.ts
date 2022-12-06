@@ -16,3 +16,10 @@ export type GUIPackage = Package & {
 	state: PackageStates;
 	installed_version?: string;
 };
+
+export type Course = {
+	title: string;
+	sub_title: string;
+	banner_image_url: string;
+	link: string;
+};
