@@ -1,12 +1,17 @@
 <script lang="ts">
 	import '$appcss';
-	import Placeholder from '$components/Placeholder/Placeholder.svelte';
+	import { open } from '@tauri-apps/api/shell';
+	const openGithub = () => {
+		open('https://github.com/teaxyz');
+	};
 </script>
 
 <div class="card social-box" style="width: 100%; float:right;">
-	<header class="text-primary border-b border-gray pt-7 pb-7 pl-5">PRE-FLIGHT</header>
+	<header class="border-b border-gray pt-7 pb-7 pl-5 text-primary">PRE-FLIGHT</header>
 	<div class="listbox-item border-b border-gray p-6">
-		<p>Install Tea</p>
+		<a href="/cli">
+			<p>Install Tea</p>
+		</a>
 	</div>
 	<div class="listbox-item border-b border-gray p-6">
 		<div>
@@ -14,7 +19,7 @@
 		</div>
 	</div>
 	<div class="listbox-item p-6">
-		<p>Give tea a star</p>
+		<button on:click={openGithub}>Give tea a star</button>
 	</div>
 </div>
 
