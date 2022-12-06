@@ -6,7 +6,7 @@
  *  * make cors work with api.tea.xyz/v1
  */
 import type { Package, Review } from '@tea/ui/types';
-import type { GUIPackage } from '../types';
+import type { GUIPackage, Course } from '../types';
 import { PackageStates } from '../types';
 import { loremIpsum } from 'lorem-ipsum';
 import _ from 'lodash';
@@ -215,4 +215,29 @@ export async function installPackage(full_name: string) {
 
 function delay(ms: number) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export async function getFeaturedCourses(): Promise<Course[]> {
+	const mockCourses: Course[] = [
+		{
+			title: 'Developing With Tea',
+			sub_title: 'by Mxcl',
+			link: '#',
+			banner_image_url: 'https://tea.xyz/Images/packages/mesonbuild_com.jpg'
+		},
+		{
+			title: 'Brewing Tea',
+			sub_title: 'by Mxcl',
+			link: '#',
+			banner_image_url: 'https://tea.xyz/Images/packages/tea_xyz_gx_cc.jpg'
+		},
+		{
+			title: 'Harvesting Tea',
+			sub_title: 'by Mxcl',
+			link: '#',
+			banner_image_url: 'https://tea.xyz/Images/packages/ipfs_tech.jpg'
+		}
+	];
+
+	return mockCourses;
 }

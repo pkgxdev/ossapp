@@ -16,7 +16,7 @@ import { Command } from '@tauri-apps/api/shell';
 import { readDir, BaseDirectory } from '@tauri-apps/api/fs';
 import { Buffer } from 'buffer';
 import type { Package, Review } from '@tea/ui/types';
-import type { GUIPackage } from '../types';
+import type { GUIPackage, Course } from '../types';
 import * as mock from './mock';
 import { PackageStates } from '../types';
 
@@ -136,4 +136,9 @@ async function getInstalledPackages() {
 			};
 		});
 	return packages;
+}
+
+export async function getFeaturedCourses(): Promise<Course[]> {
+	const courses = await mock.getFeaturedCourses();
+	return courses;
 }
