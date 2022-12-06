@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '$appcss';
+	import '../app.css';
 	import ImgLoader from '../ImgLoader/ImgLoader.svelte';
 
 	export let width = 0;

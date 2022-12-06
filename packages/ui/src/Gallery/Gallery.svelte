@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '$appcss';
+	import '../app.css';
 	import { onDestroy, onMount } from 'svelte';
 	import { watchResize } from 'svelte-watch-resize';
 	import Preloader from '../Preloader/Preloader.svelte';
