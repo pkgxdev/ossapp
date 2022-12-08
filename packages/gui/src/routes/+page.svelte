@@ -6,7 +6,7 @@
 	import FeaturedPackages from '$components/FeaturedPackages/FeaturedPackages.svelte';
 	import GettingStarted from '$components/GettingStarted/GettingStarted.svelte';
 	import TopPackages from '$components/TopPackages/TopPackages.svelte';
-	import News from '$components/News/News.svelte';
+	import PostThumbs from '$components/PostThumbs/PostThumbs.svelte';
 	backLink.set('');
 </script>
 
@@ -22,7 +22,12 @@
 		<TopPackages />
 	</section>
 	<section class="mt-8">
-		<News />
+		<PostThumbs
+			title="open-source news"
+			readMoreCta="Read more articles >"
+			readMoreLink="/"
+			type="news"
+		/>
 	</section>
 </div>
 

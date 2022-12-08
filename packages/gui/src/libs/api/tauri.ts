@@ -149,8 +149,8 @@ export async function getTopPackages(): Promise<GUIPackage[]> {
 	return packages;
 }
 
-export async function getAllPosts(): Promise<AirtablePost[]> {
+export async function getAllPosts(type: string): Promise<AirtablePost[]> {
 	// add filter here someday: type = news | course
-	const posts = await mock.getAllPosts();
+	const posts = await mock.getAllPosts(type);
 	return posts;
 }

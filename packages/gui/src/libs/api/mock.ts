@@ -252,7 +252,8 @@ export async function getTopPackages(): Promise<GUIPackage[]> {
 	});
 }
 
-export async function getAllPosts(): Promise<AirtablePost[]> {
+export async function getAllPosts(type: string): Promise<AirtablePost[]> {
+	console.log('filter by type:', type);
 	const posts: AirtablePost[] = [
 		{
 			airtable_record_id: 'a',

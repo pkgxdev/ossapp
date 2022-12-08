@@ -4,20 +4,26 @@
 	import type { AirtablePost } from '@tea/ui/types';
 	import { onMount } from 'svelte';
 
-	let news: AirtablePost[] = [];
+	export let title: string;
+	export let type: string;
+	export let readMoreLink: string;
+	export let readMoreCta = 'Read more';
+
+	let posts: AirtablePost[] = [];
 
 	onMount(async () => {
-		news = await getAllPosts();
+		// todo: filter by type
+		posts = await getAllPosts();
 	});
 </script>
 
 <header class="flex items-center justify-between border border-gray bg-black p-4 text-primary">
-	<span>OPEN-SOURCE NEWS</span>
-	<a href="/" class="font-sono text-sm underline">Read more articles ></a>
+	<span class="uppercase">{title}</span>
+	<a href={readMoreLink} class="font-sono text-sm underline">{readMoreCta}</a>
 </header>
 
 <ul class="flex flex-col bg-black">
-	{#each news as article}
+	{#each posts as article}
 		<li class="border border-t-0 border-gray p-4">
 			<article class="flex border border-gray">
 				<figure class="w-1/3">
