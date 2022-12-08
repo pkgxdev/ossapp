@@ -2,7 +2,7 @@
 	import '$appcss';
 	import PageHeader from '$components/PageHeader/PageHeader.svelte';
 	import FeaturedCourses from '$components/FeaturedCourses/FeaturedCourses.svelte';
-	import PostThumbs from '$components/PostThumbs/PostThumbs.svelte';
+	import EssentialWorkshops from '$components/EssentialWorkshops/EssentialWorkshops.svelte';
 	import { backLink } from '$libs/stores';
 	backLink.set('/');
 </script>
@@ -15,11 +15,6 @@
 	</section>
 
 	<section class="mt-8">
-		<PostThumbs
-			type="course"
-			title="ESSENTIAL WORKSHOPS"
-			readMoreCta="View all >"
-			readMoreLink="/"
-		/>
+		<EssentialWorkshops />
 	</section>
 </div>
