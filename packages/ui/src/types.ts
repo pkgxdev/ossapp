@@ -19,3 +19,17 @@ export interface Package {
 	installs: number;
 	reviews?: Review[];
 }
+
+export type AirtablePost = {
+	airtable_record_id: string;
+	title: string;
+	link: string;
+	sub_title: string;
+	short_description: string;
+	thumb_image_url: string;
+	thumb_image_name: string;
+	created_at: Date;
+	updated_at: Date;
+	published_at: Date;
+	tags: string[];
+};
