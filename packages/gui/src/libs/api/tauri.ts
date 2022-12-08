@@ -19,6 +19,7 @@ import type { Package, Review } from '@tea/ui/types';
 import type { GUIPackage, Course } from '../types';
 import * as mock from './mock';
 import { PackageStates } from '../types';
+import { AirtablePost } from '../../../../ui/src/types';
 
 const username = 'user';
 const password = 'password';
@@ -146,4 +147,10 @@ export async function getFeaturedCourses(): Promise<Course[]> {
 export async function getTopPackages(): Promise<GUIPackage[]> {
 	const packages = await mock.getTopPackages();
 	return packages;
+}
+
+export async function getAllPosts(type: string): Promise<AirtablePost[]> {
+	// add filter here someday: type = news | course
+	const posts = await mock.getAllPosts(type);
+	return posts;
 }

@@ -5,7 +5,7 @@
  * TODO:
  *  * make cors work with api.tea.xyz/v1
  */
-import type { Package, Review } from '@tea/ui/types';
+import type { Package, Review, AirtablePost } from '@tea/ui/types';
 import type { GUIPackage, Course } from '../types';
 import { PackageStates } from '../types';
 import { loremIpsum } from 'lorem-ipsum';
@@ -250,4 +250,51 @@ export async function getTopPackages(): Promise<GUIPackage[]> {
 			state: PackageStates.AVAILABLE
 		};
 	});
+}
+
+export async function getAllPosts(type: string): Promise<AirtablePost[]> {
+	console.log('filter by type:', type);
+	const posts: AirtablePost[] = [
+		{
+			airtable_record_id: 'a',
+			link: 'https://google.com',
+			title: 'Tea Inc releases game changing api!',
+			sub_title: 'lorem ipsum dolor sit amet',
+			short_description: 'lorem ipsum dolor sit amet',
+			thumb_image_url: '/images/bored-ape.png',
+			thumb_image_name: 'borred-api.png',
+			created_at: new Date(),
+			updated_at: new Date(),
+			published_at: new Date(),
+			tags: ['news']
+		},
+		{
+			airtable_record_id: 'b',
+			link: 'https://google.com',
+			title: 'Bored Ape not bored anymore',
+			sub_title: 'lorem ipsum dolor sit amet',
+			short_description: 'lorem ipsum dolor sit amet',
+			thumb_image_url: '/images/bored-ape.png',
+			thumb_image_name: 'borred-api.png',
+			created_at: new Date(),
+			updated_at: new Date(),
+			published_at: new Date(),
+			tags: ['news']
+		},
+		{
+			airtable_record_id: 'c',
+			link: 'https://google.com',
+			title: 'Markdown can be executed! hoohah!',
+			sub_title: 'lorem ipsum dolor sit amet',
+			short_description: 'lorem ipsum dolor sit amet',
+			thumb_image_url: '/images/bored-ape.png',
+			thumb_image_name: 'borred-api.png',
+			created_at: new Date(),
+			updated_at: new Date(),
+			published_at: new Date(),
+			tags: ['news']
+		}
+	];
+
+	return posts;
 }

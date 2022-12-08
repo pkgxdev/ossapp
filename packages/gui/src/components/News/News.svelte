@@ -6,12 +6,12 @@
 	import PanelHeader from '@tea/ui/PanelHeader/PanelHeader.svelte';
 	import { onMount } from 'svelte';
 
-	let courses: AirtablePost[] = [];
+	let news: AirtablePost[] = [];
 
 	onMount(async () => {
-		courses = await getAllPosts('course');
+		news = await getAllPosts('news');
 	});
 </script>
 
-<PanelHeader title="Essential Workshops" ctaLabel="View all" ctaLink="/" />
-<Posts posts={courses} />
+<PanelHeader title="Open-source News" ctaLabel="Read more articles >" ctaLink="/" />
+<Posts posts={news} />
