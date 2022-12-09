@@ -2,6 +2,7 @@
 <script lang="ts">
 	import '$appcss';
 	import NavBar from '$components/NavBar/NavBar.svelte';
+	import FooterLinks from '$components/FooterLinks/FooterLinks.svelte';
 
 	import { backLink as backLinkStore } from '$libs/stores';
 
@@ -15,17 +16,20 @@
 	<nav class="border border-t-0 border-l-0 border-b-0 border-gray">
 		<NavBar />
 	</nav>
-	<section class="px-16 pt-24 pb-24">
+	<section class="pt-24">
 		{#if backLink}
 			<header class="px-16 py-2 text-3xl text-gray hover:text-primary">
 				<a href={backLink}>&#8592</a>
 			</header>
 		{/if}
 		<figure />
-		<div>
+		<div class="px-16">
 			<!-- all pages get inserted in this slot -->
 			<slot />
 		</div>
+		<footer class="mt-8 w-full border border-r-0 border-gray bg-black">
+			<FooterLinks />
+		</footer>
 	</section>
 </div>
 
@@ -69,5 +73,9 @@
 
 	div {
 		position: relative;
+	}
+
+	footer {
+		height: 100px;
 	}
 </style>
