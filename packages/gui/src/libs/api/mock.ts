@@ -6,7 +6,7 @@
  *  * make cors work with api.tea.xyz/v1
  */
 import type { Package, Review, AirtablePost } from '@tea/ui/types';
-import type { GUIPackage, Course } from '../types';
+import type { GUIPackage, Course, Category } from '../types';
 import { PackageStates } from '../types';
 import { loremIpsum } from 'lorem-ipsum';
 import _ from 'lodash';
@@ -297,4 +297,28 @@ export async function getAllPosts(type: string): Promise<AirtablePost[]> {
 	];
 
 	return posts;
+}
+
+export async function getCategorizedPackages(): Promise<Category[]> {
+	const mockPackages = packages.slice(0, 9).map((pkg) => ({
+		...pkg,
+		state: PackageStates.AVAILABLE
+	}));
+	return [
+		{
+			label: 'framework essentials',
+			cta_label: 'View all essentials >',
+			packages: mockPackages
+		},
+		{
+			label: 'star-struck heavyweights',
+			cta_label: 'View all star-strucks >',
+			packages: mockPackages
+		},
+		{
+			label: 'simply delightful',
+			cta_label: 'View all delightful packages >',
+			packages: mockPackages
+		}
+	];
 }

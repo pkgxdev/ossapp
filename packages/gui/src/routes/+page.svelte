@@ -7,6 +7,7 @@
 	import GettingStarted from '$components/GettingStarted/GettingStarted.svelte';
 	import TopPackages from '$components/TopPackages/TopPackages.svelte';
 	import News from '$components/News/News.svelte';
+	import CategorizedPackages from '$components/CategorizedPackages/CategorizedPackages.svelte';
 	backLink.set('');
 </script>
 
@@ -20,6 +21,9 @@
 	</section>
 	<section class="mt-8">
 		<TopPackages />
+	</section>
+	<section class="mt-8">
+		<CategorizedPackages />
 	</section>
 	<section class="mt-8">
 		<News />
