@@ -158,6 +158,6 @@ export async function getAllPosts(tag: string): Promise<AirtablePost[]> {
 }
 
 export async function getCategorizedPackages(): Promise<Category[]> {
-	const cats = await mock.getCategorizedPackages();
-	return cats;
+	const categories = await get<Category[]>('/packages/categorized');
+	return categories;
 }
