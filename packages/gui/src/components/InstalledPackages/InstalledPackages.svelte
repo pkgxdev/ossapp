@@ -21,7 +21,6 @@
 			<div class="border border-t-0 border-l-0 border-gray p-4">
 				<MiniPackageCard
 					{pkg}
-					link={`/packages/${pkg.slug}`}
 					ctaLabel="DETAILS"
 					onClickCTA={async () => {
 						console.log('do something with:', pkg.full_name);

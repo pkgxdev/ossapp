@@ -23,3 +23,9 @@ export type Course = {
 	banner_image_url: string;
 	link: string;
 };
+
+export type Category = {
+	label: string;
+	cta_label: string;
+	packages: GUIPackage[];
+};

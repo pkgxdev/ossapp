@@ -15,7 +15,7 @@ import { getClient } from '@tauri-apps/api/http';
 import { Command } from '@tauri-apps/api/shell';
 import { readDir, BaseDirectory } from '@tauri-apps/api/fs';
 import type { Package, Review, AirtablePost } from '@tea/ui/types';
-import type { GUIPackage, Course } from '../types';
+import type { GUIPackage, Course, Category } from '../types';
 import * as mock from './mock';
 import { PackageStates } from '../types';
 
@@ -155,4 +155,9 @@ export async function getAllPosts(tag: string): Promise<AirtablePost[]> {
 	// add filter here someday: tag = news | course
 	const posts = await get<AirtablePost[]>('posts', { tag });
 	return posts;
+}
+
+export async function getCategorizedPackages(): Promise<Category[]> {
+	const cats = await mock.getCategorizedPackages();
+	return cats;
 }
