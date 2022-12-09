@@ -18,6 +18,7 @@ export interface Package {
 	dl_count: number;
 	installs: number;
 	reviews?: Review[];
+	bottles?: number; // TODO: where to get this?
 }
 
 export type AirtablePost = {
