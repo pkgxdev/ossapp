@@ -21,7 +21,7 @@ import { PackageStates } from '../types';
 
 const base = 'https://api.tea.xyz/v1';
 
-async function get<T>(path: string, query?: { [key: string]: any }) {
+async function get<T>(path: string, query?: { [key: string]: string }) {
 	const client = await getClient();
 	const uri = join(base, path);
 	const { data } = await client.get<T>(uri.toString(), {
