@@ -3,6 +3,7 @@
 	import { open } from '@tauri-apps/api/shell';
 	import { appWindow } from '@tauri-apps/api/window';
 	import SearchInput from '@tea/ui/SearchInput/SearchInput.svelte';
+	import { searchStore } from '$libs/stores';
 	import Button from '@tea/ui/Button/Button.svelte';
 
 	import { beforeUpdate } from 'svelte';
@@ -57,7 +58,8 @@
 	});
 
 	const onSearch = (term: string) => {
-		console.log('navbar search:', term);
+		console.log('search:', term);
+		searchStore.search(term);
 	};
 </script>
 

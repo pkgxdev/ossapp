@@ -2,6 +2,7 @@
 <script lang="ts">
 	import '$appcss';
 	import NavBar from '$components/NavBar/NavBar.svelte';
+	import SearchResults from '$components/SearchResults/SearchResults.svelte';
 
 	import { backLink as backLinkStore } from '$libs/stores';
 
@@ -16,12 +17,13 @@
 		<NavBar />
 	</nav>
 	<section class="px-16 pt-24 pb-24">
+		<figure />
 		{#if backLink}
 			<header class="px-16 py-2 text-3xl text-gray hover:text-primary">
 				<a href={backLink}>&#8592</a>
 			</header>
 		{/if}
-		<figure />
+		<SearchResults />
 		<div>
 			<!-- all pages get inserted in this slot -->
 			<slot />
