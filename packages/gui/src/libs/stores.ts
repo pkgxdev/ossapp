@@ -62,9 +62,9 @@ function initPackagesReviewStore() {
 export const packagesReviewStore = initPackagesReviewStore();
 
 function initSearchStore() {
-	const { update, subscribe, set } = writable<string>('');
+	const { subscribe, set } = writable<string>('');
 
-	let term: string = '';
+	let term = '';
 
 	subscribe((v) => (term = v));
 
