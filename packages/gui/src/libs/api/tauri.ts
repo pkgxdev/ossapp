@@ -135,8 +135,15 @@ async function getInstalledPackages() {
 }
 
 export async function getFeaturedCourses(): Promise<Course[]> {
-	const courses = await mock.getFeaturedCourses();
-	return courses;
+	const posts = await get<AirtablePost[]>('posts', { tag: 'featured_course' });
+	return posts.map((post) => {
+		return {
+			title: post.title,
+			sub_title: post.sub_title,
+			banner_image_url: post.thumb_image_url,
+			link: post.link
+		} as Course;
+	});
 }
 
 export async function getTopPackages(): Promise<GUIPackage[]> {
