@@ -14,26 +14,21 @@ import { getClient } from '@tauri-apps/api/http';
 // import { invoke } from '@tauri-apps/api';
 import { Command } from '@tauri-apps/api/shell';
 import { readDir, BaseDirectory } from '@tauri-apps/api/fs';
-import { Buffer } from 'buffer';
-import type { Package, Review } from '@tea/ui/types';
+import type { Package, Review, AirtablePost } from '@tea/ui/types';
 import type { GUIPackage, Course } from '../types';
 import * as mock from './mock';
 import { PackageStates } from '../types';
-import { AirtablePost } from '../../../../ui/src/types';
-
-const username = 'user';
-const password = 'password';
-const auth = 'Basic ' + Buffer.from(username + ':' + password).toString('base64');
 
 const base = 'https://api.tea.xyz/v1';
 
-async function get<T>(path: string) {
+async function get<T>(path: string, query?: { [key: string]: any }) {
 	const client = await getClient();
 	const uri = join(base, path);
 	const { data } = await client.get<T>(uri.toString(), {
 		headers: {
-			Authorization: auth
-		}
+			Authorization: 'public' // TODO: figure out why req w/o Authorization does not work
+		},
+		query: query || {}
 	});
 	return data;
 }
@@ -140,8 +135,15 @@ async function getInstalledPackages() {
 }
 
 export async function getFeaturedCourses(): Promise<Course[]> {
-	const courses = await mock.getFeaturedCourses();
-	return courses;
+	const posts = await get<AirtablePost[]>('posts', { tag: 'featured_course' });
+	return posts.map((post) => {
+		return {
+			title: post.title,
+			sub_title: post.sub_title,
+			banner_image_url: post.thumb_image_url,
+			link: post.link
+		} as Course;
+	});
 }
 
 export async function getTopPackages(): Promise<GUIPackage[]> {
@@ -149,8 +151,8 @@ export async function getTopPackages(): Promise<GUIPackage[]> {
 	return packages;
 }
 
-export async function getAllPosts(type: string): Promise<AirtablePost[]> {
-	// add filter here someday: type = news | course
-	const posts = await mock.getAllPosts(type);
+export async function getAllPosts(tag: string): Promise<AirtablePost[]> {
+	// add filter here someday: tag = news | course
+	const posts = await get<AirtablePost[]>('posts', { tag });
 	return posts;
 }
