@@ -49,14 +49,31 @@
 		height: 100vh;
 		overflow-y: scroll;
 	}
-	figure {
-		position: fixed;
-		z-index: 0;
-		top: 220px;
-		left: 240px;
-		right: 0px;
-		bottom: 0px;
-		background-image: url('/images/footer-grid-element.svg');
+	@media screen and (min-width: 1215px) {
+		figure {
+			position: fixed;
+			z-index: 0;
+			top: 220px;
+			left: 240px;
+			right: 0px;
+			bottom: 0px;
+			background-image: url('/images/gui-background-grid.svg');
+			background-size: cover;
+			background-repeat: repeat;
+		}
+	}
+	@media screen and (max-width: 1215px) {
+		figure {
+			position: fixed;
+			z-index: 0;
+			top: 220px;
+			left: 240px;
+			right: 0px;
+			bottom: 0px;
+			background-image: url('/images/gui-background-grid.svg');
+			background-size: contain;
+			background-repeat: repeat;
+		}
 	}
 	header {
 		position: absolute;
