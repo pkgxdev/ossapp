@@ -5,7 +5,7 @@ For better documentation checkout this [notion](https://www.notion.so/teaxyz/tea
 
 # Requirements
 * [pnpm@^7.8](https://pnpm.io/)
-* [node@16](https://github.com/tj/n)
+* [node@^16](https://github.com/tj/n)
 * [rust@^1.62](https://www.rust-lang.org/)
 * [cargo@^1.62](https://crates.io/)
 
