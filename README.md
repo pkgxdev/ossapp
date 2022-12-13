@@ -15,6 +15,15 @@ Setting up the workspace just run here:
 $ pnpm install
 ```
 
+To develop the GUI within Tauri Webview
+```
+$ pnpm dev:gui
+```
+
+To develop the GUI within your local browser at localhost:8080
+```
+$ pnpm web:gui
+```
 # Build a GUI installer
 This assumes you have installed the dev dependencies
 ```
