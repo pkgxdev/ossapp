@@ -15,6 +15,12 @@ Setting up the workspace just run here:
 $ pnpm install
 ```
 
+# Build a GUI installer
+This assumes you have installed the dev dependencies
+```
+$ pnpm build:gui
+```
+
 Refer to each package README.md for instructions on how to setup and contribue to them:
 
 * [tea/gui](./packages/gui/README.md)

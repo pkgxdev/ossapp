@@ -2,6 +2,9 @@
     "name": "@tea/workspace",
 	"author": "neil molina <neil@tea.xyz>",
     "private": true,
+    "scripts": {
+        "build:gui": "pnpm --filter gui exec tauri build"
+    },
     "workspaces": {
         "packages": [
             "packages/*"
