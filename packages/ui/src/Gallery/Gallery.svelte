@@ -65,7 +65,7 @@
 						focus = i;
 						resetLoop();
 					}}
-					class={`bg-purple h-4 w-4 rounded-lg border-2 border-white transition-colors ${
+					class={`bg-purple h-3 w-3 rounded-lg border border-white transition-colors ${
 						i === focus ? 'bg-purple-900' : ''
 					}`}
 				/>
