@@ -29,3 +29,10 @@ export type Category = {
 	cta_label: string;
 	packages: GUIPackage[];
 };
+
+export enum AuthStatus {
+	UNKNOWN = 'UNKNOWN',
+	PENDING = 'PENDING',
+	SUCCESS = 'SUCCESS',
+	FAILED = 'FAILED',
+}

@@ -322,3 +322,12 @@ export async function getCategorizedPackages(): Promise<Category[]> {
 		}
 	];
 }
+
+export async function getDeviceAuth(): Promise<any> {
+	const deviceId = 'xyz123';
+	// const data = await get<any>(`/auth/device/${deviceId}`);
+	return {
+		status: 'SUCCESS',
+		user: {},
+	};
+}

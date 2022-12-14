@@ -14,16 +14,19 @@ import { getClient } from '@tauri-apps/api/http';
 // import { invoke } from '@tauri-apps/api';
 import { Command } from '@tauri-apps/api/shell';
 import { readDir, BaseDirectory } from '@tauri-apps/api/fs';
-import type { Package, Review, AirtablePost } from '@tea/ui/types';
-import type { GUIPackage, Course, Category } from '../types';
+import type { Package, Review, AirtablePost, User } from '@tea/ui/types';
+import type { GUIPackage, Course, Category, AuthStatus } from '../types';
 import * as mock from './mock';
 import { PackageStates } from '../types';
 
 const base = 'https://api.tea.xyz/v1';
+// const base = 'http://localhost:3000/v1';
 
 async function get<T>(path: string, query?: { [key: string]: string }) {
+	console.log('path', path);
 	const client = await getClient();
 	const uri = join(base, path);
+	console.log('uri:', uri);
 	const { data } = await client.get<T>(uri.toString(), {
 		headers: {
 			Authorization: 'public' // TODO: figure out why req w/o Authorization does not work
@@ -160,4 +163,15 @@ export async function getAllPosts(tag: string): Promise<AirtablePost[]> {
 export async function getCategorizedPackages(): Promise<Category[]> {
 	const categories = await get<Category[]>('/packages/categorized');
 	return categories;
+}
+
+type DeviceAuth = {
+	status: AuthStatus;
+	user: User;
+}
+
+export async function getDeviceAuth(): Promise<DeviceAuth> {
+	const deviceId = 'xyxz123';
+	const data = await get<DeviceAuth>(`/auth/device/${deviceId}`);
+	return data;
 }

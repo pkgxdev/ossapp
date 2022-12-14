@@ -34,3 +34,9 @@ export type AirtablePost = {
 	published_at: Date;
 	tags: string[];
 };
+
+export type User = {
+	username: string;
+	country?: string;
+	eth_wallet_address?: string;
+}
