@@ -32,9 +32,10 @@ $ pnpm build:gui
 
 # Creating a release
 Tag any commit in the main branch, then push directly to the main branch.
-Lets follow the [semver](https://semver.org/) versioning standard
+Lets follow the [semver](https://semver.org/) versioning standard, prefixed with `v`: ie `v1.2.3`
 ```
 $ git tag v1.0.0
+$ git push <remote> tag v1.0.0
 ```
 
 Refer to each package README.md for instructions on how to setup and contribue to them:
