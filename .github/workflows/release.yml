@@ -2,6 +2,7 @@ on:
   push:
     tags:
       - 'v*.*.*'
+
 jobs:
   build_release_tauri:
     strategy:
