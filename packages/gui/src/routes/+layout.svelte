@@ -23,7 +23,11 @@
 			</header>
 		{/if}
 		<figure />
+<<<<<<< HEAD
 		<div style="padding: 0vw 3.33vw;">
+=======
+		<div style="padding: 0vw 6.667vw;">
+>>>>>>> 67c9bb5a7f9db7158481cca1606f6bf441b90bad
 			<!-- all pages get inserted in this slot -->
 			<slot />
 		</div>
