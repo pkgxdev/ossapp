@@ -126,21 +126,4 @@ jobs:
       run: |
         aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
           s3://preview.gui.tea.xyz/release/gui_${{ steps.date.outputs.unix_seconds }}.deb
-    # update and replace latest release bin in s3
-    - name: Set tag
-      id: tag
-      run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-    - name: UBUNTU publish release 
-      if: startsWith(github.ref, 'refs/tags/v') && matrix.platform == 'ubuntu-latest'
-      run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
-          s3://preview.gui.tea.xyz/release/tea_gui_latest.${{matrix.platform}}.deb
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
-          s3://preview.gui.tea.xyz/release/tea_gui_${{steps.tag.outputs.tag}}.${{matrix.platform}}.deb
-    - name: MAC INTEL publish release 
-      if: startsWith(github.ref, 'refs/tags/v') && matrix.platform == 'macos-latest'
-      run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
-          s3://preview.gui.tea.xyz/release/tea_gui_latest.${{matrix.platform}}.dmg
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
-          s3://preview.gui.tea.xyz/release/tea_gui_${{steps.tag.outputs.tag}}.${{matrix.platform}}.dmg
+

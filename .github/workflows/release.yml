@@ -1,0 +1,82 @@
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+jobs:
+  build_release_tauri:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-latest]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 7
+    - name: setup node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+        cache: 'pnpm'
+        cache-dependency-path: pnpm-lock.yaml
+    - name: install Rust stable
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+    - uses: Swatinem/rust-cache@v2
+      with:
+        # The prefix cache key, this can be changed to start a new cache manually.
+        # default: "v0-rust"
+        prefix-key: ${{ matrix.platform }}
+        shared-key: prod
+        cache-targets: false
+    - name: install dependencies (ubuntu only)
+      if: matrix.platform == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+    - name: install app dependencies
+      run: pnpm install
+
+    - name: Cache Tauri Target
+      uses: actions/cache@v3
+      with:
+        path: |
+          ./packages/gui/src-tauri/target
+        key: ${{ matrix.platform }}-build-target-prod
+        restore-keys: |
+          ${{ matrix.platform }}-build-target-prod
+
+    - name: test build tauri
+      run: pnpm --filter gui tauri build
+
+    - name: Get current unix ts - seconds
+      id: date
+      run: echo "unix_seconds=$(date +'%s')" >> $GITHUB_OUTPUT
+    - uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    # update and replace latest release bin in s3
+    - name: Set tag
+      id: tag
+      run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+    - name: UBUNTU publish release 
+      if: matrix.platform == 'ubuntu-latest'
+      run: |
+        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
+          s3://preview.gui.tea.xyz/release/tea_gui_latest.${{matrix.platform}}.deb
+        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
+          s3://preview.gui.tea.xyz/release/tea_gui_${{steps.tag.outputs.tag}}.${{matrix.platform}}.deb
+    - name: MAC INTEL publish release 
+      if: matrix.platform == 'macos-latest'
+      run: |
+        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
+          s3://preview.gui.tea.xyz/release/tea_gui_latest.${{matrix.platform}}.dmg
+        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
+          s3://preview.gui.tea.xyz/release/tea_gui_${{steps.tag.outputs.tag}}.${{matrix.platform}}.dmg
