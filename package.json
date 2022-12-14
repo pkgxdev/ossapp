@@ -3,6 +3,7 @@
 	"author": "neil molina <neil@tea.xyz>",
     "private": true,
     "scripts": {
+        "release": "sh ./.github/update-latest-binary.sh",
         "build:gui": "pnpm --filter gui exec tauri build",
         "dev:gui": "pnpm --filter gui exec tauri dev",
         "web:gui": "BUILD_FOR=preview pnpm --filter gui dev"

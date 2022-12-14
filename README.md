@@ -37,6 +37,12 @@ Lets follow the [semver](https://semver.org/) versioning standard, prefixed with
 $ git tag v1.0.0
 $ git push <remote> tag v1.0.0
 ```
+We do not have a runner for building for M1 and M2, to manually deploy a release. Make sure you have a [aws-cli](https://aws.amazon.com/cli/). Configure your aws cli profile correctly.
+To publish a release simply run
+```
+$ AWS_PROFILE=tea/or/etc pnpm release
+```
+
 
 Refer to each package README.md for instructions on how to setup and contribue to them:
 
