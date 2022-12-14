@@ -30,6 +30,13 @@ This assumes you have installed the dev dependencies
 $ pnpm build:gui
 ```
 
+# Creating a release
+Tag any commit in the main branch, then push directly to the main branch.
+Lets follow the [semver](https://semver.org/) versioning standard
+```
+$ git tag v1.0.0
+```
+
 Refer to each package README.md for instructions on how to setup and contribue to them:
 
 * [tea/gui](./packages/gui/README.md)
