@@ -24,7 +24,7 @@
 		<ArticleCard
 			content={{
 				title: 'authenticating',
-				copy: "Using tea without authenticating is like playing a video game without the DLC. Join us today!",
+				copy: 'Using tea without authenticating is like playing a video game without the DLC. Join us today!',
 				img_url: '/images/bored-ape.png',
 				cta_label: 'Get Started',
 				link: ''
