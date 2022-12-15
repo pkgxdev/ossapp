@@ -18,7 +18,7 @@
 	</nav>
 	<section class="pt-24">
 		{#if backLink}
-			<header class="px-16 border-b border-gray text-3xl text-gray hover:text-primary">
+			<header class="border-b border-gray px-16 text-3xl text-gray hover:text-primary">
 				<a href={backLink}>&#8592</a>
 			</header>
 		{/if}
