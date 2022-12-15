@@ -13,7 +13,7 @@
 		<ArticleCard
 			content={{
 				title: 'installing tea',
-				copy: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptatum molestiae esse quisquam earum debitis.',
+				copy: "It's time to take your first sip! Click below to visit our tea-cli documentation page.",
 				img_url: '/images/bored-ape.png',
 				cta_label: 'Get Started',
 				link: '/cli'
@@ -24,7 +24,7 @@
 		<ArticleCard
 			content={{
 				title: 'authenticating',
-				copy: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptatum molestiae esse quisquam earum debitis.',
+				copy: "Using tea without authenticating is like playing a video game without the DLC. Join us today!",
 				img_url: '/images/bored-ape.png',
 				cta_label: 'Get Started',
 				link: ''
@@ -36,7 +36,7 @@
 		<ArticleCard
 			content={{
 				title: 'give us a star',
-				copy: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptatum molestiae esse quisquam earum debitis.',
+				copy: 'Revolutions are built on the will of the people. Show your support for a more equitable internet.',
 				img_url: '/images/bored-ape.png',
 				cta_label: 'Get Started'
 			}}
