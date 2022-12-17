@@ -4,15 +4,19 @@ This repository includes the tea GUI/Desktop App.
 For better documentation checkout this [notion](https://www.notion.so/teaxyz/tea-gui-fdd9f50aa980432fa370b2cf6a03cb50).
 
 # Requirements
-* [pnpm@^7.8](https://pnpm.io/)
-* [node@^16](https://github.com/tj/n)
-* [rust@^1.62](https://www.rust-lang.org/)
-* [cargo@^1.62](https://crates.io/)
+* [tea - is all you need](https://tea.xyz/)
 
-# Development
-Setting up the workspace just run here:
-```
-$ pnpm install
+## Dependencies
+
+| Project    | Version |
+|------------|---------|
+| nodejs.org |  >=16   |
+| pnpm.io    |  >=7.18.2 |
+| rust-lang.org |  >=1.62 |
+
+# Getting Started
+```sh
+pnpm install
 ```
 
 To develop the GUI within Tauri Webview
@@ -24,10 +28,9 @@ To develop the GUI within your local browser at localhost:8080
 ```
 $ pnpm web:gui
 ```
-# Build a GUI installer
-This assumes you have installed the dev dependencies
-```
-$ pnpm build:gui
+# Build
+```sh
+pnpm build:gui
 ```
 
 # Creating a release
