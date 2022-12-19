@@ -18,7 +18,7 @@
 {#if courses.length}
 	<Posts posts={courses} />
 {:else}
-	<section class="h-64 border border-gray p-4">
+	<section class="h-64 border border-gray bg-black p-4">
 		<Preloader />
 	</section>
 {/if}

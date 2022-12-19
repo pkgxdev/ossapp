@@ -22,3 +22,20 @@ html {
 		font-family: sono, sans-serif;
 	}
 }
+
+.text-primary,
+header,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+.click-copy {
+	font-family: 'pp-neue-machina' !important;
+}
+
+.pk-version {
+	font-family: 'sono';
+}

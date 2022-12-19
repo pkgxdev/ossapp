@@ -63,7 +63,7 @@
 
 <ul id="NavBar">
 	<nav data-tauri-drag-region class="flex justify-between">
-		<div class="flex gap-1 p-3">
+		<div class="flex gap-1 p-3 pt-3">
 			<button class="titlebar-button" id="titlebar-close" on:click={appWindow.close}>
 				<img src="/images/close.svg" alt="close" />
 			</button>
@@ -139,8 +139,8 @@
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
-		width: 16px;
-		height: 16px;
+		width: 12px;
+		height: 12px;
 		border-radius: 8px;
 		opacity: 0.9;
 	}

@@ -18,12 +18,13 @@
 	</nav>
 	<section class="pt-24">
 		{#if backLink}
-			<header class="px-16 py-2 text-3xl text-gray hover:text-primary">
+			<header class="border-b border-gray px-16 text-3xl text-gray hover:text-primary">
 				<a href={backLink}>&#8592</a>
 			</header>
 		{/if}
 		<figure />
-		<div class="px-16">
+
+		<div class="content">
 			<!-- all pages get inserted in this slot -->
 			<slot />
 		</div>
@@ -49,7 +50,8 @@
 		height: 100vh;
 		overflow-y: scroll;
 	}
-	@media screen and (min-width: 1215px) {
+
+	@media screen and (min-width: 1440px) {
 		figure {
 			position: fixed;
 			z-index: 0;
@@ -59,10 +61,13 @@
 			bottom: 0px;
 			background-image: url('/images/gui-background-grid.svg');
 			background-size: cover;
-			background-repeat: repeat;
+			background-repeat: repeat-y;
+		}
+		.content {
+			padding: 0vw 3.6vw !important;
 		}
 	}
-	@media screen and (max-width: 1215px) {
+	@media screen and (max-width: 1440px) {
 		figure {
 			position: fixed;
 			z-index: 0;
@@ -74,14 +79,16 @@
 			background-size: contain;
 			background-repeat: repeat;
 		}
+		.content {
+			padding: 0vw 3.33vw;
+		}
 	}
 	header {
 		position: absolute;
 		top: 0px;
 		left: 0px;
 		width: 100%;
-		height: 50px;
-		border-bottom: #ccc 1px solid;
+		height: 40px;
 	}
 
 	slot {
