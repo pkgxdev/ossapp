@@ -13,26 +13,35 @@
 				</p>
 			</div>
 
-			<div class="card social-box border-2 border-gray w-1/4">
+			<div class="card social-box w-1/4 border-2 border-gray">
 				<ul class="list-group list-group-flush">
-					<div class="p-3 border-b border-gray">
-						<a class="list-group-item" role="button" href="https://twitter.com/teaxyz"><i class="icon-twitter social-icon mr-3"></i>Twitter</a>
+					<div class="border-b border-gray p-3">
+						<a class="list-group-item" role="button" href="https://twitter.com/teaxyz"
+							><i class="icon-twitter social-icon mr-3" />Twitter</a
+						>
 					</div>
-					<div class="p-3 border-b border-gray">
-						<a class="list-group-item" role="button" href="https://discord.gg/KCZsXfJphn"><i class="icon-discord social-icon mr-3"></i>Discord</a>
+					<div class="border-b border-gray p-3">
+						<a class="list-group-item" role="button" href="https://discord.gg/KCZsXfJphn"
+							><i class="icon-discord social-icon mr-3" />Discord</a
+						>
 					</div>
-					<div class="p-3 border-b border-gray">
-						<a class="list-group-item" role="button" href="https://github.com/teaxyz"><i class="icon-github social-icon mr-3"></i>GitHub</a>
+					<div class="border-b border-gray p-3">
+						<a class="list-group-item" role="button" href="https://github.com/teaxyz"
+							><i class="icon-github social-icon mr-3" />GitHub</a
+						>
 					</div>
-					<div class="p-3 border-b border-gray">
-						<a class="list-group-item" role="button" href="https://reddit.com/r/teaxyz"><i class="icon-reddit social-icon mr-3"></i>Reddit</a>
+					<div class="border-b border-gray p-3">
+						<a class="list-group-item" role="button" href="https://reddit.com/r/teaxyz"
+							><i class="icon-reddit social-icon mr-3" />Reddit</a
+						>
 					</div>
-					<div class="p-3 border-b border-gray">
-						<a class="list-group-item" role="button" href="https://t.me/tea_xyz"><i class="icon-telegram social-icon mr-3"></i>Telegram</a>
+					<div class="border-b border-gray p-3">
+						<a class="list-group-item" role="button" href="https://t.me/tea_xyz"
+							><i class="icon-telegram social-icon mr-3" />Telegram</a
+						>
 					</div>
 				</ul>
-		</div>
-
+			</div>
 		</div>
 	</section>
 
