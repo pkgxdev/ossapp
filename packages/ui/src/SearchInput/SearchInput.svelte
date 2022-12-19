@@ -16,7 +16,7 @@
 	};
 </script>
 
-<section class={`flex border-b border-r-0 border-l-0 items-center py-2 ${size} ${clazz}`}>
+<section class={`flex items-center border-b border-r-0 border-l-0 py-2 ${size} ${clazz}`}>
 	<div class="icon pl-4">
 		<i class="icon-search-icon" />
 	</div>

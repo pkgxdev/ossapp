@@ -34,7 +34,7 @@
 		</article>
 	</header>
 	<footer class="flex h-20 border-t border-gray text-white">
-		<input class="flex-grow click-copy bg-black pl-4" disabled value={copyValue} />
+		<input class="click-copy flex-grow bg-black pl-4" disabled value={copyValue} />
 		<Button class="w-16 border-0 border-l-2 text-sm" onClick={onCopy}>{copyButtonText}</Button>
 		<Button class="w-56 border-0 border-l-2 text-sm" onClick={() => console.log('cli')}
 			>OPEN IN TERMINAL</Button
