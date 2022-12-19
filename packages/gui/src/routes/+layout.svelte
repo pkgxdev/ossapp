@@ -24,7 +24,7 @@
 		{/if}
 		<figure />
 
-		<div style="padding: 0vw 3.33vw;">
+		<div class="content">
 			<!-- all pages get inserted in this slot -->
 			<slot />
 		</div>
@@ -50,7 +50,8 @@
 		height: 100vh;
 		overflow-y: scroll;
 	}
-	@media screen and (min-width: 1215px) {
+
+	@media screen and (min-width: 1440px) {
 		figure {
 			position: fixed;
 			z-index: 0;
@@ -60,10 +61,13 @@
 			bottom: 0px;
 			background-image: url('/images/gui-background-grid.svg');
 			background-size: cover;
-			background-repeat: repeat;
+			background-repeat: repeat-y;
+		}
+		.content {
+			padding: 0vw 3.6vw !important;
 		}
 	}
-	@media screen and (max-width: 1215px) {
+	@media screen and (max-width: 1440px) {
 		figure {
 			position: fixed;
 			z-index: 0;
@@ -74,6 +78,9 @@
 			background-image: url('/images/gui-background-grid.svg');
 			background-size: contain;
 			background-repeat: repeat;
+		}
+		.content {
+			padding: 0vw 3.33vw;
 		}
 	}
 	header {
