@@ -13,15 +13,26 @@
 				</p>
 			</div>
 
-			<div class="socials w-1/4">
-				<ul class="h-full border-2 border-gray">
-					<li class="h-1/5 border-b border-gray px-3 py-1">Facebook</li>
-					<li class="h-1/5 border-b border-gray px-3 py-1">Facebook</li>
-					<li class="h-1/5 border-b border-gray px-3 py-1">Facebook</li>
-					<li class="h-1/5 border-b border-gray px-3 py-1">Facebook</li>
-					<li class="h-1/5 border-b border-gray px-3 py-1">Facebook</li>
+			<div class="card social-box border-2 border-gray w-1/4">
+				<ul class="list-group list-group-flush">
+					<div class="p-3 border-b border-gray">
+						<a class="list-group-item" role="button" href="https://twitter.com/teaxyz"><i class="icon-twitter social-icon mr-3"></i>Twitter</a>
+					</div>
+					<div class="p-3 border-b border-gray">
+						<a class="list-group-item" role="button" href="https://discord.gg/KCZsXfJphn"><i class="icon-discord social-icon mr-3"></i>Discord</a>
+					</div>
+					<div class="p-3 border-b border-gray">
+						<a class="list-group-item" role="button" href="https://github.com/teaxyz"><i class="icon-github social-icon mr-3"></i>GitHub</a>
+					</div>
+					<div class="p-3 border-b border-gray">
+						<a class="list-group-item" role="button" href="https://reddit.com/r/teaxyz"><i class="icon-reddit social-icon mr-3"></i>Reddit</a>
+					</div>
+					<div class="p-3 border-b border-gray">
+						<a class="list-group-item" role="button" href="https://t.me/tea_xyz"><i class="icon-telegram social-icon mr-3"></i>Telegram</a>
+					</div>
 				</ul>
-			</div>
+		</div>
+
 		</div>
 	</section>
 
