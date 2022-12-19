@@ -36,7 +36,7 @@
 	<footer class="mt-4 flex items-center justify-between">
 		<div>
 			<p>
-				<span class="text-xs">V&NonBreakingSpace;{pkg.version}</span>
+				<span class="text-xs pk-version">V&NonBreakingSpace;{pkg.version}</span>
 				<!--
         TODO: uncomment once install counts improve
         <br>
