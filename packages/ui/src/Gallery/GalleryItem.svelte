@@ -31,8 +31,7 @@
 <style>
 	.gallery-item :global(.featured-img) {
 		box-shadow: 0px 0px 12px #0c0c0c !important;
-		width: 100%;
-		height: 100%;
+		object-fit: cover;
 	}
 	.card-thumb-label i {
 		font-size: 1.5vw;
