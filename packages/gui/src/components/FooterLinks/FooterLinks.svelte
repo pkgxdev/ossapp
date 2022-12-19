@@ -16,7 +16,7 @@
 				</div>
 			</div>
 
-			<div class="card social-box w-1/4 h-full border-2 border-gray">
+			<div class="card social-box h-full w-1/4 border-2 border-gray">
 				<ul class="list-group list-group-flush">
 					<div class="border-b border-gray p-3">
 						<a class="list-group-item" role="button" href="https://twitter.com/teaxyz"
@@ -45,33 +45,53 @@
 					</div>
 				</ul>
 			</div>
-
 		</div>
 	</section>
 
-	<section class="h-16 border border-r-0 border-gray p-4 px-16" />
+	<section class="h-16 border border-r-0 border-gray p-4 px-16">
+		<div class="flex">
+			<div class="w-1/2 pt-2">
+				<p class="text-xs">
+					©2022 tea inc. You can also share our <a href="https://linktr.ee/teaxyz">Linktree</a>.
+				</p>
+			</div>
+			<div class="flex w-1/2 pt-2">
+				<ul class="nav ml-auto flex text-xs">
+					<li class="nav-item mr-3 ">
+						<a class="nav-link footer-link small" href="https://tea.xyz/privacy-policy/"
+							>Privacy Policy</a
+						>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link footer-link small" href="https://tea.xyz/terms-of-use/"
+							>Terms of Use</a
+						>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>
 </footer>
 
 <style>
-
-	h3{
-	  font-family: "pp-neue-machina", sans-serif;
-	  color:#00ffd0;
+	h3 {
+		font-family: 'pp-neue-machina', sans-serif;
+		color: #00ffd0;
 	}
 
-	p{
-	  font-family: "sono", sans-serif;
-	  color: #ffffff;
+	p,
+	.nav-item {
+		font-family: 'sono', sans-serif;
+		color: #ffffff;
 	}
 
-	.list-group-item{
-		font-family: "pp-neue-machina", sans-serif;
+	.list-group-item {
+		font-family: 'pp-neue-machina', sans-serif;
 		text-transform: uppercase;
 		transition: 0.1s ease-in;
 	}
 
-	.list-group-item:hover{
+	.list-group-item:hover {
 		padding-left: 1vw;
 	}
-
 </style>
