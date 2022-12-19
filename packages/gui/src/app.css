@@ -31,7 +31,8 @@ h3,
 h4,
 h5,
 h6,
-button {
+button,
+.click-copy {
 	font-family: 'pp-neue-machina' !important;
 }
 
