@@ -1,4 +1,4 @@
-<script type="ts">
+<script lang="ts">
 	import '../app.css';
 	import type { Review } from '../types';
 

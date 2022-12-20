@@ -1,4 +1,4 @@
-<script type="ts">
+<script lang="ts">
 	import '$appcss';
 	import Fuse from 'fuse.js';
 	import { packages as packagesStore, initializePackages } from '$libs/stores';

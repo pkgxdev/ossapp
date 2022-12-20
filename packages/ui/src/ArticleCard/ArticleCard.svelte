@@ -1,4 +1,4 @@
-<script type="ts">
+<script lang="ts">
 	import '../app.css';
 
 	type Article = {

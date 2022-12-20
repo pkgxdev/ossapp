@@ -1,4 +1,4 @@
-<script type="ts">
+<script lang="ts">
 	import '$appcss';
 	import PageHeader from '$components/PageHeader/PageHeader.svelte';
 	import { backLink } from '$libs/stores';
