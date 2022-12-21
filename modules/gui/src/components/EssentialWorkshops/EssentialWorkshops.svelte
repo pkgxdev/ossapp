@@ -16,7 +16,7 @@
 
 <PanelHeader title="Essential Workshops" ctaLabel="View all" ctaLink="/" />
 {#if courses.length}
-	<Posts posts={courses} />
+	<Posts posts={courses} linkTarget="_blank" />
 {:else}
 	<section class="h-64 border border-gray bg-black p-4">
 		<Preloader />

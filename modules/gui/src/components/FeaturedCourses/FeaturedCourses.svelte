@@ -23,4 +23,5 @@
 		imageUrl: course.banner_image_url,
 		link: course.link
 	}))}
+	linkTarget="_blank"
 />

@@ -12,35 +12,55 @@
 					here.
 				</p>
 				<div class="w-3/4">
-					<img src="/static/images/footer-grid-element.svg" />
+					<img src="/static/images/footer-grid-element.svg" alt="grid" />
 				</div>
 			</div>
 
 			<div class="card social-box h-full w-1/4 border-2 border-gray">
 				<ul class="list-group list-group-flush">
 					<div class="border-b border-gray p-3">
-						<a class="list-group-item" role="button" href="https://twitter.com/teaxyz"
-							><i class="icon-twitter social-icon mr-3" />Twitter</a
+						<a
+							class="list-group-item"
+							role="button"
+							href="https://twitter.com/teaxyz"
+							target="_blank"
+							rel="noreferrer"><i class="icon-twitter social-icon mr-3" />Twitter</a
 						>
 					</div>
 					<div class="border-b border-gray p-3">
-						<a class="list-group-item" role="button" href="https://discord.gg/KCZsXfJphn"
-							><i class="icon-discord social-icon mr-3" />Discord</a
+						<a
+							class="list-group-item"
+							role="button"
+							href="https://discord.gg/KCZsXfJphn"
+							target="_blank"
+							rel="noreferrer"><i class="icon-discord social-icon mr-3" />Discord</a
 						>
 					</div>
 					<div class="border-b border-gray p-3">
-						<a class="list-group-item" role="button" href="https://github.com/teaxyz"
-							><i class="icon-github social-icon mr-3" />GitHub</a
+						<a
+							class="list-group-item"
+							role="button"
+							href="https://github.com/teaxyz"
+							target="_blank"
+							rel="noreferrer"><i class="icon-github social-icon mr-3" />GitHub</a
 						>
 					</div>
 					<div class="border-b border-gray p-3">
-						<a class="list-group-item" role="button" href="https://reddit.com/r/teaxyz"
-							><i class="icon-reddit social-icon mr-3" />Reddit</a
+						<a
+							class="list-group-item"
+							role="button"
+							href="https://reddit.com/r/teaxyz"
+							target="_blank"
+							rel="noreferrer"><i class="icon-reddit social-icon mr-3" />Reddit</a
 						>
 					</div>
 					<div class="p-3">
-						<a class="list-group-item" role="button" href="https://t.me/tea_xyz"
-							><i class="icon-telegram social-icon mr-3" />Telegram</a
+						<a
+							class="list-group-item"
+							role="button"
+							href="https://t.me/tea_xyz"
+							target="_blank"
+							rel="noreferrer"><i class="icon-telegram social-icon mr-3" />Telegram</a
 						>
 					</div>
 				</ul>
@@ -52,19 +72,29 @@
 		<div class="flex">
 			<div class="w-1/2 pt-2">
 				<p class="text-xs">
-					©2022 tea inc. You can also share our <a href="https://linktr.ee/teaxyz">Linktree</a>.
+					©2022 tea inc. You can also share our <a
+						href="https://linktr.ee/teaxyz"
+						target="_blank"
+						rel="noreferrer">Linktree</a
+					>.
 				</p>
 			</div>
 			<div class="flex w-1/2 pt-2">
 				<ul class="nav ml-auto flex text-xs">
 					<li class="nav-item mr-3 ">
-						<a class="nav-link footer-link small" href="https://tea.xyz/privacy-policy/"
-							>Privacy Policy</a
+						<a
+							class="nav-link footer-link small"
+							href="https://tea.xyz/privacy-policy/"
+							target="_blank"
+							rel="noreferrer">Privacy Policy</a
 						>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link footer-link small" href="https://tea.xyz/terms-of-use/"
-							>Terms of Use</a
+						<a
+							class="nav-link footer-link small"
+							href="https://tea.xyz/terms-of-use/"
+							target="_blank"
+							rel="noreferrer">Terms of Use</a
 						>
 					</li>
 				</ul>

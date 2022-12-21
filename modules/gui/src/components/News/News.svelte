@@ -16,7 +16,7 @@
 
 <PanelHeader title="Open-source News" ctaLabel="Read more articles >" ctaLink="/" />
 {#if news.length}
-	<Posts posts={news} />
+	<Posts posts={news} linkTarget="_blank" />
 {:else}
 	<section class="h-64 border border-gray bg-black p-4">
 		<Preloader />
