@@ -6,6 +6,7 @@
 	import FooterLinks from '$components/FooterLinks/FooterLinks.svelte';
 
 	import { backLink as backLinkStore } from '$libs/stores';
+	import SearchResults from '$components/SearchResults/SearchResults.svelte';
 
 	let view: HTMLElement;
 
@@ -36,6 +37,7 @@
 		<footer class="mt-8 w-full border border-r-0 border-gray bg-black">
 			<FooterLinks />
 		</footer>
+		<SearchResults />
 	</section>
 </div>
 
