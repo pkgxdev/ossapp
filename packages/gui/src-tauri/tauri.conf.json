@@ -7,7 +7,7 @@
 		"distDir": "../build"
 	},
 	"package": {
-		"productName": "gui",
+		"productName": "tea",
 		"version": "0.1.0"
 	},
 	"tauri": {
