@@ -1,4 +1,4 @@
-<script type="ts">
+<script lang="ts">
 	import './header.css';
 	import Button from '../Button/Button.svelte';
 

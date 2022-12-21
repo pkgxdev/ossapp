@@ -1,6 +1,7 @@
-<script type="ts">
+<script lang="ts">
 	import '../app.css';
 	import type { Package } from '../types';
+
 	import ImgLoader from '../ImgLoader/ImgLoader.svelte';
 
 	export let pkg: Package;
