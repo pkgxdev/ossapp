@@ -41,6 +41,12 @@
 			path: '/packages',
 			active: false,
 			label: 'PACKAGES'
+		},
+		{
+			path: 'https://github.com/teaxyz',
+			active: false,
+			label: 'VIEW ON GITHUB',
+			target: '_blank'
 		}
 	];
 
@@ -83,14 +89,11 @@
 
 	{#each routes as route}
 		<li class={route.active ? 'nav_button active' : 'nav_button'}>
-			<a href={route.path}>
+			<a href={route.path} target={route.target || ''}>
 				<Button class="h-16 pl-4 text-left text-white" active={route.active}>{route.label}</Button>
 			</a>
 		</li>
 	{/each}
-	<li class="nav_button">
-		<Button class="h-16 pl-4 text-left text-white" onClick={openGithub}>VIEW ON GITHUB</Button>
-	</li>
 
 	<footer class="w-full border border-x-0 border-gray">
 		<a href="/profile">
