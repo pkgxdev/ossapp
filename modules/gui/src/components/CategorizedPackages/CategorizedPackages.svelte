@@ -17,13 +17,7 @@
 	<ul class="grid grid-cols-3 border border-r-0 border-gray bg-black">
 		{#each category.packages as pkg}
 			<div class="border border-t-0 border-l-0 border-gray p-4">
-				<MiniPackageCard
-					{pkg}
-					ctaLabel="DETAILS"
-					onClickCTA={async () => {
-						console.log('do something with:', pkg.full_name);
-					}}
-				/>
+				<MiniPackageCard {pkg} ctaLabel="DETAILS" link={`/packages/${pkg.slug}`} />
 			</div>
 		{/each}
 	</ul>

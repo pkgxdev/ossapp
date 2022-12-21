@@ -6,6 +6,7 @@
 
 	export let pkg: Package;
 	export let ctaLabel: string;
+	export let link = '';
 
 	export let onClickCTA = () => {
 		console.log('do nothing');
@@ -37,7 +38,13 @@
 				>
 			</p>
 		</div>
-		<button class="h-6 w-full font-machina text-xs" on:click={onClickCTA}>{ctaLabel}</button>
+		{#if link}
+			<a href={link}>
+				<button class="h-6 w-full font-machina text-xs">{ctaLabel}</button>
+			</a>
+		{:else}
+			<button class="h-6 w-full font-machina text-xs" on:click={onClickCTA}>{ctaLabel}</button>
+		{/if}
 	</footer>
 </section>
 
