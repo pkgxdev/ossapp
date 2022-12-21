@@ -2,6 +2,7 @@
 	import '../app.css';
 	import type { AirtablePost } from '../types';
 
+	export let linkTarget = '';
 	export let posts: AirtablePost[] = [];
 </script>
 
@@ -15,7 +16,9 @@
 				<section class="w-2/3 p-4 font-sono">
 					<h1 class="text-xl text-primary">{article.title}</h1>
 					<p class="my-4 text-sm line-clamp-4">{article.short_description}</p>
-					<a href={article.link} class="text-sm text-primary underline">Read more ...</a>
+					<a href={article.link} target={linkTarget} class="text-sm text-primary underline"
+						>Read more ...</a
+					>
 				</section>
 			</article>
 		</li>

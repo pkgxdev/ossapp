@@ -6,6 +6,7 @@
 	import GalleryItem from './GalleryItem.svelte';
 
 	export let title = '';
+	export let linkTarget = '';
 
 	interface GalleryItemShape {
 		imageUrl: string;
@@ -77,7 +78,7 @@
 			<section class="absolute top-0 flex h-full" style={styleFeaturedPackages}>
 				{#each items as item}
 					<div class="h-full" style={`width:${width}px`}>
-						<a href={item.link}>
+						<a href={item.link} target={linkTarget} rel="noopener">
 							<GalleryItem {...item} {width} />
 						</a>
 					</div>
