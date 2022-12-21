@@ -19,14 +19,14 @@ jobs:
       with:
         filters: |
           src:
-            - 'packages/gui/src/**'
-            - 'packages/ui/**'
+            - 'modules/gui/src/**'
+            - 'modules/ui/**'
     - uses: dorny/paths-filter@v2
       id: tauri
       with:
         filters: |
           src:
-            - 'packages/gui/src-tauri/**'
+            - 'modules/gui/src-tauri/**'
   build_svelte:
     needs: changes
     if: needs.changes.outputs.svelte == 'true'
@@ -99,7 +99,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          ./packages/gui/src-tauri/target
+          ./modules/gui/src-tauri/target
         key: ${{ matrix.platform }}-build-target-prod
         restore-keys: |
           ${{ matrix.platform }}-build-target-prod
@@ -118,12 +118,12 @@ jobs:
     - name: mac-os cp package images from prod to gui bucket
       if: matrix.platform == 'macos-latest'
       run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
-          s3://preview.gui.tea.xyz/release/gui_${{ steps.date.outputs.unix_seconds }}.dmg
+        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_x64.dmg \
+          s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}.dmg
   
     - name: ubuntu cp package images from prod to gui bucket
       if: matrix.platform == 'ubuntu-latest'
       run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
-          s3://preview.gui.tea.xyz/release/gui_${{ steps.date.outputs.unix_seconds }}.deb
+        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/deb/tea_0.1.0_amd64.deb \
+          s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}.deb
 
