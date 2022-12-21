@@ -7,14 +7,14 @@
 
 	import { backLink as backLinkStore } from '$libs/stores';
 
-	let view:HTMLElement;
+	let view: HTMLElement;
 
 	let backLink = '';
 	backLinkStore.subscribe((v) => {
 		backLink = v;
 	});
 
-	$: if($navigating) view.scrollTop = 0;
+	$: if ($navigating) view.scrollTop = 0;
 </script>
 
 <div id="main-layout">
@@ -29,7 +29,7 @@
 		{/if}
 		<figure />
 
-		<div class="content" >
+		<div class="content">
 			<!-- all pages get inserted in this slot -->
 			<slot />
 		</div>
