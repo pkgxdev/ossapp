@@ -1,22 +1,27 @@
 <!-- home / discover / welcome page -->
 <script lang="ts">
 	import '$appcss';
+	import { navigating } from '$app/stores';
 	import NavBar from '$components/NavBar/NavBar.svelte';
 	import FooterLinks from '$components/FooterLinks/FooterLinks.svelte';
 
 	import { backLink as backLinkStore } from '$libs/stores';
 
+	let view:HTMLElement;
+
 	let backLink = '';
 	backLinkStore.subscribe((v) => {
 		backLink = v;
 	});
+
+	$: if($navigating) view.scrollTop = 0;
 </script>
 
 <div id="main-layout">
 	<nav class="border border-t-0 border-l-0 border-b-0 border-gray">
 		<NavBar />
 	</nav>
-	<section class="pt-24">
+	<section class="pt-24" bind:this={view}>
 		{#if backLink}
 			<header class="border-b border-gray px-16 text-3xl text-gray hover:text-primary">
 				<a href={backLink}>&#8592</a>
@@ -24,7 +29,7 @@
 		{/if}
 		<figure />
 
-		<div class="content">
+		<div class="content" >
 			<!-- all pages get inserted in this slot -->
 			<slot />
 		</div>
