@@ -16,16 +16,16 @@ jobs:
       with:
         filters: |
           src:
-            - 'packages/gui/src/**'
-            - 'packages/ui/**'
+            - 'modules/gui/src/**'
+            - 'modules/ui/**'
     - uses: dorny/paths-filter@v2
       id: tauri
       with:
         filters: |
           src:
-            - 'packages/gui/src-tauri/**'
-            - 'packages/gui/src/**'
-            - 'packages/ui/src/**'
+            - 'modules/gui/src-tauri/**'
+            - 'modules/gui/src/**'
+            - 'modules/ui/src/**'
     - name: get s3 preview folder
       id: preview
       run: echo "folder=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
@@ -94,7 +94,7 @@ jobs:
         env:
           prefix: ${{ needs.changes.outputs.preview_folder }}
         run: |
-          aws s3 sync ./packages/gui/build \
+          aws s3 sync ./modules/gui/build \
             "s3://preview.gui.tea.xyz/$prefix"
       - name: Install package
         run: sudo apt-get install -y jq coreutils
@@ -157,7 +157,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          ./packages/gui/src-tauri/target
+          ./modules/gui/src-tauri/target
         key: ${{ matrix.platform }}-build-target
         restore-keys: |
           ${{ matrix.platform }}-build-target
@@ -176,7 +176,7 @@ jobs:
       env:
         prefix: ${{ needs.changes.outputs.preview_folder }}
       run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
+        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
           "s3://preview.gui.tea.xyz/$prefix/gui.dmg"
   
     - name: ubuntu cp package images from prod to preview bucket
@@ -184,7 +184,7 @@ jobs:
       env:
         prefix: ${{ needs.changes.outputs.preview_folder }}
       run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
+        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
           "s3://preview.gui.tea.xyz/$prefix/gui.deb"
 
     - name: comment install ubuntu

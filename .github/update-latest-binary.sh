@@ -28,7 +28,7 @@ else
   pnpm build:gui -b dmg
 
   echo "uploading to s3"
-  build_path="$PWD/packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_aarch64.dmg"
+  build_path="$PWD/modules/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_aarch64.dmg"
   tag_path="s3://preview.gui.tea.xyz/release/tea_gui_$tag.$ARM_CPU.dmg"
   latest_path="s3://preview.gui.tea.xyz/release/tea_gui_latest.$ARM_CPU.dmg"
   aws s3 cp $build_path $tag_path

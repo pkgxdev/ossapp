@@ -46,7 +46,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          ./packages/gui/src-tauri/target
+          ./modules/gui/src-tauri/target
         key: ${{ matrix.platform }}-build-target-prod
         restore-keys: |
           ${{ matrix.platform }}-build-target-prod
@@ -70,14 +70,14 @@ jobs:
     - name: UBUNTU publish release 
       if: matrix.platform == 'ubuntu-latest'
       run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
+        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
           s3://preview.gui.tea.xyz/release/tea_gui_latest.${{matrix.platform}}.deb
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
+        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
           s3://preview.gui.tea.xyz/release/tea_gui_${{steps.tag.outputs.tag}}.${{matrix.platform}}.deb
     - name: MAC INTEL publish release 
       if: matrix.platform == 'macos-latest'
       run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
+        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
           s3://preview.gui.tea.xyz/release/tea_gui_latest.${{matrix.platform}}.dmg
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
+        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
           s3://preview.gui.tea.xyz/release/tea_gui_${{steps.tag.outputs.tag}}.${{matrix.platform}}.dmg
