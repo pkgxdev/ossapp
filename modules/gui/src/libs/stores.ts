@@ -60,3 +60,23 @@ function initPackagesReviewStore() {
 }
 
 export const packagesReviewStore = initPackagesReviewStore();
+
+function initSearchStore() {
+	const { subscribe, set } = writable<string>('');
+	// TODO:
+	// add fuse.js index here: packages, articles/posts, etc
+	// define fuse.js shape { tags:[], desc:string, title: string, thumb_image_url: string }
+	// should use algolia if user is somehow online
+
+	let term = '';
+
+	subscribe((v) => (term = v));
+
+	return {
+		term,
+		subscribe,
+		search: (term: string) => set(term)
+	};
+}
+
+export const searchStore = initSearchStore();
