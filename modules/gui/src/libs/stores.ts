@@ -9,15 +9,7 @@ import { getPackages, getFeaturedPackages, getPackageReviews } from '@api';
 
 export const backLink = writable<string>('/');
 
-export const packages = writable<GUIPackage[]>([]);
-
 export const featuredPackages = writable<Package[]>([]);
-
-export const initializePackages = async () => {
-	console.log('initialize packages');
-	const newPackages = await getPackages();
-	packages.set(newPackages);
-};
 
 function initPackagesStore() {
 	let initialized = false;
@@ -46,7 +38,6 @@ function initPackagesStore() {
 
 			const res = packagesIndex.search(term, { limit });
 			const matchingPackages: GUIPackage[] = res.map((v) => v.item);
-
 			return matchingPackages;
 		}
 	};
@@ -100,21 +91,30 @@ export const packagesReviewStore = initPackagesReviewStore();
 
 function initSearchStore() {
 	const { subscribe, set } = writable<string>('');
+	const packagesSearch = writable<GUIPackage[]>([]);
+
 	// TODO:
 	// add fuse.js index here: packages, articles/posts, etc
 	// define fuse.js shape { tags:[], desc:string, title: string, thumb_image_url: string }
 	// should use algolia if user is somehow online
 
-	// use packagesStore here
+	const packagesFound: GUIPackage[] = [];
 
 	let term = '';
 
 	subscribe((v) => (term = v));
+	packagesSearch.subscribe((v) => packagesFound.push(...v));
 
 	return {
 		term,
+		packagesSearch,
+		packagesFound,
 		subscribe,
-		search: (term: string) => set(term)
+		search: async (term: string) => {
+			const resultPkgs = await packagesStore.search(term, 5);
+			packagesSearch.set(resultPkgs);
+			set(term);
+		}
 	};
 }
 
