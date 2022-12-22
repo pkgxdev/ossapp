@@ -1,11 +1,11 @@
 import { writable } from 'svelte/store';
 import Fuse from 'fuse.js';
 
-import type { Package, Review } from '@tea/ui/types';
+import type { Package, Review, AirtablePost } from '@tea/ui/types';
 import type { GUIPackage } from '$libs/types';
 // TODO: figure out a better structure for managing states maybe turn them into models?
 
-import { getPackages, getFeaturedPackages, getPackageReviews } from '@api';
+import { getPackages, getFeaturedPackages, getPackageReviews, getAllPosts } from '@api';
 
 export const backLink = writable<string>('/');
 
@@ -89,9 +89,39 @@ function initPackagesReviewStore() {
 
 export const packagesReviewStore = initPackagesReviewStore();
 
+function initPosts() {
+	let initialized = false;
+	const { subscribe, set } = writable<AirtablePost[]>([]);
+	const posts: AirtablePost[] = [];
+	let postsIndex: Fuse<AirtablePost>;
+
+	if (!initialized) {
+		initialized = true;
+		getAllPosts().then(set);
+	}
+
+	subscribe((v) => {
+		posts.push(...v);
+		postsIndex = new Fuse(posts, {
+			keys: ['title', 'sub_title', 'short_description', 'tags']
+		});
+	});
+
+	return {
+		subscribe,
+		search: async (term: string, limit = 10) => {
+			const res = postsIndex.search(term, { limit });
+			const matchingPosts: AirtablePost[] = res.map((v) => v.item);
+			return matchingPosts;
+		}
+	};
+}
+export const postsStore = initPosts();
+
 function initSearchStore() {
 	const { subscribe, set } = writable<string>('');
 	const packagesSearch = writable<GUIPackage[]>([]);
+	const postsSearch = writable<AirtablePost[]>([]);
 
 	// TODO:
 	// add fuse.js index here: packages, articles/posts, etc
@@ -108,11 +138,16 @@ function initSearchStore() {
 	return {
 		term,
 		packagesSearch,
+		postsSearch,
 		packagesFound,
 		subscribe,
 		search: async (term: string) => {
-			const resultPkgs = await packagesStore.search(term, 5);
+			const [resultPkgs, resultPosts] = await Promise.all([
+				packagesStore.search(term, 5),
+				postsStore.search(term, 10)
+			]);
 			packagesSearch.set(resultPkgs);
+			postsSearch.set(resultPosts);
 			set(term);
 		}
 	};

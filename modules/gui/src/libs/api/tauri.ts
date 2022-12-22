@@ -152,9 +152,9 @@ export async function getTopPackages(): Promise<GUIPackage[]> {
 	return packages;
 }
 
-export async function getAllPosts(tag: string): Promise<AirtablePost[]> {
+export async function getAllPosts(tag?: string): Promise<AirtablePost[]> {
 	// add filter here someday: tag = news | course
-	const posts = await get<AirtablePost[]>('posts', { tag });
+	const posts = await get<AirtablePost[]>('posts', tag ? { tag } : {});
 	return posts;
 }
 

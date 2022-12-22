@@ -4,15 +4,36 @@
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import PackageCard from '@tea/ui/PackageCard/PackageCard.svelte';
 	import { PackageStates } from '$libs/types';
+	import Posts from '@tea/ui/Posts/Posts.svelte';
 
 	import { installPackage } from '@api';
+	import type { AirtablePost } from '@tea/ui/types';
 	let term: string;
 	let packagesFound: GUIPackage[] = [];
+
+	let articles: AirtablePost[] = []; // news, blogs, etc
+	let workshops: AirtablePost[] = []; // workshops, course
+
 	searchStore.subscribe((v) => {
 		term = v;
 	});
 	searchStore.packagesSearch.subscribe((pkgs) => {
 		packagesFound = pkgs;
+	});
+	searchStore.postsSearch.subscribe((posts) => {
+		let partialArticles: AirtablePost[] = [];
+		let partialWorkshops: AirtablePost[] = [];
+		for (let post of posts) {
+			if (post.tags.includes('news')) {
+				partialArticles.push(post);
+			}
+			if (post.tags.includes('course') || post.tags.includes('featured_course')) {
+				partialWorkshops.push(post);
+			}
+		}
+
+		articles = partialArticles;
+		workshops = partialWorkshops;
 	});
 
 	const getCTALabel = (state: PackageStates): string => {
@@ -32,8 +53,8 @@
 		</header>
 		<menu class="flex h-8 w-full gap-4 bg-accent px-4 text-xs">
 			<button>packages ({packagesFound.length})</button>
-			<button>articles (33)</button>
-			<button>workshops (33)</button>
+			<button>articles ({articles.length})</button>
+			<button>workshops ({workshops.length})</button>
 		</menu>
 		<header class="p-4 text-lg text-primary">
 			Top Package Results ({packagesFound.length})
@@ -66,6 +87,26 @@
 				{/each}
 			{/if}
 		</ul>
+		<header class="p-4 text-lg text-primary">
+			Top Article Results ({articles.length})
+		</header>
+		{#if articles.length}
+			<Posts posts={articles} linkTarget="_blank" />
+		{:else}
+			<section class="h-64 border border-gray bg-black p-4">
+				<Preloader />
+			</section>
+		{/if}
+		<header class="p-4 text-lg text-primary">
+			Top Workshop Results ({workshops.length})
+		</header>
+		{#if workshops.length}
+			<Posts posts={workshops} linkTarget="_blank" />
+		{:else}
+			<section class="h-64 border border-gray bg-black p-4">
+				<Preloader />
+			</section>
+		{/if}
 	</div>
 </section>
 
