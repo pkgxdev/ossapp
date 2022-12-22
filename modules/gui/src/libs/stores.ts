@@ -1,4 +1,6 @@
 import { writable } from 'svelte/store';
+import Fuse from 'fuse.js';
+
 import type { Package, Review } from '@tea/ui/types';
 import type { GUIPackage } from '$libs/types';
 // TODO: figure out a better structure for managing states maybe turn them into models?
@@ -16,6 +18,41 @@ export const initializePackages = async () => {
 	const newPackages = await getPackages();
 	packages.set(newPackages);
 };
+
+function initPackagesStore() {
+	let initialized = false;
+	const { subscribe, set } = writable<GUIPackage[]>([]);
+	let packages: GUIPackage[] = [];
+	let packagesIndex: Fuse<GUIPackage>;
+
+	if (!initialized) {
+		initialized = true;
+		getPackages().then((pkgs) => {
+			set(pkgs);
+			packagesIndex = new Fuse(pkgs, {
+				keys: ['name', 'full_name', 'desc']
+			});
+		});
+	}
+
+	subscribe((v) => packages.push(...v));
+
+	return {
+		packages,
+		subscribe,
+		search: async (term: string, limit: number = 5): Promise<GUIPackage[]> => {
+			if (!term) return [];
+			// TODO: if online, use algolia else use Fuse
+
+			const res = packagesIndex.search(term, { limit });
+			const matchingPackages: GUIPackage[] = res.map((v) => v.item);
+
+			return matchingPackages;
+		}
+	};
+}
+
+export const packagesStore = initPackagesStore();
 
 export const initializeFeaturedPackages = async () => {
 	console.log('initialzie featured packages');
@@ -67,6 +104,8 @@ function initSearchStore() {
 	// add fuse.js index here: packages, articles/posts, etc
 	// define fuse.js shape { tags:[], desc:string, title: string, thumb_image_url: string }
 	// should use algolia if user is somehow online
+
+	// use packagesStore here
 
 	let term = '';
 

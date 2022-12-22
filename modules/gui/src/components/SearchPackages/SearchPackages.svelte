@@ -1,21 +1,16 @@
 <script lang="ts">
 	import '$appcss';
-	import Fuse from 'fuse.js';
-	import { packages as packagesStore, initializePackages } from '$libs/stores';
+	import { packagesStore } from '$libs/stores';
 	import SortingButtons from './SortingButtons.svelte';
 	import type { GUIPackage } from '$libs/types';
 	import { PackageStates } from '$libs/types';
 	import PackageCard from '@tea/ui/PackageCard/PackageCard.svelte';
 	import SearchInput from '@tea/ui/SearchInput/SearchInput.svelte';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
-	import { onMount } from 'svelte';
 
 	import { installPackage } from '@api';
 
-	let allPackages: GUIPackage[] = [];
-	let packagesIndex: Fuse<GUIPackage>;
 	let packages: GUIPackage[] = [];
-	let initialized = false;
 
 	let sortBy = 'popularity';
 	let sortDirection: 'asc' | 'desc' = 'desc';
@@ -39,32 +34,12 @@
 			  });
 	};
 
-	packagesStore.subscribe((v) => {
-		allPackages = v;
-		setPackages(allPackages);
-		if (!packagesIndex && allPackages.length) {
-			// dont remove or this can get crazy
-			packagesIndex = new Fuse(allPackages, {
-				keys: ['name', 'full_name', 'desc']
-			});
-		}
-	});
-
-	onMount(async () => {
-		if (!packages.length && !initialized) {
-			initialized = true;
-			initializePackages();
-		}
-	});
-
-	const onSearch = (term: string) => {
+	const onSearch = async (term: string) => {
 		if (term !== '' && term.length > 1) {
-			const res = packagesIndex.search(term, { limit: searchLimit });
-			const matchingPackages: GUIPackage[] = res.map((v) => v.item);
-
+			const matchingPackages: GUIPackage[] = await packagesStore.search(term, searchLimit);
 			setPackages(matchingPackages, true);
 		} else {
-			setPackages(allPackages);
+			setPackages(packagesStore.packages, false);
 		}
 	};
 
@@ -82,6 +57,8 @@
 			[PackageStates.UNINSTALLED]: 'RE-INSTALL'
 		}[state];
 	};
+
+	packagesStore.subscribe(setPackages);
 </script>
 
 <div class="border border-gray bg-black">
