@@ -41,7 +41,7 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18
           cache: 'pnpm'
           cache-dependency-path: pnpm-lock.yaml
       - name: install Rust stable
@@ -73,7 +73,7 @@ jobs:
     - name: setup node
       uses: actions/setup-node@v1
       with:
-        node-version: 16
+        node-version: 18
         cache: 'pnpm'
         cache-dependency-path: pnpm-lock.yaml
     - name: install Rust stable
