@@ -20,7 +20,7 @@ jobs:
     - name: setup node
       uses: actions/setup-node@v1
       with:
-        node-version: 16
+        node-version: 18
         cache: 'pnpm'
         cache-dependency-path: pnpm-lock.yaml
     - name: install Rust stable
@@ -81,3 +81,10 @@ jobs:
           s3://preview.gui.tea.xyz/release/tea_gui_latest.${{matrix.platform}}.dmg
         aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_x64.dmg \
           s3://preview.gui.tea.xyz/release/tea_gui_${{steps.tag.outputs.tag}}.${{matrix.platform}}.dmg
+    - name: Slack Notification
+      run: ./.github/notify-slack.js
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        PLATFORM: ${{ matrix.platform }}
+        VERSION: ${{steps.tag.outputs.tag}}
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_gui_${{steps.tag.outputs.tag}}.${{matrix.platform}}.${{ matrix.platform == 'ubuntu-latest' && 'deb' ||  'dmg'}}

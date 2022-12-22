@@ -41,7 +41,7 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18
           cache: 'pnpm'
           cache-dependency-path: pnpm-lock.yaml
       - name: install Rust stable
@@ -73,7 +73,7 @@ jobs:
     - name: setup node
       uses: actions/setup-node@v1
       with:
-        node-version: 16
+        node-version: 18
         cache: 'pnpm'
         cache-dependency-path: pnpm-lock.yaml
     - name: install Rust stable
@@ -126,4 +126,9 @@ jobs:
       run: |
         aws s3 cp ./modules/gui/src-tauri/target/release/bundle/deb/tea_0.1.0_amd64.deb \
           s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}.deb
-
+    - name: Slack Notification
+      run: ./.github/notify-slack.js
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        PLATFORM: ${{ matrix.platform }}
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}.${{ matrix.platform == 'ubuntu-latest' && 'deb' ||  'dmg'}}
