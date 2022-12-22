@@ -131,8 +131,5 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_USERNAME: GH_GUI_BOT
-        SLACK_TITLE: NEW BUILD
-        SLACK_MESSAGE: |
-          installers:
-          <s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}.deb|ubuntu>
-          <s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}.dmg|macos intel>
+        SLACK_TITLE: LATEST BUILD {{matrix.platform}}
+        SLACK_MESSAGE: download <s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}.${{ matrix.platform == 'ubuntu-latest' && 'deb' ||  'dmg'}}|here>
