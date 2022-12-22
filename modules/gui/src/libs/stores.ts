@@ -22,7 +22,7 @@ export const initializePackages = async () => {
 function initPackagesStore() {
 	let initialized = false;
 	const { subscribe, set } = writable<GUIPackage[]>([]);
-	let packages: GUIPackage[] = [];
+	const packages: GUIPackage[] = [];
 	let packagesIndex: Fuse<GUIPackage>;
 
 	if (!initialized) {
@@ -40,8 +40,8 @@ function initPackagesStore() {
 	return {
 		packages,
 		subscribe,
-		search: async (term: string, limit: number = 5): Promise<GUIPackage[]> => {
-			if (!term) return [];
+		search: async (term: string, limit = 5): Promise<GUIPackage[]> => {
+			if (!term || !packagesIndex) return [];
 			// TODO: if online, use algolia else use Fuse
 
 			const res = packagesIndex.search(term, { limit });

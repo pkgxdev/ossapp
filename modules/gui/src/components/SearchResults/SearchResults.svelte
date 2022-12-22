@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { searchStore } from '$libs/stores';
-	import PanelHeader from '@tea/ui/PanelHeader/PanelHeader.svelte';
 	let term: string;
 	searchStore.subscribe((v) => (term = v));
 </script>

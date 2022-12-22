@@ -1,16 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { open } from '@tauri-apps/api/shell';
 	import { appWindow } from '@tauri-apps/api/window';
 	import { searchStore } from '$libs/stores';
 	import SearchInput from '@tea/ui/SearchInput/SearchInput.svelte';
 	import Button from '@tea/ui/Button/Button.svelte';
 
 	import { beforeUpdate } from 'svelte';
-
-	const openGithub = () => {
-		open('https://github.com/teaxyz');
-	};
 
 	let maximized = false;
 	const toggleMaximize = () => {
