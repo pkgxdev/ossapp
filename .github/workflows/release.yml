@@ -81,3 +81,10 @@ jobs:
           s3://preview.gui.tea.xyz/release/tea_gui_latest.${{matrix.platform}}.dmg
         aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_x64.dmg \
           s3://preview.gui.tea.xyz/release/tea_gui_${{steps.tag.outputs.tag}}.${{matrix.platform}}.dmg
+    - name: Slack Notification
+      run: ./.github/notify-slack.js
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        PLATFORM: ${{ matrix.platform }}
+        VERSION: ${{steps.tag.outputs.tag}}
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}.${{ matrix.platform == 'ubuntu-latest' && 'deb' ||  'dmg'}}
