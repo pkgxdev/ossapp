@@ -126,4 +126,13 @@ jobs:
       run: |
         aws s3 cp ./modules/gui/src-tauri/target/release/bundle/deb/tea_0.1.0_amd64.deb \
           s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}.deb
-
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: GH_GUI_BOT
+        SLACK_TITLE: NEW BUILD
+        SLACK_MESSAGE: |
+          installers:
+          <s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}.deb|ubuntu>
+          <s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}.dmg|macos intel>
