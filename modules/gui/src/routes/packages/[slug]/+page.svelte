@@ -9,7 +9,7 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	import { packages, featuredPackages } from '$libs/stores';
+	import { packagesStore, featuredPackages } from '$libs/stores';
 
 	import type { Package } from '@tea/ui/types';
 
@@ -30,7 +30,7 @@
 		// }
 	};
 
-	packages.subscribe(setPkg);
+	packagesStore.subscribe(setPkg);
 	featuredPackages.subscribe(setPkg);
 </script>
 

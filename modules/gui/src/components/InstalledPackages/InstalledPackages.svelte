@@ -3,7 +3,7 @@
 	import type { GUIPackage } from '$libs/types';
 	import { PackageStates } from '$libs/types';
 	import PanelHeader from '@tea/ui/PanelHeader/PanelHeader.svelte';
-	import { packages as packagesStore } from '$libs/stores';
+	import { packagesStore } from '$libs/stores';
 	import MiniPackageCard from '@tea/ui/MiniPackageCard/MiniPackageCard.svelte';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	let packages: GUIPackage[] = [];
