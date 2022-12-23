@@ -27,6 +27,8 @@ jobs:
         filters: |
           src:
             - 'modules/gui/src-tauri/**'
+            - 'modules/gui/src/**'
+            - 'modules/ui/src/**'
   build_svelte:
     needs: changes
     if: needs.changes.outputs.svelte == 'true'

@@ -125,8 +125,6 @@ function initSearchStore() {
 	const postsSearch = writable<AirtablePost[]>([]);
 
 	// TODO:
-	// add fuse.js index here: packages, articles/posts, etc
-	// define fuse.js shape { tags:[], desc:string, title: string, thumb_image_url: string }
 	// should use algolia if user is somehow online
 
 	const packagesFound: GUIPackage[] = [];
