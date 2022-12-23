@@ -26,7 +26,8 @@ async function get<T>(path: string, query?: { [key: string]: string }) {
 	const uri = join(base, path);
 	const { data } = await client.get<T>(uri.toString(), {
 		headers: {
-			Authorization: 'public' // TODO: figure out why req w/o Authorization does not work
+			Authorization: 'public', // TODO: figure out why req w/o Authorization does not work
+			'cache-control': 'no-cache'
 		},
 		query: query || {}
 	});
@@ -151,9 +152,9 @@ export async function getTopPackages(): Promise<GUIPackage[]> {
 	return packages;
 }
 
-export async function getAllPosts(tag: string): Promise<AirtablePost[]> {
+export async function getAllPosts(tag?: string): Promise<AirtablePost[]> {
 	// add filter here someday: tag = news | course
-	const posts = await get<AirtablePost[]>('posts', { tag });
+	const posts = await get<AirtablePost[]>('posts', tag ? { tag } : {});
 	return posts;
 }
 

@@ -8,7 +8,7 @@ async function main() {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `NEW BUILD FOR ${process.env.PLATFORM}  <${process.env.DOWNLOAD_URL}|download ${process.env.VERSION ? ('v'+process.env.VERSION) : ''}>`
+          text: `NEW BUILD FOR ${process.env.PLATFORM}  <${process.env.DOWNLOAD_URL}|download ${process.env.VERSION || ''}>`
         }
       }
     ]
