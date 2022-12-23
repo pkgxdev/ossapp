@@ -9,16 +9,16 @@
 	import { installPackage } from '@api';
 	import type { AirtablePost } from '@tea/ui/types';
 	let term: string;
-	let packagesFound: GUIPackage[] = [];
-
+	let packages: GUIPackage[] = [];
 	let articles: AirtablePost[] = []; // news, blogs, etc
 	let workshops: AirtablePost[] = []; // workshops, course
+	let loading = true;
 
 	searchStore.subscribe((v) => {
 		term = v;
 	});
 	searchStore.packagesSearch.subscribe((pkgs) => {
-		packagesFound = pkgs;
+		packages = pkgs;
 	});
 	searchStore.postsSearch.subscribe((posts) => {
 		let partialArticles: AirtablePost[] = [];
@@ -36,6 +36,8 @@
 		workshops = partialWorkshops;
 	});
 
+	searchStore.searching.subscribe((v) => (loading = v));
+
 	const getCTALabel = (state: PackageStates): string => {
 		return {
 			[PackageStates.AVAILABLE]: 'INSTALL',
@@ -44,24 +46,32 @@
 			[PackageStates.UNINSTALLED]: 'RE-INSTALL'
 		}[state];
 	};
+
+	const onClose = () => {
+		term = '';
+	};
 </script>
 
 <section class={term ? 'show' : ''}>
-	<div class="border border-gray bg-black">
-		<header class="p-4 text-2xl text-primary">
-			Showing search results for `{term}`
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<figure on:click={onClose} />
+	<div class="z-20 border border-gray bg-black">
+		<header class="flex justify-between p-4">
+			<div class="text-2xl text-primary">Showing search results for `{term}`</div>
+
+			<button on:click={onClose}>&#x2715</button>
 		</header>
 		<menu class="flex h-8 w-full gap-4 bg-accent px-4 text-xs">
-			<button>packages ({packagesFound.length})</button>
+			<button>packages ({packages.length})</button>
 			<button>articles ({articles.length})</button>
 			<button>workshops ({workshops.length})</button>
 		</menu>
 		<header class="p-4 text-lg text-primary">
-			Top Package Results ({packagesFound.length})
+			Top Package Results ({packages.length})
 		</header>
 		<ul class="grid grid-cols-3">
-			{#if packagesFound.length > 0}
-				{#each packagesFound as pkg}
+			{#if packages.length > 0}
+				{#each packages as pkg}
 					<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
 						<PackageCard
 							{pkg}
@@ -79,7 +89,7 @@
 						/>
 					</div>
 				{/each}
-			{:else}
+			{:else if loading}
 				{#each Array(12) as _}
 					<section class="h-50 border border-gray p-4">
 						<Preloader />
@@ -92,7 +102,7 @@
 		</header>
 		{#if articles.length}
 			<Posts posts={articles} linkTarget="_blank" />
-		{:else}
+		{:else if loading}
 			<section class="h-64 border border-gray bg-black p-4">
 				<Preloader />
 			</section>
@@ -102,7 +112,7 @@
 		</header>
 		{#if workshops.length}
 			<Posts posts={workshops} linkTarget="_blank" />
-		{:else}
+		{:else if loading}
 			<section class="h-64 border border-gray bg-black p-4">
 				<Preloader />
 			</section>
@@ -122,14 +132,23 @@
 		opacity: 0%;
 		overflow: hidden;
 		height: 0px;
+		z-index: 10;
 	}
 
+	section > figure {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+	}
 	section.show {
 		opacity: 100%;
 		height: 100%;
 	}
 
 	section > div {
+		position: relative;
 		height: 0%;
 		transition: height 0.6s ease-in-out;
 		overflow-y: scroll;

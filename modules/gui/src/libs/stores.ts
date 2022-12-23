@@ -119,6 +119,7 @@ function initPosts() {
 export const postsStore = initPosts();
 
 function initSearchStore() {
+	const searching = writable<boolean>(false);
 	const { subscribe, set } = writable<string>('');
 	const packagesSearch = writable<GUIPackage[]>([]);
 	const postsSearch = writable<AirtablePost[]>([]);
@@ -137,18 +138,29 @@ function initSearchStore() {
 
 	return {
 		term,
+		searching,
 		packagesSearch,
 		postsSearch,
 		packagesFound,
 		subscribe,
 		search: async (term: string) => {
-			const [resultPkgs, resultPosts] = await Promise.all([
-				packagesStore.search(term, 5),
-				postsStore.search(term, 10)
-			]);
-			packagesSearch.set(resultPkgs);
-			postsSearch.set(resultPosts);
-			set(term);
+			searching.set(true);
+			try {
+				if (term) {
+					const [resultPkgs, resultPosts] = await Promise.all([
+						packagesStore.search(term, 5),
+						postsStore.search(term, 10)
+					]);
+					packagesSearch.set(resultPkgs);
+					postsSearch.set(resultPosts);
+				} else {
+					packagesSearch.set([]);
+					postsSearch.set([]);
+				}
+				set(term);
+			} finally {
+				searching.set(false);
+			}
 		}
 	};
 }

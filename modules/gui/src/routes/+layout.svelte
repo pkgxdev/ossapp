@@ -6,7 +6,7 @@
 	import FooterLinks from '$components/FooterLinks/FooterLinks.svelte';
 
 	import { backLink as backLinkStore } from '$libs/stores';
-	import SearchResults from '$components/SearchResults/SearchResults.svelte';
+	import SearchPopupResults from '$components/SearchPopupResults/SearchPopupResults.svelte';
 
 	let view: HTMLElement;
 
@@ -37,7 +37,7 @@
 		<footer class="mt-8 w-full border border-r-0 border-gray bg-black">
 			<FooterLinks />
 		</footer>
-		<SearchResults />
+		<SearchPopupResults />
 	</section>
 </div>
 
@@ -58,15 +58,17 @@
 		overflow-y: scroll;
 	}
 
+	figure {
+		z-index: 0;
+		position: fixed;
+		top: 220px;
+		left: 240px;
+		right: 0px;
+		bottom: 0px;
+		background-image: url('/images/gui-background-grid.svg');
+	}
 	@media screen and (min-width: 1440px) {
 		figure {
-			position: fixed;
-			z-index: 0;
-			top: 220px;
-			left: 240px;
-			right: 0px;
-			bottom: 0px;
-			background-image: url('/images/gui-background-grid.svg');
 			background-size: cover;
 			background-repeat: repeat-y;
 		}
@@ -76,13 +78,6 @@
 	}
 	@media screen and (max-width: 1440px) {
 		figure {
-			position: fixed;
-			z-index: 0;
-			top: 220px;
-			left: 240px;
-			right: 0px;
-			bottom: 0px;
-			background-image: url('/images/gui-background-grid.svg');
 			background-size: contain;
 			background-repeat: repeat;
 		}
