@@ -6,8 +6,12 @@
 	import type { Review } from '@tea/ui/types';
 	export let reviews: Review[];
 
+	export let showLimit = 9;
+	let showMore = false;
+
 	const getColReviews = (n: number) => {
-		return reviews.filter((_item, i) => (i - n) % 3 === 0);
+		const showReviews = reviews.filter((_item, i) => (i - n) % 3 === 0);
+		return showMore ? showReviews : showReviews.slice(0, showLimit / 3);
 	};
 
 	let col1: Review[] = [];
@@ -26,22 +30,27 @@
 
 <header class="border border-gray bg-black p-4 text-primary">REVIEWS ({reviews.length})</header>
 <section class="flex flex-row flex-wrap bg-black font-machina">
-	<div class="w-1/3 border-0 border-l-2 border-gray p-4">
+	<div class="w-1/3 border-0 border-l-2 border-b-2 border-gray p-4">
 		{#each col1 as review}
 			<ReviewCard {review} />
 			<div class="mt-4" />
 		{/each}
 	</div>
-	<div class="w-1/3 border-0 border-l-2 border-gray p-4">
+	<div class="w-1/3 border-0 border-l-2 border-b-2 border-gray p-4">
 		{#each col2 as review}
 			<ReviewCard {review} />
 			<div class="mt-4" />
 		{/each}
 	</div>
-	<div class="w-1/3 border-0 border-x-2 border-gray p-4">
+	<div class="w-1/3 border-0 border-x-2 border-b-2 border-gray p-4">
 		{#each col3 as review}
 			<ReviewCard {review} />
 			<div class="mt-4" />
 		{/each}
 	</div>
 </section>
+{#if showLimit <= reviews.length && showMore === false}
+	<footer class="border border-gray bg-black p-4">
+		<button on:click={() => (showMore = true)}>SHOW MORE</button>
+	</footer>
+{/if}

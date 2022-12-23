@@ -172,7 +172,7 @@ export async function getFeaturedPackages(): Promise<Package[]> {
 export async function getPackageReviews(full_name: string): Promise<Review[]> {
 	console.log(`generating reviews for ${full_name}`);
 
-	const reviewCount = _.random(7, 21);
+	const reviewCount = _.random(9, 21);
 	const reviews: Review[] = [];
 
 	for (let i = 0; i < reviewCount; i++) {
