@@ -127,8 +127,8 @@ jobs:
           #   container:
           #     image: debian:buster-slim
           #     options: --memory=24g
-          # - os: [self-hosted, macOS, ARM64]
-          #   name: darwin+aarch64
+          - os: [self-hosted, macOS, ARM64]
+            name: darwin+aarch64
           # - os: [self-hosted, linux, ARM64]
           #   name: linux+aarch64
     container: ${{ matrix.platform.container }}
@@ -180,6 +180,10 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
+    
+    - run: echo $name
+      env:
+        name: ${{matrix.platform.name}}
 
     # - name: mac-os cp package images from prod to preview bucket
     #   if: matrix.platform == 'macos-latest'
