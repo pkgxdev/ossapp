@@ -119,7 +119,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest]
+        platform:
+          - os: macos-11
+            name: darwin+x86-64
+          - os: ubuntu-latest
+            name: linux+x86-64
+            container:
+              image: debian:buster-slim
+              options: --memory=24g
+          - os: [self-hosted, macOS, ARM64]
+            name: darwin+aarch64
+          - os: [self-hosted, linux, ARM64]
+            name: linux+aarch64
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -171,43 +182,43 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - name: mac-os cp package images from prod to preview bucket
-      if: matrix.platform == 'macos-latest'
-      env:
-        prefix: ${{ needs.changes.outputs.preview_folder }}
-      run: |
-        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_x64.dmg \
-          "s3://preview.gui.tea.xyz/$prefix/gui.dmg"
+    # - name: mac-os cp package images from prod to preview bucket
+    #   if: matrix.platform == 'macos-latest'
+    #   env:
+    #     prefix: ${{ needs.changes.outputs.preview_folder }}
+    #   run: |
+    #     aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_x64.dmg \
+    #       "s3://preview.gui.tea.xyz/$prefix/gui.dmg"
   
-    - name: ubuntu cp package images from prod to preview bucket
-      if: matrix.platform == 'ubuntu-latest'
-      env:
-        prefix: ${{ needs.changes.outputs.preview_folder }}
-      run: |
-        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/deb/tea_0.1.0_amd64.deb \
-          "s3://preview.gui.tea.xyz/$prefix/gui.deb"
+    # - name: ubuntu cp package images from prod to preview bucket
+    #   if: matrix.platform == 'ubuntu-latest'
+    #   env:
+    #     prefix: ${{ needs.changes.outputs.preview_folder }}
+    #   run: |
+    #     aws s3 cp ./modules/gui/src-tauri/target/release/bundle/deb/tea_0.1.0_amd64.deb \
+    #       "s3://preview.gui.tea.xyz/$prefix/gui.deb"
 
-    - name: comment install ubuntu
-      uses: mshick/add-pr-comment@v2
-      if: matrix.platform == 'ubuntu-latest'
-      with:
-        message-id: ${{ matrix.platform }}-comment-${{steps.prefix.outputs.prefix}}
-        message: |
-          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb)
-          ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui.deb
-          ```
-          copy-paste into a browser to download
+    # - name: comment install ubuntu
+    #   uses: mshick/add-pr-comment@v2
+    #   if: matrix.platform == 'ubuntu-latest'
+    #   with:
+    #     message-id: ${{ matrix.platform }}-comment-${{steps.prefix.outputs.prefix}}
+    #     message: |
+    #       **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb)
+    #       ```bash
+    #       http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui.deb
+    #       ```
+    #       copy-paste into a browser to download
 
   
-    - name: comment install mac-os
-      uses: mshick/add-pr-comment@v2
-      if: matrix.platform == 'macos-latest'
-      with:
-        message-id: ${{ matrix.platform }}-comment-${{steps.prefix.outputs.prefix}}
-        message: |
-          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg)
-          ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui.dmg
-          ```
-          copy-paste into a browser to download
+    # - name: comment install mac-os
+    #   uses: mshick/add-pr-comment@v2
+    #   if: matrix.platform == 'macos-latest'
+    #   with:
+    #     message-id: ${{ matrix.platform }}-comment-${{steps.prefix.outputs.prefix}}
+    #     message: |
+    #       **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg)
+    #       ```bash
+    #       http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui.dmg
+    #       ```
+    #       copy-paste into a browser to download
