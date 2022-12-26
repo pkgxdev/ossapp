@@ -116,8 +116,8 @@ jobs:
   build_tauri:
     needs: changes
     if: needs.changes.outputs.tauri == 'true'
+    runs-on: ${{ matrix.platform.os }}
     strategy:
-      fail-fast: false
       matrix:
         platform:
           - os: macos-11
@@ -132,7 +132,6 @@ jobs:
           # - os: [self-hosted, linux, ARM64]
           #   name: linux+aarch64
     container: ${{ matrix.platform.container }}
-    runs-on: ${{ matrix.platform }}
     steps:
     - uses: actions/checkout@v2
 
