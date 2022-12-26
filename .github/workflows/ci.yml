@@ -131,7 +131,7 @@ jobs:
             name: darwin+aarch64
           - os: [self-hosted, linux, ARM64]
             name: linux+aarch64
-
+    container: ${{ matrix.platform.container }}
     runs-on: ${{ matrix.platform }}
     steps:
     - uses: actions/checkout@v2
