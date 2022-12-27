@@ -126,8 +126,8 @@ jobs:
             name: linux+x86-64
           - os: [self-hosted, macOS, ARM64]
             name: darwin+aarch64
-          - os: [self-hosted, linux, ARM64]
-            name: linux+aarch64
+          # - os: [self-hosted, linux, ARM64]
+          #   name: linux+aarch64
     container: ${{ matrix.platform.container }}
     steps:
     - uses: actions/checkout@v2
