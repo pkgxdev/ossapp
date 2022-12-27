@@ -124,8 +124,6 @@ jobs:
             name: darwin+x86-64
           - os: ubuntu-latest
             name: linux+x86-64
-            container:
-              image: debian:buster
           - os: [self-hosted, macOS, ARM64]
             name: darwin+aarch64
           - os: [self-hosted, linux, ARM64]
@@ -143,9 +141,6 @@ jobs:
         node-version: 16
         cache: 'pnpm'
         cache-dependency-path: pnpm-lock.yaml
-    - name: install curl
-      if: matrix.platform.name == 'linux+x86-64' || matrix.platform.name == 'linux+aarch64'
-      run: apt update && apt install curl
     - name: install Rust stable
       uses: actions-rs/toolchain@v1
       with:
