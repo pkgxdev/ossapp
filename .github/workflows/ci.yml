@@ -175,6 +175,7 @@ jobs:
         platform: ${{ matrix.platform.name }}
       run: |
         BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
+        [[ $BUILD_PLATFORM = "x86-64" ]] && BUILD_PLATFORM="x64" || BUILD_PLATFORM=$BUILD_PLATFORM
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
 
     - name: test build tauri
@@ -226,6 +227,6 @@ jobs:
         message: |
           **installer for ${{ matrix.platform.name }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui_${{steps.build_platform.outputs.build_platform}}.dmg)
           ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui.${{ steps.build_platform.outputs.build_platform }}.dmg
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{ steps.build_platform.outputs.build_platform }}.dmg
           ```
           copy-paste into a browser to download
