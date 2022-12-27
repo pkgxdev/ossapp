@@ -146,7 +146,7 @@ jobs:
       with:
         toolchain: stable
     - name: install dependencies (ubuntu only)
-      if: matrix.platform == 'ubuntu-latest'
+      if: matrix.platform.name == 'linux+x86-64'
       run: |
         sudo apt-get update
         sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
@@ -182,13 +182,14 @@ jobs:
       env:
         name: ${{matrix.platform.name}}
 
-    # - name: mac-os cp package images from prod to preview bucket
-    #   if: matrix.platform == 'macos-latest'
-    #   env:
-    #     prefix: ${{ needs.changes.outputs.preview_folder }}
-    #   run: |
-    #     aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_x64.dmg \
-    #       "s3://preview.gui.tea.xyz/$prefix/gui.dmg"
+    - name: mac-os cp package images from prod to preview bucket
+      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      env:
+        prefix: ${{ needs.changes.outputs.preview_folder }}
+        platform: ${{ matrix.platform.name }}
+      run: |
+        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_x64.dmg \
+          "s3://preview.gui.tea.xyz/$prefix/gui.$platform.dmg"
   
     # - name: ubuntu cp package images from prod to preview bucket
     #   if: matrix.platform == 'ubuntu-latest'
@@ -211,14 +212,14 @@ jobs:
     #       copy-paste into a browser to download
 
   
-    # - name: comment install mac-os
-    #   uses: mshick/add-pr-comment@v2
-    #   if: matrix.platform == 'macos-latest'
-    #   with:
-    #     message-id: ${{ matrix.platform }}-comment-${{steps.prefix.outputs.prefix}}
-    #     message: |
-    #       **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg)
-    #       ```bash
-    #       http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui.dmg
-    #       ```
-    #       copy-paste into a browser to download
+    - name: comment install mac-os
+      uses: mshick/add-pr-comment@v2
+      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      with:
+        message-id: ${{ matrix.platform.name }}-comment-${{steps.prefix.outputs.prefix}}
+        message: |
+          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg)
+          ```bash
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui.${{ matrix.platform.name }}.dmg
+          ```
+          copy-paste into a browser to download
