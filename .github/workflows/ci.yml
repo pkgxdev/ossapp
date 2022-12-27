@@ -149,7 +149,7 @@ jobs:
       if: matrix.platform.name == 'linux+x86-64'
       run: |
         sudo apt-get update
-        sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+        sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
     - uses: Swatinem/rust-cache@v2
       with:
         # The prefix cache key, this can be changed to start a new cache manually.
@@ -178,19 +178,22 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
     
-    - run: echo $name
-      env:
-        name: ${{matrix.platform.name}}
+    - name: build platform output
+      id: build_platform
+      run: |
+        BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
+        echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
 
     - name: mac-os cp package images from prod to preview bucket
       if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
       env:
         prefix: ${{ needs.changes.outputs.preview_folder }}
-        platform: ${{ matrix.platform.name }}
+        platform: ${{ steps.build_platform.outputs.build_platform }}
       run: |
-        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_x64.dmg \
-          "s3://preview.gui.tea.xyz/$prefix/gui.$platform.dmg"
-  
+        aws s3 cp "./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_$platform.dmg" \
+          "s3://preview.gui.tea.xyz/$prefix/gui_$platform.dmg"
+
+
     # - name: ubuntu cp package images from prod to preview bucket
     #   if: matrix.platform == 'ubuntu-latest'
     #   env:
@@ -218,8 +221,8 @@ jobs:
       with:
         message-id: ${{ matrix.platform.name }}-comment-${{steps.prefix.outputs.prefix}}
         message: |
-          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg)
+          **installer for ${{ matrix.platform.name }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui_${{steps.build_platform.outputs.build_platform}}.dmg)
           ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui.${{ matrix.platform.name }}.dmg
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui.${{ steps.build_platform.outputs.build_platform }}.dmg
           ```
           copy-paste into a browser to download
