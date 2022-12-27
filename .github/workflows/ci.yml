@@ -144,9 +144,9 @@ jobs:
         node-version: 16
         cache: 'pnpm'
         cache-dependency-path: pnpm-lock.yaml
-    - name: install wget
+    - name: install curl
       if: matrix.platform.name == 'linux+x86-64' || matrix.platform.name == 'linux+aarch64'
-      run: apt install curl
+      run: sudo apt install curl
     - name: install Rust stable
       uses: actions-rs/toolchain@v1
       with:
