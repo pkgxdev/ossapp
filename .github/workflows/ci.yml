@@ -168,6 +168,14 @@ jobs:
         key: ${{ matrix.platform.name }}-build-target
         restore-keys: |
           ${{ matrix.platform.name }}-build-target
+    
+    - name: build platform output
+      id: build_platform
+      env:
+        platform: ${{ matrix.platform.name }}
+      run: |
+        BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
+        echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
 
     - name: test build tauri
       run: pnpm --filter gui tauri build
@@ -177,12 +185,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-    
-    - name: build platform output
-      id: build_platform
-      run: |
-        BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
-        echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
+
 
     - name: mac-os cp package images from prod to preview bucket
       if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
