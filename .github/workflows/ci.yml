@@ -200,7 +200,7 @@ jobs:
 
 
     - name: ubuntu cp package images from prod to preview bucket
-      if: matrix.platform == 'ubuntu-latest'
+      if: matrix.platform.name == 'linux+x86-64'
       env:
         prefix: ${{ needs.changes.outputs.preview_folder }}
         platform: ${{ steps.build_platform.outputs.build_platform }}
@@ -210,7 +210,7 @@ jobs:
 
     - name: comment install ubuntu
       uses: mshick/add-pr-comment@v2
-      if: matrix.platform == 'ubuntu-latest'
+      if: matrix.platform.name == 'linux+x86-64'
       with:
         message-id: ${{ matrix.platform.name }}-comment
         message: |

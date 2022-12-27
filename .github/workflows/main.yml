@@ -60,12 +60,19 @@ jobs:
   build_tauri:
     needs: changes
     if: needs.changes.outputs.tauri == 'true'
+    runs-on: ${{ matrix.platform.os }}
     strategy:
-      fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest]
-
-    runs-on: ${{ matrix.platform }}
+        platform:
+          - os: macos-11
+            name: darwin+x86-64
+          - os: ubuntu-latest
+            name: linux+x86-64
+          - os: [self-hosted, macOS, ARM64]
+            name: darwin+aarch64
+          # - os: [self-hosted, linux, ARM64]
+          #   name: linux+aarch64
+    container: ${{ matrix.platform.container }}
     steps:
     - uses: actions/checkout@v2
 
@@ -86,11 +93,11 @@ jobs:
       with:
         # The prefix cache key, this can be changed to start a new cache manually.
         # default: "v0-rust"
-        prefix-key: ${{ matrix.platform }}
+        prefix-key: ${{ matrix.platform.name }}
         shared-key: prod
         cache-targets: false
     - name: install dependencies (ubuntu only)
-      if: matrix.platform == 'ubuntu-latest'
+      if: matrix.platform.name == 'linux+x86-64'
       run: |
         sudo apt-get update
         sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
@@ -102,9 +109,9 @@ jobs:
       with:
         path: |
           ./modules/gui/src-tauri/target
-        key: ${{ matrix.platform }}-build-target-prod
+        key: ${{ matrix.platform.name }}-build-target-prod
         restore-keys: |
-          ${{ matrix.platform }}-build-target-prod
+          ${{ matrix.platform.name }}-build-target-prod
 
     - name: test build tauri
       run: pnpm --filter gui tauri build
@@ -117,20 +124,30 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-    - name: mac-os cp package images from prod to gui bucket
-      if: matrix.platform == 'macos-latest'
+
+    - name: build platform output
+      id: build_platform
+      env:
+        platform: ${{ matrix.platform.name }}
       run: |
-        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_x64.dmg \
-          s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}.dmg
+        BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
+        [[ $BUILD_PLATFORM = "x86-64" ]] && BUILD_PLATFORM="x64" || BUILD_PLATFORM=$BUILD_PLATFORM
+        [[ $BUILD_PLATFORM = "linux+x86-64" ]] && BUILD_PLATFORM="amd64" || BUILD_PLATFORM=$BUILD_PLATFORM
+        echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
   
-    - name: ubuntu cp package images from prod to gui bucket
-      if: matrix.platform == 'ubuntu-latest'
+    - name:  cp package images from prod to gui bucket
+      env:
+        platform: ${{ steps.build_platform.outputs.build_platform }}
+        build_platform: ${{ matrix.platform.name }}
       run: |
-        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/deb/tea_0.1.0_amd64.deb \
-          s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}.deb
+        extension=dmg
+        [[ $build_platform = "linux+x86-64" ]] && extension="deb" || extension="dmg"
+        aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
+          "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
+
     - name: Slack Notification
       run: ./.github/notify-slack.js
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        PLATFORM: ${{ matrix.platform }}
-        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}.${{ matrix.platform == 'ubuntu-latest' && 'deb' ||  'dmg'}}
+        PLATFORM: ${{ matrix.platform.name }}
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.${{ matrix.platform.name == 'ubuntu-latest' && 'deb' ||  'dmg'}}
