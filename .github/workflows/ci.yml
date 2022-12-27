@@ -174,10 +174,13 @@ jobs:
       env:
         platform: ${{ matrix.platform.name }}
       run: |
+        EXTENSION=dmg
         BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
         [[ $BUILD_PLATFORM = "x86-64" ]] && BUILD_PLATFORM="x64" || BUILD_PLATFORM=$BUILD_PLATFORM
         [[ $platform = "linux+x86-64" ]] && BUILD_PLATFORM="amd64" || BUILD_PLATFORM=$BUILD_PLATFORM
+        [[ $platform = "linux+x86-64" ]] && EXTENSION="deb"
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
+        echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
 
     - name: test build tauri
       run: pnpm --filter gui tauri build
@@ -188,47 +191,22 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-
-    - name: mac-os cp package images from prod to preview bucket
-      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+    - name: cp package images from prod to preview bucket
       env:
         prefix: ${{ needs.changes.outputs.preview_folder }}
         platform: ${{ steps.build_platform.outputs.build_platform }}
+        extension: ${{ steps.build_platform.outputs.extension }}
       run: |
-        aws s3 cp "./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_$platform.dmg" \
-          "s3://preview.gui.tea.xyz/$prefix/gui_$platform.dmg"
-
-
-    - name: ubuntu cp package images from prod to preview bucket
-      if: matrix.platform.name == 'linux+x86-64'
-      env:
-        prefix: ${{ needs.changes.outputs.preview_folder }}
-        platform: ${{ steps.build_platform.outputs.build_platform }}
-      run: |
-        aws s3 cp "./modules/gui/src-tauri/target/release/bundle/deb/tea_0.1.0_$platform.deb" \
-          "s3://preview.gui.tea.xyz/$prefix/gui_$platform.deb"
-
-    - name: comment install ubuntu
-      uses: mshick/add-pr-comment@v2
-      if: matrix.platform.name == 'linux+x86-64'
-      with:
-        message-id: ${{ matrix.platform.name }}-comment
-        message: |
-          **installer for ${{ matrix.platform.name }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{steps.build_platform.outputs.build_platform}}.deb)
-          ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{steps.build_platform.outputs.build_platform}}.deb
-          ```
-          copy-paste into a browser to download
-
+        aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
+          "s3://preview.gui.tea.xyz/$prefix/gui_$platform.$extension"
   
-    - name: comment install mac-os
+    - name: comment install
       uses: mshick/add-pr-comment@v2
-      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
       with:
         message-id: ${{ matrix.platform.name }}-comment
         message: |
-          **installer for ${{ matrix.platform.name }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{steps.build_platform.outputs.build_platform}}.dmg)
+          **installer for ${{ matrix.platform.name }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{steps.build_platform.outputs.build_platform}}.${{steps.build_platform.outputs.extension}})
           ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{ steps.build_platform.outputs.build_platform }}.dmg
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
           ```
           copy-paste into a browser to download

@@ -131,17 +131,19 @@ jobs:
         platform: ${{ matrix.platform.name }}
       run: |
         BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
+        EXTENSION=dmg
         [[ $BUILD_PLATFORM = "x86-64" ]] && BUILD_PLATFORM="x64" || BUILD_PLATFORM=$BUILD_PLATFORM
         [[ $platform = "linux+x86-64" ]] && BUILD_PLATFORM="amd64" || BUILD_PLATFORM=$BUILD_PLATFORM
+        [[ $platform = "linux+x86-64" ]] && EXTENSION="deb"
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
+        echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
   
     - name:  cp package images from prod to gui bucket
       env:
         platform: ${{ steps.build_platform.outputs.build_platform }}
         build_platform: ${{ matrix.platform.name }}
+        extension: ${{steps.build_platform.outputs.extension}}
       run: |
-        extension=dmg
-        [[ $build_platform = "linux+x86-64" ]] && extension="deb" || extension="dmg"
         aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
           "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
 
@@ -150,4 +152,4 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         PLATFORM: ${{ matrix.platform.name }}
-        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.${{ matrix.platform.name == 'ubuntu-latest' && 'deb' ||  'dmg'}}
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
