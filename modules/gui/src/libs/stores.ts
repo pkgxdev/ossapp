@@ -113,6 +113,12 @@ function initPosts() {
 			const res = postsIndex.search(term, { limit });
 			const matchingPosts: AirtablePost[] = res.map((v) => v.item);
 			return matchingPosts;
+		},
+		subscribeByTag: (tag: string, cb: (posts: AirtablePost[]) => void) => {
+			subscribe((newPosts: AirtablePost[]) => {
+				const filteredPosts = newPosts.filter((post) => post.tags.includes(tag));
+				cb(filteredPosts);
+			});
 		}
 	};
 }

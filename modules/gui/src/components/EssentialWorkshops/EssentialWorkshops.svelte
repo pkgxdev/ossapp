@@ -1,17 +1,14 @@
 <script lang="ts">
 	import '$appcss';
-	import { getAllPosts } from '@api';
 	import type { AirtablePost } from '@tea/ui/types';
 	import Posts from '@tea/ui/Posts/Posts.svelte';
 	import PanelHeader from '@tea/ui/PanelHeader/PanelHeader.svelte';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
-	import { onMount } from 'svelte';
+	import { postsStore } from '$libs/stores';
 
 	let courses: AirtablePost[] = [];
 
-	onMount(async () => {
-		courses = await getAllPosts('course');
-	});
+	postsStore.subscribeByTag('course', (posts) => (courses = posts));
 </script>
 
 <PanelHeader title="Essential Workshops" ctaLabel="View all" ctaLink="/" />
