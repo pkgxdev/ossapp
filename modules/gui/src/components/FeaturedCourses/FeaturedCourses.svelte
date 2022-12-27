@@ -1,17 +1,21 @@
 <script lang="ts">
 	import '$appcss';
-	import { onMount } from 'svelte';
+	import { postsStore } from '$libs/stores';
 	import type { Course } from '$libs/types';
 
 	import Gallery from '@tea/ui/Gallery/Gallery.svelte';
-	import { getFeaturedCourses } from '@api';
 
 	let courses: Course[] = [];
 
-	onMount(async () => {
-		if (!courses.length) {
-			courses = await getFeaturedCourses();
-		}
+	postsStore.subscribeByTag('featured_course', (posts) => {
+		courses = posts.map((post) => {
+			return {
+				title: post.title,
+				sub_title: post.sub_title,
+				banner_image_url: post.thumb_image_url,
+				link: post.link
+			} as Course;
+		});
 	});
 </script>
 

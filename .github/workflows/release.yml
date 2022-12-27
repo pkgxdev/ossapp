@@ -5,12 +5,19 @@ on:
 
 jobs:
   build_release_tauri:
+    runs-on: ${{ matrix.platform.os }}
     strategy:
-      fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest]
-
-    runs-on: ${{ matrix.platform }}
+        platform:
+          - os: macos-11
+            name: darwin+x86-64
+          - os: ubuntu-latest
+            name: linux+x86-64
+          - os: [self-hosted, macOS, ARM64]
+            name: darwin+aarch64
+          # - os: [self-hosted, linux, ARM64]
+          #   name: linux+aarch64
+    container: ${{ matrix.platform.container }}
     steps:
     - uses: actions/checkout@v2
 
@@ -27,15 +34,27 @@ jobs:
       uses: actions-rs/toolchain@v1
       with:
         toolchain: stable
+    - name: build platform output
+      id: build_platform
+      env:
+        platform: ${{ matrix.platform.name }}
+      run: |
+        BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
+        EXTENSION=dmg
+        [[ $BUILD_PLATFORM = "x86-64" ]] && BUILD_PLATFORM="x64" || BUILD_PLATFORM=$BUILD_PLATFORM
+        [[ $platform = "linux+x86-64" ]] && BUILD_PLATFORM="amd64" || BUILD_PLATFORM=$BUILD_PLATFORM
+        [[ $platform = "linux+x86-64" ]] && EXTENSION="deb"
+        echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
+        echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
     - uses: Swatinem/rust-cache@v2
       with:
         # The prefix cache key, this can be changed to start a new cache manually.
         # default: "v0-rust"
-        prefix-key: ${{ matrix.platform }}
+        prefix-key: ${{ matrix.platform.name }}
         shared-key: prod
         cache-targets: false
     - name: install dependencies (ubuntu only)
-      if: matrix.platform == 'ubuntu-latest'
+      if: matrix.platform.name == 'linux+x86-64'
       run: |
         sudo apt-get update
         sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
@@ -47,9 +66,9 @@ jobs:
       with:
         path: |
           ./modules/gui/src-tauri/target
-        key: ${{ matrix.platform }}-build-target-prod
+        key: ${{ matrix.platform.name }}-build-target-prod
         restore-keys: |
-          ${{ matrix.platform }}-build-target-prod
+          ${{ matrix.platform.name }}-build-target-prod
 
     - name: test build tauri
       run: pnpm --filter gui tauri build
@@ -67,24 +86,22 @@ jobs:
     - name: Set tag
       id: tag
       run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-    - name: UBUNTU publish release 
-      if: matrix.platform == 'ubuntu-latest'
+
+    - name: publish release 
+      env:
+        platform: ${{ steps.build_platform.outputs.build_platform }}
+        extension: ${{ steps.build_platform.outputs.extension }}
+        tag: ${{ steps.tag.outputs.tag }}
       run: |
-        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/deb/tea_0.1.0_amd64.deb \
-          s3://preview.gui.tea.xyz/release/tea_gui_latest.${{matrix.platform}}.deb
-        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/deb/tea_0.1.0_amd64.deb \
-          s3://preview.gui.tea.xyz/release/tea_gui_${{steps.tag.outputs.tag}}.${{matrix.platform}}.deb
-    - name: MAC INTEL publish release 
-      if: matrix.platform == 'macos-latest'
-      run: |
-        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_x64.dmg \
-          s3://preview.gui.tea.xyz/release/tea_gui_latest.${{matrix.platform}}.dmg
-        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_x64.dmg \
-          s3://preview.gui.tea.xyz/release/tea_gui_${{steps.tag.outputs.tag}}.${{matrix.platform}}.dmg
+        aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
+          "s3://preview.gui.tea.xyz/release/tea_gui_latest_$platform.$extension"
+        aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
+          "s3://preview.gui.tea.xyz/release/tea_gui_$tag_$platform.$extension"
+
     - name: Slack Notification
       run: ./.github/notify-slack.js
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        PLATFORM: ${{ matrix.platform }}
+        PLATFORM: ${{ matrix.platform.name }}
         VERSION: ${{steps.tag.outputs.tag}}
-        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_gui_${{steps.tag.outputs.tag}}.${{matrix.platform}}.${{ matrix.platform == 'ubuntu-latest' && 'deb' ||  'dmg'}}
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_gui_${{steps.tag.outputs.tag}}_${{steps.build_platform.outputs.build_platform}}.${{ steps.build_platform.outputs.extension }}
