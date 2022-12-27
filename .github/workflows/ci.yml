@@ -214,7 +214,7 @@ jobs:
       with:
         message-id: ${{ matrix.platform.name }}-comment
         message: |
-          **installer for ${{ matrix.platform.name }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui_${{steps.build_platform.outputs.build_platform}}.deb)
+          **installer for ${{ matrix.platform.name }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{steps.build_platform.outputs.build_platform}}.deb)
           ```bash
           http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{steps.build_platform.outputs.build_platform}}.deb
           ```
@@ -227,7 +227,7 @@ jobs:
       with:
         message-id: ${{ matrix.platform.name }}-comment
         message: |
-          **installer for ${{ matrix.platform.name }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui_${{steps.build_platform.outputs.build_platform}}.dmg)
+          **installer for ${{ matrix.platform.name }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{steps.build_platform.outputs.build_platform}}.dmg)
           ```bash
           http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{ steps.build_platform.outputs.build_platform }}.dmg
           ```
