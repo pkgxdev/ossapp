@@ -62,4 +62,17 @@ jobs:
         restore-keys: m1-test
 
     - name: test dev tauri
-      run: pnpm dev:gui
+      run: pnpm build:gui
+
+    - name: zip app
+      run: zip -r tea.zip ./modules/gui/src-tauri/target/release/bundle/macos/tea.app
+
+    - uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: cp package images from prod to preview bucket
+      run: |
+        aws s3 cp ./tea.zip "s3://preview.gui.tea.xyz/release/tea.zip"
