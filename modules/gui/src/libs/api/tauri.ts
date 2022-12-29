@@ -14,7 +14,7 @@ import { getClient } from '@tauri-apps/api/http';
 // import { invoke } from '@tauri-apps/api';
 import { Command } from '@tauri-apps/api/shell';
 import { readDir, BaseDirectory } from '@tauri-apps/api/fs';
-import type { Package, Review, AirtablePost } from '@tea/ui/types';
+import type { Package, Review, AirtablePost, Bottle } from '@tea/ui/types';
 import type { GUIPackage, Course, Category } from '../types';
 import * as mock from './mock';
 import { PackageStates } from '../types';
@@ -162,4 +162,13 @@ export async function getAllPosts(tag?: string): Promise<AirtablePost[]> {
 export async function getCategorizedPackages(): Promise<Category[]> {
 	const categories = await get<Category[]>('/packages/categorized');
 	return categories;
+}
+
+export async function getPackageBottles(packageName: string): Promise<Bottle[]> {
+	console.log('getting bottles for ', packageName);
+	const client = await getClient();
+	const uri = join('https://app.tea.xyz/api/bottles/', packageName);
+	const { data } = await client.get<Bottle[]>(uri.toString());
+	console.log('got bottles', data);
+	return data;
 }

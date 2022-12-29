@@ -1,12 +1,15 @@
 <script lang="ts">
 	import '$appcss';
 	import '@tea/ui/icons/icons.css';
-	import type { Package } from '@tea/ui/types';
+	import type { Package, Bottle } from '@tea/ui/types';
 	import Button from '@tea/ui/Button/Button.svelte';
 	import StarRating from '@tea/ui/StarRating/StarRating.svelte';
+	import Bottles from '@tea/ui/Bottles/Bottles.svelte';
+	import { onMount } from 'svelte';
+	import { getPackageBottles } from '@api';
 
 	export let pkg: Package;
-
+	let bottles: Bottle[] = [];
 	let packageRating = 0;
 	let copyButtonText = 'COPY';
 	const copyValue = `sh <(curl tea.xyz ) +${pkg.full_name}`;
@@ -15,6 +18,14 @@
 		copyButtonText = 'COPIED!';
 		navigator.clipboard.writeText(copyValue);
 	};
+
+	onMount(async () => {
+		try {
+			bottles = await getPackageBottles(pkg.full_name);
+		} catch (err) {
+			console.error(err);
+		}
+	});
 </script>
 
 <section class="mt-4 border border-gray bg-black">
@@ -33,6 +44,9 @@
 			<p class="mt-4 font-sono text-sm">{pkg.desc}</p>
 		</article>
 	</header>
+	<section>
+		<Bottles {bottles} />
+	</section>
 	<footer class="flex h-20 border-t border-gray text-white">
 		<input class="click-copy flex-grow bg-black pl-4" disabled value={copyValue} />
 		<Button class="w-16 border-0 border-l-2 text-sm" onClick={onCopy}>{copyButtonText}</Button>
