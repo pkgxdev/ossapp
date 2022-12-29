@@ -25,44 +25,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - uses: pnpm/action-setup@v2
+    - uses: teaxyz/setup@v0
       with:
-        version: 7
-    - name: setup node
-      uses: actions/setup-node@v1
-      with:
-        node-version: 18
-        cache: 'pnpm'
-        cache-dependency-path: pnpm-lock.yaml
-    - name: install Rust stable
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-    - uses: Swatinem/rust-cache@v2
-      with:
-        # The prefix cache key, this can be changed to start a new cache manually.
-        # default: "v0-rust"
-        prefix-key: ${{ matrix.platform.name }}
-        shared-key: prod
-        cache-targets: false
-    # - name: install dependencies (ubuntu only)
-    #   if: matrix.platform.name == 'linux+x86-64'
-    #   run: |
-    #     sudo apt-get update
-    #     sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
-    - name: install app dependencies
-      run: pnpm install
-
-    - name: Cache Tauri Target
-      uses: actions/cache@v3
-      with:
-        path: |
-          ./modules/gui/src-tauri/target
-        key: m1-test
-        restore-keys: m1-test
-
-    - name: test dev tauri
-      run: pnpm build:gui
+        target: build
 
     - name: zip app
       run: zip -r tea.zip ./modules/gui/src-tauri/target/release/bundle/macos/tea.app
