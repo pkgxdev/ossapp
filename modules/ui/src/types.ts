@@ -34,3 +34,10 @@ export type AirtablePost = {
 	published_at: Date;
 	tags: string[];
 };
+
+export type Bottle = {
+	name: string;
+	platform: string;
+	arch: string;
+	version: string;
+};
