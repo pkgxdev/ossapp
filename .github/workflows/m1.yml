@@ -25,12 +25,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-
-    # Needed for self-hosted runner, since it doesn't destroy itself automatically.
-    - name: Delete keychain
-      if: always() && matrix.platform.name == 'darwin+aarch64'
-      run: security delete-keychain signing_temp.keychain
-
     - uses: teaxyz/setup@v0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
