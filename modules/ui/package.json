@@ -1,0 +1,58 @@
+{
+	"name": "@tea/ui",
+	"version": "0.0.1",
+	"scripts": {
+		"vite:dev": "vite dev",
+		"build": "svelte-kit sync && svelte-package",
+		"prepublishOnly": "echo 'Did you mean to publish `./package/`, instead of `./`?' && exit 1",
+		"test": "playwright test",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"format": "prettier --plugin-search-dir . --write .",
+		"dev": "storybook dev -p 6006",
+		"build-storybook": "storybook build",
+		"update-icons": "node scripts/update-icons.js"
+	},
+	"files": [
+		"src/**/*",
+		"tsconfig.json",
+		"tailwind.config.cjs"
+	],
+	"devDependencies": {
+		"@playwright/test": "1.25.0",
+		"@storybook/addon-essentials": "^7.0.0-alpha.51",
+		"@storybook/addon-interactions": "^7.0.0-alpha.51",
+		"@storybook/addon-links": "^7.0.0-alpha.51",
+		"@storybook/svelte": "^7.0.0-alpha.51",
+		"@storybook/svelte-vite": "^7.0.0-alpha.51",
+		"@storybook/testing-library": "^0.0.13",
+		"@sveltejs/adapter-auto": "^1.0.0",
+		"@sveltejs/kit": "^1.0.0",
+		"@sveltejs/package": "^1.0.1",
+		"@typescript-eslint/eslint-plugin": "^5.27.0",
+		"@typescript-eslint/parser": "^5.27.0",
+		"autoprefixer": "^10.4.13",
+		"eslint": "^8.16.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-storybook": "^0.6.7",
+		"eslint-plugin-svelte3": "^4.0.0",
+		"postcss": "^8.4.19",
+		"prettier": "^2.7.1",
+		"prettier-plugin-svelte": "^2.7.0",
+		"prettier-plugin-tailwindcss": "^0.2.0",
+		"storybook": "^7.0.0-alpha.51",
+		"svelte": "^3.44.0",
+		"svelte-check": "^2.7.1",
+		"svelte-preprocess": "^4.10.7",
+		"tailwindcss": "^3.2.4",
+		"tslib": "^2.3.1",
+		"typescript": "^4.7.4",
+		"vite": "^4.0.0"
+	},
+	"type": "module",
+	"dependencies": {
+		"@tailwindcss/line-clamp": "^0.4.2",
+		"svelte-watch-resize": "^1.0.3"
+	}
+}

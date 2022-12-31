@@ -16,16 +16,16 @@ jobs:
       with:
         filters: |
           src:
-            - 'packages/gui/src/**'
-            - 'packages/ui/**'
+            - 'modules/gui/src/**'
+            - 'modules/ui/**'
     - uses: dorny/paths-filter@v2
       id: tauri
       with:
         filters: |
           src:
-            - 'packages/gui/src-tauri/**'
-            - 'packages/gui/src/**'
-            - 'packages/ui/src/**'
+            - 'modules/gui/src-tauri/**'
+            - 'modules/gui/src/**'
+            - 'modules/ui/src/**'
     - name: get s3 preview folder
       id: preview
       run: echo "folder=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
@@ -53,7 +53,7 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18
           cache: 'pnpm'
           cache-dependency-path: pnpm-lock.yaml
       - name: install app dependencies
@@ -74,7 +74,7 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18
           cache: 'pnpm'
           cache-dependency-path: pnpm-lock.yaml
       - name: install Rust stable
@@ -94,7 +94,7 @@ jobs:
         env:
           prefix: ${{ needs.changes.outputs.preview_folder }}
         run: |
-          aws s3 sync ./packages/gui/build \
+          aws s3 sync ./modules/gui/build \
             "s3://preview.gui.tea.xyz/$prefix"
       - name: Install package
         run: sudo apt-get install -y jq coreutils
@@ -116,12 +116,19 @@ jobs:
   build_tauri:
     needs: changes
     if: needs.changes.outputs.tauri == 'true'
+    runs-on: ${{ matrix.platform.os }}
     strategy:
-      fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest]
-
-    runs-on: ${{ matrix.platform }}
+        platform:
+          - os: macos-11
+            name: darwin+x86-64
+          - os: ubuntu-latest
+            name: linux+x86-64
+          - os: [self-hosted, macOS, ARM64]
+            name: darwin+aarch64
+          # - os: [self-hosted, linux, ARM64]
+          #   name: linux+aarch64
+    container: ${{ matrix.platform.container }}
     steps:
     - uses: actions/checkout@v2
 
@@ -139,15 +146,15 @@ jobs:
       with:
         toolchain: stable
     - name: install dependencies (ubuntu only)
-      if: matrix.platform == 'ubuntu-latest'
+      if: matrix.platform.name == 'linux+x86-64'
       run: |
         sudo apt-get update
-        sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+        sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
     - uses: Swatinem/rust-cache@v2
       with:
         # The prefix cache key, this can be changed to start a new cache manually.
         # default: "v0-rust"
-        prefix-key: ${{ matrix.platform }}
+        prefix-key: ${{ matrix.platform.name }}
         shared-key: ci
         cache-targets: false
     - name: install app dependencies
@@ -157,10 +164,23 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          ./packages/gui/src-tauri/target
-        key: ${{ matrix.platform }}-build-target
+          ./modules/gui/src-tauri/target
+        key: ${{ matrix.platform.name }}-build-target
         restore-keys: |
-          ${{ matrix.platform }}-build-target
+          ${{ matrix.platform.name }}-build-target
+    
+    - name: build platform output
+      id: build_platform
+      env:
+        platform: ${{ matrix.platform.name }}
+      run: |
+        EXTENSION=dmg
+        BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
+        [[ $BUILD_PLATFORM = "x86-64" ]] && BUILD_PLATFORM="x64" || BUILD_PLATFORM=$BUILD_PLATFORM
+        [[ $platform = "linux+x86-64" ]] && BUILD_PLATFORM="amd64" || BUILD_PLATFORM=$BUILD_PLATFORM
+        [[ $platform = "linux+x86-64" ]] && EXTENSION="deb"
+        echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
+        echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
 
     - name: test build tauri
       run: pnpm --filter gui tauri build
@@ -171,43 +191,22 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - name: mac-os cp package images from prod to preview bucket
-      if: matrix.platform == 'macos-latest'
+    - name: cp package images from prod to preview bucket
       env:
         prefix: ${{ needs.changes.outputs.preview_folder }}
+        platform: ${{ steps.build_platform.outputs.build_platform }}
+        extension: ${{ steps.build_platform.outputs.extension }}
       run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/dmg/gui_0.1.0_x64.dmg \
-          "s3://preview.gui.tea.xyz/$prefix/gui.dmg"
+        aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
+          "s3://preview.gui.tea.xyz/$prefix/gui_$platform.$extension"
   
-    - name: ubuntu cp package images from prod to preview bucket
-      if: matrix.platform == 'ubuntu-latest'
-      env:
-        prefix: ${{ needs.changes.outputs.preview_folder }}
-      run: |
-        aws s3 cp ./packages/gui/src-tauri/target/release/bundle/deb/gui_0.1.0_amd64.deb \
-          "s3://preview.gui.tea.xyz/$prefix/gui.deb"
-
-    - name: comment install ubuntu
+    - name: comment install
       uses: mshick/add-pr-comment@v2
-      if: matrix.platform == 'ubuntu-latest'
       with:
-        message-id: ${{ matrix.platform }}-comment-${{steps.prefix.outputs.prefix}}
+        message-id: ${{ matrix.platform.name }}-comment
         message: |
-          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.deb)
+          **installer for ${{ matrix.platform.name }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{steps.build_platform.outputs.build_platform}}.${{steps.build_platform.outputs.extension}})
           ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui.deb
-          ```
-          copy-paste into a browser to download
-
-  
-    - name: comment install mac-os
-      uses: mshick/add-pr-comment@v2
-      if: matrix.platform == 'macos-latest'
-      with:
-        message-id: ${{ matrix.platform }}-comment-${{steps.prefix.outputs.prefix}}
-        message: |
-          **installer for ${{ matrix.platform }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{steps.prefix.outputs.prefix}}/gui.dmg)
-          ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui.dmg
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
           ```
           copy-paste into a browser to download
