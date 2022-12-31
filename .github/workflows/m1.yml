@@ -25,12 +25,27 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+
+    # Needed for self-hosted runner, since it doesn't destroy itself automatically.
+    - name: Delete keychain
+      if: always() && matrix.platform.name == 'darwin+aarch64'
+      run: security delete-keychain signing_temp.keychain
+
     - uses: teaxyz/setup@v0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ENABLE_CODE_SIGNING: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+        APPLE_CERTIFICATE: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+        APPLE_CERTIFICATE_PASSWORD: ${{ secrets.P12_PASSWORD }}
+        APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
       with:
         target: build
 
     - name: zip app
-      run: zip -r tea.zip ./modules/gui/src-tauri/target/release/bundle/macos/tea.app
+      run: |
+        cd ./modules/gui/src-tauri/target/release/bundle/macos/ && zip -r tea.zip tea.app
 
     - uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -40,4 +55,4 @@ jobs:
 
     - name: cp package images from prod to preview bucket
       run: |
-        aws s3 cp ./tea.zip "s3://preview.gui.tea.xyz/release/tea.zip"
+        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/macos/tea.zip "s3://preview.gui.tea.xyz/release/tea.zip"
