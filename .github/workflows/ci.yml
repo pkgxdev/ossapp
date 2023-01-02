@@ -182,24 +182,23 @@ jobs:
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
 
-    - name: test build tauri
-      run: pnpm --filter gui tauri build
-
     - uses: apple-actions/import-codesign-certs@d54750db52a4d3eaed0fc107a8bab3958f3f7494
       if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
       with:
         p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
         p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
 
+    - name: test build tauri
+      run: pnpm --filter gui tauri build
+
     - name: Codesign package
       if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
       env:
         APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
       run: |
-        codesign -s $APPLE_SIGNING_IDENTITY -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/macos/tea.app || true
-        codesign -s $APPLE_SIGNING_IDENTITY -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg || true
+        codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/macos/tea.app || true
+        codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg || true
 
-  
     - uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
