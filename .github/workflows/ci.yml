@@ -199,12 +199,24 @@ jobs:
         run: |
           codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/macos/tea.app || true
           codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg || true
+      
+      - name: clean package for preview
+        if: matrix.platform.name == 'darwin+aarch64'
+        run: |
+          xattr -d com.apple.quarantine ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg
+          xattr -d com.apple.quarantine ./modules/gui/src-tauri/target/release/bundle/macos/tea.app
+      
+      - name: zip app
+        if: matrix.platform.name == 'darwin+aarch64'
+        run: |
+          cd ./modules/gui/src-tauri/target/release/bundle/macos/ && zip -r tea.zip tea.app
 
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+
 
       - name: cp package images from prod to preview bucket
         env:
@@ -214,6 +226,13 @@ jobs:
         run: |
           aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
             "s3://preview.gui.tea.xyz/$prefix/gui_$platform.$extension"
+  
+      - name: cp package zip
+        if: matrix.platform.name == 'darwin+aarch64'
+        env:
+          prefix: ${{ needs.changes.outputs.preview_folder }}
+        run: |
+          aws s3 cp ./modules/gui/src-tauri/target/release/bundle/macos/tea.zip "s3://preview.gui.tea.xyz/$prefix/tea_m1.zip"
 
       - name: Delete keychain
         if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
