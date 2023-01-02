@@ -62,6 +62,11 @@ jobs:
       with:
         version: 7.18.2
         run_install: true
+  
+    - uses: apple-actions/import-codesign-certs@d54750db52a4d3eaed0fc107a8bab3958f3f7494
+      with:
+        p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+        p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
 
     - env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
