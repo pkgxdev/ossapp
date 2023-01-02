@@ -29,6 +29,3 @@
 		<News />
 	</section>
 </div>
-
-<style>
-</style>
