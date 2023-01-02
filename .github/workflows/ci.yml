@@ -185,6 +185,10 @@ jobs:
     - name: test build tauri
       run: pnpm --filter gui tauri build
 
+    - name: Delete keychain
+      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      run: security delete-keychain signing_temp.keychain
+
     - uses: apple-actions/import-codesign-certs@d54750db52a4d3eaed0fc107a8bab3958f3f7494
       if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
       with:
@@ -199,6 +203,7 @@ jobs:
         codesign -s $APPLE_SIGNING_IDENTITY -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/macos/tea.app || true
         codesign -s $APPLE_SIGNING_IDENTITY -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg || true
 
+  
     - uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -213,7 +218,11 @@ jobs:
       run: |
         aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
           "s3://preview.gui.tea.xyz/$prefix/gui_$platform.$extension"
-  
+
+    - name: Delete keychain
+      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      run: security delete-keychain signing_temp.keychain
+
     - name: comment install
       uses: mshick/add-pr-comment@v2
       with:

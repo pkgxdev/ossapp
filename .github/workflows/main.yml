@@ -143,6 +143,7 @@ jobs:
       with:
         p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
         p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
+
     - name: Codesign package
       if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
       env:
@@ -159,6 +160,10 @@ jobs:
       run: |
         aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
           "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
+
+    - name: Delete keychain
+      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      run: security delete-keychain signing_temp.keychain
 
     - name: Slack Notification
       run: ./.github/notify-slack.js
