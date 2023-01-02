@@ -37,16 +37,16 @@ jobs:
         version: 7.18.2
         run_install: true
   
-    - uses: apple-actions/import-codesign-certs@d54750db52a4d3eaed0fc107a8bab3958f3f7494
-      with:
-        p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
-        p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
-    - run: pnpm build:gui
+    # - uses: apple-actions/import-codesign-certs@d54750db52a4d3eaed0fc107a8bab3958f3f7494
+    #   with:
+    #     p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+    #     p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
+    # - run: pnpm build:gui
 
-    - name: Codesign package
-      run: |
-        codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/macos/tea.app || true
-        codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg || true
+    # - name: Codesign package
+    #   run: |
+    #     codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/macos/tea.app || true
+    #     codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg || true
 
     - name: zip app
       run: |
@@ -63,6 +63,6 @@ jobs:
         aws s3 cp ./modules/gui/src-tauri/target/release/bundle/macos/tea.zip "s3://preview.gui.tea.xyz/release/tea_m1.zip"
         aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg "s3://preview.gui.tea.xyz/release/tea_m1.dmg"
 
-    - name: Delete keychain
-      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
-      run: security delete-keychain signing_temp.keychain
+    # - name: Delete keychain
+    #   if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+    #   run: security delete-keychain signing_temp.keychain
