@@ -72,7 +72,6 @@ jobs:
     - name: Codesign package
       run: |
         codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/macos/tea.app || true
-        done
 
     - name: zip app
       run: |
