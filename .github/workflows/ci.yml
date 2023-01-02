@@ -189,7 +189,22 @@ jobs:
       #     p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
       #     p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
 
-      - name: test build tauri
+      - name: test build tauri for MacOS
+        if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+        # FROM: https://tauri.app/v1/guides/distribution/sign-macos
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        run: pnpm build:gui
+
+      - name: test build tauri for Linux
+        if: matrix.platform.name == 'linux+x86-64'
+        # TODO: https://tauri.app/v1/guides/distribution/sign-linux
         run: pnpm build:gui
 
       # - name: Codesign package
