@@ -185,10 +185,6 @@ jobs:
     - name: test build tauri
       run: pnpm --filter gui tauri build
 
-    - name: Delete keychain
-      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
-      run: security delete-keychain signing_temp.keychain
-
     - uses: apple-actions/import-codesign-certs@d54750db52a4d3eaed0fc107a8bab3958f3f7494
       if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
       with:
