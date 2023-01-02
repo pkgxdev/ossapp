@@ -25,8 +25,45 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - uses: teaxyz/setup@v0
-      env:
+    # - uses: teaxyz/setup@v0
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #     ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+    #     APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+    #     APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
+    #     APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+    #     APPLE_ID: ${{ secrets.APPLE_ID }}
+    #     APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+    #   with:
+    #     target: build
+
+    # - name: zip app
+    #   run: |
+    #     cd ./modules/gui/src-tauri/target/release/bundle/macos/ && zip -r tea.zip tea.app
+
+    # - uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     aws-region: us-east-1
+
+    # - name: cp package images from prod to preview bucket
+    #   run: |
+    #     aws s3 cp ./modules/gui/src-tauri/target/release/bundle/macos/tea.zip "s3://preview.gui.tea.xyz/release/tea.zip"
+    - name: setup node
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16
+    - name: install Rust stable
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 7.18.2
+        run_install: true
+
+    - env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE_P12 }}
         APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE_P12 }}
@@ -34,18 +71,7 @@ jobs:
         APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-      with:
-        target: build
-
-    - name: zip app
-      run: |
-        cd ./modules/gui/src-tauri/target/release/bundle/macos/ && zip -r tea.zip tea.app
-
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+      run: pnpm build:gui
 
     - name: cp package images from prod to preview bucket
       run: |
