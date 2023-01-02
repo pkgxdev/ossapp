@@ -28,12 +28,10 @@ jobs:
     - uses: teaxyz/setup@v0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        ENABLE_CODE_SIGNING: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-        APPLE_CERTIFICATE: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-        APPLE_CERTIFICATE_PASSWORD: ${{ secrets.P12_PASSWORD }}
+        ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+        APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+        APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
         APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
       with:
         target: build
 
