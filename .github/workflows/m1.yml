@@ -67,16 +67,16 @@ jobs:
       with:
         p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
         p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
+    - run: pnpm build:gui
 
-    - env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE_P12 }}
-        APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE_P12 }}
-        APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
-        APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-      run: pnpm build:gui
+    - name: Codesign package
+      run: |
+        codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime /modules/gui/src-tauri/target/release/bundle/macos/tea.app/* || true
+        done
+
+    - name: zip app
+      run: |
+        cd ./modules/gui/src-tauri/target/release/bundle/macos/ && zip -r tea.zip tea.app
 
     - name: cp package images from prod to preview bucket
       run: |
