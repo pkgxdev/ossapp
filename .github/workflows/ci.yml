@@ -131,6 +131,10 @@ jobs:
     container: ${{ matrix.platform.container }}
     steps:
       - uses: actions/checkout@v2
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7.18.2
+          run_install: true
       - name: setup node
         uses: actions/setup-node@v2
         with:
@@ -141,10 +145,6 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7.18.2
-          run_install: true
 
       - name: install dependencies (ubuntu only)
         if: matrix.platform.name == 'linux+x86-64'
