@@ -130,101 +130,101 @@ jobs:
           #   name: linux+aarch64
     container: ${{ matrix.platform.container }}
     steps:
-    - uses: actions/checkout@v2
-    - name: setup node
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16
-        cache: 'pnpm'
-        cache-dependency-path: pnpm-lock.yaml
-    - name: install Rust stable
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-    - uses: pnpm/action-setup@v2
-      with:
-        version: 7.18.2
-        run_install: true
+      - uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
+      - name: install Rust stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7.18.2
+          run_install: true
 
-    - name: install dependencies (ubuntu only)
-      if: matrix.platform.name == 'linux+x86-64'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform.name == 'linux+x86-64'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
 
-    - uses: Swatinem/rust-cache@v2
-      with:
-        # The prefix cache key, this can be changed to start a new cache manually.
-        # default: "v0-rust"
-        prefix-key: ${{ matrix.platform.name }}
-        shared-key: ci
-        cache-targets: false
+      - uses: Swatinem/rust-cache@v2
+        with:
+          # The prefix cache key, this can be changed to start a new cache manually.
+          # default: "v0-rust"
+          prefix-key: ${{ matrix.platform.name }}
+          shared-key: ci
+          cache-targets: false
 
-    - name: Cache Tauri Target
-      uses: actions/cache@v3
-      with:
-        path: |
-          ./modules/gui/src-tauri/target
-        key: ${{ matrix.platform.name }}-build-target
-        restore-keys: |
-          ${{ matrix.platform.name }}-build-target
-    
-    - name: build platform output
-      id: build_platform
-      env:
-        platform: ${{ matrix.platform.name }}
-      run: |
-        EXTENSION=dmg
-        BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
-        [[ $BUILD_PLATFORM = "x86-64" ]] && BUILD_PLATFORM="x64" || BUILD_PLATFORM=$BUILD_PLATFORM
-        [[ $platform = "linux+x86-64" ]] && BUILD_PLATFORM="amd64" || BUILD_PLATFORM=$BUILD_PLATFORM
-        [[ $platform = "linux+x86-64" ]] && EXTENSION="deb"
-        echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
-        echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
+      - name: Cache Tauri Target
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./modules/gui/src-tauri/target
+          key: ${{ matrix.platform.name }}-build-target
+          restore-keys: |
+            ${{ matrix.platform.name }}-build-target
+      
+      - name: build platform output
+        id: build_platform
+        env:
+          platform: ${{ matrix.platform.name }}
+        run: |
+          EXTENSION=dmg
+          BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
+          [[ $BUILD_PLATFORM = "x86-64" ]] && BUILD_PLATFORM="x64" || BUILD_PLATFORM=$BUILD_PLATFORM
+          [[ $platform = "linux+x86-64" ]] && BUILD_PLATFORM="amd64" || BUILD_PLATFORM=$BUILD_PLATFORM
+          [[ $platform = "linux+x86-64" ]] && EXTENSION="deb"
+          echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
+          echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
 
-    - uses: apple-actions/import-codesign-certs@d54750db52a4d3eaed0fc107a8bab3958f3f7494
-      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
-      with:
-        p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
-        p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
+      - uses: apple-actions/import-codesign-certs@d54750db52a4d3eaed0fc107a8bab3958f3f7494
+        if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+        with:
+          p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+          p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
 
-    - name: test build tauri
-      run: pnpm build:gui
+      - name: test build tauri
+        run: pnpm build:gui
 
-    - name: Codesign package
-      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
-      env:
-        APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-      run: |
-        codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/macos/tea.app || true
-        codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg || true
+      - name: Codesign package
+        if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+        env:
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+        run: |
+          codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/macos/tea.app || true
+          codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg || true
 
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
-    - name: cp package images from prod to preview bucket
-      env:
-        prefix: ${{ needs.changes.outputs.preview_folder }}
-        platform: ${{ steps.build_platform.outputs.build_platform }}
-        extension: ${{ steps.build_platform.outputs.extension }}
-      run: |
-        aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
-          "s3://preview.gui.tea.xyz/$prefix/gui_$platform.$extension"
+      - name: cp package images from prod to preview bucket
+        env:
+          prefix: ${{ needs.changes.outputs.preview_folder }}
+          platform: ${{ steps.build_platform.outputs.build_platform }}
+          extension: ${{ steps.build_platform.outputs.extension }}
+        run: |
+          aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
+            "s3://preview.gui.tea.xyz/$prefix/gui_$platform.$extension"
 
-    - name: Delete keychain
-      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
-      run: security delete-keychain signing_temp.keychain
+      - name: Delete keychain
+        if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+        run: security delete-keychain signing_temp.keychain
 
-    - name: comment install
-      uses: mshick/add-pr-comment@v2
-      with:
-        message-id: ${{ matrix.platform.name }}-comment
-        message: |
-          **installer for ${{ matrix.platform.name }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{steps.build_platform.outputs.build_platform}}.${{steps.build_platform.outputs.extension}})
-          ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
-          ```
-          copy-paste into a browser to download
+      - name: comment install
+        uses: mshick/add-pr-comment@v2
+        with:
+          message-id: ${{ matrix.platform.name }}-comment
+          message: |
+            **installer for ${{ matrix.platform.name }} is at**: [here](http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{steps.build_platform.outputs.build_platform}}.${{steps.build_platform.outputs.extension}})
+            ```bash
+            http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/gui_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
+            ```
+            copy-paste into a browser to download
