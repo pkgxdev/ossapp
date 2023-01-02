@@ -234,9 +234,9 @@ jobs:
         run: |
           aws s3 cp ./modules/gui/src-tauri/target/release/bundle/macos/tea.zip "s3://preview.gui.tea.xyz/$prefix/tea_m1.zip"
 
-      - name: Delete keychain
-        if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
-        run: security delete-keychain signing_temp.keychain
+      # - name: Delete keychain
+      #   if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      #   run: security delete-keychain signing_temp.keychain
 
       - name: comment install
         uses: mshick/add-pr-comment@v2
