@@ -34,5 +34,5 @@ export enum AuthStatus {
 	UNKNOWN = 'UNKNOWN',
 	PENDING = 'PENDING',
 	SUCCESS = 'SUCCESS',
-	FAILED = 'FAILED',
+	FAILED = 'FAILED'
 }

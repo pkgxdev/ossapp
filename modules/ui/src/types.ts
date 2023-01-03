@@ -36,7 +36,10 @@ export type AirtablePost = {
 };
 
 export type User = {
-	username: string;
+	developer_id: string;
+	avatar_url?: string;
+	name: string;
+	login: string;
 	country?: string;
-	eth_wallet_address?: string;
-}
+	wallet?: string;
+};

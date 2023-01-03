@@ -328,6 +328,16 @@ export async function getDeviceAuth(): Promise<any> {
 	// const data = await get<any>(`/auth/device/${deviceId}`);
 	return {
 		status: 'SUCCESS',
-		user: {},
+		user: {
+			developer_id: 'xxx',
+			name: 'Neil paul Molina',
+			login: 'getneil',
+			avatar_url: 'https://avatars.githubusercontent.com/u/7913978?v=4',
+			created_at: 'xxx',
+			updated_at: 'xxx',
+			country: 'germany',
+			wallet: 'wallet'
+		},
+		key: 'xxx'
 	};
 }

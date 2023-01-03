@@ -6,15 +6,11 @@
 	import Badges from '$components/Badges/Badges.svelte';
 	import InstalledPackages from '$components/InstalledPackages/InstalledPackages.svelte';
 	import { backLink } from '$libs/stores';
-	import Auth from '$components/Auth/Auth.svelte';
 	backLink.set('/');
 </script>
 
 <div>
 	<PageHeader>PROFILE</PageHeader>
-	<section>
-		<Auth/>
-	</section>
 	<section>
 		<ProfileBanner />
 	</section>

@@ -6,6 +6,7 @@ import type { GUIPackage } from '$libs/types';
 // TODO: figure out a better structure for managing states maybe turn them into separate files?
 
 import { getPackages, getFeaturedPackages, getPackageReviews, getAllPosts } from '@api';
+import initAuthStore from './stores/auth';
 
 export const backLink = writable<string>('/');
 
@@ -170,3 +171,5 @@ function initSearchStore() {
 }
 
 export const searchStore = initSearchStore();
+
+export const authStore = initAuthStore();

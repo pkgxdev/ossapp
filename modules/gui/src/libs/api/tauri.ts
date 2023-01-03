@@ -19,8 +19,8 @@ import type { GUIPackage, Course, Category, AuthStatus } from '../types';
 import * as mock from './mock';
 import { PackageStates } from '../types';
 
-const base = 'https://api.tea.xyz/v1';
-// const base = 'http://localhost:3000/v1';
+// const base = 'https://api.tea.xyz/v1';
+const base = 'http://localhost:3000/v1';
 
 async function get<T>(path: string, query?: { [key: string]: string }) {
 	console.log('path', path);
@@ -29,8 +29,8 @@ async function get<T>(path: string, query?: { [key: string]: string }) {
 	console.log('uri:', uri);
 	const { data } = await client.get<T>(uri.toString(), {
 		headers: {
-			Authorization: 'public', // TODO: figure out why req w/o Authorization does not work
-			'cache-control': 'no-cache'
+			Authorization: 'public' // TODO: figure out why req w/o Authorization does not work
+			// 'cache-control': 'no-cache'
 		},
 		query: query || {}
 	});
@@ -170,7 +170,8 @@ export async function getCategorizedPackages(): Promise<Category[]> {
 type DeviceAuth = {
 	status: AuthStatus;
 	user: User;
-}
+	key: string;
+};
 
 export async function getDeviceAuth(): Promise<DeviceAuth> {
 	const deviceId = 'xyxz123';
