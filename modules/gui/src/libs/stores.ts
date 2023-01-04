@@ -3,7 +3,7 @@ import Fuse from 'fuse.js';
 
 import type { Package, Review, AirtablePost } from '@tea/ui/types';
 import type { GUIPackage } from '$libs/types';
-// TODO: figure out a better structure for managing states maybe turn them into separate files?
+
 
 import { getPackages, getFeaturedPackages, getPackageReviews, getAllPosts } from '@api';
 

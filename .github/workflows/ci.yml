@@ -134,45 +134,35 @@ jobs:
           #   name: linux+aarch64
     container: ${{ matrix.platform.container }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7
-      - name: setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 18
-          cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
-      - name: install Rust stable
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-      - name: install app dependencies
-        run: pnpm install
+      - uses: actions/checkout@v3
 
-      - name: install dependencies (ubuntu only)
+      #  will this work on tea? this is not packaged yet?
+      # - name: install dependencies (ubuntu only)
+      #   if: matrix.platform.name == 'linux+x86-64'
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
+
+      - name: build tauri for MacOS
+        uses: teaxyz/setup@v0
+        if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+        # FROM: https://tauri.app/v1/guides/distribution/sign-macos
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ENABLE_CODE_SIGNING: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        with:
+          target: build
+
+      - name: build tauri for Linux
+        uses: teaxyz/setup@v0
         if: matrix.platform.name == 'linux+x86-64'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
-
-      - uses: Swatinem/rust-cache@v2
-        with:
-          # The prefix cache key, this can be changed to start a new cache manually.
-          # default: "v0-rust"
-          prefix-key: ${{ matrix.platform.name }}
-          shared-key: ci
-          cache-targets: false
-
-      - name: Cache Tauri Target
-        uses: actions/cache@v3
-        with:
-          path: |
-            ./modules/gui/src-tauri/target
-          key: ${{ matrix.platform.name }}-build-target
-          restore-keys: |
-            ${{ matrix.platform.name }}-build-target
+        # TODO: https://tauri.app/v1/guides/distribution/sign-linux
+        run: pnpm build:gui
       
       - name: build platform output
         id: build_platform
@@ -186,24 +176,6 @@ jobs:
           [[ $platform = "linux+x86-64" ]] && EXTENSION="deb"
           echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
           echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
-
-      - name: test build tauri for MacOS
-        if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
-        # FROM: https://tauri.app/v1/guides/distribution/sign-macos
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ENABLE_CODE_SIGNING: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        run: pnpm build:gui
-
-      - name: test build tauri for Linux
-        if: matrix.platform.name == 'linux+x86-64'
-        # TODO: https://tauri.app/v1/guides/distribution/sign-linux
-        run: pnpm build:gui
 
       - name: zip .app for MacOS
         if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
