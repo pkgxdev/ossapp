@@ -123,10 +123,13 @@ jobs:
         platform:
           - os: macos-11
             name: darwin+x86-64
+            id: mac_latest
           - os: ubuntu-latest
             name: linux+x86-64
+            id: linux
           - os: [self-hosted, macOS, ARM64]
             name: darwin+aarch64
+            id: mac_m1
           # - os: [self-hosted, linux, ARM64]
           #   name: linux+aarch64
     container: ${{ matrix.platform.container }}
@@ -213,7 +216,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-
       - name: cp package images from prod to preview bucket
         env:
           prefix: ${{ needs.changes.outputs.preview_folder }}
@@ -235,7 +237,7 @@ jobs:
         if: matrix.platform.name == 'linux+x86-64'
         uses: mshick/add-pr-comment@v2
         with:
-          message-id: ${{ matrix.platform.name }}-comment
+          message-id: ${{ matrix.platform.id }}-comment
           message: |
             **installer for Linux ${{ matrix.platform.name }} is at**: 
             <a href="http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{steps.build_platform.outputs.build_platform}}.${{steps.build_platform.outputs.extension}}" target="_blank">here</a>
@@ -244,11 +246,12 @@ jobs:
             http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
             ```
             copy-paste into a browser to download
+
       - name: comment install for MacOS
         if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
         uses: mshick/add-pr-comment@v2
         with:
-          message-id: ${{ matrix.platform.name }}-comment
+          message-id: ${{ matrix.platform.id }}-comment
           message: |
             **installers for MacOS ${{ matrix.platform.name }} is at**: 
             <a href="http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{steps.build_platform.outputs.build_platform}}.zip" target="_blank">.zip</a>

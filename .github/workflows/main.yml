@@ -113,8 +113,23 @@ jobs:
         restore-keys: |
           ${{ matrix.platform.name }}-build-target-prod
 
-    - name: test build tauri
-      run: pnpm --filter gui tauri build
+    - name: test build tauri for MacOS
+      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      # FROM: https://tauri.app/v1/guides/distribution/sign-macos
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ENABLE_CODE_SIGNING: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+        APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+        APPLE_CERTIFICATE_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+        APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+      run: pnpm build:gui
+
+    - name: test build tauri for Linux
+      if: matrix.platform.name == 'linux+x86-64'
+      # TODO: https://tauri.app/v1/guides/distribution/sign-linux
+      run: pnpm build:gui
 
     - name: Get current unix ts - seconds
       id: date
@@ -137,20 +152,11 @@ jobs:
         [[ $platform = "linux+x86-64" ]] && EXTENSION="deb"
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
-
-    - uses: apple-actions/import-codesign-certs@d54750db52a4d3eaed0fc107a8bab3958f3f7494
+  
+    - name: zip .app for MacOS
       if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
-      with:
-        p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
-        p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
-
-    - name: Codesign package
-      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
-      env:
-        APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
       run: |
-        codesign -s $APPLE_SIGNING_IDENTITY -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/macos/tea.app || true
-        codesign -s $APPLE_SIGNING_IDENTITY -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg || true
+        cd ./modules/gui/src-tauri/target/release/bundle/macos/ && zip -r tea.zip tea.app
 
     - name:  cp package images from prod to gui bucket
       env:
@@ -161,13 +167,27 @@ jobs:
         aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
           "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
 
-    - name: Delete keychain
+    - name: cp package zip for MacOS
       if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
-      run: security delete-keychain signing_temp.keychain
+      env:
+        platform: ${{ steps.build_platform.outputs.build_platform }}
+        build_platform: ${{ matrix.platform.name }}
+      run: |
+        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/macos/tea.zip "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.zip"
 
     - name: Slack Notification
       run: ./.github/notify-slack.js
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         PLATFORM: ${{ matrix.platform.name }}
+        EXT: ${{ steps.build_platform.outputs.extension }}
         DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
+
+    - name: Slack Notification for .app Mac
+      run: ./.github/notify-slack.js
+      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        PLATFORM: ${{ matrix.platform.name }}
+        EXT: .zip(.app)
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.zip
