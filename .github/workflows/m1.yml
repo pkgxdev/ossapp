@@ -43,10 +43,14 @@ jobs:
         p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
     - run: pnpm build:gui
 
-    - name: Codesign package
+    # - name: Codesign package
+    #   run: |
+    #     codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/macos/tea.app || true
+    #     codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg || true
+
+    - name: Codesign package .app only
       run: |
-        codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/macos/tea.app || true
-        codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" -v --force --deep --timestamp --preserve-metadata=entitlements -o runtime ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg || true
+        codesign -s "Developer ID Application: Tea Inc. (7WV56FL599)" --force ./modules/gui/src-tauri/target/release/bundle/macos/tea.app
 
     - name: zip app
       run: |
@@ -58,10 +62,13 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
   
+    # - name: cp package images from prod to preview bucket
+    #   run: |
+    #     aws s3 cp ./modules/gui/src-tauri/target/release/bundle/macos/tea.zip "s3://preview.gui.tea.xyz/release/tea_m1.zip"
+    #     aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg "s3://preview.gui.tea.xyz/release/tea_m1.dmg"
     - name: cp package images from prod to preview bucket
       run: |
-        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/macos/tea.zip "s3://preview.gui.tea.xyz/release/tea_m1.zip"
-        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/dmg/tea_0.1.0_aarch64.dmg "s3://preview.gui.tea.xyz/release/tea_m1.dmg"
+        aws s3 cp ./modules/gui/src-tauri/target/release/bundle/macos/tea.zip "s3://preview.gui.tea.xyz/release/tea_m1_simplified.zip"
 
     - name: Delete keychain
       if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
