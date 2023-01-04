@@ -162,7 +162,8 @@ jobs:
         uses: teaxyz/setup@v0
         if: matrix.platform.name == 'linux+x86-64'
         # TODO: https://tauri.app/v1/guides/distribution/sign-linux
-        run: pnpm build:gui
+        with:
+          target: build
       
       - name: build platform output
         id: build_platform
