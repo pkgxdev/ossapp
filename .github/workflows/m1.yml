@@ -3,7 +3,7 @@ name: "deploy"
 on:
   push:
     branches:
-      - m1-codesign
+      - m1-codesign-x
 
 
 jobs:

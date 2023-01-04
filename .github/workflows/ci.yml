@@ -194,9 +194,9 @@ jobs:
         # FROM: https://tauri.app/v1/guides/distribution/sign-macos
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE_P12 }}
-          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE_P12 }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
+          ENABLE_CODE_SIGNING: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
           APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
