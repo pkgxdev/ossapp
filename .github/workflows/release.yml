@@ -70,8 +70,23 @@ jobs:
         restore-keys: |
           ${{ matrix.platform.name }}-build-target-prod
 
-    - name: test build tauri
-      run: pnpm --filter gui tauri build
+    - name: test build tauri for MacOS
+      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      # FROM: https://tauri.app/v1/guides/distribution/sign-macos
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ENABLE_CODE_SIGNING: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+        APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+        APPLE_CERTIFICATE_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+        APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+      run: pnpm build:gui
+
+    - name: test build tauri for Linux
+      if: matrix.platform.name == 'linux+x86-64'
+      # TODO: https://tauri.app/v1/guides/distribution/sign-linux
+      run: pnpm build:gui
 
     - name: Get current unix ts - seconds
       id: date
@@ -97,11 +112,38 @@ jobs:
           "s3://preview.gui.tea.xyz/release/tea_gui_latest_$platform.$extension"
         aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
           "s3://preview.gui.tea.xyz/release/tea_gui_$tag_$platform.$extension"
+  
+    - name: zip .app for MacOS
+      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      run: |
+        cd ./modules/gui/src-tauri/target/release/bundle/macos/ && zip -r tea.zip tea.app
 
+    - name: publish .zip(.app) for MacOS
+      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      env:
+        platform: ${{ steps.build_platform.outputs.build_platform }}
+        extension: ${{ steps.build_platform.outputs.extension }}
+        tag: ${{ steps.tag.outputs.tag }}
+      run: |
+        aws s3 cp "./modules/gui/src-tauri/target/release/bundle/macos/tea.zip" \
+          "s3://preview.gui.tea.xyz/release/tea_gui_latest_$platform.zip"
+        aws s3 cp "./modules/gui/src-tauri/target/release/bundle/macos/tea.zip" \
+          "s3://preview.gui.tea.xyz/release/tea_gui_$tag_$platform.zip"
     - name: Slack Notification
       run: ./.github/notify-slack.js
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         PLATFORM: ${{ matrix.platform.name }}
         VERSION: ${{steps.tag.outputs.tag}}
+        EXT: ${{ steps.build_platform.outputs.extension }}
         DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_gui_${{steps.tag.outputs.tag}}_${{steps.build_platform.outputs.build_platform}}.${{ steps.build_platform.outputs.extension }}
+
+    - name: Slack Notification for .app Mac
+      run: ./.github/notify-slack.js
+      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        PLATFORM: ${{ matrix.platform.name }}
+        VERSION: ${{steps.tag.outputs.tag}}
+        EXT: .zip(.app)
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_gui_${{steps.tag.outputs.tag}}_${{steps.build_platform.outputs.build_platform}}.zip
