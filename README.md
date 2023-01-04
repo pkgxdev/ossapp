@@ -16,6 +16,7 @@ For better documentation checkout this [notion](https://www.notion.so/teaxyz/tea
 | nixos.org/patchelf | >= 0.17.0 |
 | freedesktop.org/pkg-config | >= 0.29.2 |
 | gnome.org/librsvg | >= 2.55.1 |
+
 # Getting Started
 ```sh
 pnpm install
