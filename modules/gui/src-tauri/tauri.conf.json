@@ -15,7 +15,7 @@
 			"http": {
 				"all": true,
 				"request": true,
-				"scope": ["https://api.tea.xyz/v1/*", "https://github.com/*", "http://localhost:3000/v1/*"]
+				"scope": ["https://api.tea.xyz/v1/*", "https://github.com/*", "http://localhost:3000/v1/*", "https://app.tea.xyz/*"]
 			},
 			"shell": {
 				"all": true,

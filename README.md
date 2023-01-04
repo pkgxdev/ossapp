@@ -30,6 +30,7 @@ $ pnpm web:gui
 ```
 # Build
 ```sh
+pnpm install
 pnpm build:gui
 ```
 

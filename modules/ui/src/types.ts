@@ -43,3 +43,10 @@ export type User = {
 	country?: string;
 	wallet?: string;
 };
+
+export type Bottle = {
+	name: string;
+	platform: string;
+	arch: string;
+	version: string;
+};

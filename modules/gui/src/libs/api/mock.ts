@@ -5,7 +5,7 @@
  * TODO:
  *  * make cors work with api.tea.xyz/v1
  */
-import type { Package, Review, AirtablePost } from '@tea/ui/types';
+import type { Package, Review, AirtablePost, Bottle } from '@tea/ui/types';
 import type { GUIPackage, Course, Category } from '../types';
 import { PackageStates } from '../types';
 import { loremIpsum } from 'lorem-ipsum';
@@ -340,4 +340,17 @@ export async function getDeviceAuth(): Promise<any> {
 		},
 		key: 'xxx'
 	};
+}
+
+export async function getPackageBottles(name: string): Promise<Bottle[]> {
+	return [
+		{ name, platform: 'darwin', arch: 'aarch64', version: '3.39.4' },
+		{ name, platform: 'darwin', arch: 'aarch64', version: '3.40.0' },
+		{ name, platform: 'darwin', arch: 'x86-64', version: '3.39.4' },
+		{ name, platform: 'darwin', arch: 'x86-64', version: '3.40.0' },
+		{ name, platform: 'linux', arch: 'aarch64', version: '3.39.4' },
+		{ name, platform: 'linux', arch: 'aarch64', version: '3.40.0' },
+		{ name, platform: 'linux', arch: 'x86-64', version: '3.39.4' },
+		{ name, platform: 'linux', arch: 'x86-64', version: '3.40.0' }
+	];
 }
