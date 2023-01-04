@@ -111,7 +111,7 @@ jobs:
         aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
           "s3://preview.gui.tea.xyz/release/tea_gui_latest_$platform.$extension"
         aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
-          "s3://preview.gui.tea.xyz/release/tea_gui_$tag_$platform.$extension"
+          "s3://preview.gui.tea.xyz/release/tea_gui_${{ steps.tag.outputs.tag }}_$platform.$extension"
   
     - name: zip .app for MacOS
       if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
