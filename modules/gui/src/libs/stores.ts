@@ -4,7 +4,6 @@ import Fuse from 'fuse.js';
 import type { Package, Review, AirtablePost } from '@tea/ui/types';
 import type { GUIPackage } from '$libs/types';
 
-
 import { getPackages, getFeaturedPackages, getPackageReviews, getAllPosts } from '@api';
 
 export const backLink = writable<string>('/');
