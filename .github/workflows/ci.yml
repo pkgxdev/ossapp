@@ -121,16 +121,16 @@ jobs:
     strategy:
       matrix:
         platform:
-          - os: macos-11
-            name: darwin+x86-64
-            id: mac_latest
+          # - os: macos-11
+          #   name: darwin+x86-64
+          #   id: mac_latest
           # TODO: blocked by gtk packages
           - os: ubuntu-latest
             name: linux+x86-64
             id: linux
-          - os: [self-hosted, macOS, ARM64]
-            name: darwin+aarch64
-            id: mac_m1
+          # - os: [self-hosted, macOS, ARM64]
+          #   name: darwin+aarch64
+          #   id: mac_m1
           # note: if this fails maybe the runner got replaced, manually installed gtk there
           # sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
           - os: [self-hosted, linux, ARM64]
@@ -144,6 +144,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev
+          sh <(curl https://tea.xyz)
 
       - name: build tauri for MacOS
         uses: teaxyz/setup@v0
@@ -163,11 +164,12 @@ jobs:
           target: build
 
       - name: build tauri for Linux
-        uses: teaxyz/setup@v0
+        # uses: teaxyz/setup@v0
         if: matrix.platform.name == 'linux+x86-64' || matrix.platform.name == 'linux+aarch64'
         # TODO: https://tauri.app/v1/guides/distribution/sign-linux
-        with:
-          target: build
+        run: |
+          tea .
+          tea build
       
       - name: build platform output
         id: build_platform
