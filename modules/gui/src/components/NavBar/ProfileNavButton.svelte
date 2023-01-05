@@ -4,10 +4,10 @@
 	import type { User } from '@tea/ui/types';
 
 	let user: User | null = null;
-	const authPage = `http://localhost:3000/v1/auth/user?device_id=${authStore.deviceId}`; // https://api.tea.xyz/v1/auth/user?device_id=device_id
+	const deviceId = authStore.deviceIdStore;
 
 	const openGithub = () => {
-		open(authPage);
+		open(`http://localhost:3000/v1/auth/user?device_id=${$deviceId}`);
 		try {
 			authStore.pollSession();
 		} catch (error) {

@@ -1,42 +1,58 @@
 import { writable } from 'svelte/store';
 import { BaseDirectory, createDir, readTextFile, writeTextFile } from '@tauri-apps/api/fs';
 import { join } from '@tauri-apps/api/path';
-import { getDeviceAuth } from '@api';
+import { getDeviceAuth, registerDevice } from '@api';
 import type { User } from '@tea/ui/types';
 
 const basePath = '.tea/tea.xyz/gui';
 interface Session {
-	key: string;
-	user: any;
+	device_id?: string;
+	key?: string;
+	user?: any;
 }
 
 export default function initAuthStore() {
-	const deviceId = 'abcdevf'; // ideally randomly generated on install
-	const session = writable<Session>();
+	const session = writable<Session>({});
 	let pollLoop = 0;
-	initSession();
+
+	const deviceIdStore = writable<string>('');
+	let deviceId = '';
+
+	initSession().then((sess) => {
+		if (sess) {
+			session.set(sess);
+			deviceIdStore.set(sess.device_id!);
+			deviceId = sess.device_id!;
+		}
+	});
 
 	let timer: NodeJS.Timer | null;
-	// TODO:
-	// fetch session data from local
-	// fetch session data remotely
-	// update local session data
+
+	async function updateSession(data: Session) {
+		const localSession = {
+			device_id: deviceId,
+			key: data.key,
+			user: data.user
+		};
+		saveLocallySessionData(localSession);
+		session.set(localSession);
+	}
 
 	async function pollSession() {
 		if (!timer) {
 			timer = setInterval(async () => {
 				pollLoop++;
 				try {
-					const data = await getDeviceAuth();
+					const data = await getDeviceAuth(deviceId);
+					console.log('dd', deviceId, data);
 					if (data.status === 'SUCCESS') {
-						session.set({
+						updateSession({
 							key: data.key,
 							user: data.user
 						});
 						timer && clearInterval(timer);
 						timer = null;
 					}
-					console.log(data);
 				} catch (error) {
 					console.error(error);
 				}
@@ -52,6 +68,7 @@ export default function initAuthStore() {
 
 	return {
 		deviceId,
+		deviceIdStore,
 		subscribe: (cb: (u: User) => void) => {
 			return session.subscribe((v) => v && cb(v.user));
 		},
@@ -60,36 +77,53 @@ export default function initAuthStore() {
 }
 
 const initSession = async (): Promise<Session | void> => {
-	await createGuiDataFolder();
-	const session = await getSessionData();
-	console.log(session);
-};
-
-const createGuiDataFolder = async () => {
 	await createDir(basePath, {
 		dir: BaseDirectory.Home,
 		recursive: true
 	});
+	const session = await getLocalSessionData();
+	return session;
 };
 
-const getSessionData = async (): Promise<Session | void> => {
+const getLocalSessionData = async (): Promise<Session | void> => {
 	const sessionFilePath = await join(basePath, 'tmp.dat');
+	let data: Session;
 	try {
-		const data = await readTextFile(sessionFilePath, {
+		const encryptedData = await readTextFile(sessionFilePath, {
 			dir: BaseDirectory.Home
 		});
 		// TODO: decrypt then return
-		console.log('data:', data);
+		data = JSON.parse(encryptedData || '{}');
 	} catch (error) {
 		console.error(error);
-		await writeTextFile(sessionFilePath, '', {
-			dir: BaseDirectory.Home
-		});
+		const deviceId = await getDeviceId();
+		data = {
+			device_id: deviceId
+		};
+		await saveLocallySessionData(data);
 	}
-	console.log(sessionFilePath);
+
+	return data;
 };
 
-const saveSessionData = async (data: { [key: string]: string | number | Date }) => {
+const saveLocallySessionData = async (data: Session) => {
 	const sessionFilePath = await join(basePath, 'tmp.dat');
-	// TODO: encrypt and write
+	// TODO: encrypt first
+	await writeTextFile(sessionFilePath, JSON.stringify(data), {
+		dir: BaseDirectory.Home
+	});
+};
+
+const getDeviceId = async (): Promise<string> => {
+	const hasLocal = false;
+	// get from local data
+	// else get from server
+	// 	GET /v1/auth/registerDevice
+	let deviceId = '';
+	if (hasLocal) {
+	} else {
+		deviceId = await registerDevice();
+	}
+	console.log('deviceId:', deviceId);
+	return deviceId;
 };

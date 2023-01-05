@@ -323,8 +323,7 @@ export async function getCategorizedPackages(): Promise<Category[]> {
 	];
 }
 
-export async function getDeviceAuth(): Promise<any> {
-	const deviceId = 'xyz123';
+export async function getDeviceAuth(deviceId: string): Promise<any> {
 	// const data = await get<any>(`/auth/device/${deviceId}`);
 	return {
 		status: 'SUCCESS',
@@ -353,4 +352,8 @@ export async function getPackageBottles(name: string): Promise<Bottle[]> {
 		{ name, platform: 'linux', arch: 'x86-64', version: '3.39.4' },
 		{ name, platform: 'linux', arch: 'x86-64', version: '3.40.0' }
 	];
+}
+
+export async function registerDevice(): Promise<string> {
+	return 'uuid1234';
 }

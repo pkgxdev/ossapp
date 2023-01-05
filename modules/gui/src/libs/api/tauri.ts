@@ -175,9 +175,9 @@ type DeviceAuth = {
 	key: string;
 };
 
-export async function getDeviceAuth(): Promise<DeviceAuth> {
-	const deviceId = 'xyxz123';
+export async function getDeviceAuth(deviceId: string): Promise<DeviceAuth> {
 	const data = await get<DeviceAuth>(`/auth/device/${deviceId}`);
+	return data;
 }
 
 export async function getPackageBottles(packageName: string): Promise<Bottle[]> {
@@ -187,4 +187,9 @@ export async function getPackageBottles(packageName: string): Promise<Bottle[]> 
 	const { data } = await client.get<Bottle[]>(uri.toString());
 	console.log('got bottles', data);
 	return data;
+}
+
+export async function registerDevice(): Promise<string> {
+	const { deviceId } = await get<{ deviceId: string }>('/auth/registerDevice');
+	return deviceId;
 }
