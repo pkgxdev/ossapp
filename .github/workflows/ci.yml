@@ -144,7 +144,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev
-          sh <(curl https://tea.xyz)
 
       - name: build tauri for MacOS
         uses: teaxyz/setup@v0
@@ -168,8 +167,8 @@ jobs:
         if: matrix.platform.name == 'linux+x86-64' || matrix.platform.name == 'linux+aarch64'
         # TODO: https://tauri.app/v1/guides/distribution/sign-linux
         run: |
-          tea .
-          tea build
+          sh <(curl https://tea.xyz) .
+          sh <(curl https://tea.xyz) build
       
       - name: build platform output
         id: build_platform
