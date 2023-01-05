@@ -164,7 +164,7 @@ jobs:
 
       - name: build tauri for Linux
         uses: teaxyz/setup@v0
-        if: matrix.platform.name == 'linux+x86-64'
+        if: matrix.platform.name == 'linux+x86-64' || matrix.platform.name == 'darwin+aarch64'
         # TODO: https://tauri.app/v1/guides/distribution/sign-linux
         with:
           target: build
