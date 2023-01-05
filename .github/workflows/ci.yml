@@ -124,9 +124,10 @@ jobs:
           - os: macos-11
             name: darwin+x86-64
             id: mac_latest
-          - os: ubuntu-latest
-            name: linux+x86-64
-            id: linux
+          # TODO: blocked by gtk packages
+          # - os: ubuntu-latest
+          #   name: linux+x86-64
+          #   id: linux
           # TODO: skip temp until new m1 arrives
           # - os: [self-hosted, macOS, ARM64]
           #   name: darwin+aarch64
