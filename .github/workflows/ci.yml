@@ -125,24 +125,25 @@ jobs:
             name: darwin+x86-64
             id: mac_latest
           # TODO: blocked by gtk packages
-          # - os: ubuntu-latest
-          #   name: linux+x86-64
-          #   id: linux
+          - os: ubuntu-latest
+            name: linux+x86-64
+            id: linux
           - os: [self-hosted, macOS, ARM64]
             name: darwin+aarch64
             id: mac_m1
-          # - os: [self-hosted, linux, ARM64]
-          #   name: linux+aarch64
+          # note: if this fails maybe the runner got replaced, manually installed gtk there
+          # sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+          - os: [self-hosted, linux, ARM64]
+            name: linux+aarch64
     container: ${{ matrix.platform.container }}
     steps:
       - uses: actions/checkout@v3
 
-      #  will this work on tea? this is not packaged yet?
-      # - name: install dependencies (ubuntu only)
-      #   if: matrix.platform.name == 'linux+x86-64'
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform.name == 'linux+x86-64'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev
 
       - name: build tauri for MacOS
         uses: teaxyz/setup@v0
