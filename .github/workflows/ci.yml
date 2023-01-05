@@ -125,9 +125,9 @@ jobs:
           #   name: darwin+x86-64
           #   id: mac_latest
           # TODO: blocked by gtk packages
-          - os: ubuntu-latest
-            name: linux+x86-64
-            id: linux
+          # - os: ubuntu-latest
+          #   name: linux+x86-64
+          #   id: linux
           # - os: [self-hosted, macOS, ARM64]
           #   name: darwin+aarch64
           #   id: mac_m1
