@@ -168,7 +168,7 @@ jobs:
         # TODO: https://tauri.app/v1/guides/distribution/sign-linux
         run: |
           sh <(curl https://tea.xyz) .
-          sh <(curl https://tea.xyz) build
+          sh <(curl https://tea.xyz) . build
       
       - name: build platform output
         id: build_platform
