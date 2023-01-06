@@ -13,6 +13,7 @@ For better documentation checkout this [notion](https://www.notion.so/teaxyz/tea
 | nodejs.org |  >=16   |
 | pnpm.io    |  >=7.18.2 |
 | rust-lang.org |  >=1.62 |
+| freedesktop.org/pkg-config | >=0.29 |
 
 # Getting Started
 ```sh
