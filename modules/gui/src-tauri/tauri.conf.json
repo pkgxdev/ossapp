@@ -124,9 +124,9 @@
 				"fullscreen": false,
 				"height": 600,
 				"resizable": true,
-				"title": "gui",
+				"title": "tea",
 				"width": 1200,
-				"decorations": false
+				"decorations": true
 			}
 		]
 	}
