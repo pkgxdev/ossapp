@@ -147,7 +147,7 @@ jobs:
 
       - name: build tauri for MacOS
         uses: teaxyz/setup@v0
-        if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+        if: startsWith(matrix.platform.name, 'darwin')
         # FROM: https://tauri.app/v1/guides/distribution/sign-macos
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -164,11 +164,11 @@ jobs:
 
       - name: build tauri for Linux
         # uses: teaxyz/setup@v0
-        if: matrix.platform.name == 'linux+x86-64' || matrix.platform.name == 'linux+aarch64'
+        if: startsWith(matrix.platform.name, 'linux')
         # TODO: https://tauri.app/v1/guides/distribution/sign-linux
         run: |
-          sh <(curl https://tea.xyz) .
-          sh <(curl https://tea.xyz) -x build
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
+          sh <(curl https://tea.xyz) build
       
       - name: build platform output
         id: build_platform
@@ -212,7 +212,7 @@ jobs:
           aws s3 cp ./modules/gui/src-tauri/target/release/bundle/macos/tea.zip "s3://preview.gui.tea.xyz/$prefix/tea_$platform.zip"
 
       - name: comment install for Linux
-        if: matrix.platform.name == 'linux+x86-64'
+        if: startsWith(matrix.platform.name, 'linux')
         uses: mshick/add-pr-comment@v2
         with:
           message-id: ${{ matrix.platform.id }}-comment
@@ -226,7 +226,7 @@ jobs:
             copy-paste into a browser to download
 
       - name: comment install for MacOS
-        if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+        if: startsWith(matrix.platform.name, 'darwin')
         uses: mshick/add-pr-comment@v2
         with:
           message-id: ${{ matrix.platform.id }}-comment
