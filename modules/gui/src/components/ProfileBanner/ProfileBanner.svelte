@@ -1,9 +1,9 @@
 <script lang="ts">
 	import '$appcss';
 	import { authStore } from '$libs/stores';
-	import type { User } from '@tea/ui/types';
+	import type { Developer } from '@tea/ui/types';
 
-	let user: User | null = null;
+	let user: Developer | null = null;
 	const authPage = `http://localhost:3000/v1/auth/user?device_id=${authStore.deviceId}`; // https://api.tea.xyz/v1/auth/user?device_id=device_id
 
 	authStore.subscribe((u) => (user = u));

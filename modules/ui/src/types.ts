@@ -35,7 +35,7 @@ export type AirtablePost = {
 	tags: string[];
 };
 
-export type User = {
+export type Developer = {
 	developer_id: string;
 	avatar_url?: string;
 	name: string;

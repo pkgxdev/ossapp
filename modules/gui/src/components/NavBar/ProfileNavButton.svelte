@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { open } from '@tauri-apps/api/shell';
 	import { authStore } from '$libs/stores';
-	import type { User } from '@tea/ui/types';
+	import type { Developer } from '@tea/ui/types';
 
-	let user: User | null = null;
+	let user: Developer | null = null;
 	const deviceId = authStore.deviceIdStore;
 
 	const openGithub = () => {

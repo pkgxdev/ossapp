@@ -15,7 +15,7 @@ import { getClient } from '@tauri-apps/api/http';
 import { Command } from '@tauri-apps/api/shell';
 import { readDir, BaseDirectory } from '@tauri-apps/api/fs';
 
-import type { Package, Review, AirtablePost, User, Bottle } from '@tea/ui/types';
+import type { Package, Review, AirtablePost, Developer, Bottle } from '@tea/ui/types';
 import type { GUIPackage, Course, Category, AuthStatus } from '../types';
 
 import * as mock from './mock';
@@ -171,7 +171,7 @@ export async function getCategorizedPackages(): Promise<Category[]> {
 
 type DeviceAuth = {
 	status: AuthStatus;
-	user: User;
+	user: Developer;
 	key: string;
 };
 

@@ -2,13 +2,13 @@ import { writable } from 'svelte/store';
 import { BaseDirectory, createDir, readTextFile, writeTextFile } from '@tauri-apps/api/fs';
 import { join } from '@tauri-apps/api/path';
 import { getDeviceAuth, registerDevice } from '@api';
-import type { User } from '@tea/ui/types';
+import type { Developer } from '@tea/ui/types';
 
 const basePath = '.tea/tea.xyz/gui';
 interface Session {
 	device_id?: string;
 	key?: string;
-	user?: any;
+	user?: Developer;
 }
 
 export default function initAuthStore() {
@@ -69,8 +69,8 @@ export default function initAuthStore() {
 	return {
 		deviceId,
 		deviceIdStore,
-		subscribe: (cb: (u: User) => void) => {
-			return session.subscribe((v) => v && cb(v.user));
+		subscribe: (cb: (u: Developer) => void) => {
+			return session.subscribe((v) => v?.user && cb(v.user));
 		},
 		pollSession
 	};
@@ -96,7 +96,7 @@ const getLocalSessionData = async (): Promise<Session | void> => {
 		data = JSON.parse(encryptedData || '{}');
 	} catch (error) {
 		console.error(error);
-		const deviceId = await getDeviceId();
+		const deviceId = await registerDevice();
 		data = {
 			device_id: deviceId
 		};
@@ -112,18 +112,4 @@ const saveLocallySessionData = async (data: Session) => {
 	await writeTextFile(sessionFilePath, JSON.stringify(data), {
 		dir: BaseDirectory.Home
 	});
-};
-
-const getDeviceId = async (): Promise<string> => {
-	const hasLocal = false;
-	// get from local data
-	// else get from server
-	// 	GET /v1/auth/registerDevice
-	let deviceId = '';
-	if (hasLocal) {
-	} else {
-		deviceId = await registerDevice();
-	}
-	console.log('deviceId:', deviceId);
-	return deviceId;
 };
