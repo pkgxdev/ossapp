@@ -37,26 +37,12 @@ jobs:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7
-      - name: setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 18
-          cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
-      - name: install Rust stable
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-      - name: install app dependencies and build it
-        run: pnpm install && pnpm --filter gui build
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+      - name: build tauri for Linux
+        if: startsWith(matrix.platform.name, 'linux')
+        run: |
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
+          sh <(curl https://tea.xyz) build
+
   build_tauri:
     needs: changes
     if: needs.changes.outputs.tauri == 'true'
@@ -74,47 +60,10 @@ jobs:
           #   name: linux+aarch64
     container: ${{ matrix.platform.container }}
     steps:
-    - uses: actions/checkout@v2
-
-    - uses: pnpm/action-setup@v2
-      with:
-        version: 7
-    - name: setup node
-      uses: actions/setup-node@v1
-      with:
-        node-version: 18
-        cache: 'pnpm'
-        cache-dependency-path: pnpm-lock.yaml
-    - name: install Rust stable
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-    - uses: Swatinem/rust-cache@v2
-      with:
-        # The prefix cache key, this can be changed to start a new cache manually.
-        # default: "v0-rust"
-        prefix-key: ${{ matrix.platform.name }}
-        shared-key: prod
-        cache-targets: false
-    - name: install dependencies (ubuntu only)
-      if: matrix.platform.name == 'linux+x86-64'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
-    - name: install app dependencies
-      run: pnpm install
-
-    - name: Cache Tauri Target
-      uses: actions/cache@v3
-      with:
-        path: |
-          ./modules/gui/src-tauri/target
-        key: ${{ matrix.platform.name }}-build-target-prod
-        restore-keys: |
-          ${{ matrix.platform.name }}-build-target-prod
+    - uses: actions/checkout@v3
 
     - name: test build tauri for MacOS
-      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      if: startsWith(matrix.platform.name, 'darwin')
       # FROM: https://tauri.app/v1/guides/distribution/sign-macos
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -122,14 +71,19 @@ jobs:
         APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
         APPLE_CERTIFICATE_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
         APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        # todo: uncomment when m1 with latest xcode is deployed
+        # this only helps in notarization
+        # APPLE_ID: ${{ secrets.APPLE_ID }}
+        # APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
       run: pnpm build:gui
 
-    - name: test build tauri for Linux
-      if: matrix.platform.name == 'linux+x86-64'
+    - name: build tauri for Linux
+      # uses: teaxyz/setup@v0
+      if: startsWith(matrix.platform.name, 'linux')
       # TODO: https://tauri.app/v1/guides/distribution/sign-linux
-      run: pnpm build:gui
+      run: |
+        sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
+        sh <(curl https://tea.xyz) build
 
     - name: Get current unix ts - seconds
       id: date
@@ -154,7 +108,7 @@ jobs:
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
   
     - name: zip .app for MacOS
-      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      if: startsWith(matrix.platform.name, 'darwin')
       run: |
         cd ./modules/gui/src-tauri/target/release/bundle/macos/ && zip -r tea.zip tea.app
 
@@ -168,7 +122,7 @@ jobs:
           "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
 
     - name: cp package zip for MacOS
-      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      if: startsWith(matrix.platform.name, 'darwin')
       env:
         platform: ${{ steps.build_platform.outputs.build_platform }}
         build_platform: ${{ matrix.platform.name }}
@@ -185,7 +139,7 @@ jobs:
 
     - name: Slack Notification for .app Mac
       run: ./.github/notify-slack.js
-      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      if: startsWith(matrix.platform.name, 'darwin')
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         PLATFORM: ${{ matrix.platform.name }}
