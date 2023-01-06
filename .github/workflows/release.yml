@@ -88,6 +88,9 @@ jobs:
           "s3://preview.gui.tea.xyz/release/tea_gui_latest_$platform.zip"
         aws s3 cp "./modules/gui/src-tauri/target/release/bundle/macos/tea.zip" \
           "s3://preview.gui.tea.xyz/release/tea_gui_$tag_$platform.zip"
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
     - name: Slack Notification
       run: ./.github/notify-slack.js
       env:
