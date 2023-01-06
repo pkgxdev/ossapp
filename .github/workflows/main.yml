@@ -62,7 +62,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: test build tauri for MacOS
+    - name: build tauri for MacOS
+      uses: teaxyz/setup@v0
       if: startsWith(matrix.platform.name, 'darwin')
       # FROM: https://tauri.app/v1/guides/distribution/sign-macos
       env:
@@ -75,7 +76,8 @@ jobs:
         # this only helps in notarization
         # APPLE_ID: ${{ secrets.APPLE_ID }}
         # APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-      run: pnpm build:gui
+      with:
+        target: build
 
     - name: build tauri for Linux
       # uses: teaxyz/setup@v0
