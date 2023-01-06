@@ -1,22 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { appWindow } from '@tauri-apps/api/window';
 	import { searchStore } from '$libs/stores';
 	import SearchInput from '@tea/ui/SearchInput/SearchInput.svelte';
 	import Button from '@tea/ui/Button/Button.svelte';
 	import ProfileNavButton from './ProfileNavButton.svelte';
 
 	import { beforeUpdate } from 'svelte';
-
-	let maximized = false;
-	const toggleMaximize = () => {
-		maximized = !maximized;
-		if (maximized) {
-			appWindow.maximize();
-		} else {
-			appWindow.unmaximize();
-		}
-	};
 
 	let routes = [
 		{
@@ -65,18 +54,7 @@
 </script>
 
 <ul id="NavBar">
-	<nav data-tauri-drag-region class="flex justify-between">
-		<div class="flex gap-1 p-3 pt-3">
-			<button class="titlebar-button" id="titlebar-close" on:click={appWindow.close}>
-				<img src="/images/close.svg" alt="close" />
-			</button>
-			<button class="titlebar-button" id="titlebar-minimize" on:click={appWindow.minimize}>
-				<img src="/images/minimize.svg" alt="minimize" />
-			</button>
-			<button class="titlebar-button" id="titlebar-maximize" on:click={toggleMaximize}>
-				<img src="/images/expand.svg" alt="maximize" />
-			</button>
-		</div>
+	<nav class="flex justify-between">
 		<a href="/">
 			<img width="40" height="40" src="/images/tea-icon.png" alt="tea" />
 		</a>
@@ -123,11 +101,6 @@
 			color: theme('colors.black');
 			background-color: theme('colors.primary');
 		}
-	}
-
-	nav:hover {
-		transition: all 0.3s;
-		background-color: #2d2d2d;
 	}
 
 	.titlebar-button {
