@@ -131,7 +131,7 @@ function initSearchStore() {
 
 	// TODO:
 	// detec if online
-	// 	should use algolia 
+	// 	should use algolia
 
 	const packagesFound: GUIPackage[] = [];
 
