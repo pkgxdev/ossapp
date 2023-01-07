@@ -72,14 +72,15 @@ jobs:
         with:
           key: tea-linux
           path: |
-            ~/.tea
-            ~/.gradle/wrapper
-            ~/.cargo
-            ~/.local/share/pnpm/store
-            ~/Library/pnpm/store
+            $HOME/.tea
+            $HOME/.gradle/wrapper
+            $HOME/.cargo
+            $HOME/.local/share/pnpm/store
+            $HOME/Library/pnpm/store
       - name: build tauri for Linux
         run: |
           tea .
+          tea -X pnpm build:gui
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -139,11 +140,11 @@ jobs:
         with:
           key: tea-${{matrix.platform.id}}
           path: |
-            ~/.tea
-            ~/.gradle/wrapper
-            ~/.cargo
-            ~/.local/share/pnpm/store
-            ~/Library/pnpm/store
+            $HOME/.tea
+            $HOME/.gradle/wrapper
+            $HOME/.cargo
+            $HOME/.local/share/pnpm/store
+            $HOME/Library/pnpm/store
 
       - name: build tauri for MacOS
         # uses: teaxyz/setup@v0
@@ -163,7 +164,8 @@ jobs:
         #   target: build
         run: |
           sh <(curl https://tea.xyz) --yes
-          tea build
+          tea .
+          tea -X pnpm build:gui
 
 
       - name: build tauri for Linux
@@ -172,6 +174,7 @@ jobs:
         # TODO: https://tauri.app/v1/guides/distribution/sign-linux
         run: |
           tea .
+          tea -X pnpm build:gui
       
       # - name: build platform output
       #   id: build_platform
