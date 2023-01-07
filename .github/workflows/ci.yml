@@ -79,8 +79,8 @@ jobs:
             ~/Library/pnpm/store
       - name: build tauri for Linux
         run: |
-          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
-          sh <(curl https://tea.xyz) --yes
+          apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
+          sh <(curl https://tea.xyz)
           tea build
       - uses: aws-actions/configure-aws-credentials@v1
         with:
