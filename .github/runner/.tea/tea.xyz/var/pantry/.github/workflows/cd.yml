@@ -1,0 +1,40 @@
+name: cd
+on:
+  push:
+   branches:
+   - main
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+    outputs:
+      HAS_SECRETS: ${{ secrets.AWS_S3_CACHE != '' }}
+    steps:
+      - uses: actions/checkout@v3
+      - run: >
+          grep -E '  github: [^\w]+/[^\w/]+' projects/**/package.yml |
+          sed -e 's|^projects/\(.*\)/package.yml: *github: \([^/]*/[^/]*\).*|{ "project": "\1", "github": "\2" }|' |
+          jq -sc . |
+          curl https://app.tea.xyz/api/receiveWatcherProjects --fail -X PUT \
+            -H "content-type: application/json" -H "authorization: bearer ${{ secrets.TEA_API_TOKEN }}" -d @-
+  bottle-pr:
+    needs: [cd]
+    #FIXME: will fail (harmlessly) on non-merge/non-new-version runs, and won't work on 3rd-party PRs
+    if: ${{ needs.cd.outputs.HAS_SECRETS }}
+    uses: teaxyz/pantry.core/.github/workflows/bottle.yml@main
+    secrets: inherit
+  bottle-standalone:
+    runs-on: ubuntu-latest
+    needs: [cd]
+    if: ${{ ! needs.cd.outputs.HAS_SECRETS }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: technote-space/get-diff-action@v6
+        id: diff
+        with:
+          PATTERNS: projects/**/package.yml
+      - run: gh workflow run new-version.yml -R teaxyz/pantry.core -f "projects=$PROJECTS"
+        if: ${{ steps.diff.outputs.diff != '' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.TEMP_JACOBS_GITHUB_PAT }}
+          PROJECTS: ${{ steps.diff.outputs.diff }}
