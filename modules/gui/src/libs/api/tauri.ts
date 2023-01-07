@@ -21,13 +21,13 @@ import type { GUIPackage, Course, Category, AuthStatus } from '../types';
 import * as mock from './mock';
 import { PackageStates } from '../types';
 
-// const base = 'https://api.tea.xyz/v1';
-const base = 'http://localhost:3000/v1';
+export const apiBaseUrl = 'https://api.tea.xyz/v1';
+// const apiBaseUrl = 'http://localhost:3000/v1';
 
 async function get<T>(path: string, query?: { [key: string]: string }) {
 	console.log('path', path);
 	const client = await getClient();
-	const uri = join(base, path);
+	const uri = join(apiBaseUrl, path);
 	console.log('uri:', uri);
 	const { data } = await client.get<T>(uri.toString(), {
 		headers: {

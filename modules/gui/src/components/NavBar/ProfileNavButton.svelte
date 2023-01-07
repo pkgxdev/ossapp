@@ -2,12 +2,13 @@
 	import { open } from '@tauri-apps/api/shell';
 	import { authStore } from '$libs/stores';
 	import type { Developer } from '@tea/ui/types';
+	import { apiBaseUrl } from '@api';
 
 	let user: Developer | null = null;
 	const deviceId = authStore.deviceIdStore;
 
 	const openGithub = () => {
-		open(`http://localhost:3000/v1/auth/user?device_id=${$deviceId}`);
+		open(`${apiBaseUrl}/auth/user?device_id=${$deviceId}`);
 		try {
 			authStore.pollSession();
 		} catch (error) {
