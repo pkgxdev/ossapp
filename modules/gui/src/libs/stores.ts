@@ -5,6 +5,7 @@ import type { Package, Review, AirtablePost } from '@tea/ui/types';
 import type { GUIPackage } from '$libs/types';
 
 import { getPackages, getFeaturedPackages, getPackageReviews, getAllPosts } from '@api';
+import initAuthStore from './stores/auth';
 
 export const backLink = writable<string>('/');
 
@@ -169,3 +170,5 @@ function initSearchStore() {
 }
 
 export const searchStore = initSearchStore();
+
+export const authStore = initAuthStore();

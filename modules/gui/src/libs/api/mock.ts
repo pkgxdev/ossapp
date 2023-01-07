@@ -11,6 +11,8 @@ import { PackageStates } from '../types';
 import { loremIpsum } from 'lorem-ipsum';
 import _ from 'lodash';
 
+export const apiBaseUrl = 'https://api.tea.xyz/v1';
+
 const packages: Package[] = [
 	{
 		slug: 'mesonbuild_com',
@@ -323,6 +325,24 @@ export async function getCategorizedPackages(): Promise<Category[]> {
 	];
 }
 
+export async function getDeviceAuth(deviceId: string): Promise<any> {
+	// const data = await get<any>(`/auth/device/${deviceId}`);
+	return {
+		status: 'SUCCESS',
+		user: {
+			developer_id: 'xxx',
+			name: 'Neil paul Molina',
+			login: 'getneil',
+			avatar_url: 'https://avatars.githubusercontent.com/u/7913978?v=4',
+			created_at: 'xxx',
+			updated_at: 'xxx',
+			country: 'germany',
+			wallet: 'wallet'
+		},
+		key: 'xxx'
+	};
+}
+
 export async function getPackageBottles(name: string): Promise<Bottle[]> {
 	return [
 		{ name, platform: 'darwin', arch: 'aarch64', version: '3.39.4' },
@@ -334,4 +354,8 @@ export async function getPackageBottles(name: string): Promise<Bottle[]> {
 		{ name, platform: 'linux', arch: 'x86-64', version: '3.39.4' },
 		{ name, platform: 'linux', arch: 'x86-64', version: '3.40.0' }
 	];
+}
+
+export async function registerDevice(): Promise<string> {
+	return 'uuid1234';
 }

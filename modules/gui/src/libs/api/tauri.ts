@@ -14,20 +14,25 @@ import { getClient } from '@tauri-apps/api/http';
 // import { invoke } from '@tauri-apps/api';
 import { Command } from '@tauri-apps/api/shell';
 import { readDir, BaseDirectory } from '@tauri-apps/api/fs';
-import type { Package, Review, AirtablePost, Bottle } from '@tea/ui/types';
-import type { GUIPackage, Course, Category } from '../types';
+
+import type { Package, Review, AirtablePost, Developer, Bottle } from '@tea/ui/types';
+import type { GUIPackage, Course, Category, AuthStatus } from '../types';
+
 import * as mock from './mock';
 import { PackageStates } from '../types';
 
-const base = 'https://api.tea.xyz/v1';
+export const apiBaseUrl = 'https://api.tea.xyz/v1';
+// const apiBaseUrl = 'http://localhost:3000/v1';
 
 async function get<T>(path: string, query?: { [key: string]: string }) {
+	console.log('path', path);
 	const client = await getClient();
-	const uri = join(base, path);
+	const uri = join(apiBaseUrl, path);
+	console.log('uri:', uri);
 	const { data } = await client.get<T>(uri.toString(), {
 		headers: {
-			Authorization: 'public', // TODO: figure out why req w/o Authorization does not work
-			'cache-control': 'no-cache'
+			Authorization: 'public' // TODO: figure out why req w/o Authorization does not work
+			// 'cache-control': 'no-cache'
 		},
 		query: query || {}
 	});
@@ -164,6 +169,17 @@ export async function getCategorizedPackages(): Promise<Category[]> {
 	return categories;
 }
 
+type DeviceAuth = {
+	status: AuthStatus;
+	user: Developer;
+	key: string;
+};
+
+export async function getDeviceAuth(deviceId: string): Promise<DeviceAuth> {
+	const data = await get<DeviceAuth>(`/auth/device/${deviceId}`);
+	return data;
+}
+
 export async function getPackageBottles(packageName: string): Promise<Bottle[]> {
 	console.log('getting bottles for ', packageName);
 	const client = await getClient();
@@ -171,4 +187,9 @@ export async function getPackageBottles(packageName: string): Promise<Bottle[]> 
 	const { data } = await client.get<Bottle[]>(uri.toString());
 	console.log('got bottles', data);
 	return data;
+}
+
+export async function registerDevice(): Promise<string> {
+	const { deviceId } = await get<{ deviceId: string }>('/auth/registerDevice');
+	return deviceId;
 }

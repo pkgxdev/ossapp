@@ -11,7 +11,6 @@
 
 <div>
 	<PageHeader>PROFILE</PageHeader>
-
 	<section>
 		<ProfileBanner />
 	</section>

@@ -20,7 +20,19 @@ jobs:
     container: ${{ matrix.platform.container }}
     steps:
     - uses: actions/checkout@v3
-
+    - name: build platform output
+      id: build_platform
+      env:
+        platform: ${{ matrix.platform.name }}
+      run: |
+        EXTENSION=dmg
+        BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
+        [[ $BUILD_PLATFORM = "x86-64" ]] && BUILD_PLATFORM="x64" || BUILD_PLATFORM=$BUILD_PLATFORM
+        [[ $platform = "linux+x86-64" ]] && BUILD_PLATFORM="amd64" || BUILD_PLATFORM=$BUILD_PLATFORM
+        [[ $platform = "linux+x86-64" ]] && EXTENSION="deb"
+        echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
+        echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
+    
     - name: build tauri for MacOS
       uses: teaxyz/setup@v0
       if: startsWith(matrix.platform.name, 'darwin')
@@ -70,7 +82,7 @@ jobs:
         aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
           "s3://preview.gui.tea.xyz/release/tea_gui_latest_$platform.$extension"
         aws s3 cp "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
-          "s3://preview.gui.tea.xyz/release/tea_gui_$tag_$platform.$extension"
+          "s3://preview.gui.tea.xyz/release/tea_gui_${{ steps.tag.outputs.tag }}_$platform.$extension"
   
     - name: zip .app for MacOS
       if: startsWith(matrix.platform.name, 'darwin')
@@ -87,7 +99,10 @@ jobs:
         aws s3 cp "./modules/gui/src-tauri/target/release/bundle/macos/tea.zip" \
           "s3://preview.gui.tea.xyz/release/tea_gui_latest_$platform.zip"
         aws s3 cp "./modules/gui/src-tauri/target/release/bundle/macos/tea.zip" \
-          "s3://preview.gui.tea.xyz/release/tea_gui_$tag_$platform.zip"
+          "s3://preview.gui.tea.xyz/release/tea_gui_${{ steps.tag.outputs.tag }}_$platform.zip"
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
     - name: Slack Notification
       run: ./.github/notify-slack.js
       env:

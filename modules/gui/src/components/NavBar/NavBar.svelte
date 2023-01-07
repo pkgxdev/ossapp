@@ -3,6 +3,7 @@
 	import { searchStore } from '$libs/stores';
 	import SearchInput from '@tea/ui/SearchInput/SearchInput.svelte';
 	import Button from '@tea/ui/Button/Button.svelte';
+	import ProfileNavButton from './ProfileNavButton.svelte';
 
 	import { beforeUpdate } from 'svelte';
 
@@ -70,12 +71,7 @@
 	{/each}
 
 	<footer class="w-full border border-x-0 border-gray">
-		<a href="/profile">
-			<section class="flex">
-				<img width="40" height="40" src="/images/bored-ape.png" alt="profile" />
-				<div class="p-2 text-gray">@user_name</div>
-			</section>
-		</a>
+		<ProfileNavButton />
 	</footer>
 </ul>
 

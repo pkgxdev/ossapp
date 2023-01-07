@@ -130,7 +130,9 @@ jobs:
         build_platform: ${{ matrix.platform.name }}
       run: |
         aws s3 cp ./modules/gui/src-tauri/target/release/bundle/macos/tea.zip "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.zip"
-
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
     - name: Slack Notification
       run: ./.github/notify-slack.js
       env:

@@ -15,7 +15,7 @@
 			"http": {
 				"all": true,
 				"request": true,
-				"scope": ["https://api.tea.xyz/v1/*", "https://github.com/*", "https://app.tea.xyz/*"]
+				"scope": ["https://api.tea.xyz/v1/*", "https://github.com/*", "http://localhost:3000/v1/*", "https://app.tea.xyz/*"]
 			},
 			"shell": {
 				"all": true,
@@ -36,6 +36,11 @@
 						"name": "list-packages",
 						"cmd": "ls",
 						"args": ["-R ~/.tea/tea.xyz/var/www | grep 'xz\\|gz'"]
+					},
+					{
+						"name": "open",
+						"cmd": "open",
+						"args": ["-a iterm"]
 					}
 				],
 				"sidecar": false
@@ -74,10 +79,15 @@
 			},
 			"fs": {
 				"readDir": true,
+				"createDir": true,
+				"writeFile": true,
+				"readFile": true,
 				"scope": [
-					"$HOME/.tea/*",
-					"$APPDATA/*"
+					"$HOME/.tea/*"
 				]
+			},
+			"path": {
+				"all": true
 			}
 		},
 		"bundle": {
