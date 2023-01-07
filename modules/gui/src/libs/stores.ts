@@ -130,7 +130,8 @@ function initSearchStore() {
 	const postsSearch = writable<AirtablePost[]>([]);
 
 	// TODO:
-	// should use algolia if user is somehow online
+	// detec if online
+	// 	should use algolia 
 
 	const packagesFound: GUIPackage[] = [];
 
