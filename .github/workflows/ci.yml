@@ -64,6 +64,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.svelte == 'true'
     runs-on: ubuntu-latest
+    container: ubuntu:22.04
     steps:
       - uses: actions/checkout@v3
       - name: Cache Tea
@@ -79,7 +80,7 @@ jobs:
       - name: build tauri for Linux
         run: |
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
-          sh <(curl https://tea.xyz) true
+          sh <(curl https://tea.xyz) --yes
           tea build
       - uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -122,6 +123,7 @@ jobs:
             id: mac_latest
           - os: ubuntu-latest
             name: linux+x86-64
+            container: ubuntu:22.04
             id: linux
           - os: [self-hosted, macOS, ARM64]
             name: darwin+aarch64
