@@ -5,14 +5,25 @@ import { getDeviceAuth, registerDevice } from '@api';
 import type { Developer } from '@tea/ui/types';
 
 const basePath = '.tea/tea.xyz/gui';
-interface Session {
+export interface Session {
 	device_id?: string;
 	key?: string;
 	user?: Developer;
 }
 
+export let session: Session | null = null;
+export const getSession = async (): Promise<Session | null> => {
+	if (session && session?.user) return session;
+	const sessionFilePath = await join(basePath, 'tmp.dat');
+	const encryptedData = await readTextFile(sessionFilePath, {
+		dir: BaseDirectory.Home
+	});
+	session = JSON.parse(encryptedData || '{}') as Session;
+	return session;
+};
+
 export default function initAuthStore() {
-	const session = writable<Session>({});
+	const sessionStore = writable<Session>({});
 	let pollLoop = 0;
 
 	const deviceIdStore = writable<string>('');
@@ -20,7 +31,8 @@ export default function initAuthStore() {
 
 	initSession().then((sess) => {
 		if (sess) {
-			session.set(sess);
+			session = sess;
+			sessionStore.set(sess);
 			deviceIdStore.set(sess.device_id!);
 			deviceId = sess.device_id!;
 		}
@@ -35,7 +47,7 @@ export default function initAuthStore() {
 			user: data.user
 		};
 		saveLocallySessionData(localSession);
-		session.set(localSession);
+		sessionStore.set(localSession);
 	}
 
 	async function pollSession() {
@@ -70,7 +82,7 @@ export default function initAuthStore() {
 		deviceId,
 		deviceIdStore,
 		subscribe: (cb: (u: Developer) => void) => {
-			return session.subscribe((v) => v?.user && cb(v.user));
+			return sessionStore.subscribe((v) => v?.user && cb(v.user));
 		},
 		pollSession
 	};
@@ -86,14 +98,12 @@ const initSession = async (): Promise<Session | void> => {
 };
 
 const getLocalSessionData = async (): Promise<Session | void> => {
-	const sessionFilePath = await join(basePath, 'tmp.dat');
 	let data: Session;
 	try {
-		const encryptedData = await readTextFile(sessionFilePath, {
-			dir: BaseDirectory.Home
-		});
-		// TODO: decrypt then return
-		data = JSON.parse(encryptedData || '{}');
+		const session = await getSession();
+		if (session) {
+			data = session;
+		}
 	} catch (error) {
 		console.error(error);
 		const deviceId = await registerDevice();
