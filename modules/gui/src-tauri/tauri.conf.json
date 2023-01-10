@@ -83,7 +83,7 @@
 				"writeFile": true,
 				"readFile": true,
 				"scope": [
-					"$HOME/.tea/*"
+					"$HOME/.tea/**"
 				]
 			},
 			"path": {
