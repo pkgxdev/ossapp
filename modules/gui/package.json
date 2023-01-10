@@ -42,6 +42,8 @@
 	"type": "module",
 	"dependencies": {
 		"@tauri-apps/api": "^1.2.0",
+		"@types/bcrypt": "^5.0.0",
+		"bcrypt": "^5.1.0",
 		"buffer": "^6.0.3",
 		"fuse.js": "^6.6.2",
 		"lodash": "^4.17.21",
