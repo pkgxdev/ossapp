@@ -20,20 +20,41 @@ import type { GUIPackage, Course, Category, AuthStatus } from '../types';
 
 import * as mock from './mock';
 import { PackageStates } from '../types';
+import { getSession } from '$libs/stores/auth';
+import type { Session } from '$libs/stores/auth';
+import bcrypt from 'bcryptjs';
 
 export const apiBaseUrl = 'https://api.tea.xyz/v1';
-// const apiBaseUrl = 'http://localhost:3000/v1';
+// export const apiBaseUrl = 'http://localhost:3000/v1';
+
+async function getHeaders(path: string, session: Session) {
+	const unixMs = new Date().getTime();
+	const unixHexSecs = Math.round(unixMs / 1000).toString(16); // hex
+	const deviceId = session.device_id?.split('-')[0];
+	const preHash = [unixHexSecs, session.key, deviceId, path].join('');
+
+	const Authorization = bcrypt.hashSync(preHash, 10);
+
+	return {
+		Authorization,
+		['tea-ts']: unixMs.toString(),
+		['tea-uid']: session.user?.developer_id,
+		['tea-gui_id']: session.device_id
+	};
+}
 
 async function get<T>(path: string, query?: { [key: string]: string }) {
-	console.log('path', path);
-	const client = await getClient();
+	const [session, client] = await Promise.all([getSession(), getClient()]);
+
 	const uri = join(apiBaseUrl, path);
-	console.log('uri:', uri);
+
+	const headers =
+		session?.device_id && session?.user
+			? await getHeaders(`GET/${path}`, session)
+			: { Authorization: 'public ' };
+
 	const { data } = await client.get<T>(uri.toString(), {
-		headers: {
-			Authorization: 'public' // TODO: figure out why req w/o Authorization does not work
-			// 'cache-control': 'no-cache'
-		},
+		headers,
 		query: query || {}
 	});
 	return data;
@@ -79,6 +100,7 @@ export async function getPackageReviews(full_name: string): Promise<Review[]> {
 	const reviews: Review[] = await get<Review[]>(
 		`packages/${full_name.replaceAll('/', ':')}/reviews`
 	);
+
 	return reviews;
 }
 

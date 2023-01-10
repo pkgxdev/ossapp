@@ -46,7 +46,7 @@ function initPackagesStore() {
 export const packagesStore = initPackagesStore();
 
 export const initializeFeaturedPackages = async () => {
-	console.log('initialzie featured packages');
+	console.log('intialize featured packages');
 	const packages = await getFeaturedPackages();
 	featuredPackages.set(packages);
 };

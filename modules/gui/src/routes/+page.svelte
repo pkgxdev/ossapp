@@ -9,7 +9,6 @@
 	import News from '$components/News/News.svelte';
 	import CategorizedPackages from '$components/CategorizedPackages/CategorizedPackages.svelte';
 	backLink.set('');
-	console.log('test', window.location);
 </script>
 
 <div>
