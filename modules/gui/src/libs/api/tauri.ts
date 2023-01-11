@@ -22,6 +22,7 @@ import * as mock from './mock';
 import { PackageStates } from '../types';
 import { getSession } from '$libs/stores/auth';
 import type { Session } from '$libs/stores/auth';
+import { getInstalledPackages } from '$libs/teaDir';
 import bcrypt from 'bcryptjs';
 
 export const apiBaseUrl = 'https://api.tea.xyz/v1';
@@ -142,25 +143,6 @@ async function installPackageCommand(full_name: string) {
 		});
 		const child = teaInstallCommand.spawn();
 	});
-}
-
-async function getInstalledPackages() {
-	const entries = await readDir('.tea/tea.xyz/var/www', {
-		dir: BaseDirectory.Home,
-		recursive: false
-	});
-	const packages = entries
-		.filter((o) => o.path.match('^(.*).(g|x)z$'))
-		.map((o) => {
-			const [pkg_version] = (o?.name || '').split('+');
-			const version = pkg_version.split('-').pop();
-			const full_name = pkg_version.replace(`-${version}`, '');
-			return {
-				full_name,
-				version
-			};
-		});
-	return packages;
 }
 
 export async function getFeaturedCourses(): Promise<Course[]> {
