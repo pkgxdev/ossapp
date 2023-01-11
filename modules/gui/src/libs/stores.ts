@@ -6,6 +6,7 @@ import type { GUIPackage } from '$libs/types';
 
 import { getPackages, getFeaturedPackages, getPackageReviews, getAllPosts } from '@api';
 import initAuthStore from './stores/auth';
+import initNavStore from './stores/nav';
 
 export const backLink = writable<string>('/');
 
@@ -172,3 +173,5 @@ function initSearchStore() {
 export const searchStore = initSearchStore();
 
 export const authStore = initAuthStore();
+
+export const navStore = initNavStore();

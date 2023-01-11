@@ -5,8 +5,8 @@
 	import Preflight from '$components/Preflight/Preflight.svelte';
 	import Badges from '$components/Badges/Badges.svelte';
 	import InstalledPackages from '$components/InstalledPackages/InstalledPackages.svelte';
-	import { backLink } from '$libs/stores';
-	backLink.set('/');
+	import { navStore } from '$libs/stores';
+	navStore.set('/');
 </script>
 
 <div>
