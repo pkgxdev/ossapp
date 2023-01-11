@@ -5,7 +5,7 @@
 	import PackageBanner from '$components/PackageBanner/PackageBanner.svelte';
 	import PackageReviews from '$components/PackageReviews/PackageReviews.svelte';
 	import type { Review } from '@tea/ui/types';
-
+	import SuggestedPackages from '$components/SuggestedPackages/SuggestedPackages.svelte';
 	navStore.set('/packages');
 
 	/** @type {import('./$types').PageData} */
@@ -44,4 +44,9 @@
 	<section class="mt-8">
 		<PackageReviews reviews={reviews || []} />
 	</section>
+	{#if pkg}
+		<section class="mt-8">
+			<SuggestedPackages {pkg} />
+		</section>
+	{/if}
 </div>
