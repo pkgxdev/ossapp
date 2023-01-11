@@ -5,6 +5,7 @@
 	export { clazz as class };
 	export let size: 'small' | 'medium' | 'large' = 'small';
 	export let onSearch: (text: string) => void;
+	export let placeholder = 'search_';
 
 	let timer: NodeJS.Timeout;
 	const onChange = (e: KeyboardEvent) => {
@@ -20,7 +21,7 @@
 	<div class="icon pl-4">
 		<i class="icon-search-icon" />
 	</div>
-	<input type="search" class="pb-2" placeholder="search_" on:keyup={onChange} />
+	<input type="search" class="flex-grow pb-2" {placeholder} on:keyup={onChange} />
 </section>
 
 <!-- <input type="search" class="w-full bg-black h-12 p-4 border border-x-0 border-gray"/> -->

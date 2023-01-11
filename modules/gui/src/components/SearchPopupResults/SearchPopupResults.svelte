@@ -123,8 +123,8 @@
 <style>
 	section {
 		position: fixed;
-		top: 0;
-		left: 240px;
+		top: 80px;
+		left: 0px;
 		right: 0;
 		background: rgba(0, 0, 0, 0.7);
 		transition: opacity 0.3s ease-in-out;

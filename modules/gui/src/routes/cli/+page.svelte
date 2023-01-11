@@ -3,8 +3,8 @@
 	import PageHeader from '$components/PageHeader/PageHeader.svelte';
 	import CliBanner from '$components/CliBanner/CliBanner.svelte';
 	import BigBlackSpace from '$components/BigBlackSpace/BigBlackSpace.svelte';
-	import { backLink } from '$libs/stores';
-	backLink.set('/');
+	import { navStore } from '$libs/stores';
+	navStore.set('/');
 </script>
 
 <div>

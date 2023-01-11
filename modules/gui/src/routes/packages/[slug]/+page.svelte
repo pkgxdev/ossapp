@@ -1,11 +1,12 @@
 <script lang="ts">
 	import '$appcss';
 	import PageHeader from '$components/PageHeader/PageHeader.svelte';
-	import { backLink, packagesReviewStore } from '$libs/stores';
+	import { navStore, packagesReviewStore } from '$libs/stores';
 	import PackageBanner from '$components/PackageBanner/PackageBanner.svelte';
 	import PackageReviews from '$components/PackageReviews/PackageReviews.svelte';
 	import type { Review } from '@tea/ui/types';
-	backLink.set('/packages');
+
+	navStore.set('/packages');
 
 	/** @type {import('./$types').PageData} */
 	export let data;

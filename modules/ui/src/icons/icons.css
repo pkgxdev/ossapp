@@ -64,9 +64,6 @@
 .icon-twitter:before {
 	content: '\69';
 }
-.icon-tea-logo-iconasset-1:before {
-	content: '\6a';
-}
 .icon-tea-circle:before {
 	content: '\6b';
 }
@@ -88,9 +85,6 @@
 .icon-click-copy-icon:before {
 	content: '\71';
 }
-.icon-search-icon:before {
-	content: '\72';
-}
 .icon-star-full:before {
 	content: '\73';
 }
@@ -99,4 +93,19 @@
 }
 .icon-star-empty:before {
 	content: '\75';
+}
+.icon-tea-logo-iconasset-1:before {
+	content: '\6a';
+}
+.icon-search-icon:before {
+	content: '\72';
+}
+.icon-filter:before {
+	content: '\76';
+}
+.icon-upload:before {
+	content: '\77';
+}
+.icon-share:before {
+	content: '\78';
 }

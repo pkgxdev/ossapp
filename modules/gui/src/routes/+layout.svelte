@@ -2,32 +2,19 @@
 <script lang="ts">
 	import '$appcss';
 	import { navigating } from '$app/stores';
-	import NavBar from '$components/NavBar/NavBar.svelte';
+	import TopBar from '$components/TopBar/TopBar.svelte';
 	import FooterLinks from '$components/FooterLinks/FooterLinks.svelte';
 
-	import { backLink as backLinkStore } from '$libs/stores';
 	import SearchPopupResults from '$components/SearchPopupResults/SearchPopupResults.svelte';
 
 	let view: HTMLElement;
 
-	let backLink = '';
-	backLinkStore.subscribe((v) => {
-		backLink = v;
-	});
-
 	$: if ($navigating) view.scrollTop = 0;
 </script>
 
-<div id="main-layout">
-	<nav class="border border-t-0 border-l-0 border-b-0 border-gray">
-		<NavBar />
-	</nav>
+<div id="main-layout" class="w-full">
+	<TopBar />
 	<section class="pt-24" bind:this={view}>
-		{#if backLink}
-			<header class="border-b border-gray px-16 text-3xl text-gray hover:text-primary">
-				<a href={backLink}>&#8592</a>
-			</header>
-		{/if}
 		<figure />
 
 		<div class="content">
@@ -43,16 +30,11 @@
 
 <style>
 	#main-layout {
-		width: 100vh;
 		height: 100vh;
-	}
-	nav {
-		position: fixed;
-		width: 240px;
 	}
 	section {
 		position: fixed;
-		left: 240px;
+		left: 0px;
 		right: 0px;
 		height: 100vh;
 		overflow-y: scroll;
@@ -62,7 +44,7 @@
 		z-index: 0;
 		position: fixed;
 		top: 220px;
-		left: 240px;
+		left: 0px;
 		right: 0px;
 		bottom: 0px;
 		background-image: url('/images/gui-background-grid.svg');
