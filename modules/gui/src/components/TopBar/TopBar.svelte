@@ -7,7 +7,7 @@
 
 	import ProfileNavButton from './ProfileNavButton.svelte';
 
-	let backLink = navStore.backLink;
+	let { nextPath, prevPath } = navStore;
 
 	const onSearch = (term: string) => {
 		searchStore.search(term);
@@ -23,9 +23,9 @@
 	<a href="/">
 		<img width="40" height="40" src="/images/tea-icon.png" alt="tea" />
 	</a>
-	<ul id="PrevNextButtons" class="flex h-10 gap-4 pl-4 align-middle leading-10 text-gray">
-		<a href={$backLink} class={currentPath !== '/' ? 'active' : ''}>&#8592</a>
-		<a href={$backLink} class={currentPath === '/' ? 'active' : ''}>&#8594</a>
+	<ul class="flex h-10 gap-4 pl-4 align-middle leading-10 text-gray">
+		<button on:click={navStore.back} class={$prevPath ? 'active' : ''}>&#8592</button>
+		<button on:click={navStore.next} class={$nextPath ? 'active' : ''}>&#8594</button>
 	</ul>
 	<SearchInput
 		class="flex-grow border border-none py-4"
@@ -64,7 +64,12 @@
 		color: white;
 	}
 
-	#PrevNextButtons a.active {
+	ul button {
+		pointer-events: none;
+	}
+
+	ul button.active {
 		color: white;
+		pointer-events: all;
 	}
 </style>

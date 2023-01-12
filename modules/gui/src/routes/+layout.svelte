@@ -2,14 +2,24 @@
 <script lang="ts">
 	import '$appcss';
 	import { navigating } from '$app/stores';
+	import { afterNavigate } from '$app/navigation';
 	import TopBar from '$components/TopBar/TopBar.svelte';
 	import FooterLinks from '$components/FooterLinks/FooterLinks.svelte';
+	import { navStore } from '$libs/stores';
 
 	import SearchPopupResults from '$components/SearchPopupResults/SearchPopupResults.svelte';
 
 	let view: HTMLElement;
 
 	$: if ($navigating) view.scrollTop = 0;
+
+	afterNavigate(({ from, to }) => {
+		if (to?.route.id) {
+			const nextPath = to.url.href.replace(to.url.origin, '');
+			const fromPath = from?.url.href.replace(from.url.origin, '');
+			navStore.setNewPath(nextPath, fromPath || '/');
+		}
+	});
 </script>
 
 <div id="main-layout" class="w-full">

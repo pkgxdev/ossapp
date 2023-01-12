@@ -1,12 +1,11 @@
 <script lang="ts">
 	import '$appcss';
 	import PageHeader from '$components/PageHeader/PageHeader.svelte';
-	import { navStore, packagesReviewStore } from '$libs/stores';
+	import { packagesReviewStore } from '$libs/stores';
 	import PackageBanner from '$components/PackageBanner/PackageBanner.svelte';
 	import PackageReviews from '$components/PackageReviews/PackageReviews.svelte';
 	import type { Review } from '@tea/ui/types';
 	import SuggestedPackages from '$components/SuggestedPackages/SuggestedPackages.svelte';
-	navStore.set('/packages');
 
 	/** @type {import('./$types').PageData} */
 	export let data;
