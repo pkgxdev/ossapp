@@ -3,7 +3,7 @@
 // 		please use the package @tea/ui/src/types.ts
 //		things that go there are shared types/shapes like ie: Package
 
-import type { Package } from '@tea/ui/types';
+import type { Package, Developer } from '@tea/ui/types';
 
 export enum PackageStates {
 	AVAILABLE,
@@ -36,3 +36,9 @@ export enum AuthStatus {
 	SUCCESS = 'SUCCESS',
 	FAILED = 'FAILED'
 }
+
+export type DeviceAuth = {
+	status: AuthStatus;
+	user: Developer;
+	key: string;
+};

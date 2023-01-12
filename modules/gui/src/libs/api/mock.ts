@@ -11,8 +11,6 @@ import { PackageStates } from '../types';
 import { loremIpsum } from 'lorem-ipsum';
 import _ from 'lodash';
 
-export const apiBaseUrl = 'https://api.tea.xyz/v1';
-
 const packages: Package[] = [
 	{
 		slug: 'mesonbuild_com',

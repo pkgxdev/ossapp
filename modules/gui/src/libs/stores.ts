@@ -8,8 +8,6 @@ import { getPackages, getFeaturedPackages, getPackageReviews, getAllPosts } from
 import initAuthStore from './stores/auth';
 import initNavStore from './stores/nav';
 
-export const backLink = writable<string>('/');
-
 export const featuredPackages = writable<Package[]>([]);
 
 function initPackagesStore() {
