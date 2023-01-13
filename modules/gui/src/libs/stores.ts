@@ -63,7 +63,7 @@ function initPackagesReviewStore() {
 
 	const getSetPackageReviews = async (full_name: string) => {
 		if (full_name && !packagesReviews[full_name]) {
-			console.log('getting reviews for', full_name);
+			packagesReviews[full_name] = [];
 			const reviews = await getPackageReviews(full_name);
 			update((v) => {
 				return {
