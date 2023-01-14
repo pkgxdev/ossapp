@@ -7,6 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get install -y libappindicator3-dev librsvg2-dev
 RUN apt-get install -y patchelf pkg-config
 RUN apt-get install -y curl
+RUN apt-get install -y libatomic1
 RUN curl https://tea.xyz -o ./tea.sh
 RUN chmod +x tea.sh
 RUN ./tea.sh --yes
