@@ -28,6 +28,14 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
 
+## Testing
+
+```bash
+pnpm playwright install
+pnpm test
+
+```
+
 ## Intuition Building Links
 
 - [Rust module system is weird?](https://www.sheshbabu.com/posts/rust-module-system/)

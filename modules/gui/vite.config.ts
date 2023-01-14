@@ -21,6 +21,17 @@ const config: UserConfig = {
 		fs: {
 			allow: ['..']
 		}
+	},
+	test: {
+		// Jest like globals
+		globals: true,
+		environment: 'jsdom',
+		include: ['src/**/*.{test,spec}.ts'],
+		// Extend jest-dom matchers
+		setupFiles: ['./setupTest.js'],
+		coverage: {
+			provider: 'c8'
+		}
 	}
 };
 

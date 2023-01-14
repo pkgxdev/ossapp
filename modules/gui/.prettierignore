@@ -19,3 +19,4 @@ build
 /src-tauri/Cargo.lock
 /src-tauri/Cargo.toml
 src-tauri
+coverage/*
