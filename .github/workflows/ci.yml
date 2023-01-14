@@ -47,6 +47,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
+      - name: build tauri for Linux
+        if: startsWith(matrix.platform.name, 'linux')
+        uses: ./.github/ubuntu-action.yml # Uses an action in the root directory
+        id: test
       - uses: pnpm/action-setup@v2
         with:
           version: 7
@@ -157,6 +161,7 @@ jobs:
       #     sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
       #     sh <(curl https://tea.xyz) build
       - name: build tauri for Linux
+        if: startsWith(matrix.platform.name, 'linux')
         uses: ./.github/ubuntu-action.yml # Uses an action in the root directory
         id: test
       - name: build platform output
