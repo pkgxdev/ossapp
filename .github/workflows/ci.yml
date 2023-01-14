@@ -149,14 +149,16 @@ jobs:
         with:
           target: build
 
+      # - name: build tauri for Linux
+      #   # uses: teaxyz/setup@v0
+      #   if: startsWith(matrix.platform.name, 'linux')
+      #   # TODO: https://tauri.app/v1/guides/distribution/sign-linux
+      #   run: |
+      #     sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
+      #     sh <(curl https://tea.xyz) build
       - name: build tauri for Linux
-        # uses: teaxyz/setup@v0
-        if: startsWith(matrix.platform.name, 'linux')
-        # TODO: https://tauri.app/v1/guides/distribution/sign-linux
-        run: |
-          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
-          sh <(curl https://tea.xyz) build
-      
+        uses: ./.github/ubuntu-action.yml # Uses an action in the root directory
+        id: test
       - name: build platform output
         id: build_platform
         env:
