@@ -36,8 +36,8 @@ export async function getInstalledPackages() {
 const semverTest =
 	/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/g;
 
-const getPkgBottles = (packageDir: Dir): string[] => {
-	let bottles: string[] = [];
+export const getPkgBottles = (packageDir: Dir): string[] => {
+	const bottles: string[] = [];
 
 	const pkg = packageDir.path.split('.tea/')[1];
 	const version = pkg.split('/v')[1];
@@ -46,15 +46,12 @@ const getPkgBottles = (packageDir: Dir): string[] => {
 
 	if (version && isVersion) {
 		bottles.push(pkg);
-	} else if (!version && packageDir.children?.length) {
+	} else if (packageDir?.children?.length) {
 		const childBottles = packageDir.children
-			.map((dir) => {
-				return getPkgBottles(dir).flatMap((v) => v);
-			})
-			.map((b) => b[0]);
-
-		bottles = [...bottles, ...childBottles].filter((b) => b);
+			.map(getPkgBottles)
+			.reduce((arr, bottles) => [...arr, ...bottles], []);
+		bottles.push(...childBottles);
 	}
 
-	return bottles; // ie: ["gohugo.io/v*", "gohugo.io/v0", "gohugo.io/v0.108", "gohugo.io/v0.108.0"]
+	return bottles.filter((b) => b !== undefined).sort(); // ie: ["gohugo.io/v*", "gohugo.io/v0", "gohugo.io/v0.108", "gohugo.io/v0.108.0"]
 };

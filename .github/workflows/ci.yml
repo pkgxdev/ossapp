@@ -58,6 +58,8 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
       - name: install app dependencies
         run: pnpm install
+      - name: unit test
+        run: pnpm --filter gui run coverage
       - name: lint
         run: pnpm -r lint
   build_svelte:
