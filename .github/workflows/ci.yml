@@ -48,7 +48,6 @@ jobs:
         with:
           persist-credentials: false
       - name: build tauri for Linux
-        if: startsWith(matrix.platform.name, 'linux')
         uses: ./ubuntu # Uses an action in the root directory
         id: test
       - uses: pnpm/action-setup@v2
