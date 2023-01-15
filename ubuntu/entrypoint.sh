@@ -2,4 +2,5 @@
 
 ls
 tea .
-tea -X pnpm build:gui
+tea pnpm install
+tea pnpm build:gui
