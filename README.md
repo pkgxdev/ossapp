@@ -12,7 +12,8 @@ For better documentation checkout this [notion](https://www.notion.so/teaxyz/tea
 |------------|---------|
 | nodejs.org |  >=16   |
 | pnpm.io    |  >=7.18.2 |
-| rust-lang.org |  >=1.62 |
+| rust-lang.org |  >=1.64 |
+| rust-lang.org/cargo |  >=0.66 |
 
 # Getting Started
 ```sh

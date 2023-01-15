@@ -1,5 +1,5 @@
 
-FROM ubuntu:20.04
+FROM ubuntu:18.04
 
 RUN apt-get update
 ARG DEBIAN_FRONTEND=noninteractive
