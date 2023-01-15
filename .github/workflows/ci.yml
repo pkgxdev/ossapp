@@ -5,10 +5,10 @@ on: [pull_request]
 jobs:
   changes:
     runs-on: ubuntu-latest
-    outputs:
-      svelte: ${{steps.svelte.outputs.src}}
-      tauri: ${{steps.tauri.outputs.src}}
-      preview_folder: ${{steps.preview.outputs.folder}}
+    # outputs:
+    #   svelte: ${{steps.svelte.outputs.src}}
+    #   tauri: ${{steps.tauri.outputs.src}}
+    #   preview_folder: ${{steps.preview.outputs.folder}}
     steps:
     - uses: actions/checkout@v3
     - name: build tauri for Linux
