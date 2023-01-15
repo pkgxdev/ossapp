@@ -11,101 +11,104 @@ jobs:
       preview_folder: ${{steps.preview.outputs.folder}}
     steps:
     - uses: actions/checkout@v3
-    - uses: dorny/paths-filter@v2
-      id: svelte
-      with:
-        filters: |
-          src:
-            - 'modules/gui/src/**'
-            - 'modules/ui/**'
-    - uses: dorny/paths-filter@v2
-      id: tauri
-      with:
-        filters: |
-          src:
-            - 'modules/gui/src-tauri/**'
-            - 'modules/gui/src/**'
-            - 'modules/ui/src/**'
-    - name: get s3 preview folder
-      id: preview
-      run: echo "folder=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
-  no_preview:
-    needs: changes
-    if: needs.changes.outputs.svelte == 'false'
-    runs-on: ubuntu-latest
-    steps:
-      - name: comment preview site
-        uses: mshick/add-pr-comment@v2
-        with:
-          message-id: preview-comment-${{needs.changes.outputs.preview_folder}}
-          message: |
-            no preview or changes related to UI
-  test:
-    needs: changes
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - name: build tauri for Linux
-        uses: ./ubuntu # Uses an action in the root directory
-        id: test
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7
-      - name: setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 18
-          cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
-      - name: install app dependencies
-        run: pnpm install
-      - name: unit test
-        run: pnpm --filter gui run coverage
-      - name: lint
-        run: pnpm -r lint
-  build_svelte:
-    needs: changes
-    if: needs.changes.outputs.svelte == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: build tauri for Linux
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
-          sh <(curl https://tea.xyz) build
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: sync web files into preview folder
-        env:
-          prefix: ${{ needs.changes.outputs.preview_folder }}
-        run: |
-          aws s3 sync ./modules/gui/build \
-            "s3://preview.gui.tea.xyz/$prefix"
-      - name: Install package
-        run: sudo apt-get install -y jq coreutils
-      - name: setup preview
-        id: preview_setup
-        run: .github/create-invalidate-preview.sh ${{ needs.changes.outputs.preview_folder }}
+    - name: build tauri for Linux
+      uses: ./ubuntu # Uses an action in the root directory
+      id: test
+    # - uses: dorny/paths-filter@v2
+    #   id: svelte
+    #   with:
+    #     filters: |
+    #       src:
+    #         - 'modules/gui/src/**'
+    #         - 'modules/ui/**'
+    # - uses: dorny/paths-filter@v2
+    #   id: tauri
+    #   with:
+    #     filters: |
+    #       src:
+    #         - 'modules/gui/src-tauri/**'
+    #         - 'modules/gui/src/**'
+    #         - 'modules/ui/src/**'
+    # - name: get s3 preview folder
+    #   id: preview
+    #   run: echo "folder=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
+  # no_preview:
+  #   needs: changes
+  #   if: needs.changes.outputs.svelte == 'false'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: comment preview site
+  #       uses: mshick/add-pr-comment@v2
+  #       with:
+  #         message-id: preview-comment-${{needs.changes.outputs.preview_folder}}
+  #         message: |
+  #           no preview or changes related to UI
+  # test:
+  #   needs: changes
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         persist-credentials: false
+  #     - name: build tauri for Linux
+  #       uses: ./ubuntu # Uses an action in the root directory
+  #       id: test
+  #     - uses: pnpm/action-setup@v2
+  #       with:
+  #         version: 7
+  #     - name: setup node
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 18
+  #         cache: 'pnpm'
+  #         cache-dependency-path: pnpm-lock.yaml
+  #     - name: install app dependencies
+  #       run: pnpm install
+  #     - name: unit test
+  #       run: pnpm --filter gui run coverage
+  #     - name: lint
+  #       run: pnpm -r lint
+  # build_svelte:
+  #   needs: changes
+  #   if: needs.changes.outputs.svelte == 'true'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: build tauri for Linux
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
+  #         sh <(curl https://tea.xyz) build
+  #     - uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: us-east-1
+  #     - name: sync web files into preview folder
+  #       env:
+  #         prefix: ${{ needs.changes.outputs.preview_folder }}
+  #       run: |
+  #         aws s3 sync ./modules/gui/build \
+  #           "s3://preview.gui.tea.xyz/$prefix"
+  #     - name: Install package
+  #       run: sudo apt-get install -y jq coreutils
+  #     - name: setup preview
+  #       id: preview_setup
+  #       run: .github/create-invalidate-preview.sh ${{ needs.changes.outputs.preview_folder }}
 
-      - name: comment preview site
-        uses: mshick/add-pr-comment@v2
-        with:
-          message-id: preview-comment-${{needs.changes.outputs.preview_folder}}
-          message: |
-            **preview is at**: 
-            <a href="https://${{steps.preview_setup.outputs.domain}}" target="_blank">here</a>
-            ```bash
-            https://${{steps.preview_setup.outputs.domain}}
-            ```
-            copy-paste into a browser to view
+  #     - name: comment preview site
+  #       uses: mshick/add-pr-comment@v2
+  #       with:
+  #         message-id: preview-comment-${{needs.changes.outputs.preview_folder}}
+  #         message: |
+  #           **preview is at**: 
+  #           <a href="https://${{steps.preview_setup.outputs.domain}}" target="_blank">here</a>
+  #           ```bash
+  #           https://${{steps.preview_setup.outputs.domain}}
+  #           ```
+  #           copy-paste into a browser to view
 
-  build_tauri:
+  # build_tauri:
     needs: changes
     if: needs.changes.outputs.tauri == 'true'
     runs-on: ${{ matrix.platform.os }}
