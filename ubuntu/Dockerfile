@@ -1,6 +1,6 @@
 
 FROM ubuntu:18.04
-
+ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 ARG DEBIAN_FRONTEND=noninteractive
 # RUN apt-get install -y libgtk-3-dev webkit2gtk-4.0
