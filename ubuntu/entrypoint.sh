@@ -1,4 +1,5 @@
 #!/bin/sh -l
 
 ls
-tea $1
+tea .
+tea -X pnpm build:gui
