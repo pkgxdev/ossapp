@@ -129,14 +129,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: install dependencies (ubuntu only)
-        if: matrix.platform.name == 'linux+x86-64'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev
-
       - name: build tauri for MacOS
-        uses: teaxyz/setup@v0
+        # uses: teaxyz/setup@v0
         if: startsWith(matrix.platform.name, 'darwin')
         # FROM: https://tauri.app/v1/guides/distribution/sign-macos
         env:
@@ -149,18 +143,23 @@ jobs:
           # only used for notarization
           # APPLE_ID: ${{ secrets.APPLE_ID }}
           # APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        with:
-          target: build
+        run: |
+          sh <(curl https://tea.xyz) --yes
+          sh <(curl https://tea.xyz) +nodejs.org +pnpm.io +rust-lang.org
+          sh <(curl https://tea.xyz) pnpm install
+          sh <(curl https://tea.xyz) pnpm build:gui
 
       - name: build tauri for Linux
         # uses: teaxyz/setup@v0
         if: startsWith(matrix.platform.name, 'linux')
         # TODO: https://tauri.app/v1/guides/distribution/sign-linux
         run: |
-          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config libatomic1
           sh <(curl https://tea.xyz) --yes
-          tea .
-          tea xc build
+          sh <(curl https://tea.xyz) +nodejs.org +pnpm.io +rust-lang.org
+          sh <(curl https://tea.xyz) pnpm install
+          sh <(curl https://tea.xyz) pnpm build:gui
       
       - name: build platform output
         id: build_platform
