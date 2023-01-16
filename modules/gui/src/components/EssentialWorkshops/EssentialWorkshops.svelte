@@ -6,12 +6,15 @@
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import { postsStore } from '$libs/stores';
 
+	export let title = 'Workshops';
+	export let ctaLabel = 'View all';
+
 	let courses: AirtablePost[] = [];
 
 	postsStore.subscribeByTag('course', (posts) => (courses = posts));
 </script>
 
-<PanelHeader title="Essential Workshops" ctaLabel="View all" ctaLink="/" />
+<PanelHeader {title} {ctaLabel} ctaLink="/" />
 {#if courses.length}
 	<Posts posts={courses} linkTarget="_blank" />
 {:else}
