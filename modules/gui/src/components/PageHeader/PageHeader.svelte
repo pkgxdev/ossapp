@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let coverUrl: string = '';
+	export let coverUrl = '';
 </script>
 
 <figure class="relative mb-8 h-32 w-full font-machina uppercase">
