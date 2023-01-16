@@ -42,7 +42,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
-          sh <(curl https://tea.xyz) build
+          sh <(curl https://tea.xyz) xc build
 
   build_tauri:
     needs: changes
@@ -87,7 +87,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf pkg-config
-        sh <(curl https://tea.xyz) build
+        sh <(curl https://tea.xyz) xc build
 
     - name: Get current unix ts - seconds
       id: date

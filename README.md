@@ -14,11 +14,21 @@ For better documentation checkout this [notion](https://www.notion.so/teaxyz/tea
 | pnpm.io    |  >=7.18.2 |
 | rust-lang.org |  >=1.62 |
 
-# Getting Started
+
+## Tasks
+
+### setup
 ```sh
 pnpm install
 ```
 
+### build
+```sh
+pnpm install
+pnpm build:gui
+```
+
+## Development
 To develop the GUI within Tauri Webview
 ```
 $ pnpm dev:gui
@@ -27,11 +37,6 @@ $ pnpm dev:gui
 To develop the GUI within your local browser at localhost:8080
 ```
 $ pnpm web:gui
-```
-# Build
-```sh
-pnpm install
-pnpm build:gui
 ```
 
 # Creating a release
