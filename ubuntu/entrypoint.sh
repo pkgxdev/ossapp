@@ -1,6 +1,7 @@
 #!/bin/sh -l
 
-ls
 tea .
+tea xc setup
+tea xc build
 # tea pnpm install
 # tea pnpm build:gui

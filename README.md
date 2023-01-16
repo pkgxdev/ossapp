@@ -16,10 +16,20 @@ For better documentation checkout this [notion](https://www.notion.so/teaxyz/tea
 | rust-lang.org/cargo |  >=0.66 |
 | tea.xyz/gx/cc | >=0.1 |
 
-# Getting Started
+## Tasks
+
+### setup
 ```sh
 pnpm install
 ```
+
+### build
+```sh
+pnpm install
+pnpm build:gui
+```
+
+## Development
 
 To develop the GUI within Tauri Webview
 ```
@@ -29,11 +39,6 @@ $ pnpm dev:gui
 To develop the GUI within your local browser at localhost:8080
 ```
 $ pnpm web:gui
-```
-# Build
-```sh
-pnpm install
-pnpm build:gui
 ```
 
 # Creating a release
