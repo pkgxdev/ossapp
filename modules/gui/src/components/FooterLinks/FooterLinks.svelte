@@ -12,7 +12,7 @@
 					here.
 				</p>
 				<div class="w-3/4">
-					<img src="/static/images/footer-grid-element.svg" alt="grid" />
+					<img src="/images/footer-grid-element.svg" alt="grid" />
 				</div>
 			</div>
 

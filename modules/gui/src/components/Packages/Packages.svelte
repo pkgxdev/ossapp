@@ -5,8 +5,12 @@
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import PackageCard from '@tea/ui/PackageCard/PackageCard.svelte';
 	import { onMount } from 'svelte';
+
+	// TODO: replace with getting foundation essentials
 	import { getTopPackages } from '$libs/api/mock';
 	import { installPackage } from '@api';
+
+	export let title = 'Packages';
 
 	let packages: GUIPackage[] = [];
 
@@ -27,7 +31,7 @@
 </script>
 
 <header class="flex items-center justify-between border border-gray bg-black p-4 text-primary">
-	<span>TOP PACKAGES</span>
+	<span>{title}</span>
 	<a href="/packages" class="font-sono text-sm underline">View all packages</a>
 </header>
 <ul class="grid grid-cols-3 bg-black">

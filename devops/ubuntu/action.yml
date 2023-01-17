@@ -1,0 +1,8 @@
+name: 'Tea Ubuntu'
+description: 'build gui using custom ubuntu'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - build
