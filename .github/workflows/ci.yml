@@ -139,9 +139,8 @@ jobs:
           # APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
         run: |
           sh <(curl https://tea.xyz) --yes
-          tea +nodejs.org +pnpm.io +rust-lang.org
-          tea pnpm install
-          tea pnpm build:gui
+          tea -SE .
+          tea -ES xc build
 
       - name: build tauri for Linux
         # uses: teaxyz/setup@v0
