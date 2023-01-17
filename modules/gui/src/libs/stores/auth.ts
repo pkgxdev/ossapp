@@ -15,11 +15,15 @@ export let session: Session | null = null;
 export const getSession = async (): Promise<Session | null> => {
 	if (session && session?.user) return session;
 	const sessionFilePath = await join(basePath, 'tmp.dat');
-	const encryptedData = await readTextFile(sessionFilePath, {
-		dir: BaseDirectory.Home
-	});
-	session = JSON.parse(encryptedData || '{}') as Session;
-	return session;
+	try {
+		const encryptedData = await readTextFile(sessionFilePath, {
+			dir: BaseDirectory.Home
+		});
+		session = JSON.parse(encryptedData || '{}') as Session;
+		return session;
+	} catch (error) {
+		return null;
+	}
 };
 
 export default function initAuthStore() {
@@ -101,11 +105,10 @@ const getLocalSessionData = async (): Promise<Session | void> => {
 	let data: Session;
 	try {
 		const session = await getSession();
-		if (session) {
-			data = session;
-		}
+		if (!session) throw new Error('no session');
+		data = session;
 	} catch (error) {
-		console.error(error);
+		console.error('register device:',error);
 		const deviceId = await registerDevice();
 		data = {
 			device_id: deviceId
