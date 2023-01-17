@@ -139,8 +139,8 @@ jobs:
           # APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
         run: |
           sh <(curl https://tea.xyz) --yes
-          tea -SE .
-          tea -ES xc build
+          sh <(curl https://tea.xyz) -SE .
+          sh <(curl https://tea.xyz) -ES xc build
 
       - name: build tauri for Linux
         # uses: teaxyz/setup@v0
