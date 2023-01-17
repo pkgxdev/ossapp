@@ -108,7 +108,7 @@ const getLocalSessionData = async (): Promise<Session | void> => {
 		if (!session) throw new Error('no session');
 		data = session;
 	} catch (error) {
-		console.error('register device:',error);
+		console.error('register device:', error);
 		const deviceId = await registerDevice();
 		data = {
 			device_id: deviceId
