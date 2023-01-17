@@ -9,6 +9,7 @@ RUN apt-get install -y --fix-missing patchelf pkg-config
 RUN apt-get install -y --fix-missing curl
 RUN apt-get install -y --fix-missing libatomic1
 RUN apt-get install -y --fix-missing gcc-multilib
+RUN apt-get install -y libsoup-gnome2.4-1
 RUN curl https://tea.xyz -o ./tea.sh
 RUN chmod +x tea.sh
 RUN ./tea.sh --yes
