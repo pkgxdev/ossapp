@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: build tauri for Linux
-      uses: ./ubuntu # Uses an action in the root directory
+      uses: getneil/tea-builder:latest
       id: test
     # - uses: dorny/paths-filter@v2
     #   id: svelte
