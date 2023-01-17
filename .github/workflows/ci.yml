@@ -138,8 +138,6 @@ jobs:
           # APPLE_ID: ${{ secrets.APPLE_ID }}
           # APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
         run: |
-          sh <(curl https://tea.xyz) --yes
-          sh <(curl https://tea.xyz) -SE .
           sh <(curl https://tea.xyz) -ES xc build
 
       - name: build tauri for Linux
