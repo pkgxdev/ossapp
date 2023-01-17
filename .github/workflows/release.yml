@@ -53,7 +53,7 @@ jobs:
       # uses: teaxyz/setup@v0
       if: startsWith(matrix.platform.name, 'linux')
       # TODO: https://tauri.app/v1/guides/distribution/sign-linux
-      uses: ./devops/ubuntu
+      uses: docker://getneil/tea-builder:latest
 
 
     - name: Get current unix ts - seconds

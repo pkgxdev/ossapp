@@ -1,4 +1,3 @@
-<!-- home / discover / welcome page -->
 <script lang="ts">
 	import '$appcss';
 	import { navigating } from '$app/stores';
