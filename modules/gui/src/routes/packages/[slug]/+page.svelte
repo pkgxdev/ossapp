@@ -12,6 +12,7 @@
 	import Badges from '$components/Badges/Badges.svelte';
 	import Bottles from '@tea/ui/Bottles/Bottles.svelte';
 	import { getPackageBottles } from '@api';
+	import PackageDetail from '$components/PackageDetail/PackageDetail.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -23,11 +24,20 @@
 	let pkg: Package;
 
 	let reviews: Review[];
+	let bottles: Bottle[] = [];
+	let versions: string[] = [];
+
+	let tabs: Tab[] = [];
 
 	const setPkg = (pkgs: Package[]) => {
 		const foundPackage = pkgs.find(({ slug }) => slug === data?.slug) as Package;
 		if (!pkg && foundPackage) {
 			pkg = foundPackage;
+			tabs.push({
+				label: 'details',
+				component: PackageDetail,
+				props: { pkg }
+			});
 		}
 
 		if (!reviews && pkg) {
@@ -40,28 +50,25 @@
 	packagesStore.subscribe(setPkg);
 	featuredPackages.subscribe(setPkg);
 
-	let bottles: Bottle[] = [];
-	const tabs: Tab[] = [
-		{
-			label: 'details',
-			component: Badges,
-			props: {
-				arg1: 'A1'
-			}
-		},
-		{
-			label: 'versions',
-			component: Bottles,
-			props: {
-				bottles
-			}
-		}
-	];
-
 	onMount(async () => {
 		try {
 			const newBottles = await getPackageBottles(pkg.full_name);
+			const newVersion = newBottles.map((b) => b.version);
+			versions = [...new Set(newVersion)];
+
 			bottles.push(...newBottles);
+			console.log('sync tabs:', versions);
+			tabs = [
+				...tabs,
+				{
+					label: `versions (${versions.length || 0})`,
+					component: Bottles,
+					props: {
+						bottles
+					}
+				}
+			];
+			console.log(tabs);
 		} catch (err) {
 			console.error(err);
 		}

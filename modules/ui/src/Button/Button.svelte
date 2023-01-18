@@ -9,7 +9,7 @@
 </script>
 
 <button
-	type="button font-sans"
+	type="button"
 	class={`w-full p-2 font-machina text-gray ${clazz} ${active ? 'active' : ''}`}
 	on:click={() => onClick && onClick()}
 >

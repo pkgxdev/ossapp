@@ -13,13 +13,17 @@
 			active = tabs[0].label;
 		}
 	});
+
+	console.log('t', tabs);
 </script>
 
 <section class="relative h-auto border border-gray">
 	<menu class="flex border border-gray">
 		{#each tabs as tab}
-			<div class="border border-y-0 border-l-0 border-gray">
-				<Button onClick={() => (active = tab.label)}>{tab.label}</Button>
+			<div class="border border-y-0 border-l-0 border-gray text-white">
+				<Button onClick={() => (active = tab.label)}>
+					<span class={tab.label === active ? 'text-white' : ''}>{tab.label}</span>
+				</Button>
 			</div>
 		{/each}
 	</menu>
