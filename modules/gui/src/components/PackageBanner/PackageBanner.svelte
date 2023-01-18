@@ -4,7 +4,6 @@
 	import type { Package, Bottle } from '@tea/ui/types';
 	import Button from '@tea/ui/Button/Button.svelte';
 	import StarRating from '@tea/ui/StarRating/StarRating.svelte';
-	// import Bottles from '@tea/ui/Bottles/Bottles.svelte';
 	import { onMount } from 'svelte';
 	import { getPackageBottles } from '@api';
 
@@ -42,9 +41,7 @@
 			<p class="mt-4 font-sono text-sm">{pkg.desc}</p>
 		</article>
 	</header>
-	<!-- <section>
-		<Bottles {bottles} />
-	</section> -->
+
 	<footer class="flex h-20 border-t border-gray text-white">
 		<input class="click-copy flex-grow bg-black pl-4" disabled value={copyValue} />
 		<Button class="w-16 border-0 border-l-2 text-sm" onClick={onCopy}>{copyButtonText}</Button>

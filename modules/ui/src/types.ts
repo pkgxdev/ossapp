@@ -1,3 +1,4 @@
+import type { ComponentType } from 'svelte';
 export interface Review {
 	title: string;
 	comment: string;
@@ -49,4 +50,12 @@ export type Bottle = {
 	platform: string;
 	arch: string;
 	version: string;
+};
+
+export type Tab = {
+	label: string;
+	props?: {
+		[key: string]: any;
+	};
+	component: ComponentType;
 };

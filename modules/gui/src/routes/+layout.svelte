@@ -13,7 +13,7 @@
 	$: if ($navigating) view.scrollTop = 0;
 
 	afterNavigate(({ from, to }) => {
-		if (to?.route.id) {
+		if (to?.route.id && from && from?.url) {
 			const nextPath = to.url.href.replace(to.url.origin, '');
 			const fromPath = from?.url.href.replace(from.url.origin, '');
 			navStore.setNewPath(nextPath, fromPath || '/');
