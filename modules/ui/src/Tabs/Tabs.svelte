@@ -1,0 +1,36 @@
+<script lang="ts">
+	import type { Tab } from '../types';
+	import { onMount } from 'svelte';
+
+	import Button from '../Button/Button.svelte';
+
+	export let tabs: Tab[] = [];
+
+	let active: string;
+
+	onMount(() => {
+		if (tabs.length) {
+			active = tabs[0].label;
+		}
+	});
+
+	console.log('t', tabs);
+</script>
+
+<section class="relative h-auto border border-gray">
+	<menu class="flex border border-gray">
+		{#each tabs as tab}
+			<div class="border border-y-0 border-l-0 border-gray text-white">
+				<Button onClick={() => (active = tab.label)}>
+					<span class={tab.label === active ? 'text-white' : ''}>{tab.label}</span>
+				</Button>
+			</div>
+		{/each}
+	</menu>
+
+	{#each tabs as tab}
+		{#if tab.label === active}
+			<svelte:component this={tab.component} {...tab.props} />
+		{/if}
+	{/each}
+</section>

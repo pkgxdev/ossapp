@@ -4,7 +4,6 @@
 	import type { Package, Bottle } from '@tea/ui/types';
 	import Button from '@tea/ui/Button/Button.svelte';
 	import StarRating from '@tea/ui/StarRating/StarRating.svelte';
-	import Bottles from '@tea/ui/Bottles/Bottles.svelte';
 	import { onMount } from 'svelte';
 	import { getPackageBottles } from '@api';
 
@@ -33,20 +32,16 @@
 		<figure class="grow-1 w-1/3">
 			<img width={260} src={pkg.thumb_image_url} alt={pkg.full_name} />
 		</figure>
-		<article class="w-2/3 p-4">
-			<h3 class="text-5xl text-primary">{pkg.full_name}</h3>
-			{#if pkg.maintainer}
-				<h3>* {pkg.maintainer}</h3>
-			{/if}
+		<article class="w-2/3 p-4 pt-8">
+			<h3 class="text-3xl text-primary">{pkg.full_name}</h3>
+			<h3>&#x2022; {pkg.maintainer || ''}{pkg.maintainer ? ' |' : ''} {bottles.length} bottles</h3>
 			<div class="mt-4">
 				<StarRating maxRating={5} rating={packageRating} />
 			</div>
 			<p class="mt-4 font-sono text-sm">{pkg.desc}</p>
 		</article>
 	</header>
-	<section>
-		<Bottles {bottles} />
-	</section>
+
 	<footer class="flex h-20 border-t border-gray text-white">
 		<input class="click-copy flex-grow bg-black pl-4" disabled value={copyValue} />
 		<Button class="w-16 border-0 border-l-2 text-sm" onClick={onCopy}>{copyButtonText}</Button>
