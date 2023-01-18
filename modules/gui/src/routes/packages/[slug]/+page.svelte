@@ -36,14 +36,24 @@
 </script>
 
 <div>
-	<PageHeader>{pkg.full_name}</PageHeader>
+	<PageHeader coverUrl={pkg.thumb_image_url}>{pkg.full_name}</PageHeader>
 	<section>
 		<PackageBanner {pkg} />
 	</section>
-	<section class="mt-8">
-		<PackageReviews reviews={reviews || []} />
+
+	<section class="mt-8 flex gap-8">
+		<div class="h-64 w-2/3 bg-gray">details and versions</div>
+		<div class="h-64 w-1/3 bg-gray">metas</div>
 	</section>
+	<PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png">SNIPPETS</PageHeader>
+	<section class="mt-8 h-64 bg-gray">snippets</section>
+	<!-- <section class="mt-8">
+		<PackageReviews reviews={reviews || []} />
+	</section> -->
 	{#if pkg}
+		<PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png"
+			>YOU MAY ALSO LIKE...</PageHeader
+		>
 		<section class="mt-8">
 			<SuggestedPackages {pkg} />
 		</section>
