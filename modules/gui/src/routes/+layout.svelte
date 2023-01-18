@@ -23,7 +23,7 @@
 
 <div id="main-layout" class="w-full">
 	<TopBar />
-	<section class="pt-24" bind:this={view}>
+	<section class="relative pt-24" bind:this={view}>
 		<figure />
 
 		<div class="content">
@@ -42,11 +42,9 @@
 		height: 100vh;
 	}
 	section {
-		position: fixed;
-		left: 0px;
-		right: 0px;
-		height: 100vh;
+		height: calc(100vh - 82px);
 		overflow-y: scroll;
+		box-sizing: border-box;
 	}
 
 	figure {
