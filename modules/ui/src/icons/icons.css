@@ -109,3 +109,6 @@
 .icon-share:before {
 	content: '\78';
 }
+.icon-calendar:before {
+	content: '\79';
+}

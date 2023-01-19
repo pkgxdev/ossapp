@@ -2,6 +2,10 @@
 	import type { Tab } from '../types';
 	import { onMount } from 'svelte';
 
+	let clazz: string = '';
+
+	export { clazz as class };
+
 	import Button from '../Button/Button.svelte';
 
 	export let tabs: Tab[] = [];
@@ -17,7 +21,7 @@
 	console.log('t', tabs);
 </script>
 
-<section class="relative h-auto border border-gray">
+<section class={`relative h-auto border border-gray ${clazz || ''}`}>
 	<menu class="flex border border-gray">
 		{#each tabs as tab}
 			<div class="border border-y-0 border-l-0 border-gray text-white">
