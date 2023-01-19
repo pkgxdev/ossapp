@@ -67,3 +67,21 @@ export type Tab = {
 	};
 	component: ComponentType;
 };
+
+export type Snippet = {
+	snippet_id: string;
+	created_at: Date | string;
+	user: string;
+	avatar_url?: string;
+	stars: number;
+	files: {
+		name: string;
+		data: string;
+		language: string;
+	}[];
+	forks: Partial<Snippet>[];
+	comments: {
+		user: string;
+		comment: string;
+	}[];
+};
