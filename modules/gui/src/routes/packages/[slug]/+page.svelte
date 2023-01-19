@@ -13,7 +13,7 @@
 	import Bottles from '@tea/ui/Bottles/Bottles.svelte';
 	import { getPackageBottles } from '@api';
 	import PackageDetail from '$components/PackageDetail/PackageDetail.svelte';
-
+	import PackageMetas from '@tea/ui/PackageMetas/PackageMetas.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
 
@@ -82,10 +82,12 @@
 	</section>
 
 	<section class="mt-8 flex gap-8">
-		<div class="w-2/3 bg-black">
-			<Tabs {tabs} />
+		<div class="w-2/3">
+			<Tabs class="bg-black" {tabs} />
 		</div>
-		<div class="h-64 w-1/3 bg-gray">metas</div>
+		<div class="w-1/3">
+			<PackageMetas />
+		</div>
 	</section>
 	<PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png">SNIPPETS</PageHeader>
 	<section class="mt-8 h-64 bg-gray">snippets</section>
