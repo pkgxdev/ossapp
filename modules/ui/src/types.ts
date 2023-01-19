@@ -55,7 +55,15 @@ export type Bottle = {
 export type Tab = {
 	label: string;
 	props?: {
-		[key: string]: any;
+		[key: string]:
+			| string
+			| Date
+			| number
+			| Record<string, unknown>
+			| Array<string>
+			| Array<number>
+			| Array<Date>
+			| Array<Record<string, unknown>>;
 	};
 	component: ComponentType;
 };

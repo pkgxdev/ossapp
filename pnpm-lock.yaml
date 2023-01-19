@@ -39,6 +39,7 @@ importers:
       prettier-plugin-tailwindcss: ^0.2.0
       svelte: ^3.55.0
       svelte-check: ^2.8.0
+      svelte-markdown: ^0.2.3
       svelte-preprocess: ^5.0.0
       svelte-watch-resize: ^1.0.3
       svelte2tsx: ^0.5.20
@@ -58,6 +59,7 @@ importers:
       fuse.js: 6.6.2
       lodash: 4.17.21
       lorem-ipsum: 2.0.8
+      svelte-markdown: 0.2.3_svelte@3.55.0
       svelte-watch-resize: 1.0.3
       url-join: 5.0.0
     devDependencies:
@@ -119,6 +121,7 @@ importers:
       storybook: ^7.0.0-alpha.51
       svelte: ^3.44.0
       svelte-check: ^2.7.1
+      svelte-markdown: ^0.2.3
       svelte-preprocess: ^4.10.7
       svelte-watch-resize: ^1.0.3
       tailwindcss: ^3.2.4
@@ -127,6 +130,7 @@ importers:
       vite: ^4.0.0
     dependencies:
       '@tailwindcss/line-clamp': 0.4.2_tailwindcss@3.2.4
+      svelte-markdown: 0.2.3_svelte@3.55.0
       svelte-watch-resize: 1.0.3
     devDependencies:
       '@playwright/test': 1.25.0
@@ -3875,6 +3879,10 @@ packages:
   /@types/lodash/4.14.189:
     resolution: {integrity: sha512-kb9/98N6X8gyME9Cf7YaqIMvYGnBSWqEci6tiettE6iJWH1XdJz/PO8LB0GtLCG7x8dU3KWhZT+lA1a35127tA==}
     dev: true
+
+  /@types/marked/4.0.8:
+    resolution: {integrity: sha512-HVNzMT5QlWCOdeuBsgXP8EZzKUf0+AXzN+sLmjvaB3ZlLqO+e4u0uXrdw9ub69wBKFs+c6/pA4r9sy6cCDvImw==}
+    dev: false
 
   /@types/mdast/3.0.10:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}
@@ -8063,6 +8071,12 @@ packages:
       react: '>= 0.14.0'
     dev: true
 
+  /marked/4.2.12:
+    resolution: {integrity: sha512-yr8hSKa3Fv4D3jdZmtMMPghgVt6TWbk86WQaWhDloQjRSQhMMYCAro7jP7VDJrjjdV8pxVxMssXS8B8Y5DZ5aw==}
+    engines: {node: '>= 12'}
+    hasBin: true
+    dev: false
+
   /mdast-util-definitions/4.0.0:
     resolution: {integrity: sha512-k8AJ6aNnUkB7IE+5azR9h81O5EQ/cTDXtWdMq9Kk5KcEW/8ritU5CeLg/9HhOC++nALHBlaogJ5jz0Ybk3kPMQ==}
     dependencies:
@@ -10250,6 +10264,16 @@ packages:
       svelte: 3.55.0
     dev: true
 
+  /svelte-markdown/0.2.3_svelte@3.55.0:
+    resolution: {integrity: sha512-2h680NzTXnAD0CXhxe3GeHl6W+ayG4iKQRl+BIDRw+R0mUE0OiNxP1Vt8Rn+aWevB/LBiBIPCAwvL+0BkG057A==}
+    peerDependencies:
+      svelte: ^3.0.0
+    dependencies:
+      '@types/marked': 4.0.8
+      marked: 4.2.12
+      svelte: 3.55.0
+    dev: false
+
   /svelte-preprocess/4.10.7_zcekeqe65pzp6xniqzzjqholqa:
     resolution: {integrity: sha512-sNPBnqYD6FnmdBrUmBCaqS00RyCsCpj2BG58A1JBswNF7b0OKviwxqVrOL/CKyJrLSClrSeqQv5BXNg2RUbPOw==}
     engines: {node: '>= 9.11.2'}
@@ -10360,7 +10384,6 @@ packages:
   /svelte/3.55.0:
     resolution: {integrity: sha512-uGu2FVMlOuey4JoKHKrpZFkoYyj0VLjJdz47zX5+gVK5odxHM40RVhar9/iK2YFRVxvfg9FkhfVlR0sjeIrOiA==}
     engines: {node: '>= 8'}
-    dev: true
 
   /svelte2tsx/0.5.20_ozwewin3tvouwvcwd5wmlkxtki:
     resolution: {integrity: sha512-yNHmN/uoAnJ7d1XqVohiNA6TMFOxibHyEddUAHVt1PiLXtbwAJF3WaGYlg8QbOdoXzOVsVNCAlqRUIdULUm+OA==}

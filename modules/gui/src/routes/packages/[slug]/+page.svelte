@@ -14,6 +14,7 @@
 	import { getPackageBottles } from '@api';
 	import PackageDetail from '$components/PackageDetail/PackageDetail.svelte';
 	import PackageMetas from '@tea/ui/PackageMetas/PackageMetas.svelte';
+	import Markdown from '@tea/ui/Markdown/Markdown.svelte';
 	/** @type {import('./$types').PageData} */
 	export let data;
 
@@ -35,7 +36,7 @@
 			pkg = foundPackage;
 			tabs.push({
 				label: 'details',
-				component: PackageDetail,
+				component: Markdown,
 				props: { pkg }
 			});
 		}

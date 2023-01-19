@@ -53,6 +53,7 @@
 	"type": "module",
 	"dependencies": {
 		"@tailwindcss/line-clamp": "^0.4.2",
+		"svelte-markdown": "^0.2.3",
 		"svelte-watch-resize": "^1.0.3"
 	}
 }
