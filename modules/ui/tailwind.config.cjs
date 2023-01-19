@@ -24,6 +24,16 @@ module.exports = {
 			fontFamily: {
 				sono: ['sono', 'sans-serif'],
 				machina: ['pp-neue-machina', 'sans-serif']
+			},
+			typography: {
+				excerpt: {
+					css: {
+						p: {
+							fontFamily: 'font-machina',
+							fontSize: 'font-2xl'
+						}
+					}
+				}
 			}
 		}
 	},
