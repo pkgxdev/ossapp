@@ -86,7 +86,7 @@
 			<Tabs class="bg-black" {tabs} />
 		</div>
 		<div class="w-1/3">
-			<PackageMetas/>
+			<PackageMetas />
 		</div>
 	</section>
 	<PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png">SNIPPETS</PageHeader>
