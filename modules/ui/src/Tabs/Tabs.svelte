@@ -17,8 +17,6 @@
 			active = tabs[0].label;
 		}
 	});
-
-	console.log('t', tabs);
 </script>
 
 <section class={`relative h-auto border border-gray ${clazz || ''}`}>

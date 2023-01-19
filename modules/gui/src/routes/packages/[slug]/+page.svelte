@@ -4,17 +4,16 @@
 	import PageHeader from '$components/PageHeader/PageHeader.svelte';
 	import { packagesReviewStore } from '$libs/stores';
 	import PackageBanner from '$components/PackageBanner/PackageBanner.svelte';
-	import PackageReviews from '$components/PackageReviews/PackageReviews.svelte';
 	import type { Review, Bottle } from '@tea/ui/types';
 	import SuggestedPackages from '$components/SuggestedPackages/SuggestedPackages.svelte';
 	import Tabs from '@tea/ui/Tabs/Tabs.svelte';
 	import type { Tab } from '@tea/ui/types';
-	import Badges from '$components/Badges/Badges.svelte';
 	import Bottles from '@tea/ui/Bottles/Bottles.svelte';
 	import { getPackageBottles } from '@api';
-	import PackageDetail from '$components/PackageDetail/PackageDetail.svelte';
 	import PackageMetas from '@tea/ui/PackageMetas/PackageMetas.svelte';
 	import Markdown from '@tea/ui/Markdown/Markdown.svelte';
+	import PackageSnippets from '@tea/ui/PackageSnippets/PackageSnippets.svelte';
+
 	/** @type {import('./$types').PageData} */
 	export let data;
 
@@ -58,7 +57,6 @@
 			versions = [...new Set(newVersion)];
 
 			bottles.push(...newBottles);
-			console.log('sync tabs:', versions);
 			tabs = [
 				...tabs,
 				{
@@ -69,7 +67,6 @@
 					}
 				}
 			];
-			console.log(tabs);
 		} catch (err) {
 			console.error(err);
 		}
@@ -91,7 +88,9 @@
 		</div>
 	</section>
 	<PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png">SNIPPETS</PageHeader>
-	<section class="mt-8 h-64 bg-gray">snippets</section>
+	<section class="mt-8">
+		<PackageSnippets />
+	</section>
 	<!-- <section class="mt-8">
 		<PackageReviews reviews={reviews || []} />
 	</section> -->

@@ -96,6 +96,7 @@ importers:
 
   modules/ui:
     specifiers:
+      '@magidoc/plugin-svelte-prismjs': ^3.0.6
       '@playwright/test': 1.25.0
       '@storybook/addon-essentials': ^7.0.0-alpha.51
       '@storybook/addon-interactions': ^7.0.0-alpha.51
@@ -107,6 +108,7 @@ importers:
       '@sveltejs/kit': ^1.0.0
       '@sveltejs/package': ^1.0.1
       '@tailwindcss/line-clamp': ^0.4.2
+      '@types/prismjs': ^1.26.0
       '@typescript-eslint/eslint-plugin': ^5.27.0
       '@typescript-eslint/parser': ^5.27.0
       autoprefixer: ^10.4.13
@@ -118,6 +120,7 @@ importers:
       prettier: ^2.7.1
       prettier-plugin-svelte: ^2.7.0
       prettier-plugin-tailwindcss: ^0.2.0
+      prismjs: ^1.29.0
       storybook: ^7.0.0-alpha.51
       svelte: ^3.44.0
       svelte-check: ^2.7.1
@@ -129,7 +132,10 @@ importers:
       typescript: ^4.7.4
       vite: ^4.0.0
     dependencies:
+      '@magidoc/plugin-svelte-prismjs': 3.0.6_prismjs@1.29.0
       '@tailwindcss/line-clamp': 0.4.2_tailwindcss@3.2.4
+      '@types/prismjs': 1.26.0
+      prismjs: 1.29.0
       svelte-markdown: 0.2.3_svelte@3.55.0
       svelte-watch-resize: 1.0.3
     devDependencies:
@@ -1963,6 +1969,14 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
+
+  /@magidoc/plugin-svelte-prismjs/3.0.6_prismjs@1.29.0:
+    resolution: {integrity: sha512-s0v9HGdgi9ZnKOuZeyO2syb0BNjmPA50IFLNwlkvsAhK/wl7/xDYddSFxeOqXqSjhA6TbKoUlYYrBtwcmFSZ3Q==}
+    peerDependencies:
+      prismjs: ^1.29.0
+    dependencies:
+      prismjs: 1.29.0
+    dev: false
 
   /@mdx-js/mdx/2.1.5:
     resolution: {integrity: sha512-zEG0lt+Bl/r5U6e0TOS7qDbsXICtemfAPquxWFsMbdzrvlWaqMGemLl+sjVpqlyaaiCiGVQBSGdCk0t1qXjkQg==}
@@ -3931,6 +3945,10 @@ packages:
   /@types/pretty-hrtime/1.0.1:
     resolution: {integrity: sha512-VjID5MJb1eGKthz2qUerWT8+R4b9N+CHvGCzg9fn4kWZgaF9AhdYikQio3R7wV8YY1NsQKPaCwKz1Yff+aHNUQ==}
     dev: true
+
+  /@types/prismjs/1.26.0:
+    resolution: {integrity: sha512-ZTaqn/qSqUuAq1YwvOFQfVW1AR/oQJlLSZVustdjwI+GZ8kr0MSHBj0tsXPW1EqHubx50gtBEjbPGsdZwQwCjQ==}
+    dev: false
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
@@ -9229,6 +9247,11 @@ packages:
     resolution: {integrity: sha512-66hKPCr+72mlfiSjlEB1+45IjXSqvVAIy6mocupoww4tBFE9R9IhwwUGoI4G++Tc9Aq+2rxOt0RFU6gPcrte0A==}
     engines: {node: '>= 0.8'}
     dev: true
+
+  /prismjs/1.29.0:
+    resolution: {integrity: sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==}
+    engines: {node: '>=6'}
+    dev: false
 
   /private/0.1.8:
     resolution: {integrity: sha512-VvivMrbvd2nKkiG38qjULzlc+4Vx4wm/whI9pQD35YrARNnhxeiRktSOhSukRLFNlzg6Br/cJPet5J/u19r/mg==}
