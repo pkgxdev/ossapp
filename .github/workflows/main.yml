@@ -76,8 +76,9 @@ jobs:
       # TODO: https://tauri.app/v1/guides/distribution/sign-linux
       uses: docker://getneil/tea-builder:latest
 
-    - run: |
-        tar -czvf artifacts.tgz -C ./modules/gui/src-tauri/target/release/bundle .
+    - run: >
+        tar -czvf artifacts.tgz
+          -C ./modules/gui/src-tauri/target/release/bundle .
 
     - name: upload artifacts
       uses: actions/upload-artifact@v3
@@ -168,38 +169,46 @@ jobs:
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
 
-    # - name:  cp package images from prod to gui bucket
-    #   env:
-    #     platform: ${{ steps.build_platform.outputs.build_platform }}
-    #     build_platform: ${{ matrix.platform }}
-    #     extension: ${{steps.build_platform.outputs.extension}}
-    #   run: |
-    #     aws s3 cp "./$extension/tea_0.1.0_$platform.$extension" \
-    #       "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
+    - name: zip .app for MacOS
+      if: startsWith(matrix.platform, 'darwin+')
+      run: |
+        cd ./modules/gui/src-tauri/target/release/bundle/macos/
+        zip -r tea.zip tea.app
 
-    # - name: cp package zip for MacOS
-    #   if: startsWith(matrix.platform, 'darwin')
-    #   env:
-    #     platform: ${{ steps.build_platform.outputs.build_platform }}
-    #     build_platform: ${{ matrix.platform }}
-    #   run: |
-    #     aws s3 cp ./macos/tea.zip "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.zip"
-    # - uses: actions/setup-node@v3
-    #   with:
-    #     node-version: 18
-    # - name: Slack Notification
-    #   run: ./.github/notify-slack.js
-    #   env:
-    #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-    #     PLATFORM: ${{ matrix.platform }}
-    #     EXT: ${{ steps.build_platform.outputs.extension }}
-    #     DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
+    - name:  cp package images from prod to gui bucket
+      env:
+        platform: ${{ steps.build_platform.outputs.build_platform }}
+        build_platform: ${{ matrix.platform }}
+        extension: ${{steps.build_platform.outputs.extension}}
+      run: >
+        aws s3 cp
+          "./$extension/tea_0.1.0_$platform.$extension"
+          "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
 
-    # - name: Slack Notification for .app Mac
-    #   run: ./.github/notify-slack.js
-    #   if: startsWith(matrix.platform, 'darwin')
-    #   env:
-    #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-    #     PLATFORM: ${{ matrix.platform }}
-    #     EXT: .zip(.app)
-    #     DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.zip
+    - name: cp package zip for MacOS
+      if: startsWith(matrix.platform, 'darwin')
+      env:
+        platform: ${{ steps.build_platform.outputs.build_platform }}
+        build_platform: ${{ matrix.platform }}
+      run: >
+        aws s3 cp ./macos/tea.zip
+          "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.zip"
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - name: Slack Notification
+      run: ./.github/notify-slack.js
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        PLATFORM: ${{ matrix.platform }}
+        EXT: ${{ steps.build_platform.outputs.extension }}
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
+
+    - name: Slack Notification for .app Mac
+      run: ./.github/notify-slack.js
+      if: startsWith(matrix.platform, 'darwin')
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        PLATFORM: ${{ matrix.platform }}
+        EXT: .zip(.app)
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.zip
