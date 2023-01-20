@@ -61,13 +61,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: teaxyz/setup@v0
+      if: startsWith(matrix.platform.name, 'darwin')
 
     - name: build tauri for MacOS
       if: startsWith(matrix.platform.name, 'darwin')
       run: tea -ES xc build
-
-    # git on Linux panics tea --sync otherwise
-    - run: git config --global --add safe.directory $TEA_PREFIX
 
     - name: build tauri for Linux
       if: startsWith(matrix.platform.name, 'linux')
