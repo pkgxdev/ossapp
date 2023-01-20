@@ -140,9 +140,7 @@ jobs:
       # TODO: https://tauri.app/v1/guides/distribution/sign-linux
       uses: docker://getneil/tea-builder:latest
 
-    - run: >
-        tar -czvf artifacts.tgz
-          -C ./modules/gui/src-tauri/target/release/bundle .
+    - run: tar -czvf artifacts.tgz -C ./modules/gui/src-tauri/target/release/bundle .
 
     - name: upload artifacts
       uses: actions/upload-artifact@v3
@@ -240,9 +238,9 @@ jobs:
         prefix: ${{ needs.changes.outputs.preview_folder }}
         platform: ${{ steps.build_platform.outputs.build_platform }}
         extension: ${{ steps.build_platform.outputs.extension }}
-      run: >
-        aws s3 cp
-          "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension"
+      run: |
+        aws s3 cp \
+          "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
           "s3://preview.gui.tea.xyz/$prefix/tea_$platform.$extension"
 
     - name: cp package zip for MacOS
@@ -250,8 +248,8 @@ jobs:
       env:
         prefix: ${{ needs.changes.outputs.preview_folder }}
         platform: ${{ steps.build_platform.outputs.build_platform }}
-      run: >
-        aws s3 cp
+      run: |
+        aws s3 cp \
           ./modules/gui/src-tauri/target/release/bundle/macos/tea.zip "s3://preview.gui.tea.xyz/$prefix/tea_$platform.zip"
 
     - name: comment install for Linux
