@@ -66,6 +66,9 @@ jobs:
       if: startsWith(matrix.platform.name, 'darwin')
       run: tea -ES xc build
 
+    # git on Linux panics tea --sync otherwise
+    - run: git config --global --add safe.directory $TEA_PREFIX
+
     - name: build tauri for Linux
       if: startsWith(matrix.platform.name, 'linux')
       # TODO: https://tauri.app/v1/guides/distribution/sign-linux
