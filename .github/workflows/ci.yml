@@ -147,7 +147,7 @@ jobs:
         uses: docker://getneil/tea-builder:latest
         env:
           SIGN: 1
-          SIGN_KEY: 0x50B271A2E44A914A
+          SIGN_KEY: ${{ secrets.GUI_LINUX_GPG_KEY }}
           APPIMAGETOOL_SIGN_PASSPHRASE: ${{ secrets.GUI_LINUX_GPG_PASSWORD }}
 
       
