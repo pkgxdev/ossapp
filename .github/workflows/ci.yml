@@ -107,18 +107,14 @@ jobs:
         platform:
           - os: macos-11
             name: darwin+x86-64
-            id: mac_latest
           - os: ubuntu-latest
             name: linux+x86-64
-            id: linux
           - os: [self-hosted, macOS, ARM64]
             name: darwin+aarch64
-            id: mac_m1
           # err: Package atk was not found in the pkg-config search path.
           # requires atk >= 2.18
           # - os: [self-hosted, linux, ARM64]
           #   name: linux+aarch64
-    container: ${{ matrix.platform.container }}
     steps:
     - uses: actions/checkout@v3
     - uses: teaxyz/setup@v0
@@ -178,21 +174,25 @@ jobs:
     strategy:
       matrix:
         platform:
-          - darwin+x86-64
-          - linux+x86-64
-          - darwin+aarch64
-          # - linux+aarch64
+          - name: darwin+x86-64
+            id: mac_latest
+          - name: linux+x86-64
+            id: linux
+          - name: darwin+aarch64
+            id: mac_m1
+          # - name: linux+aarch64
+          #   id: linux_arm64
     steps:
     - uses: actions/download-artifact@v3
       with:
-        name: ${{ matrix.platform }}
+        name: ${{ matrix.platform.name }}
 
     - run: tar xzf artifacts.tgz
 
     - name: build platform output
       id: build_platform
       env:
-        platform: ${{ matrix.platform }}
+        platform: ${{ matrix.platform.name }}
       run: |
         BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
         EXTENSION=dmg
@@ -222,9 +222,9 @@ jobs:
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
 
     - name: zip .app for MacOS
-      if: startsWith(matrix.platform, 'darwin+')
+      if: startsWith(matrix.platform.name, 'darwin+')
       run: |
-        cd ./modules/gui/src-tauri/target/release/bundle/macos/
+        cd ./macos/
         zip -r tea.zip tea.app
 
     - uses: aws-actions/configure-aws-credentials@v1
@@ -240,17 +240,17 @@ jobs:
         extension: ${{ steps.build_platform.outputs.extension }}
       run: |
         aws s3 cp \
-          "./modules/gui/src-tauri/target/release/bundle/$extension/tea_0.1.0_$platform.$extension" \
+          "./$extension/tea_0.1.0_$platform.$extension" \
           "s3://preview.gui.tea.xyz/$prefix/tea_$platform.$extension"
 
     - name: cp package zip for MacOS
-      if: matrix.platform.name == 'darwin+x86-64' || matrix.platform.name == 'darwin+aarch64'
+      if: startsWith(matrix.platform.name, 'darwin')
       env:
         prefix: ${{ needs.changes.outputs.preview_folder }}
         platform: ${{ steps.build_platform.outputs.build_platform }}
       run: |
         aws s3 cp \
-          ./modules/gui/src-tauri/target/release/bundle/macos/tea.zip "s3://preview.gui.tea.xyz/$prefix/tea_$platform.zip"
+          ./macos/tea.zip "s3://preview.gui.tea.xyz/$prefix/tea_$platform.zip"
 
     - name: comment install for Linux
       if: startsWith(matrix.platform.name, 'linux')

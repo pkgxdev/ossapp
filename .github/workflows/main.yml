@@ -55,7 +55,6 @@ jobs:
             name: darwin+aarch64
           # - os: [self-hosted, linux, ARM64]
           #   name: linux+aarch64
-    container: ${{ matrix.platform.container }}
     steps:
     - uses: actions/checkout@v3
     - uses: teaxyz/setup@v0
