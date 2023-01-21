@@ -169,7 +169,7 @@ jobs:
     - name: zip .app for MacOS
       if: startsWith(matrix.platform, 'darwin+')
       run: |
-        cd ./modules/gui/src-tauri/target/release/bundle/macos/
+        cd ./macos/
         zip -r tea.zip tea.app
 
     - name:  cp package images from prod to gui bucket
