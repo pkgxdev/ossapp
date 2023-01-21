@@ -1,0 +1,178 @@
+name: "deploy"
+
+on:
+  push:
+    branches:
+      - test-main
+
+jobs:
+  build_tauri:
+    runs-on: ${{ matrix.platform.os }}
+    strategy:
+      matrix:
+        platform:
+          - os: macos-11
+            name: darwin+x86-64
+          - os: [self-hosted, macOS, ARM64]
+            name: darwin+aarch64
+          
+          # TMP
+          # - os: ubuntu-latest
+          #   name: linux+x86-64
+  
+          # - os: [self-hosted, linux, ARM64]
+          #   name: linux+aarch64
+    steps:
+    - uses: actions/checkout@v3
+    - uses: teaxyz/setup@v0
+      if: startsWith(matrix.platform.name, 'darwin')
+
+    - name: build tauri for MacOS
+      if: startsWith(matrix.platform.name, 'darwin')
+      run: tea -ES xc build
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ENABLE_CODE_SIGNING: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+        APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+        APPLE_CERTIFICATE_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+        APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+
+    - name: build tauri for Linux
+      if: startsWith(matrix.platform.name, 'linux')
+      # TODO: https://tauri.app/v1/guides/distribution/sign-linux
+      uses: docker://getneil/tea-builder:latest
+
+    - run: tar -czvf artifacts.tgz -C ./modules/gui/src-tauri/target/release/bundle .
+
+    - name: upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.platform.name }}
+        path: artifacts.tgz
+        if-no-files-found: error
+
+  notorize_tauri:
+    needs: [build_tauri]
+    runs-on: macos-11
+    strategy:
+      matrix:
+        platform:
+          - darwin+x86-64
+          - darwin+aarch64
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: ${{ matrix.platform }}
+
+    - run: tar xzf artifacts.tgz
+
+    - run: cd ./macos/ && zip -r tea.zip tea.app
+
+    # Notarize. Can take up to 10 minutes (and fail) asynchronously
+    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file ./macos/tea.zip
+      env:
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+
+  upload:
+    needs: [build_tauri, notorize_tauri]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform:
+          - darwin+x86-64
+          - linux+x86-64
+          - darwin+aarch64
+          # - linux+aarch64
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: ${{ matrix.platform }}
+
+    - run: tar xzf artifacts.tgz
+
+    - name: Get current unix ts - seconds
+      id: date
+      run: echo "unix_seconds=$(date +'%s')" >> $GITHUB_OUTPUT
+
+    - uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: build platform output
+      id: build_platform
+      env:
+        platform: ${{ matrix.platform }}
+      run: |
+        BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
+        EXTENSION=dmg
+        case $platform in
+          "linux+x86-64")
+            BUILD_PLATFORM="amd64"
+            EXTENSION="deb"
+            ;;
+          "linux+aarch64")
+            BUILD_PLATFORM="aarch64"
+            EXTENSION="deb"
+            ;;
+          "darwin+aarch64")
+            BUILD_PLATFORM="aarch64"
+            EXTENSION="dmg"
+            ;;
+          "darwin+x86-64")
+            BUILD_PLATFORM="x64"
+            EXTENSION="dmg"
+            ;;
+          *)
+            echo "Unknown platform $platform"
+            exit 1
+            ;;
+        esac
+        echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
+        echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
+
+    - name: zip .app for MacOS
+      if: startsWith(matrix.platform, 'darwin+')
+      run: |
+        cd ./macos/
+        zip -r tea.zip tea.app
+
+    - name:  cp package images from prod to gui bucket
+      env:
+        platform: ${{ steps.build_platform.outputs.build_platform }}
+        build_platform: ${{ matrix.platform }}
+        extension: ${{steps.build_platform.outputs.extension}}
+      run: |
+        aws s3 cp \
+          "./$extension/tea_0.1.0_$platform.$extension" \
+          "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
+
+    - name: cp package zip for MacOS
+      if: startsWith(matrix.platform, 'darwin')
+      env:
+        platform: ${{ steps.build_platform.outputs.build_platform }}
+        build_platform: ${{ matrix.platform }}
+      run: |
+        aws s3 cp ./macos/tea.zip \
+          "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.zip"
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - name: Slack Notification
+      run: ./.github/notify-slack.js
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        PLATFORM: ${{ matrix.platform }}
+        EXT: ${{ steps.build_platform.outputs.extension }}
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
+
+    - name: Slack Notification for .app Mac
+      run: ./.github/notify-slack.js
+      if: startsWith(matrix.platform, 'darwin')
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        PLATFORM: ${{ matrix.platform }}
+        EXT: .zip(.app)
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.zip
