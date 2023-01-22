@@ -128,10 +128,13 @@
 		right: 0;
 		background: rgba(0, 0, 0, 0.7);
 		transition: opacity 0.3s ease-in-out;
-		padding: 36px;
 		opacity: 0%;
 		overflow: hidden;
 		height: 0px;
+	}
+
+	section.show {
+		padding: 36px;
 		z-index: 10;
 	}
 
