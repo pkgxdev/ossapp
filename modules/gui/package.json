@@ -21,7 +21,7 @@
 		"@sveltejs/adapter-auto": "^1.0.0",
 		"@sveltejs/adapter-static": "^1.0.0",
 		"@sveltejs/kit": "^1.0.1",
-		"@tauri-apps/cli": "^1.2.2",
+		"@tauri-apps/cli": "^1.2.3",
 		"@tea/ui": "workspace:*",
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/svelte": "^3.2.2",
