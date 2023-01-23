@@ -20,3 +20,4 @@ build
 /src-tauri/Cargo.toml
 src-tauri
 coverage/*
+**/*.plist
