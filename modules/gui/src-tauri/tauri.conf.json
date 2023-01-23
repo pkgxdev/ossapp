@@ -106,7 +106,7 @@
 				"icons/icon.icns",
 				"icons/icon.ico"
 			],
-			"identifier": "com.tea.xyz",
+			"identifier": "xyz.tea.gui",
 			"longDescription": "",
 			"macOS": {
 				"entitlements": null,
