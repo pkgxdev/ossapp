@@ -12,5 +12,7 @@ description: 'Tea GUI builder for linux'
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  env:
+    XDG_DATA_HOME: /tmp/cache
   args:
     - ${{ inputs.who-to-greet }}

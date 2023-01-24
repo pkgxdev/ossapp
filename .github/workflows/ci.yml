@@ -69,216 +69,216 @@ jobs:
       - uses: actions/checkout@v3
       - name: build tauri for Linux
         uses: ./devops/linux-build
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: sync web files into preview folder
-        env:
-          prefix: ${{ needs.changes.outputs.preview_folder }}
-        run: |
-          aws s3 sync ./modules/gui/build \
-            "s3://preview.gui.tea.xyz/$prefix"
-      - name: Install package
-        run: sudo apt-get install -y jq coreutils
-      - name: setup preview
-        id: preview_setup
-        run: .github/create-invalidate-preview.sh ${{ needs.changes.outputs.preview_folder }}
+      # - uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-east-1
+      # - name: sync web files into preview folder
+      #   env:
+      #     prefix: ${{ needs.changes.outputs.preview_folder }}
+      #   run: |
+      #     aws s3 sync ./modules/gui/build \
+      #       "s3://preview.gui.tea.xyz/$prefix"
+      # - name: Install package
+      #   run: sudo apt-get install -y jq coreutils
+      # - name: setup preview
+      #   id: preview_setup
+      #   run: .github/create-invalidate-preview.sh ${{ needs.changes.outputs.preview_folder }}
 
-      - name: comment preview site
-        uses: mshick/add-pr-comment@v2
-        with:
-          message-id: preview-comment-${{needs.changes.outputs.preview_folder}}
-          message: |
-            **preview is at**: 
-            <a href="https://${{steps.preview_setup.outputs.domain}}" target="_blank">here</a>
-            ```bash
-            https://${{steps.preview_setup.outputs.domain}}
-            ```
-            copy-paste into a browser to view
+      # - name: comment preview site
+      #   uses: mshick/add-pr-comment@v2
+      #   with:
+      #     message-id: preview-comment-${{needs.changes.outputs.preview_folder}}
+      #     message: |
+      #       **preview is at**: 
+      #       <a href="https://${{steps.preview_setup.outputs.domain}}" target="_blank">here</a>
+      #       ```bash
+      #       https://${{steps.preview_setup.outputs.domain}}
+      #       ```
+      #       copy-paste into a browser to view
 
-  build_tauri:
-    needs: changes
-    if: needs.changes.outputs.tauri == 'true'
-    runs-on: ${{ matrix.platform.os }}
-    strategy:
-      matrix:
-        platform:
-          # - os: macos-11
-          #   name: darwin+x86-64
-          - os: ubuntu-latest
-            name: linux+x86-64
-          # - os: [self-hosted, macOS, ARM64]
-          #   name: darwin+aarch64
-          # err: Package atk was not found in the pkg-config search path.
-          # requires atk >= 2.18
-          # - os: [self-hosted, linux, ARM64]
-          #   name: linux+aarch64
-    steps:
-    - uses: actions/checkout@v3
-    - uses: teaxyz/setup@v0
-      if: startsWith(matrix.platform.name, 'darwin')
+  # build_tauri:
+  #   needs: changes
+  #   if: needs.changes.outputs.tauri == 'true'
+  #   runs-on: ${{ matrix.platform.os }}
+  #   strategy:
+  #     matrix:
+  #       platform:
+  #         # - os: macos-11
+  #         #   name: darwin+x86-64
+  #         - os: ubuntu-latest
+  #           name: linux+x86-64
+  #         # - os: [self-hosted, macOS, ARM64]
+  #         #   name: darwin+aarch64
+  #         # err: Package atk was not found in the pkg-config search path.
+  #         # requires atk >= 2.18
+  #         # - os: [self-hosted, linux, ARM64]
+  #         #   name: linux+aarch64
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - uses: teaxyz/setup@v0
+  #     if: startsWith(matrix.platform.name, 'darwin')
 
-    - name: build tauri for MacOS
-      if: startsWith(matrix.platform.name, 'darwin')
-      # FROM: https://tauri.app/v1/guides/distribution/sign-macos
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        ENABLE_CODE_SIGNING: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-        APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-        APPLE_CERTIFICATE_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-        APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-      run: tea -ES xc build
+  #   - name: build tauri for MacOS
+  #     if: startsWith(matrix.platform.name, 'darwin')
+  #     # FROM: https://tauri.app/v1/guides/distribution/sign-macos
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       ENABLE_CODE_SIGNING: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+  #       APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+  #       APPLE_CERTIFICATE_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+  #       APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+  #     run: tea -ES xc build
 
-    - name: build tauri for Linux
-      if: startsWith(matrix.platform.name, 'linux')
-      # TODO: https://tauri.app/v1/guides/distribution/sign-linux
-      uses: ./devops/linux-build
+  #   - name: build tauri for Linux
+  #     if: startsWith(matrix.platform.name, 'linux')
+  #     # TODO: https://tauri.app/v1/guides/distribution/sign-linux
+  #     uses: ./devops/linux-build
 
-    - run: tar -czvf artifacts.tgz -C ./modules/gui/src-tauri/target/release/bundle .
+  #   - run: tar -czvf artifacts.tgz -C ./modules/gui/src-tauri/target/release/bundle .
 
-    - name: upload artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ matrix.platform.name }}
-        path: artifacts.tgz
-        if-no-files-found: error
+  #   - name: upload artifacts
+  #     uses: actions/upload-artifact@v3
+  #     with:
+  #       name: ${{ matrix.platform.name }}
+  #       path: artifacts.tgz
+  #       if-no-files-found: error
 
-  notorize_tauri:
-    needs: [build_tauri]
-    runs-on: macos-11
-    strategy:
-      matrix:
-        platform:
-          - darwin+x86-64
-          - darwin+aarch64
-    steps:
-    - uses: actions/download-artifact@v3
-      with:
-        name: ${{ matrix.platform }}
+  # notorize_tauri:
+  #   needs: [build_tauri]
+  #   runs-on: macos-11
+  #   strategy:
+  #     matrix:
+  #       platform:
+  #         - darwin+x86-64
+  #         - darwin+aarch64
+  #   steps:
+  #   - uses: actions/download-artifact@v3
+  #     with:
+  #       name: ${{ matrix.platform }}
 
-    - run: tar xzf artifacts.tgz
+  #   - run: tar xzf artifacts.tgz
 
-    - run: cd ./macos/ && zip -r tea.zip tea.app
+  #   - run: cd ./macos/ && zip -r tea.zip tea.app
 
-    # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file ./macos/tea.zip
-      env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+  #   # Notarize. Can take up to 10 minutes (and fail) asynchronously
+  #   - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file ./macos/tea.zip
+  #     env:
+  #       APPLE_ID: ${{ secrets.APPLE_ID }}
+  #       APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
 
-  upload:
-    needs: [build_tauri, notorize_tauri]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform:
-          - name: darwin+x86-64
-            id: mac_latest
-          - name: linux+x86-64
-            id: linux
-          - name: darwin+aarch64
-            id: mac_m1
-          # - name: linux+aarch64
-          #   id: linux_arm64
-    steps:
-    - uses: actions/download-artifact@v3
-      with:
-        name: ${{ matrix.platform.name }}
+  # upload:
+  #   needs: [build_tauri, notorize_tauri]
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       platform:
+  #         - name: darwin+x86-64
+  #           id: mac_latest
+  #         - name: linux+x86-64
+  #           id: linux
+  #         - name: darwin+aarch64
+  #           id: mac_m1
+  #         # - name: linux+aarch64
+  #         #   id: linux_arm64
+  #   steps:
+  #   - uses: actions/download-artifact@v3
+  #     with:
+  #       name: ${{ matrix.platform.name }}
 
-    - run: tar xzf artifacts.tgz
+  #   - run: tar xzf artifacts.tgz
 
-    - name: build platform output
-      id: build_platform
-      env:
-        platform: ${{ matrix.platform.name }}
-      run: |
-        BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
-        EXTENSION=dmg
-        case $platform in
-          "linux+x86-64")
-            BUILD_PLATFORM="amd64"
-            EXTENSION="deb"
-            ;;
-          "linux+aarch64")
-            BUILD_PLATFORM="aarch64"
-            EXTENSION="deb"
-            ;;
-          "darwin+aarch64")
-            BUILD_PLATFORM="aarch64"
-            EXTENSION="dmg"
-            ;;
-          "darwin+x86-64")
-            BUILD_PLATFORM="x64"
-            EXTENSION="dmg"
-            ;;
-          *)
-            echo "Unknown platform $platform"
-            exit 1
-            ;;
-        esac
-        echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
-        echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
+  #   - name: build platform output
+  #     id: build_platform
+  #     env:
+  #       platform: ${{ matrix.platform.name }}
+  #     run: |
+  #       BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
+  #       EXTENSION=dmg
+  #       case $platform in
+  #         "linux+x86-64")
+  #           BUILD_PLATFORM="amd64"
+  #           EXTENSION="deb"
+  #           ;;
+  #         "linux+aarch64")
+  #           BUILD_PLATFORM="aarch64"
+  #           EXTENSION="deb"
+  #           ;;
+  #         "darwin+aarch64")
+  #           BUILD_PLATFORM="aarch64"
+  #           EXTENSION="dmg"
+  #           ;;
+  #         "darwin+x86-64")
+  #           BUILD_PLATFORM="x64"
+  #           EXTENSION="dmg"
+  #           ;;
+  #         *)
+  #           echo "Unknown platform $platform"
+  #           exit 1
+  #           ;;
+  #       esac
+  #       echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
+  #       echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
 
-    - name: zip .app for MacOS
-      if: startsWith(matrix.platform.name, 'darwin+')
-      run: |
-        cd ./macos/
-        zip -r tea.zip tea.app
+  #   - name: zip .app for MacOS
+  #     if: startsWith(matrix.platform.name, 'darwin+')
+  #     run: |
+  #       cd ./macos/
+  #       zip -r tea.zip tea.app
 
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+  #   - uses: aws-actions/configure-aws-credentials@v1
+  #     with:
+  #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #       aws-region: us-east-1
 
-    - name: cp package images from prod to preview bucket
-      env:
-        prefix: ${{ needs.changes.outputs.preview_folder }}
-        platform: ${{ steps.build_platform.outputs.build_platform }}
-        extension: ${{ steps.build_platform.outputs.extension }}
-      run: |
-        aws s3 cp \
-          "./$extension/tea_0.1.0_$platform.$extension" \
-          "s3://preview.gui.tea.xyz/$prefix/tea_$platform.$extension"
+  #   - name: cp package images from prod to preview bucket
+  #     env:
+  #       prefix: ${{ needs.changes.outputs.preview_folder }}
+  #       platform: ${{ steps.build_platform.outputs.build_platform }}
+  #       extension: ${{ steps.build_platform.outputs.extension }}
+  #     run: |
+  #       aws s3 cp \
+  #         "./$extension/tea_0.1.0_$platform.$extension" \
+  #         "s3://preview.gui.tea.xyz/$prefix/tea_$platform.$extension"
 
-    - name: cp package zip for MacOS
-      if: startsWith(matrix.platform.name, 'darwin')
-      env:
-        prefix: ${{ needs.changes.outputs.preview_folder }}
-        platform: ${{ steps.build_platform.outputs.build_platform }}
-      run: |
-        aws s3 cp \
-          ./macos/tea.zip "s3://preview.gui.tea.xyz/$prefix/tea_$platform.zip"
+  #   - name: cp package zip for MacOS
+  #     if: startsWith(matrix.platform.name, 'darwin')
+  #     env:
+  #       prefix: ${{ needs.changes.outputs.preview_folder }}
+  #       platform: ${{ steps.build_platform.outputs.build_platform }}
+  #     run: |
+  #       aws s3 cp \
+  #         ./macos/tea.zip "s3://preview.gui.tea.xyz/$prefix/tea_$platform.zip"
 
-    - name: comment install for Linux
-      if: startsWith(matrix.platform.name, 'linux')
-      uses: mshick/add-pr-comment@v2
-      with:
-        message-id: ${{ matrix.platform.id }}-comment
-        message: |
-          **installer for Linux ${{ matrix.platform.name }} is at**:
-          <a href="http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{steps.build_platform.outputs.build_platform}}.${{steps.build_platform.outputs.extension}}" target="_blank">here</a>
+  #   - name: comment install for Linux
+  #     if: startsWith(matrix.platform.name, 'linux')
+  #     uses: mshick/add-pr-comment@v2
+  #     with:
+  #       message-id: ${{ matrix.platform.id }}-comment
+  #       message: |
+  #         **installer for Linux ${{ matrix.platform.name }} is at**:
+  #         <a href="http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{steps.build_platform.outputs.build_platform}}.${{steps.build_platform.outputs.extension}}" target="_blank">here</a>
 
-          ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
-          ```
-          copy-paste into a browser to download
+  #         ```bash
+  #         http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
+  #         ```
+  #         copy-paste into a browser to download
 
-    - name: comment install for MacOS
-      if: startsWith(matrix.platform.name, 'darwin')
-      uses: mshick/add-pr-comment@v2
-      with:
-        message-id: ${{ matrix.platform.id }}-comment
-        message: |
-          **installers for MacOS ${{ matrix.platform.name }} is at**:
-          <a href="http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{steps.build_platform.outputs.build_platform}}.zip" target="_blank">.zip</a>
-          or
-          <a href="http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{steps.build_platform.outputs.build_platform}}.dmg" target="_blank">.dmg</a>
+  #   - name: comment install for MacOS
+  #     if: startsWith(matrix.platform.name, 'darwin')
+  #     uses: mshick/add-pr-comment@v2
+  #     with:
+  #       message-id: ${{ matrix.platform.id }}-comment
+  #       message: |
+  #         **installers for MacOS ${{ matrix.platform.name }} is at**:
+  #         <a href="http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{steps.build_platform.outputs.build_platform}}.zip" target="_blank">.zip</a>
+  #         or
+  #         <a href="http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{steps.build_platform.outputs.build_platform}}.dmg" target="_blank">.dmg</a>
 
-          ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.zip
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.dmg
-          ```
-          copy-paste into a browser to download
+  #         ```bash
+  #         http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.zip
+  #         http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.dmg
+  #         ```
+  #         copy-paste into a browser to download

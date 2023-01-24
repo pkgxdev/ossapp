@@ -26,7 +26,6 @@ RUN tea +pnpm.io
 RUN tea +rust-lang.org
 RUN tea +rust-lang.org/cargo
 RUN tea +xcfile.dev
-RUN cd /tmp/app && tea pnpm install
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 ENTRYPOINT ["/entrypoint.sh"]

@@ -1,4 +1,4 @@
-FROM getneil/tea-builder:cached
+FROM getneil/tea-builder:bincache
 
 COPY entrypoint.sh /entrypoint.sh
 
