@@ -6,4 +6,4 @@
 </script>
 
 <Placeholder label="Badges" />
-<h1>{arg1 || 'tes'}</h1>
+<h1>{arg1 || 'test'}</h1>
