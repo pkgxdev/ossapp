@@ -13,6 +13,6 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    CARGO_TARGET_DIR: /github/workspace/target
+    CARGO_TARGET_DIR: ${{ GITHUB_WORKSPACE }}/target
   args:
     - ${{ inputs.who-to-greet }}

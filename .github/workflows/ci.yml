@@ -73,8 +73,8 @@ jobs:
         with:
           key: ubuntu-20
           path: |
-            /github/workspace/.pnpm-store
-            /github/workspace/target
+            ${{ GITHUB_WORKSPACE }}/.pnpm-store
+            ${{ GITHUB_WORKSPACE }}/target
       - name: build tauri for Linux
         uses: ./devops/linux-build
       - uses: aws-actions/configure-aws-credentials@v1
