@@ -11,6 +11,6 @@ description: 'Tea GUI builder for linux'
 #     description: 'The time we greeted you'
 runs:
   using: 'docker'
-  image: 'getneil/tea-builder:cached'
+  image: 'Dockerfile'
   args:
     - ${{ inputs.who-to-greet }}
