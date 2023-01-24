@@ -1,0 +1,16 @@
+name: 'build-gui-linux'
+description: 'Tea GUI builder for linux'
+# TODO: cache
+# inputs:
+#   who-to-greet:  # id of input
+#     description: 'Who to greet'
+#     required: true
+#     default: 'World'
+# outputs:
+#   time: # id of output
+#     description: 'The time we greeted you'
+runs:
+  using: 'docker'
+  image: 'getneil/tea-builder:cached'
+  args:
+    - ${{ inputs.who-to-greet }}
