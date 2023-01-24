@@ -1,3 +1,6 @@
 #!/bin/sh -l
 
-echo "Hello"
+xxx=$(pnpm store path)
+echo $xxx
+ls $xxx
+pwd
