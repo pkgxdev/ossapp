@@ -13,6 +13,6 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    XDG_DATA_HOME: /tmp/cache
+    CARGO_TARGET_DIR: /github/workspace/target
   args:
     - ${{ inputs.who-to-greet }}
