@@ -1,3 +1,4 @@
 #!/bin/sh -l
 
-tea -SE xc build
+pwd
+# tea -SE xc build
