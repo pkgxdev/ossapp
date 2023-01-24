@@ -68,7 +68,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: build tauri for Linux
-        uses: docker://getneil/tea-builder:latest
+        uses: docker://getneil/tea-builder:cached
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -105,12 +105,12 @@ jobs:
     strategy:
       matrix:
         platform:
-          - os: macos-11
-            name: darwin+x86-64
+          # - os: macos-11
+          #   name: darwin+x86-64
           - os: ubuntu-latest
             name: linux+x86-64
-          - os: [self-hosted, macOS, ARM64]
-            name: darwin+aarch64
+          # - os: [self-hosted, macOS, ARM64]
+          #   name: darwin+aarch64
           # err: Package atk was not found in the pkg-config search path.
           # requires atk >= 2.18
           # - os: [self-hosted, linux, ARM64]
@@ -134,7 +134,7 @@ jobs:
     - name: build tauri for Linux
       if: startsWith(matrix.platform.name, 'linux')
       # TODO: https://tauri.app/v1/guides/distribution/sign-linux
-      uses: docker://getneil/tea-builder:latest
+      uses: docker://getneil/tea-builder:cached
 
     - run: tar -czvf artifacts.tgz -C ./modules/gui/src-tauri/target/release/bundle .
 

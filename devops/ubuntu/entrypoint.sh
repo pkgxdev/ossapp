@@ -1,3 +1,3 @@
 #!/bin/sh -l
-tea -SE .
+tea -SE xc setup
 tea -ES xc build
