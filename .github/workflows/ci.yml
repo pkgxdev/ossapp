@@ -73,8 +73,11 @@ jobs:
         with:
           key: ubuntu-20
           path: |
+            ~/node_modules
             ~/.pnpm-store
             ~/.cargo
+            ~/modules/gui/src-tauri/target
+            ~/target
       - name: build tauri for Linux
         uses: ./devops/linux-build
       - uses: aws-actions/configure-aws-credentials@v1
