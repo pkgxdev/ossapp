@@ -76,7 +76,7 @@ jobs:
         uses: actions/cache@v3
         with:
           key: ubuntu-20-cargo
-          path: ~/target
+          path: ./target
       - name: build tauri for Linux
         uses: ./devops/linux-build
       - run: ls -lha
