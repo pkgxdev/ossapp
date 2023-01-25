@@ -128,6 +128,10 @@ jobs:
       if: startsWith(matrix.platform.name, 'darwin')
 
     - name: cache gui build
+      # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
+      # but its ok to ignore, its still the fastest builder
+      # NOTE: enabling cache in the self hosted runner slows down the pipeline by 4m because post-cache builder error ^
+      if: startsWith(matrix.platform.name, 'linux') || matrix.platform.name == 'darwin+x86-64'
       uses: actions/cache@v3
       with:
         key: ${{matrix.platform.name}}-pnpm-cargo
