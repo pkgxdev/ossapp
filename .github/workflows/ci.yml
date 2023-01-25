@@ -112,12 +112,12 @@ jobs:
     strategy:
       matrix:
         platform:
-          # - os: macos-11
-          #   name: darwin+x86-64
+          - os: macos-11
+            name: darwin+x86-64
           - os: ubuntu-latest
             name: linux+x86-64
-          # - os: [self-hosted, macOS, ARM64]
-          #   name: darwin+aarch64
+          - os: [self-hosted, macOS, ARM64]
+            name: darwin+aarch64
           # err: Package atk was not found in the pkg-config search path.
           # requires atk >= 2.18
           # - os: [self-hosted, linux, ARM64]
@@ -140,6 +140,7 @@ jobs:
       if: startsWith(matrix.platform.name, 'darwin')
       # FROM: https://tauri.app/v1/guides/distribution/sign-macos
       env:
+        CARGO_TARGET_DIR: /github/workspace/target
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ENABLE_CODE_SIGNING: ${{ secrets.GUI_APPLE_CERTIFICATE }}
         APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
@@ -152,7 +153,7 @@ jobs:
       # TODO: https://tauri.app/v1/guides/distribution/sign-linux
       uses: ./devops/linux-builder
 
-    - run: tar -czvf artifacts.tgz -C ./modules/gui/src-tauri/target/release/bundle .
+    - run: tar -czvf artifacts.tgz -C ./target/release/bundle .
 
     - name: upload artifacts
       uses: actions/upload-artifact@v3
