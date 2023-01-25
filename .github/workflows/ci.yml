@@ -73,7 +73,7 @@ jobs:
         with:
           key: ubuntu-20
           path: |
-            /github/workspace/.pnpm-store
+            /github/workspace/pnpm
             /github/workspace/target
       - name: build tauri for Linux
         uses: ./devops/linux-build
