@@ -140,7 +140,7 @@ jobs:
       if: startsWith(matrix.platform.name, 'darwin')
       # FROM: https://tauri.app/v1/guides/distribution/sign-macos
       env:
-        CARGO_TARGET_DIR: ${{ GITHUB_WORKSPACE }}/target
+        CARGO_TARGET_DIR: ${{ github.workspace }}/target
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ENABLE_CODE_SIGNING: ${{ secrets.GUI_APPLE_CERTIFICATE }}
         APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
