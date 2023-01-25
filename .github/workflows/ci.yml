@@ -67,8 +67,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: cache gui linux
+        uses: actions/cache@v3
+        with:
+          key: linux+x86-64-20-pnpm-cargo
+          path: |
+            ./pnpm
+            ./target
       - name: build tauri for Linux
-        uses: docker://getneil/tea-builder:latest
+        uses: ./devops/linux-builder
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -120,10 +127,24 @@ jobs:
     - uses: teaxyz/setup@v0
       if: startsWith(matrix.platform.name, 'darwin')
 
+    - name: cache gui build
+      # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
+      # but its ok to ignore, its still the fastest builder
+      # NOTE: enabling cache in the self hosted runner slows down the pipeline by 4m because post-cache builder error ^
+      if: startsWith(matrix.platform.name, 'linux') || matrix.platform.name == 'darwin+x86-64'
+      uses: actions/cache@v3
+      with:
+        key: ${{matrix.platform.name}}-pnpm-cargo
+        path: |
+          ./pnpm
+          ./target
+    # - name: build tauri for Linux
+    #   uses: ./devops/linux-build
     - name: build tauri for MacOS
       if: startsWith(matrix.platform.name, 'darwin')
       # FROM: https://tauri.app/v1/guides/distribution/sign-macos
       env:
+        CARGO_TARGET_DIR: ${{ github.workspace }}/target
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ENABLE_CODE_SIGNING: ${{ secrets.GUI_APPLE_CERTIFICATE }}
         APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
@@ -134,9 +155,9 @@ jobs:
     - name: build tauri for Linux
       if: startsWith(matrix.platform.name, 'linux')
       # TODO: https://tauri.app/v1/guides/distribution/sign-linux
-      uses: docker://getneil/tea-builder:latest
+      uses: ./devops/linux-builder
 
-    - run: tar -czvf artifacts.tgz -C ./modules/gui/src-tauri/target/release/bundle .
+    - run: tar -czvf artifacts.tgz -C ./target/release/bundle .
 
     - name: upload artifacts
       uses: actions/upload-artifact@v3
