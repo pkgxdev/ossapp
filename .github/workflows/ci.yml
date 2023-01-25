@@ -67,14 +67,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Cache GUI deps
-        id: cache-npm
+      - name: pnpm gui linux
         uses: actions/cache@v3
         with:
-          key: ubuntu-20
-          path: |
-            ~/pnpm
-            ~/target
+          key: ubuntu-20-pnpm
+          path: ~/pnpm
+      - name: cargo gui linux
+        uses: actions/cache@v3
+        with:
+          key: ubuntu-20-cargo
+          path: ~/target
       - name: build tauri for Linux
         uses: ./devops/linux-build
       - uses: aws-actions/configure-aws-credentials@v1
