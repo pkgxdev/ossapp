@@ -67,16 +67,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: pnpm gui linux
+      - name: cache gui linux
         uses: actions/cache@v3
         with:
-          key: ubuntu-20-pnpm
-          path: ./pnpm
-      - name: cargo gui linux
-        uses: actions/cache@v3
-        with:
-          key: ubuntu-20-cargo
-          path: ./target
+          key: ubuntu-20-pnpm-cargo
+          path: |
+            ./pnpm
+            ./target
       - name: build tauri for Linux
         uses: ./devops/linux-build
       - run: ls -lha
