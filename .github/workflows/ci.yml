@@ -71,7 +71,7 @@ jobs:
         uses: actions/cache@v3
         with:
           key: ubuntu-20-pnpm
-          path: ~/pnpm
+          path: ./pnpm
       - name: cargo gui linux
         uses: actions/cache@v3
         with:

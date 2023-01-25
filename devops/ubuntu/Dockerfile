@@ -11,11 +11,6 @@ RUN apt-get install -y libjavascriptcoregtk-4.0-dev wget
 RUN curl https://tea.xyz -o ./tea.sh
 RUN chmod +x tea.sh
 RUN ./tea.sh --yes
-# Copies your code file from your action repository to the filesystem path `/` of the container
-COPY entrypoint.sh /entrypoint.sh
-
-RUN mkdir -p /github/workspace/.pnpm-store/v3
-ENV XDG_DATA_HOME=/github/workspace
 
 RUN mkdir -p /tmp/app/.git
 COPY README.md /tmp/app/README.md
@@ -23,9 +18,10 @@ COPY package.json /tmp/app/package.json
 
 RUN tea +nodejs.org
 RUN tea +pnpm.io
-RUN tea +rust-lang.org
-RUN tea +rust-lang.org/cargo
-RUN tea +xcfile.dev
+# RUN tea +rust-lang.org
+# RUN tea +rust-lang.org/cargo
+# RUN tea +xcfile.dev
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
+COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
