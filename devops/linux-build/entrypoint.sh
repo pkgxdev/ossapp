@@ -3,4 +3,4 @@
 pwd
 ls
 tea -SE pnpm store path
-# tea -SE xc build
+tea -SE xc setup
