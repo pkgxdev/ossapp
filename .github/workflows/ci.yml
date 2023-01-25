@@ -75,7 +75,7 @@ jobs:
             ./pnpm
             ./target
       - name: build tauri for Linux
-        uses: ./devops/linux-builder
+        uses: docker://getneil/tea-builder:bincache
         env:
           CARGO_TARGET_DIR: /github/workspace/target
         run: tea -SE xc build
@@ -157,7 +157,7 @@ jobs:
 
     - name: build tauri for Linux
       if: startsWith(matrix.platform.name, 'linux')
-      uses: ./devops/linux-builder
+      uses: docker://getneil/tea-builder:bincache
       # TODO: https://tauri.app/v1/guides/distribution/sign-linux
       env:
         CARGO_TARGET_DIR: /github/workspace/target
