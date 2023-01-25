@@ -18,9 +18,9 @@ COPY package.json /tmp/app/package.json
 
 RUN tea +nodejs.org
 RUN tea +pnpm.io
-# RUN tea +rust-lang.org
-# RUN tea +rust-lang.org/cargo
-# RUN tea +xcfile.dev
+RUN tea +rust-lang.org
+RUN tea +rust-lang.org/cargo
+RUN tea +xcfile.dev
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 COPY entrypoint.sh /entrypoint.sh
