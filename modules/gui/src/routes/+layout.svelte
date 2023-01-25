@@ -74,13 +74,6 @@
 			padding: 0vw 3.33vw;
 		}
 	}
-	header {
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		width: 100%;
-		height: 40px;
-	}
 
 	slot {
 		z-index: 1;
