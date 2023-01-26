@@ -11,7 +11,7 @@ jobs:
     steps:
     - run: echo "$ttt" | sed -r 's/[a]+/_/g'
       env:
-        ttt: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+        ttt: ${{ secrets.APPLE_PASSWORD }}
     - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
       id: svelte
