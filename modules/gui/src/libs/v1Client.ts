@@ -7,6 +7,7 @@ import urlJoin from 'url-join';
 export const baseUrl = 'https://api.tea.xyz/v1';
 
 export async function get<T>(path: string, query?: { [key: string]: string }) {
+	console.log(`GET /api/${path}`)
 	const [session, client] = await Promise.all([getSession(), getClient()]);
 
 	const uri = urlJoin(baseUrl, path);

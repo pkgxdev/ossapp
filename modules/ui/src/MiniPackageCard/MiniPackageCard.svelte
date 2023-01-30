@@ -34,7 +34,7 @@
 		<div>
 			<p>
 				<span class="text-xs text-gray"
-					>V&NonBreakingSpace;{pkg.version} {pkg?.bottles ? `| ${pkg.bottles} bottles` : ''}</span
+					>V&NonBreakingSpace;{pkg.version} {pkg?.bottles?.length ? `| ${pkg.bottles.length} bottles` : ''}</span
 				>
 			</p>
 		</div>
