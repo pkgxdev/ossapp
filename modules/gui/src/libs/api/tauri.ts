@@ -30,7 +30,7 @@ export async function getPackages(): Promise<GUIPackage[]> {
 		getInstalledPackages()
 	]);
 
-	return packages.map((pkg) => {
+	return (packages || []).map((pkg) => {
 		const found = installedPackages.find((p) => p.full_name === pkg.full_name);
 		return {
 			...pkg,
