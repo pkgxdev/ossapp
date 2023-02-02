@@ -23,7 +23,7 @@ module.exports = {
 			return;
 		}
 
-		console.log(`Notarizing ${appId} found at ${appPath} with Apple ID ${process.env.APPLE_ID}`);
+		console.log(`Notarizing ${appBundleId} found at ${appPath} with Apple ID ${process.env.APPLE_ID}`);
 
 		try {
 			await notarize({
