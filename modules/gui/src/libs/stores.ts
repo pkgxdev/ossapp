@@ -4,43 +4,12 @@ import Fuse from 'fuse.js';
 import type { Package, Review, AirtablePost } from '@tea/ui/types';
 import type { GUIPackage } from '$libs/types';
 
-import { getPackages, getFeaturedPackages, getPackageReviews, getAllPosts } from '@api';
+import { getFeaturedPackages, getPackageReviews, getAllPosts } from '@api';
 import initAuthStore from './stores/auth';
 import initNavStore from './stores/nav';
+import initPackagesStore from './stores/pkgs';
 
 export const featuredPackages = writable<Package[]>([]);
-
-function initPackagesStore() {
-	let initialized = false;
-	const { subscribe, set } = writable<GUIPackage[]>([]);
-	const packages: GUIPackage[] = [];
-	let packagesIndex: Fuse<GUIPackage>;
-
-	if (!initialized) {
-		initialized = true;
-		getPackages().then((pkgs) => {
-			set(pkgs);
-			packagesIndex = new Fuse(pkgs, {
-				keys: ['name', 'full_name', 'desc']
-			});
-		});
-	}
-
-	subscribe((v) => packages.push(...v));
-
-	return {
-		packages,
-		subscribe,
-		search: async (term: string, limit = 5): Promise<GUIPackage[]> => {
-			if (!term || !packagesIndex) return [];
-			// TODO: if online, use algolia else use Fuse
-
-			const res = packagesIndex.search(term, { limit });
-			const matchingPackages: GUIPackage[] = res.map((v) => v.item);
-			return matchingPackages;
-		}
-	};
-}
 
 export const packagesStore = initPackagesStore();
 

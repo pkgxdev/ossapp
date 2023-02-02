@@ -19,7 +19,15 @@ export interface Package {
 	dl_count: number;
 	installs: number;
 	reviews?: Review[];
-	bottles?: number; // TODO: where to get this?
+	// metas
+	full_description?: string; // probably markdown
+	bottles?: Bottle[];
+	license?: string;
+	size_bytes?: number;
+	documentation_url?: string;
+	github_repository_url?: string;
+	owners?: Partial<Developer>[];
+	categories?: string[];
 }
 
 export type AirtablePost = {
