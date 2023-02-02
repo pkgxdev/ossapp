@@ -104,8 +104,8 @@ jobs:
         platform:
           - os: macos-11
             name: darwin+x86-64
-          - os: ubuntu-latest
-            name: linux+x86-64
+          # - os: ubuntu-latest
+          #   name: linux+x86-64
           - os: [self-hosted, macOS, ARM64]
             name: darwin+aarch64
           # err: Package atk was not found in the pkg-config search path.
