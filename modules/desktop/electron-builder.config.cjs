@@ -5,7 +5,7 @@
 module.exports = {
 	appId: 'xyz.tea.gui',
 	productName: 'tea',
-	asar: true,
+	asar: false,
 	directories: { output: 'dist' },
 	files: ['src/electron.cjs', { from: 'build', to: '' }]
 	// TODO: if xcrun altool exists eventually in our self-hosted macos
