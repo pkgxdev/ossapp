@@ -128,14 +128,15 @@ jobs:
         path: |
           ./pnpm
     - name: build
-      # if: startsWith(matrix.platform.name, 'darwin')
-      # # FROM: https://tauri.app/v1/guides/distribution/sign-macos
+      if: startsWith(matrix.platform.name, 'darwin')
+      run: tea -ES xc build
       env:
+        CSC_FOR_PULL_REQUEST: true
         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
         CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
         CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-        CSC_FOR_PULL_REQUEST: true
-      run: tea -ES xc build
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
     - run: mkdir -p target
     - run: cp ./modules/desktop/dist/*.dmg ./target/tea.dmg
     - run: cp ./modules/desktop/dist/*.zip ./target/tea.zip
@@ -147,26 +148,26 @@ jobs:
         path: artifacts.tgz
         if-no-files-found: error
 
-  notorize_tauri:
-    needs: [build_desktop]
-    runs-on: macos-11
-    strategy:
-      matrix:
-        platform:
-          - darwin+x86-64
-          - darwin+aarch64
-    steps:
-    - uses: actions/download-artifact@v3
-      with:
-        name: ${{ matrix.platform }}
+  # notorize_tauri:
+  #   needs: [build_desktop]
+  #   runs-on: macos-11
+  #   strategy:
+  #     matrix:
+  #       platform:
+  #         - darwin+x86-64
+  #         - darwin+aarch64
+  #   steps:
+  #   - uses: actions/download-artifact@v3
+  #     with:
+  #       name: ${{ matrix.platform }}
 
-    - run: tar xzf artifacts.tgz
+  #   - run: tar xzf artifacts.tgz
 
-    # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file ./tea.zip
-      env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+  #   # Notarize. Can take up to 10 minutes (and fail) asynchronously
+  #   - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file ./tea.zip
+  #     env:
+  #       APPLE_ID: ${{ secrets.APPLE_ID }}
+  #       APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
 
   # build_tauri:
   #   needs: changes
@@ -231,7 +232,7 @@ jobs:
 
 
   upload:
-    needs: [notorize_tauri]
+    needs: [build_desktop]
     runs-on: ubuntu-latest
     strategy:
       matrix:
