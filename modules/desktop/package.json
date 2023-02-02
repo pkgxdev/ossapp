@@ -6,6 +6,8 @@
 	"author": "tea.xyz",
 	"main": "src/electron.cjs",
 	"scripts": {
+		"pack": "electron-builder --dir",
+		"dist": "electron-builder",
 		"package": "pnpm build && electron-builder --config electron-builder.config.json",
 		"dev:package": "pnpm build && electron-builder --config electron-builder.config.json --dir",
 		"electron": "concurrently --kill-others \"vite dev\" \"electron src/electron.cjs\"",
@@ -81,8 +83,12 @@
 	},
 	"build": {
 		"appId": "xyz.tea.gui",
+		"productName": "tea",
 		"linux": {
 			"icon": "./icon.png"
+		},
+		"mac": {
+			"category": "public.app-category.developer-tools"
 		}
 	},
 	"homepage": "https://tea.xyz",

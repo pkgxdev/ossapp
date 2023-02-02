@@ -35,6 +35,12 @@ pnpm install
 pnpm dev
 ```
 
+## dist
+```sh
+pnpm install
+pnpm --filter desktop exec pnpm dist
+```
+
 ## Development
 To develop the GUI within electron view
 ```
