@@ -6,10 +6,10 @@
 	"author": "tea.xyz",
 	"main": "src/electron.cjs",
 	"scripts": {
-		"pack": "electron-builder --dir --config electron-builder.config.js",
+		"pack": "electron-builder --dir --config electron-builder.config.cjs",
 		"dist": "electron-builder --config electron-builder.config.cjs",
-		"package": "pnpm build && electron-builder --config electron-builder.config.js",
-		"dev:package": "pnpm build && electron-builder --config electron-builder.config.js --dir",
+		"package": "pnpm build && electron-builder --config electron-builder.config.cjs",
+		"dev:package": "pnpm build && electron-builder --config electron-builder.config.cjs --dir",
 		"electron": "concurrently --kill-others \"vite dev\" \"electron src/electron.cjs\"",
 		"dev": "vite dev --port 8080",
 		"build": "vite build",
