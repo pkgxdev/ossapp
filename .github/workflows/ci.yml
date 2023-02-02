@@ -289,11 +289,6 @@ jobs:
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
 
-    - name: zip .app for MacOS
-      if: startsWith(matrix.platform.name, 'darwin+')
-      run: |
-        zip -r tea.zip tea.app
-
     - uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -307,7 +302,7 @@ jobs:
         extension: ${{ steps.build_platform.outputs.extension }}
       run: |
         aws s3 cp \
-          "./$extension/tea_0.1.0_$platform.$extension" \
+          "./tea.$extension" \
           "s3://preview.gui.tea.xyz/$prefix/tea_$platform.$extension"
 
     - name: cp package zip for MacOS
@@ -316,8 +311,7 @@ jobs:
         prefix: ${{ needs.changes.outputs.preview_folder }}
         platform: ${{ steps.build_platform.outputs.build_platform }}
       run: |
-        aws s3 cp \
-          ./macos/tea.zip "s3://preview.gui.tea.xyz/$prefix/tea_$platform.zip"
+        aws s3 cp ./tea.zip "s3://preview.gui.tea.xyz/$prefix/tea_$platform.zip"
 
     - name: comment install for Linux
       if: startsWith(matrix.platform.name, 'linux')
