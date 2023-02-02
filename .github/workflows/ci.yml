@@ -125,7 +125,8 @@ jobs:
         key: ${{matrix.platform.name}}-pnpm-cargo
         path: |
           ./pnpm
-    
+    - name: build desktop installer
+      run: tea -ES xc build
   build_tauri:
     needs: changes
     if: false

@@ -15,7 +15,7 @@
 	</p>
 </main>
 
-<style lang="scss">
+<style lang="css">
 	main {
 		text-align: center;
 		padding: 1em;

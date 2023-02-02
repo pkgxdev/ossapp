@@ -26,18 +26,24 @@ pnpm install
 ### build
 ```sh
 pnpm install
-pnpm build:gui
+pnpm build:desktop
+```
+
+### dev
+```sh
+pnpm install
+pnpm dev
 ```
 
 ## Development
-To develop the GUI within Tauri Webview
+To develop the GUI within electron view
 ```
-$ pnpm dev:gui
+$ pnpm dev:desktop
 ```
 
 To develop the GUI within your local browser at localhost:8080
 ```
-$ pnpm web:gui
+$ pnpm web:desktop
 ```
 
 # Creating a release
