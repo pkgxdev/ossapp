@@ -125,8 +125,22 @@ jobs:
         key: ${{matrix.platform.name}}-pnpm-cargo
         path: |
           ./pnpm
-    - name: build desktop installer
+    - name: build for MacOS
+      if: startsWith(matrix.platform.name, 'darwin')
+      # FROM: https://tauri.app/v1/guides/distribution/sign-macos
+      env:
+        CARGO_TARGET_DIR: ${{ github.workspace }}/target
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ENABLE_CODE_SIGNING: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+        APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+        APPLE_CERTIFICATE_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+        APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
       run: tea -ES xc build
+
+    - name: build for Linux
+      if: startsWith(matrix.platform.name, 'linux')
+      # TODO: https://tauri.app/v1/guides/distribution/sign-linux
+      uses: ./devops/linux-builder
   build_tauri:
     needs: changes
     if: false
