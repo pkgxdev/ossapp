@@ -170,7 +170,7 @@ jobs:
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
 
   upload:
-    needs: [build_desktop]
+    needs: [notorize_tauri]
     runs-on: ubuntu-latest
     strategy:
       matrix:
