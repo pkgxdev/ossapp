@@ -80,7 +80,10 @@
 		]
 	},
 	"build": {
-		"appId": "xyz.tea.gui"
+		"appId": "xyz.tea.gui",
+		"linux": {
+			"icon": "./icon.png"
+		}
 	},
 	"homepage": "https://tea.xyz",
 	"repository": "https://github.com/teaxyz/gui.git"
