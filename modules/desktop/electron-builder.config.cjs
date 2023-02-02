@@ -8,7 +8,7 @@ module.exports = {
 	asar: true,
 	directories: { output: 'dist' },
 	files: ['src/electron.cjs', { from: 'build', to: '' }],
-	afterSign: async (ctx) => {
+	afterSign: async (params) => {
 		if (process.platform !== 'darwin') {
 			return;
 		}
