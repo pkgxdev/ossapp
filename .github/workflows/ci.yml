@@ -5,32 +5,23 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      svelte: ${{steps.svelte.outputs.src}}
-      tauri: ${{steps.tauri.outputs.src}}
+      desktop: ${{steps.desktop.outputs.src}}
       preview_folder: ${{steps.preview.outputs.folder}}
     steps:
     - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
-      id: svelte
+      id: desktop
       with:
         filters: |
           src:
-            - 'modules/gui/src/**'
+            - 'modules/desktop/**'
             - 'modules/ui/**'
-    - uses: dorny/paths-filter@v2
-      id: tauri
-      with:
-        filters: |
-          src:
-            - 'modules/gui/src-tauri/**'
-            - 'modules/gui/src/**'
-            - 'modules/ui/src/**'
     - name: get s3 preview folder
       id: preview
       run: echo "folder=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
   no_preview:
     needs: changes
-    if: needs.changes.outputs.svelte == 'false'
+    if: needs.changes.outputs.desktop == 'false'
     runs-on: ubuntu-latest
     steps:
       - name: comment preview site
@@ -104,10 +95,28 @@ jobs:
             https://${{steps.preview_setup.outputs.domain}}
             ```
             copy-paste into a browser to view
-
+  build_desktop:
+    needs: changes
+    if: needs.changes.outputs.desktop == 'true'
+    runs-on: ${{ matrix.platform.os }}
+    strategy:
+      matrix:
+        platform:
+          - os: macos-11
+            name: darwin+x86-64
+          - os: ubuntu-latest
+            name: linux+x86-64
+          - os: [self-hosted, macOS, ARM64]
+            name: darwin+aarch64
+          # err: Package atk was not found in the pkg-config search path.
+          # requires atk >= 2.18
+          # - os: [self-hosted, linux, ARM64]
+          #   name: linux+aarch64
+    steps:
+    - uses: actions/checkout@v3
   build_tauri:
     needs: changes
-    if: needs.changes.outputs.tauri == 'true'
+    if: needs.changes.outputs.desktop == 'true'
     runs-on: ${{ matrix.platform.os }}
     strategy:
       matrix:
