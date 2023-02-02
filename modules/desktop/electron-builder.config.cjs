@@ -7,7 +7,7 @@ module.exports = {
 	productName: 'tea',
 	asar: true,
 	directories: { output: 'dist' },
-	files: ['src/electron.cjs', { from: 'build', to: '' }],
+	files: ['src/electron.cjs', { from: 'build', to: '' }]
 	// TODO: if xcrun altool exists eventually in our self-hosted macos
 	// SOLUTION: is notarize separately in next pipeline step
 	// afterSign: async (params) => {
