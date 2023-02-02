@@ -139,8 +139,8 @@ jobs:
       #   APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
       run: tea -ES xc build
     - run: mkdir -p target
-    - run: cp ./modules/desktop/dist/tea-0.0.0-arm64.dmg ./target
-    - run: cp ./modules/desktop/dist/tea-0.0.0-arm64.zip ./target
+    - run: cp ./modules/desktop/dist/**/*.dmg ./target/tea.dmg
+    - run: cp ./modules/desktop/dist/**/*.zip ./target/tea.zip
     - run: tar -czvf artifacts.tgz -C ./target/ .
     - name: upload artifacts
       uses: actions/upload-artifact@v3
@@ -166,6 +166,10 @@ jobs:
 
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
     - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file ./tea.zip
+      env:
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file ./tea.dmg
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
@@ -288,7 +292,6 @@ jobs:
     - name: zip .app for MacOS
       if: startsWith(matrix.platform.name, 'darwin+')
       run: |
-        cd ./macos/
         zip -r tea.zip tea.app
 
     - uses: aws-actions/configure-aws-credentials@v1
