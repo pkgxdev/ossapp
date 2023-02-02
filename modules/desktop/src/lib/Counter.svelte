@@ -1,11 +1,11 @@
 <script>
-  let count = 0;
+	let count = 0;
 
-  const increment = () => {
-    count += 1;
-  };
+	const increment = () => {
+		count += 1;
+	};
 </script>
 
 <button class="button" on:click={increment}>
-  Clicks: {count}
+	Clicks: {count}
 </button>
