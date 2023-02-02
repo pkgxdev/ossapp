@@ -23,7 +23,7 @@
 	<a href="/profile">
 		<section class="flex">
 			<img width="40" height="40" src={user.avatar_url || '/images/bored-ape.png'} alt="profile" />
-			<div class="p-2 text-gray">@{user.login}</div>
+			<div class="text-gray p-2">@{user.login}</div>
 		</section>
 	</a>
 {:else}
@@ -32,6 +32,6 @@
 		<figure class="p-2">
 			<img width="28" height="28" src="/images/github.png" alt="profile" />
 		</figure>
-		<div class="p-2 text-gray">Login</div>
+		<div class="text-gray p-2">Login</div>
 	</section>
 {/if}

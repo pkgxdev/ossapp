@@ -2,34 +2,34 @@
 	import Button from '@tea/ui/Button/Button.svelte';
 </script>
 
-<footer class="relative h-auto w-full bg-black font-machina">
+<footer class="font-machina relative h-auto w-full bg-black">
 	<section class="p-4 px-16 py-16">
-		<h3 class="mb-5 text-2xl text-primary">QUICK LINKS</h3>
+		<h3 class="text-primary mb-5 text-2xl">QUICK LINKS</h3>
 		<menu class="flex gap-4">
-			<div class="flex-grow border border-l-0 border-r-0 border-gray">
+			<div class="border-gray flex-grow border border-l-0 border-r-0">
 				<a href="/">
 					<Button>
-						<div class="flex justify-between text-primary hover:text-black">
+						<div class="text-primary flex justify-between hover:text-black">
 							<div class="uppercase">About the tea store</div>
 							<div>&#8594</div>
 						</div>
 					</Button>
 				</a>
 			</div>
-			<div class="flex-grow border border-l-0 border-r-0 border-gray">
+			<div class="border-gray flex-grow border border-l-0 border-r-0">
 				<a href="/">
 					<Button>
-						<div class="flex justify-between text-primary hover:text-black">
+						<div class="text-primary flex justify-between hover:text-black">
 							<div class="uppercase">REPORT A PROBLEM</div>
 							<div>&#8594</div>
 						</div>
 					</Button>
 				</a>
 			</div>
-			<div class="flex-grow border border-l-0 border-r-0 border-gray">
+			<div class="border-gray flex-grow border border-l-0 border-r-0">
 				<a href="https://tea.xyz" target="_blank" rel="noreferrer">
 					<Button>
-						<div class="flex justify-between text-primary hover:text-black">
+						<div class="text-primary flex justify-between hover:text-black">
 							<div class="uppercase">VISIT TEA.XYZ</div>
 							<div>&#8594</div>
 						</div>
@@ -39,8 +39,8 @@
 		</menu>
 	</section>
 
-	<section class="h-16 border border-r-0 border-gray p-4 px-16">
-		<div class="flex gap-4 text-xs text-gray">
+	<section class="border-gray h-16 border border-r-0 p-4 px-16">
+		<div class="text-gray flex gap-4 text-xs">
 			<a
 				href="https://tea.xyz/terms-of-use/"
 				target="_blank"

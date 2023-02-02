@@ -19,11 +19,11 @@
 	});
 </script>
 
-<header class="flex w-full border border-l-0 border-r-0 border-gray">
+<header class="border-gray flex w-full border border-l-0 border-r-0">
 	<a href="/">
 		<img width="40" height="40" src="/images/tea-icon.png" alt="tea" />
 	</a>
-	<ul class="flex h-10 gap-4 pl-4 align-middle leading-10 text-gray">
+	<ul class="text-gray flex h-10 gap-4 pl-4 align-middle leading-10">
 		<button on:click={navStore.back} class={$prevPath ? 'active' : ''}>&#8592</button>
 		<button on:click={navStore.next} class={$nextPath ? 'active' : ''}>&#8594</button>
 	</ul>
@@ -33,7 +33,7 @@
 		placeholder="search the tea store"
 		{onSearch}
 	/>
-	<ul class="flex gap-4 pr-4 pt-2 align-middle text-gray">
+	<ul class="text-gray flex gap-4 pr-4 pt-2 align-middle">
 		<button class="icon-filter hover:text-white" />
 		<button class="icon-share hover:text-white" />
 		<button class="icon-star-empty hover:text-white" />
@@ -41,7 +41,7 @@
 	<ProfileNavButton />
 </header>
 <menu
-	class="flex h-10 gap-4 border border-l-0 border-r-0 border-t-0 border-gray pl-4 align-middle leading-10 text-gray"
+	class="border-gray text-gray flex h-10 gap-4 border border-l-0 border-r-0 border-t-0 pl-4 align-middle leading-10"
 >
 	<a href="/cli" class={currentPath === '/cli' ? 'active' : ''}>install teaCli</a>
 	<a href="/documentation" class={currentPath === '/documentation' ? 'active' : ''}>documentation</a

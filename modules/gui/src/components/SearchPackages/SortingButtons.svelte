@@ -20,7 +20,7 @@
 	};
 </script>
 
-<section class="sorting-container bg-black font-machina text-white">
+<section class="sorting-container font-machina bg-black text-white">
 	<div class="dropdown">
 		<div class="dropdown-title">SORT ORDER</div>
 		<ul class="dropdown-content column flex">

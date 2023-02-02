@@ -15,10 +15,10 @@
 
 <PanelHeader title="My installs" ctaLabel="Check for updates >" ctaLink="#" />
 
-<ul class="grid grid-cols-3 border border-r-0 border-gray bg-black">
+<ul class="border-gray grid grid-cols-3 border border-r-0 bg-black">
 	{#if packages.length > 0}
 		{#each packages as pkg}
-			<div class="border border-t-0 border-l-0 border-gray p-4">
+			<div class="border-gray border border-t-0 border-l-0 p-4">
 				<MiniPackageCard
 					{pkg}
 					ctaLabel="DETAILS"
@@ -30,7 +30,7 @@
 		{/each}
 	{:else}
 		{#each Array(12) as _}
-			<section class="h-50 border border-gray p-4">
+			<section class="h-50 border-gray border p-4">
 				<Preloader />
 			</section>
 		{/each}

@@ -15,7 +15,7 @@
 {#if news.length}
 	<Posts posts={news} linkTarget="_blank" />
 {:else}
-	<section class="h-64 border border-gray bg-black p-4">
+	<section class="border-gray h-64 border bg-black p-4">
 		<Preloader />
 	</section>
 {/if}

@@ -4,7 +4,7 @@
 	"private": true,
 	"description": "tea gui app",
 	"author": "tea.xyz",
-  "main": "src/electron.cjs",
+	"main": "src/electron.cjs",
 	"scripts": {
 		"package": "pnpm build && electron-builder --config electron-builder.config.json",
 		"dev:package": "pnpm build && electron-builder --config electron-builder.config.json --dir",

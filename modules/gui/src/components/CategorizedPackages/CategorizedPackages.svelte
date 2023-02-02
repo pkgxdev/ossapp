@@ -14,9 +14,9 @@
 
 {#each categories as category}
 	<PanelHeader ctaLabel={category.cta_label} ctaLink={'#'} title={category.label} />
-	<ul class="grid grid-cols-3 border border-r-0 border-gray bg-black">
+	<ul class="border-gray grid grid-cols-3 border border-r-0 bg-black">
 		{#each category.packages as pkg}
-			<div class="border border-t-0 border-l-0 border-gray p-4">
+			<div class="border-gray border border-t-0 border-l-0 p-4">
 				<MiniPackageCard {pkg} ctaLabel="DETAILS" link={`/packages/${pkg.slug}`} />
 			</div>
 		{/each}

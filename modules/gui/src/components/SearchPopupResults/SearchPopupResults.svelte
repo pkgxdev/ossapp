@@ -55,18 +55,18 @@
 <section class={term ? 'show' : ''}>
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<figure on:click={onClose} />
-	<div class="z-20 border border-gray bg-black">
+	<div class="border-gray z-20 border bg-black">
 		<header class="flex justify-between p-4">
-			<div class="text-2xl text-primary">Showing search results for `{term}`</div>
+			<div class="text-primary text-2xl">Showing search results for `{term}`</div>
 
 			<button on:click={onClose}>&#x2715</button>
 		</header>
-		<menu class="flex h-8 w-full gap-4 bg-accent px-4 text-xs">
+		<menu class="bg-accent flex h-8 w-full gap-4 px-4 text-xs">
 			<button>packages ({packages.length})</button>
 			<button>articles ({articles.length})</button>
 			<button>workshops ({workshops.length})</button>
 		</menu>
-		<header class="p-4 text-lg text-primary">
+		<header class="text-primary p-4 text-lg">
 			Top Package Results ({packages.length})
 		</header>
 		<ul class="grid grid-cols-3">
@@ -91,29 +91,29 @@
 				{/each}
 			{:else if loading}
 				{#each Array(12) as _}
-					<section class="h-50 border border-gray p-4">
+					<section class="h-50 border-gray border p-4">
 						<Preloader />
 					</section>
 				{/each}
 			{/if}
 		</ul>
-		<header class="p-4 text-lg text-primary">
+		<header class="text-primary p-4 text-lg">
 			Top Article Results ({articles.length})
 		</header>
 		{#if articles.length}
 			<Posts posts={articles} linkTarget="_blank" />
 		{:else if loading}
-			<section class="h-64 border border-gray bg-black p-4">
+			<section class="border-gray h-64 border bg-black p-4">
 				<Preloader />
 			</section>
 		{/if}
-		<header class="p-4 text-lg text-primary">
+		<header class="text-primary p-4 text-lg">
 			Top Workshop Results ({workshops.length})
 		</header>
 		{#if workshops.length}
 			<Posts posts={workshops} linkTarget="_blank" />
 		{:else if loading}
-			<section class="h-64 border border-gray bg-black p-4">
+			<section class="border-gray h-64 border bg-black p-4">
 				<Preloader />
 			</section>
 		{/if}

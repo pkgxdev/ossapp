@@ -61,13 +61,13 @@
 	packagesStore.subscribe(setPackages);
 </script>
 
-<div class="border border-gray bg-black">
+<div class="border-gray border bg-black">
 	<section class="flex items-center justify-between">
 		<div>
 			<SearchInput size="medium" {onSearch} />
 		</div>
 		<div class="pr-4">
-			<section class="h-12 w-48 border border-gray">
+			<section class="border-gray h-12 w-48 border">
 				<SortingButtons {onSort} />
 			</section>
 		</div>
@@ -94,7 +94,7 @@
 			{/each}
 		{:else}
 			{#each Array(12) as _}
-				<section class="h-50 border border-gray p-4">
+				<section class="h-50 border-gray border p-4">
 					<Preloader />
 				</section>
 			{/each}

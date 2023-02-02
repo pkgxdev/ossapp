@@ -10,18 +10,18 @@
 </script>
 
 {#if user}
-	<section class="border-2 border-gray bg-black p-2">
-		<div class="profile_banner container flex border border-gray bg-black">
+	<section class="border-gray border-2 bg-black p-2">
+		<div class="profile_banner border-gray container flex border bg-black">
 			<img class="w-1/5" src={user.avatar_url || '/images/bored-ape.png'} alt="profile" />
 			<div class="flex w-4/5 items-center p-5">
 				<div class="w-1/2 pl-5">
-					<p class="uppercase text-gray">Authenticated with GitHub</p>
+					<p class="text-gray uppercase">Authenticated with GitHub</p>
 					<p />
-					<p class="text-4xl text-primary">@{user.login}</p>
+					<p class="text-primary text-4xl">@{user.login}</p>
 				</div>
-				<div class="h-full border-l border-gray" />
+				<div class="border-gray h-full border-l" />
 				<div class="w-1/2 pl-10">
-					<p class="uppercase leading-loose text-gray">
+					<p class="text-gray uppercase leading-loose">
 						Country: <span>{user?.country}</span><br />Wallet:
 						{#if user.wallet}
 							<span>{user.wallet}</span>

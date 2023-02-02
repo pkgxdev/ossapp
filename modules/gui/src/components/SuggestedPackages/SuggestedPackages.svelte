@@ -30,7 +30,7 @@
 	});
 </script>
 
-<header class="flex items-center justify-between border border-gray bg-black p-4 text-primary">
+<header class="border-gray text-primary flex items-center justify-between border bg-black p-4">
 	<span>MORE LIKE THIS</span>
 </header>
 <ul class="grid grid-cols-3 bg-black">
@@ -55,7 +55,7 @@
 		{/each}
 	{:else}
 		{#each Array(9) as _}
-			<section class="h-50 border border-gray p-4">
+			<section class="h-50 border-gray border p-4">
 				<Preloader />
 			</section>
 		{/each}

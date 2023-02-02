@@ -4,11 +4,11 @@
 	export { clazz as class };
 </script>
 
-<figure class={`relative mb-8 h-32 w-full font-machina uppercase ${clazz}`}>
+<figure class={`font-machina relative mb-8 h-32 w-full uppercase ${clazz}`}>
 	{#if coverUrl}
 		<img src={coverUrl} class="absolute z-0 h-32 w-full object-cover" alt="cover" />
 	{/if}
-	<div class="absolute bottom-0 z-10 text-6xl leading-[32px] text-primary">
+	<div class="text-primary absolute bottom-0 z-10 text-6xl leading-[32px]">
 		<slot />
 	</div>
 </figure>

@@ -28,21 +28,21 @@
 	// ideally they should work like metro-ui to not have extreme height diff between columns
 </script>
 
-<header class="border border-gray bg-black p-4 text-primary">REVIEWS ({reviews.length})</header>
-<section class="flex flex-row flex-wrap bg-black font-machina">
-	<div class="w-1/3 border-0 border-l-2 border-b-2 border-gray p-4">
+<header class="border-gray text-primary border bg-black p-4">REVIEWS ({reviews.length})</header>
+<section class="font-machina flex flex-row flex-wrap bg-black">
+	<div class="border-gray w-1/3 border-0 border-l-2 border-b-2 p-4">
 		{#each col1 as review}
 			<ReviewCard {review} />
 			<div class="mt-4" />
 		{/each}
 	</div>
-	<div class="w-1/3 border-0 border-l-2 border-b-2 border-gray p-4">
+	<div class="border-gray w-1/3 border-0 border-l-2 border-b-2 p-4">
 		{#each col2 as review}
 			<ReviewCard {review} />
 			<div class="mt-4" />
 		{/each}
 	</div>
-	<div class="w-1/3 border-0 border-x-2 border-b-2 border-gray p-4">
+	<div class="border-gray w-1/3 border-0 border-x-2 border-b-2 p-4">
 		{#each col3 as review}
 			<ReviewCard {review} />
 			<div class="mt-4" />
@@ -50,7 +50,7 @@
 	</div>
 </section>
 {#if showLimit <= reviews.length && showMore === false}
-	<footer class="border border-gray bg-black p-4">
+	<footer class="border-gray border bg-black p-4">
 		<button on:click={() => (showMore = true)}>SHOW MORE</button>
 	</footer>
 {/if}

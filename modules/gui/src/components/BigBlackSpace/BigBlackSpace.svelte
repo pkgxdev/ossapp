@@ -2,4 +2,4 @@
 	import '$appcss';
 </script>
 
-<section class="h-56 border border-gray bg-black" />
+<section class="border-gray h-56 border bg-black" />
