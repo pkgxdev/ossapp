@@ -10,7 +10,7 @@ For better documentation checkout this [notion](https://www.notion.so/teaxyz/tea
 
 | Project    | Version |
 |------------|---------|
-| nodejs.org |  >=16   |
+| nodejs.org |  =18.13.0 |
 | pnpm.io    |  >=7.18.2 |
 | rust-lang.org |  >=1.62 |
 | rust-lang.org/cargo |  >=0.66 |
