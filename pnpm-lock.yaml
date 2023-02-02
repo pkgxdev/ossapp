@@ -27,7 +27,7 @@ importers:
       bcryptjs: ^2.4.3
       buffer: ^6.0.3
       concurrently: ^6.5.1
-      electron: ^22.1.0
+      electron: 22.1.0
       electron-builder: ^23.6.0
       electron-log: ^4.4.8
       electron-reloader: ^1.2.3
@@ -87,7 +87,7 @@ importers:
       '@typescript-eslint/parser': 5.43.0_e3uo4sehh4zr4i6m57mkkxxv7y
       autoprefixer: 10.4.13_postcss@8.4.20
       concurrently: 6.5.1
-      electron: 22.2.0
+      electron: 22.1.0
       electron-builder: 23.6.0
       electron-reloader: 1.2.3
       eslint: 8.27.0
@@ -6338,8 +6338,8 @@ packages:
       mkdirp: 0.5.6
     dev: false
 
-  /electron/22.2.0:
-    resolution: {integrity: sha512-puRZSF2vWJ4pz3oetL5Td8LcuivTWz3MoAk/gjImHSN1B/2VJNEQlw1jGdkte+ppid2craOswE2lmCOZ7SwF1g==}
+  /electron/22.1.0:
+    resolution: {integrity: sha512-wz5s4N6V7zyKm4YQmXJImFoxO1Doai32ShYm0FzOLPBMwLMdQBV+REY+j1opRx0KJ9xJEIdjYgcA8OSw6vx3pA==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
