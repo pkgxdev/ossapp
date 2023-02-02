@@ -134,6 +134,7 @@ jobs:
         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
         CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
         CSC_NAME: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+        CSC_FOR_PULL_REQUEST: true
       run: tea -ES xc build
     - run: mkdir -p target
     - run: cp ./modules/desktop/dist/*.dmg ./target/tea.dmg
