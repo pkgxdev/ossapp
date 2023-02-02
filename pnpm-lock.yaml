@@ -8,6 +8,7 @@ importers:
   modules/desktop:
     specifiers:
       '@electron/asar': ^3.2.3
+      '@electron/notarize': ^1.2.3
       '@playwright/experimental-ct-svelte': ^1.29.2
       '@playwright/test': 1.25.0
       '@sveltejs/adapter-auto': ^1.0.0
@@ -73,6 +74,7 @@ importers:
       svelte-watch-resize: 1.0.3
       url-join: 5.0.0
     devDependencies:
+      '@electron/notarize': 1.2.3
       '@playwright/experimental-ct-svelte': 1.29.2_svelte@3.55.1
       '@playwright/test': 1.25.0
       '@sveltejs/adapter-auto': 1.0.0_@sveltejs+kit@1.0.1
@@ -1717,6 +1719,16 @@ packages:
       sumchecker: 3.0.1
     optionalDependencies:
       global-agent: 3.0.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@electron/notarize/1.2.3:
+    resolution: {integrity: sha512-9oRzT56rKh5bspk3KpAVF8lPKHYQrBnRwcgiOeR0hdilVEQmszDaAu0IPCPrwwzJN0ugNs0rRboTreHMt/6mBQ==}
+    engines: {node: '>= 10.0.0'}
+    dependencies:
+      debug: 4.3.4
+      fs-extra: 9.1.0
     transitivePeerDependencies:
       - supports-color
     dev: true

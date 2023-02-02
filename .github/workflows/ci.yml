@@ -129,7 +129,7 @@ jobs:
           ./pnpm
     - name: build
       if: startsWith(matrix.platform.name, 'darwin')
-      run: tea -ES xc build
+      run: tea -ES xc dist
       env:
         CSC_FOR_PULL_REQUEST: true
         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}

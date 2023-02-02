@@ -6,10 +6,10 @@
 	"author": "tea.xyz",
 	"main": "src/electron.cjs",
 	"scripts": {
-		"pack": "electron-builder --dir",
-		"dist": "electron-builder",
-		"package": "pnpm build && electron-builder --config electron-builder.config.json",
-		"dev:package": "pnpm build && electron-builder --config electron-builder.config.json --dir",
+		"pack": "electron-builder --dir --config electron-builder.config.js",
+		"dist": "electron-builder --config electron-builder.config.cjs",
+		"package": "pnpm build && electron-builder --config electron-builder.config.js",
+		"dev:package": "pnpm build && electron-builder --config electron-builder.config.js --dir",
 		"electron": "concurrently --kill-others \"vite dev\" \"electron src/electron.cjs\"",
 		"dev": "vite dev --port 8080",
 		"build": "vite build",
@@ -23,6 +23,7 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
+		"@electron/notarize": "^1.2.3",
 		"@playwright/experimental-ct-svelte": "^1.29.2",
 		"@playwright/test": "1.25.0",
 		"@sveltejs/adapter-auto": "^1.0.0",
@@ -86,10 +87,6 @@
 		"productName": "tea",
 		"linux": {
 			"icon": "./icon.png"
-		},
-		"mac": {
-			"category": "public.app-category.developer-tools",
-			"notarize": true
 		}
 	},
 	"homepage": "https://tea.xyz",

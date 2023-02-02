@@ -35,7 +35,7 @@ pnpm install
 pnpm dev
 ```
 
-## dist
+### dist
 ```sh
 pnpm install
 pnpm --filter desktop exec pnpm dist

@@ -1,8 +1,0 @@
-{
-	"appId": "xyz.tea.gui",
-	"productName": "tea",
-	"asar": true,
-	"directories": { "output": "dist" },
-	"files": ["src/electron.cjs", { "from": "build", "to": "" }],
-	"notarize": true
-}
