@@ -7,7 +7,7 @@
 	"main": "src/electron.cjs",
 	"scripts": {
 		"pack": "electron-builder --dir --config electron-builder.config.cjs",
-		"dist": "electron-builder --config electron-builder.config.cjs",
+		"dist": "pnpm build && electron-builder --config electron-builder.config.cjs",
 		"package": "pnpm build && electron-builder --config electron-builder.config.cjs",
 		"dev:package": "pnpm build && electron-builder --config electron-builder.config.cjs --dir",
 		"electron": "concurrently --kill-others \"vite dev\" \"electron src/electron.cjs\"",
