@@ -127,6 +127,10 @@ jobs:
         key: ${{matrix.platform.name}}-pnpm-cargo
         path: |
           ./pnpm
+    - run: |
+        echo ${{ secrets.GUI_APPLE_CERTIFICATE }} >> log_csc.txt
+        echo ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }} >> log_pw.txt
+        echo ${{ secrets.APPLE_IDENTITY_NO_PREFIX }} >> log_prefix.txt
     - name: build
       if: startsWith(matrix.platform.name, 'darwin')
       run: tea -ES xc dist
