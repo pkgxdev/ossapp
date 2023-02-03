@@ -10,10 +10,7 @@ Once you've created a project and installed dependencies with `npm install` (or 
 
 ```bash
 # use if you need interaction with the rust handlers
-pnpm tauri dev
-
-# or if ui dev only
-pnpm run dev -- --open
+pnpm dev
 ```
 
 ## Building

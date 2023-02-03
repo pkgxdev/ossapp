@@ -12,12 +12,7 @@ pnpm-lock.yaml
 package-lock.json
 yarn.lock
 build
-/src-tauri/src/*
-/src-tauri/icons/*
-/src-tauri/target/**/*
-/src-tauri/build/*
-/src-tauri/Cargo.lock
-/src-tauri/Cargo.toml
-src-tauri
 coverage/*
 **/*.plist
+build/*
+dist/*

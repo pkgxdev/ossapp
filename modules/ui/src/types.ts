@@ -71,7 +71,8 @@ export type Tab = {
 			| Array<string>
 			| Array<number>
 			| Array<Date>
-			| Array<Record<string, unknown>>;
+			| Array<Record<string, unknown>>
+			| Package;
 	};
 	component: ComponentType;
 };

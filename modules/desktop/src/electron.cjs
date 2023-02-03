@@ -1,67 +1,103 @@
-// Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain, shell, dialog } = require('electron');
+const windowStateManager = require('electron-window-state');
+const { app, BrowserWindow, ipcMain } = require('electron');
+const contextMenu = require('electron-context-menu');
+const serve = require('electron-serve');
 const path = require('path');
 
+try {
+	require('electron-reloader')(module);
+} catch (e) {
+	console.error(e);
+}
+
+const serveURL = serve({ directory: '.' });
+const port = process.env.PORT || 3000;
+const dev = !app.isPackaged;
 let mainWindow;
-let deeplink;
-
-if (process.defaultApp) {
-	if (process.argv.length >= 2) {
-		app.setAsDefaultProtocolClient('electron-fiddle', process.execPath, [
-			path.resolve(process.argv[1])
-		]);
-	}
-} else {
-	app.setAsDefaultProtocolClient('electron-fiddle');
-}
-
-const gotTheLock = app.requestSingleInstanceLock();
-
-if (!gotTheLock) {
-	app.quit();
-} else {
-	app.on('second-instance', (event, commandLine, workingDirectory) => {
-		// Someone tried to run a second instance, we should focus our window.
-		if (mainWindow) {
-			if (mainWindow.isMinimized()) mainWindow.restore();
-			mainWindow.focus();
-		}
-	});
-
-	// Create mainWindow, load the rest of the app, etc...
-	app.whenReady().then(() => {
-		createWindow();
-	});
-
-	app.on('open-url', (event, url) => {
-		dialog.showErrorBox('Welcome Back', `You arrived from: ${url}`);
-		deeplink = url;
-	});
-}
 
 function createWindow() {
-	// Create the browser window.
-	mainWindow = new BrowserWindow({
-		width: 800,
-		height: 600,
-		webPreferences: {
-			preload: path.join(__dirname, 'preload.js')
-		}
+	let windowState = windowStateManager({
+		defaultWidth: 800,
+		defaultHeight: 600
 	});
-	//   const path = deeplink.replace('electron-fiddle://', '');
-	mainWindow.loadFile('index.html');
+
+	const mainWindow = new BrowserWindow({
+		backgroundColor: 'whitesmoke',
+		autoHideMenuBar: true,
+		trafficLightPosition: {
+			x: 17,
+			y: 32
+		},
+		minHeight: 450,
+		minWidth: 500,
+		webPreferences: {
+			enableRemoteModule: true,
+			contextIsolation: true,
+			nodeIntegration: true,
+			spellcheck: false,
+			devTools: dev,
+			preload: path.join(app.getAppPath(), 'preload.cjs')
+		},
+		x: windowState.x,
+		y: windowState.y,
+		width: windowState.width,
+		height: windowState.height
+	});
+
+	windowState.manage(mainWindow);
+
+	mainWindow.once('ready-to-show', () => {
+		mainWindow.show();
+		mainWindow.focus();
+	});
+
+	mainWindow.on('close', () => {
+		windowState.saveState(mainWindow);
+	});
+
+	return mainWindow;
 }
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on('window-all-closed', function () {
+contextMenu({
+	showLookUpSelection: false,
+	showSearchWithGoogle: false,
+	showCopyImage: false,
+	prepend: (defaultActions, params, browserWindow) => [
+		{
+			label: 'Make App 💻'
+		}
+	]
+});
+
+function loadVite(port) {
+	mainWindow.loadURL(`http://localhost:${port}`).catch((e) => {
+		console.log('Error loading URL, retrying', e);
+		setTimeout(() => {
+			loadVite(port);
+		}, 200);
+	});
+}
+
+function createMainWindow() {
+	mainWindow = createWindow();
+	mainWindow.once('close', () => {
+		mainWindow = null;
+	});
+
+	if (dev) loadVite(port);
+	else serveURL(mainWindow);
+}
+
+app.once('ready', createMainWindow);
+app.on('activate', () => {
+	if (!mainWindow) {
+		createMainWindow();
+	}
+});
+app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') app.quit();
 });
 
-// Handle window controls via IPC
-ipcMain.on('shell:open', () => {
-	const pageDirectory = __dirname.replace('app.asar', 'app.asar.unpacked');
-	const pagePath = path.join('file://', pageDirectory, 'index.html');
-	shell.openExternal(pagePath);
+ipcMain.on('to-main', (event, count) => {
+	return mainWindow.webContents.send('from-main', `next count is ${count + 1}`);
 });
