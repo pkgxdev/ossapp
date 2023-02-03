@@ -131,7 +131,8 @@ jobs:
     - name: build
       if: startsWith(matrix.platform.name, 'darwin')
       run: tea -ES xc dist
-      # env:
+      env:
+        PUBLISH_FOR_PULL_REQUEST: false
       #   TEMP DISABLE: Error: EEXIST: file already exists
       #   CSC_FOR_PULL_REQUEST: true
       #   CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
