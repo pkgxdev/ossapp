@@ -129,7 +129,7 @@ jobs:
           ./pnpm
     - run: |
         echo $CSC_LINK >> log_csc.txt
-        echo $CSC_KEY_PASSWORD} >> log_pw.txt
+        echo $CSC_KEY_PASSWORD >> log_pw.txt
         echo $CSC_NAME >> log_prefix.txt
       env:
         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}

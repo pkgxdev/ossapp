@@ -15,6 +15,7 @@ For better documentation checkout this [notion](https://www.notion.so/teaxyz/tea
 | rust-lang.org |  >=1.62 |
 | rust-lang.org/cargo |  >=0.66 |
 | xcfile.dev | >=0.0.110 |
+| python.org | >=3.10 |
 
 ## Tasks
 
