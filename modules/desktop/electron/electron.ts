@@ -1,12 +1,15 @@
-const windowStateManager = require('electron-window-state');
-const { app, BrowserWindow, ipcMain } = require('electron');
-const contextMenu = require('electron-context-menu');
-const serve = require('electron-serve');
-const path = require('path');
-const fs = require('fs');
+import windowStateManager from 'electron-window-state';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import contextMenu from 'electron-context-menu';
+import serve from 'electron-serve';
+import path from 'path';
+import fs from 'fs';
 
 try {
-	require('electron-reloader')(module);
+	//@ts-ignore only used in dev should not be packaged inprod
+	/* eslint-disable */
+	const er = require('electron-reloader');
+	er(module);
 } catch (e) {
 	console.error(e);
 }
@@ -14,10 +17,10 @@ try {
 const serveURL = serve({ directory: '.' });
 const port = process.env.PORT || 3000;
 const dev = !app.isPackaged;
-let mainWindow;
+let mainWindow: BrowserWindow | null;
 
 function createWindow() {
-	let windowState = windowStateManager({
+	const windowState = windowStateManager({
 		defaultWidth: 800,
 		defaultHeight: 600
 	});
@@ -32,7 +35,7 @@ function createWindow() {
 		minHeight: 450,
 		minWidth: 500,
 		webPreferences: {
-			enableRemoteModule: true,
+			// enableRemoteModule: true,
 			contextIsolation: false,
 			nodeIntegration: true,
 			spellcheck: false,
@@ -72,7 +75,7 @@ contextMenu({
 });
 
 function loadVite(port) {
-	mainWindow.loadURL(`http://localhost:${port}`).catch((e) => {
+	mainWindow?.loadURL(`http://localhost:${port}`).catch((e) => {
 		console.log('Error loading URL, retrying', e);
 		setTimeout(() => {
 			loadVite(port);
@@ -101,7 +104,7 @@ app.on('window-all-closed', () => {
 });
 
 ipcMain.on('to-main', (event, count) => {
-	return mainWindow.webContents.send('from-main', `next count is ${count + 1}`);
+	return mainWindow?.webContents.send('from-main', `next count is ${count + 1}`);
 });
 
 ipcMain.handle('get-installed-packages', async () => {
@@ -114,10 +117,10 @@ ipcMain.handle('get-installed-packages', async () => {
 const deepReadDir = async (dirPath) => {
 	let arrayOfFiles;
 	try {
-		arrayOfFiles = fs.readdirSync(dirPath)
-		console.log(arrayOfFiles)
-	} catch(e) {
-		console.log(e)
+		arrayOfFiles = fs.readdirSync(dirPath);
+		console.log(arrayOfFiles);
+	} catch (e) {
+		console.log(e);
 	}
 	// await Promise.all(
 	// 	(await readdir(dirPath, {withFileTypes: true})).map(async (dirent) => {
@@ -126,4 +129,4 @@ const deepReadDir = async (dirPath) => {
 	// 	}),
 	// )
 	return arrayOfFiles;
-}
+};

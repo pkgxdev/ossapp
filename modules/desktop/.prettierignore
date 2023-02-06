@@ -16,3 +16,4 @@ coverage/*
 **/*.plist
 build/*
 dist/*
+electron/dist/*
