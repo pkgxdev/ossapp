@@ -156,7 +156,6 @@ const packages: Package[] = [
 ];
 
 export async function getPackages(): Promise<GUIPackage[]> {
-	await getInstalledPackages();
 	return packages.map((pkg) => {
 		return {
 			...pkg,

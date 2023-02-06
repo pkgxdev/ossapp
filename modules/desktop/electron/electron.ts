@@ -5,6 +5,7 @@ import serve from 'electron-serve';
 import path from 'path';
 import fs from 'fs';
 
+import { getInstalledPackages } from './libs/teaDir';
 try {
 	//@ts-ignore only used in dev should not be packaged inprod
 	/* eslint-disable */
@@ -108,25 +109,7 @@ ipcMain.on('to-main', (event, count) => {
 });
 
 ipcMain.handle('get-installed-packages', async () => {
-	const homePath = app.getPath('home');
-	const teaPath = path.join(homePath, '.tea');
-	const folders = await deepReadDir(teaPath);
-	return folders;
+	console.log('get installed pkgs: ipc');
+	const pkgs = await getInstalledPackages();
+	return pkgs;
 });
-
-const deepReadDir = async (dirPath) => {
-	let arrayOfFiles;
-	try {
-		arrayOfFiles = fs.readdirSync(dirPath);
-		console.log(arrayOfFiles);
-	} catch (e) {
-		console.log(e);
-	}
-	// await Promise.all(
-	// 	(await readdir(dirPath, {withFileTypes: true})).map(async (dirent) => {
-	// 		const path = join(dirPath, dirent.name)
-	// 		return dirent.isDirectory() ? await deepReadDir(path) : path
-	// 	}),
-	// )
-	return arrayOfFiles;
-};
