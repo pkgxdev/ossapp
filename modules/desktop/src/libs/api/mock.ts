@@ -10,6 +10,7 @@ import type { GUIPackage, Course, Category } from '../types';
 import { PackageStates } from '../types';
 import { loremIpsum } from 'lorem-ipsum';
 import _ from 'lodash';
+import { getInstalledPackages } from '$libs/teaDir';
 
 const packages: Package[] = [
 	{
@@ -155,7 +156,7 @@ const packages: Package[] = [
 ];
 
 export async function getPackages(): Promise<GUIPackage[]> {
-	await delay(2000);
+	await getInstalledPackages();
 	return packages.map((pkg) => {
 		return {
 			...pkg,

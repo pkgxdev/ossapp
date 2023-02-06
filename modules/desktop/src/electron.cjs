@@ -3,6 +3,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const contextMenu = require('electron-context-menu');
 const serve = require('electron-serve');
 const path = require('path');
+const fs = require('fs');
 
 try {
 	require('electron-reloader')(module);
@@ -32,11 +33,12 @@ function createWindow() {
 		minWidth: 500,
 		webPreferences: {
 			enableRemoteModule: true,
-			contextIsolation: true,
+			contextIsolation: false,
 			nodeIntegration: true,
 			spellcheck: false,
-			devTools: dev,
-			preload: path.join(app.getAppPath(), 'preload.cjs')
+			webSecurity: false,
+			devTools: dev
+			// preload: path.join(app.getAppPath(), 'preload.cjs')
 		},
 		x: windowState.x,
 		y: windowState.y,
@@ -101,3 +103,27 @@ app.on('window-all-closed', () => {
 ipcMain.on('to-main', (event, count) => {
 	return mainWindow.webContents.send('from-main', `next count is ${count + 1}`);
 });
+
+ipcMain.handle('get-installed-packages', async () => {
+	const homePath = app.getPath('home');
+	const teaPath = path.join(homePath, '.tea');
+	const folders = await deepReadDir(teaPath);
+	return folders;
+});
+
+const deepReadDir = async (dirPath) => {
+	let arrayOfFiles;
+	try {
+		arrayOfFiles = fs.readdirSync(dirPath)
+		console.log(arrayOfFiles)
+	} catch(e) {
+		console.log(e)
+	}
+	// await Promise.all(
+	// 	(await readdir(dirPath, {withFileTypes: true})).map(async (dirent) => {
+	// 		const path = join(dirPath, dirent.name)
+	// 		return dirent.isDirectory() ? await deepReadDir(path) : path
+	// 	}),
+	// )
+	return arrayOfFiles;
+}

@@ -1,13 +1,18 @@
-import { app } from 'electron';
-import fs from 'fs';
-import { join } from 'upath';
+// import { app } from 'electron';
+// import fs from 'fs';
+// import { join } from 'upath';
 
 type Dir = {
 	name: string;
 	path: string;
 	children?: Dir[];
 };
+
+const { ipcRenderer } = window.require('electron');
 export async function getInstalledPackages() {
+	console.log('get installed pkgs');
+	const pkgs = await ipcRenderer.invoke('get-installed-packages');
+	console.log(pkgs);
 	// const homePath = app.getPath('home');
 	// const packageFolders = (await readDir('.tea/', {
 	// 	dir: BaseDirectory.Home,
