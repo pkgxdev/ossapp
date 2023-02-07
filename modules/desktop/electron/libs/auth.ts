@@ -2,11 +2,16 @@ import { mkdirp } from 'mkdirp';
 import path from 'path';
 import fs from 'fs';
 import { getTeaPath } from './teaDir';
-import type { Session } from '../../src/libs/types';
 import * as v1Client from './v1Client';
 
 const sessionFilePath = path.join(getTeaPath(), 'tea.xyz/gui/tmp.dat');
 const sessionFolder = path.join(getTeaPath(), 'tea.xyz/gui');
+
+interface Session {
+	device_id?: string;
+	key?: string;
+	user?: any;
+}
 
 export async function initSessionData() {
 	fs.readFileSync(sessionFilePath);

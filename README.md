@@ -39,6 +39,7 @@ pnpm dev
 ### dist
 ```sh
 pnpm install
+pnpm add -g vite
 pnpm --filter desktop exec pnpm dist
 ```
 
