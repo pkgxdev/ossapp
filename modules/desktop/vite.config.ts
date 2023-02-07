@@ -12,7 +12,7 @@ const config: UserConfig = {
 			// this dynamic-ish static importing is followed by the svelte build
 			// but for vscode editing intellisense tsconfig.json is being used
 			// TODO: replace it with correct api
-			'@api': path.resolve('src/libs/api/mock.ts'),
+			'@api': path.resolve('src/libs/api/electron.ts'),
 			$components: path.resolve('./src/components'),
 			$libs: path.resolve('./src/libs'),
 			$appcss: path.resolve('./src/app.css')

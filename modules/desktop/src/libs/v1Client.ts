@@ -5,7 +5,7 @@ import { getSession } from '$libs/stores/auth';
 
 export const baseUrl = 'https://api.tea.xyz/v1';
 
-export async function get<T>(urlPath: string, query?: { [key: string]: string }) {
+export async function get<T>(urlPath: string, params?: { [key: string]: string }) {
 	console.log(`GET /v1/${urlPath}`);
 
 	const [session] = await Promise.all([getSession()]);
@@ -18,7 +18,9 @@ export async function get<T>(urlPath: string, query?: { [key: string]: string })
 	const req = await axios.request({
 		method: 'GET',
 		baseURL: 'https://api.tea.xyz',
-		url: ['v1', ...urlPath.split('/')].filter((p) => p).join('/')
+		url: ['v1', ...urlPath.split('/')].filter((p) => p).join('/'),
+		headers,
+		params
 	});
 
 	return req.data as T;

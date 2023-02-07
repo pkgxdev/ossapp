@@ -14,7 +14,7 @@
 		"paths": {
 			"$appcss": ["src/app.css"],
 			"$libs/*": ["src/libs/*"],
-			"@api": ["src/libs/api/mock.ts"],
+			"@api": ["src/libs/api/electron.ts"],
 			"$components/*": ["src/components/*"],
 			"@tea/ui/*": ["../ui/src/*"]
 		}
