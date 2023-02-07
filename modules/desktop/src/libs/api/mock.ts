@@ -10,7 +10,9 @@ import type { GUIPackage, Course, Category } from '../types';
 import { PackageStates } from '../types';
 import { loremIpsum } from 'lorem-ipsum';
 import _ from 'lodash';
-import { getInstalledPackages } from '$libs/teaDir';
+// import { getInstalledPackages } from '$libs/teaDir';
+// import { getSession } from '$libs/stores/auth';
+import * as v1Client from '$libs/v1Client';
 
 const packages: Package[] = [
 	{
@@ -324,21 +326,8 @@ export async function getCategorizedPackages(): Promise<Category[]> {
 }
 
 export async function getDeviceAuth(deviceId: string): Promise<any> {
-	// const data = await get<any>(`/auth/device/${deviceId}`);
-	return {
-		status: 'SUCCESS',
-		user: {
-			developer_id: 'xxx',
-			name: 'Neil paul Molina',
-			login: 'getneil',
-			avatar_url: 'https://avatars.githubusercontent.com/u/7913978?v=4',
-			created_at: 'xxx',
-			updated_at: 'xxx',
-			country: 'germany',
-			wallet: 'wallet'
-		},
-		key: 'xxx'
-	};
+	const data = await v1Client.get<any>(`/auth/device/${deviceId}`);
+	return data;
 }
 
 export async function getPackageBottles(name: string): Promise<Bottle[]> {

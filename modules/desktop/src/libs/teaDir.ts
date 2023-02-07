@@ -10,36 +10,8 @@ type Dir = {
 
 const { ipcRenderer } = window.require('electron');
 export async function getInstalledPackages() {
-	console.log('get installed pkgs');
 	const pkgs = await ipcRenderer.invoke('get-installed-packages');
-	console.log(pkgs);
-	// const homePath = app.getPath('home');
-	// const packageFolders = (await readDir('.tea/', {
-	// 	dir: BaseDirectory.Home,
-	// 	recursive: true
-	// })) as Dir[];
-
-	// const pkgs = packageFolders
-	// 	.filter((p) => p.name !== 'tea.xyz')
-	// 	.map(getPkgBottles)
-	// 	.filter((pkgBottles) => pkgBottles.length)
-	// 	.map((pkgBottles) => {
-	// 		const versions = pkgBottles.map((v) => v.split('/v')[1]);
-	// 		const full_name = pkgBottles[0].split('/v')[0];
-
-	// 		const isSemverVersion = versions.filter((v) => semverTest.test(v));
-	// 		const isNotAsterisk = versions.filter((v) => v !== '*');
-	// 		const version =
-	// 			(isSemverVersion.length && isSemverVersion[0]) ||
-	// 			(isNotAsterisk.length && isNotAsterisk[0]) ||
-	// 			'*';
-	// 		return {
-	// 			version,
-	// 			full_name
-	// 		};
-	// 	});
-	// return pkgs;
-	return [];
+	return pkgs as { version: string; full_name: string };
 }
 
 const semverTest =

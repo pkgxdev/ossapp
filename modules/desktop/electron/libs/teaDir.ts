@@ -9,9 +9,15 @@ type Dir = {
 	path: string;
 	children?: Dir[];
 };
-export async function getInstalledPackages() {
+
+export const getTeaPath = () => {
 	const homePath = app.getPath('home');
-	const pkgsPath = path.join(homePath, './.tea');
+	const teaPath = path.join(homePath, './.tea');
+	return teaPath;
+};
+
+export async function getInstalledPackages() {
+	const pkgsPath = getTeaPath();
 
 	const folders = await deepReadDir({
 		dir: pkgsPath,

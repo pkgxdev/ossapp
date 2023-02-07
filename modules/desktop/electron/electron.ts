@@ -6,14 +6,17 @@ import path from 'path';
 import fs from 'fs';
 
 import { getInstalledPackages } from './libs/teaDir';
-try {
-	//@ts-ignore only used in dev should not be packaged inprod
-	/* eslint-disable */
-	const er = require('electron-reloader');
-	er(module);
-} catch (e) {
-	console.error(e);
-}
+import { readSessionData, writeSessionData } from './libs/auth';
+import type { Session } from '../src/libs/types';
+
+// try {
+// 	//@ts-ignore only used in dev should not be packaged inprod
+// 	/* eslint-disable */
+// 	const er = require('electron-reloader');
+// 	er(module);
+// } catch (e) {
+// 	console.error(e);
+// }
 
 const serveURL = serve({ directory: '.' });
 const port = process.env.PORT || 3000;
@@ -112,4 +115,15 @@ ipcMain.handle('get-installed-packages', async () => {
 	console.log('get installed pkgs: ipc');
 	const pkgs = await getInstalledPackages();
 	return pkgs;
+});
+
+ipcMain.handle('get-session', async () => {
+	console.log('get session');
+	const session = await readSessionData();
+	console.log('session:', session);
+	return session;
+});
+
+ipcMain.handle('update-session', async (_, data) => {
+	await writeSessionData(data as Session);
 });

@@ -1,49 +1,27 @@
-import { net, app } from 'electron';
-import type { Session } from '$libs/stores/auth';
+import axios from 'axios';
+import type { Session } from '$libs/types';
 import bcrypt from 'bcryptjs';
 import { getSession } from '$libs/stores/auth';
-import urlJoin from 'url-join';
 
 export const baseUrl = 'https://api.tea.xyz/v1';
 
-export async function get<T>(path: string, query?: { [key: string]: string }) {
-	console.log(`GET /api/${path}`);
-
-	await app.isReady(); // wait for electrong dont remove
+export async function get<T>(urlPath: string, query?: { [key: string]: string }) {
+	console.log(`GET /v1/${urlPath}`);
 
 	const [session] = await Promise.all([getSession()]);
 
 	const headers =
 		session?.device_id && session?.user
-			? await getHeaders(`GET/${path}`, session)
+			? await getHeaders(`GET/${urlPath}`, session)
 			: { Authorization: 'public ' };
 
-	return new Promise((resolve, reject) => {
-		const url = urlJoin(baseUrl, path);
-
-		const req = net.request({
-			method: 'GET',
-			url
-		});
-
-		for (const k in headers) {
-			const v = headers[k as keyof typeof headers];
-			if (v) req.setHeader(k, v);
-		}
-
-		const buffer: Buffer[] = [];
-		req.on('response', (res) => {
-			res.on('error', reject);
-			res.on('data', (b) => buffer.push(b));
-			res.on('end', () => {
-				const bodyRaw = Buffer.concat(buffer);
-				const body = JSON.parse(bodyRaw.toString());
-				resolve(body);
-			});
-		});
-
-		req.on('error', reject);
+	const req = await axios.request({
+		method: 'GET',
+		baseURL: 'https://api.tea.xyz',
+		url: ['v1', ...urlPath.split('/')].filter((p) => p).join('/')
 	});
+
+	return req.data as T;
 }
 
 async function getHeaders(path: string, session: Session) {

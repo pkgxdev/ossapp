@@ -42,3 +42,8 @@ export type DeviceAuth = {
 	user: Developer;
 	key: string;
 };
+export interface Session {
+	device_id?: string;
+	key?: string;
+	user?: Developer;
+}

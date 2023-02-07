@@ -1,21 +1,23 @@
 <script lang="ts">
-	// import { authStore } from '$libs/stores';
+	import { authStore } from '$libs/stores';
 	import type { Developer } from '@tea/ui/types';
-	// import { baseUrl } from '$libs/v1Client';
+	import { baseUrl } from '$libs/v1Client';
+
+	const { shell } = window.require('electron');
 
 	let user: Developer | null = null;
-	// const deviceId = authStore.deviceIdStore;
+	const deviceId = authStore.deviceIdStore;
 
 	const openGithub = () => {
-		// open(`${baseUrl}/auth/user?device_id=${$deviceId}`);
+		shell.openExternal(`${baseUrl}/auth/user?device_id=${$deviceId}`)
 		try {
-			// authStore.pollSession();
+			authStore.pollSession();
 		} catch (error) {
 			console.error(error);
 		}
 	};
 
-	// authStore.subscribe((u) => (user = u));
+	authStore.subscribe((u) => (user = u));
 </script>
 
 {#if user}
