@@ -76,6 +76,7 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: ${{ matrix.platform }}
+    - run: tar xzf artifacts.tgz
     - name: Get current unix ts - seconds
       id: date
       run: echo "unix_seconds=$(date +'%s')" >> $GITHUB_OUTPUT
