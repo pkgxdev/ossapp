@@ -6,6 +6,7 @@
 	"author": "tea.xyz",
 	"main": "electron/dist/electron.cjs",
 	"scripts": {
+		"prepare": "svelte-kit sync",
 		"dev": "cross-env NODE_ENV=dev npm run dev:all",
 		"dev:all": "concurrently -n=svelte,electron -c='#ff3e00',blue  \"pnpm dev:main\" \"pnpm dev:svelte\" \"pnpm dev:electron\"",
 		"dev:svelte": "vite dev",
