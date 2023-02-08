@@ -181,13 +181,13 @@ jobs:
           "./tea.$extension" \
           "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
 
-    - name: cp package zip for MacOS
+    - name: cp package to s3
       env:
         platform: ${{ steps.build_platform.outputs.build_platform }}
         build_platform: ${{ matrix.platform }}
         extension: ${{ steps.build_platform.outputs.extension }}
       run: |
-        aws s3 cp ./macos/tea.zip \
+        aws s3 cp "./tea.$extension" \
           "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
 
     - uses: actions/setup-node@v3
