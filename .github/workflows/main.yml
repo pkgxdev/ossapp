@@ -20,6 +20,7 @@ jobs:
           src:
             - 'modules/desktop/**'
             - 'modules/ui/**'
+            - '.github/**'
     - name: get s3 preview folder
       id: preview
       run: echo "folder=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
@@ -103,8 +104,6 @@ jobs:
         name: ${{ matrix.platform }}
 
     - run: tar xzf artifacts.tgz
-
-    - run: cd ./macos/ && zip -r tea.zip tea.app
 
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
     - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file ./macos/tea.zip
