@@ -106,7 +106,7 @@ jobs:
     - run: tar xzf artifacts.tgz
 
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file ./macos/tea.zip
+    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file ./tea.zip
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
