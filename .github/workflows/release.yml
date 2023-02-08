@@ -142,7 +142,7 @@ jobs:
       run: ./.github/notify-slack.js
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        PLATFORM: ${{ matrix.platform.name }}
+        PLATFORM: ${{ matrix.platform }}
         VERSION: ${{steps.tag.outputs.tag}}
         EXT: ${{ steps.build_platform.outputs.extension }}
         DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_gui_${{steps.tag.outputs.tag}}_${{steps.build_platform.outputs.build_platform}}.${{ steps.build_platform.outputs.extension }}
