@@ -3,14 +3,19 @@
 	"author": "neil molina <neil@tea.xyz>",
     "private": true,
     "scripts": {
+        "dev": "pnpm --filter desktop exec pnpm electron",
         "release": "sh ./.github/update-latest-binary.sh",
-        "build:gui": "pnpm --filter gui exec tauri build --verbose",
-        "dev:gui": "pnpm --filter gui exec tauri dev",
-        "web:gui": "BUILD_FOR=preview pnpm --filter gui dev"
+        "build:desktop": "pnpm --filter desktop exec pnpm package",
+        "web:desktop": "BUILD_FOR=preview pnpm --filter desktop dev"
     },
     "workspaces": {
         "packages": [
             "modules/*"
         ]
-    }
+    },
+	"homepage": "https://tea.xyz",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/teaxyz/gui.git"
+	}
 }

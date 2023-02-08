@@ -15,6 +15,7 @@ For better documentation checkout this [notion](https://www.notion.so/teaxyz/tea
 | rust-lang.org |  >=1.62 |
 | rust-lang.org/cargo |  >=0.66 |
 | xcfile.dev | >=0.0.110 |
+| python.org | >=3.10 |
 
 ## Tasks
 
@@ -26,18 +27,31 @@ pnpm install
 ### build
 ```sh
 pnpm install
-pnpm build:gui
+pnpm build:desktop
+```
+
+### dev
+```sh
+pnpm install
+pnpm dev
+```
+
+### dist
+```sh
+pnpm install
+pnpm add -g vite
+pnpm --filter desktop exec pnpm dist
 ```
 
 ## Development
-To develop the GUI within Tauri Webview
+To develop the GUI within electron view
 ```
-$ pnpm dev:gui
+$ pnpm dev:desktop
 ```
 
 To develop the GUI within your local browser at localhost:8080
 ```
-$ pnpm web:gui
+$ pnpm web:desktop
 ```
 
 # Creating a release

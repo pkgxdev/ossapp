@@ -7,13 +7,13 @@
 </script>
 
 <div class="card social-box" style="width: 100%; float:right;">
-	<header class="border-b border-gray pt-7 pb-7 pl-5 text-primary">PRE-FLIGHT</header>
-	<div class="listbox-item border-b border-gray p-6">
+	<header class="border-gray text-primary border-b pt-7 pb-7 pl-5">PRE-FLIGHT</header>
+	<div class="listbox-item border-gray border-b p-6">
 		<a href="/cli">
 			<p>Install Tea</p>
 		</a>
 	</div>
-	<div class="listbox-item border-b border-gray p-6">
+	<div class="listbox-item border-gray border-b p-6">
 		<div>
 			<p>Authenticate</p>
 		</div>

@@ -30,7 +30,7 @@
 			<!-- all pages get inserted in this slot -->
 			<slot />
 		</div>
-		<footer class="mt-8 w-full border border-r-0 border-gray bg-black">
+		<footer class="border-gray mt-8 w-full border border-r-0 bg-black">
 			<FooterLinks />
 		</footer>
 		<SearchPopupResults />

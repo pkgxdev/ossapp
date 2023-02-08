@@ -5,32 +5,23 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      svelte: ${{steps.svelte.outputs.src}}
-      tauri: ${{steps.tauri.outputs.src}}
+      desktop: ${{steps.desktop.outputs.src}}
       preview_folder: ${{steps.preview.outputs.folder}}
     steps:
     - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
-      id: svelte
+      id: desktop
       with:
         filters: |
           src:
-            - 'modules/gui/src/**'
+            - 'modules/desktop/**'
             - 'modules/ui/**'
-    - uses: dorny/paths-filter@v2
-      id: tauri
-      with:
-        filters: |
-          src:
-            - 'modules/gui/src-tauri/**'
-            - 'modules/gui/src/**'
-            - 'modules/ui/src/**'
     - name: get s3 preview folder
       id: preview
       run: echo "folder=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
   no_preview:
     needs: changes
-    if: needs.changes.outputs.svelte == 'false'
+    if: needs.changes.outputs.desktop == 'false'
     runs-on: ubuntu-latest
     steps:
       - name: comment preview site
@@ -104,18 +95,18 @@ jobs:
             https://${{steps.preview_setup.outputs.domain}}
             ```
             copy-paste into a browser to view
-
-  build_tauri:
+  build_desktop:
     needs: changes
-    if: needs.changes.outputs.tauri == 'true'
+    if: needs.changes.outputs.desktop == 'true'
     runs-on: ${{ matrix.platform.os }}
     strategy:
       matrix:
         platform:
           - os: macos-11
             name: darwin+x86-64
-          - os: ubuntu-latest
-            name: linux+x86-64
+          # TODO: #181 build for linux
+          # - os: ubuntu-latest
+          #   name: linux+x86-64
           - os: [self-hosted, macOS, ARM64]
             name: darwin+aarch64
           # err: Package atk was not found in the pkg-config search path.
@@ -125,40 +116,45 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: teaxyz/setup@v0
-      if: startsWith(matrix.platform.name, 'darwin')
 
-    - name: cache gui build
+    - name: cache node_modules build
       # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
       # but its ok to ignore, its still the fastest builder
       # NOTE: enabling cache in the self hosted runner slows down the pipeline by 4m because post-cache builder error ^
       if: startsWith(matrix.platform.name, 'linux') || matrix.platform.name == 'darwin+x86-64'
       uses: actions/cache@v3
       with:
-        key: ${{matrix.platform.name}}-pnpm-cargo
+        key: ${{matrix.platform.name}}-pnpm
         path: |
           ./pnpm
-          ./target
-    # - name: build tauri for Linux
-    #   uses: ./devops/linux-build
-    - name: build tauri for MacOS
+          ./.pnpm-store
+          ./node_modules
+          ./modules/desktop/node_modules
+          ./modules/ui/node_modules
+    - name: cache electron build
+      uses: actions/cache@v3
+      with:
+        key: ${{matrix.platform.name}}-electron
+        path: |
+          ./modules/desktop/.svelte-kit
+          ./modules/desktop/build
+          ./modules/desktop/dist
+
+    - name: build
       if: startsWith(matrix.platform.name, 'darwin')
-      # FROM: https://tauri.app/v1/guides/distribution/sign-macos
+      run: tea -ES xc dist
       env:
-        CARGO_TARGET_DIR: ${{ github.workspace }}/target
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        ENABLE_CODE_SIGNING: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-        APPLE_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-        APPLE_CERTIFICATE_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-        APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-      run: tea -ES xc build
-
-    - name: build tauri for Linux
-      if: startsWith(matrix.platform.name, 'linux')
-      # TODO: https://tauri.app/v1/guides/distribution/sign-linux
-      uses: ./devops/linux-builder
-
-    - run: tar -czvf artifacts.tgz -C ./target/release/bundle .
-
+        # PUBLISH_FOR_PULL_REQUEST: true
+        USE_HARD_LINKS: false
+        CSC_FOR_PULL_REQUEST: true
+        CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+        CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+        CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+      #   APPLE_ID: ${{ secrets.APPLE_ID }}
+      #   APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+    - run: mkdir -p target
+    - run: cp ./modules/desktop/dist/*.zip ./target/tea.zip
+    - run: tar -czvf artifacts.tgz -C ./target/ .
     - name: upload artifacts
       uses: actions/upload-artifact@v3
       with:
@@ -166,8 +162,9 @@ jobs:
         path: artifacts.tgz
         if-no-files-found: error
 
-  notorize_tauri:
-    needs: [build_tauri]
+  notorize_app:
+    needs: [build_desktop]
+    # NOTE: atm notarization is only doable in gh macos-11 not in our self-hosted runner
     runs-on: macos-11
     strategy:
       matrix:
@@ -181,24 +178,22 @@ jobs:
 
     - run: tar xzf artifacts.tgz
 
-    - run: cd ./macos/ && zip -r tea.zip tea.app
-
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file ./macos/tea.zip
+    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file ./tea.zip
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
 
   upload:
-    needs: [build_tauri, notorize_tauri]
+    needs: [notorize_app, changes]
     runs-on: ubuntu-latest
     strategy:
       matrix:
         platform:
           - name: darwin+x86-64
             id: mac_latest
-          - name: linux+x86-64
-            id: linux
+          # - name: linux+x86-64
+          #   id: linux
           - name: darwin+aarch64
             id: mac_m1
           # - name: linux+aarch64
@@ -228,11 +223,11 @@ jobs:
             ;;
           "darwin+aarch64")
             BUILD_PLATFORM="aarch64"
-            EXTENSION="dmg"
+            EXTENSION="zip"
             ;;
           "darwin+x86-64")
             BUILD_PLATFORM="x64"
-            EXTENSION="dmg"
+            EXTENSION="zip"
             ;;
           *)
             echo "Unknown platform $platform"
@@ -241,12 +236,6 @@ jobs:
         esac
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
-
-    - name: zip .app for MacOS
-      if: startsWith(matrix.platform.name, 'darwin+')
-      run: |
-        cd ./macos/
-        zip -r tea.zip tea.app
 
     - uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -261,17 +250,8 @@ jobs:
         extension: ${{ steps.build_platform.outputs.extension }}
       run: |
         aws s3 cp \
-          "./$extension/tea_0.1.0_$platform.$extension" \
+          "./tea.$extension" \
           "s3://preview.gui.tea.xyz/$prefix/tea_$platform.$extension"
-
-    - name: cp package zip for MacOS
-      if: startsWith(matrix.platform.name, 'darwin')
-      env:
-        prefix: ${{ needs.changes.outputs.preview_folder }}
-        platform: ${{ steps.build_platform.outputs.build_platform }}
-      run: |
-        aws s3 cp \
-          ./macos/tea.zip "s3://preview.gui.tea.xyz/$prefix/tea_$platform.zip"
 
     - name: comment install for Linux
       if: startsWith(matrix.platform.name, 'linux')
@@ -280,8 +260,6 @@ jobs:
         message-id: ${{ matrix.platform.id }}-comment
         message: |
           **installer for Linux ${{ matrix.platform.name }} is at**:
-          <a href="http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{steps.build_platform.outputs.build_platform}}.${{steps.build_platform.outputs.extension}}" target="_blank">here</a>
-
           ```bash
           http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
           ```
@@ -294,12 +272,7 @@ jobs:
         message-id: ${{ matrix.platform.id }}-comment
         message: |
           **installers for MacOS ${{ matrix.platform.name }} is at**:
-          <a href="http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{steps.build_platform.outputs.build_platform}}.zip" target="_blank">.zip</a>
-          or
-          <a href="http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{steps.build_platform.outputs.build_platform}}.dmg" target="_blank">.dmg</a>
-
           ```bash
           http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.zip
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.dmg
           ```
           copy-paste into a browser to download
