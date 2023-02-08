@@ -1,8 +1,6 @@
 import { writable } from 'svelte/store';
-// import { app } from 'electron';
-// import { join } from 'upath';
-// import fs from 'fs';
-import { getDeviceAuth, registerDevice } from '@api';
+
+import { getDeviceAuth } from '@api';
 import type { Developer } from '@tea/ui/types';
 import type { Session } from '$libs/types';
 

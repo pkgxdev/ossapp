@@ -8,6 +8,7 @@ import fs from 'fs';
 import { getInstalledPackages } from './libs/teaDir';
 import { readSessionData, writeSessionData } from './libs/auth';
 import type { Session } from '../src/libs/types';
+import { installPackage } from './libs/cli';
 
 // try {
 // 	//@ts-ignore only used in dev should not be packaged inprod
@@ -126,4 +127,9 @@ ipcMain.handle('get-session', async () => {
 
 ipcMain.handle('update-session', async (_, data) => {
 	await writeSessionData(data as Session);
+});
+
+ipcMain.handle('install-package', async (_, data) => {
+	const result = await installPackage(data.full_name);
+	return result;
 });
