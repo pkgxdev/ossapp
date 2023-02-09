@@ -4,9 +4,6 @@
 
 	import './styles.css';
 
-	// TODO: rm sample
-	// import { md } from './sample';
-
 	export let source: string;
 
 	const renderers = {

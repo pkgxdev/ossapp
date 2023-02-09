@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 import type { GUIPackage } from '../types';
 import { getPackages } from '@api';
 import Fuse from 'fuse.js';
-import { getPackageBottles } from '@api';
+import { getPackage } from '@api';
 
 import { getGithubOwnerRepo, getReadme } from '$libs/github';
 
@@ -61,17 +61,21 @@ export default function initPackagesStore() {
 				// getReadmeRaw('');
 
 				if (!foundPackage.bottles) {
-					getPackageBottles(foundPackage.full_name).then((bottles) => {
-						updatePackageProp(foundPackage.full_name, { bottles });
+					getPackage(foundPackage.full_name).then((pkg) => {
+						updatePackageProp(foundPackage.full_name, pkg);
 					});
 				}
-				console.log(foundPackage);
+
 				if (!foundPackage.readme_md && foundPackage.package_yml_url) {
 					getGithubOwnerRepo(foundPackage.package_yml_url).then(async ({ owner, repo }) => {
+						const defaultReadme = `# ${foundPackage.full_name} #
+To read more about this package go to [${foundPackage.homepage}](${foundPackage.homepage}).
+						`;
 						if (owner && repo) {
-							const readme_md = await getReadme(owner, repo);
-							console.log(readme_md);
-							updatePackageProp(foundPackage.full_name, { readme_md });
+							const readme = await getReadme(owner, repo);
+							updatePackageProp(foundPackage.full_name, { readme_md: readme || defaultReadme });
+						} else {
+							updatePackageProp(foundPackage.full_name, { readme_md: defaultReadme });
 						}
 					});
 				}
