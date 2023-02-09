@@ -5,7 +5,7 @@
 	import './styles.css';
 
 	// TODO: rm sample
-	import { md } from './sample';
+	// import { md } from './sample';
 
 	export let source: string;
 
@@ -15,5 +15,5 @@
 </script>
 
 <section class="markdown-body p-4">
-	<SvelteMarkdown source={source || md} {renderers} />
+	<SvelteMarkdown {source} {renderers} />
 </section>

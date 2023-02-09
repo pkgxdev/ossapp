@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Tab } from '../types';
-	import { onMount } from 'svelte';
+	import { onMount, afterUpdate } from 'svelte';
 
 	let clazz = '';
 
@@ -12,8 +12,8 @@
 
 	let active: string;
 
-	onMount(() => {
-		if (tabs.length) {
+	afterUpdate(() => {
+		if (tabs.length && !active) {
 			active = tabs[0].label;
 		}
 	});

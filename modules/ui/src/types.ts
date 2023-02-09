@@ -19,6 +19,7 @@ export interface Package {
 	dl_count: number;
 	installs: number;
 	reviews?: Review[];
+	package_yml_url?: string;
 	// metas
 	full_description?: string; // probably markdown
 	bottles?: Bottle[];
@@ -26,8 +27,9 @@ export interface Package {
 	size_bytes?: number;
 	documentation_url?: string;
 	github_repository_url?: string;
-	owners?: Partial<Developer>[];
 	categories?: string[];
+	contributors?: Contributor[];
+	readme_md?: string;
 }
 
 export type AirtablePost = {
@@ -93,4 +95,10 @@ export type Snippet = {
 		user: string;
 		comment: string;
 	}[];
+};
+
+export type Contributor = Pick<Developer, 'avatar_url' | 'login' | 'name'> & {
+	github_id: number;
+	developer_id?: string;
+	contributions: number;
 };

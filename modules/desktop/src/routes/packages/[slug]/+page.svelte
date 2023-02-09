@@ -26,37 +26,16 @@
 	let reviews: Review[];
 	let bottles: Bottle[] = [];
 	let versions: string[] = [];
+	let readme: string;
 
 	let tabs: Tab[] = [];
 
-	const setPkg = (pkgs: Package[]) => {
-		const foundPackage = pkgs.find(({ slug }) => slug === data?.slug) as Package;
-		if (!pkg && foundPackage) {
-			pkg = foundPackage;
-			tabs.push({
-				label: 'details',
-				component: Markdown,
-				props: { pkg }
-			});
-		}
-
-		if (!reviews && pkg) {
-			packagesReviewStore.subscribe(pkg.full_name, (updatedReviews) => {
-				reviews = updatedReviews;
-			});
-		}
-	};
-
-	packagesStore.subscribe(setPkg);
-	featuredPackages.subscribe(setPkg);
-
-	onMount(async () => {
-		try {
-			const newBottles = await getPackageBottles(pkg.full_name);
-			const newVersion = newBottles.map((b) => b.version);
+	packagesStore.subscribeToPackage(data?.slug, (p) => {
+		pkg = p;
+		if (!bottles.length && pkg.bottles) {
+			const newVersion =  pkg.bottles.map((b) => b.version);
 			versions = [...new Set(newVersion)];
-
-			bottles.push(...newBottles);
+			bottles.push(...pkg.bottles);
 			tabs = [
 				...tabs,
 				{
@@ -67,10 +46,21 @@
 					}
 				}
 			];
-		} catch (err) {
-			console.error(err);
+		}
+
+		if (!readme && pkg.readme_md) {
+			readme = pkg.readme_md;
+			tabs = [
+				{
+					label: 'details',
+					component: Markdown,
+					props: { pkg, source: readme }
+				},
+				...tabs,
+			];
 		}
 	});
+
 </script>
 
 <div>
