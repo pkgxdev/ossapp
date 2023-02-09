@@ -2,25 +2,14 @@ import axios from 'axios';
 import type { Contributor } from '@tea/ui/types';
 const yaml = window.require('yaml');
 
-export async function getGithubOwnerRepo(
-	pkgYamlUrl: string
-): Promise<{ owner: string; repo: string }> {
-	let owner = '';
-	let repo = '';
-
+export async function getPackageYaml(pkgYamlUrl: string) {
 	const url = pkgYamlUrl.replace('/github.com', '/raw.githubusercontent.com').replace('/blob', '');
 
 	const { data: rawYaml } = await axios.get(url);
 
 	const data = await yaml.parse(rawYaml);
-	if (data?.versions?.github) {
-		[owner, repo] = data.versions.github.split('/').filter((b: string) => b);
-	}
 
-	return {
-		owner,
-		repo
-	};
+	return data;
 }
 
 export async function getReadme(owner: string, repo: string): Promise<string> {
