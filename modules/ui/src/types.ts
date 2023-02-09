@@ -26,7 +26,7 @@ export interface Package {
 	license?: string;
 	size_bytes?: number;
 	documentation_url?: string;
-	github_repository_url?: string;
+	github?: string;
 	categories?: string[];
 	contributors?: Contributor[];
 	readme_md?: string;

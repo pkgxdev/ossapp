@@ -32,6 +32,7 @@
 
 	packagesStore.subscribeToPackage(data?.slug, (p) => {
 		pkg = p;
+
 		if (!bottles.length && pkg.bottles) {
 			const newVersion =  pkg.bottles.map((b) => b.version);
 			versions = [...new Set(newVersion)];
@@ -74,7 +75,7 @@
 			<Tabs class="bg-black" {tabs} />
 		</div>
 		<div class="w-1/3">
-			<PackageMetas />
+			<PackageMetas {pkg} />
 		</div>
 	</section>
 	<PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png">SNIPPETS</PageHeader>

@@ -100,7 +100,6 @@ export async function getPackageBottles(packageName: string): Promise<Bottle[]> 
 }
 
 export async function getPackage(packageName: string): Promise<Partial<Package>> {
-	console.log('getting package:', packageName);
 	const pkg: Partial<Package> = await apiGet<Partial<Package>>(
 		`packages/${packageName.replaceAll('/', ':')}`
 	);

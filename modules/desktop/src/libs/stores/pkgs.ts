@@ -4,7 +4,7 @@ import { getPackages } from '@api';
 import Fuse from 'fuse.js';
 import { getPackage } from '@api';
 
-import { getGithubOwnerRepo, getReadme } from '$libs/github';
+import { getReadme, getContributors } from '$libs/github';
 
 export default function initPackagesStore() {
 	let initialized = false;
@@ -37,13 +37,40 @@ export default function initPackagesStore() {
 		});
 	};
 
+	const syncPackageData = async (guiPkg: Partial<GUIPackage>) => {
+		if (guiPkg.synced) return;
+
+		const pkg = await getPackage(guiPkg.full_name!); // ATM: pkg only bottles and github:string
+		const readmeMd = `# ${guiPkg.full_name} #
+To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
+		`;
+
+		const updatedPackage: Partial<GUIPackage> = {
+			...pkg,
+			readme_md: readmeMd,
+			synced: true
+		};
+		if (pkg.github) {
+			const [owner, repo] = pkg.github.split('/');
+			const [readme, contributors] = await Promise.all([
+				getReadme(owner, repo),
+				getContributors(owner, repo)
+			]);
+			if (readme) {
+				updatedPackage.readme_md = readme;
+			}
+			updatedPackage.contributors = contributors;
+		}
+
+		updatePackageProp(guiPkg.full_name!, updatedPackage);
+	};
+
 	return {
 		packages,
 		subscribe,
 		search: async (term: string, limit = 5): Promise<GUIPackage[]> => {
 			if (!term || !packagesIndex) return [];
 			// TODO: if online, use algolia else use Fuse
-
 			const res = packagesIndex.search(term, { limit });
 			const matchingPackages: GUIPackage[] = res.map((v) => v.item);
 			return matchingPackages;
@@ -51,44 +78,11 @@ export default function initPackagesStore() {
 		subscribeToPackage: (slug: string, cb: (pkg: GUIPackage) => void) => {
 			subscribe((pkgs) => {
 				const foundPackage = pkgs.find((p) => p.slug === slug) as GUIPackage;
-				if (foundPackage) cb(foundPackage);
-				// get readme
-				// get contributors
-				// get github last modified
-				// subscribe((pkgs) => cb(pkgs[pkg]));
-
-				// console.log('f:', foundPackage);
-				// getReadmeRaw('');
-
-				if (!foundPackage.bottles) {
-					getPackage(foundPackage.full_name).then((pkg) => {
-						updatePackageProp(foundPackage.full_name, pkg);
-					});
-				}
-
-				if (!foundPackage.readme_md && foundPackage.package_yml_url) {
-					getGithubOwnerRepo(foundPackage.package_yml_url).then(async ({ owner, repo }) => {
-						const defaultReadme = `# ${foundPackage.full_name} #
-To read more about this package go to [${foundPackage.homepage}](${foundPackage.homepage}).
-						`;
-						if (owner && repo) {
-							const readme = await getReadme(owner, repo);
-							updatePackageProp(foundPackage.full_name, { readme_md: readme || defaultReadme });
-						} else {
-							updatePackageProp(foundPackage.full_name, { readme_md: defaultReadme });
-						}
-					});
+				if (foundPackage) {
+					cb(foundPackage);
+					syncPackageData(foundPackage);
 				}
 			});
 		}
 	};
-}
-
-async function getReadmeRaw(owner: string, repo: string): Promise<string> {
-	// const rep = await getRepo('oven-sh', 'bun');
-	// const repo = await octokit.request('GET /repos/{owner}/{repo}', {
-	// 	owner: '',
-	// 	repo: '',
-	// });
-	return '';
 }

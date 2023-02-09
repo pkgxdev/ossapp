@@ -1,11 +1,10 @@
 import axios from 'axios';
+import type { Contributor } from '@tea/ui/types';
 const yaml = window.require('yaml');
 
 export async function getGithubOwnerRepo(
 	pkgYamlUrl: string
 ): Promise<{ owner: string; repo: string }> {
-	// https://github.com/teaxyz/pantry.core/blob/main/projects/sqlite.org/package.yml
-	// https://raw.githubusercontent.com/teaxyz/pantry.core/main/projects/sqlite.org/package.yml
 	let owner = '';
 	let repo = '';
 
@@ -32,4 +31,20 @@ export async function getReadme(owner: string, repo: string): Promise<string> {
 		readme = reqDl.data;
 	}
 	return readme;
+}
+
+export async function getContributors(owner: string, repo: string): Promise<Contributor[]> {
+	// maintainer/repo
+	let contributors: Contributor[] = [];
+	const req = await axios.get(`https://api.github.com/repos/${owner}/${repo}/contributors`);
+	if (req.data) {
+		contributors = req.data.map((c: Contributor & { id: number }) => ({
+			login: c.login,
+			avatar_url: c.avatar_url,
+			name: c.name || '',
+			github_id: c.id,
+			contributions: c.contributions
+		}));
+	}
+	return contributors;
 }
