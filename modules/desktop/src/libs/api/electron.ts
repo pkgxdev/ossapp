@@ -95,8 +95,15 @@ export async function getDeviceAuth(deviceId: string): Promise<DeviceAuth> {
 
 export async function getPackageBottles(packageName: string): Promise<Bottle[]> {
 	console.log('getting bottles for ', packageName);
-	const req = await axios.get(`https://app.tea.xyz/api/bottles/${packageName}`);
-	return req.data as Bottle[];
+	const pkg: Package = await apiGet<Package>(`packages/${packageName.replaceAll('/', ':')}`);
+	return pkg.bottles || [];
+}
+
+export async function getPackage(packageName: string): Promise<Partial<Package>> {
+	const pkg: Partial<Package> = await apiGet<Partial<Package>>(
+		`packages/${packageName.replaceAll('/', ':')}`
+	);
+	return pkg;
 }
 
 export async function registerDevice(): Promise<string> {

@@ -113,15 +113,12 @@ ipcMain.on('to-main', (event, count) => {
 });
 
 ipcMain.handle('get-installed-packages', async () => {
-	console.log('get installed pkgs: ipc');
 	const pkgs = await getInstalledPackages();
 	return pkgs;
 });
 
 ipcMain.handle('get-session', async () => {
-	console.log('get session');
 	const session = await readSessionData();
-	console.log('session:', session);
 	return session;
 });
 
