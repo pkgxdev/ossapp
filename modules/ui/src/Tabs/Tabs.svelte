@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Tab } from '../types';
-	import { onMount, afterUpdate } from 'svelte';
+	import { afterUpdate } from 'svelte';
 
 	let clazz = '';
 

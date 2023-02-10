@@ -60,6 +60,8 @@ export type Bottle = {
 	platform: string;
 	arch: string;
 	version: string;
+	bytes: number;
+	last_modified_at?: Date | string;
 };
 
 export type Tab = {
