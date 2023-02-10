@@ -4,7 +4,7 @@ import { getPackages } from '@api';
 import Fuse from 'fuse.js';
 import { getPackage } from '@api';
 
-import { getReadme, getContributors } from '$libs/github';
+import { getReadme, getContributors, getRepoAsPackage } from '$libs/github';
 
 export default function initPackagesStore() {
 	let initialized = false;
@@ -52,14 +52,16 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		};
 		if (pkg.github) {
 			const [owner, repo] = pkg.github.split('/');
-			const [readme, contributors] = await Promise.all([
+			const [readme, contributors, repoData] = await Promise.all([
 				getReadme(owner, repo),
-				getContributors(owner, repo)
+				getContributors(owner, repo),
+				getRepoAsPackage(owner, repo)
 			]);
 			if (readme) {
 				updatedPackage.readme_md = readme;
 			}
 			updatedPackage.contributors = contributors;
+			updatedPackage.license = repoData.license;
 		}
 
 		updatePackageProp(guiPkg.full_name!, updatedPackage);

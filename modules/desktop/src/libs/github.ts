@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Contributor } from '@tea/ui/types';
+import type { Contributor, Package } from '@tea/ui/types';
 const yaml = window.require('yaml');
 
 export async function getPackageYaml(pkgYamlUrl: string) {
@@ -36,4 +36,13 @@ export async function getContributors(owner: string, repo: string): Promise<Cont
 		}));
 	}
 	return contributors;
+}
+
+export async function getRepoAsPackage(owner: string, repo: string): Promise<Partial<Package>> {
+	const req = await axios.get(`https://api.github.com/repos/${owner}/${repo}`);
+	const pkg: Partial<Package> = {};
+	if (req.data) {
+		pkg.license = req.data?.license?.name || '';
+	}
+	return pkg;
 }
