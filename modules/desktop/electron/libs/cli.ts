@@ -2,8 +2,6 @@ import { spawn, exec } from 'child_process';
 import { clean } from 'semver';
 import { promisify } from 'util';
 
-const child_process = require('child_process');
-
 const execPromise = promisify(exec);
 
 export async function installPackage(full_name: string) {
