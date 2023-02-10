@@ -4,13 +4,14 @@
 	import { PackageStates } from '$libs/types';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import PackageCard from '@tea/ui/PackageCard/PackageCard.svelte';
-	import { onMount } from 'svelte';
+	import { packagesStore } from '$libs/stores';
 
 	// TODO: replace with getting foundation essentials
 	import { getTopPackages } from '$libs/api/mock';
 	import { installPackage } from '@api';
 
 	export let title = 'Packages';
+	export let category = ''; // filter
 
 	let packages: GUIPackage[] = [];
 
@@ -23,10 +24,10 @@
 		}[state];
 	};
 
-	onMount(async () => {
-		if (!packages.length) {
-			packages = await getTopPackages();
-		}
+	packagesStore.subscribe((ps) => {
+		packages = category ?
+			ps.filter((p) => (p.categories || []).includes(category)) :
+			ps;
 	});
 </script>
 

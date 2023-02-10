@@ -24,7 +24,7 @@ import { get as apiGet } from '$libs/v1Client';
 
 export async function getPackages(): Promise<GUIPackage[]> {
 	const [packages, installedPackages] = await Promise.all([
-		apiGet<Package[]>('packages'),
+		apiGet<Package[]>('packages', { nocache: 'true' }),
 		getInstalledPackages()
 	]);
 
