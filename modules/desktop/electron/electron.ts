@@ -2,13 +2,11 @@ import windowStateManager from 'electron-window-state';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import contextMenu from 'electron-context-menu';
 import serve from 'electron-serve';
-import path from 'path';
-import fs from 'fs';
 
 import { getInstalledPackages } from './libs/teaDir';
 import { readSessionData, writeSessionData } from './libs/auth';
 import type { Session } from '../src/libs/types';
-import { installPackage } from './libs/cli';
+import { installPackage, openTerminal } from './libs/cli';
 
 // try {
 // 	//@ts-ignore only used in dev should not be packaged inprod
@@ -129,4 +127,17 @@ ipcMain.handle('update-session', async (_, data) => {
 ipcMain.handle('install-package', async (_, data) => {
 	const result = await installPackage(data.full_name);
 	return result;
+});
+
+ipcMain.handle('open-terminal', async (_, data) => {
+	// console.log(data);
+	const { cmd } = data as { cmd: string };
+	try {
+		await openTerminal(cmd);
+	} catch (error) {
+		console.error('elast:', error);
+	}
+
+	// detect if mac use
+	// https://ss64.com/osx/osascript.html
 });
