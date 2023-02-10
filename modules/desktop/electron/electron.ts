@@ -130,14 +130,12 @@ ipcMain.handle('install-package', async (_, data) => {
 });
 
 ipcMain.handle('open-terminal', async (_, data) => {
-	// console.log(data);
 	const { cmd } = data as { cmd: string };
 	try {
+		// TODO: detect if mac or linux
+		// current openTerminal is only design for Mac
 		await openTerminal(cmd);
 	} catch (error) {
 		console.error('elast:', error);
 	}
-
-	// detect if mac use
-	// https://ss64.com/osx/osascript.html
 });
