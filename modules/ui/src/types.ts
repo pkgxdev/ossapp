@@ -20,6 +20,7 @@ export interface Package {
 	installs: number;
 	reviews?: Review[];
 	package_yml_url?: string;
+	categories: string[];
 	// metas
 	full_description?: string; // probably markdown
 	bottles?: Bottle[];
@@ -27,7 +28,6 @@ export interface Package {
 	size_bytes?: number;
 	documentation_url?: string;
 	github?: string;
-	categories?: string[];
 	contributors?: Contributor[];
 	readme_md?: string;
 }

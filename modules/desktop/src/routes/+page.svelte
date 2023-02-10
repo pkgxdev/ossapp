@@ -13,7 +13,7 @@
 <div>
 	<PageHeader coverUrl="/images/headers/header_bg_1.png">Discover</PageHeader>
 	<section class="mt-8 mb-8">
-		<Packages title="FOUNDATION ESSENTIALS" />
+		<Packages title="FOUNDATION ESSENTIALS" category="foundation_essentials" />
 	</section>
 	<PageHeader coverUrl="/images/headers/header_bg_1.png">ASSET TYPE</PageHeader>
 	<section class="mt-8 mb-8 flex gap-4">
