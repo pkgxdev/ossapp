@@ -26,7 +26,7 @@
 				articleTitle="What are packages?"
 				description="Collections of files aggregated to form larger frameworks & functions. Think Python or Node.js."
 			/>
-			<ListAction title="Top packages this week" mainCtaTitle="VIEW ALL PACKAGES" />
+			<ListAction title="Top packages this week" mainCtaTitle="VIEW ALL PACKAGES" mainCtaLink="/packages"/>
 		</div>
 		<div>
 			<HeaderCard

@@ -3,6 +3,7 @@
 
 	export let title: string;
 	export let mainCtaTitle: string;
+	export let mainCtaLink = '/';
 </script>
 
 <section class="bg-black">
@@ -60,7 +61,7 @@
 		</li>
 	</ul>
 	<footer class="w-full border border-t-0 border-gray text-gray">
-		<a href="/" class="flex w-full">
+		<a href={mainCtaLink} class="flex w-full">
 			<Button>
 				<div class="flex w-full justify-between p-2">
 					<button>{mainCtaTitle}</button>
