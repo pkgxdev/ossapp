@@ -16,6 +16,10 @@ export const getTeaPath = () => {
 	return teaPath;
 };
 
+export const getGuiPath = () => {
+	return path.join(getTeaPath(), 'tea.xyz/gui');
+};
+
 export async function getInstalledPackages() {
 	const pkgsPath = getTeaPath();
 
