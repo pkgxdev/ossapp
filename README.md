@@ -1,74 +1,111 @@
-# Tea UI Workspace
-This repository includes the tea GUI/Desktop App.
+![tea](https://tea.xyz/banner.png)
 
-For better documentation checkout this [notion](https://www.notion.so/teaxyz/tea-gui-fdd9f50aa980432fa370b2cf6a03cb50).
+<p align="center">
+  <a href="https://twitter.com/teaxyz">
+    <img src="https://img.shields.io/twitter/follow/teaxyz?style=flat&label=%40teaxyz&logo=twitter&color=2675f5&logoColor=fff" alt="Twitter" />
+  </a>
+  <a href="https://discord.gg/JKzuqrW9">
+    <img src="https://img.shields.io/discord/906608167901876256?label=discord&color=29f746" alt="Discord" />
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/github/v/release/teaxyz/cli?label=tea/cli&color=ff00ff" alt="Version" />
+  </a>
+</p>
 
-# Requirements
-* [tea - is all you need](https://tea.xyz/)
+This repository contains tea/gui \[[notion]\].
 
-## Dependencies
 
-| Project    | Version |
-|------------|---------|
-| nodejs.org |  =18.13.0 |
-| pnpm.io    |  >=7.18.2 |
-| rust-lang.org |  >=1.62 |
-| rust-lang.org/cargo |  >=0.66 |
-| xcfile.dev | >=0.0.110 |
-| python.org | >=3.10 |
+# Developing tea/gui
 
-## Tasks
+To develop within an electron view:
 
-### setup
+```
+$ pnpm dev:desktop
+```
+
+To develop in your local browser:
+
+```
+$ pnpm web:desktop
+$ open localhost:8080
+```
+
+
+# Releasing tea/gui
+
+Tag any commit in the main branch, then push directly to the main branch.
+Lets follow the [semver] versioning standard, prefixed with `v`:
+
+```
+$ git tag v1.0.0
+$ git push <remote> tag v1.0.0
+```
+
+We do not have a runner for building for M1 and M2, to manually deploy a
+release. Make sure you have [aws/cli] configured correctly.
+
+To publish a release:
+
+```
+$ AWS_PROFILE=tea/or/etc pnpm release
+```
+
+Refer to each package `README.md` for instructions on how to setup and
+contribute to them:
+
+* [tea/gui](./modules/gui/README.md)
+* [tea/ui](./modules/ui/README.md)
+
+&nbsp;
+
+
+
+# Tasks
+
+The following can be run with [`xc`], eg. `xc build`
+
+## Setup
+
 ```sh
 pnpm install
 ```
 
-### build
+## Build
+
 ```sh
 pnpm install
 pnpm build:desktop
 ```
 
-### dev
+## Dev
+
 ```sh
 pnpm install
 pnpm dev
 ```
 
-### dist
+## Dist
+
 ```sh
 pnpm install
 pnpm add -g vite
 pnpm --filter desktop exec pnpm dist
 ```
 
-## Development
-To develop the GUI within electron view
-```
-$ pnpm dev:desktop
-```
+# Dependencies
 
-To develop the GUI within your local browser at localhost:8080
-```
-$ pnpm web:desktop
-```
-
-# Creating a release
-Tag any commit in the main branch, then push directly to the main branch.
-Lets follow the [semver](https://semver.org/) versioning standard, prefixed with `v`: ie `v1.2.3`
-```
-$ git tag v1.0.0
-$ git push <remote> tag v1.0.0
-```
-We do not have a runner for building for M1 and M2, to manually deploy a release. Make sure you have a [aws-cli](https://aws.amazon.com/cli/). Configure your aws cli profile correctly.
-To publish a release simply run
-```
-$ AWS_PROFILE=tea/or/etc pnpm release
-```
+| Project             |  Version  |
+|---------------------|-----------|
+| nodejs.org          | =18.13.0  |
+| pnpm.io             | >=7.18.2  |
+| rust-lang.org       | >=1.62    |
+| rust-lang.org/cargo | >=0.66    |
+| xcfile.dev          | >=0.0.110 |
+| python.org          | >=3.10    |
 
 
-Refer to each package README.md for instructions on how to setup and contribue to them:
 
-* [tea/gui](./modules/gui/README.md)
-* [tea/ui](./modules/ui/README.md)
+[aws/cli]: https://aws.amazon.com/cli/
+[`xc`]: https://xcfile.dev
+[semver]: https://semver.org
+[notion]: https://www.notion.so/teaxyz/tea-gui-fdd9f50aa980432fa370b2cf6a03cb50
