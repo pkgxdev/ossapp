@@ -1,6 +1,8 @@
 <script lang="ts">
 	import '$appcss';
 	import Button from '@tea/ui/Button/Button.svelte';
+
+	const { ipcRenderer } = window.require('electron');
 	let copyButtonText = 'COPY';
 	const copyValue = `sh <(curl https://tea.xyz)`;
 
@@ -8,6 +10,10 @@
 		copyButtonText = 'COPIED!';
 		navigator.clipboard.writeText(copyValue);
 	};
+
+	const onInstall = () => {
+		ipcRenderer.invoke('open-terminal', { cmd: copyValue });
+	}
 </script>
 
 <section class="border-gray mt-4 border bg-black">
@@ -20,7 +26,7 @@
 	<footer class="border-gray flex h-20 border-t text-white">
 		<input class="flex-grow bg-black pl-4" disabled value="sh <(curl tea.xyz)>" />
 		<Button class="w-16 border-0 border-l-2 text-sm" onClick={onCopy}>{copyButtonText}</Button>
-		<Button class="w-56 border-0 border-l-2 text-sm" onClick={() => console.log('cli')}
+		<Button class="w-56 border-0 border-l-2 text-sm" onClick={onInstall}
 			>OPEN IN TERMINAL</Button
 		>
 	</footer>
