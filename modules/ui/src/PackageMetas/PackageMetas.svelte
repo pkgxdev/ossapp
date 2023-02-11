@@ -81,7 +81,7 @@
 			</li>
 		</ul>
 	{/if}
-	{#if pkg.contributors}
+	{#if pkg.contributors?.length}
 		<h1 class="border border-t-0 border-gray p-4 text-primary">CONTRIBUTORS</h1>
 		<ul class="border border-t-0 border-gray p-4">
 			{#each pkg.contributors as contributor}
@@ -96,19 +96,16 @@
 			{/each}
 		</ul>
 	{/if}
-	<h1 class="border border-t-0 border-gray p-4 text-primary">CATEGORIES</h1>
-	<ul class="border border-t-0 border-gray p-4">
-		<li class="border border-gray p-4">
-			<i class="icon-calendar" />
-			<span class="ml-4">utility</span>
-		</li>
-		<li class="border border-gray p-4">
-			<i class="icon-calendar" />
-			<span class="ml-4">design</span>
-		</li>
-		<li class="border border-gray p-4">
-			<i class="icon-calendar" />
-			<span class="ml-4">gaming</span>
-		</li>
-	</ul>
+
+	{#if pkg.categories?.length}
+		<h1 class="border border-t-0 border-gray p-4 text-primary">CATEGORIES</h1>
+		<ul class="border border-t-0 border-gray p-4">
+			{#each pkg.categories as category}
+				<li class="border border-gray p-4">
+					<i class="icon-calendar" />
+					<span class="ml-4">{category}</span>
+				</li>
+			{/each}
+		</ul>
+	{/if}
 </section>
