@@ -17,7 +17,7 @@ export default function initPackagesStore() {
 		getPackages().then((pkgs) => {
 			set(pkgs);
 			packagesIndex = new Fuse(pkgs, {
-				keys: ['name', 'full_name', 'desc']
+				keys: ['name', 'full_name', 'desc', 'categories']
 			});
 		});
 	}
