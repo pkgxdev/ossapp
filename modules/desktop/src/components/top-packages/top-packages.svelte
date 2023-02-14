@@ -1,7 +1,7 @@
 <!-- home / discover / welcome page -->
 <script lang="ts">
 	import '$appcss';
-	import ListAction from '@tea/ui/ListAction/ListAction.svelte';
+	import ListAction from '@tea/ui/list-action/list-action.svelte';
   import type { ListActionItem } from '@tea/ui/types';
   import { packagesStore } from '$libs/stores';
 

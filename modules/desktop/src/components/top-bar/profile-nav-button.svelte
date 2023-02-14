@@ -1,14 +1,15 @@
 <script lang="ts">
-	import { open } from '@tauri-apps/api/shell';
 	import { authStore } from '$libs/stores';
 	import type { Developer } from '@tea/ui/types';
 	import { baseUrl } from '$libs/v1-client';
+
+	const { shell } = window.require('electron');
 
 	let user: Developer | null = null;
 	const deviceId = authStore.deviceIdStore;
 
 	const openGithub = () => {
-		open(`${baseUrl}/auth/user?device_id=${$deviceId}`);
+		shell.openExternal(`${baseUrl}/auth/user?device_id=${$deviceId}`)
 		try {
 			authStore.pollSession();
 		} catch (error) {

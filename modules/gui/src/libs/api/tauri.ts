@@ -19,10 +19,10 @@ import type { GUIPackage, Course, Category, AuthStatus, DeviceAuth } from '../ty
 
 import * as mock from './mock';
 import { PackageStates } from '../types';
-import { getInstalledPackages } from '$libs/teaDir';
+import { getInstalledPackages } from '$libs/tea-dir';
 import { installPackageCommand } from '$libs/cli';
 
-import { get as apiGet } from '$libs/v1Client';
+import { get as apiGet } from '$libs/v1-client';
 
 export async function getPackages(): Promise<GUIPackage[]> {
 	const [packages, installedPackages] = await Promise.all([

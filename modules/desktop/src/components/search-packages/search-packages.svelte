@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '$appcss';
 	import { packagesStore } from '$libs/stores';
-	import SortingButtons from './SortingButtons.svelte';
+	import SortingButtons from './sorting-buttons.svelte';
 	import type { GUIPackage } from '$libs/types';
 	import { PackageStates } from '$libs/types';
 	import PackageCard from '@tea/ui/package-card/package-card.svelte';

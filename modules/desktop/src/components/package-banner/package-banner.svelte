@@ -7,6 +7,8 @@
 	import { onMount } from 'svelte';
 	import { getPackageBottles } from '@api';
 
+	const { ipcRenderer } = window.require('electron');
+
 	export let pkg: Package;
 	let bottles: Bottle[] = [];
 	let packageRating = 0;
@@ -17,6 +19,10 @@
 		copyButtonText = 'COPIED!';
 		navigator.clipboard.writeText(copyValue);
 	};
+
+	const onOpenTerminal = () => {
+		ipcRenderer.invoke('open-terminal', { cmd: `sh <(curl tea.xyz) +${pkg.full_name}` });
+	}
 
 	onMount(async () => {
 		try {
@@ -45,7 +51,7 @@
 	<footer class="border-gray flex h-20 border-t text-white">
 		<input class="click-copy flex-grow bg-black pl-4" disabled value={copyValue} />
 		<Button class="w-16 border-0 border-l-2 text-sm" onClick={onCopy}>{copyButtonText}</Button>
-		<Button class="w-56 border-0 border-l-2 text-sm" onClick={() => console.log('cli')}
+		<Button class="w-56 border-0 border-l-2 text-sm" onClick={onOpenTerminal}
 			>OPEN IN TERMINAL</Button
 		>
 	</footer>

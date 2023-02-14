@@ -10,9 +10,9 @@ import type { GUIPackage, Course, Category } from "../types";
 import { PackageStates } from "../types";
 import { loremIpsum } from "lorem-ipsum";
 import _ from "lodash";
-// import { getInstalledPackages } from '$libs/teaDir';
+// import { getInstalledPackages } from '$libs/tea-dir';
 // import { getSession } from '$libs/stores/auth';
-import * as v1Client from "$libs/v1Client";
+import * as v1Client from "$libs/v1-client";
 
 const packages: Package[] = [
 	{

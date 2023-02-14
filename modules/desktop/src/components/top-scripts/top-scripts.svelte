@@ -2,7 +2,7 @@
 <script lang="ts">
 	import '$appcss';
   import type { ListActionItem } from '@tea/ui/types';
-	import ListAction from '@tea/ui/ListAction/ListAction.svelte';
+	import ListAction from '@tea/ui/list-action/list-action.svelte';
 
   const items: ListActionItem[] = [
     {

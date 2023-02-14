@@ -1,13 +1,13 @@
 <!-- home / discover / welcome page -->
 <script lang="ts">
 	import '$appcss';
-	import PageHeader from '$components/PageHeader/PageHeader.svelte';
-	import EssentialWorkshops from '$components/EssentialWorkshops/EssentialWorkshops.svelte';
+	import PageHeader from '$components/page-header/page-header.svelte';
+	import EssentialWorkshops from '$components/essential-workshops/essential-workshops.svelte';
 	import Packages from '$components/Packages/Packages.svelte';
 	import News from '$components/News/News.svelte';
 
 	import HeaderCard from '@tea/ui/HeaderCard/HeaderCard.svelte';
-	import ListAction from '@tea/ui/ListAction/ListAction.svelte';
+	import ListAction from '@tea/ui/list-action/list-action.svelte';
 </script>
 
 <div>

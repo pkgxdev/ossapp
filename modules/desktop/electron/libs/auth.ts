@@ -1,8 +1,8 @@
 import { mkdirp } from "mkdirp";
 import path from "path";
 import fs from "fs";
-import { getTeaPath } from "./teaDir";
-import * as v1Client from "./v1Client";
+import { getTeaPath } from "./tea-dir";
+import * as v1Client from "./v1-client";
 
 const sessionFilePath = path.join(getTeaPath(), "tea.xyz/gui/tmp.dat");
 const sessionFolder = path.join(getTeaPath(), "tea.xyz/gui");

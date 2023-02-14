@@ -2,11 +2,11 @@
 	import '$appcss';
 	import { navigating } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
-	import TopBar from '$components/TopBar/TopBar.svelte';
-	import FooterLinks from '$components/FooterLinks/FooterLinks.svelte';
+	import TopBar from '$components/top-bar/top-bar.svelte';
+	import FooterLinks from '$components/footer-links/footer-links.svelte';
 	import { navStore } from '$libs/stores';
 
-	import SearchPopupResults from '$components/SearchPopupResults/SearchPopupResults.svelte';
+	import SearchPopupResults from '$components/search-popup-results/search-popup-results.svelte';
 
 	let view: HTMLElement;
 

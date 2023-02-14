@@ -1,18 +1,18 @@
 <script lang="ts">
 	import '$appcss';
 	import { onMount } from 'svelte';
-	import PageHeader from '$components/PageHeader/PageHeader.svelte';
+	import PageHeader from '$components/page-header/page-header.svelte';
 	import { packagesReviewStore } from '$libs/stores';
-	import PackageBanner from '$components/PackageBanner/PackageBanner.svelte';
+	import PackageBanner from '$components/package-banner/package-banner.svelte';
 	import type { Review, Bottle } from '@tea/ui/types';
-	import SuggestedPackages from '$components/SuggestedPackages/SuggestedPackages.svelte';
+	import SuggestedPackages from '$components/suggested-packages/suggested-packages.svelte';
 	import Tabs from '@tea/ui/Tabs/Tabs.svelte';
 	import type { Tab } from '@tea/ui/types';
 	import Bottles from '@tea/ui/Bottles/Bottles.svelte';
 	import { getPackageBottles } from '@api';
-	import PackageMetas from '@tea/ui/PackageMetas/PackageMetas.svelte';
-	import Markdown from '@tea/ui/Markdown/Markdown.svelte';
-	import PackageSnippets from '@tea/ui/PackageSnippets/PackageSnippets.svelte';
+	import PackageMetas from '@tea/ui/package-metas/package-metas.svelte';
+	import Markdown from '@tea/ui/markdown/markdown.svelte';
+	import PackageSnippets from '@tea/ui/package-snippets/package-snippets.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
