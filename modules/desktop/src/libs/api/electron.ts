@@ -84,7 +84,6 @@ export async function getAllPosts(tag?: string): Promise<AirtablePost[]> {
 		nocache: 'true'
 	};
 	const posts = await apiGet<AirtablePost[]>('posts', queryParams);
-	console.log(posts);
 	return posts;
 }
 
