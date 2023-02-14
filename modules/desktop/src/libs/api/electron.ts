@@ -79,7 +79,12 @@ export async function getTopPackages(): Promise<GUIPackage[]> {
 
 export async function getAllPosts(tag?: string): Promise<AirtablePost[]> {
 	// add filter here someday: tag = news | course
-	const posts = await apiGet<AirtablePost[]>('posts', tag ? { tag } : {});
+	const queryParams = {
+		...(tag ? { tag } : {}),
+		nocache: 'true'
+	};
+	const posts = await apiGet<AirtablePost[]>('posts', queryParams);
+	console.log(posts);
 	return posts;
 }
 
