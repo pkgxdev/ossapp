@@ -1,64 +1,45 @@
 <script lang="ts">
 	import Button from '../Button/Button.svelte';
+	import ImgLoader from '../ImgLoader/ImgLoader.svelte';
+	import type { ListActionItem } from '../types';
 
 	export let title: string;
 	export let mainCtaTitle: string;
 	export let mainCtaLink = '/';
+
+	export let items: ListActionItem[];
+	export let onSelectItem = (item: ListActionItem) => console.log(item);
+
+	const onSelect = (item: ListActionItem) => {
+		if (onSelectItem) {
+			onSelectItem(item);
+		}
+	};
 </script>
 
 <section class="bg-black">
 	<header class="w-full border border-gray p-2 text-primary">{title}</header>
 	<ul class="border border-b-0 border-r-0 border-l-0 border-gray">
-		<li class="flex content-center border border-t-0 border-gray">
-			<figure class="m-2 w-10 bg-gray" />
-			<div class="flex flex-grow pt-4 leading-10">
-				<div class="text-sm">Homebrew</div>
-				<div class="pl-2 text-sm text-gray">ver 1.21</div>
-			</div>
-			<div class="m-2 w-28 border border-gray">
-				<Button>INSTALL</Button>
-			</div>
-		</li>
-		<li class="flex content-center border border-t-0 border-gray">
-			<figure class="m-2 w-10 bg-gray" />
-			<div class="flex flex-grow pt-4 leading-10">
-				<div class="text-sm">Homebrew</div>
-				<div class="pl-2 text-sm text-gray">ver 1.21</div>
-			</div>
-			<div class="m-2 w-28 border border-gray">
-				<Button>INSTALL</Button>
-			</div>
-		</li>
-		<li class="flex content-center border border-t-0 border-gray">
-			<figure class="m-2 w-10 bg-gray" />
-			<div class="flex flex-grow pt-4 leading-10">
-				<div class="text-sm">Homebrew</div>
-				<div class="pl-2 text-sm text-gray">ver 1.21</div>
-			</div>
-			<div class="m-2 w-28 border border-gray">
-				<Button>INSTALL</Button>
-			</div>
-		</li>
-		<li class="flex content-center border border-t-0 border-gray">
-			<figure class="m-2 w-10 bg-gray" />
-			<div class="flex flex-grow pt-4 leading-10">
-				<div class="text-sm">Homebrew</div>
-				<div class="pl-2 text-sm text-gray">ver 1.21</div>
-			</div>
-			<div class="m-2 w-28 border border-gray">
-				<Button>INSTALL</Button>
-			</div>
-		</li>
-		<li class="flex content-center border border-t-0 border-gray">
-			<figure class="m-2 w-10 bg-gray" />
-			<div class="flex flex-grow pt-4 leading-10">
-				<div class="text-sm">Homebrew</div>
-				<div class="pl-2 text-sm text-gray">ver 1.21</div>
-			</div>
-			<div class="m-2 w-28 border border-gray">
-				<Button>INSTALL</Button>
-			</div>
-		</li>
+		{#each items as item}
+			<li class="flex content-center border border-t-0 border-gray">
+				<figure class="m-2 w-10 bg-gray">
+					<img src={item.image_url} alt={item.title} />
+				</figure>
+				<div class="flex flex-grow pt-4 leading-10">
+					<div class="text-sm">{item.title}</div>
+					<div class="pl-2 text-sm text-gray">{item.sub_title}</div>
+				</div>
+				<div class="m-2 w-28 border border-gray">
+					{#if item.detail_url}
+						<a href={item.detail_url}>
+							<Button>{item.action_label}</Button>
+						</a>
+					{:else}
+						<Button onClick={() => onSelect(item)}>{item.action_label}</Button>
+					{/if}
+				</div>
+			</li>
+		{/each}
 	</ul>
 	<footer class="w-full border border-t-0 border-gray text-gray">
 		<a href={mainCtaLink} class="flex w-full">

@@ -104,3 +104,11 @@ export type Contributor = Pick<Developer, 'avatar_url' | 'login' | 'name'> & {
 	developer_id?: string;
 	contributions: number;
 };
+
+export interface ListActionItem {
+	title: string;
+	sub_title: string;
+	image_url: string;
+	action_label: string;
+	detail_url?: string;
+}

@@ -7,7 +7,8 @@
 	import News from '$components/News/News.svelte';
 
 	import HeaderCard from '@tea/ui/HeaderCard/HeaderCard.svelte';
-	import ListAction from '@tea/ui/ListAction/ListAction.svelte';
+	import TopPackages from '$components/top-packages/top-packages.svelte';
+	import TopScripts from '$components/top-scripts/top-scripts.svelte';
 </script>
 
 <div>
@@ -26,7 +27,7 @@
 				articleTitle="What are packages?"
 				description="Collections of files aggregated to form larger frameworks & functions. Think Python or Node.js."
 			/>
-			<ListAction title="Top packages this week" mainCtaTitle="VIEW ALL PACKAGES" mainCtaLink="/packages"/>
+			<TopPackages />
 		</div>
 		<div>
 			<HeaderCard
@@ -37,7 +38,7 @@
 				articleTitle="What are scripts?"
 				description="Invisible applications that chain packages together in order to perform cool actions on your computer."
 			/>
-			<ListAction title="Top scripts this week" mainCtaTitle="VIEW ALL SCRIPTS" />
+			<TopScripts/>
 		</div>
 	</section>
 	<PageHeader coverUrl="/images/headers/header_bg_1.png">TUTORIALS</PageHeader>
