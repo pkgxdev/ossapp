@@ -1,8 +1,8 @@
 <!-- home / discover / welcome page -->
 <script lang="ts">
 	import '$appcss';
-	import PageHeader from '$components/PageHeader/PageHeader.svelte';
-	import EssentialWorkshops from '$components/EssentialWorkshops/EssentialWorkshops.svelte';
+	import PageHeader from '$components/page-header/page-header.svelte';
+	import EssentialWorkshops from '$components/essential-workshops/essential-workshops.svelte';
 	import Packages from '$components/Packages/Packages.svelte';
 	import News from '$components/News/News.svelte';
 

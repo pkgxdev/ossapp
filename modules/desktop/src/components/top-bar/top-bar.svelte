@@ -5,7 +5,7 @@
 	import SearchInput from '@tea/ui/search-input/search-input.svelte';
 	import { navStore } from '$libs/stores';
 
-	import ProfileNavButton from './ProfileNavButton.svelte';
+	import ProfileNavButton from './profile-nav-button.svelte';
 
 	let { nextPath, prevPath } = navStore;
 

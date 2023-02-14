@@ -1,4 +1,4 @@
-import { getPkgBottles } from "../teaDir";
+import { getPkgBottles } from "../tea-dir";
 
 describe("teaDir module", () => {
 	it("should getPkgBottles from nested Dir object/s", () => {

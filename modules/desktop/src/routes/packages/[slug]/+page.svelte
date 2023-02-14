@@ -1,11 +1,11 @@
 <script lang="ts">
 	import '$appcss';
 	import { onMount } from 'svelte';
-	import PageHeader from '$components/PageHeader/PageHeader.svelte';
+	import PageHeader from '$components/page-header/page-header.svelte';
 	import { packagesReviewStore } from '$libs/stores';
-	import PackageBanner from '$components/PackageBanner/PackageBanner.svelte';
+	import PackageBanner from '$components/package-banner/package-banner.svelte';
 	import type { Review, Bottle } from '@tea/ui/types';
-	import SuggestedPackages from '$components/SuggestedPackages/SuggestedPackages.svelte';
+	import SuggestedPackages from '$components/suggested-packages/suggested-packages.svelte';
 	import Tabs from '@tea/ui/Tabs/Tabs.svelte';
 	import type { Tab } from '@tea/ui/types';
 	import Bottles from '@tea/ui/Bottles/Bottles.svelte';

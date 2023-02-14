@@ -1,7 +1,7 @@
 <script>
 	import '$appcss';
-	import PageHeader from '$components/PageHeader/PageHeader.svelte';
-	import SearchPackages from '$components/SearchPackages/SearchPackages.svelte';
+	import PageHeader from '$components/page-header/page-header.svelte';
+	import SearchPackages from '$components/search-packages/search-packages.svelte';
 </script>
 
 <div>

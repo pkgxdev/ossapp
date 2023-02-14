@@ -12,7 +12,7 @@ import { loremIpsum } from "lorem-ipsum";
 import _ from "lodash";
 // import { getInstalledPackages } from '$libs/teaDir';
 // import { getSession } from '$libs/stores/auth';
-import * as v1Client from "$libs/v1Client";
+import * as v1Client from "$libs/v1-client";
 
 const packages: Package[] = [
 	{

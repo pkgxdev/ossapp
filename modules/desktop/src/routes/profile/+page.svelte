@@ -1,10 +1,10 @@
 <script>
 	import '$appcss';
-	import PageHeader from '$components/PageHeader/PageHeader.svelte';
-	import ProfileBanner from '$components/ProfileBanner/ProfileBanner.svelte';
+	import PageHeader from '$components/page-header/page-header.svelte';
+	import ProfileBanner from '$components/profile-banner/profile-banner.svelte';
 	import Preflight from '$components/Preflight/Preflight.svelte';
-	import Badges from '$components/Badges/Badges.svelte';
-	import InstalledPackages from '$components/InstalledPackages/InstalledPackages.svelte';
+	import Badges from '$components/badges/badges.svelte';
+	import InstalledPackages from '$components/installed-packages/installed-packages.svelte';
 </script>
 
 <div>
