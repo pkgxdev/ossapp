@@ -1,16 +1,16 @@
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
-import { getDeviceAuth } from '@api';
-import type { Developer } from '@tea/ui/types';
-import type { Session } from '$libs/types';
+import { getDeviceAuth } from "@api";
+import type { Developer } from "@tea/ui/types";
+import type { Session } from "$libs/types";
 
-const { ipcRenderer } = window.require('electron');
+const { ipcRenderer } = window.require("electron");
 
-const basePath = '.tea/tea.xyz/gui';
+const basePath = ".tea/tea.xyz/gui";
 
 export let session: Session | null = null;
 export const getSession = async (): Promise<Session | null> => {
-	session = await ipcRenderer.invoke('get-session');
+	session = await ipcRenderer.invoke("get-session");
 	return session;
 };
 
@@ -18,8 +18,8 @@ export default function initAuthStore() {
 	const sessionStore = writable<Session>({});
 	let pollLoop = 0;
 
-	const deviceIdStore = writable<string>('');
-	let deviceId = '';
+	const deviceIdStore = writable<string>("");
+	let deviceId = "";
 
 	getSession().then((sess) => {
 		if (sess) {
@@ -38,8 +38,8 @@ export default function initAuthStore() {
 			key: data.key,
 			user: data.user
 		};
-		console.log('localSession:', localSession);
-		await ipcRenderer.invoke('update-session', localSession);
+		console.log("localSession:", localSession);
+		await ipcRenderer.invoke("update-session", localSession);
 		sessionStore.set(localSession);
 	}
 
@@ -49,8 +49,8 @@ export default function initAuthStore() {
 				pollLoop++;
 				try {
 					const data = await getDeviceAuth(deviceId);
-					console.log('dd', deviceId, data);
-					if (data.status === 'SUCCESS') {
+					console.log("dd", deviceId, data);
+					if (data.status === "SUCCESS") {
 						updateSession({
 							key: data.key,
 							user: data.user

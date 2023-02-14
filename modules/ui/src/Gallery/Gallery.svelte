@@ -1,12 +1,12 @@
 <script lang="ts">
-	import '../app.css';
-	import { onDestroy, onMount } from 'svelte';
-	import { watchResize } from 'svelte-watch-resize';
-	import Preloader from '../Preloader/Preloader.svelte';
-	import GalleryItem from './GalleryItem.svelte';
+	import "../app.css";
+	import { onDestroy, onMount } from "svelte";
+	import { watchResize } from "svelte-watch-resize";
+	import Preloader from "../Preloader/Preloader.svelte";
+	import GalleryItem from "./GalleryItem.svelte";
 
-	export let title = '';
-	export let linkTarget = '';
+	export let title = "";
+	export let linkTarget = "";
 
 	interface GalleryItemShape {
 		imageUrl: string;
@@ -67,7 +67,7 @@
 						resetLoop();
 					}}
 					class={`bg-purple h-3 w-3 rounded-lg border border-white transition-colors ${
-						i === focus ? 'bg-purple-900' : ''
+						i === focus ? "bg-purple-900" : ""
 					}`}
 				/>
 			{/each}

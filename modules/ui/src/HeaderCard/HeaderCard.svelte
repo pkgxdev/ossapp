@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../app.css';
+	import "../app.css";
 
 	export let title: string;
 	export let imgUrl: string;

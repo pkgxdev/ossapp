@@ -1,8 +1,8 @@
 <script lang="ts">
-	import '../app.css';
-	import type { AirtablePost } from '../types';
+	import "../app.css";
+	import type { AirtablePost } from "../types";
 
-	export let linkTarget = '';
+	export let linkTarget = "";
 	export let posts: AirtablePost[] = [];
 </script>
 

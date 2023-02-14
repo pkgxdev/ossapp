@@ -1,18 +1,18 @@
 <script lang="ts">
-	import '../app.css';
-	import ImgLoader from '../ImgLoader/ImgLoader.svelte';
+	import "../app.css";
+	import ImgLoader from "../ImgLoader/ImgLoader.svelte";
 
 	export let width = 0;
-	export let imageUrl = '';
-	export let title = '';
-	export let subTitle = '';
+	export let imageUrl = "";
+	export let title = "";
+	export let subTitle = "";
 </script>
 
 <figure class="gallery-item relative h-full w-full" style={`width:${width}px`}>
 	<ImgLoader
 		class="featured-img"
-		src={!imageUrl.includes('https://tea.xyz')
-			? 'https://tea.xyz/Images/package-thumb-nolabel4.jpg'
+		src={!imageUrl.includes("https://tea.xyz")
+			? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
 			: imageUrl}
 		alt={title}
 	/>

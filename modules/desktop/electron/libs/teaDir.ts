@@ -1,8 +1,8 @@
 // import { readDir, BaseDirectory } from '@tauri-apps/api/fs';
-import fs from 'fs';
-import path from 'path';
-import { app } from 'electron';
-import semver from 'semver';
+import fs from "fs";
+import path from "path";
+import { app } from "electron";
+import semver from "semver";
 
 type Dir = {
 	name: string;
@@ -11,13 +11,13 @@ type Dir = {
 };
 
 export const getTeaPath = () => {
-	const homePath = app.getPath('home');
-	const teaPath = path.join(homePath, './.tea');
+	const homePath = app.getPath("home");
+	const teaPath = path.join(homePath, "./.tea");
 	return teaPath;
 };
 
 export const getGuiPath = () => {
-	return path.join(getTeaPath(), 'tea.xyz/gui');
+	return path.join(getTeaPath(), "tea.xyz/gui");
 };
 
 export async function getInstalledPackages() {
@@ -30,14 +30,14 @@ export async function getInstalledPackages() {
 	});
 
 	const pkgs = folders
-		.map((p: string) => p.split('.tea/')[1])
-		.filter((p: string) => !p.includes('tea.xyz'))
+		.map((p: string) => p.split(".tea/")[1])
+		.filter((p: string) => !p.includes("tea.xyz"))
 		.map((p: string) => {
-			const path = p.trim().split('/');
+			const path = p.trim().split("/");
 			const version = path.pop();
 			return {
-				version: semver.clean(version || ''),
-				full_name: path.join('/')
+				version: semver.clean(version || ""),
+				full_name: path.join("/")
 			};
 		});
 
@@ -50,10 +50,10 @@ const semverTest =
 export const getPkgBottles = (packageDir: Dir): string[] => {
 	const bottles: string[] = [];
 
-	const pkg = packageDir.path.split('.tea/')[1];
-	const version = pkg.split('/v')[1];
+	const pkg = packageDir.path.split(".tea/")[1];
+	const version = pkg.split("/v")[1];
 
-	const isVersion = semverTest.test(version) || !isNaN(+version) || version === '*';
+	const isVersion = semverTest.test(version) || !isNaN(+version) || version === "*";
 
 	if (version && isVersion) {
 		bottles.push(pkg);

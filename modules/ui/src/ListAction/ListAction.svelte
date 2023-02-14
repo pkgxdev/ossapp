@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Button from '../Button/Button.svelte';
-	import ImgLoader from '../ImgLoader/ImgLoader.svelte';
-	import type { ListActionItem } from '../types';
+	import Button from "../Button/Button.svelte";
+	import ImgLoader from "../ImgLoader/ImgLoader.svelte";
+	import type { ListActionItem } from "../types";
 
 	export let title: string;
 	export let mainCtaTitle: string;
-	export let mainCtaLink = '/';
+	export let mainCtaLink = "/";
 
 	export let items: ListActionItem[];
 	export let onSelectItem = (item: ListActionItem) => console.log(item);

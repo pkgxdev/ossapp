@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Bottle } from '../types';
+	import type { Bottle } from "../types";
 	export let bottles: Bottle[];
 
 	let versions: string[] = [];
@@ -12,7 +12,7 @@
 <div class="my-4 w-full p-2">
 	<div>
 		<h4 class="mb-4 text-lg text-primary">
-			{versions.length} version{versions.length === 1 ? '' : 's'} bottled
+			{versions.length} version{versions.length === 1 ? "" : "s"} bottled
 		</h4>
 	</div>
 	<table class="w-full table-auto border border-gray font-sono">
@@ -30,15 +30,15 @@
 				<tr>
 					<th class="border border-gray px-2 py-4 text-left">{version}</th>
 					<td class="border border-gray px-2 py-4"
-						>{available.has('darwin-aarch64') ? '✅' : '❌'}</td
+						>{available.has("darwin-aarch64") ? "✅" : "❌"}</td
 					>
 					<td class="border border-gray px-2 py-4"
-						>{available.has('darwin-x86-64') ? '✅' : '❌'}</td
+						>{available.has("darwin-x86-64") ? "✅" : "❌"}</td
 					>
 					<td class="border border-gray px-2 py-4"
-						>{available.has('linux-aarch64') ? '✅' : '❌'}</td
+						>{available.has("linux-aarch64") ? "✅" : "❌"}</td
 					>
-					<td class="border border-gray px-2 py-4">{available.has('linux-x86-64') ? '✅' : '❌'}</td
+					<td class="border border-gray px-2 py-4">{available.has("linux-x86-64") ? "✅" : "❌"}</td
 					>
 				</tr>
 			{/each}

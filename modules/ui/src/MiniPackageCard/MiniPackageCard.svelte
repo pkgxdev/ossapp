@@ -1,15 +1,15 @@
 <script lang="ts">
-	import '../app.css';
-	import type { Package } from '../types';
+	import "../app.css";
+	import type { Package } from "../types";
 
-	import ImgLoader from '../ImgLoader/ImgLoader.svelte';
+	import ImgLoader from "../ImgLoader/ImgLoader.svelte";
 
 	export let pkg: Package;
 	export let ctaLabel: string;
-	export let link = '';
+	export let link = "";
 
 	export let onClickCTA = () => {
-		console.log('do nothing');
+		console.log("do nothing");
 	};
 </script>
 
@@ -17,8 +17,8 @@
 	<figure class="relative w-24">
 		<ImgLoader
 			class="pkg-image object-contain"
-			src={!pkg.thumb_image_url.includes('https://tea.xyz')
-				? 'https://tea.xyz/Images/package-thumb-nolabel4.jpg'
+			src={!pkg.thumb_image_url.includes("https://tea.xyz")
+				? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
 				: pkg.thumb_image_url}
 			alt={pkg.name}
 		/>
@@ -35,7 +35,7 @@
 			<p>
 				<span class="text-xs text-gray"
 					>V&NonBreakingSpace;{pkg.version}
-					{pkg?.bottles?.length ? `| ${pkg.bottles.length} bottles` : ''}</span
+					{pkg?.bottles?.length ? `| ${pkg.bottles.length} bottles` : ""}</span
 				>
 			</p>
 		</div>

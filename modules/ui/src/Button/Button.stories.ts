@@ -1,16 +1,16 @@
-import Button from './ButtonView.svelte';
+import Button from "./ButtonView.svelte";
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/svelte/writing-stories/introduction
 export default {
-	title: 'Example/Button',
+	title: "Example/Button",
 	component: Button,
-	tags: ['docsPage'],
+	tags: ["docsPage"],
 	render: (args) => ({
 		Component: Button,
 		props: args
 	}),
 	argTypes: {
-		onClick: () => console.log('does nothing')
+		onClick: () => console.log("does nothing")
 	}
 };
 

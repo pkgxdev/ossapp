@@ -1,4 +1,4 @@
-import type { ComponentType } from 'svelte';
+import type { ComponentType } from "svelte";
 export interface Review {
 	title: string;
 	comment: string;
@@ -99,7 +99,7 @@ export type Snippet = {
 	}[];
 };
 
-export type Contributor = Pick<Developer, 'avatar_url' | 'login' | 'name'> & {
+export type Contributor = Pick<Developer, "avatar_url" | "login" | "name"> & {
 	github_id: number;
 	developer_id?: string;
 	contributions: number;

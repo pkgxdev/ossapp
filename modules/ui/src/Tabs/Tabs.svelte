@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { Tab } from '../types';
-	import { afterUpdate } from 'svelte';
+	import type { Tab } from "../types";
+	import { afterUpdate } from "svelte";
 
-	let clazz = '';
+	let clazz = "";
 
 	export { clazz as class };
 
-	import Button from '../Button/Button.svelte';
+	import Button from "../Button/Button.svelte";
 
 	export let tabs: Tab[] = [];
 
@@ -19,12 +19,12 @@
 	});
 </script>
 
-<section class={`relative h-auto border border-gray ${clazz || ''}`}>
+<section class={`relative h-auto border border-gray ${clazz || ""}`}>
 	<menu class="flex border border-gray">
 		{#each tabs as tab}
 			<div class="border border-y-0 border-l-0 border-gray text-white">
 				<Button onClick={() => (active = tab.label)}>
-					<span class={tab.label === active ? 'text-white' : ''}>{tab.label}</span>
+					<span class={tab.label === active ? "text-white" : ""}>{tab.label}</span>
 				</Button>
 			</div>
 		{/each}

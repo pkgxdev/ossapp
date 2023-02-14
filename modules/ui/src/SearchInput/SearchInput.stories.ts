@@ -1,7 +1,7 @@
-import SearchInput from './SearchInput.svelte';
+import SearchInput from "./SearchInput.svelte";
 
 export default {
-	title: 'Example/SearchInput',
+	title: "Example/SearchInput",
 	component: SearchInput,
 	// This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/7.0/svelte/writing-docs/docs-page
 	tags: [],
@@ -23,7 +23,7 @@ export default {
 export const Small = {
 	args: {
 		user: {
-			name: 'Jane Doe'
+			name: "Jane Doe"
 		}
 	}
 };

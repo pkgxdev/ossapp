@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../app.css';
+	import "../app.css";
 
 	type Article = {
 		title: string;
@@ -21,7 +21,7 @@
 	<article class="p-4">
 		<p class="font-sono text-xs line-clamp-3">{content.copy}</p>
 		{#if content.link}
-			<a href={content.link || '#'}>
+			<a href={content.link || "#"}>
 				<button class="mt-2 text-primary">{content.cta_label}</button>
 			</a>
 		{:else if onClick}

@@ -1,14 +1,14 @@
 <script lang="ts">
-	import '../app.css';
-	import type { Package } from '../types';
-	import ImgLoader from '../ImgLoader/ImgLoader.svelte';
+	import "../app.css";
+	import type { Package } from "../types";
+	import ImgLoader from "../ImgLoader/ImgLoader.svelte";
 
 	export let pkg: Package;
 	export let link: string;
 	export let ctaLabel: string;
 
 	export let onClickCTA = () => {
-		console.log('do nothing');
+		console.log("do nothing");
 	};
 </script>
 
@@ -17,8 +17,8 @@
 		<figure>
 			<ImgLoader
 				class="pkg-image"
-				src={!pkg.thumb_image_url.includes('https://tea.xyz')
-					? 'https://tea.xyz/Images/package-thumb-nolabel4.jpg'
+				src={!pkg.thumb_image_url.includes("https://tea.xyz")
+					? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
 					: pkg.thumb_image_url}
 				alt={pkg.name}
 			/>

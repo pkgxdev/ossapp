@@ -1,9 +1,9 @@
-import axios from 'axios';
-import type { Contributor, Package } from '@tea/ui/types';
-const yaml = window.require('yaml');
+import axios from "axios";
+import type { Contributor, Package } from "@tea/ui/types";
+const yaml = window.require("yaml");
 
 export async function getPackageYaml(pkgYamlUrl: string) {
-	const url = pkgYamlUrl.replace('/github.com', '/raw.githubusercontent.com').replace('/blob', '');
+	const url = pkgYamlUrl.replace("/github.com", "/raw.githubusercontent.com").replace("/blob", "");
 
 	const { data: rawYaml } = await axios.get(url);
 
@@ -13,7 +13,7 @@ export async function getPackageYaml(pkgYamlUrl: string) {
 }
 
 export async function getReadme(owner: string, repo: string): Promise<string> {
-	let readme = '';
+	let readme = "";
 	const req = await axios.get(`https://api.github.com/repos/${owner}/${repo}/readme`);
 	if (req.data?.download_url) {
 		const reqDl = await axios.get(req.data.download_url);
@@ -30,7 +30,7 @@ export async function getContributors(owner: string, repo: string): Promise<Cont
 		contributors = req.data.map((c: Contributor & { id: number }) => ({
 			login: c.login,
 			avatar_url: c.avatar_url,
-			name: c.name || '',
+			name: c.name || "",
 			github_id: c.id,
 			contributions: c.contributions
 		}));
@@ -42,7 +42,7 @@ export async function getRepoAsPackage(owner: string, repo: string): Promise<Par
 	const req = await axios.get(`https://api.github.com/repos/${owner}/${repo}`);
 	const pkg: Partial<Package> = {};
 	if (req.data) {
-		pkg.license = req.data?.license?.name || '';
+		pkg.license = req.data?.license?.name || "";
 	}
 	return pkg;
 }

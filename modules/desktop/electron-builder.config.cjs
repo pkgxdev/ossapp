@@ -3,11 +3,11 @@
 // const path = require('path');
 
 module.exports = {
-	appId: 'xyz.tea.gui',
-	productName: 'tea',
+	appId: "xyz.tea.gui",
+	productName: "tea",
 	asar: false,
-	directories: { output: 'dist' },
-	files: ['electron/dist/electron.cjs', { from: 'build', to: '' }]
+	directories: { output: "dist" },
+	files: ["electron/dist/electron.cjs", { from: "build", to: "" }]
 	// TODO: if xcrun altool exists eventually in our self-hosted macos
 	// SOLUTION: is notarize separately in next pipeline step
 	// afterSign: async (params) => {

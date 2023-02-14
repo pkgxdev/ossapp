@@ -1,12 +1,12 @@
-import windowStateManager from 'electron-window-state';
-import { app, BrowserWindow, ipcMain } from 'electron';
-import contextMenu from 'electron-context-menu';
-import serve from 'electron-serve';
+import windowStateManager from "electron-window-state";
+import { app, BrowserWindow, ipcMain } from "electron";
+import contextMenu from "electron-context-menu";
+import serve from "electron-serve";
 
-import { getInstalledPackages } from './libs/teaDir';
-import { readSessionData, writeSessionData } from './libs/auth';
-import type { Session } from '../src/libs/types';
-import { installPackage, openTerminal } from './libs/cli';
+import { getInstalledPackages } from "./libs/teaDir";
+import { readSessionData, writeSessionData } from "./libs/auth";
+import type { Session } from "../src/libs/types";
+import { installPackage, openTerminal } from "./libs/cli";
 
 // try {
 // 	//@ts-ignore only used in dev should not be packaged inprod
@@ -17,7 +17,7 @@ import { installPackage, openTerminal } from './libs/cli';
 // 	console.error(e);
 // }
 
-const serveURL = serve({ directory: '.' });
+const serveURL = serve({ directory: "." });
 const port = process.env.PORT || 3000;
 const dev = !app.isPackaged;
 let mainWindow: BrowserWindow | null;
@@ -29,7 +29,7 @@ function createWindow() {
 	});
 
 	const mainWindow = new BrowserWindow({
-		backgroundColor: 'whitesmoke',
+		backgroundColor: "whitesmoke",
 		autoHideMenuBar: true,
 		trafficLightPosition: {
 			x: 17,
@@ -54,12 +54,12 @@ function createWindow() {
 
 	windowState.manage(mainWindow);
 
-	mainWindow.once('ready-to-show', () => {
+	mainWindow.once("ready-to-show", () => {
 		mainWindow.show();
 		mainWindow.focus();
 	});
 
-	mainWindow.on('close', () => {
+	mainWindow.on("close", () => {
 		windowState.saveState(mainWindow);
 	});
 
@@ -72,14 +72,14 @@ contextMenu({
 	showCopyImage: false,
 	prepend: (defaultActions, params, browserWindow) => [
 		{
-			label: 'Make App 💻'
+			label: "Make App 💻"
 		}
 	]
 });
 
 function loadVite(port) {
 	mainWindow?.loadURL(`http://localhost:${port}`).catch((e) => {
-		console.log('Error loading URL, retrying', e);
+		console.log("Error loading URL, retrying", e);
 		setTimeout(() => {
 			loadVite(port);
 		}, 200);
@@ -88,7 +88,7 @@ function loadVite(port) {
 
 function createMainWindow() {
 	mainWindow = createWindow();
-	mainWindow.once('close', () => {
+	mainWindow.once("close", () => {
 		mainWindow = null;
 	});
 
@@ -96,46 +96,46 @@ function createMainWindow() {
 	else serveURL(mainWindow);
 }
 
-app.once('ready', createMainWindow);
-app.on('activate', () => {
+app.once("ready", createMainWindow);
+app.on("activate", () => {
 	if (!mainWindow) {
 		createMainWindow();
 	}
 });
-app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') app.quit();
+app.on("window-all-closed", () => {
+	if (process.platform !== "darwin") app.quit();
 });
 
-ipcMain.on('to-main', (event, count) => {
-	return mainWindow?.webContents.send('from-main', `next count is ${count + 1}`);
+ipcMain.on("to-main", (event, count) => {
+	return mainWindow?.webContents.send("from-main", `next count is ${count + 1}`);
 });
 
-ipcMain.handle('get-installed-packages', async () => {
+ipcMain.handle("get-installed-packages", async () => {
 	const pkgs = await getInstalledPackages();
 	return pkgs;
 });
 
-ipcMain.handle('get-session', async () => {
+ipcMain.handle("get-session", async () => {
 	const session = await readSessionData();
 	return session;
 });
 
-ipcMain.handle('update-session', async (_, data) => {
+ipcMain.handle("update-session", async (_, data) => {
 	await writeSessionData(data as Session);
 });
 
-ipcMain.handle('install-package', async (_, data) => {
+ipcMain.handle("install-package", async (_, data) => {
 	const result = await installPackage(data.full_name);
 	return result;
 });
 
-ipcMain.handle('open-terminal', async (_, data) => {
+ipcMain.handle("open-terminal", async (_, data) => {
 	const { cmd } = data as { cmd: string };
 	try {
 		// TODO: detect if mac or linux
 		// current openTerminal is only design for Mac
 		await openTerminal(cmd);
 	} catch (error) {
-		console.error('elast:', error);
+		console.error("elast:", error);
 	}
 });
