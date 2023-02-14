@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../app.css';
+	import "../app.css";
 	// TODO: add types of preloader here
 	// export let type: EnumPreload = 'logo-pulse';
 </script>

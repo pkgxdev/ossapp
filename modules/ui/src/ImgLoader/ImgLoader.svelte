@@ -1,11 +1,11 @@
 <script lang="ts">
-	import '../app.css';
-	import Preloader from '../Preloader/Preloader.svelte';
+	import "../app.css";
+	import Preloader from "../Preloader/Preloader.svelte";
 	export let src: string;
-	export let alt = 'loading';
-	export let style = '';
+	export let alt = "loading";
+	export let style = "";
 
-	let clazz = '';
+	let clazz = "";
 	export { clazz as class };
 
 	function preloadImage() {

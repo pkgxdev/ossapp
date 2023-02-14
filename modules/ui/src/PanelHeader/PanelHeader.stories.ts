@@ -1,7 +1,7 @@
-import PanelHeader from './PanelHeader.svelte';
+import PanelHeader from "./PanelHeader.svelte";
 
 export default {
-	title: 'Example/PanelHeader',
+	title: "Example/PanelHeader",
 	component: PanelHeader,
 	render: (props) => ({
 		Component: PanelHeader,
@@ -12,8 +12,8 @@ export default {
 // More on interaction testing: https://storybook.js.org/docs/7.0/svelte/writing-tests/interaction-testing
 export const Example = {
 	args: {
-		title: 'Open-Source News',
-		ctaLabel: 'Read More News >',
-		ctaLink: '/'
+		title: "Open-Source News",
+		ctaLabel: "Read More News >",
+		ctaLink: "/"
 	}
 };

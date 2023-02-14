@@ -1,8 +1,8 @@
 <script lang="ts">
-	import SvelteMarkdown from 'svelte-markdown';
-	import Link from './Link.svelte';
+	import SvelteMarkdown from "svelte-markdown";
+	import Link from "./Link.svelte";
 
-	import './styles.css';
+	import "./styles.css";
 
 	export let source: string;
 

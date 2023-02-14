@@ -1,25 +1,25 @@
 <script lang="ts">
-	import '../app.css';
-	import type { Review } from '../types';
+	import "../app.css";
+	import type { Review } from "../types";
 
 	export let review: Review;
 
 	const getStarType = () => {
-		let star = 'full';
+		let star = "full";
 		if (review.rating < 3) {
-			star = 'empty';
+			star = "empty";
 		} else if (review.rating < 4) {
-			star = 'half';
+			star = "half";
 		}
 		return `icon-star-${star}`;
 	};
 
 	const getStarLabel = () => {
-		let label = 'DELIGHTFUL';
+		let label = "DELIGHTFUL";
 		if (review.rating < 3) {
-			label = 'NOT DELIGHTFUL';
+			label = "NOT DELIGHTFUL";
 		} else if (review.rating < 4) {
-			label = 'DELIGHTFUL WITH NOTES';
+			label = "DELIGHTFUL WITH NOTES";
 		}
 		return label;
 	};

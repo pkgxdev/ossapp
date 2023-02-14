@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Package } from '../types';
-	import dayjs from 'dayjs';
-	import relativeTime from 'dayjs/plugin/relativeTime';
+	import type { Package } from "../types";
+	import dayjs from "dayjs";
+	import relativeTime from "dayjs/plugin/relativeTime";
 
 	dayjs.extend(relativeTime);
 
@@ -9,17 +9,17 @@
 
 	const computeFileSize = (bytes: number): string => {
 		let n: number = bytes;
-		let unit = 'bytes';
+		let unit = "bytes";
 		let divisor = 1;
 
 		if (n > 1024 ** 3) {
-			unit = 'GB';
+			unit = "GB";
 			divisor = 1024 ** 3;
 		} else if (n > 1024 ** 2) {
-			unit = 'MB';
+			unit = "MB";
 			divisor = 1024 ** 2;
 		} else if (n > 1024) {
-			unit = 'KB';
+			unit = "KB";
 			divisor = 1024;
 		}
 

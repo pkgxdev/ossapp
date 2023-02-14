@@ -1,20 +1,20 @@
-import { writable } from 'svelte/store';
-import Fuse from 'fuse.js';
+import { writable } from "svelte/store";
+import Fuse from "fuse.js";
 
-import type { Package, Review, AirtablePost } from '@tea/ui/types';
-import type { GUIPackage } from '$libs/types';
+import type { Package, Review, AirtablePost } from "@tea/ui/types";
+import type { GUIPackage } from "$libs/types";
 
-import { getFeaturedPackages, getPackageReviews, getAllPosts } from '@api';
-import initAuthStore from './stores/auth';
-import initNavStore from './stores/nav';
-import initPackagesStore from './stores/pkgs';
+import { getFeaturedPackages, getPackageReviews, getAllPosts } from "@api";
+import initAuthStore from "./stores/auth";
+import initNavStore from "./stores/nav";
+import initPackagesStore from "./stores/pkgs";
 
 export const featuredPackages = writable<Package[]>([]);
 
 export const packagesStore = initPackagesStore();
 
 export const initializeFeaturedPackages = async () => {
-	console.log('intialize featured packages');
+	console.log("intialize featured packages");
 	const packages = await getFeaturedPackages();
 	featuredPackages.set(packages);
 };
@@ -71,7 +71,7 @@ function initPosts() {
 	subscribe((v) => {
 		posts.push(...v);
 		postsIndex = new Fuse(posts, {
-			keys: ['title', 'sub_title', 'short_description', 'tags']
+			keys: ["title", "sub_title", "short_description", "tags"]
 		});
 	});
 
@@ -94,7 +94,7 @@ export const postsStore = initPosts();
 
 function initSearchStore() {
 	const searching = writable<boolean>(false);
-	const { subscribe, set } = writable<string>('');
+	const { subscribe, set } = writable<string>("");
 	const packagesSearch = writable<GUIPackage[]>([]);
 	const postsSearch = writable<AirtablePost[]>([]);
 
@@ -103,7 +103,7 @@ function initSearchStore() {
 
 	const packagesFound: GUIPackage[] = [];
 
-	let term = '';
+	let term = "";
 
 	subscribe((v) => (term = v));
 	packagesSearch.subscribe((v) => packagesFound.push(...v));

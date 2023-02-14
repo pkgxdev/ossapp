@@ -1,14 +1,14 @@
-import { writable } from 'svelte/store';
-import { goto } from '$app/navigation';
+import { writable } from "svelte/store";
+import { goto } from "$app/navigation";
 
 export default function initNavStore() {
-	const historyStore = writable<string[]>(['/']);
-	let history = ['/'];
+	const historyStore = writable<string[]>(["/"]);
+	let history = ["/"];
 
 	historyStore.subscribe((v) => (history = v));
 
-	const prevPathStore = writable<string>('');
-	const nextPathStore = writable<string>('');
+	const prevPathStore = writable<string>("");
+	const nextPathStore = writable<string>("");
 
 	let currentIndex = 0; // if non next/back click
 
@@ -25,7 +25,7 @@ export default function initNavStore() {
 				goto(history[currentIndex + 1]);
 				prevPathStore.set(history[currentIndex]);
 				currentIndex++;
-				if (currentIndex >= history.length - 1) nextPathStore.set('');
+				if (currentIndex >= history.length - 1) nextPathStore.set("");
 			}
 		},
 		back: () => {
@@ -34,7 +34,7 @@ export default function initNavStore() {
 				goto(history[currentIndex - 1]);
 				nextPathStore.set(history[currentIndex]);
 				currentIndex--;
-				if (currentIndex === 0) prevPathStore.set('');
+				if (currentIndex === 0) prevPathStore.set("");
 			}
 		},
 		setNewPath: (newNextPath: string, newPrevPath: string) => {

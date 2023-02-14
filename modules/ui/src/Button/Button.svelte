@@ -1,5 +1,5 @@
 <script lang="ts">
-	let clazz = '';
+	let clazz = "";
 	export { clazz as class };
 
 	// export let size: 'large' | 'medium' | 'small' = 'medium';
@@ -10,7 +10,7 @@
 
 <button
 	type="button"
-	class={`w-full p-2 font-machina text-gray ${clazz} ${active ? 'active' : ''}`}
+	class={`w-full p-2 font-machina text-gray ${clazz} ${active ? "active" : ""}`}
 	on:click={() => onClick && onClick()}
 >
 	<slot />

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import '../app.css';
+	import "../app.css";
 
-	let clazz = '';
+	let clazz = "";
 	export { clazz as class };
-	export let size: 'small' | 'medium' | 'large' = 'small';
+	export let size: "small" | "medium" | "large" = "small";
 	export let onSearch: (text: string) => void;
-	export let placeholder = 'search_';
+	export let placeholder = "search_";
 
 	let timer: NodeJS.Timeout;
 	const onChange = (e: KeyboardEvent) => {
@@ -45,7 +45,7 @@
 	}
 
 	section input {
-		font-family: 'pp-neue-machina', sans-serif;
+		font-family: "pp-neue-machina", sans-serif;
 		color: #00ffd0;
 		text-transform: uppercase;
 		margin-bottom: -5px;

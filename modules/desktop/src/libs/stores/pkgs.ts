@@ -1,10 +1,10 @@
-import { writable } from 'svelte/store';
-import type { GUIPackage } from '../types';
-import { getPackages } from '@api';
-import Fuse from 'fuse.js';
-import { getPackage } from '@api';
+import { writable } from "svelte/store";
+import type { GUIPackage } from "../types";
+import { getPackages } from "@api";
+import Fuse from "fuse.js";
+import { getPackage } from "@api";
 
-import { getReadme, getContributors, getRepoAsPackage } from '$libs/github';
+import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 
 export default function initPackagesStore() {
 	let initialized = false;
@@ -17,7 +17,7 @@ export default function initPackagesStore() {
 		getPackages().then((pkgs) => {
 			set(pkgs);
 			packagesIndex = new Fuse(pkgs, {
-				keys: ['name', 'full_name', 'desc', 'categories']
+				keys: ["name", "full_name", "desc", "categories"]
 			});
 		});
 	}
@@ -51,7 +51,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			synced: true
 		};
 		if (pkg.github) {
-			const [owner, repo] = pkg.github.split('/');
+			const [owner, repo] = pkg.github.split("/");
 			const [readme, contributors, repoData] = await Promise.all([
 				getReadme(owner, repo),
 				getContributors(owner, repo),

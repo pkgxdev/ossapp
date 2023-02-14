@@ -10,21 +10,21 @@
  *  - connect to remote api(api.tea.xyz) and returns a data
  *  - connect to a local platform api and returns a data
  */
-import axios from 'axios';
+import axios from "axios";
 
-import type { Package, Review, AirtablePost, Bottle } from '@tea/ui/types';
-import type { GUIPackage, Course, Category, DeviceAuth } from '../types';
+import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
+import type { GUIPackage, Course, Category, DeviceAuth } from "../types";
 
-import * as mock from './mock';
-import { PackageStates } from '../types';
-import { getInstalledPackages } from '$libs/teaDir';
-import { installPackageCommand } from '$libs/cli';
+import * as mock from "./mock";
+import { PackageStates } from "../types";
+import { getInstalledPackages } from "$libs/teaDir";
+import { installPackageCommand } from "$libs/cli";
 
-import { get as apiGet } from '$libs/v1Client';
+import { get as apiGet } from "$libs/v1Client";
 
 export async function getPackages(): Promise<GUIPackage[]> {
 	const [packages, installedPackages] = await Promise.all([
-		apiGet<Package[]>('packages', { nocache: 'true' }),
+		apiGet<Package[]>("packages", { nocache: "true" }),
 		getInstalledPackages()
 	]);
 
@@ -33,7 +33,7 @@ export async function getPackages(): Promise<GUIPackage[]> {
 		return {
 			...pkg,
 			state: found ? PackageStates.INSTALLED : PackageStates.AVAILABLE,
-			installed_version: found ? found.version : ''
+			installed_version: found ? found.version : ""
 		};
 	});
 }
@@ -46,7 +46,7 @@ export async function getFeaturedPackages(): Promise<Package[]> {
 export async function getPackageReviews(full_name: string): Promise<Review[]> {
 	console.log(`getting reviews for ${full_name}`);
 	const reviews: Review[] = await apiGet<Review[]>(
-		`packages/${full_name.replaceAll('/', ':')}/reviews`
+		`packages/${full_name.replaceAll("/", ":")}/reviews`
 	);
 
 	return reviews;
@@ -61,7 +61,7 @@ export async function installPackage(full_name: string) {
 }
 
 export async function getFeaturedCourses(): Promise<Course[]> {
-	const posts = await apiGet<AirtablePost[]>('posts', { tag: 'featured_course' });
+	const posts = await apiGet<AirtablePost[]>("posts", { tag: "featured_course" });
 	return posts.map((post) => {
 		return {
 			title: post.title,
@@ -81,14 +81,14 @@ export async function getAllPosts(tag?: string): Promise<AirtablePost[]> {
 	// add filter here someday: tag = news | course
 	const queryParams = {
 		...(tag ? { tag } : {}),
-		nocache: 'true'
+		nocache: "true"
 	};
-	const posts = await apiGet<AirtablePost[]>('posts', queryParams);
+	const posts = await apiGet<AirtablePost[]>("posts", queryParams);
 	return posts;
 }
 
 export async function getCategorizedPackages(): Promise<Category[]> {
-	const categories = await apiGet<Category[]>('/packages/categorized');
+	const categories = await apiGet<Category[]>("/packages/categorized");
 	return categories;
 }
 
@@ -98,19 +98,19 @@ export async function getDeviceAuth(deviceId: string): Promise<DeviceAuth> {
 }
 
 export async function getPackageBottles(packageName: string): Promise<Bottle[]> {
-	console.log('getting bottles for ', packageName);
-	const pkg: Package = await apiGet<Package>(`packages/${packageName.replaceAll('/', ':')}`);
+	console.log("getting bottles for ", packageName);
+	const pkg: Package = await apiGet<Package>(`packages/${packageName.replaceAll("/", ":")}`);
 	return pkg.bottles || [];
 }
 
 export async function getPackage(packageName: string): Promise<Partial<Package>> {
 	const pkg: Partial<Package> = await apiGet<Partial<Package>>(
-		`packages/${packageName.replaceAll('/', ':')}`
+		`packages/${packageName.replaceAll("/", ":")}`
 	);
 	return pkg;
 }
 
 export async function registerDevice(): Promise<string> {
-	const { deviceId } = await apiGet<{ deviceId: string }>('/auth/registerDevice');
+	const { deviceId } = await apiGet<{ deviceId: string }>("/auth/registerDevice");
 	return deviceId;
 }

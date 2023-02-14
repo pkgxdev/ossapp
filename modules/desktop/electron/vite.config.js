@@ -1,7 +1,7 @@
-import { join } from 'path';
+import { join } from "path";
 
 const PACKAGE_ROOT = __dirname;
-const PROJECT_ROOT = join(PACKAGE_ROOT, '../..');
+const PROJECT_ROOT = join(PACKAGE_ROOT, "../..");
 
 /**
  * @type {import('vite').UserConfig}
@@ -12,22 +12,22 @@ const config = {
 	envDir: PROJECT_ROOT,
 	resolve: {
 		alias: {
-			'/@/': join(PACKAGE_ROOT, 'src') + '/'
+			"/@/": join(PACKAGE_ROOT, "src") + "/"
 		}
 	},
 	build: {
 		ssr: true,
-		sourcemap: 'inline',
-		outDir: 'dist',
-		assetsDir: '.',
-		minify: process.env.MODE !== 'development',
+		sourcemap: "inline",
+		outDir: "dist",
+		assetsDir: ".",
+		minify: process.env.MODE !== "development",
 		lib: {
-			entry: 'electron.ts',
-			formats: ['cjs']
+			entry: "electron.ts",
+			formats: ["cjs"]
 		},
 		rollupOptions: {
 			output: {
-				entryFileNames: '[name].cjs'
+				entryFileNames: "[name].cjs"
 			}
 		},
 		emptyOutDir: true,

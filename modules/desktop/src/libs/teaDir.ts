@@ -8,9 +8,9 @@ type Dir = {
 	children?: Dir[];
 };
 
-const { ipcRenderer } = window.require('electron');
+const { ipcRenderer } = window.require("electron");
 export async function getInstalledPackages() {
-	const pkgs = await ipcRenderer.invoke('get-installed-packages');
+	const pkgs = await ipcRenderer.invoke("get-installed-packages");
 	return pkgs as { version: string; full_name: string }[];
 }
 
@@ -20,10 +20,10 @@ const semverTest =
 export const getPkgBottles = (packageDir: Dir): string[] => {
 	const bottles: string[] = [];
 
-	const pkg = packageDir.path.split('.tea/')[1];
-	const version = pkg.split('/v')[1];
+	const pkg = packageDir.path.split(".tea/")[1];
+	const version = pkg.split("/v")[1];
 
-	const isVersion = semverTest.test(version) || !isNaN(+version) || version === '*';
+	const isVersion = semverTest.test(version) || !isNaN(+version) || version === "*";
 
 	if (version && isVersion) {
 		bottles.push(pkg);

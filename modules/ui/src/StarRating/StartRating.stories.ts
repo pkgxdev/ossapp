@@ -1,7 +1,7 @@
-import StarRating from './StarRating.svelte';
+import StarRating from "./StarRating.svelte";
 
 export default {
-	title: 'Example/StarRating',
+	title: "Example/StarRating",
 	component: StarRating,
 	// This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/7.0/svelte/writing-docs/docs-page
 	tags: [],

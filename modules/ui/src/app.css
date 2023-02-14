@@ -5,11 +5,11 @@
 @tailwind utilities;
 
 @font-face {
-	font-family: 'pp-neue-machina';
-	src: url('../static/fonts/PPNeueMachina-InktrapLight.woff');
+	font-family: "pp-neue-machina";
+	src: url("../static/fonts/PPNeueMachina-InktrapLight.woff");
 }
 
 @font-face {
-	font-family: 'sono';
-	src: url('../static/fonts/Sono-Light.woff2');
+	font-family: "sono";
+	src: url("../static/fonts/Sono-Light.woff2");
 }
