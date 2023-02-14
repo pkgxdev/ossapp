@@ -10,9 +10,9 @@
 	import type { Tab } from '@tea/ui/types';
 	import Bottles from '@tea/ui/Bottles/Bottles.svelte';
 	import { getPackageBottles } from '@api';
-	import PackageMetas from '@tea/ui/PackageMetas/PackageMetas.svelte';
-	import Markdown from '@tea/ui/Markdown/Markdown.svelte';
-	import PackageSnippets from '@tea/ui/PackageSnippets/PackageSnippets.svelte';
+	import PackageMetas from '@tea/ui/package-metas/package-metas.svelte';
+	import Markdown from '@tea/ui/markdown/markdown.svelte';
+	import PackageSnippets from '@tea/ui/package-snippets/package-snippets.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;

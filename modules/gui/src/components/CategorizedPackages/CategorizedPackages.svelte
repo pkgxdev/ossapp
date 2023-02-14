@@ -1,6 +1,6 @@
 <script lang="ts">
-	import PanelHeader from '@tea/ui/PanelHeader/PanelHeader.svelte';
-	import MiniPackageCard from '@tea/ui/MiniPackageCard/MiniPackageCard.svelte';
+	import PanelHeader from '@tea/ui/panel-header/panel-header.svelte';
+	import MiniPackageCard from '@tea/ui/mini-package-card/mini-package-card.svelte';
 	import type { Category } from '$libs/types';
 	import { onMount } from 'svelte';
 	import { getCategorizedPackages } from '@api';

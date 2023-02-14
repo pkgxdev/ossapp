@@ -3,7 +3,7 @@
 	import '@tea/ui/icons/icons.css';
 	import type { Package, Bottle } from '@tea/ui/types';
 	import Button from '@tea/ui/Button/Button.svelte';
-	import StarRating from '@tea/ui/StarRating/StarRating.svelte';
+	import StarRating from '@tea/ui/star-rating/star-rating.svelte';
 	import { onMount } from 'svelte';
 	import { getPackageBottles } from '@api';
 

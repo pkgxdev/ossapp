@@ -3,7 +3,7 @@
 	import { onDestroy, onMount } from "svelte";
 	import { watchResize } from "svelte-watch-resize";
 	import Preloader from "../Preloader/Preloader.svelte";
-	import GalleryItem from "./GalleryItem.svelte";
+	import GalleryItem from "./gallery-item.svelte";
 
 	export let title = "";
 	export let linkTarget = "";

@@ -3,7 +3,7 @@
 	import type { GUIPackage } from '$libs/types';
 	import { PackageStates } from '$libs/types';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
-	import PackageCard from '@tea/ui/PackageCard/PackageCard.svelte';
+	import PackageCard from '@tea/ui/package-card/package-card.svelte';
 	import { packagesStore } from '$libs/stores';
 
 	// TODO: replace with getting foundation essentials

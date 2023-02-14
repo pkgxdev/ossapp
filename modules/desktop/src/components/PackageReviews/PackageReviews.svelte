@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '$appcss';
 	import { afterUpdate } from 'svelte';
-	import ReviewCard from '@tea/ui/ReviewCard/ReviewCard.svelte';
+	import ReviewCard from '@tea/ui/review-card/review-card.svelte';
 
 	import type { Review } from '@tea/ui/types';
 	export let reviews: Review[];

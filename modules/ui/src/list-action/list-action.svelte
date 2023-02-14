@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from "../Button/Button.svelte";
-	import ImgLoader from "../ImgLoader/ImgLoader.svelte";
+	import ImgLoader from "../img-loader/img-loader.svelte";
 	import type { ListActionItem } from "../types";
 
 	export let title: string;

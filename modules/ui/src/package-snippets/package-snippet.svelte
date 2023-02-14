@@ -2,8 +2,8 @@
 	import "../app.css";
 	import { onMount } from "svelte";
 	import type { Snippet, Tab } from "../types";
-	import Tabs from "../Tabs/Tabs.svelte";
-	import Code from "./Code.svelte";
+	import Tabs from "../tabs/tabs.svelte";
+	import Code from "./code.svelte";
 
 	export let snippet: Snippet;
 

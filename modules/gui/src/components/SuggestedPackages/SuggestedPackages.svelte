@@ -4,7 +4,7 @@
 	import type { Package } from '@tea/ui/types';
 	import { PackageStates } from '$libs/types';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
-	import PackageCard from '@tea/ui/PackageCard/PackageCard.svelte';
+	import PackageCard from '@tea/ui/package-card/package-card.svelte';
 	import { onMount } from 'svelte';
 	import { installPackage } from '@api';
 	import { packagesStore } from '$libs/stores';

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { snippets } from "./sample";
-	import PackageSnippet from "./PackageSnippet.svelte";
+	import PackageSnippet from "./package-snippet.svelte";
 </script>
 
 <ul class="bg-black">

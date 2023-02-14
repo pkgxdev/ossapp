@@ -2,9 +2,9 @@
 	import '$appcss';
 	import type { GUIPackage } from '$libs/types';
 	import { PackageStates } from '$libs/types';
-	import PanelHeader from '@tea/ui/PanelHeader/PanelHeader.svelte';
+	import PanelHeader from '@tea/ui/panel-header/panel-header.svelte';
 	import { packagesStore } from '$libs/stores';
-	import MiniPackageCard from '@tea/ui/MiniPackageCard/MiniPackageCard.svelte';
+	import MiniPackageCard from '@tea/ui/mini-package-card/mini-package-card.svelte';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	let packages: GUIPackage[] = [];
 

@@ -4,8 +4,8 @@
 	import SortingButtons from './SortingButtons.svelte';
 	import type { GUIPackage } from '$libs/types';
 	import { PackageStates } from '$libs/types';
-	import PackageCard from '@tea/ui/PackageCard/PackageCard.svelte';
-	import SearchInput from '@tea/ui/SearchInput/SearchInput.svelte';
+	import PackageCard from '@tea/ui/package-card/package-card.svelte';
+	import SearchInput from '@tea/ui/search-input/search-input.svelte';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 
 	import { installPackage } from '@api';

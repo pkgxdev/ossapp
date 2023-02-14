@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import { beforeUpdate } from 'svelte';
 	import { searchStore } from '$libs/stores';
-	import SearchInput from '@tea/ui/SearchInput/SearchInput.svelte';
+	import SearchInput from '@tea/ui/search-input/search-input.svelte';
 	import { navStore } from '$libs/stores';
 
 	import ProfileNavButton from './ProfileNavButton.svelte';

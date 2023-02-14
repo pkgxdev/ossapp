@@ -7,7 +7,7 @@
 	import News from '$components/News/News.svelte';
 
 	import HeaderCard from '@tea/ui/HeaderCard/HeaderCard.svelte';
-	import ListAction from '@tea/ui/ListAction/ListAction.svelte';
+	import ListAction from '@tea/ui/list-action/list-action.svelte';
 </script>
 
 <div>

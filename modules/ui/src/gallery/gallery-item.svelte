@@ -1,6 +1,6 @@
 <script lang="ts">
 	import "../app.css";
-	import ImgLoader from "../ImgLoader/ImgLoader.svelte";
+	import ImgLoader from "../img-loader/img-loader.svelte";
 
 	export let width = 0;
 	export let imageUrl = "";

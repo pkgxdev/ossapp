@@ -2,7 +2,7 @@
 	import { searchStore } from '$libs/stores';
 	import type { GUIPackage } from '$libs/types';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
-	import PackageCard from '@tea/ui/PackageCard/PackageCard.svelte';
+	import PackageCard from '@tea/ui/package-card/package-card.svelte';
 	import { PackageStates } from '$libs/types';
 	import Posts from '@tea/ui/Posts/Posts.svelte';
 
