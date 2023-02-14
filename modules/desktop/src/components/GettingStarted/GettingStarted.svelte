@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '$appcss';
-	import ArticleCard from '@tea/ui/article-card/ArticleCard.svelte';
+	import ArticleCard from '@tea/ui/article-card/article-card.svelte';
 
 	const doStuff = () => {
 		console.log('do stuff!');
