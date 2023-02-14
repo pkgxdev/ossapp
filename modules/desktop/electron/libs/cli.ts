@@ -1,6 +1,6 @@
 import { spawn } from "child_process";
 import { clean } from "semver";
-import { getGuiPath } from "./teaDir";
+import { getGuiPath } from "./tea-dir";
 import fs from "fs";
 import path from "path";
 

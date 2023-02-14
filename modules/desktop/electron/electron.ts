@@ -3,7 +3,7 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import contextMenu from "electron-context-menu";
 import serve from "electron-serve";
 
-import { getInstalledPackages } from "./libs/teaDir";
+import { getInstalledPackages } from "./libs/tea-dir";
 import { readSessionData, writeSessionData } from "./libs/auth";
 import type { Session } from "../src/libs/types";
 import { installPackage, openTerminal } from "./libs/cli";

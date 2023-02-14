@@ -1,6 +1,6 @@
 import { getPkgBottles } from "../tea-dir";
 
-describe("teaDir module", () => {
+describe("tea-dir module", () => {
 	it("should getPkgBottles from nested Dir object/s", () => {
 		const results = getPkgBottles({
 			name: "kkos",

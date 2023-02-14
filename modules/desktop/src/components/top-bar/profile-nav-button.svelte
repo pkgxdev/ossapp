@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { authStore } from '$libs/stores';
 	import type { Developer } from '@tea/ui/types';
-	import { baseUrl } from '$libs/v1Client';
+	import { baseUrl } from '$libs/v1-client';
 
 	const { shell } = window.require('electron');
 
