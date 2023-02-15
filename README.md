@@ -91,7 +91,6 @@ pnpm install
 pnpm add -g vite
 pnpm --filter desktop exec pnpm build
 cp -R modules/desktop/build modules/cli
-
 ```
 
 # Dependencies
@@ -100,8 +99,6 @@ cp -R modules/desktop/build modules/cli
 |---------------------|-----------|
 | nodejs.org          | =18.13.0  |
 | pnpm.io             | >=7.18.2  |
-| rust-lang.org       | >=1.62    |
-| rust-lang.org/cargo | >=0.66    |
 | xcfile.dev          | >=0.0.110 |
 | python.org          | >=3.10    |
 | deno.land           | >=1.30    |
