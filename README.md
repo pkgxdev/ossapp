@@ -87,7 +87,6 @@ pnpm dev
 ## Dist
 
 ```sh
-pnpm setup
 pnpm install
 pnpm add -g vite
 pnpm --filter desktop exec pnpm dist
@@ -98,7 +97,7 @@ pnpm --filter desktop exec pnpm dist
 | Project             |  Version  |
 |---------------------|-----------|
 | nodejs.org          | =18.13.0  |
-| pnpm.io             | >=7.18.2  |
+| pnpm.io             | =7.18.2  |
 | rust-lang.org       | >=1.62    |
 | rust-lang.org/cargo | >=0.66    |
 | xcfile.dev          | >=0.0.110 |
