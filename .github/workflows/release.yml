@@ -14,6 +14,7 @@ jobs:
       run: tea -ES xc dist
       env:
         USE_HARD_LINKS: false
+    - run: rm ./modules/cli/.gitignore
     - name: Compress action step
       uses: a7ul/tar-action@v1.1.0
       id: compress
