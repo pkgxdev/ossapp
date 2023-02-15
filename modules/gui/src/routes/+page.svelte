@@ -3,8 +3,8 @@
 	import '$appcss';
 	import PageHeader from '$components/page-header/page-header.svelte';
 	import EssentialWorkshops from '$components/essential-workshops/essential-workshops.svelte';
-	import Packages from '$components/Packages/Packages.svelte';
-	import News from '$components/News/News.svelte';
+	import Packages from '$components/packages/packages.svelte';
+	import News from '$components/news/news.svelte';
 
 	import HeaderCard from '@tea/ui/HeaderCard/HeaderCard.svelte';
 	import ListAction from '@tea/ui/list-action/list-action.svelte';
