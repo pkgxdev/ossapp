@@ -88,7 +88,6 @@ pnpm dev
 
 ```sh
 pnpm install
-pnpm add -g vite
 pnpm --filter desktop exec pnpm build
 cp -R modules/desktop/build modules/cli
 ```

@@ -19,7 +19,7 @@
 		"dev:package": "pnpm build && electron-builder --config electron-builder.config.cjs --dir",
 		"electron": "concurrently --kill-others \"vite dev\" \"electron electron/dist/electron.cjs\"",
 		"olddev": "vite dev",
-		"build": "pnpm build:main && vite build && cp build/app.html build/index.html",
+		"build": "vite build && cp build/app.html build/index.html",
 		"preview": "vite preview",
 		"unit:test": "vitest",
 		"coverage": "vitest run --coverage",
