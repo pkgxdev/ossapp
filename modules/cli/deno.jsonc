@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "strict": true
+  },
+  "tasks": {
+    "run": "deno run --unstable --allow-all src/gui.ts",
+    "compile": "deno compile --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output $INIT_CWD/gui src/gui.ts",
+    "install": "deno compile --unstable -Ao $TEA_PREFIX/tea.xyz/gui/v$VERSION/bin/gui src/gui.ts"
+  },
+  // ignore all files since the current style deviates from deno's default style.
+  "fmt": {
+    "files": {
+      "exclude": [
+        "./"
+      ]
+    }
+  },
+  "tea": {
+    "dependencies": {
+      "deno.land": "^1.30"
+    }
+  },
+  "importMap": "import-map.json"
+}

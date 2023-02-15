@@ -2,7 +2,7 @@
 	import '$appcss';
 	import Button from '@tea/ui/Button/Button.svelte';
 
-	const { ipcRenderer } = window.require('electron');
+	// const { ipcRenderer } = window.require('electron');
 	let copyButtonText = 'COPY';
 	const copyValue = `sh <(curl https://tea.xyz)`;
 
@@ -12,7 +12,7 @@
 	};
 
 	const onInstall = () => {
-		ipcRenderer.invoke('open-terminal', { cmd: copyValue });
+		// ipcRenderer.invoke('open-terminal', { cmd: copyValue });
 	}
 </script>
 

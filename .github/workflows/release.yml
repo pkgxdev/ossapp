@@ -5,19 +5,7 @@ on:
 
 jobs:
   build_desktop:
-    runs-on: ${{ matrix.platform.os }}
-    strategy:
-      matrix:
-        platform:
-          - os: macos-11
-            name: darwin+x86-64
-          # - os: ubuntu-latest
-          #   name: linux+x86-64
-          - os: [self-hosted, macOS, ARM64]
-            name: darwin+aarch64
-          # - os: [self-hosted, linux, ARM64]
-          #   name: linux+aarch64
-    container: ${{ matrix.platform.container }}
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: teaxyz/setup@v0
@@ -26,123 +14,17 @@ jobs:
       run: tea -ES xc dist
       env:
         USE_HARD_LINKS: false
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-        CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-        CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-    - run: mkdir -p target
-    - run: cp ./modules/desktop/dist/*.zip ./target/tea.zip
-    - run: tar -czvf artifacts.tgz -C ./target/ .
-    - name: upload artifacts
-      uses: actions/upload-artifact@v3
+    - name: Compress action step
+      uses: a7ul/tar-action@v1.1.0
+      id: compress
       with:
-        name: ${{ matrix.platform.name }}
-        path: artifacts.tgz
-        if-no-files-found: error
+        command: c
+        cwd: ./modules/cli
+        files: ./
+        outPath: release.tar.gz
 
-  notarize_desktop:
-    needs: [build_desktop]
-    runs-on: macos-11
-    strategy:
-      matrix:
-        platform:
-          - darwin+x86-64
-          - darwin+aarch64
-    steps:
-    - uses: actions/download-artifact@v3
+    - uses: ncipollo/release-action@v1
       with:
-        name: ${{ matrix.platform }}
+        artifacts: "release.tar.gz"
+        bodyFile: "README.md"
 
-    - run: tar xzf artifacts.tgz
-
-    # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file ./tea.zip
-      env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-
-  upload:
-    needs: [build_desktop, notarize_desktop]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform:
-          - darwin+x86-64
-          # - linux+x86-64
-          - darwin+aarch64
-          # - linux+aarch64
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/download-artifact@v3
-      with:
-        name: ${{ matrix.platform }}
-    - run: tar xzf artifacts.tgz
-    - name: Get current unix ts - seconds
-      id: date
-      run: echo "unix_seconds=$(date +'%s')" >> $GITHUB_OUTPUT
-
-    - name: build platform output
-      id: build_platform
-      env:
-        platform: ${{ matrix.platform }}
-      run: |
-        BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
-        EXTENSION=dmg
-        case $platform in
-          "linux+x86-64")
-            BUILD_PLATFORM="amd64"
-            EXTENSION="deb"
-            ;;
-          "linux+aarch64")
-            BUILD_PLATFORM="aarch64"
-            EXTENSION="deb"
-            ;;
-          "darwin+aarch64")
-            BUILD_PLATFORM="aarch64"
-            EXTENSION="zip"
-            ;;
-          "darwin+x86-64")
-            BUILD_PLATFORM="x64"
-            EXTENSION="zip"
-            ;;
-          *)
-            echo "Unknown platform $platform"
-            exit 1
-            ;;
-        esac
-        echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
-        echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
-  
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
-
-    # update and replace latest release bin in s3
-    - name: Set tag
-      id: tag
-      run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-
-    - name: publish release 
-      env:
-        platform: ${{ steps.build_platform.outputs.build_platform }}
-        extension: ${{ steps.build_platform.outputs.extension }}
-        tag: ${{ steps.tag.outputs.tag }}
-      run: |
-        aws s3 cp "./tea.$extension" \
-          "s3://preview.gui.tea.xyz/release/tea_gui_latest_$platform.$extension"
-        aws s3 cp "./tea.$extension" \
-          "s3://preview.gui.tea.xyz/release/tea_gui_${{ steps.tag.outputs.tag }}_$platform.$extension"
-
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 18
-    - name: Slack Notification
-      run: ./.github/notify-slack.js
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        PLATFORM: ${{ matrix.platform }}
-        VERSION: ${{steps.tag.outputs.tag}}
-        EXT: ${{ steps.build_platform.outputs.extension }}
-        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_gui_${{steps.tag.outputs.tag}}_${{steps.build_platform.outputs.build_platform}}.${{ steps.build_platform.outputs.extension }}

@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte';
 	import { getPackageBottles } from '@api';
 
-	const { ipcRenderer } = window.require('electron');
+	// const { ipcRenderer } = window.require('electron');
 
 	export let pkg: Package;
 	let bottles: Bottle[] = [];
@@ -21,7 +21,7 @@
 	};
 
 	const onOpenTerminal = () => {
-		ipcRenderer.invoke('open-terminal', { cmd: `sh <(curl tea.xyz) +${pkg.full_name}` });
+		// ipcRenderer.invoke('open-terminal', { cmd: `sh <(curl tea.xyz) +${pkg.full_name}` });
 	}
 
 	onMount(async () => {

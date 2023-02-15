@@ -89,7 +89,9 @@ pnpm dev
 ```sh
 pnpm install
 pnpm add -g vite
-pnpm --filter desktop exec pnpm dist
+pnpm --filter desktop exec pnpm build
+cp -R modules/desktop/build modules/cli
+
 ```
 
 # Dependencies
@@ -102,7 +104,7 @@ pnpm --filter desktop exec pnpm dist
 | rust-lang.org/cargo | >=0.66    |
 | xcfile.dev          | >=0.0.110 |
 | python.org          | >=3.10    |
-
+| deno.land           | >=1.30    |
 
 
 [aws/cli]: https://aws.amazon.com/cli/

@@ -21,19 +21,19 @@ import { getInstalledPackages } from "$libs/tea-dir";
 import { installPackageCommand } from "$libs/cli";
 
 import { get as apiGet } from "$libs/v1-client";
-
+import { packages } from "./mock";
 export async function getPackages(): Promise<GUIPackage[]> {
-	const [packages, installedPackages] = await Promise.all([
-		apiGet<Package[]>("packages", { nocache: "true" }),
-		getInstalledPackages()
-	]);
+	// const [packages, installedPackages] = await Promise.all([
+	// 	mockPackages,
+	// 	getInstalledPackages()
+	// ]);
 
 	return (packages || []).map((pkg) => {
-		const found = installedPackages.find((p) => p.full_name === pkg.full_name);
+		const found = false;
 		return {
 			...pkg,
 			state: found ? PackageStates.INSTALLED : PackageStates.AVAILABLE,
-			installed_version: found ? found.version : ""
+			installed_version: ""
 		};
 	});
 }
@@ -61,15 +61,27 @@ export async function installPackage(full_name: string) {
 }
 
 export async function getFeaturedCourses(): Promise<Course[]> {
-	const posts = await apiGet<AirtablePost[]>("posts", { tag: "featured_course" });
-	return posts.map((post) => {
-		return {
-			title: post.title,
-			sub_title: post.sub_title,
-			banner_image_url: post.thumb_image_url,
-			link: post.link
-		} as Course;
-	});
+	const mockCourses: Course[] = [
+		{
+			title: "Developing With Tea",
+			sub_title: "by Mxcl",
+			link: "#",
+			banner_image_url: "https://tea.xyz/Images/packages/mesonbuild_com.jpg"
+		},
+		{
+			title: "Brewing Tea",
+			sub_title: "by Mxcl",
+			link: "#",
+			banner_image_url: "https://tea.xyz/Images/packages/tea_xyz_gx_cc.jpg"
+		},
+		{
+			title: "Harvesting Tea",
+			sub_title: "by Mxcl",
+			link: "#",
+			banner_image_url: "https://tea.xyz/Images/packages/ipfs_tech.jpg"
+		}
+	];
+	return mockCourses;
 }
 
 export async function getTopPackages(): Promise<GUIPackage[]> {
@@ -78,12 +90,49 @@ export async function getTopPackages(): Promise<GUIPackage[]> {
 }
 
 export async function getAllPosts(tag?: string): Promise<AirtablePost[]> {
-	// add filter here someday: tag = news | course
-	const queryParams = {
-		...(tag ? { tag } : {}),
-		nocache: "true"
-	};
-	const posts = await apiGet<AirtablePost[]>("posts", queryParams);
+	console.log("filter by type:", type);
+	const posts: AirtablePost[] = [
+		{
+			airtable_record_id: "a",
+			link: "https://google.com",
+			title: "Tea Inc releases game changing api!",
+			sub_title: "lorem ipsum dolor sit amet",
+			short_description: "lorem ipsum dolor sit amet",
+			thumb_image_url: "/images/bored-ape.png",
+			thumb_image_name: "borred-api.png",
+			created_at: new Date(),
+			updated_at: new Date(),
+			published_at: new Date(),
+			tags: ["news"]
+		},
+		{
+			airtable_record_id: "b",
+			link: "https://google.com",
+			title: "Bored Ape not bored anymore",
+			sub_title: "lorem ipsum dolor sit amet",
+			short_description: "lorem ipsum dolor sit amet",
+			thumb_image_url: "/images/bored-ape.png",
+			thumb_image_name: "borred-api.png",
+			created_at: new Date(),
+			updated_at: new Date(),
+			published_at: new Date(),
+			tags: ["news"]
+		},
+		{
+			airtable_record_id: "c",
+			link: "https://google.com",
+			title: "Markdown can be executed! hoohah!",
+			sub_title: "lorem ipsum dolor sit amet",
+			short_description: "lorem ipsum dolor sit amet",
+			thumb_image_url: "/images/bored-ape.png",
+			thumb_image_name: "borred-api.png",
+			created_at: new Date(),
+			updated_at: new Date(),
+			published_at: new Date(),
+			tags: ["news"]
+		}
+	];
+
 	return posts;
 }
 
@@ -99,8 +148,17 @@ export async function getDeviceAuth(deviceId: string): Promise<DeviceAuth> {
 
 export async function getPackageBottles(packageName: string): Promise<Bottle[]> {
 	console.log("getting bottles for ", packageName);
-	const pkg: Package = await apiGet<Package>(`packages/${packageName.replaceAll("/", ":")}`);
-	return pkg.bottles || [];
+	// const pkg: Package = await apiGet<Package>(`packages/${packageName.replaceAll("/", ":")}`);
+	return [
+		{
+			name: "string",
+			platform: "darwin",
+			arch: "aarm64",
+			version: "v1.2.3",
+			bytes: 123123123,
+			last_modified_at: new Date()
+		}
+	];
 }
 
 export async function getPackage(packageName: string): Promise<Partial<Package>> {

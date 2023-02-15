@@ -1,16 +1,5 @@
 import axios from "axios";
 import type { Contributor, Package } from "@tea/ui/types";
-const yaml = window.require("yaml");
-
-export async function getPackageYaml(pkgYamlUrl: string) {
-	const url = pkgYamlUrl.replace("/github.com", "/raw.githubusercontent.com").replace("/blob", "");
-
-	const { data: rawYaml } = await axios.get(url);
-
-	const data = await yaml.parse(rawYaml);
-
-	return data;
-}
 
 export async function getReadme(owner: string, repo: string): Promise<string> {
 	let readme = "";

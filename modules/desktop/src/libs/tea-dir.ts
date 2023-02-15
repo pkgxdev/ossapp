@@ -8,10 +8,11 @@ type Dir = {
 	children?: Dir[];
 };
 
-const { ipcRenderer } = window.require("electron");
+// const { ipcRenderer } = window.require("electron");
 export async function getInstalledPackages() {
-	const pkgs = await ipcRenderer.invoke("get-installed-packages");
-	return pkgs as { version: string; full_name: string }[];
+	// const pkgs = await ipcRenderer.invoke("get-installed-packages");
+	// return pkgs as { version: string; full_name: string }[];
+	return [];
 }
 
 const semverTest =
