@@ -15,13 +15,14 @@ jobs:
       env:
         USE_HARD_LINKS: false
     - run: mkdir release && cp -R modules/cli/* release
+    - run: ls release
     - name: Compress action step
       uses: a7ul/tar-action@v1.1.0
       id: compress
       with:
         command: c
         cwd: ./release
-        files: ./
+        files: ./**/*
         outPath: release.tar.gz
     - uses: ncipollo/release-action@v1
       with:
