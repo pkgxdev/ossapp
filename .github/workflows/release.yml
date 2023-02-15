@@ -5,7 +5,7 @@ on:
 
 jobs:
   build_desktop:
-    runs-on: ubuntu-latest
+    runs-on: macos-11
     steps:
     - uses: actions/checkout@v3
     - uses: teaxyz/setup@v0
