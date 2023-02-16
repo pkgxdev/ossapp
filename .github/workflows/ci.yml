@@ -148,6 +148,7 @@ jobs:
         # PUBLISH_FOR_PULL_REQUEST: true
         USE_HARD_LINKS: false
         CSC_FOR_PULL_REQUEST: true
+        PNPM_HOME: ${{ github.workspace }}/pnpm
         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
         CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
         CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
