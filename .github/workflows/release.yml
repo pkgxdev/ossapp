@@ -25,13 +25,17 @@ jobs:
       if: startsWith(matrix.platform.name, 'darwin')
       run: tea -ES xc dist
       env:
+        PUBLISH_FOR_PULL_REQUEST: true
         USE_HARD_LINKS: false
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
         CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
         CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
     - run: mkdir -p target
     - run: cp ./modules/desktop/dist/*.zip ./target/tea.zip
+    - run: cp ./modules/desktop/dist/*.dmg ./target/tea.dmg
     - run: tar -czvf artifacts.tgz -C ./target/ .
     - name: upload artifacts
       uses: actions/upload-artifact@v3
@@ -40,29 +44,30 @@ jobs:
         path: artifacts.tgz
         if-no-files-found: error
 
-  notarize_desktop:
-    needs: [build_desktop]
-    runs-on: macos-11
-    strategy:
-      matrix:
-        platform:
-          - darwin+x86-64
-          - darwin+aarch64
-    steps:
-    - uses: actions/download-artifact@v3
-      with:
-        name: ${{ matrix.platform }}
+  # notarize_desktop:
+  #   needs: [build_desktop]
+  #   runs-on: macos-11
+  #   strategy:
+  #     matrix:
+  #       platform:
+  #         - darwin+x86-64
+  #         - darwin+aarch64
+  #   steps:
+  #   - uses: actions/download-artifact@v3
+  #     with:
+  #       name: ${{ matrix.platform }}
 
-    - run: tar xzf artifacts.tgz
+  #   - run: tar xzf artifacts.tgz
 
-    # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file ./tea.zip
-      env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+  #   # Notarize. Can take up to 10 minutes (and fail) asynchronously
+  #   - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file ./tea.zip
+  #     env:
+  #       APPLE_ID: ${{ secrets.APPLE_ID }}
+  #       APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
 
   upload:
-    needs: [build_desktop, notarize_desktop]
+    # needs: [build_desktop, notarize_desktop]
+    needs: [build_desktop]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -99,11 +104,11 @@ jobs:
             ;;
           "darwin+aarch64")
             BUILD_PLATFORM="aarch64"
-            EXTENSION="zip"
+            EXTENSION="dmg"
             ;;
           "darwin+x86-64")
             BUILD_PLATFORM="x64"
-            EXTENSION="zip"
+            EXTENSION="dmg"
             ;;
           *)
             echo "Unknown platform $platform"
