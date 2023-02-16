@@ -146,6 +146,7 @@ jobs:
       run: tea -ES xc dist
       env:
         PUBLISH_FOR_PULL_REQUEST: true
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         USE_HARD_LINKS: false
         CSC_FOR_PULL_REQUEST: true
         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
