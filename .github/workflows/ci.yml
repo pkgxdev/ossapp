@@ -157,7 +157,7 @@ jobs:
         # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
     - run: mkdir -p target
     - run: cp ./modules/desktop/dist/*.zip ./target/tea.zip
-    - run: cp ./modules/desktop/dist/*.dmg ./target/tea.dmg
+    # - run: cp ./modules/desktop/dist/*.dmg ./target/tea.dmg
     - run: tar -czvf artifacts.tgz -C ./target/ .
     - name: upload artifacts
       uses: actions/upload-artifact@v3
