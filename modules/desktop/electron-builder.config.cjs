@@ -38,7 +38,7 @@ module.exports = {
 			console.error(error);
 		}
 
-		console.log(`Done notarizing ${appId}`);
+		console.log(`Done notarizing`);
 	},
 
 	publish: {
