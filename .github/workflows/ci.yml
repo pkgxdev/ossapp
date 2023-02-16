@@ -151,8 +151,8 @@ jobs:
         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
         CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
         CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-      #   APPLE_ID: ${{ secrets.APPLE_ID }}
-      #   APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
     - run: mkdir -p target
     - run: cp ./modules/desktop/dist/*.zip ./target/tea.zip
     - run: tar -czvf artifacts.tgz -C ./target/ .
