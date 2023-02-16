@@ -7,7 +7,7 @@ module.exports = {
 	productName: "tea",
 	asar: false,
 	directories: { output: "dist" },
-	files: ["electron/dist/electron.cjs", { from: "build", to: "" }]
+	files: ["electron/dist/electron.cjs", { from: "build", to: "" }],
 	// TODO: if xcrun altool exists eventually in our self-hosted macos
 	// SOLUTION: is notarize separately in next pipeline step
 	// afterSign: async (params) => {
@@ -40,4 +40,11 @@ module.exports = {
 
 	// 	console.log(`Done notarizing ${appId}`);
 	// }
+
+	publish: {
+		provider: "github",
+		repo: "gui",
+		owner: "teaxyz",
+		releaseType: "release"
+	},
 };

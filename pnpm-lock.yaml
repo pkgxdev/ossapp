@@ -3898,7 +3898,7 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
     dependencies:
-      '@sveltejs/kit': 1.0.1_svelte@3.55.0+vite@4.1.1
+      '@sveltejs/kit': 1.0.1_svelte@3.55.1+vite@4.1.1
       import-meta-resolve: 2.2.0
     dev: true
 
@@ -3919,7 +3919,7 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
     dependencies:
-      '@sveltejs/kit': 1.0.1_svelte@3.55.0+vite@4.1.1
+      '@sveltejs/kit': 1.0.1_svelte@3.55.1+vite@4.1.1
     dev: true
 
   /@sveltejs/kit/1.0.1_svelte@3.55.0+vite@4.1.1:
