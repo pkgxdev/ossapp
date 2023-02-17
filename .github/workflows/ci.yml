@@ -204,6 +204,14 @@ jobs:
         "tea-installer.dmg" \
         "installer/"
     - run: rm -rf installer
+    - run: mkdir installer && mv tea-installer.dmg installer
+    - run: tar -czvf artifacts-installer.tgz -C ./installer/ .
+    - name: upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.platform.name }}-installer
+        path: artifacts-installer.tgz
+        if-no-files-found: error
 
   upload:
     needs: [notorize_app, changes]
@@ -222,9 +230,9 @@ jobs:
     steps:
     - uses: actions/download-artifact@v3
       with:
-        name: ${{ matrix.platform.name }}
+        name: ${{ matrix.platform.name }}-installer
 
-    - run: tar xzf artifacts.tgz
+    - run: tar xzf artifacts-installer.tgz
 
     - name: build platform output
       id: build_platform
