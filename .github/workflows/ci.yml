@@ -196,7 +196,7 @@ jobs:
         --icon "tea.app" 200 190 \
         --hide-extension "tea.app" \
         --app-drop-link 600 185 \
-        --sandbox-safe
+        --sandbox-safe \
         "tea-installer.dmg" \
         "installer/"
     - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file ./tea-installer.dmg
