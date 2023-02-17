@@ -185,10 +185,6 @@ jobs:
     - run: tar xzf artifacts.tgz
 
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file ./tea.zip
-      env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
     - run: mkdir installer
     - run: tea unzip tea.zip -d installer/
     - run: |
@@ -203,6 +199,10 @@ jobs:
         --sandbox-safe
         "tea-installer.dmg" \
         "installer/"
+    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file ./tea-installer.dmg
+      env:
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
     - run: rm -rf installer
     - run: mkdir installer && mv tea-installer.dmg installer
     - run: tar -czvf artifacts-installer.tgz -C ./installer/ .
