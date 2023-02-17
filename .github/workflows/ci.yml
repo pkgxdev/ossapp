@@ -200,6 +200,7 @@ jobs:
         --icon "tea.app" 200 190 \
         --hide-extension "tea.app" \
         --app-drop-link 600 185 \
+        --sandbox-safe
         "tea-installer.dmg" \
         "installer/"
     - run: rm -rf installer
