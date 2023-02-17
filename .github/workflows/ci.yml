@@ -143,7 +143,8 @@ jobs:
 
     - name: build
       if: startsWith(matrix.platform.name, 'darwin')
-      run: tea -ES xc dist
+      # run: tea -ES xc dist # temporary tea installs 19
+      run: tea -ES +nodejs.org@18 xc dist
       env:
         USE_HARD_LINKS: false
         CSC_FOR_PULL_REQUEST: true
@@ -176,6 +177,7 @@ jobs:
           - darwin+x86-64
           - darwin+aarch64
     steps:
+    - uses: teaxyz/setup@v0
     - uses: actions/download-artifact@v3
       with:
         name: ${{ matrix.platform }}
@@ -187,6 +189,20 @@ jobs:
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+    - run: mkdir installer
+    - run: tea unzip tea.zip -d installer/
+    - run: |
+        tea create-dmg \
+        --volname "Tea Installer" \
+        --window-pos 200 120 \
+        --window-size 800 400 \
+        --icon-size 100 \
+        --icon "tea.app" 200 190 \
+        --hide-extension "tea.app" \
+        --app-drop-link 600 185 \
+        "tea-installer.dmg" \
+        "installer/"
+    - run: rm -rf installer
 
   upload:
     needs: [notorize_app, changes]
@@ -227,11 +243,11 @@ jobs:
             ;;
           "darwin+aarch64")
             BUILD_PLATFORM="aarch64"
-            EXTENSION="zip"
+            EXTENSION="dmg"
             ;;
           "darwin+x86-64")
             BUILD_PLATFORM="x64"
-            EXTENSION="zip"
+            EXTENSION="dmg"
             ;;
           *)
             echo "Unknown platform $platform"

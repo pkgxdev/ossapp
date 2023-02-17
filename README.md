@@ -95,11 +95,10 @@ pnpm --filter desktop exec pnpm dist
 
 | Project                           |  Version  |
 |-----------------------------------|-----------|
-| nodejs.org                        | =18.13.0  |
-| pnpm.io                           | =7.18.2   |
-| rust-lang.org                     | >=1.62    |
-| rust-lang.org/cargo               | >=0.66    |
+| nodejs.org                        | >=18.14   |
+| pnpm.io                           | >=7.20    |
 | xcfile.dev                        | >=0.0.110 |
+| python.org                        | >=3.10    |
 | github.com/create-dmg/create-dmg  | >=1.1     |
 
 
