@@ -53,7 +53,7 @@ $ AWS_PROFILE=tea/or/etc pnpm release
 Refer to each package `README.md` for instructions on how to setup and
 contribute to them:
 
-* [tea/gui](./modules/gui/README.md)
+* [tea/desktop](./modules/desktop/README.md)
 * [tea/ui](./modules/ui/README.md)
 
 &nbsp;
