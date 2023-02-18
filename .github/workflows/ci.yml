@@ -283,7 +283,7 @@ jobs:
         extension: ${{ steps.build_platform.outputs.extension }}
       run: |
         aws s3 cp \
-          "./tea.$extension" \
+          "./tea-installer.$extension" \
           "s3://preview.gui.tea.xyz/$prefix/tea_$platform.$extension"
 
     - name: comment install for Linux
