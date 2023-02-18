@@ -163,7 +163,7 @@ jobs:
     - name: upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ matrix.platform }}
+        name: ${{ matrix.platform.name }}
         path: artifacts.tgz
         if-no-files-found: error
 
@@ -211,7 +211,7 @@ jobs:
     - name: upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ matrix.platform.name }}-installer
+        name: ${{ matrix.platform }}-installer
         path: artifacts-installer.tgz
         if-no-files-found: error
 
