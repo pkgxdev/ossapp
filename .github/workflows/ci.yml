@@ -103,8 +103,8 @@ jobs:
     strategy:
       matrix:
         platform:
-          # - os: macos-11
-          #   name: darwin+x86-64
+          - os: macos-11
+            name: darwin+x86-64
           # TODO: #181 build for linux
           # - os: ubuntu-latest
           #   name: linux+x86-64
@@ -174,7 +174,7 @@ jobs:
     strategy:
       matrix:
         platform:
-          # - darwin+x86-64
+          - darwin+x86-64
           - darwin+aarch64
     steps:
     - uses: teaxyz/setup@v0
@@ -219,8 +219,8 @@ jobs:
     strategy:
       matrix:
         platform:
-          # - name: darwin+x86-64
-          #   id: mac_latest
+          - name: darwin+x86-64
+            id: mac_latest
           # - name: linux+x86-64
           #   id: linux
           - name: darwin+aarch64
