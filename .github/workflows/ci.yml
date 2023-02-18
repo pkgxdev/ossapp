@@ -236,6 +236,8 @@ jobs:
 
     - run: tar xzf artifacts-installer.tgz
 
+    - run: ls -lha
+
     - name: build platform output
       id: build_platform
       env:
