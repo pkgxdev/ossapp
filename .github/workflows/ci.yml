@@ -221,8 +221,8 @@ jobs:
     strategy:
       matrix:
         platform:
-          - name: darwin+x86-64
-            id: mac_latest
+          # - name: darwin+x86-64
+          #   id: mac_latest
           # - name: linux+x86-64
           #   id: linux
           - name: darwin+aarch64
