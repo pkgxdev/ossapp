@@ -163,7 +163,7 @@ jobs:
     - name: upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ matrix.platform.name }}
+        name: ${{ matrix.platform }}
         path: artifacts.tgz
         if-no-files-found: error
 
