@@ -206,8 +206,8 @@ jobs:
     #     APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
     # - run: rm -rf installer && rm tea.zip
 
-    # - run: mkdir -p artifacts && mv tea-installer.dmg artifacts/
-    - run: tar -czvf artifacts-installer.tgz -C tea-installer.dmg .
+    - run: mkdir -p artifacts && mv tea-installer.dmg artifacts/
+    - run: tar -czvf artifacts-installer.tgz -C artifacts/ .
     - name: upload artifacts
       uses: actions/upload-artifact@v3
       with:
