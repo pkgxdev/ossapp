@@ -199,12 +199,12 @@ jobs:
         --sandbox-safe \
         "tea-installer.dmg" \
         "installer/"
-    - run: tar acvf tea.zip tea-installer.dmg
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file ./tea.zip
-      env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-    - run: rm -rf installer && rm tea.zip
+    # - run: tar acvf tea.zip tea-installer.dmg
+    # - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file ./tea.zip
+    #   env:
+    #     APPLE_ID: ${{ secrets.APPLE_ID }}
+    #     APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+    # - run: rm -rf installer && rm tea.zip
     - run: mkdir installer && mv tea-installer.dmg installer
     - run: tar -czvf artifacts-installer.tgz -C ./installer/ .
     - name: upload artifacts
