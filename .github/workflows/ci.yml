@@ -306,6 +306,6 @@ jobs:
         message: |
           **installers for MacOS ${{ matrix.platform.name }} is at**:
           ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.zip
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
           ```
           copy-paste into a browser to download
