@@ -101,8 +101,9 @@ jobs:
       env:
         filename: ${{ steps.get_dmg_filename.outputs.filename }}
 
-    - run: mv ${{ steps.get_dmg_filename.outputs.filename }} artifacts/
     - run: tar -czvf artifacts-installer.tgz -C artifacts/ .
+    - run: mv ${{ steps.get_dmg_filename.outputs.filename }} artifacts/
+
     - name: upload artifacts
       uses: actions/upload-artifact@v3
       with:
