@@ -201,6 +201,7 @@ jobs:
     - name: get dmg filename
       id: get_dmg_filename
       run: |
+        rm installer/*.blockmap
         FILENAME=$(cd installer && ls  | grep dmg)
         echo "filename=$FILENAME" >> $GITHUB_OUTPUT
 

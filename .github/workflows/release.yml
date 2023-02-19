@@ -77,6 +77,7 @@ jobs:
     - name: get dmg filename
       id: get_dmg_filename
       run: |
+        rm artifacts/*.blockmap
         FILENAME=$(cd artifacts && ls  | grep dmg)
         echo "filename=$FILENAME" >> $GITHUB_OUTPUT
 
