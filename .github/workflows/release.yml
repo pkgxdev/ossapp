@@ -124,7 +124,7 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/download-artifact@v3
       with:
-        name: ${{ matrix.platform }}
+        name: ${{ matrix.platform }}-dist
     - run: mkdir dist
     - run: tar xzf dist.tgz -C dist
 
