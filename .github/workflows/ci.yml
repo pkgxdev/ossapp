@@ -187,35 +187,49 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: ${{ matrix.platform }}
-
-    - run: tar xzf artifacts.tgz
+  
+    - run: mkdir installer
+    - run: tar xzf artifacts.tgz -C installer
 
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file *.zip
+    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file installer/*.zip
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-    # - run: |
-    #     tea create-dmg \
-    #     --volname "Tea Installer" \
-    #     --window-pos 200 120 \
-    #     --window-size 800 400 \
-    #     --icon-size 100 \
-    #     --icon "tea.app" 200 190 \
-    #     --hide-extension "tea.app" \
-    #     --app-drop-link 600 185 \
-    #     --sandbox-safe \
-    #     "tea-installer.dmg" \
-    #     "installer/"
+    
+    # dmg from electron doesnt work after notorizing this way
+    # need to create a new dmg
+    - name: get dmg filename
+      id: get_dmg_filename
+      run: |
+        FILENAME=$(cd installer && ls  | grep dmg)
+        echo "filename=$FILENAME" >> $GITHUB_OUTPUT
+        rm installer/*.dmg
+    - run: |
+        tea create-dmg \
+        --volname "Tea Installer" \
+        --window-pos 200 120 \
+        --window-size 800 400 \
+        --icon-size 100 \
+        --icon "tea.app" 200 190 \
+        --hide-extension "tea.app" \
+        --app-drop-link 600 185 \
+        --sandbox-safe \
+        "$filename" \
+        "installer/"
+      env:
+        filename: ${{ steps.get_dmg_filename.outputs.filename }}
 
-    # - run: mkdir -p artifacts && mv *.dmg artifacts/
-    # - run: tar -czvf artifacts-installer.tgz -C artifacts/ .
-    # - name: upload artifacts
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: ${{ matrix.platform }}-installer
-    #     path: artifacts-installer.tgz
-    #     if-no-files-found: error
+    - run: |
+        mkdir -p artifacts && mv ${{ steps.get_dmg_filename.outputs.filename }}.dmg artifacts/
+        cp installer/*.yml artifacts/
+    - run: tar -czvf artifacts-installer.tgz -C artifacts/ .
+    - name: upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.platform }}-installer
+        path: artifacts-installer.tgz
+        if-no-files-found: error
 
   upload:
     needs: [notorize_app, changes]
@@ -234,7 +248,7 @@ jobs:
     steps:
     - uses: actions/download-artifact@v3
       with:
-        name: ${{ matrix.platform.name }}
+        name: ${{ matrix.platform.name }}-installer
 
     - run: tar xzf artifacts.tgz
 
