@@ -236,7 +236,7 @@ jobs:
       with:
         name: ${{ matrix.platform.name }}
 
-    - run: tar xzf artifacts-installer.tgz
+    - run: tar xzf artifacts.tgz
 
     - run: ls -lha
 
