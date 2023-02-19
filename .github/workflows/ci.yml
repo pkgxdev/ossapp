@@ -152,10 +152,10 @@ jobs:
         CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
         CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
         # NOTE: you might think the ff will work, it wont unless PR is properly tagged
-        # PUBLISH_FOR_PULL_REQUEST: true
-        # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # APPLE_ID: ${{ secrets.APPLE_ID }}
-        # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        PUBLISH_FOR_PULL_REQUEST: true
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
     - run: cat modules/desktop/dist/latest-mac.yml
     - run: ls -lh modules/desktop/dist/
     - run: mkdir -p target
