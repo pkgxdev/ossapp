@@ -31,15 +31,18 @@ jobs:
         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
         CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
         CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: us-east-1
+        # notarization doesnt work
+        # APPLE_ID: ${{ secrets.APPLE_ID }}
+        # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        # AWS_REGION: us-east-1
+    # build artifacts for publishing and notarization
     - run: mkdir -p target
-    - run: cp ./modules/desktop/dist/*.zip ./target/tea.zip
-    - run: cp ./modules/desktop/dist/*.dmg ./target/tea.dmg
+    - run: cp -r ./modules/desktop/dist/.icon-icns ./target/
+    - run: cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
     - run: tar -czvf artifacts.tgz -C ./target/ .
+
     - name: upload artifacts
       uses: actions/upload-artifact@v3
       with:
@@ -59,14 +62,53 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: ${{ matrix.platform }}
-
-    - run: tar xzf artifacts.tgz
+  
+    - run: mkdir artifacts
+    - run: tar xzf artifacts.tgz -C artifacts
 
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file ./tea.zip
+    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file artifacts/*.zip
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+    
+    # dmg from electron doesnt work after notorizing this way
+    # need to create a new dmg
+    - name: get dmg filename
+      id: get_dmg_filename
+      run: |
+        FILENAME=$(cd artifacts && ls  | grep dmg)
+        echo "filename=$FILENAME" >> $GITHUB_OUTPUT
+
+    # create installer folder
+    - run: |
+        mkdir installer
+        cp -r artifacts/.icon-icns installer/
+        tar xzf artifacts/*.zip -C installer/
+
+    - run: |
+        tea create-dmg \
+        --volname "Tea Installer" \
+        --window-pos 200 120 \
+        --window-size 800 400 \
+        --icon-size 100 \
+        --icon "tea.app" 200 190 \
+        --hide-extension "tea.app" \
+        --app-drop-link 600 185 \
+        --sandbox-safe \
+        "$filename" \
+        "installer/"
+      env:
+        filename: ${{ steps.get_dmg_filename.outputs.filename }}
+
+    - run: mv ${{ steps.get_dmg_filename.outputs.filename }} artifacts/
+    - run: tar -czvf artifacts-installer.tgz -C artifacts/ .
+    - name: upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.platform }}-installer
+        path: artifacts-installer.tgz
+        if-no-files-found: error
 
   upload:
     needs: [build_desktop, notarize_desktop]
@@ -119,6 +161,8 @@ jobs:
         esac
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
+        FILENAME=$(ls  | grep $EXTENSION)
+        echo "filename=$FILENAME" >> $GITHUB_OUTPUT
   
     - uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -136,11 +180,10 @@ jobs:
         platform: ${{ steps.build_platform.outputs.build_platform }}
         extension: ${{ steps.build_platform.outputs.extension }}
         tag: ${{ steps.tag.outputs.tag }}
+        filename: ${{ steps.build_platform.outputs.filename }}
       run: |
-        aws s3 cp "./tea.$extension" \
-          "s3://preview.gui.tea.xyz/release/tea_gui_latest_$platform.$extension"
-        aws s3 cp "./tea.$extension" \
-          "s3://preview.gui.tea.xyz/release/tea_gui_${{ steps.tag.outputs.tag }}_$platform.$extension"
+        aws s3 cp "$filename" \
+          "s3://preview.gui.tea.xyz/release/$filename"
 
     - uses: actions/setup-node@v3
       with:
@@ -152,4 +195,4 @@ jobs:
         PLATFORM: ${{ matrix.platform }}
         VERSION: ${{steps.tag.outputs.tag}}
         EXT: ${{ steps.build_platform.outputs.extension }}
-        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_gui_${{steps.tag.outputs.tag}}_${{steps.build_platform.outputs.build_platform}}.${{ steps.build_platform.outputs.extension }}
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/${{ steps.build_platform.outputs.filename }}

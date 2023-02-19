@@ -161,9 +161,8 @@ jobs:
     - run: mkdir -p target
 
     # build artifacts for publishing and notarization
-    - run: cp ./modules/desktop/dist/*.zip ./target/
-    - run: cp ./modules/desktop/dist/*.dmg ./target/
-    - run: cp ./modules/desktop/dist/*.yml ./target/
+    - run: cp -r ./modules/desktop/dist/.icon-icns ./target/
+    - run: cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
   
     - run: tar -czvf artifacts.tgz -C ./target/ .
     - name: upload artifacts
