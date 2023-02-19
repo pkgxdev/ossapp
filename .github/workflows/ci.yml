@@ -205,6 +205,12 @@ jobs:
         FILENAME=$(cd installer && ls  | grep dmg)
         echo "filename=$FILENAME" >> $GITHUB_OUTPUT
         rm installer/*.dmg
+
+    - name: prepare artifacts
+      run: |
+        mkdir -p artifacts
+        mv installer/*.yml artifacts
+
     - run: |
         tea create-dmg \
         --volname "Tea Installer" \
@@ -221,7 +227,7 @@ jobs:
         filename: ${{ steps.get_dmg_filename.outputs.filename }}
 
     - run: |
-        mkdir -p artifacts && mv ${{ steps.get_dmg_filename.outputs.filename }} artifacts/
+        mv ${{ steps.get_dmg_filename.outputs.filename }} artifacts/
         cp installer/*.yml artifacts/
     - run: tar -czvf artifacts-installer.tgz -C artifacts/ .
     - name: upload artifacts
@@ -287,7 +293,6 @@ jobs:
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
         echo "filename=$FILENAME" >> $GITHUB_OUTPUT
-
 
     - uses: aws-actions/configure-aws-credentials@v1
       with:
