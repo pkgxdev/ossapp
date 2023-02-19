@@ -204,7 +204,11 @@ jobs:
       run: |
         FILENAME=$(cd installer && ls  | grep dmg)
         echo "filename=$FILENAME" >> $GITHUB_OUTPUT
+
+    # cleanup installer folder
+    - run: |
         rm installer/*.dmg
+        tar xzf installer/*.zip -C installer/
 
     - name: prepare artifacts
       run: |
