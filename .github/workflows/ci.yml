@@ -103,8 +103,8 @@ jobs:
     strategy:
       matrix:
         platform:
-          - os: macos-11
-            name: darwin+x86-64
+          # - os: macos-11
+          #   name: darwin+x86-64
           # TODO: #181 build for linux
           # - os: ubuntu-latest
           #   name: linux+x86-64
@@ -157,9 +157,14 @@ jobs:
         # APPLE_ID: ${{ secrets.APPLE_ID }}
         # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
     - run: cat modules/desktop/dist/latest-mac.yml
+    - run: ls -lh modules/desktop/dist/
     - run: mkdir -p target
-    - run: cp ./modules/desktop/dist/*.zip ./target/tea.zip
-    # - run: cp ./modules/desktop/dist/*.dmg ./target/tea.dmg
+
+    # build artifacts for publishing and notarization
+    - run: cp ./modules/desktop/dist/*.zip ./target/
+    - run: cp ./modules/desktop/dist/*.dmg ./target/
+    - run: cp ./modules/desktop/dist/*.yml ./target/
+  
     - run: tar -czvf artifacts.tgz -C ./target/ .
     - name: upload artifacts
       uses: actions/upload-artifact@v3
@@ -175,7 +180,7 @@ jobs:
     strategy:
       matrix:
         platform:
-          - darwin+x86-64
+          # - darwin+x86-64
           - darwin+aarch64
     steps:
     - uses: teaxyz/setup@v0
@@ -186,33 +191,31 @@ jobs:
     - run: tar xzf artifacts.tgz
 
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: mkdir installer
-    - run: tea unzip tea.zip -d installer/
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file tea.zip
+    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file *.zip
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-    - run: |
-        tea create-dmg \
-        --volname "Tea Installer" \
-        --window-pos 200 120 \
-        --window-size 800 400 \
-        --icon-size 100 \
-        --icon "tea.app" 200 190 \
-        --hide-extension "tea.app" \
-        --app-drop-link 600 185 \
-        --sandbox-safe \
-        "tea-installer.dmg" \
-        "installer/"
+    # - run: |
+    #     tea create-dmg \
+    #     --volname "Tea Installer" \
+    #     --window-pos 200 120 \
+    #     --window-size 800 400 \
+    #     --icon-size 100 \
+    #     --icon "tea.app" 200 190 \
+    #     --hide-extension "tea.app" \
+    #     --app-drop-link 600 185 \
+    #     --sandbox-safe \
+    #     "tea-installer.dmg" \
+    #     "installer/"
 
-    - run: mkdir -p artifacts && mv tea-installer.dmg artifacts/
-    - run: tar -czvf artifacts-installer.tgz -C artifacts/ .
-    - name: upload artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ matrix.platform }}-installer
-        path: artifacts-installer.tgz
-        if-no-files-found: error
+    # - run: mkdir -p artifacts && mv *.dmg artifacts/
+    # - run: tar -czvf artifacts-installer.tgz -C artifacts/ .
+    # - name: upload artifacts
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: ${{ matrix.platform }}-installer
+    #     path: artifacts-installer.tgz
+    #     if-no-files-found: error
 
   upload:
     needs: [notorize_app, changes]
@@ -220,8 +223,8 @@ jobs:
     strategy:
       matrix:
         platform:
-          - name: darwin+x86-64
-            id: mac_latest
+          # - name: darwin+x86-64
+          #   id: mac_latest
           # - name: linux+x86-64
           #   id: linux
           - name: darwin+aarch64
@@ -231,7 +234,7 @@ jobs:
     steps:
     - uses: actions/download-artifact@v3
       with:
-        name: ${{ matrix.platform.name }}-installer
+        name: ${{ matrix.platform.name }}
 
     - run: tar xzf artifacts-installer.tgz
 
@@ -266,8 +269,11 @@ jobs:
             exit 1
             ;;
         esac
+        FILENAME=$(ls | grep $EXTENSION)
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
+        echo "filename=$FILENAME" >> $GITHUB_OUTPUT
+
 
     - uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -280,10 +286,11 @@ jobs:
         prefix: ${{ needs.changes.outputs.preview_folder }}
         platform: ${{ steps.build_platform.outputs.build_platform }}
         extension: ${{ steps.build_platform.outputs.extension }}
+        filename: ${{ steps.build_platform.outputs.filename }}
       run: |
         aws s3 cp \
-          "./tea-installer.$extension" \
-          "s3://preview.gui.tea.xyz/$prefix/tea_$platform.$extension"
+          "$filename" \
+          "s3://preview.gui.tea.xyz/$prefix/$filename"
 
     - name: comment install for Linux
       if: startsWith(matrix.platform.name, 'linux')
@@ -293,7 +300,7 @@ jobs:
         message: |
           **installer for Linux ${{ matrix.platform.name }} is at**:
           ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.build_platform.outputs.filename }}
           ```
           copy-paste into a browser to download
 
@@ -305,6 +312,6 @@ jobs:
         message: |
           **installers for MacOS ${{ matrix.platform.name }} is at**:
           ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/tea_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.build_platform.outputs.filename }}
           ```
           copy-paste into a browser to download
