@@ -186,35 +186,27 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: ${{ matrix.platform }}
-  
-    - run: mkdir installer
-    - run: tar xzf artifacts.tgz -C installer
+
+    # prepare folders
+    - run: mkdir dist
+    - run: tar xzf artifacts.tgz -C dist
 
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file installer/*.zip
+    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/*.zip
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-    
-    # dmg from electron doesnt work after notorizing this way
-    # need to create a new dmg
+
+    # prepare for DMG creation
+    - run: mkdir installer
+    - run: tar xzf dist/*.zip -C installer/
+    - run: cp -r ./dist/.icon-icns installer/
+
     - name: get dmg filename
       id: get_dmg_filename
       run: |
-        rm installer/*.blockmap
-        FILENAME=$(cd installer && ls  | grep dmg)
+        FILENAME=$(cd dist && ls | grep -Ev blockmap | grep dmg)
         echo "filename=$FILENAME" >> $GITHUB_OUTPUT
-
-    # cleanup installer folder
-    - run: |
-        rm installer/*.dmg
-        tar xzf installer/*.zip -C installer/
-        rm installer/*.zip
-
-    - name: prepare artifacts
-      run: |
-        mkdir -p artifacts
-        mv installer/*.yml artifacts
 
     - run: |
         tea create-dmg \
@@ -231,8 +223,9 @@ jobs:
       env:
         filename: ${{ steps.get_dmg_filename.outputs.filename }}
 
-    - run: mv ${{ steps.get_dmg_filename.outputs.filename }} artifacts/
-    - run: tar -czvf artifacts-installer.tgz -C artifacts/ .
+    # finalize artifacts
+    - run: mv ${{ steps.get_dmg_filename.outputs.filename }} dist
+    - run: tar -czvf artifacts-installer.tgz -C dist/ .
     - name: upload artifacts
       uses: actions/upload-artifact@v3
       with:
