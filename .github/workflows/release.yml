@@ -102,7 +102,7 @@ jobs:
 
     # finalize artifacts
     - run: mv ${{ steps.get_dmg_filename.outputs.filename }} dist
-    - run: tar -czvf artifacts-installer.tgz -C dist/ .
+    - run: tar -czvf dist.tgz -C dist/ .
     - name: upload artifacts
       uses: actions/upload-artifact@v3
       with:
