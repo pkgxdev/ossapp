@@ -59,6 +59,7 @@ jobs:
           - darwin+x86-64
           - darwin+aarch64
     steps:
+    - uses: teaxyz/setup@v0
     - uses: actions/download-artifact@v3
       with:
         name: ${{ matrix.platform }}
