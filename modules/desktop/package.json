@@ -14,7 +14,7 @@
 		"dev:main": "cd ./electron && vite build --config ./vite.config.js --watch",
 		"build:main": "cp package.json electron && cd ./electron && vite  --config ./vite.config.js build --base . && rm package.json",
 		"pack": "electron-builder --dir --config electron-builder.config.cjs",
-		"dist": "pnpm build && electron-builder --config electron-builder.config.cjs --publish always",
+		"dist": "pnpm build && electron-builder --config electron-builder.config.cjs --publish onTag",
 		"package": "pnpm build && electron-builder --config electron-builder.config.cjs",
 		"dev:package": "pnpm build && electron-builder --config electron-builder.config.cjs --dir",
 		"electron": "concurrently --kill-others \"vite dev\" \"electron electron/dist/electron.cjs\"",
@@ -97,13 +97,6 @@
 		"onlyBuiltDependencies": [
 			"@tea/ui"
 		]
-	},
-	"build": {
-		"appId": "xyz.tea.gui",
-		"productName": "tea",
-		"linux": {
-			"icon": "./icon.png"
-		}
 	},
 	"homepage": "https://tea.xyz",
 	"repository": "https://github.com/teaxyz/gui.git"
