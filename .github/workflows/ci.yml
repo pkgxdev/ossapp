@@ -156,6 +156,7 @@ jobs:
         # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # APPLE_ID: ${{ secrets.APPLE_ID }}
         # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+    - run: cat modules/desktop/dist/latest-mac.yml
     - run: mkdir -p target
     - run: cp ./modules/desktop/dist/*.zip ./target/tea.zip
     # - run: cp ./modules/desktop/dist/*.dmg ./target/tea.dmg
