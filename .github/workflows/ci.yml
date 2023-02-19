@@ -230,9 +230,7 @@ jobs:
       env:
         filename: ${{ steps.get_dmg_filename.outputs.filename }}
 
-    - run: |
-        mv ${{ steps.get_dmg_filename.outputs.filename }} artifacts/
-        cp installer/*.yml artifacts/
+    - run: mv ${{ steps.get_dmg_filename.outputs.filename }} artifacts/
     - run: tar -czvf artifacts-installer.tgz -C artifacts/ .
     - name: upload artifacts
       uses: actions/upload-artifact@v3
