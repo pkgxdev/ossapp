@@ -53,7 +53,7 @@ module.exports = {
 
 	// this determines the configuration of the auto-update feature
 	publish: {
-		provider: "s3", 
+		provider: "s3",
 		bucket: "preview.gui.tea.xyz",
 		path: "auto"
 	}

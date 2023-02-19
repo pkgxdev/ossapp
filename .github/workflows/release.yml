@@ -23,7 +23,7 @@ jobs:
     - uses: teaxyz/setup@v0
     - name: build
       if: startsWith(matrix.platform.name, 'darwin')
-      run: tea -ES xc dist
+      run: tea -ES +nodejs.org@18 xc dist
       env:
         # PUBLISH_FOR_PULL_REQUEST: true
         USE_HARD_LINKS: false
