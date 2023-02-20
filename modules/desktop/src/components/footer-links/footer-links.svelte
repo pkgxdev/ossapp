@@ -47,7 +47,7 @@
 				rel="noreferrer"
 				class="hover:text-white"
 			>
-				TERMS & SERVICES
+				TERMS & SERVICES UPDATE
 			</a>
 			<a
 				href="https://tea.xyz/privacy-policy/"
