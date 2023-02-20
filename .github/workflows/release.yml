@@ -176,7 +176,7 @@ jobs:
     # TODO: 
     # - configure correct blockmap and checksum hash on latest-mac.yml
     # - upload to s3:previewgui bucket, release/*
-    # - cloudfront invalidation for gui-dist.tea.xyz/release/*
+    # - cloudfront invalidation for gui-dist.tea.xyz/*.yml
     - name: publish release 
       env:
         platform: ${{ steps.build_platform.outputs.build_platform }}
@@ -184,8 +184,9 @@ jobs:
         tag: ${{ steps.tag.outputs.tag }}
         filename: ${{ steps.build_platform.outputs.filename }}
       run: |
-        aws s3 cp "dist/$filename" \
-          "s3://preview.gui.tea.xyz/release/$filename"
+        cd dist && \
+        aws s3 sync . \
+          "s3://preview.gui.tea.xyz/release/"
 
     - uses: actions/setup-node@v3
       with:
