@@ -286,7 +286,7 @@ jobs:
         if-no-files-found: error
 
   upload:
-    needs: [notorize_app, changes]
+    needs: [notarize_desktop, changes]
     runs-on: ubuntu-latest
     strategy:
       matrix:
