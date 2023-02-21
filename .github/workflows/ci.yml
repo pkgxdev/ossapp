@@ -145,7 +145,7 @@ jobs:
           ./modules/desktop/.svelte-kit
           ./modules/desktop/build
           ./modules/desktop/dist
-    - name: rm -rf modules/desktop/dist || true
+    - run: rm -rf modules/desktop/dist || true
     - name: build
       if: startsWith(matrix.platform.name, 'darwin')
       # run: tea -ES xc dist # temporary tea installs 19
