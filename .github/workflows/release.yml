@@ -52,7 +52,7 @@ jobs:
     - run: cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
     - run: tar -czvf artifacts.tgz -C ./target/ .
 
-    - run: ls target
+    - run: cat target/latest-mac.yml
 
     - name: upload artifacts
       uses: actions/upload-artifact@v3
