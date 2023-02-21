@@ -91,35 +91,134 @@ jobs:
     - run: cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
     - run: tar -czvf artifacts.tgz -C ./target/ .
 
-    - name: upload artifacts
-      uses: actions/upload-artifact@v3
+
+    - uses: aws-actions/configure-aws-credentials@v1
       with:
-        name: ${{ matrix.platform.name }}
-        path: artifacts.tgz
-        if-no-files-found: error
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: s3 artifact upload
+      env:
+        prefix: main
+      run: |
+        aws s3 cp artifacts.tgz "s3://preview.gui.tea.xyz/$prefix/artifacts.tgz"
 
   notarize_desktop:
-    needs: [build_desktop]
+    needs: [build_desktop, changes]
     runs-on: macos-11
     strategy:
       matrix:
         platform:
-          - darwin+x86-64
+          # no need for x86-64
           - darwin+aarch64
     steps:
-    - uses: actions/download-artifact@v3
+    - uses: teaxyz/setup@v0
+    - uses: aws-actions/configure-aws-credentials@v1
       with:
-        name: ${{ matrix.platform }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: s3 artifact download
+      env:
+        prefix: main
+      run: |
+        aws s3 cp "s3://preview.gui.tea.xyz/$prefix/artifacts.tgz" artifacts.tgz
 
     # prepare folders
     - run: mkdir dist
     - run: tar xzf artifacts.tgz -C dist
 
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/*.zip
+
+    - name: get .zip of arm64 and x86+64
+      id: app_files
+      working-directory: ./dist
+      run: |
+        ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
+        X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
+        ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
+        X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
+        echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
+        echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
+        echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
+        echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
+
+    # Notarize. Can take up to 10 minutes (and fail) asynchronously
+    - name: notarize .app arm64
+      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE || true
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
+
+    - name: notarize .app x86+64
+      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE || true
+      env:
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
+
+    # prepare for DMG creation
+    - name: prepare installer folders
+      run: |
+        mkdir x86_installer && mkdir arm64_installer
+        tar xzf dist/$ZIP_FILE_X86 -C x86_installer/
+        tar xzf dist/$ZIP_FILE_ARM64 -C arm64_installer/
+        cp -r ./dist/.icon-icns x86_installer/
+        cp -r ./dist/.icon-icns arm64_installer/
+      env:
+        ZIP_FILE_X86: ${{ steps.app_files.outputs.zip_x86 }}
+        ZIP_FILE_ARM64: ${{ steps.app_files.outputs.zip_arm64 }}
+
+    - name: create x86 dmg
+      run: |
+        tea create-dmg \
+        --volname "Tea Installer" \
+        --window-pos 200 120 \
+        --window-size 800 400 \
+        --icon-size 100 \
+        --icon "tea.app" 200 190 \
+        --hide-extension "tea.app" \
+        --app-drop-link 600 185 \
+        --sandbox-safe \
+        "$filename" \
+        "$installer_folder"
+      env:
+        filename: ${{ steps.app_files.outputs.dmg_x86 }}
+        installer_folder: x86_installer/
+
+    - name: create arm64 dmg
+      run: |
+        tea create-dmg \
+        --volname "Tea Installer" \
+        --window-pos 200 120 \
+        --window-size 800 400 \
+        --icon-size 100 \
+        --icon "tea.app" 200 190 \
+        --hide-extension "tea.app" \
+        --app-drop-link 600 185 \
+        --sandbox-safe \
+        "$filename" \
+        "$installer_folder"
+      env:
+        filename: ${{ steps.app_files.outputs.dmg_arm64 }}
+        installer_folder: arm64_installer/
+
+    # finalize artifacts
+    - run: |
+        mv $x86dmg dist
+        mv $arm64dmg dist
+      env:
+        x86dmg: ${{ steps.app_files.outputs.dmg_x86 }}
+        arm64dmg: ${{ steps.app_files.outputs.dmg_arm64 }}
+    - run: tar -czvf dist.tgz -C dist/ .
+    - name: s3 artifact upload
+      env:
+        prefix: main
+      run: |
+        aws s3 cp dist.tgz "s3://preview.gui.tea.xyz/$prefix/dist.tgz" 
 
   upload:
     needs: [build_desktop, notarize_desktop]
@@ -127,27 +226,40 @@ jobs:
     strategy:
       matrix:
         platform:
-          - darwin+x86-64
           # - linux+x86-64
           - darwin+aarch64
           # - linux+aarch64
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/download-artifact@v3
-      with:
-        name: ${{ matrix.platform }}
-
-    - run: tar xzf artifacts.tgz
-
-    - name: Get current unix ts - seconds
-      id: date
-      run: echo "unix_seconds=$(date +'%s')" >> $GITHUB_OUTPUT
-
     - uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
+    - name: s3 artifact download
+      env:
+        prefix: main
+      run: |
+        aws s3 cp "s3://preview.gui.tea.xyz/$prefix/dist.tgz" dist.tgz
+
+    - run: mkdir dist
+    - run: tar xzf dist.tgz -C dist
+    - name: get installer filenames of arm64 and x86+64
+      id: app_files
+      working-directory: ./dist
+      run: |
+        ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
+        X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
+        ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
+        X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
+        echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
+        echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
+        echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
+        echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
+  
+    - name: Get current unix ts - seconds
+      id: date
+      run: echo "unix_seconds=$(date +'%s')" >> $GITHUB_OUTPUT
 
     - name: build platform output
       id: build_platform
@@ -167,11 +279,11 @@ jobs:
             ;;
           "darwin+aarch64")
             BUILD_PLATFORM="aarch64"
-            EXTENSION="zip"
+            EXTENSION="dmg"
             ;;
           "darwin+x86-64")
             BUILD_PLATFORM="x64"
-            EXTENSION="zip"
+            EXTENSION="dmg"
             ;;
           *)
             echo "Unknown platform $platform"
@@ -183,31 +295,32 @@ jobs:
 
     - name:  cp package images from prod to gui bucket
       env:
-        platform: ${{ steps.build_platform.outputs.build_platform }}
-        build_platform: ${{ matrix.platform }}
-        extension: ${{steps.build_platform.outputs.extension}}
+        arm64: ${{ steps.app_files.outputs.dmg_arm64 }}
+        x86: ${{ steps.app_files.outputs.dmg_x86 }}
       run: |
         aws s3 cp \
-          "./tea.$extension" \
-          "s3://preview.gui.tea.xyz/main/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
-
-    - name: cp package to s3
-      env:
-        platform: ${{ steps.build_platform.outputs.build_platform }}
-        build_platform: ${{ matrix.platform }}
-        extension: ${{ steps.build_platform.outputs.extension }}
-      run: |
-        aws s3 cp "./tea.$extension" \
-          "s3://preview.gui.tea.xyz/main/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
+          "dist/$arm64" \
+          "s3://preview.gui.tea.xyz/main/$arm64"
+        aws s3 cp \
+          "dist/$x86" \
+          "s3://preview.gui.tea.xyz/main/$x86"
 
     - uses: actions/setup-node@v3
       with:
         node-version: 18
 
-    - name: Slack Notification
+    - name: Slack Notification ARM64
       run: ./.github/notify-slack.js
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        PLATFORM: ${{ matrix.platform }}
-        EXT: ${{ steps.build_platform.outputs.extension }}
-        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/main/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
+        PLATFORM: darwin-aarch64
+        EXT: dmg
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/main/${{ steps.app_files.outputs.dmg_arm64 }}
+
+    - name: Slack Notification X86
+      run: ./.github/notify-slack.js
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        PLATFORM: darwin-x86+64
+        EXT: dmg
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/main/${{ steps.app_files.outputs.dmg_x86 }}

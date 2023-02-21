@@ -168,14 +168,8 @@ jobs:
     # build artifacts for publishing and notarization
     - run: cp -r ./modules/desktop/dist/.icon-icns ./target/
     - run: cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
-    - run: ls target
     - run: tar -czvf artifacts.tgz -C ./target/ .
-    # - name: upload artifacts
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: ${{ matrix.platform.name }}
-    #     path: artifacts.tgz
-    #     if-no-files-found: error
+
     - uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -296,14 +290,7 @@ jobs:
       env:
         x86dmg: ${{ steps.app_files.outputs.dmg_x86 }}
         arm64dmg: ${{ steps.app_files.outputs.dmg_arm64 }}
-    - run: ls dist
     - run: tar -czvf dist.tgz -C dist/ .
-    # - name: upload artifacts
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: ${{ matrix.platform }}-dist
-    #     path: dist.tgz
-    #     if-no-files-found: error
     - name: s3 artifact upload
       env:
         prefix: ${{ needs.changes.outputs.preview_folder }}
@@ -333,13 +320,11 @@ jobs:
         prefix: ${{ needs.changes.outputs.preview_folder }}
       run: |
         aws s3 cp "s3://preview.gui.tea.xyz/$prefix/dist.tgz" dist.tgz
-    # - uses: actions/download-artifact@v3
-    #   with:
-    #     name: ${{ matrix.platform.name }}-dist
+
     - run: mkdir dist
     - run: tar xzf dist.tgz -C dist
 
-    - name: get .zip of arm64 and x86+64
+    - name: get installer filenames of arm64 and x86+64
       id: app_files
       working-directory: ./dist
       run: |
