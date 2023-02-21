@@ -103,13 +103,12 @@ jobs:
     strategy:
       matrix:
         platform:
-          - os: macos-11
-            name: darwin+x86-64
+          # X86+64 is built with ARM64 also
+          - os: [self-hosted, macOS, ARM64]
+            name: darwin+aarch64
           # TODO: #181 build for linux
           # - os: ubuntu-latest
           #   name: linux+x86-64
-          - os: [self-hosted, macOS, ARM64]
-            name: darwin+aarch64
           # err: Package atk was not found in the pkg-config search path.
           # requires atk >= 2.18
           # - os: [self-hosted, linux, ARM64]
@@ -164,8 +163,7 @@ jobs:
         # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # APPLE_ID: ${{ secrets.APPLE_ID }}
         # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-    - run: cat modules/desktop/dist/latest-mac.yml
-    - run: ls -lh modules/desktop/dist/
+
     - run: mkdir -p target
 
     # build artifacts for publishing and notarization
@@ -180,14 +178,13 @@ jobs:
         path: artifacts.tgz
         if-no-files-found: error
 
-  notorize_app:
+  notarize_desktop:
     needs: [build_desktop]
-    # NOTE: atm notarization is only doable in gh macos-11 not in our self-hosted runner
     runs-on: macos-11
     strategy:
       matrix:
         platform:
-          - darwin+x86-64
+          # no need for x86-64
           - darwin+aarch64
     steps:
     - uses: teaxyz/setup@v0
@@ -199,24 +196,47 @@ jobs:
     - run: mkdir dist
     - run: tar xzf artifacts.tgz -C dist
 
+    - name: get .zip of arm64 and x86+64
+      id: app_files
+      working-directory: ./dist
+      run: |
+        ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
+        X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
+        ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
+        X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
+        echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
+        echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
+        echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
+        echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
+
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/*.zip
+    - name: notarize .app arm64
+      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
+
+    - name: notarize .app x86+64
+      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE
+      env:
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
 
     # prepare for DMG creation
-    - run: mkdir installer
-    - run: tar xzf dist/*.zip -C installer/
-    - run: cp -r ./dist/.icon-icns installer/
-
-    - name: get dmg filename
-      id: get_dmg_filename
-      run: |
-        FILENAME=$(cd dist && ls | grep -Ev blockmap | grep dmg)
-        echo "filename=$FILENAME" >> $GITHUB_OUTPUT
-
     - run: |
+        mkdir x86_installer && mkdir arm64_installer
+        tar xzf dist/$ZIP_FILE_X86 -C x86_installer/
+        tar xzf dist/$ZIP_FILE_ARM64 -C arm64_installer/
+        cp -r ./dist/.icon-icns x86_installer/
+        cp -r ./dist/.icon-icns arm64_installer/
+      env:
+        ZIP_FILE_X86: ${{ steps.app_files.outputs.zip_x86 }}
+        ZIP_FILE_ARM64: ${{ steps.app_files.outputs.zip_arm64 }}
+
+    - name: create x86 dmg
+      run: |
         tea create-dmg \
         --volname "Tea Installer" \
         --window-pos 200 120 \
@@ -227,18 +247,42 @@ jobs:
         --app-drop-link 600 185 \
         --sandbox-safe \
         "$filename" \
-        "installer/"
+        "$installer_folder"
       env:
-        filename: ${{ steps.get_dmg_filename.outputs.filename }}
+        filename: ${{ steps.app_files.outputs.dmg_x86 }}
+        installer_folder: x86_installer/
+
+    - name: create arm64 dmg
+      run: |
+        tea create-dmg \
+        --volname "Tea Installer" \
+        --window-pos 200 120 \
+        --window-size 800 400 \
+        --icon-size 100 \
+        --icon "tea.app" 200 190 \
+        --hide-extension "tea.app" \
+        --app-drop-link 600 185 \
+        --sandbox-safe \
+        "$filename" \
+        "$installer_folder"
+      env:
+        filename: ${{ steps.app_files.outputs.dmg_arm64 }}
+        installer_folder: arm64_installer/
 
     # finalize artifacts
-    - run: mv ${{ steps.get_dmg_filename.outputs.filename }} dist
-    - run: tar -czvf artifacts-installer.tgz -C dist/ .
+    - run: |
+        mv $x86dmg dist
+        mv $arm64dmg dist
+      env:
+        x86dmg: ${{ steps.app_files.outputs.dmg_x86 }}
+        arm64dmg: ${{ steps.app_files.outputs.dmg_arm64 }}
+
+    - run: tar -czvf dist.tgz -C dist/ .
     - name: upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ matrix.platform }}-installer
-        path: artifacts-installer.tgz
+        name: ${{ matrix.platform }}-dist
+        path: dist.tgz
         if-no-files-found: error
 
   upload:
@@ -247,22 +291,32 @@ jobs:
     strategy:
       matrix:
         platform:
-          - name: darwin+x86-64
-            id: mac_latest
-          # - name: linux+x86-64
-          #   id: linux
+          # x86 included already in aarch64
           - name: darwin+aarch64
             id: mac_m1
+          # - name: linux+x86-64
+          #   id: linux
           # - name: linux+aarch64
           #   id: linux_arm64
     steps:
     - uses: actions/download-artifact@v3
       with:
-        name: ${{ matrix.platform.name }}-installer
+        name: ${{ matrix.platform.name }}-dist
+    - run: mkdir dist
+    - run: tar xzf dist.tgz -C dist
 
-    - run: tar xzf artifacts-installer.tgz
-
-    - run: ls -lha
+    - name: get .zip of arm64 and x86+64
+      id: app_files
+      working-directory: ./dist
+      run: |
+        ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
+        X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
+        ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
+        X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
+        echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
+        echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
+        echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
+        echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
 
     - name: build platform output
       id: build_platform
@@ -293,10 +347,8 @@ jobs:
             exit 1
             ;;
         esac
-        FILENAME=$(ls | grep -Ev blockmap | grep $EXTENSION)
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
-        echo "filename=$FILENAME" >> $GITHUB_OUTPUT
 
     - uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -307,13 +359,10 @@ jobs:
     - name: cp package images from prod to preview bucket
       env:
         prefix: ${{ needs.changes.outputs.preview_folder }}
-        platform: ${{ steps.build_platform.outputs.build_platform }}
-        extension: ${{ steps.build_platform.outputs.extension }}
-        filename: ${{ steps.build_platform.outputs.filename }}
       run: |
-        aws s3 cp \
-          "$filename" \
-          "s3://preview.gui.tea.xyz/$prefix/$filename"
+        cd dist && \
+        aws s3 sync . \
+          "s3://preview.gui.tea.xyz/$prefix/"
 
     - name: comment install for Linux
       if: startsWith(matrix.platform.name, 'linux')
@@ -331,10 +380,21 @@ jobs:
       if: startsWith(matrix.platform.name, 'darwin')
       uses: mshick/add-pr-comment@v2
       with:
-        message-id: ${{ matrix.platform.id }}-comment
+        message-id: darwin+aarch64-comment
         message: |
-          **installers for MacOS ${{ matrix.platform.name }} is at**:
+          **installers for MacOS darwin+aarch64 is at**:
           ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.build_platform.outputs.filename }}
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_arm64 }}
+          ```
+          copy-paste into a browser to download
+    - name: comment install for MacOS
+      if: startsWith(matrix.platform.name, 'darwin')
+      uses: mshick/add-pr-comment@v2
+      with:
+        message-id: darwin+x86-64-comment
+        message: |
+          **installers for MacOS darwin+x86-64 is at**:
+          ```bash
+          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_x86 }}
           ```
           copy-paste into a browser to download
