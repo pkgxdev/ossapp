@@ -20,14 +20,11 @@ jobs:
     container: ${{ matrix.platform.container }}
     steps:
     - uses: actions/checkout@v3
-
-    - name: get gui package.json version
-      uses: getneil/jq-action@v1
-      id: gui-version
-      with:
-        cmd: 'version=$(echo $(cat modules/desktop/package.json) | jq .version) echo "version=$version" >> $GITHUB_OUTPUT'
-
     - uses: teaxyz/setup@v0
+
+    - id: gui-version
+      run: 'version=$(echo $(cat modules/desktop/package.json) | jq .version) echo "version=$version" >> $GITHUB_OUTPUT'
+
     - name: build
       if: startsWith(matrix.platform.name, 'darwin')
       run: tea -ES +nodejs.org@18 xc dist
