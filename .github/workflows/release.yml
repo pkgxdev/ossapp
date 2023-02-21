@@ -227,8 +227,6 @@ jobs:
         esac
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
-        FILENAME=$(cd dist && ls | grep -Ev blockmap | grep $EXTENSION)
-        echo "filename=$FILENAME" >> $GITHUB_OUTPUT
   
     - uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -248,7 +246,6 @@ jobs:
         platform: ${{ steps.build_platform.outputs.build_platform }}
         extension: ${{ steps.build_platform.outputs.extension }}
         tag: ${{ steps.tag.outputs.tag }}
-        filename: ${{ steps.build_platform.outputs.filename }}
       run: |
         cd dist && \
         aws s3 sync . \
