@@ -13,11 +13,8 @@ module.exports = {
 	},
 	mac: {
 		target: {
-			target: 'default',
-			arch: [
-				'x64',
-				'arm64'
-			],
+			target: "default",
+			arch: ["x64", "arm64"]
 		}
 	},
 	// TODO: if xcrun altool exists eventually in our self-hosted macos
