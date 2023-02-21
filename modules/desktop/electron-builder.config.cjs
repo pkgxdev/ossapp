@@ -11,6 +11,15 @@ module.exports = {
 	linux: {
 		icon: "./icon.png"
 	},
+	mac: {
+		target: {
+			target: 'default',
+			arch: [
+				'x64',
+				'arm64'
+			],
+		}
+	}
 	// TODO: if xcrun altool exists eventually in our self-hosted macos
 	// SOLUTION: is notarize separately in next pipeline step
 	// afterSign: async (params) => {
