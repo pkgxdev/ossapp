@@ -26,7 +26,7 @@ jobs:
       id: gui-version
       run: |
         tea +stedolan.github.io/jq
-        export version=$(echo $(cat modules/desktop/package.json) | jq .version)
+        export version=$(echo $(cat modules/desktop/package.json) | jq --raw-output .version)
         echo "version=$version" >> $GITHUB_OUTPUT
 
     - name: build
@@ -195,7 +195,6 @@ jobs:
         cd dist && \
         aws s3 sync . \
           "s3://preview.gui.tea.xyz/release/"
-
     - uses: actions/setup-node@v3
       with:
         node-version: 18
@@ -207,3 +206,7 @@ jobs:
         VERSION: ${{steps.tag.outputs.tag}}
         EXT: ${{ steps.build_platform.outputs.extension }}
         DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/${{ steps.build_platform.outputs.filename }}
+    - run: |
+        aws cloudfront create-invalidation \
+          --distribution-id ${{ secrets.AWS_CF_GUI_RELEASE_ID }} \
+          --paths '/latest-mac.yml'

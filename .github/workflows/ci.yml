@@ -118,6 +118,13 @@ jobs:
     - uses: actions/checkout@v3
     - uses: teaxyz/setup@v0
 
+    - name: get gui version
+      id: gui-version
+      run: |
+        tea +stedolan.github.io/jq
+        export version=$(echo $(cat modules/desktop/package.json) | jq --raw-output .version)
+        echo "version=$version" >> $GITHUB_OUTPUT
+
     - name: cache node_modules build
       # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
       # but its ok to ignore, its still the fastest builder
@@ -146,6 +153,7 @@ jobs:
       # run: tea -ES xc dist # temporary tea installs 19
       run: tea -ES +nodejs.org@18 xc dist
       env:
+        PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}-dev
         USE_HARD_LINKS: false
         CSC_FOR_PULL_REQUEST: true
         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}

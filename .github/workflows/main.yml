@@ -69,10 +69,18 @@ jobs:
           ./modules/desktop/build
           ./modules/desktop/dist
 
+
+    - name: get gui version
+      id: gui-version
+      run: |
+        tea +stedolan.github.io/jq
+        export version=$(echo $(cat modules/desktop/package.json) | jq --raw-output .version)
+        echo "version=$version" >> $GITHUB_OUTPUT
     - name: build
       if: startsWith(matrix.platform.name, 'darwin')
       run: tea -ES xc dist
       env:
+        PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}-main
         USE_HARD_LINKS: false
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
