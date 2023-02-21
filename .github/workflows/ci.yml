@@ -116,7 +116,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: teaxyz/setup@v0
-
     - name: get gui version
       id: gui-version
       run: |
@@ -146,7 +145,7 @@ jobs:
           ./modules/desktop/.svelte-kit
           ./modules/desktop/build
           ./modules/desktop/dist
-
+    - name: rm -rf modules/desktop/dist || true
     - name: build
       if: startsWith(matrix.platform.name, 'darwin')
       # run: tea -ES xc dist # temporary tea installs 19
@@ -169,15 +168,25 @@ jobs:
     # build artifacts for publishing and notarization
     - run: cp -r ./modules/desktop/dist/.icon-icns ./target/
     - run: cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
-  
+    - run: ls target
     - run: tar -czvf artifacts.tgz -C ./target/ .
-    - name: upload artifacts
-      uses: actions/upload-artifact@v3
+    # - name: upload artifacts
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: ${{ matrix.platform.name }}
+    #     path: artifacts.tgz
+    #     if-no-files-found: error
+    - uses: aws-actions/configure-aws-credentials@v1
       with:
-        name: ${{ matrix.platform.name }}
-        path: artifacts.tgz
-        if-no-files-found: error
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
 
+    - name: s3 artifact upload
+      env:
+        prefix: ${{ needs.changes.outputs.preview_folder }}
+      run: |
+        aws s3 cp artifacts.tgz "s3://preview.gui.tea.xyz/$prefix/artifacts.tgz"
   notarize_desktop:
     needs: [build_desktop]
     runs-on: macos-11
@@ -189,9 +198,18 @@ jobs:
     steps:
     - uses: teaxyz/setup@v0
     - run: rm -rf ./*.{dmg,zip} || true
-    - uses: actions/download-artifact@v3
+    - uses: aws-actions/configure-aws-credentials@v1
       with:
-        name: ${{ matrix.platform }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: s3 artifact download
+      env:
+        prefix: ${{ needs.changes.outputs.preview_folder }}
+      run: |
+        aws s3 cp "s3://preview.gui.tea.xyz/$prefix/artifacts.tgz" artifacts.tgz
+
 
     # prepare folders
     - run: mkdir dist
@@ -278,15 +296,19 @@ jobs:
       env:
         x86dmg: ${{ steps.app_files.outputs.dmg_x86 }}
         arm64dmg: ${{ steps.app_files.outputs.dmg_arm64 }}
-
+    - run: ls dist
     - run: tar -czvf dist.tgz -C dist/ .
-    - name: upload artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ matrix.platform }}-dist
-        path: dist.tgz
-        if-no-files-found: error
-
+    # - name: upload artifacts
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: ${{ matrix.platform }}-dist
+    #     path: dist.tgz
+    #     if-no-files-found: error
+    - name: s3 artifact upload
+      env:
+        prefix: ${{ needs.changes.outputs.preview_folder }}
+      run: |
+        aws s3 cp dist.tgz "s3://preview.gui.tea.xyz/$prefix/dist.tgz" 
   upload:
     needs: [notarize_desktop, changes]
     runs-on: ubuntu-latest
@@ -301,9 +323,19 @@ jobs:
           # - name: linux+aarch64
           #   id: linux_arm64
     steps:
-    - uses: actions/download-artifact@v3
+    - uses: aws-actions/configure-aws-credentials@v1
       with:
-        name: ${{ matrix.platform.name }}-dist
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    - name: s3 artifact download
+      env:
+        prefix: ${{ needs.changes.outputs.preview_folder }}
+      run: |
+        aws s3 cp "s3://preview.gui.tea.xyz/$prefix/dist.tgz" dist.tgz
+    # - uses: actions/download-artifact@v3
+    #   with:
+    #     name: ${{ matrix.platform.name }}-dist
     - run: mkdir dist
     - run: tar xzf dist.tgz -C dist
 
