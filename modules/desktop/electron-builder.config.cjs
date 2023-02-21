@@ -19,7 +19,7 @@ module.exports = {
 				'arm64'
 			],
 		}
-	}
+	},
 	// TODO: if xcrun altool exists eventually in our self-hosted macos
 	// SOLUTION: is notarize separately in next pipeline step
 	// afterSign: async (params) => {
