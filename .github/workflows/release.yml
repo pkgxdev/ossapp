@@ -20,17 +20,19 @@ jobs:
     container: ${{ matrix.platform.container }}
     steps:
     - uses: actions/checkout@v3
-    - name: get-npm-version
+
+    - name: get gui package.json version
+      uses: getneil/jq-action@v1
       id: gui-version
-      uses: martinbeentjes/npm-get-version-action@main
       with:
-        path: modules/desktop
+        cmd: 'version=$(echo $(cat modules/desktop/package.json) | jq .version) echo "version=$version" >> $GITHUB_OUTPUT'
+
     - uses: teaxyz/setup@v0
     - name: build
       if: startsWith(matrix.platform.name, 'darwin')
       run: tea -ES +nodejs.org@18 xc dist
       env:
-        PUBLIC_VERSION: ${{ steps.gui-version.outputs.current-version }}
+        PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
         # PUBLISH_FOR_PULL_REQUEST: true
         USE_HARD_LINKS: false
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
