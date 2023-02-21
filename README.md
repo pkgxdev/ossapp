@@ -53,7 +53,7 @@ $ AWS_PROFILE=tea/or/etc pnpm release
 Refer to each package `README.md` for instructions on how to setup and
 contribute to them:
 
-* [tea/gui](./modules/gui/README.md)
+* [tea/desktop](./modules/desktop/README.md)
 * [tea/ui](./modules/ui/README.md)
 
 &nbsp;
@@ -88,21 +88,18 @@ pnpm dev
 
 ```sh
 pnpm install
-pnpm add -g vite
 pnpm --filter desktop exec pnpm dist
 ```
 
 # Dependencies
 
-| Project             |  Version  |
-|---------------------|-----------|
-| nodejs.org          | =18.13.0  |
-| pnpm.io             | >=7.18.2  |
-| rust-lang.org       | >=1.62    |
-| rust-lang.org/cargo | >=0.66    |
-| xcfile.dev          | >=0.0.110 |
-| python.org          | >=3.10    |
-
+| Project                           |  Version  |
+|-----------------------------------|-----------|
+| nodejs.org                        | >=18.14   |
+| pnpm.io                           | >=7.20    |
+| xcfile.dev                        | >=0.0.110 |
+| python.org                        | >=3.10    |
+| github.com/create-dmg/create-dmg  | >=1.1     |
 
 
 [aws/cli]: https://aws.amazon.com/cli/

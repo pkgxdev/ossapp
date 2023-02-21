@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Button from '@tea/ui/Button/Button.svelte';
+	import * as pub from '$env/static/public';
 </script>
 
 <footer class="font-machina relative h-auto w-full bg-black">
@@ -39,7 +40,7 @@
 		</menu>
 	</section>
 
-	<section class="border-gray h-16 border border-r-0 p-4 px-16">
+	<section class="border-gray h-16 border border-r-0 p-4 px-16 flex justify-between">
 		<div class="text-gray flex gap-4 text-xs">
 			<a
 				href="https://tea.xyz/terms-of-use/"
@@ -58,6 +59,11 @@
 				PRIVACY POLICY
 			</a>
 		</div>
+		{#if pub.PUBLIC_VERSION}
+			<div class="text-gray flex gap-4 text-xs">
+				<span>v{pub.PUBLIC_VERSION}</span>
+			</div>
+		{/if}
 	</section>
 </footer>
 

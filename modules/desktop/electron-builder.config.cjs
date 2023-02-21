@@ -7,7 +7,16 @@ module.exports = {
 	productName: "tea",
 	asar: false,
 	directories: { output: "dist" },
-	files: ["electron/dist/electron.cjs", { from: "build", to: "" }]
+	files: ["electron/dist/electron.cjs", { from: "build", to: "" }],
+	linux: {
+		icon: "./icon.png"
+	},
+	mac: {
+		target: {
+			target: "default",
+			arch: ["x64", "arm64"]
+		}
+	},
 	// TODO: if xcrun altool exists eventually in our self-hosted macos
 	// SOLUTION: is notarize separately in next pipeline step
 	// afterSign: async (params) => {
@@ -38,6 +47,20 @@ module.exports = {
 	// 		console.error(error);
 	// 	}
 
-	// 	console.log(`Done notarizing ${appId}`);
-	// }
+	// 	console.log(`Done notarizing`);
+	// },
+
+	// publish: {
+	// 	provider: "github",
+	// 	repo: "gui",
+	// 	owner: "teaxyz",
+	// 	releaseType: "release"
+	// },
+
+	// this determines the configuration of the auto-update feature
+	publish: {
+		provider: "generic",
+		// TODO: replace this with tea branded domain: gui-dist.tea.xyz
+		url: "https://d2ovumu63qzbn6.cloudfront.net/"
+	}
 };

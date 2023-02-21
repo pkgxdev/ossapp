@@ -7,7 +7,8 @@ import { getInstalledPackages } from "./libs/tea-dir";
 import { readSessionData, writeSessionData } from "./libs/auth";
 import type { Session } from "../src/libs/types";
 import { installPackage, openTerminal } from "./libs/cli";
-
+import { autoUpdater } from "electron-updater";
+import * as log from "electron-log";
 // try {
 // 	//@ts-ignore only used in dev should not be packaged inprod
 // 	/* eslint-disable */
@@ -16,6 +17,8 @@ import { installPackage, openTerminal } from "./libs/cli";
 // } catch (e) {
 // 	console.error(e);
 // }
+autoUpdater.logger = log;
+log.info("App starting...");
 
 const serveURL = serve({ directory: "." });
 const port = process.env.PORT || 3000;
@@ -66,6 +69,34 @@ function createWindow() {
 	return mainWindow;
 }
 
+function sendStatusToWindow(text) {
+	log.info(text);
+	mainWindow?.webContents.send("message", text);
+}
+autoUpdater.on("checking-for-update", () => {
+	sendStatusToWindow("Checking for update...");
+});
+autoUpdater.on("update-available", (info) => {
+	sendStatusToWindow("Update available.");
+});
+autoUpdater.on("update-not-available", (info) => {
+	sendStatusToWindow("Update not available.");
+});
+autoUpdater.on("error", (err) => {
+	sendStatusToWindow("Error in auto-updater. " + err);
+});
+
+autoUpdater.on("download-progress", (progressObj) => {
+	let log_message = "Download speed: " + progressObj.bytesPerSecond;
+	log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+	log_message = log_message + " (" + progressObj.transferred + "/" + progressObj.total + ")";
+	sendStatusToWindow(log_message);
+});
+
+autoUpdater.on("update-downloaded", (info) => {
+	sendStatusToWindow("Update downloaded");
+});
+
 contextMenu({
 	showLookUpSelection: false,
 	showSearchWithGoogle: false,
@@ -87,6 +118,7 @@ function loadVite(port) {
 }
 
 function createMainWindow() {
+	autoUpdater.checkForUpdatesAndNotify();
 	mainWindow = createWindow();
 	mainWindow.once("close", () => {
 		mainWindow = null;
