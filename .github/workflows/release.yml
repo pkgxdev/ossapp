@@ -13,8 +13,8 @@ jobs:
             name: darwin+x86-64
           # - os: ubuntu-latest
           #   name: linux+x86-64
-          # - os: [self-hosted, macOS, ARM64]
-          #   name: darwin+aarch64
+          - os: [self-hosted, macOS, ARM64]
+            name: darwin+aarch64
           # - os: [self-hosted, linux, ARM64]
           #   name: linux+aarch64
     container: ${{ matrix.platform.container }}
@@ -68,7 +68,7 @@ jobs:
       matrix:
         platform:
           - darwin+x86-64
-          # - darwin+aarch64
+          - darwin+aarch64
     steps:
     - uses: teaxyz/setup@v0
     - uses: actions/download-artifact@v3
@@ -129,7 +129,7 @@ jobs:
         platform:
           - darwin+x86-64
           # - linux+x86-64
-          # - darwin+aarch64
+          - darwin+aarch64
           # - linux+aarch64
     steps:
     - uses: actions/checkout@v3
