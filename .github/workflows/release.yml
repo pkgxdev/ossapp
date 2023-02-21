@@ -9,8 +9,8 @@ jobs:
     strategy:
       matrix:
         platform:
-          # - os: macos-11
-          #   name: darwin+x86-64
+          - os: macos-11
+            name: darwin+x86-64
           # - os: ubuntu-latest
           #   name: linux+x86-64
           - os: [self-hosted, macOS, ARM64]
@@ -65,7 +65,7 @@ jobs:
     strategy:
       matrix:
         platform:
-          # - darwin+x86-64
+          - darwin+x86-64
           - darwin+aarch64
     steps:
     - uses: teaxyz/setup@v0
@@ -125,7 +125,7 @@ jobs:
     strategy:
       matrix:
         platform:
-          # - darwin+x86-64
+          - darwin+x86-64
           # - linux+x86-64
           - darwin+aarch64
           # - linux+aarch64
@@ -184,7 +184,6 @@ jobs:
 
     # TODO: 
     # - configure correct blockmap and checksum hash on latest-mac.yml
-    # - cloudfront invalidation for gui-dist.tea.xyz/*.yml
     - name: publish release 
       env:
         platform: ${{ steps.build_platform.outputs.build_platform }}

@@ -69,7 +69,6 @@ jobs:
           ./modules/desktop/build
           ./modules/desktop/dist
 
-
     - name: get gui version
       id: gui-version
       run: |
@@ -86,11 +85,12 @@ jobs:
         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
         CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
         CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-      #   APPLE_ID: ${{ secrets.APPLE_ID }}
-      #   APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+
     - run: mkdir -p target
-    - run: cp ./modules/desktop/dist/*.zip ./target/tea.zip
+    - run: cp -r ./modules/desktop/dist/.icon-icns ./target/
+    - run: cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
     - run: tar -czvf artifacts.tgz -C ./target/ .
+
     - name: upload artifacts
       uses: actions/upload-artifact@v3
       with:
@@ -111,10 +111,12 @@ jobs:
       with:
         name: ${{ matrix.platform }}
 
-    - run: tar xzf artifacts.tgz
+    # prepare folders
+    - run: mkdir dist
+    - run: tar xzf artifacts.tgz -C dist
 
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file ./tea.zip
+    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/*.zip
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
@@ -187,7 +189,7 @@ jobs:
       run: |
         aws s3 cp \
           "./tea.$extension" \
-          "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
+          "s3://preview.gui.tea.xyz/main/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
 
     - name: cp package to s3
       env:
@@ -196,7 +198,7 @@ jobs:
         extension: ${{ steps.build_platform.outputs.extension }}
       run: |
         aws s3 cp "./tea.$extension" \
-          "s3://preview.gui.tea.xyz/release/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
+          "s3://preview.gui.tea.xyz/main/tea_${{ steps.date.outputs.unix_seconds }}_$platform.$extension"
 
     - uses: actions/setup-node@v3
       with:
@@ -208,4 +210,4 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         PLATFORM: ${{ matrix.platform }}
         EXT: ${{ steps.build_platform.outputs.extension }}
-        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/main/tea_${{ steps.date.outputs.unix_seconds }}_${{ steps.build_platform.outputs.build_platform }}.${{ steps.build_platform.outputs.extension }}
