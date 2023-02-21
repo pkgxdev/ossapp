@@ -188,6 +188,7 @@ jobs:
           - darwin+aarch64
     steps:
     - uses: teaxyz/setup@v0
+    - run: rm -rf ./*.{dmg,zip} || true
     - uses: actions/download-artifact@v3
       with:
         name: ${{ matrix.platform }}
@@ -225,7 +226,8 @@ jobs:
         ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
 
     # prepare for DMG creation
-    - run: |
+    - name: prepare installer folders
+      run: |
         mkdir x86_installer && mkdir arm64_installer
         tar xzf dist/$ZIP_FILE_X86 -C x86_installer/
         tar xzf dist/$ZIP_FILE_ARM64 -C arm64_installer/
