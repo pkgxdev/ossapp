@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '@tea/ui/Button/Button.svelte';
 	import * as pub from '$env/static/public';
-pub.</script>
+</script>
 
 <footer class="font-machina relative h-auto w-full bg-black">
 	<section class="p-4 px-16 py-16">

@@ -22,17 +22,19 @@ jobs:
     - uses: actions/checkout@v3
     - uses: teaxyz/setup@v0
 
-    - name: create .env file in gui folder
+    - name: get gui version
+      id: gui-version
       run: |
         tea +stedolan.github.io/jq
         export version=$(echo $(cat modules/desktop/package.json) | jq .version)
-        echo "PUBLIC_VERSION=$version" >> modules/desktop/.env
+        echo "version=$version" >> $GITHUB_OUTPUT
 
     - name: build
       if: startsWith(matrix.platform.name, 'darwin')
       run: tea -ES +nodejs.org@18 xc dist
       env:
         # PUBLISH_FOR_PULL_REQUEST: true
+        PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
         USE_HARD_LINKS: false
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
