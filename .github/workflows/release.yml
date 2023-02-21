@@ -25,7 +25,7 @@ jobs:
     - id: gui-version
       run: |
         tea +stedolan.github.io/jq
-        version=$(echo $(cat modules/desktop/package.json) | jq .version)
+        export version=$(echo $(cat modules/desktop/package.json) | jq .version)
         echo "version=$version" >> $GITHUB_OUTPUT
 
     - name: build
