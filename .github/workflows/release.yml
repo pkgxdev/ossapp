@@ -20,11 +20,17 @@ jobs:
     container: ${{ matrix.platform.container }}
     steps:
     - uses: actions/checkout@v3
+    - name: get-npm-version
+      id: gui-version
+      uses: martinbeentjes/npm-get-version-action@main
+      with:
+        path: modules/desktop
     - uses: teaxyz/setup@v0
     - name: build
       if: startsWith(matrix.platform.name, 'darwin')
       run: tea -ES +nodejs.org@18 xc dist
       env:
+        PUBLIC_VERSION: ${{ steps.gui-version.outputs.current-version }}
         # PUBLISH_FOR_PULL_REQUEST: true
         USE_HARD_LINKS: false
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -175,7 +181,6 @@ jobs:
 
     # TODO: 
     # - configure correct blockmap and checksum hash on latest-mac.yml
-    # - upload to s3:previewgui bucket, release/*
     # - cloudfront invalidation for gui-dist.tea.xyz/*.yml
     - name: publish release 
       env:
