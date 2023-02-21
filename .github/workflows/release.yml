@@ -9,10 +9,9 @@ jobs:
     strategy:
       matrix:
         platform:
-          - os: macos-11
-            name: darwin+x86-64
           # - os: ubuntu-latest
           #   name: linux+x86-64
+          # no need for macos-11 arm will build for both
           - os: [self-hosted, macOS, ARM64]
             name: darwin+aarch64
           # - os: [self-hosted, linux, ARM64]
@@ -52,8 +51,6 @@ jobs:
     - run: cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
     - run: tar -czvf artifacts.tgz -C ./target/ .
 
-    - run: cat target/latest-mac.yml
-
     - name: upload artifacts
       uses: actions/upload-artifact@v3
       with:
@@ -67,7 +64,7 @@ jobs:
     strategy:
       matrix:
         platform:
-          - darwin+x86-64
+          # no need for x86-64
           - darwin+aarch64
     steps:
     - uses: teaxyz/setup@v0
@@ -79,24 +76,47 @@ jobs:
     - run: mkdir dist
     - run: tar xzf artifacts.tgz -C dist
 
+    - name: get .zip of arm64 and x86+64
+      id: app_files
+      working-directory: ./dist
+      run: |
+        ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
+        X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
+        ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
+        X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
+        echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
+        echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
+        echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
+        echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
+
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/*.zip
+    - name: notarize .app arm64
+      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
+
+    - name: notarize .app x86+64
+      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE
+      env:
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
 
     # prepare for DMG creation
-    - run: mkdir installer
-    - run: tar xzf dist/*.zip -C installer/
-    - run: cp -r ./dist/.icon-icns installer/
-
-    - name: get dmg filename
-      id: get_dmg_filename
-      run: |
-        FILENAME=$(cd dist && ls | grep -Ev blockmap | grep dmg)
-        echo "filename=$FILENAME" >> $GITHUB_OUTPUT
-
     - run: |
+        mkdir x86_installer && mkdir arm64_installer
+        tar xzf dist/$ZIP_FILE_X86 -C x86_installer/
+        tar xzf dist/$ZIP_FILE_ARM64 -C arm64_installer/
+        cp -r ./dist/.icon-icns x86_installer/
+        cp -r ./dist/.icon-icns arm64_installer/
+      env:
+        ZIP_FILE_X86: ${{ steps.app_files.outputs.zip_x86 }}
+        ZIP_FILE_ARM64: ${{ steps.app_files.outputs.zip_arm64 }}
+
+    - name: create x86 dmg
+      run: |
         tea create-dmg \
         --volname "Tea Installer" \
         --window-pos 200 120 \
@@ -107,12 +127,36 @@ jobs:
         --app-drop-link 600 185 \
         --sandbox-safe \
         "$filename" \
-        "installer/"
+        "$installer_folder"
       env:
-        filename: ${{ steps.get_dmg_filename.outputs.filename }}
+        filename: ${{ steps.app_files.outputs.dmg_x86 }}
+        installer_folder: x86_installer/
+
+    - name: create arm64 dmg
+      run: |
+        tea create-dmg \
+        --volname "Tea Installer" \
+        --window-pos 200 120 \
+        --window-size 800 400 \
+        --icon-size 100 \
+        --icon "tea.app" 200 190 \
+        --hide-extension "tea.app" \
+        --app-drop-link 600 185 \
+        --sandbox-safe \
+        "$filename" \
+        "$installer_folder"
+      env:
+        filename: ${{ steps.app_files.outputs.dmg_arm64 }}
+        installer_folder: arm64_installer/
 
     # finalize artifacts
-    - run: mv ${{ steps.get_dmg_filename.outputs.filename }} dist
+    - run: |
+        mv $x86dmg dist
+        mv $arm64dmg dist
+      env:
+        x86dmg: ${{ steps.app_files.outputs.dmg_x86 }}
+        arm64dmg: ${{ steps.app_files.outputs.dmg_arm64 }}
+
     - run: tar -czvf dist.tgz -C dist/ .
     - name: upload artifacts
       uses: actions/upload-artifact@v3
@@ -127,8 +171,8 @@ jobs:
     strategy:
       matrix:
         platform:
-          - darwin+x86-64
           # - linux+x86-64
+          # no need for x86 mac
           - darwin+aarch64
           # - linux+aarch64
     steps:
@@ -138,6 +182,19 @@ jobs:
         name: ${{ matrix.platform }}-dist
     - run: mkdir dist
     - run: tar xzf dist.tgz -C dist
+
+    - name: get .zip of arm64 and x86+64
+      id: app_files
+      working-directory: ./dist
+      run: |
+        ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
+        X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
+        ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
+        X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
+        echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
+        echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
+        echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
+        echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
 
     - name: build platform output
       id: build_platform
@@ -199,14 +256,24 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 18
-    - name: Slack Notification
+    - name: Slack Notification ARM64 Build
       run: ./.github/notify-slack.js
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        PLATFORM: ${{ matrix.platform }}
+        PLATFORM: darwin+aarch64
+        VERSION: ${{steps.tag.outputs.tag}}
+        EXT: "${{ steps.build_platform.outputs.extension }}"
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/${{ steps.app_files.outputs.dmg_arm64 }}
+
+    - name: Slack Notification X86 Build
+      run: ./.github/notify-slack.js
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        PLATFORM: darwin+x86-64
         VERSION: ${{steps.tag.outputs.tag}}
         EXT: ${{ steps.build_platform.outputs.extension }}
-        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/${{ steps.build_platform.outputs.filename }}
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/${{ steps.app_files.outputs.dmg_x86 }}
+
     - run: |
         aws cloudfront create-invalidation \
           --distribution-id ${{ secrets.AWS_CF_GUI_RELEASE_ID }} \
