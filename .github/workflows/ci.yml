@@ -97,7 +97,7 @@ jobs:
       - name: build
         run: |
           tea -ES +nodejs.org@18 xc setup
-          cd modules/desktop && pnpm vite build && cp build/app.html build/index.html
+          cd modules/desktop && tea -ES pnpm vite build && cp build/app.html build/index.html
         env:
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           BUILD_FOR:  preview
