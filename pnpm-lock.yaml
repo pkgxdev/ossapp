@@ -44,6 +44,7 @@ importers:
       eslint-config-prettier: ^8.3.0
       eslint-plugin-svelte3: ^4.0.0
       fuse.js: ^6.6.2
+      js-yaml: ^4.1.0
       jsdom: ^21.0.0
       lodash: ^4.17.21
       lorem-ipsum: ^2.0.8
@@ -82,6 +83,7 @@ importers:
       electron-vite: 1.0.18_vite@4.1.1
       electron-window-state: 5.0.3
       fuse.js: 6.6.2
+      js-yaml: 4.1.0
       lodash: 4.17.21
       lorem-ipsum: 2.0.8
       mkdirp: 2.1.3
