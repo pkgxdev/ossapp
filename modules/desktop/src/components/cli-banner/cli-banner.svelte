@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '$appcss';
-	import Button from '@tea/ui/Button/Button.svelte';
+	import Button from '@tea/ui/button/button.svelte';
 	import { openTerminal } from '@native';
 
 	let copyButtonText = 'COPY';

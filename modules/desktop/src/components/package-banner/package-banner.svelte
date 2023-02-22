@@ -2,7 +2,7 @@
 	import '$appcss';
 	import '@tea/ui/icons/icons.css';
 	import type { Package, Bottle } from '@tea/ui/types';
-	import Button from '@tea/ui/Button/Button.svelte';
+	import Button from '@tea/ui/button/button.svelte';
 	import StarRating from '@tea/ui/star-rating/star-rating.svelte';
 	import { onMount } from 'svelte';
 	import { getPackageBottles } from '@native';

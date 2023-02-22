@@ -6,7 +6,7 @@
 
 	export { clazz as class };
 
-	import Button from "../Button/Button.svelte";
+	import Button from "../button/button.svelte";
 
 	export let tabs: Tab[] = [];
 

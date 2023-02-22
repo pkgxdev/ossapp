@@ -6,7 +6,7 @@
 	import Packages from '$components/packages/packages.svelte';
 	import News from '$components/news/news.svelte';
 
-	import HeaderCard from '@tea/ui/HeaderCard/HeaderCard.svelte';
+	import HeaderCard from '@tea/ui/header-card/header-card.svelte';
 	import TopPackages from '$components/top-packages/top-packages.svelte';
 	import TopScripts from '$components/top-scripts/top-scripts.svelte';
 </script>

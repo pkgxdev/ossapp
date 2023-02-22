@@ -4,7 +4,7 @@
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import PackageCard from '@tea/ui/package-card/package-card.svelte';
 	import { PackageStates } from '$libs/types';
-	import Posts from '@tea/ui/Posts/Posts.svelte';
+	import Posts from '@tea/ui/posts/posts.svelte';
 
 	import { installPackage } from '@native';
 	import type { AirtablePost } from '@tea/ui/types';
