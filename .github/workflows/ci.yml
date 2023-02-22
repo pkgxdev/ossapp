@@ -98,206 +98,19 @@ jobs:
             copy-paste into a browser to view
   build_desktop:
     needs: changes
-    if: needs.changes.outputs.desktop == 'true'
-    runs-on: ${{ matrix.platform.os }}
+    # if: needs.changes.outputs.desktop == 'true'
     strategy:
       matrix:
         platform:
           # X86+64 is built with ARM64 also
-          - os: [self-hosted, macOS, ARM64]
-            name: darwin+aarch64
-          # TODO: #181 build for linux
-          # - os: ubuntu-latest
-          #   name: linux+x86-64
-          # err: Package atk was not found in the pkg-config search path.
-          # requires atk >= 2.18
-          # - os: [self-hosted, linux, ARM64]
-          #   name: linux+aarch64
-    steps:
-    - uses: actions/checkout@v3
-    - uses: teaxyz/setup@v0
-    - name: get gui version
-      id: gui-version
-      run: |
-        tea +stedolan.github.io/jq
-        export version=$(echo $(cat modules/desktop/package.json) | jq --raw-output .version)
-        echo "version=$version" >> $GITHUB_OUTPUT
-
-    - name: cache node_modules build
-      # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
-      # but its ok to ignore, its still the fastest builder
-      # NOTE: enabling cache in the self hosted runner slows down the pipeline by 4m because post-cache builder error ^
-      if: startsWith(matrix.platform.name, 'linux') || matrix.platform.name == 'darwin+x86-64'
-      uses: actions/cache@v3
-      with:
-        key: ${{matrix.platform.name}}-pnpm
-        path: |
-          ./pnpm
-          ./.pnpm-store
-          ./node_modules
-          ./modules/desktop/node_modules
-          ./modules/ui/node_modules
-    - name: cache electron build
-      uses: actions/cache@v3
-      with:
-        key: ${{matrix.platform.name}}-electron
-        path: |
-          ./modules/desktop/.svelte-kit
-          ./modules/desktop/build
-          ./modules/desktop/dist
-    - run: rm -rf modules/desktop/dist || true
-    - name: build
-      if: startsWith(matrix.platform.name, 'darwin')
-      # run: tea -ES xc dist # temporary tea installs 19
-      run: tea -ES +nodejs.org@18 xc dist
-      env:
-        PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}-dev
-        USE_HARD_LINKS: false
-        CSC_FOR_PULL_REQUEST: true
-        CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-        CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-        CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-        # NOTE: you might think the ff will work, it wont unless PR is properly tagged
-        # PUBLISH_FOR_PULL_REQUEST: true
-        # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # APPLE_ID: ${{ secrets.APPLE_ID }}
-        # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-
-    - run: mkdir -p target
-
-    # build artifacts for publishing and notarization
-    - run: cp -r ./modules/desktop/dist/.icon-icns ./target/
-    - run: cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
-    - run: tar -czvf artifacts.tgz -C ./target/ .
-
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
-
-    - name: s3 artifact upload
-      env:
-        prefix: ${{ needs.changes.outputs.preview_folder }}
-      run: |
-        aws s3 cp artifacts.tgz "s3://preview.gui.tea.xyz/$prefix/artifacts.tgz"
-  notarize_desktop:
-    needs: [build_desktop, changes]
-    runs-on: macos-11
-    strategy:
-      matrix:
-        platform:
-          # no need for x86-64
           - darwin+aarch64
-    steps:
-    - uses: teaxyz/setup@v0
-    - run: rm -rf ./*.{dmg,zip} || true
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
-
-    - name: s3 artifact download
-      env:
-        prefix: ${{ needs.changes.outputs.preview_folder }}
-      run: |
-        aws s3 cp "s3://preview.gui.tea.xyz/$prefix/artifacts.tgz" artifacts.tgz
-
-
-    # prepare folders
-    - run: mkdir dist
-    - run: tar xzf artifacts.tgz -C dist
-
-    - name: get .zip of arm64 and x86+64
-      id: app_files
-      working-directory: ./dist
-      run: |
-        ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
-        X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
-        ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
-        X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
-        echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
-        echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
-        echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
-        echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
-
-    # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    - name: notarize .app arm64
-      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE || true
-      env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
-
-    - name: notarize .app x86+64
-      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE || true
-      env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
-
-    # prepare for DMG creation
-    - name: prepare installer folders
-      run: |
-        mkdir x86_installer && mkdir arm64_installer
-        tar xzf dist/$ZIP_FILE_X86 -C x86_installer/
-        tar xzf dist/$ZIP_FILE_ARM64 -C arm64_installer/
-        cp -r ./dist/.icon-icns x86_installer/
-        cp -r ./dist/.icon-icns arm64_installer/
-      env:
-        ZIP_FILE_X86: ${{ steps.app_files.outputs.zip_x86 }}
-        ZIP_FILE_ARM64: ${{ steps.app_files.outputs.zip_arm64 }}
-
-    - name: create x86 dmg
-      run: |
-        tea create-dmg \
-        --volname "Tea Installer" \
-        --window-pos 200 120 \
-        --window-size 800 400 \
-        --icon-size 100 \
-        --icon "tea.app" 200 190 \
-        --hide-extension "tea.app" \
-        --app-drop-link 600 185 \
-        --sandbox-safe \
-        "$filename" \
-        "$installer_folder"
-      env:
-        filename: ${{ steps.app_files.outputs.dmg_x86 }}
-        installer_folder: x86_installer/
-
-    - name: create arm64 dmg
-      run: |
-        tea create-dmg \
-        --volname "Tea Installer" \
-        --window-pos 200 120 \
-        --window-size 800 400 \
-        --icon-size 100 \
-        --icon "tea.app" 200 190 \
-        --hide-extension "tea.app" \
-        --app-drop-link 600 185 \
-        --sandbox-safe \
-        "$filename" \
-        "$installer_folder"
-      env:
-        filename: ${{ steps.app_files.outputs.dmg_arm64 }}
-        installer_folder: arm64_installer/
-
-    # finalize artifacts
-    - run: |
-        mv $x86dmg dist
-        mv $arm64dmg dist
-      env:
-        x86dmg: ${{ steps.app_files.outputs.dmg_x86 }}
-        arm64dmg: ${{ steps.app_files.outputs.dmg_arm64 }}
-    - run: tar -czvf dist.tgz -C dist/ .
-    - name: s3 artifact upload
-      env:
-        prefix: ${{ needs.changes.outputs.preview_folder }}
-      run: |
-        aws s3 cp dist.tgz "s3://preview.gui.tea.xyz/$prefix/dist.tgz" 
+    uses: ./.github/workflows/build-sign-notarize.yml
+    with:
+      platform: ${{ matrix.platform }}
+      s3-prefix: ${{ needs.changes.outputs.preview_folder || 'dev-pr' }}
+    secrets: inherit
   upload:
-    needs: [notarize_desktop, changes]
+    needs: [build_desktop, changes]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -317,9 +130,8 @@ jobs:
         aws-region: us-east-1
     - name: s3 artifact download
       env:
-        prefix: ${{ needs.changes.outputs.preview_folder }}
-      run: |
-        aws s3 cp "s3://preview.gui.tea.xyz/$prefix/dist.tgz" dist.tgz
+        S3_INSTALLER_KEY: ${{ needs.build_desktop.outputs.s3-installers-artifact-key }}
+      run: aws s3 cp $S3_INSTALLER_KEY dist.tgz
 
     - run: mkdir dist
     - run: tar xzf dist.tgz -C dist
