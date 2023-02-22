@@ -1,7 +1,8 @@
 <script lang="ts">
 	import '$appcss';
+	import { shellOpenExternal } from '@native';
 	const openGithub = () => {
-		// open('https://github.com/teaxyz');
+		shellOpenExternal("https://github.com/teaxyz");
 	};
 </script>
 
