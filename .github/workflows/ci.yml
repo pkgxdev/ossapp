@@ -113,11 +113,11 @@ jobs:
         run: |
           aws s3 sync ./modules/desktop/build \
             "s3://preview.gui.tea.xyz/$prefix"
-      - name: Install package
-        run: sudo apt-get install -y jq coreutils
+
       - name: setup preview
         id: preview_setup
-        run: .github/create-invalidate-preview.sh ${{ needs.changes.outputs.preview_folder }}
+        run: |
+          tea +stedolan.github.io/jq .github/create-invalidate-preview.sh ${{ needs.changes.outputs.preview_folder }}
 
       - name: comment preview site
         uses: mshick/add-pr-comment@v2
