@@ -103,8 +103,7 @@ jobs:
       matrix:
         platform:
           # X86+64 is built with ARM64 also
-          - os: [self-hosted, macOS, ARM64]
-            name: darwin+aarch64
+          - darwin+aarch64
     uses: ./.github/workflows/build-sign-notarize.yml
     with:
       platform: ${{ matrix.platform }}
