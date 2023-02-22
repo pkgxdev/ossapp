@@ -98,7 +98,7 @@ jobs:
             copy-paste into a browser to view
   build_desktop:
     needs: changes
-    if: needs.changes.outputs.desktop == 'true'
+    # if: needs.changes.outputs.desktop == 'true'
     strategy:
       matrix:
         platform:
