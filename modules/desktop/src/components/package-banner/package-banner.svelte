@@ -5,9 +5,8 @@
 	import Button from '@tea/ui/Button/Button.svelte';
 	import StarRating from '@tea/ui/star-rating/star-rating.svelte';
 	import { onMount } from 'svelte';
-	import { getPackageBottles } from '@api';
-
-	const { ipcRenderer } = window.require('electron');
+	import { getPackageBottles } from '@native';
+	import { openTerminal } from '@native';
 
 	export let pkg: Package;
 	let bottles: Bottle[] = [];
@@ -21,7 +20,7 @@
 	};
 
 	const onOpenTerminal = () => {
-		ipcRenderer.invoke('open-terminal', { cmd: `sh <(curl tea.xyz) +${pkg.full_name}` });
+		openTerminal(`sh <(curl tea.xyz) +${pkg.full_name}`);
 	}
 
 	onMount(async () => {

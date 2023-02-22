@@ -1,8 +1,8 @@
 import { writable } from "svelte/store";
 import type { GUIPackage } from "../types";
-import { getPackages } from "@api";
+import { getPackages } from "@native";
 import Fuse from "fuse.js";
-import { getPackage } from "@api";
+import { getPackage } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 

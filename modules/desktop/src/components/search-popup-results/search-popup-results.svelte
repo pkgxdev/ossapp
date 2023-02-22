@@ -6,7 +6,7 @@
 	import { PackageStates } from '$libs/types';
 	import Posts from '@tea/ui/Posts/Posts.svelte';
 
-	import { installPackage } from '@api';
+	import { installPackage } from '@native';
 	import type { AirtablePost } from '@tea/ui/types';
 	let term: string;
 	let packages: GUIPackage[] = [];

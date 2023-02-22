@@ -8,12 +8,6 @@ type Dir = {
 	children?: Dir[];
 };
 
-const { ipcRenderer } = window.require("electron");
-export async function getInstalledPackages() {
-	const pkgs = await ipcRenderer.invoke("get-installed-packages");
-	return pkgs as { version: string; full_name: string }[];
-}
-
 const semverTest =
 	/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/g;
 

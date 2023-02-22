@@ -10,22 +10,22 @@
  *  - connect to remote api(api.tea.xyz) and returns a data
  *  - connect to a local platform api and returns a data
  */
-import axios from "axios";
 
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
-import type { GUIPackage, Course, Category, DeviceAuth } from "../types";
+import type { GUIPackage, Course, Category, DeviceAuth, Session } from "./types";
 
-import * as mock from "./mock";
-import { PackageStates } from "../types";
-import { getInstalledPackages } from "$libs/tea-dir";
-import { installPackageCommand } from "$libs/cli";
+import * as mock from "./native-mock";
+import { PackageStates } from "./types";
+import { installPackageCommand } from "./native/cli";
 
 import { get as apiGet } from "$libs/v1-client";
+
+const { ipcRenderer, shell } = window.require("electron");
 
 export async function getPackages(): Promise<GUIPackage[]> {
 	const [packages, installedPackages] = await Promise.all([
 		apiGet<Package[]>("packages", { nocache: "true" }),
-		getInstalledPackages()
+		ipcRenderer.invoke("get-installed-packages") as { version: string; full_name: string }[],
 	]);
 
 	return (packages || []).map((pkg) => {
@@ -114,3 +114,16 @@ export async function registerDevice(): Promise<string> {
 	const { deviceId } = await apiGet<{ deviceId: string }>("/auth/registerDevice");
 	return deviceId;
 }
+
+export const getSession = async (): Promise<Session | null> => {
+	const session = await ipcRenderer.invoke("get-session");
+	return session;
+};
+
+export const updateSession = async (session: Partial<Session>) => {
+	await ipcRenderer.invoke("update-session", session);
+}
+
+export const openTerminal = (cmd:string) => ipcRenderer.invoke('open-terminal', { cmd });
+
+export const shellOpenExternal = (link:string) => shell.openExternal(link);

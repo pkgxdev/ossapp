@@ -8,7 +8,7 @@
 	import SearchInput from '@tea/ui/search-input/search-input.svelte';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 
-	import { installPackage } from '@api';
+	import { installPackage } from '@native';
 
 	let packages: GUIPackage[] = [];
 

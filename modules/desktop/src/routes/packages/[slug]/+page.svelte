@@ -9,7 +9,7 @@
 	import Tabs from '@tea/ui/Tabs/Tabs.svelte';
 	import type { Tab } from '@tea/ui/types';
 	import Bottles from '@tea/ui/Bottles/Bottles.svelte';
-	import { getPackageBottles } from '@api';
+	import { getPackageBottles } from '@native';
 	import PackageMetas from '@tea/ui/package-metas/package-metas.svelte';
 	import Markdown from '@tea/ui/markdown/markdown.svelte';
 	import PackageSnippets from '@tea/ui/package-snippets/package-snippets.svelte';

@@ -55,19 +55,54 @@ jobs:
         run: pnpm -r lint
   build_svelte:
     needs: changes
-    if: needs.changes.outputs.svelte == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: cache gui linux
+      - name: cache node_modules build
+        # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
+        # but its ok to ignore, its still the fastest builder
+        # NOTE: enabling cache in the self hosted runner slows down the pipeline by 4m because post-cache builder error ^
+        if: startsWith(inputs.platform, 'linux') || matrix.platform.name == 'darwin+x86-64'
         uses: actions/cache@v3
         with:
-          key: linux+x86-64-20-pnpm-cargo
+          key: ubuntu-latest-pnpm
           path: |
             ./pnpm
-            ./target
-      - name: build tauri for Linux
-        uses: ./devops/linux-builder
+            ./.pnpm-store
+            ./node_modules
+            ./modules/desktop/node_modules
+            ./modules/ui/node_modules
+      - name: cache electron build
+        uses: actions/cache@v3
+        with:
+          key: ubuntu-latest-electron
+          path: |
+            ./modules/desktop/.svelte-kit
+            ./modules/desktop/build
+      - name: get gui version
+        id: gui-version
+        run: |
+          tea +stedolan.github.io/jq
+          export version=$(echo $(cat modules/desktop/package.json) | jq --raw-output .version)
+          export postfix=
+          if GIT_DIR=/path/to/repo/.git git rev-parse $1 >/dev/null 2>&1
+          then
+              echo "Found tag"
+          else
+              export postfix=-dev
+          fi
+          echo "version=$version$postfix" >> $GITHUB_OUTPUT
+
+      - name: build
+        if: startsWith(inputs.platform, 'darwin')
+        # run: tea -ES xc dist # temporary tea installs 19
+        run: |
+          tea -ES +nodejs.org@18 xc setup
+          cd modules/desktop && pnpm vite build && cp build/app.html build/index.html
+        env:
+          PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
+          BUILD_FOR:  preview
+
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -77,7 +112,7 @@ jobs:
         env:
           prefix: ${{ needs.changes.outputs.preview_folder }}
         run: |
-          aws s3 sync ./modules/gui/build \
+          aws s3 sync ./modules/desktop/build \
             "s3://preview.gui.tea.xyz/$prefix"
       - name: Install package
         run: sudo apt-get install -y jq coreutils

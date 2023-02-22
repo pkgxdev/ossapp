@@ -6,9 +6,7 @@
 	import PackageCard from '@tea/ui/package-card/package-card.svelte';
 	import { packagesStore } from '$libs/stores';
 
-	// TODO: replace with getting foundation essentials
-	import { getTopPackages } from '$libs/api/mock';
-	import { installPackage } from '@api';
+	import { installPackage } from '@native';
 
 	export let title = 'Packages';
 	export let category = ''; // filter

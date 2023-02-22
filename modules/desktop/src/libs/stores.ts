@@ -4,7 +4,7 @@ import Fuse from "fuse.js";
 import type { Package, Review, AirtablePost } from "@tea/ui/types";
 import type { GUIPackage } from "$libs/types";
 
-import { getFeaturedPackages, getPackageReviews, getAllPosts } from "@api";
+import { getFeaturedPackages, getPackageReviews, getAllPosts } from "@native";
 import initAuthStore from "./stores/auth";
 import initNavStore from "./stores/nav";
 import initPackagesStore from "./stores/pkgs";

@@ -6,11 +6,11 @@
  *  * make cors work with api.tea.xyz/v1
  */
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
-import type { GUIPackage, Course, Category } from "../types";
-import { PackageStates } from "../types";
+import type { GUIPackage, Course, Category, Session } from "./types";
+import { PackageStates } from "./types";
 import { loremIpsum } from "lorem-ipsum";
 import _ from "lodash";
-// import { getInstalledPackages } from '$libs/tea-dir';
+
 // import { getSession } from '$libs/stores/auth';
 import * as v1Client from "$libs/v1-client";
 
@@ -27,7 +27,8 @@ const packages: Package[] = [
 		maintainer: "",
 		desc: "Fast and user friendly build system",
 		thumb_image_url: "https://tea.xyz/Images/packages/mesonbuild_com.jpg",
-		installs: 0
+		installs: 0,
+		categories: ["foundation_essentials"],
 	},
 	{
 		slug: "pixman_org",
@@ -41,7 +42,8 @@ const packages: Package[] = [
 		thumb_image_name: "pixman_org_option 1.jpg ",
 		desc: "Pixman is a library that provides low-level pixel manipulation features such as image compositing and trapezoid rasterization.",
 		thumb_image_url: "https://tea.xyz/Images/packages/pixman_org.jpg",
-		installs: 0
+		installs: 0,
+		categories: ["foundation_essentials"],
 	},
 	{
 		slug: "freedesktop_org_pkg_config",
@@ -55,7 +57,8 @@ const packages: Package[] = [
 		thumb_image_name: "freedecktop_org_pkg_config option 1.jpg ",
 		desc: "Manage compile and link flags for libraries",
 		thumb_image_url: "https://tea.xyz/Images/packages/freedesktop_org_pkg_config.jpg",
-		installs: 0
+		installs: 0,
+		categories: ["foundation_essentials"],
 	},
 	{
 		slug: "gnu_org_gettext",
@@ -69,7 +72,8 @@ const packages: Package[] = [
 		thumb_image_name: "gnu_org_gettext_option 1.jpg ",
 		desc: "GNU internationalization (i18n) and localization (l10n) library",
 		thumb_image_url: "https://tea.xyz/Images/packages/gnu_org_gettext.jpg",
-		installs: 0
+		installs: 0,
+		categories: ["foundation_essentials"],
 	},
 	{
 		slug: "ipfs_tech",
@@ -83,7 +87,8 @@ const packages: Package[] = [
 		maintainer: "",
 		desc: "Peer-to-peer hypermedia protocol",
 		thumb_image_url: "https://tea.xyz/Images/packages/ipfs_tech.jpg",
-		installs: 0
+		installs: 0,
+		categories: ["foundation_essentials"],
 	},
 	{
 		slug: "nixos_org_patchelf",
@@ -97,7 +102,8 @@ const packages: Package[] = [
 		thumb_image_name: "nixos_org_patchelf_option 1.jpg ",
 		desc: "PatchELF is a simple utility for modifying existing ELF executables and libraries.",
 		thumb_image_url: "https://tea.xyz/Images/packages/nixos_org_patchelf.jpg",
-		installs: 0
+		installs: 0,
+		categories: ["top_packages", "foundation_essentials"],
 	},
 	{
 		slug: "tea_xyz",
@@ -111,7 +117,8 @@ const packages: Package[] = [
 		thumb_image_name: "tea_xyz_option 2.jpg ",
 		desc: "Website of tea.xyz",
 		thumb_image_url: "https://tea.xyz/Images/packages/tea_xyz.jpg",
-		installs: 0
+		installs: 0,
+		categories: ["top_packages", "foundation_essentials"],
 	},
 	{
 		slug: "charm_sh_gum",
@@ -125,7 +132,8 @@ const packages: Package[] = [
 		thumb_image_name: "charm_sh_gum.jpg ",
 		desc: "",
 		thumb_image_url: "https://tea.xyz/Images/packages/charm_sh_gum.jpg",
-		installs: 0
+		installs: 0,
+		categories: ["top_packages", "foundation_essentials"],
 	},
 	{
 		slug: "pyyaml_org",
@@ -139,7 +147,8 @@ const packages: Package[] = [
 		maintainer: "",
 		desc: "YAML framework for Python",
 		thumb_image_url: "https://tea.xyz/Images/packages/pyyaml_org.jpg",
-		installs: 0
+		installs: 0,
+		categories: ["top_packages", "foundation_essentials"],
 	},
 	{
 		slug: "tea_xyz_gx_cc",
@@ -153,7 +162,8 @@ const packages: Package[] = [
 		thumb_image_name: "tea_xyz_gx.jpg ",
 		desc: "",
 		thumb_image_url: "https://tea.xyz/Images/packages/tea_xyz_gx_cc.jpg",
-		installs: 0
+		installs: 0,
+		categories: ["top_packages", "foundation_essentials"],
 	}
 ];
 
@@ -332,17 +342,35 @@ export async function getDeviceAuth(deviceId: string): Promise<any> {
 
 export async function getPackageBottles(name: string): Promise<Bottle[]> {
 	return [
-		{ name, platform: "darwin", arch: "aarch64", version: "3.39.4" },
-		{ name, platform: "darwin", arch: "aarch64", version: "3.40.0" },
-		{ name, platform: "darwin", arch: "x86-64", version: "3.39.4" },
-		{ name, platform: "darwin", arch: "x86-64", version: "3.40.0" },
-		{ name, platform: "linux", arch: "aarch64", version: "3.39.4" },
-		{ name, platform: "linux", arch: "aarch64", version: "3.40.0" },
-		{ name, platform: "linux", arch: "x86-64", version: "3.39.4" },
-		{ name, platform: "linux", arch: "x86-64", version: "3.40.0" }
+		{ name, platform: "darwin", arch: "aarch64", version: "3.39.4", bytes: 123456 },
+		{ name, platform: "darwin", arch: "aarch64", version: "3.40.0", bytes: 123456 },
+		{ name, platform: "darwin", arch: "x86-64", version: "3.39.4", bytes: 123456 },
+		{ name, platform: "darwin", arch: "x86-64", version: "3.40.0", bytes: 123456 },
+		{ name, platform: "linux", arch: "aarch64", version: "3.39.4", bytes: 123456 },
+		{ name, platform: "linux", arch: "aarch64", version: "3.40.0", bytes: 123456 },
+		{ name, platform: "linux", arch: "x86-64", version: "3.39.4", bytes: 123456 },
+		{ name, platform: "linux", arch: "x86-64", version: "3.40.0", bytes: 123456 }
 	];
+}
+
+export async function getPackage(packageName: string): Promise<Partial<Package>> {
+	return packages.find((pkg) => pkg.full_name === packageName) || packages[0];
 }
 
 export async function registerDevice(): Promise<string> {
 	return "uuid1234";
 }
+
+export const getSession = async (): Promise<Session | null> => {
+	return null;
+};
+
+export const updateSession = async (session: Partial<Session>) => {
+	console.log(session);
+}
+
+export const openTerminal = (cmd:string) => console.log(cmd);
+
+export const shellOpenExternal = (link:string) => {
+	window.open(link, "_blank");
+};

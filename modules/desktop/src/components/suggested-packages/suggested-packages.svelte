@@ -6,7 +6,7 @@
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import PackageCard from '@tea/ui/package-card/package-card.svelte';
 	import { onMount } from 'svelte';
-	import { installPackage } from '@api';
+	import { installPackage } from '@native';
 	import { packagesStore } from '$libs/stores';
 
 	export let pkg: Package;
