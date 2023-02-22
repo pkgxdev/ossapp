@@ -130,9 +130,8 @@ jobs:
         aws-region: us-east-1
     - name: s3 artifact download
       env:
-        s3-installers-key: ${{ needs.build_desktop.outputs.s3-installers-artifact-key }}
-      run: |
-        aws s3 cp $s3-installers-key dist.tgz
+        S3_INSTALLER_KEY: ${{ needs.build_desktop.outputs.s3-installers-artifact-key }}
+      run: aws s3 cp $S3_INSTALLER_KEY dist.tgz
 
     - run: mkdir dist
     - run: tar xzf dist.tgz -C dist
