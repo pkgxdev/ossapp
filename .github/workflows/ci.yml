@@ -95,8 +95,6 @@ jobs:
           echo "version=$version$postfix" >> $GITHUB_OUTPUT
 
       - name: build
-        if: startsWith(inputs.platform, 'darwin')
-        # run: tea -ES xc dist # temporary tea installs 19
         run: |
           tea -ES +nodejs.org@18 xc setup
           cd modules/desktop && pnpm vite build && cp build/app.html build/index.html
@@ -133,7 +131,7 @@ jobs:
             ```
             copy-paste into a browser to view
   build_desktop:
-    needs: changes
+    needs: [changes, test, build_svelte]
     # if: needs.changes.outputs.desktop == 'true'
     strategy:
       matrix:

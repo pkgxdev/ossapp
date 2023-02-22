@@ -25,7 +25,7 @@ const { ipcRenderer, shell } = window.require("electron");
 export async function getPackages(): Promise<GUIPackage[]> {
 	const [packages, installedPackages] = await Promise.all([
 		apiGet<Package[]>("packages", { nocache: "true" }),
-		ipcRenderer.invoke("get-installed-packages") as { version: string; full_name: string }[],
+		ipcRenderer.invoke("get-installed-packages") as { version: string; full_name: string }[]
 	]);
 
 	return (packages || []).map((pkg) => {
@@ -122,8 +122,8 @@ export const getSession = async (): Promise<Session | null> => {
 
 export const updateSession = async (session: Partial<Session>) => {
 	await ipcRenderer.invoke("update-session", session);
-}
+};
 
-export const openTerminal = (cmd:string) => ipcRenderer.invoke('open-terminal', { cmd });
+export const openTerminal = (cmd: string) => ipcRenderer.invoke("open-terminal", { cmd });
 
-export const shellOpenExternal = (link:string) => shell.openExternal(link);
+export const shellOpenExternal = (link: string) => shell.openExternal(link);
