@@ -57,6 +57,7 @@ jobs:
     needs: changes
     runs-on: ubuntu-latest
     steps:
+      - uses: teaxyz/setup@v0
       - uses: actions/checkout@v3
       - name: cache node_modules build
         # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
