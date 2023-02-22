@@ -143,9 +143,8 @@ jobs:
 
     - name: s3 artifact download
       env:
-        s3-key: ${{ needs.build.outputs.s3-artifacts-key }}
-      run: |
-        aws s3 cp $s3-key artifacts.tgz
+        S3_KEY: ${{ needs.build.outputs.s3-artifacts-key }}
+      run: aws s3 cp $S3_KEY artifacts.tgz
 
     # prepare folders
     - run: mkdir dist
