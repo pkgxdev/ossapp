@@ -63,7 +63,7 @@ jobs:
         # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
         # but its ok to ignore, its still the fastest builder
         # NOTE: enabling cache in the self hosted runner slows down the pipeline by 4m because post-cache builder error ^
-        if: startsWith(matrix.platform.name, 'linux') || matrix.platform.name == 'darwin+x86-64'
+        if: startsWith(inputs.platform, 'linux') || matrix.platform.name == 'darwin+x86-64'
         uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-pnpm
@@ -82,7 +82,7 @@ jobs:
             ./modules/desktop/build
 
       - name: build
-        if: startsWith(matrix.platform.name, 'darwin')
+        if: startsWith(inputs.platform, 'darwin')
         # run: tea -ES xc dist # temporary tea installs 19
         run: tea -ES +nodejs.org@18 xc dist
         env:
