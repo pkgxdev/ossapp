@@ -2,7 +2,7 @@
 	import '$appcss';
 	import { postsStore } from '$libs/stores';
 	import type { AirtablePost } from '@tea/ui/types';
-	import Posts from '@tea/ui/Posts/Posts.svelte';
+	import Posts from '@tea/ui/posts/posts.svelte';
 	import PanelHeader from '@tea/ui/panel-header/panel-header.svelte';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 

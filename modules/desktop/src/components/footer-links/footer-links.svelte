@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '@tea/ui/Button/Button.svelte';
+	import Button from '@tea/ui/button/button.svelte';
 	import * as pub from '$env/static/public';
 </script>
 

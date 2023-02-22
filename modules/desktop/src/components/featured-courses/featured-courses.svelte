@@ -3,7 +3,7 @@
 	import { postsStore } from '$libs/stores';
 	import type { Course } from '$libs/types';
 
-	import Gallery from '@tea/ui/Gallery/Gallery.svelte';
+	import Gallery from '@tea/ui/gallery/gallery.svelte';
 
 	let courses: Course[] = [];
 

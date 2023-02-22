@@ -1,8 +1,8 @@
 <script lang="ts">
 	import '$appcss';
-	import Button from '@tea/ui/Button/Button.svelte';
+	import Button from '@tea/ui/button/button.svelte';
+	import { openTerminal } from '@native';
 
-	const { ipcRenderer } = window.require('electron');
 	let copyButtonText = 'COPY';
 	const copyValue = `sh <(curl https://tea.xyz)`;
 
@@ -12,7 +12,7 @@
 	};
 
 	const onInstall = () => {
-		ipcRenderer.invoke('open-terminal', { cmd: copyValue });
+		openTerminal(copyValue);
 	}
 </script>
 

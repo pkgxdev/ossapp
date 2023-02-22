@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import type { Package } from '@tea/ui/types';
 
-	import Gallery from '@tea/ui/Gallery/Gallery.svelte';
+	import Gallery from '@tea/ui/gallery/gallery.svelte';
 	import {
 		featuredPackages as featuredPackagesStore,
 		initializeFeaturedPackages

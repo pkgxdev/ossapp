@@ -2,14 +2,13 @@
 	import { authStore } from '$libs/stores';
 	import type { Developer } from '@tea/ui/types';
 	import { baseUrl } from '$libs/v1-client';
-
-	const { shell } = window.require('electron');
+	import { shellOpenExternal } from '@native';
 
 	let user: Developer | null = null;
 	const deviceId = authStore.deviceIdStore;
 
 	const openGithub = () => {
-		shell.openExternal(`${baseUrl}/auth/user?device_id=${$deviceId}`)
+		shellOpenExternal(`${baseUrl}/auth/user?device_id=${$deviceId}`)
 		try {
 			authStore.pollSession();
 		} catch (error) {

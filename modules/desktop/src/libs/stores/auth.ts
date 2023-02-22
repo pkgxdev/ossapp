@@ -1,16 +1,15 @@
 import { writable } from "svelte/store";
 
-import { getDeviceAuth } from "@api";
+import { getDeviceAuth } from "@native";
 import type { Developer } from "@tea/ui/types";
 import type { Session } from "$libs/types";
-
-const { ipcRenderer } = window.require("electron");
+import { getSession as electronGetSession, updateSession as electronUpdateSession } from "@native";
 
 const basePath = ".tea/tea.xyz/gui";
 
 export let session: Session | null = null;
 export const getSession = async (): Promise<Session | null> => {
-	session = await ipcRenderer.invoke("get-session");
+	session = await electronGetSession();
 	return session;
 };
 
@@ -39,7 +38,7 @@ export default function initAuthStore() {
 			user: data.user
 		};
 		console.log("localSession:", localSession);
-		await ipcRenderer.invoke("update-session", localSession);
+		await electronUpdateSession(localSession);
 		sessionStore.set(localSession);
 	}
 
