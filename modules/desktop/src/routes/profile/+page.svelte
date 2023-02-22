@@ -2,7 +2,7 @@
 	import '$appcss';
 	import PageHeader from '$components/page-header/page-header.svelte';
 	import ProfileBanner from '$components/profile-banner/profile-banner.svelte';
-	import Preflight from '$components/Preflight/Preflight.svelte';
+	import Preflight from '$components/preflight/preflight.svelte';
 	import Badges from '$components/badges/badges.svelte';
 	import InstalledPackages from '$components/installed-packages/installed-packages.svelte';
 </script>
