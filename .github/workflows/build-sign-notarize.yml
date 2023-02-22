@@ -102,8 +102,8 @@ jobs:
       - name: build artifacts for publishing and notarization
         run: |
           mkdir -p target
-          mv modules/desktop/dist/.* target/
-          mv modules/desktop/dist/* target/
+          cp -r modules/desktop/dist/.* target/
+          cp -r modules/desktop/dist/* target/
           tar -czvf artifacts.tgz -C ./target/ .
 
       - uses: aws-actions/configure-aws-credentials@v1
