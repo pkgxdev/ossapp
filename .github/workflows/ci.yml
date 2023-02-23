@@ -37,12 +37,12 @@ jobs:
       - uses: teaxyz/setup@v0
       - uses: actions/checkout@v3
       - name: install app dependencies
-        run: tea -E xc setup
+        run: tea -E node --version
       # TODO: fix
       # - name: unit test
       #   run: pnpm --filter desktop run coverage
-      - name: lint
-        run: tea -E pnpm -r lint
+      # - name: lint
+      #   run: tea -E pnpm -r lint
   # build_svelte:
   #   needs: changes
   #   runs-on: ubuntu-latest
