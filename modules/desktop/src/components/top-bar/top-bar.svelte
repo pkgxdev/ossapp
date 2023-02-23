@@ -6,6 +6,7 @@
 	import { navStore } from '$libs/stores';
 
 	import ProfileNavButton from './profile-nav-button.svelte';
+	import SelectLang from '$components/select-lang/select-lang.svelte';
 
 	let { nextPath, prevPath } = navStore;
 
@@ -39,6 +40,7 @@
 		<button class="icon-star-empty hover:text-white" />
 	</ul>
 	<ProfileNavButton />
+	<SelectLang />
 </header>
 <menu
 	class="border-gray text-gray flex h-10 gap-4 border border-l-0 border-r-0 border-t-0 pl-4 align-middle leading-10"

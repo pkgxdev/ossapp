@@ -20,7 +20,7 @@
 	<section class="mt-8 mb-8 flex gap-4">
 		<div>
 			<HeaderCard
-				title="Browser Packages"
+				title="Browse Packages"
 				imgUrl="/images/bored-ape.png"
 				ctaUrl="/packages"
 				ctaLabel="Browse packages >"
