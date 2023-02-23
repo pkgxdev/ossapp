@@ -95,8 +95,8 @@ pnpm --filter desktop exec pnpm dist
 
 | Project                           |  Version  |
 |-----------------------------------|-----------|
-| nodejs.org                        | =18.14   |
-| pnpm.io                           | >=7.20    |
+| nodejs.org                        | =18.14    |
+| pnpm.io                           | =7.20     |
 | xcfile.dev                        | >=0.0.110 |
 | python.org                        | >=3.10    |
 | github.com/create-dmg/create-dmg  | >=1.1     |
