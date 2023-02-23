@@ -95,7 +95,10 @@ pnpm --filter desktop exec pnpm dist
 
 | Project                           |  Version  |
 |-----------------------------------|-----------|
-| nodejs.org                        | =18.14.2  |
+| python.org                        | >=3.10    |
+
+
+<!-- | nodejs.org                        | =18.14.2  | -->
 <!-- | pnpm.io                           | >=7.27    | -->
 <!-- | xcfile.dev                        | >=0.0.110 | -->
 <!-- | python.org                        | >=3.10    | -->

@@ -37,7 +37,7 @@ jobs:
       - uses: teaxyz/setup@v0
       - uses: actions/checkout@v3
       - name: install app dependencies
-        run: tea -E node --version
+        run: tea -E python --version
       # TODO: fix
       # - name: unit test
       #   run: pnpm --filter desktop run coverage
