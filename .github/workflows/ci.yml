@@ -42,7 +42,7 @@ jobs:
       # - name: unit test
       #   run: pnpm --filter desktop run coverage
       - name: lint
-        run: pnpm -r lint
+        run: tea -E pnpm -r lint
   build_svelte:
     needs: changes
     runs-on: ubuntu-latest
