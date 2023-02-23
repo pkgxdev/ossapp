@@ -34,20 +34,10 @@ jobs:
     needs: changes
     runs-on: ubuntu-latest
     steps:
+      - uses: teaxyz/setup@v0
       - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7
-      - name: setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 18
-          cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
       - name: install app dependencies
-        run: pnpm install
+        run: tea -E xc setup
       # TODO: fix
       # - name: unit test
       #   run: pnpm --filter desktop run coverage
