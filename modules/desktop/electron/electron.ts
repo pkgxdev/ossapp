@@ -39,7 +39,7 @@ function createWindow() {
 			nodeIntegration: true,
 			spellcheck: false,
 			webSecurity: false,
-			devTools: dev,
+			devTools: dev
 			// preload: path.join(app.getAppPath(), 'preload.cjs')
 		},
 		x: windowState.x,
@@ -161,6 +161,6 @@ ipcMain.handle("open-terminal", async (_, data) => {
 	}
 });
 
-ipcMain.handle('get-lang', function () {
+ipcMain.handle("get-lang", function () {
 	return app.getLocale();
- })
+});

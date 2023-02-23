@@ -96,7 +96,7 @@ jobs:
 
       - name: build
         run: |
-          tea -ES xc setup
+          tea xc setup
           cd modules/desktop && tea -ES pnpm vite build && cp build/app.html build/index.html
         env:
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}

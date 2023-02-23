@@ -83,8 +83,7 @@ jobs:
 
       - name: build
         if: startsWith(inputs.platform, 'darwin')
-        # run: tea -ES xc dist # temporary tea installs 19
-        run: tea -ES xc dist
+        run: tea xc dist
         env:
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           USE_HARD_LINKS: false
