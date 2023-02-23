@@ -9,14 +9,7 @@ import type { Session } from "../src/libs/types";
 import { installPackage, openTerminal } from "./libs/cli";
 import { autoUpdater } from "electron-updater";
 import * as log from "electron-log";
-// try {
-// 	//@ts-ignore only used in dev should not be packaged inprod
-// 	/* eslint-disable */
-// 	const er = require('electron-reloader');
-// 	er(module);
-// } catch (e) {
-// 	console.error(e);
-// }
+
 autoUpdater.logger = log;
 log.info("App starting...");
 
@@ -46,7 +39,7 @@ function createWindow() {
 			nodeIntegration: true,
 			spellcheck: false,
 			webSecurity: false,
-			devTools: dev
+			devTools: dev,
 			// preload: path.join(app.getAppPath(), 'preload.cjs')
 		},
 		x: windowState.x,
@@ -138,10 +131,6 @@ app.on("window-all-closed", () => {
 	if (process.platform !== "darwin") app.quit();
 });
 
-ipcMain.on("to-main", (event, count) => {
-	return mainWindow?.webContents.send("from-main", `next count is ${count + 1}`);
-});
-
 ipcMain.handle("get-installed-packages", async () => {
 	const pkgs = await getInstalledPackages();
 	return pkgs;
@@ -171,3 +160,7 @@ ipcMain.handle("open-terminal", async (_, data) => {
 		console.error("elast:", error);
 	}
 });
+
+ipcMain.handle('get-lang', function () {
+	return app.getLocale();
+ })
