@@ -83,7 +83,7 @@ jobs:
 
       - name: build
         if: startsWith(inputs.platform, 'darwin')
-        run: tea -S xc dist
+        run: tea -SE xc dist
         env:
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           USE_HARD_LINKS: false
