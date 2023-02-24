@@ -60,6 +60,7 @@ importers:
       svelte-preprocess: ^5.0.1
       svelte-watch-resize: ^1.0.3
       svelte2tsx: ^0.5.20
+      sveltekit-i18n: ^2.2.2
       tailwindcss: ^3.2.4
       tslib: ^2.3.1
       typescript: ^4.7.4
@@ -90,6 +91,7 @@ importers:
       semver: 7.3.8
       svelte-markdown: 0.2.3_svelte@3.55.1
       svelte-watch-resize: 1.0.3
+      sveltekit-i18n: 2.2.2_svelte@3.55.1
       upath: 2.0.1
       yaml: 2.2.1
     devDependencies:
@@ -3946,6 +3948,20 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@sveltekit-i18n/base/1.2.1_svelte@3.55.1:
+    resolution: {integrity: sha512-F8gqG2+KAOeT0o2wYlUrW3TRCX7zaD7rBy/1CEVNw0irfw9TgFf/ODmhubkHHT3+6Zk+SMz8RNgeuffBfAMbJw==}
+    peerDependencies:
+      svelte: ^3.x
+    dependencies:
+      svelte: 3.55.1
+    optionalDependencies:
+      '@sveltekit-i18n/parser-default': 1.0.3
+    dev: false
+
+  /@sveltekit-i18n/parser-default/1.0.3:
+    resolution: {integrity: sha512-HheveklTjp3hxpYQhoHfyA6B4bQaUeSV5MQf2usIv/58UF2jY/YqhCAWj9bDBjufbuZc5pSz4BXvdX3WVT+viA==}
+    dev: false
 
   /@szmarczak/http-timer/4.0.6:
     resolution: {integrity: sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==}
@@ -11882,6 +11898,16 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /sveltekit-i18n/2.2.2_svelte@3.55.1:
+    resolution: {integrity: sha512-6eygICleGCSL7elY7A3trF8XUhV+mlW56ZSoD0UUKXlw+Y6u0MTTHDq48u1LyY73SfnlbPHXgTarhTjZ0BvUKA==}
+    peerDependencies:
+      svelte: ^3.x
+    dependencies:
+      '@sveltekit-i18n/base': 1.2.1_svelte@3.55.1
+      '@sveltekit-i18n/parser-default': 1.0.3
+      svelte: 3.55.1
+    dev: false
 
   /symbol-tree/3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}

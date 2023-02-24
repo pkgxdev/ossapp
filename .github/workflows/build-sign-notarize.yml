@@ -83,8 +83,7 @@ jobs:
 
       - name: build
         if: startsWith(inputs.platform, 'darwin')
-        # run: tea -ES xc dist # temporary tea installs 19
-        run: tea -ES +nodejs.org@18 xc dist
+        run: tea -SE xc dist
         env:
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           USE_HARD_LINKS: false
@@ -193,7 +192,7 @@ jobs:
 
     - name: create x86 dmg
       run: |
-        tea create-dmg \
+        tea +github.com/create-dmg/create-dmg create-dmg \
         --volname "Tea Installer" \
         --window-pos 200 120 \
         --window-size 800 400 \
@@ -210,7 +209,7 @@ jobs:
 
     - name: create arm64 dmg
       run: |
-        tea create-dmg \
+        tea +github.com/create-dmg/create-dmg create-dmg \
         --volname "Tea Installer" \
         --window-pos 200 120 \
         --window-size 800 400 \
