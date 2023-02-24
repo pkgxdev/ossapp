@@ -9,6 +9,9 @@ on:
       s3-prefix:
         required: true
         type: string
+      debug:
+        required: true
+        type: string
     outputs:
       s3-installers-artifact-key:
         description: 'The S3 build key includes the installer files: [zip, dmg, etc, yml]'
@@ -85,6 +88,7 @@ jobs:
         if: startsWith(inputs.platform, 'darwin')
         run: tea -SE xc dist
         env:
+          DEBUG_BUILD: ${{ inputs.debug }}
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           USE_HARD_LINKS: false
           CSC_FOR_PULL_REQUEST: true
