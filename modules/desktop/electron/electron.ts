@@ -15,7 +15,7 @@ log.info("App starting...");
 
 const serveURL = serve({ directory: "." });
 const port = process.env.PORT || 3000;
-const allowDebug = !app.isPackaged || !!process.env.DEBUG_BUILD;
+const allowDebug = !app.isPackaged || process.env.DEBUG_BUILD === "1";
 let mainWindow: BrowserWindow | null;
 
 function createWindow() {
