@@ -85,6 +85,7 @@ jobs:
         if: startsWith(inputs.platform, 'darwin')
         run: tea -SE xc dist
         env:
+          PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           USE_HARD_LINKS: false
           CSC_FOR_PULL_REQUEST: true
