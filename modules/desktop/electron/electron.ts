@@ -15,7 +15,7 @@ log.info("App starting...");
 
 const serveURL = serve({ directory: "." });
 const port = process.env.PORT || 3000;
-const dev = !app.isPackaged;
+const allowDebug = !app.isPackaged || !!process.env.DEBUG_BUILD;
 let mainWindow: BrowserWindow | null;
 
 function createWindow() {
@@ -39,7 +39,7 @@ function createWindow() {
 			nodeIntegration: true,
 			spellcheck: false,
 			webSecurity: false,
-			devTools: dev
+			devTools: allowDebug
 			// preload: path.join(app.getAppPath(), 'preload.cjs')
 		},
 		x: windowState.x,
@@ -117,7 +117,7 @@ function createMainWindow() {
 		mainWindow = null;
 	});
 
-	if (dev) loadVite(port);
+	if (!app.isPackaged) loadVite(port);
 	else serveURL(mainWindow);
 }
 
