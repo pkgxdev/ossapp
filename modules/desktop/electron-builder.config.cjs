@@ -61,6 +61,7 @@ module.exports = {
 	publish: {
 		provider: "generic",
 		// TODO: replace this with tea branded domain: gui-dist.tea.xyz
-		url: "https://d2ovumu63qzbn6.cloudfront.net/"
+		// url: "https://d2ovumu63qzbn6.cloudfront.net/"
+		url: "https://s3.amazonaws.com/preview.gui.tea.xyz/release"
 	}
 };
