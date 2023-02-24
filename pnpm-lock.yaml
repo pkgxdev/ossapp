@@ -3,7 +3,10 @@ lockfileVersion: 5.4
 importers:
 
   .:
-    specifiers: {}
+    specifiers:
+      yaml: ^2.2.1
+    dependencies:
+      yaml: 2.2.1
 
   modules/desktop:
     specifiers:
