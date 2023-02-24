@@ -142,6 +142,7 @@ jobs:
           - darwin+aarch64
     steps:
     - uses: teaxyz/setup@v0
+    - uses: actions/checkout@v3
     - run: rm -rf ./*.{dmg,zip} || true
     - uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -238,6 +239,8 @@ jobs:
       run: |
         mv $x86dmg dist
         mv $arm64dmg dist
+        tea pnpm install
+        tea +nodejs.org@18 node .github/create-correct-release-yaml.js ./dist
         tar -czvf dist.tgz -C dist/ .
       env:
         x86dmg: ${{ steps.app_files.outputs.dmg_x86 }}

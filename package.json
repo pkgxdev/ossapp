@@ -1,6 +1,6 @@
 {
     "name": "@tea/workspace",
-	"author": "neil molina <neil@tea.xyz>",
+    "author": "neil molina <neil@tea.xyz>",
     "private": true,
     "scripts": {
         "dev": "pnpm --filter desktop exec pnpm electron",
@@ -13,9 +13,12 @@
             "modules/*"
         ]
     },
-	"homepage": "https://tea.xyz",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/teaxyz/gui.git"
-	}
+    "homepage": "https://tea.xyz",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/teaxyz/gui.git"
+    },
+    "dependencies": {
+        "yaml": "^2.2.1"
+    }
 }
