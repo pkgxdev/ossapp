@@ -8,7 +8,7 @@ export async function installPackage(full_name: string) {
 	return await new Promise((resolve, reject) => {
 		let version = "";
 		let lastError = "";
-		const teaInstallation = spawn("tea", [`+${full_name}`, "true"]);
+		const teaInstallation = spawn("/usr/local/bin/tea", [`+${full_name}`, "true"]);
 
 		teaInstallation.stdout.on("data", (data) => {
 			console.log("stdout:", data);

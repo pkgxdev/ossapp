@@ -132,6 +132,7 @@ jobs:
     with:
       platform: ${{ matrix.platform }}
       s3-prefix: ${{ needs.changes.outputs.preview_folder || 'dev-pr' }}
+      debug: 1
     secrets: inherit
   upload:
     needs: [build_desktop, changes]
