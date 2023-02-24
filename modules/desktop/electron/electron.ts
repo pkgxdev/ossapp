@@ -160,7 +160,3 @@ ipcMain.handle("open-terminal", async (_, data) => {
 		console.error("elast:", error);
 	}
 });
-
-ipcMain.handle("get-lang", function () {
-	return app.getLocale();
-});
