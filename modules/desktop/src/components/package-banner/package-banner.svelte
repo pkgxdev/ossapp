@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte';
 	import { getPackageBottles } from '@native';
 	import { openTerminal } from '@native';
+	import { trackInstall, trackInstallFailed } from '$libs/analytics';
 
 	export let pkg: Package;
 	let bottles: Bottle[] = [];
@@ -20,7 +21,14 @@
 	};
 
 	const onOpenTerminal = () => {
-		openTerminal(`sh <(curl tea.xyz) +${pkg.full_name}`);
+		try {
+			openTerminal(`sh <(curl tea.xyz) +${pkg.full_name}`);
+			trackInstall(pkg.full_name);
+		} catch (error) {
+			let message = 'Unknown Error'
+			if (error instanceof Error) message = error.message
+			trackInstallFailed(pkg.full_name, message || "unknown");
+		}
 	}
 
 	onMount(async () => {

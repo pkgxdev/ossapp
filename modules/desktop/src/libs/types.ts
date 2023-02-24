@@ -47,4 +47,5 @@ export interface Session {
 	device_id?: string;
 	key?: string;
 	user?: Developer;
+	locale?: string;
 }

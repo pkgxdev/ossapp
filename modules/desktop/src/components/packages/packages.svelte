@@ -7,6 +7,7 @@
 	import { packagesStore } from '$libs/stores';
 
 	import { installPackage } from '@native';
+	import { trackInstall, trackInstallFailed } from '$libs/analytics';
 
 	export let title = 'Packages';
 	export let category = ''; // filter
@@ -45,9 +46,12 @@
 						try {
 							pkg.state = PackageStates.INSTALLING;
 							await installPackage(pkg.full_name);
+							trackInstall(pkg.full_name);
 							pkg.state = PackageStates.INSTALLED;
 						} catch (error) {
-							console.error(error);
+							let message = 'Unknown Error'
+  						if (error instanceof Error) message = error.message
+							trackInstallFailed(pkg.full_name, message || "unknown");
 						}
 					}}
 				/>
