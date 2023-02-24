@@ -142,6 +142,7 @@ jobs:
           - darwin+aarch64
     steps:
     - uses: teaxyz/setup@v0
+    - uses: actions/checkout@v3
     - run: rm -rf ./*.{dmg,zip} || true
     - uses: aws-actions/configure-aws-credentials@v1
       with:
