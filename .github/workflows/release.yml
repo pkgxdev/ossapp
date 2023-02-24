@@ -16,6 +16,7 @@ jobs:
     with:
       platform: ${{ matrix.platform }}
       s3-prefix: release
+      debug: 0
     secrets: inherit
   upload:
     needs: [build_desktop]
