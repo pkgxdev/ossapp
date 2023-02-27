@@ -1,4 +1,5 @@
 import { join } from "path";
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 const PACKAGE_ROOT = __dirname;
 const PROJECT_ROOT = join(PACKAGE_ROOT, "../..");
@@ -32,7 +33,17 @@ const config = {
 		},
 		emptyOutDir: true,
 		reportCompressedSize: false
-	}
+	},
+	plugins: [
+		viteStaticCopy({
+			targets: [
+				{
+					src: "./preload.cjs",
+					dest: "."
+				}
+			]
+		})
+	]
 };
 
 export default config;
