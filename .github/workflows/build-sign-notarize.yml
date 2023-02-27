@@ -24,21 +24,10 @@ jobs:
       os: ${{ steps.platform.outputs.os }}
       cache-set: ${{ steps.platform.outputs.cache-set }}
     steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: teaxyz/pantry.core
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.deno
-            ~/.cache/deno
-          key: ${{ runner.os }}-deno-get-platform-${{ hashFiles('deno.jsonc')}}
-      - uses: teaxyz/setup@v0
-      - run: scripts/get-platform.ts
+      - uses: teaxyz/pantry.core/.github/actions/get-platform@main
         id: platform
-        env:
-          PLATFORM: ${{ inputs.platform }}
-
+        with:
+          platform: ${{ inputs.platform }}
   build:
     needs: [get-platform]
     runs-on: ${{ fromJson(needs.get-platform.outputs.os) }}
