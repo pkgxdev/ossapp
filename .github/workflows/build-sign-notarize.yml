@@ -132,7 +132,7 @@ jobs:
           echo key=$S3_KEY >> $GITHUB_OUTPUT
 
   notarize-mac-installers:
-    if: ${{ inputs.s3-prefix }} != 'release'
+    if: inputs.s3-prefix != 'release'
     # TODO: run only for mac, create separate Job for linux
     needs: [get-platform, build]
     runs-on: macos-11
