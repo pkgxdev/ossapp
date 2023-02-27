@@ -13,10 +13,12 @@ on:
         required: true
         type: string
     outputs:
-      s3-installers-artifact-key:
-        description: 'The S3 build key includes the installer files: [zip, dmg, etc, yml]'
+      s3-electron-dist-key:
+        description: 'The S3 build key includes the installer files: [zip, dmg, etc, yml] from electron'
+        value: ${{ jobs.build.outputs.s3-artifacts-key }}
+      s3-custom-notarized-installers-key:
+        description: 'The S3 build key includes the installer files: [zip, dmg, etc, yml] from notarization strategy done outside of electron'
         value: ${{ jobs.notarize-mac-installers.outputs.s3-installers-key }}
-
 jobs:
   get-platform:
     runs-on: ubuntu-latest
@@ -77,8 +79,8 @@ jobs:
             ./modules/desktop/.svelte-kit
             ./modules/desktop/build
 
-      - name: build
-        if: startsWith(inputs.platform, 'darwin')
+      - name: build dev
+        if: inputs.s3-prefix != 'release'
         run: tea -SE xc dist
         env:
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
@@ -89,12 +91,23 @@ jobs:
           CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
           CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
           CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-          # NOTE: you might think the ff will work, it wont unless PR is properly tagged
-          # TODO: get this notarized here to save time
-          # PUBLISH_FOR_PULL_REQUEST: true
-          # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # APPLE_ID: ${{ secrets.APPLE_ID }}
-          # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+
+      # slower build but dmg output is much nicer looking
+      - name: build release
+        if: inputs.s3-prefix == 'release'
+        run: tea -SE xc dist
+        env:
+          PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
+          DEBUG_BUILD: ${{ inputs.debug }}
+          PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
+          USE_HARD_LINKS: false
+          CSC_FOR_PULL_REQUEST: true
+          CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+          CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+          CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
 
       - name: build artifacts for publishing and notarization
         run: |
@@ -119,6 +132,7 @@ jobs:
           echo key=$S3_KEY >> $GITHUB_OUTPUT
 
   notarize-mac-installers:
+    if: ${{ inputs.s3-prefix }} != 'release'
     # TODO: run only for mac, create separate Job for linux
     needs: [get-platform, build]
     runs-on: macos-11
