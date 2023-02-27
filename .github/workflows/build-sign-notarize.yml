@@ -79,8 +79,8 @@ jobs:
             ./modules/desktop/.svelte-kit
             ./modules/desktop/build
 
-      - name: build
-        if: ${{ inputs.s3-prefix }} != 'release
+      - name: build dev
+        if: inputs.s3-prefix != 'release'
         run: tea -SE xc dist
         env:
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
@@ -94,7 +94,7 @@ jobs:
 
       # slower build but dmg output is much nicer looking
       - name: build release
-        if: ${{ inputs.s3-prefix }} == 'release'
+        if: inputs.s3-prefix == 'release'
         run: tea -SE xc dist
         env:
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
