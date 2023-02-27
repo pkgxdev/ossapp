@@ -1,4 +1,4 @@
-const { notarize } = require('@electron/notarize');
+const { notarize } = require("@electron/notarize");
 // const fs = require('fs');
 // const path = require('path');
 
@@ -20,21 +20,23 @@ module.exports = {
 	// TODO: if xcrun altool exists eventually in our self-hosted macos
 	// SOLUTION: is notarize separately in next pipeline step
 	afterSign: async (params) => {
-		if (process.platform !== 'darwin') {
+		if (process.platform !== "darwin") {
 			return;
 		}
 
-		console.log('afterSign hook triggered', params);
+		console.log("afterSign hook triggered", params);
 
-		const appBundleId = 'xyz.tea.gui';
+		const appBundleId = "xyz.tea.gui";
 
 		let appPath = path.join(params.appOutDir, `${params.packager.appInfo.productFilename}.app`);
 		if (!fs.existsSync(appPath)) {
-			console.log('skip');
+			console.log("skip");
 			return;
 		}
 
-		console.log(`Notarizing ${appBundleId} found at ${appPath} with Apple ID ${process.env.APPLE_ID}`);
+		console.log(
+			`Notarizing ${appBundleId} found at ${appPath} with Apple ID ${process.env.APPLE_ID}`
+		);
 
 		try {
 			await notarize({
