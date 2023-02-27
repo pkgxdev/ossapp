@@ -1,5 +1,6 @@
 import windowStateManager from "electron-window-state";
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, net } from "electron";
+import * as Sentry from "@sentry/electron";
 import contextMenu from "electron-context-menu";
 import serve from "electron-serve";
 
@@ -9,9 +10,23 @@ import type { Session } from "../src/libs/types";
 import { installPackage, openTerminal } from "./libs/cli";
 import { autoUpdater } from "electron-updater";
 import * as log from "electron-log";
+import path from "path";
 
 autoUpdater.logger = log;
 log.info("App starting...");
+Sentry.init({
+	dsn: "https://5ff29bb5b3b64cd4bd4f4960ef1db2e3@o4504750197899264.ingest.sentry.io/4504750206746624",
+	debug: true,
+	transportOptions: {
+		maxQueueAgeDays: 30,
+		maxQueueCount: 30,
+		beforeSend: async () => {
+			const ol = await net.isOnline();
+			log.log("isOnline", ol);
+			return ol ? "send" : "queue";
+		}
+	}
+});
 
 const serveURL = serve({ directory: "." });
 const port = process.env.PORT || 3000;
@@ -39,8 +54,8 @@ function createWindow() {
 			nodeIntegration: true,
 			spellcheck: false,
 			webSecurity: false,
-			devTools: allowDebug
-			// preload: path.join(app.getAppPath(), 'preload.cjs')
+			devTools: allowDebug,
+			preload: path.join(app.getAppPath(), "preload.cjs")
 		},
 		x: windowState.x,
 		y: windowState.y,
@@ -49,7 +64,7 @@ function createWindow() {
 	});
 
 	windowState.manage(mainWindow);
-
+	mainWindow.webContents.openDevTools();
 	mainWindow.once("ready-to-show", () => {
 		mainWindow.show();
 		mainWindow.focus();
@@ -78,14 +93,12 @@ autoUpdater.on("update-not-available", (info) => {
 autoUpdater.on("error", (err) => {
 	sendStatusToWindow("Error in auto-updater. " + err);
 });
-
 autoUpdater.on("download-progress", (progressObj) => {
 	let log_message = "Download speed: " + progressObj.bytesPerSecond;
 	log_message = log_message + " - Downloaded " + progressObj.percent + "%";
 	log_message = log_message + " (" + progressObj.transferred + "/" + progressObj.total + ")";
 	sendStatusToWindow(log_message);
 });
-
 autoUpdater.on("update-downloaded", (info) => {
 	sendStatusToWindow("Update downloaded");
 });
@@ -127,8 +140,9 @@ app.on("activate", () => {
 		createMainWindow();
 	}
 });
-app.on("window-all-closed", () => {
-	if (process.platform !== "darwin") app.quit();
+app.on("window-all-closed", async () => {
+	await autoUpdater.quitAndInstall();
+	app.quit();
 });
 
 ipcMain.handle("get-installed-packages", async () => {
