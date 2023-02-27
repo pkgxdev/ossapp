@@ -1,6 +1,6 @@
 const { notarize } = require("@electron/notarize");
-// const fs = require('fs');
-// const path = require('path');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
 	appId: "xyz.tea.gui",
