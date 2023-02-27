@@ -9,7 +9,7 @@ jobs:
       matrix:
         platform:
           # X86+64 is built with ARM64 also
-          - darwin+aarch64
+          - darwin+x86-64
     uses: ./.github/workflows/build-sign-notarize.yml
     with:
       platform: ${{ matrix.platform }}
@@ -35,7 +35,7 @@ jobs:
         aws-region: us-east-1
     - name: s3 artifact download
       env:
-        S3_INSTALLER_KEY: ${{ needs.build_desktop.outputs.s3-installers-artifact-key }}
+        S3_INSTALLER_KEY: ${{ needs.build_desktop.outputs.s3-electron-dist-key }}
       run: aws s3 cp $S3_INSTALLER_KEY dist.tgz
 
     - run: |
