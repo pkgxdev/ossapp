@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$appcss';
+	import { t } from '$libs/translations'; 
 	import { postsStore } from '$libs/stores';
 	import type { Course } from '$libs/types';
 
@@ -20,7 +21,7 @@
 </script>
 
 <Gallery
-	title="FEATURED COURSES"
+	title={$t("documentation.featured-courses-title").toUpperCase()}
 	items={courses.map((course) => ({
 		title: course.title,
 		subTitle: course.sub_title,

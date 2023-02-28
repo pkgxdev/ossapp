@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$appcss';
+	import { t } from '$libs/translations'; 
 
 	export let onSort: (opt: string, dir: 'asc' | 'desc') => void;
 
@@ -7,6 +8,11 @@
 	let sortDirection: 'asc' | 'desc' = 'desc';
 
 	const sortOptions = ['popularity', 'most recent'];
+
+	const optionLabels = {
+		[sortOptions[0]]: $t("sorting.popularity"),
+		[sortOptions[1]]: $t("sorting.most-recent")
+	}
 
 	const setSortBy = (opt: string) => {
 		sortBy = opt;
@@ -22,7 +28,7 @@
 
 <section class="sorting-container font-machina bg-black text-white">
 	<div class="dropdown">
-		<div class="dropdown-title">SORT ORDER</div>
+		<div class="dropdown-title">{$t("sorting.label")}</div>
 		<ul class="dropdown-content column flex">
 			{#each sortOptions as option}
 				<li class="flex items-center">
@@ -30,7 +36,7 @@
 						class={`sort-btn uppercase ${sortBy === option ? 'active' : ''}`}
 						on:click={() => setSortBy(option)}
 					>
-						{option}
+						{optionLabels[option]}
 					</button>
 					<div class="direction-arrows">
 						<button

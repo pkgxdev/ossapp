@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$appcss';
+	import { t } from '$libs/translations'; 
 	import { packagesStore } from '$libs/stores';
 	import SortingButtons from './sorting-buttons.svelte';
 	import type { GUIPackage } from '$libs/types';
@@ -51,10 +52,10 @@
 
 	const getCTALabel = (state: PackageStates): string => {
 		return {
-			[PackageStates.AVAILABLE]: 'INSTALL',
-			[PackageStates.INSTALLED]: 'INSTALLED',
-			[PackageStates.INSTALLING]: 'INSTALLING',
-			[PackageStates.UNINSTALLED]: 'RE-INSTALL'
+			[PackageStates.AVAILABLE]: $t("package.install-label").toUpperCase(),
+			[PackageStates.INSTALLED]: $t("package.installed-label").toUpperCase(),
+			[PackageStates.INSTALLING]: $t("package.installing-label").toUpperCase(),
+			[PackageStates.UNINSTALLED]: $t("package.reinstall-label").toUpperCase(),
 		}[state];
 	};
 
@@ -64,7 +65,7 @@
 <div class="border-gray border bg-black">
 	<section class="flex items-center justify-between">
 		<div>
-			<SearchInput size="medium" {onSearch} />
+			<SearchInput size="medium" {onSearch} placeholder={`${$t("search")}_`} />
 		</div>
 		<div class="pr-4">
 			<section class="border-gray h-12 w-48 border">

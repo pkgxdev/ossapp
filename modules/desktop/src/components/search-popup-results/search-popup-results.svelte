@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { searchStore } from '$libs/stores';
+	import { t } from '$libs/translations'; 
 	import type { GUIPackage } from '$libs/types';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import PackageCard from '@tea/ui/package-card/package-card.svelte';
@@ -40,10 +41,10 @@
 
 	const getCTALabel = (state: PackageStates): string => {
 		return {
-			[PackageStates.AVAILABLE]: 'INSTALL',
-			[PackageStates.INSTALLED]: 'INSTALLED',
-			[PackageStates.INSTALLING]: 'INSTALLING',
-			[PackageStates.UNINSTALLED]: 'RE-INSTALL'
+			[PackageStates.AVAILABLE]: $t("package.install-label").toUpperCase(),
+			[PackageStates.INSTALLED]: $t("package.installed-label").toUpperCase(),
+			[PackageStates.INSTALLING]: $t("package.installing-label").toUpperCase(),
+			[PackageStates.UNINSTALLED]: $t("package.reinstall-label").toUpperCase(),
 		}[state];
 	};
 

@@ -4,6 +4,7 @@
 	import { searchStore } from '$libs/stores';
 	import SearchInput from '@tea/ui/search-input/search-input.svelte';
 	import { navStore } from '$libs/stores';
+	import { t } from '$libs/translations'; 
 
 	import ProfileNavButton from './profile-nav-button.svelte';
 	import SelectLang from '$components/select-lang/select-lang.svelte';
@@ -31,7 +32,7 @@
 	<SearchInput
 		class="flex-grow border border-none py-4"
 		size="small"
-		placeholder="search the tea store"
+		placeholder={$t("store-search-placeholder")}
 		{onSearch}
 	/>
 	<ul class="text-gray flex gap-4 pr-4 pt-2 align-middle">
@@ -45,8 +46,8 @@
 <menu
 	class="border-gray text-gray flex h-10 gap-4 border border-l-0 border-r-0 border-t-0 pl-4 align-middle leading-10"
 >
-	<a href="/cli" class={currentPath === '/cli' ? 'active' : ''}>install teaCli</a>
-	<a href="/documentation" class={currentPath === '/documentation' ? 'active' : ''}>documentation</a
+	<a href="/cli" class={currentPath === '/cli' ? 'active' : ''}>{$t('cli.install')}</a>
+	<a href="/documentation" class={currentPath === '/documentation' ? 'active' : ''}>{$t('documentation.title')}</a
 	>
 	<a href="/packages" class={currentPath === '/packages' ? 'active' : ''}>packages</a>
 	<a href="https://github.com/teaxyz" target="_blank" rel="noreferrer">

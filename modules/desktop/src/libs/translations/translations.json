@@ -1,0 +1,65 @@
+{
+	"en": {
+		"lang": {
+			"en": "English"
+		},
+		"cli": {
+			"install": "install tea"
+		},
+		"store-search-placeholder": "search the tea store",
+		"search": "search",
+		"home": {
+			"discover-title": "DISCOVER",
+			"asset-title": "ASSET TYPE",
+			"tutorials-title": "TUTORIALS",
+			"os-news-title": "OPEN-SOURCE NEWS"
+		},
+		"package": {
+			"top-list-title": "Top packages this week",
+			"browse-cta": "Browse packages",
+			"what-title": "What are packages?",
+			"short-description": "Collections of files aggregated to form larger frameworks & functions. Think Python or Node.js.",
+			"foundation-essentials-title": "FOUNDATION ESSENTIALS",
+			"view-all-cta": "View all packages",
+			"install-label": "install",
+			"installed-label": "installed",
+			"installing-label": "installing",
+			"reinstall-label": "re-install",
+			"my-installs-title": "my installs",
+			"check-for-updates": "check for updates",
+			"details": "details"
+		},
+		"script": {
+			"top-list-title": "Top scripts this week",
+			"view-all-cta": "View all scripts",
+			"use-label": "use",
+			"browse-cta": "Browse scripts",
+			"what-title": "What are scripts?",
+			"short-description": "Invisible applications that chain packages together in order to perform cool actions on your computer."
+		},
+		"post": {
+			"workshops-title": "workshops to get started",
+			"article-more-cta": "Read more articles",
+			"read-more-cta": "read more"
+		},
+		"footer": {
+			"quick-links-title": "quick links",
+			"about-tea-store": "about the tea store",
+			"report-a-problem": "report a problem",
+			"visit-website": "visit tea.xyz",
+			"terms-services": "terms & services",
+			"privacy-policy": "privacy-policy"
+		},
+		"documentation": {
+			"title": "documentation",
+			"featured-courses-title": "featured courses",
+			"workshops": "workshops"
+		},
+		"view-all": "view all",
+		"sorting": {
+			"label": "sort order",
+			"popularity": "popularity",
+			"most-recent": "most recent"
+		}
+	}
+}

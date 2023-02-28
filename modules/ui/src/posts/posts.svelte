@@ -3,6 +3,7 @@
 	import type { AirtablePost } from "../types";
 
 	export let linkTarget = "";
+	export let readMoreCta = "read more";
 	export let posts: AirtablePost[] = [];
 </script>
 
@@ -17,7 +18,7 @@
 					<h1 class="text-xl text-primary">{article.title}</h1>
 					<p class="my-4 text-sm line-clamp-4">{article.short_description}</p>
 					<a href={article.link} target={linkTarget} class="text-sm text-primary underline"
-						>Read more ...</a
+						>{readMoreCta} ...</a
 					>
 				</section>
 			</article>

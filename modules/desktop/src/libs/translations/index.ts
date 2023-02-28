@@ -1,9 +1,10 @@
 import i18n from "sveltekit-i18n";
-import translations from "./translations";
+import translations from "./translations.json";
 
 /** @type {import('sveltekit-i18n').Config} */
 const config = {
 	initLocale: "en",
+	fallbackLocale: "en",
 	translations
 };
 

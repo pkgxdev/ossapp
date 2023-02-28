@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$appcss';
+	import { t } from '$libs/translations';
 	import type { GUIPackage } from '$libs/types';
 	import { PackageStates } from '$libs/types';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
@@ -16,10 +17,10 @@
 
 	const getCTALabel = (state: PackageStates): string => {
 		return {
-			[PackageStates.AVAILABLE]: 'INSTALL',
-			[PackageStates.INSTALLED]: 'INSTALLED',
-			[PackageStates.INSTALLING]: 'INSTALLING',
-			[PackageStates.UNINSTALLED]: 'RE-INSTALL'
+			[PackageStates.AVAILABLE]: $t("package.install-label").toUpperCase(),
+			[PackageStates.INSTALLED]: $t("package.installed-label").toUpperCase(),
+			[PackageStates.INSTALLING]: $t("package.installing-label").toUpperCase(),
+			[PackageStates.UNINSTALLED]: $t("package.reinstall-label").toUpperCase(),
 		}[state];
 	};
 
@@ -32,7 +33,7 @@
 
 <header class="border-gray text-primary flex items-center justify-between border bg-black p-4">
 	<span>{title}</span>
-	<a href="/packages" class="font-sono text-sm underline">View all packages</a>
+	<a href="/packages" class="font-sono text-sm underline">{$t("package.view-all-cta")}</a>
 </header>
 <ul class="grid grid-cols-3 bg-black">
 	{#if packages.length > 0}
