@@ -1,6 +1,8 @@
 const { notarize } = require("@electron/notarize");
 const fs = require("fs");
 const path = require("path");
+const otaClient = require("@crowdin/ota-client");
+const _ = require("lodash");
 
 module.exports = {
 	appId: "xyz.tea.gui",
@@ -17,8 +19,6 @@ module.exports = {
 			arch: ["x64", "arm64"]
 		}
 	},
-	// TODO: if xcrun altool exists eventually in our self-hosted macos
-	// SOLUTION: is notarize separately in next pipeline step
 	afterSign: async (params) => {
 		if (process.platform !== "darwin") {
 			return;
@@ -51,14 +51,6 @@ module.exports = {
 
 		console.log(`Done notarizing`);
 	},
-
-	// publish: {
-	// 	provider: "github",
-	// 	repo: "gui",
-	// 	owner: "teaxyz",
-	// 	releaseType: "release"
-	// },
-
 	// this determines the configuration of the auto-update feature
 	publish: {
 		provider: "generic",

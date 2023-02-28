@@ -1,0 +1,10 @@
+{
+	"en": {
+		"lang": {
+			"en": "English"
+		},
+		"cli": {
+			"install": "install tea"
+		}
+	}
+}

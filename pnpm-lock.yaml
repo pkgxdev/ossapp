@@ -4,12 +4,17 @@ importers:
 
   .:
     specifiers:
+      '@crowdin/ota-client': ^0.7.0
+      lodash: ^4.17.21
       yaml: ^2.2.1
     dependencies:
+      '@crowdin/ota-client': 0.7.0
+      lodash: 4.17.21
       yaml: 2.2.1
 
   modules/desktop:
     specifiers:
+      '@crowdin/ota-client': ^0.7.0
       '@electron/asar': ^3.2.3
       '@electron/notarize': ^1.2.3
       '@playwright/experimental-ct-svelte': ^1.29.2
@@ -77,6 +82,7 @@ importers:
       vitest: ^0.28.3
       yaml: ^2.2.1
     dependencies:
+      '@crowdin/ota-client': 0.7.0
       '@electron/asar': 3.2.3
       '@sentry/electron': 4.3.0
       '@sentry/svelte': 7.38.0_svelte@3.55.1
@@ -1681,6 +1687,15 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@crowdin/ota-client/0.7.0:
+    resolution: {integrity: sha512-RNFnR2ter5dsFJlyQysT8jswDn/TBF/ALosiDRpaj2tcOlAk/amQOoqEMJrCdR46xWqMUNwz/hJ4YIlcN51kPQ==}
+    engines: {node: '>=12.9.0'}
+    dependencies:
+      axios: 0.25.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /@design-systems/utils/2.12.0:
     resolution: {integrity: sha512-Y/d2Zzr+JJfN6u1gbuBUb1ufBuLMJJRZQk+dRmw8GaTpqKx5uf7cGUYGTwN02dIb3I+Tf+cW8jcGBTRiFxdYFg==}
@@ -5097,6 +5112,14 @@ packages:
     resolution: {integrity: sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==}
     engines: {node: '>= 0.4'}
     dev: true
+
+  /axios/0.25.0:
+    resolution: {integrity: sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==}
+    dependencies:
+      follow-redirects: 1.15.2
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /axios/1.3.2:
     resolution: {integrity: sha512-1M3O703bYqYuPhbHeya5bnhpYVsDDRyQSabNja04mZtboLNSuZ4YrltestrLXfHgmzua4TpUqRiVKbiQuo2epw==}

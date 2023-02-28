@@ -14,6 +14,7 @@
 		"dev:main": "cd ./electron && vite build --config ./vite.config.js --watch",
 		"build:main": "cp package.json electron && cd ./electron && vite  --config ./vite.config.js build --base . && rm package.json",
 		"pack": "electron-builder --dir --config electron-builder.config.cjs",
+		"predist": "node ./scripts/update-translations.cjs",
 		"dist": "pnpm build && electron-builder --config electron-builder.config.cjs",
 		"package": "pnpm build && electron-builder --config electron-builder.config.cjs",
 		"dev:package": "pnpm build && electron-builder --config electron-builder.config.cjs --dir",
@@ -72,6 +73,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@crowdin/ota-client": "^0.7.0",
 		"@electron/asar": "^3.2.3",
 		"@sentry/electron": "^4.3.0",
 		"@sentry/svelte": "^7.38.0",
