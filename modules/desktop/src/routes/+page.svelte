@@ -1,6 +1,7 @@
 <!-- home / discover / welcome page -->
 <script lang="ts">
 	import '$appcss';
+	import { t } from '$libs/translations'; 
 	import PageHeader from '$components/page-header/page-header.svelte';
 	import EssentialWorkshops from '$components/essential-workshops/essential-workshops.svelte';
 	import Packages from '$components/packages/packages.svelte';
@@ -12,40 +13,40 @@
 </script>
 
 <div>
-	<PageHeader coverUrl="/images/headers/header_bg_1.png">Discover</PageHeader>
+	<PageHeader coverUrl="/images/headers/header_bg_1.png">{$t("home.discover-title")}</PageHeader>
 	<section class="mt-8 mb-8">
-		<Packages title="FOUNDATION ESSENTIALS" category="foundation_essentials" />
+		<Packages title={$t("package.foundation-essentials-title")} category="foundation_essentials" />
 	</section>
-	<PageHeader coverUrl="/images/headers/header_bg_1.png">ASSET TYPE</PageHeader>
+	<PageHeader coverUrl="/images/headers/header_bg_1.png">{$t("home.asset-title")}</PageHeader>
 	<section class="mt-8 mb-8 flex gap-4">
 		<div>
 			<HeaderCard
-				title="Browse Packages"
+				title={$t("package.browse-cta")}
 				imgUrl="/images/bored-ape.png"
 				ctaUrl="/packages"
-				ctaLabel="Browse packages >"
-				articleTitle="What are packages?"
-				description="Collections of files aggregated to form larger frameworks & functions. Think Python or Node.js."
+				ctaLabel={`${$t("package.browse-cta")} >`}
+				articleTitle={$t("package.what-title")}
+				description={$t("package.short-description")}
 			/>
 			<TopPackages />
 		</div>
 		<div>
 			<HeaderCard
-				title="Browse Scripts"
+				title={$t("script.browse-cta")}
 				imgUrl="/images/bored-ape.png"
 				ctaUrl="/packages"
-				ctaLabel="Browse scripts >"
-				articleTitle="What are scripts?"
-				description="Invisible applications that chain packages together in order to perform cool actions on your computer."
+				ctaLabel={`${$t("script.browse-cta")} >`}
+				articleTitle={$t("script.what-title")}
+				description={$t("script.short-description")}
 			/>
 			<TopScripts/>
 		</div>
 	</section>
-	<PageHeader coverUrl="/images/headers/header_bg_1.png">TUTORIALS</PageHeader>
+	<PageHeader coverUrl="/images/headers/header_bg_1.png">{$t("home.tutorials-title")}</PageHeader>
 	<section class="mt-8 mb-8">
-		<EssentialWorkshops title="WORKSHOPS TO GET STARTED" ctaLabel="Read more articles >" />
+		<EssentialWorkshops title={$t("post.workshops-title")} ctaLabel={`${$t('post.article-more-cta')} >`} />
 	</section>
-	<PageHeader coverUrl="/images/headers/header_bg_1.png">OPEN-SOURCE NEWS</PageHeader>
+	<PageHeader coverUrl="/images/headers/header_bg_1.png">{$t("home.os-news-title")}</PageHeader>
 	<section class="mt-8">
 		<News />
 	</section>

@@ -4,6 +4,7 @@
 	import { searchStore } from '$libs/stores';
 	import SearchInput from '@tea/ui/search-input/search-input.svelte';
 	import { navStore } from '$libs/stores';
+	import { t } from '$libs/translations'; 
 
 	import ProfileNavButton from './profile-nav-button.svelte';
 	import SelectLang from '$components/select-lang/select-lang.svelte';
@@ -45,7 +46,7 @@
 <menu
 	class="border-gray text-gray flex h-10 gap-4 border border-l-0 border-r-0 border-t-0 pl-4 align-middle leading-10"
 >
-	<a href="/cli" class={currentPath === '/cli' ? 'active' : ''}>install teaCli</a>
+	<a href="/cli" class={currentPath === '/cli' ? 'active' : ''}>{$t('cli.install')}</a>
 	<a href="/documentation" class={currentPath === '/documentation' ? 'active' : ''}>documentation</a
 	>
 	<a href="/packages" class={currentPath === '/packages' ? 'active' : ''}>packages</a>

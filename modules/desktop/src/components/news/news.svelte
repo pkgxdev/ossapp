@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$appcss';
+	import { t } from '$libs/translations'; 
 	import { postsStore } from '$libs/stores';
 	import type { AirtablePost } from '@tea/ui/types';
 	import Posts from '@tea/ui/posts/posts.svelte';
@@ -11,7 +12,7 @@
 	postsStore.subscribeByTag('news', (posts) => (news = posts));
 </script>
 
-<PanelHeader title="Open-source News" ctaLabel="Read more articles >" ctaLink="/" />
+<PanelHeader title={$t("home.os-news-title")} ctaLabel={`${$t("post.article-more-cta")} >`} ctaLink="/" />
 {#if news.length}
 	<Posts posts={news} linkTarget="_blank" />
 {:else}

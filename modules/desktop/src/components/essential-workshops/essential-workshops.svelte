@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$appcss';
+	import { t } from '$libs/translations'; 
 	import type { AirtablePost } from '@tea/ui/types';
 	import Posts from '@tea/ui/posts/posts.svelte';
 	import PanelHeader from '@tea/ui/panel-header/panel-header.svelte';
@@ -16,7 +17,7 @@
 
 <PanelHeader {title} {ctaLabel} ctaLink="/" />
 {#if courses.length}
-	<Posts posts={courses} linkTarget="_blank" />
+	<Posts posts={courses} readMoreCta={$t("post.read-more-cta")} linkTarget="_blank" />
 {:else}
 	<section class="border-gray h-64 border bg-black p-4">
 		<Preloader />
