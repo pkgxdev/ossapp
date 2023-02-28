@@ -10,6 +10,8 @@
 
 	import SearchPopupResults from '$components/search-popup-results/search-popup-results.svelte';
 
+  	import TeaUpdate from '$components/tea-update/tea-update.svelte';
+
 	let view: HTMLElement;
 
 	$: if ($navigating) view.scrollTop = 0;
@@ -29,6 +31,9 @@
 		<Notification {notification} />
 	{/each}
 	<section class="relative pt-24" bind:this={view}>
+		<div class="content">
+			<TeaUpdate />
+		</div>
 		<figure />
 		<div class="content">
 			<slot />

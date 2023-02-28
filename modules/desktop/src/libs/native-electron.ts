@@ -135,7 +135,7 @@ export const openTerminal = (cmd: string) => ipcRenderer.invoke("open-terminal",
 export const shellOpenExternal = (link: string) => shell.openExternal(link);
 
 export const listenToChannel = (channel: string, callback: (msg: string, ...args: any) => void) => {
-	ipcRenderer.on(channel, (_, message: string, ...args: any[]) => callback(message, ...args));
+	ipcRenderer.on(channel, (_: any, message: string, ...args: any[]) => callback(message, ...args));
 };
 
 export const relaunch = () => ipcRenderer.invoke("relaunch");

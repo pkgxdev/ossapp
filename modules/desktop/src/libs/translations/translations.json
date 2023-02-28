@@ -38,7 +38,10 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"update-label": "update",
+			"install-tea-cli": "Install Tea CLI?",
+			"update-tea-cli": "A new version of Tea CLI is available to install."
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -112,7 +115,10 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"update-label": "update",
+			"install-tea-cli": "Install Tea CLI?",
+			"update-tea-cli": "A new version of Tea CLI is available to install."
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -186,7 +192,10 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"update-label": "update",
+			"install-tea-cli": "Install Tea CLI?",
+			"update-tea-cli": "A new version of Tea CLI is available to install."
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -260,7 +269,10 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"update-label": "update",
+			"install-tea-cli": "Install Tea CLI?",
+			"update-tea-cli": "A new version of Tea CLI is available to install."
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -334,7 +346,10 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"update-label": "update",
+			"install-tea-cli": "Install Tea CLI?",
+			"update-tea-cli": "A new version of Tea CLI is available to install."
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -408,7 +423,10 @@
 			"reinstall-label": "neu installieren",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"update-label": "update",
+			"install-tea-cli": "Install Tea CLI?",
+			"update-tea-cli": "A new version of Tea CLI is available to install."
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -482,7 +500,10 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"update-label": "update",
+			"install-tea-cli": "Install Tea CLI?",
+			"update-tea-cli": "A new version of Tea CLI is available to install."
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -556,7 +577,10 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"update-label": "update",
+			"install-tea-cli": "Install Tea CLI?",
+			"update-tea-cli": "A new version of Tea CLI is available to install."
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -630,7 +654,10 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"update-label": "update",
+			"install-tea-cli": "Install Tea CLI?",
+			"update-tea-cli": "A new version of Tea CLI is available to install."
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -704,7 +731,10 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"update-label": "update",
+			"install-tea-cli": "Install Tea CLI?",
+			"update-tea-cli": "A new version of Tea CLI is available to install."
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -778,7 +808,10 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"update-label": "update",
+			"install-tea-cli": "Install Tea CLI?",
+			"update-tea-cli": "A new version of Tea CLI is available to install."
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -852,7 +885,10 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"update-label": "update",
+			"install-tea-cli": "Install Tea CLI?",
+			"update-tea-cli": "A new version of Tea CLI is available to install."
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
