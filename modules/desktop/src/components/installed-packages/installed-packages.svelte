@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$appcss';
+	import { t } from '$libs/translations'; 
 	import type { GUIPackage } from '$libs/types';
 	import { PackageStates } from '$libs/types';
 	import PanelHeader from '@tea/ui/panel-header/panel-header.svelte';
@@ -13,7 +14,7 @@
 	});
 </script>
 
-<PanelHeader title="My installs" ctaLabel="Check for updates >" ctaLink="#" />
+<PanelHeader title={$t("package.my-installs-title")} ctaLabel={`${$t("package.check-for-updates")} >`} ctaLink="#" />
 
 <ul class="border-gray grid grid-cols-3 border border-r-0 bg-black">
 	{#if packages.length > 0}
@@ -21,7 +22,7 @@
 			<div class="border-gray border border-t-0 border-l-0 p-4">
 				<MiniPackageCard
 					{pkg}
-					ctaLabel="DETAILS"
+					ctaLabel={$t("package.details").toUpperCase()}
 					onClickCTA={async () => {
 						console.log('do something with:', pkg.full_name);
 					}}

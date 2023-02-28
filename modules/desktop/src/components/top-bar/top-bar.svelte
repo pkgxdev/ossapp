@@ -32,7 +32,7 @@
 	<SearchInput
 		class="flex-grow border border-none py-4"
 		size="small"
-		placeholder="search the tea store"
+		placeholder={$t("store-search-placeholder")}
 		{onSearch}
 	/>
 	<ul class="text-gray flex gap-4 pr-4 pt-2 align-middle">
@@ -47,7 +47,7 @@
 	class="border-gray text-gray flex h-10 gap-4 border border-l-0 border-r-0 border-t-0 pl-4 align-middle leading-10"
 >
 	<a href="/cli" class={currentPath === '/cli' ? 'active' : ''}>{$t('cli.install')}</a>
-	<a href="/documentation" class={currentPath === '/documentation' ? 'active' : ''}>documentation</a
+	<a href="/documentation" class={currentPath === '/documentation' ? 'active' : ''}>{$t('documentation.title')}</a
 	>
 	<a href="/packages" class={currentPath === '/packages' ? 'active' : ''}>packages</a>
 	<a href="https://github.com/teaxyz" target="_blank" rel="noreferrer">

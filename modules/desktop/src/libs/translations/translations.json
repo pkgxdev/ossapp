@@ -6,6 +6,7 @@
 		"cli": {
 			"install": "install tea"
 		},
+		"store-search-placeholder": "search the tea store",
 		"search": "search",
 		"home": {
 			"discover-title": "DISCOVER",
@@ -23,7 +24,10 @@
 			"install-label": "install",
 			"installed-label": "installed",
 			"installing-label": "installing",
-			"reinstall-label": "re-install"
+			"reinstall-label": "re-install",
+			"my-installs-title": "my installs",
+			"check-for-updates": "check for updates",
+			"details": "details"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -45,6 +49,17 @@
 			"visit-website": "visit tea.xyz",
 			"terms-services": "terms & services",
 			"privacy-policy": "privacy-policy"
+		},
+		"documentation": {
+			"title": "documentation",
+			"featured-courses-title": "featured courses",
+			"workshops": "workshops"
+		},
+		"view-all": "view all",
+		"sorting": {
+			"label": "sort order",
+			"popularity": "popularity",
+			"most-recent": "most recent"
 		}
 	}
 }
