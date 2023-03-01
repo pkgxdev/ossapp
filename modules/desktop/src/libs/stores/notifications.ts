@@ -10,6 +10,10 @@ export default function initNotificationStore() {
 	const notifications: Notification[] = [];
 	const { update, subscribe } = writable<Notification[]>([]);
 
+	const remove = (id: string) => {
+		update((notifications) => notifications.filter((n) => n.id != id));
+	};
+
 	listenToChannel("message", (message: string, params: any) => {
 		update((value) => {
 			const newNotification: Notification = {
@@ -21,6 +25,7 @@ export default function initNotificationStore() {
 				newNotification.callback_label = params.action;
 				newNotification.callback = () => {
 					relaunch();
+					remove(newNotification.id); // not sure yet
 				};
 			}
 			return [...value, newNotification];
@@ -29,6 +34,7 @@ export default function initNotificationStore() {
 
 	return {
 		notifications,
-		subscribe
+		subscribe,
+		remove
 	};
 }

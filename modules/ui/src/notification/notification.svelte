@@ -7,7 +7,7 @@
 	export let notification: Notification;
 </script>
 
-<div class=" flex w-full items-center justify-between bg-accent p-4">
+<div class=" flex w-full items-center justify-between bg-accent px-4 py-2">
 	<div class="text-white">{notification.message}</div>
 	{#if notification.callback}
 		<button

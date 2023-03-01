@@ -43,6 +43,7 @@
 <style>
 	#main-layout {
 		height: 100vh;
+		overflow: hidden;
 	}
 	section {
 		height: calc(100vh - 82px);
