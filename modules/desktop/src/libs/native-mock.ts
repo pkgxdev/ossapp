@@ -374,3 +374,11 @@ export const openTerminal = (cmd: string) => console.log(cmd);
 export const shellOpenExternal = (link: string) => {
 	window.open(link, "_blank");
 };
+
+export const listenToChannel = (channel: string, callback: (msg: string, ...args: any) => void) => {
+	console.log("listen to channel", callback);
+};
+
+export const relaunch = () => {
+	console.log("relaunch");
+};
