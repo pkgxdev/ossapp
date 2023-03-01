@@ -1,10 +1,10 @@
 const isVite = () => {
 	try {
-		return window.location.href.includes('is-vite');
+		return window.location.href.includes("is-vite");
 	} catch (error) {
 		return false;
 	}
-}
+};
 
 if (!isVite()) {
 	const { init } = window.require("@sentry/electron/renderer");
