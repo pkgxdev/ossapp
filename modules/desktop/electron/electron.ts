@@ -14,20 +14,21 @@ import path from "path";
 
 autoUpdater.logger = log;
 log.info("App starting...");
-Sentry.init({
-	dsn: "https://5ff29bb5b3b64cd4bd4f4960ef1db2e3@o4504750197899264.ingest.sentry.io/4504750206746624",
-	debug: true,
-	transportOptions: {
-		maxQueueAgeDays: 30,
-		maxQueueCount: 30,
-		beforeSend: async () => {
-			const ol = await net.isOnline();
-			log.log("isOnline", ol);
-			return ol ? "send" : "queue";
+if (app.isPackaged) {
+	Sentry.init({
+		dsn: "https://5ff29bb5b3b64cd4bd4f4960ef1db2e3@o4504750197899264.ingest.sentry.io/4504750206746624",
+		debug: true,
+		transportOptions: {
+			maxQueueAgeDays: 30,
+			maxQueueCount: 30,
+			beforeSend: async () => {
+				const ol = await net.isOnline();
+				log.log("isOnline", ol);
+				return ol ? "send" : "queue";
+			}
 		}
-	}
-});
-
+	});
+}
 const serveURL = serve({ directory: "." });
 const port = process.env.PORT || 3000;
 const allowDebug = !app.isPackaged || process.env.DEBUG_BUILD === "1";
@@ -49,7 +50,6 @@ function createWindow() {
 		minHeight: 450,
 		minWidth: 500,
 		webPreferences: {
-			// enableRemoteModule: true,
 			contextIsolation: false,
 			nodeIntegration: true,
 			spellcheck: false,
@@ -115,7 +115,7 @@ contextMenu({
 });
 
 function loadVite(port) {
-	mainWindow?.loadURL(`http://localhost:${port}`).catch((e) => {
+	mainWindow?.loadURL(`http://localhost:${port}?is-vite=true`).catch((e) => {
 		console.log("Error loading URL, retrying", e);
 		setTimeout(() => {
 			loadVite(port);
