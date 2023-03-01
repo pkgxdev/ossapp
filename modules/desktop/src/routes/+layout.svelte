@@ -4,7 +4,9 @@
 	import { afterNavigate } from '$app/navigation';
 	import TopBar from '$components/top-bar/top-bar.svelte';
 	import FooterLinks from '$components/footer-links/footer-links.svelte';
-	import { navStore } from '$libs/stores';
+	import { navStore, notificationStore } from '$libs/stores';
+
+	import Notification from "@tea/ui/notification/notification.svelte";
 
 	import SearchPopupResults from '$components/search-popup-results/search-popup-results.svelte';
 
@@ -23,6 +25,9 @@
 
 <div id="main-layout" class="w-full">
 	<TopBar />
+	{#each $notificationStore as notification}
+		<Notification {notification} />
+	{/each}
 	<section class="relative pt-24" bind:this={view}>
 		<figure />
 		<div class="content">

@@ -8,6 +8,7 @@ import { getFeaturedPackages, getPackageReviews, getAllPosts } from "@native";
 import initAuthStore from "./stores/auth";
 import initNavStore from "./stores/nav";
 import initPackagesStore from "./stores/pkgs";
+import initNotificationStore from "./stores/notifications";
 
 export const featuredPackages = writable<Package[]>([]);
 
@@ -142,3 +143,5 @@ export const searchStore = initSearchStore();
 export const authStore = initAuthStore();
 
 export const navStore = initNavStore();
+
+export const notificationStore = initNotificationStore();
