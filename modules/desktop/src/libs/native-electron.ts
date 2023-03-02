@@ -11,6 +11,7 @@
  *  - connect to a local platform api and returns a data
  */
 
+import semverCompare from "semver/functions/compare";
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
 import type { GUIPackage, Course, Category, DeviceAuth, Session } from "./types";
 
@@ -23,17 +24,22 @@ import { get as apiGet } from "$libs/v1-client";
 const { ipcRenderer, shell } = window.require("electron");
 
 export async function getPackages(): Promise<GUIPackage[]> {
-	const [packages, installedPackages] = await Promise.all([
+	let [packages, installedPackages] = await Promise.all([
 		apiGet<Package[]>("packages", { nocache: "true" }),
 		ipcRenderer.invoke("get-installed-packages") as { version: string; full_name: string }[]
 	]);
 
+	// sorts all packages from highest -> lowest
+	installedPackages.sort((a, b) => semverCompare(b.version, a.version));
+
 	return (packages || []).map((pkg) => {
-		const found = installedPackages.find((p) => p.full_name === pkg.full_name);
+		const installedVersions = installedPackages
+			.filter((p) => p.full_name === pkg.full_name)
+			.map((p) => p.version);
 		return {
 			...pkg,
-			state: found ? PackageStates.INSTALLED : PackageStates.AVAILABLE,
-			installed_version: found ? found.version : ""
+			state: installedVersions.length ? PackageStates.INSTALLED : PackageStates.AVAILABLE,
+			installed_versions: installedVersions
 		};
 	});
 }
