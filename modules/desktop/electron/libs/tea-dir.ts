@@ -31,7 +31,6 @@ export async function getInstalledPackages() {
 
 	const pkgs = folders
 		.map((p: string) => p.split(".tea/")[1])
-		.filter((p: string) => !p.includes("tea.xyz"))
 		.map((p: string) => {
 			const path = p.trim().split("/");
 			const version = path.pop();

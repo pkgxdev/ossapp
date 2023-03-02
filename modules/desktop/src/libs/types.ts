@@ -14,7 +14,7 @@ export enum PackageStates {
 
 export type GUIPackage = Package & {
 	state: PackageStates;
-	installed_version?: string;
+	installed_versions?: string[];
 	synced?: boolean;
 };
 
