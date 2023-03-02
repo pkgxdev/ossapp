@@ -217,7 +217,7 @@ jobs:
     - name: create x86 dmg
       run: |
         tea +github.com/create-dmg/create-dmg
-        tea create-dmg \
+        tea -SE create-dmg \
         --volname "Tea Installer" \
         --window-pos 200 120 \
         --window-size 800 400 \
@@ -235,7 +235,7 @@ jobs:
     - name: create arm64 dmg
       run: |
         tea +github.com/create-dmg/create-dmg
-        tea create-dmg \
+        tea -SE create-dmg \
         --volname "Tea Installer" \
         --window-pos 200 120 \
         --window-size 800 400 \
