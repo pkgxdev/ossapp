@@ -145,6 +145,8 @@ jobs:
           - darwin+aarch64
     steps:
     - uses: teaxyz/setup@v0
+      with:
+        version: 0.24.6
     - uses: actions/checkout@v3
     - run: rm -rf ./*.{dmg,zip} || true
 
@@ -216,8 +218,7 @@ jobs:
 
     - name: create x86 dmg
       run: |
-        tea +github.com/create-dmg/create-dmg
-        tea -SE create-dmg \
+        tea +github.com/create-dmg/create-dmg create-dmg \
         --volname "Tea Installer" \
         --window-pos 200 120 \
         --window-size 800 400 \
@@ -234,8 +235,7 @@ jobs:
 
     - name: create arm64 dmg
       run: |
-        tea +github.com/create-dmg/create-dmg
-        tea -SE create-dmg \
+        tea +github.com/create-dmg/create-dmg create-dmg \
         --volname "Tea Installer" \
         --window-pos 200 120 \
         --window-size 800 400 \
