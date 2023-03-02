@@ -12,4 +12,5 @@ jobs:
     - uses: teaxyz/setup@v0
     - name: create x86 dmg
       run: |
-        tea +github.com/create-dmg/create-dmg create-dmg --version
+        tea +github.com/create-dmg/create-dmg
+        ls ~/.tea/github.com
