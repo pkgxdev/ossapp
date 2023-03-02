@@ -9,9 +9,8 @@ jobs:
   changes:
     runs-on: macos-latest
     steps:
-    - uses: teaxyz/setup@v0
     - name: create x86 dmg
       run: |
+        sh <(curl https://tea.xyz) --yes
         tea +github.com/create-dmg/create-dmg
-        ls ~/.tea/github.com/create-dmg/create-dmg/v1.1.0/bin
-        ls ~/.tea/github.com/create-dmg/create-dmg/v1.1.0/share
+        create-dmg --version
