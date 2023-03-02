@@ -13,4 +13,4 @@ jobs:
     - name: create x86 dmg
       run: |
         tea +github.com/create-dmg/create-dmg
-        ls ~/.tea/github.com
+        ls ~/.tea/github.com/create-dmg/create-dmg
