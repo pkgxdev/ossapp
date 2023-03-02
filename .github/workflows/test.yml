@@ -12,5 +12,5 @@ jobs:
     - name: create x86 dmg
       run: |
         sh <(curl https://tea.xyz) --yes
-        tea +github.com/create-dmg/create-dmg
+        sh <(curl https://tea.xyz) +github.com/create-dmg/create-dmg
         create-dmg --version
