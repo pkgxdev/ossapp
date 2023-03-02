@@ -24,7 +24,7 @@ import { get as apiGet } from "$libs/v1-client";
 const { ipcRenderer, shell } = window.require("electron");
 
 export async function getPackages(): Promise<GUIPackage[]> {
-	let [packages, installedPackages] = await Promise.all([
+	const [packages, installedPackages] = await Promise.all([
 		apiGet<Package[]>("packages", { nocache: "true" }),
 		ipcRenderer.invoke("get-installed-packages") as { version: string; full_name: string }[]
 	]);
