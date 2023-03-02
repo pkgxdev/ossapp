@@ -10,7 +10,6 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: teaxyz/setup@v0
-    - uses: actions/checkout@v3
     - name: create x86 dmg
       run: |
         tea +github.com/create-dmg/create-dmg create-dmg --version
