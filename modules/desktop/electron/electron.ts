@@ -41,7 +41,7 @@ function createWindow() {
 	});
 
 	const mainWindow = new BrowserWindow({
-		backgroundColor: "whitesmoke",
+		backgroundColor: "black",
 		autoHideMenuBar: true,
 		trafficLightPosition: {
 			x: 17,
@@ -77,9 +77,9 @@ function createWindow() {
 	return mainWindow;
 }
 
-function sendStatusToWindow(text) {
+function sendStatusToWindow(text: string, params?: { [key: string]: any }) {
 	log.info(text);
-	mainWindow?.webContents.send("message", text);
+	mainWindow?.webContents.send("message", text, params || {});
 }
 autoUpdater.on("checking-for-update", () => {
 	sendStatusToWindow("Checking for update...");
@@ -100,7 +100,9 @@ autoUpdater.on("download-progress", (progressObj) => {
 	sendStatusToWindow(log_message);
 });
 autoUpdater.on("update-downloaded", (info) => {
-	sendStatusToWindow("Update downloaded");
+	sendStatusToWindow(`A new tea gui(${info.version}) is available. Relaunch the app to update.`, {
+		action: "relaunch"
+	});
 });
 
 contextMenu({
@@ -173,4 +175,8 @@ ipcMain.handle("open-terminal", async (_, data) => {
 	} catch (error) {
 		console.error("elast:", error);
 	}
+});
+
+ipcMain.handle("relaunch", async () => {
+	await autoUpdater.quitAndInstall();
 });

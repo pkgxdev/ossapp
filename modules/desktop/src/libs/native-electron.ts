@@ -127,3 +127,9 @@ export const updateSession = async (session: Partial<Session>) => {
 export const openTerminal = (cmd: string) => ipcRenderer.invoke("open-terminal", { cmd });
 
 export const shellOpenExternal = (link: string) => shell.openExternal(link);
+
+export const listenToChannel = (channel: string, callback: (msg: string, ...args: any) => void) => {
+	ipcRenderer.on(channel, (_, message: string, ...args: any[]) => callback(message, ...args));
+};
+
+export const relaunch = () => ipcRenderer.invoke("relaunch");

@@ -112,3 +112,15 @@ export interface ListActionItem {
 	action_label: string;
 	detail_url?: string;
 }
+
+export enum NotificationType {
+	MESSAGE,
+	ACTION_BANNER
+}
+export interface Notification {
+	id: string;
+	message: string;
+	type: NotificationType;
+	callback_label?: string;
+	callback?: () => void;
+}
