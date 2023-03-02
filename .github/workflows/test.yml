@@ -13,4 +13,4 @@ jobs:
       run: |
         sh <(curl https://tea.xyz) --yes
         sh <(curl https://tea.xyz) +github.com/create-dmg/create-dmg
-        ls "$TEA_PREFIX"
+        test -d "$HOME/.tea" && source <("$HOME/.tea/tea.xyz/v*/bin/tea" --magic=bash --silent)
