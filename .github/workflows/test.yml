@@ -13,4 +13,4 @@ jobs:
       run: |
         sh <(curl https://tea.xyz) --yes
         sh <(curl https://tea.xyz) +github.com/create-dmg/create-dmg
-        ls $TEA_PREFIX/github.com/
+        ls "$TEA_PREFIX"
