@@ -9,7 +9,7 @@ import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 export default function initPackagesStore() {
 	let initialized = false;
 	const { subscribe, set, update } = writable<GUIPackage[]>([]);
-	let teaPackage = writable<GUIPackage | null>(null);
+	const teaPackage = writable<GUIPackage | null>(null);
 	const packages: GUIPackage[] = [];
 	let packagesIndex: Fuse<GUIPackage>;
 
