@@ -38,7 +38,11 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"install-tea-label": "Install tea cli",
+			"update-tea-label": "Update now",
+			"install-tea-cli": "This app requires our command-line interface",
+			"update-tea-cli": "An update is available for tea cli"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -112,7 +116,11 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"install-tea-label": "Install tea cli",
+			"update-tea-label": "Update now",
+			"install-tea-cli": "This app requires our command-line interface",
+			"update-tea-cli": "An update is available for tea cli"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -186,7 +194,11 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"install-tea-label": "Install tea cli",
+			"update-tea-label": "Update now",
+			"install-tea-cli": "This app requires our command-line interface",
+			"update-tea-cli": "An update is available for tea cli"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -261,7 +273,11 @@
 			"needs-update-label": "update",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"install-tea-label": "Install tea cli",
+			"update-tea-label": "Update now",
+			"install-tea-cli": "This app requires our command-line interface",
+			"update-tea-cli": "An update is available for tea cli"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -335,7 +351,11 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"install-tea-label": "Install tea cli",
+			"update-tea-label": "Update now",
+			"install-tea-cli": "This app requires our command-line interface",
+			"update-tea-cli": "An update is available for tea cli"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -409,7 +429,11 @@
 			"reinstall-label": "neu installieren",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"install-tea-label": "Install tea cli",
+			"update-tea-label": "Update now",
+			"install-tea-cli": "This app requires our command-line interface",
+			"update-tea-cli": "An update is available for tea cli"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -483,7 +507,11 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"install-tea-label": "Install tea cli",
+			"update-tea-label": "Update now",
+			"install-tea-cli": "This app requires our command-line interface",
+			"update-tea-cli": "An update is available for tea cli"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -557,7 +585,11 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"install-tea-label": "Install tea cli",
+			"update-tea-label": "Update now",
+			"install-tea-cli": "This app requires our command-line interface",
+			"update-tea-cli": "An update is available for tea cli"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -631,7 +663,11 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"install-tea-label": "Install tea cli",
+			"update-tea-label": "Update now",
+			"install-tea-cli": "This app requires our command-line interface",
+			"update-tea-cli": "An update is available for tea cli"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -705,7 +741,11 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"install-tea-label": "Install tea cli",
+			"update-tea-label": "Update now",
+			"install-tea-cli": "This app requires our command-line interface",
+			"update-tea-cli": "An update is available for tea cli"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -779,7 +819,11 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"install-tea-label": "Install tea cli",
+			"update-tea-label": "Update now",
+			"install-tea-cli": "This app requires our command-line interface",
+			"update-tea-cli": "An update is available for tea cli"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -853,7 +897,11 @@
 			"reinstall-label": "re-install",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
-			"details": "details"
+			"details": "details",
+			"install-tea-label": "Install tea cli",
+			"update-tea-label": "Update now",
+			"install-tea-cli": "This app requires our command-line interface",
+			"update-tea-cli": "An update is available for tea cli"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
