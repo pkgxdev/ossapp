@@ -3,13 +3,15 @@
 	import Button from '@tea/ui/button/button.svelte';
 	import { openTerminal } from '@native';
 	import { packagesStore } from '$libs/stores';
-  	import { PackageStates, type GUIPackage } from '$libs/types';
+  import { PackageStates, type GUIPackage } from '$libs/types';
 
 	type CliUpdateState = 'unknown' | 'not_installed' | 'update_required' | 'up_to_date' | 'updated';
 	
 	$: updateState = 'unknown' as CliUpdateState;
 
+	// TODO: show the user which version they are on and what they would update to?
 
+	// TODO: move to the store and just subscribe to the update mode??
 	const getCliUpdateState = (pkg: GUIPackage | null): CliUpdateState => {
 		if (!pkg) {
 			return 'unknown';

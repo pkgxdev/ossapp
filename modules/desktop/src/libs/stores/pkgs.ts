@@ -9,6 +9,7 @@ import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 export default function initPackagesStore() {
 	let initialized = false;
 	const { subscribe, set, update } = writable<GUIPackage[]>([]);
+	const teaPackage = writable<GUIPackage | null>(null);
 	const packages: GUIPackage[] = [];
 	let packagesIndex: Fuse<GUIPackage>;
 
@@ -67,8 +68,23 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		updatePackageProp(guiPkg.full_name!, updatedPackage);
 	};
 
+	const subscribeToPackage = (slug: string, cb: (pkg: GUIPackage) => void) => {
+		subscribe((pkgs) => {
+			const foundPackage = pkgs.find((p) => p.slug === slug) as GUIPackage;
+			if (foundPackage) {
+				cb(foundPackage);
+				syncPackageData(foundPackage);
+			}
+		});
+	};
+
+	subscribeToPackage("tea_xyz", (teaPkg) => {
+		teaPackage.set(teaPkg);
+	});
+
 	return {
 		packages,
+		teaPackage,
 		subscribe,
 		search: async (term: string, limit = 5): Promise<GUIPackage[]> => {
 			if (!term || !packagesIndex) return [];
@@ -77,14 +93,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			const matchingPackages: GUIPackage[] = res.map((v) => v.item);
 			return matchingPackages;
 		},
-		subscribeToPackage: (slug: string, cb: (pkg: GUIPackage) => void) => {
-			subscribe((pkgs) => {
-				const foundPackage = pkgs.find((p) => p.slug === slug) as GUIPackage;
-				if (foundPackage) {
-					cb(foundPackage);
-					syncPackageData(foundPackage);
-				}
-			});
-		}
+		subscribeToPackage
 	};
 }
