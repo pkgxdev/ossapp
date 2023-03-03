@@ -9,13 +9,15 @@ export enum PackageStates {
 	AVAILABLE,
 	INSTALLED,
 	INSTALLING,
-	UNINSTALLED
+	UNINSTALLED,
+	NEEDS_UPDATE
 }
 
 export type GUIPackage = Package & {
 	state: PackageStates;
 	installed_versions?: string[];
 	synced?: boolean;
+	available_versions?: string[];
 };
 
 export type Course = {

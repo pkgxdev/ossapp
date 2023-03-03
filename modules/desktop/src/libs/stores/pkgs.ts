@@ -1,10 +1,12 @@
 import { writable } from "svelte/store";
 import type { GUIPackage } from "../types";
+import { PackageStates } from "../types";
 import { getPackages } from "@native";
 import Fuse from "fuse.js";
-import { getPackage } from "@native";
+import { getPackage, getPackageBottles } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
+import semverCompare from "semver/functions/compare";
 
 export default function initPackagesStore() {
 	let initialized = false;
@@ -18,6 +20,12 @@ export default function initPackagesStore() {
 			set(pkgs);
 			packagesIndex = new Fuse(pkgs, {
 				keys: ["name", "full_name", "desc", "categories"]
+			});
+
+			pkgs.forEach((pkg) => {
+				if (pkg.state === PackageStates.INSTALLED) {
+					syncPackageBottlesAndState(pkg.full_name);
+				}
 			});
 		});
 	}
@@ -65,6 +73,25 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		}
 
 		updatePackageProp(guiPkg.full_name!, updatedPackage);
+	};
+
+	const syncPackageBottlesAndState = async (pkgName: string) => {
+		const bottles = await getPackageBottles(pkgName);
+		const pkg = packages.find((p) => p.full_name === pkgName);
+
+		const availableVersions = bottles
+			.map(({ version }) => version)
+			.sort((a, b) => semverCompare(b, a));
+
+		const installedVersions = pkg?.installed_versions?.sort((a, b) => semverCompare(b, a)) || [];
+
+		updatePackageProp(pkgName, {
+			available_versions: availableVersions,
+			state:
+				availableVersions[0] === installedVersions[0]
+					? PackageStates.INSTALLED
+					: PackageStates.NEEDS_UPDATE
+		});
 	};
 
 	return {
