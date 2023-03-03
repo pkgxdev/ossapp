@@ -68,7 +68,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		updatePackageProp(guiPkg.full_name!, updatedPackage);
 	};
 
-	const subscribeToPackage =  (slug: string, cb: (pkg: GUIPackage) => void) => {
+	const subscribeToPackage = (slug: string, cb: (pkg: GUIPackage) => void) => {
 		subscribe((pkgs) => {
 			const foundPackage = pkgs.find((p) => p.slug === slug) as GUIPackage;
 			if (foundPackage) {
@@ -76,11 +76,11 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				syncPackageData(foundPackage);
 			}
 		});
-	}
+	};
 
-	subscribeToPackage("tea_xyz", (teaPkg => {
-		teaPackage.set(teaPkg)
-	}));
+	subscribeToPackage("tea_xyz", (teaPkg) => {
+		teaPackage.set(teaPkg);
+	});
 
 	return {
 		packages,
