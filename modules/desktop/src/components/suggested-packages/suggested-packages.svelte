@@ -1,11 +1,10 @@
 <script lang="ts">
 	import '$appcss';
-	import { t } from '$libs/translations'; 
 	import type { GUIPackage } from '$libs/types';
 	import type { Package } from '@tea/ui/types';
 	import { PackageStates } from '$libs/types';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
-	import PackageCard from '@tea/ui/package-card/package-card.svelte';
+	import PackageCard from "$components/packages/package.svelte";
 	import { onMount } from 'svelte';
 	import { installPackage } from '@native';
 	import { packagesStore } from '$libs/stores';
@@ -13,15 +12,6 @@
 	export let pkg: Package;
 
 	let packages: GUIPackage[] = [];
-
-	const getCTALabel = (state: PackageStates): string => {
-		return {
-			[PackageStates.AVAILABLE]: $t("package.install-label").toUpperCase(),
-			[PackageStates.INSTALLED]: $t("package.installed-label").toUpperCase(),
-			[PackageStates.INSTALLING]: $t("package.installing-label").toUpperCase(),
-			[PackageStates.UNINSTALLED]: $t("package.reinstall-label").toUpperCase(),
-		}[state];
-	};
 
 	onMount(async () => {
 		if (!packages.length) {
@@ -40,9 +30,7 @@
 			<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
 				<PackageCard
 					{pkg}
-					link={`/packages/${pkg.slug}`}
-					ctaLabel={getCTALabel(pkg.state)}
-					onClickCTA={async () => {
+					onClick={async () => {
 						try {
 							pkg.state = PackageStates.INSTALLING;
 							await installPackage(pkg.full_name);

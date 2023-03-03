@@ -258,6 +258,7 @@
 			"installed-label": "installed",
 			"installing-label": "installing",
 			"reinstall-label": "re-install",
+			"needs-update-label": "update",
 			"my-installs-title": "my installs",
 			"check-for-updates": "check for updates",
 			"details": "details"
