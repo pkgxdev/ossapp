@@ -19,7 +19,7 @@
 			return 'not_installed';
 		}
 
-		if (!pkg.installed_versions?.some((version) => version === pkg.version )) {
+		if (!pkg.installed_versions?.includes(pkg.version)) {
 			return 'update_required';
 		}
 
@@ -36,7 +36,7 @@
 	const onOpenTerminal = async () => {
 		console.log("installing tea...")
 		try {
-			openTerminal(`sh <(curl tea.xyz)`);
+			openTerminal(`sh <(curl https://tea.xyz)`);
 		} catch (error) {
 			console.log("install failed")
 		}
