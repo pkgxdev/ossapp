@@ -33,7 +33,7 @@
 					onClick={async () => {
 						try {
 							pkg.state = PackageStates.INSTALLING;
-							await installPackage(pkg.full_name);
+							await installPackage(pkg);
 							pkg.state = PackageStates.INSTALLED;
 						} catch (error) {
 							console.error(error);

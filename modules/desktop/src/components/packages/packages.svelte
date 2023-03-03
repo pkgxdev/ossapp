@@ -35,7 +35,7 @@
 					onClick={async () => {
 						try {
 							pkg.state = PackageStates.INSTALLING;
-							await installPackage(pkg.full_name);
+							await installPackage(pkg);
 							trackInstall(pkg.full_name);
 							pkg.state = PackageStates.INSTALLED;
 						} catch (error) {
