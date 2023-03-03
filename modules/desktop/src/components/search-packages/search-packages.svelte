@@ -5,7 +5,7 @@
 	import SortingButtons from './sorting-buttons.svelte';
 	import type { GUIPackage } from '$libs/types';
 	import { PackageStates } from '$libs/types';
-	import PackageCard from '@tea/ui/package-card/package-card.svelte';
+	import Package from "$components/packages/package.svelte";
 	import SearchInput from '@tea/ui/search-input/search-input.svelte';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 
@@ -50,15 +50,6 @@
 		setPackages(packages);
 	};
 
-	const getCTALabel = (state: PackageStates): string => {
-		return {
-			[PackageStates.AVAILABLE]: $t("package.install-label").toUpperCase(),
-			[PackageStates.INSTALLED]: $t("package.installed-label").toUpperCase(),
-			[PackageStates.INSTALLING]: $t("package.installing-label").toUpperCase(),
-			[PackageStates.UNINSTALLED]: $t("package.reinstall-label").toUpperCase(),
-		}[state];
-	};
-
 	packagesStore.subscribe(setPackages);
 </script>
 
@@ -77,11 +68,9 @@
 		{#if packages.length > 0}
 			{#each packages as pkg}
 				<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
-					<PackageCard
+					<Package
 						{pkg}
-						link={`/packages/${pkg.slug}`}
-						ctaLabel={getCTALabel(pkg.state)}
-						onClickCTA={async () => {
+						onClick={async () => {
 							try {
 								pkg.state = PackageStates.INSTALLING;
 								await installPackage(pkg.full_name);
