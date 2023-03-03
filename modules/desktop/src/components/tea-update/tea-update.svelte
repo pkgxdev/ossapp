@@ -3,7 +3,7 @@
 	import Button from '@tea/ui/button/button.svelte';
 	import { openTerminal } from '@native';
 	import { packagesStore } from '$libs/stores';
-  	import { PackageStates, type GUIPackage } from '$libs/types';
+  import { PackageStates, type GUIPackage } from '$libs/types';
 
 	type CliUpdateState = 'unknown' | 'not_installed' | 'update_required' | 'up_to_date' | 'updated';
 	
