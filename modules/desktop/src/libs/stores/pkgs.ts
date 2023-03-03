@@ -11,7 +11,6 @@ import semverCompare from "semver/functions/compare";
 export default function initPackagesStore() {
 	let initialized = false;
 	const { subscribe, set, update } = writable<GUIPackage[]>([]);
-	const teaPackage = writable<GUIPackage | null>(null);
 	const packages: GUIPackage[] = [];
 	let packagesIndex: Fuse<GUIPackage>;
 
@@ -97,7 +96,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 
 	return {
 		packages,
-		teaPackage,
 		subscribe,
 		search: async (term: string, limit = 5): Promise<GUIPackage[]> => {
 			if (!term || !packagesIndex) return [];
