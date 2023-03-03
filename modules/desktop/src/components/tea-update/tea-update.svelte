@@ -26,9 +26,8 @@
 	}
 
 	packagesStore.subscribeToPackage("tea_xyz", (pkg) => {
-		const newUpdateState = getCliUpdateState(pkg);
 		if (updateState !== 'updated' ) {
-			updateState = newUpdateState;
+			updateState = getCliUpdateState(pkg);
 		}
 	});
 
