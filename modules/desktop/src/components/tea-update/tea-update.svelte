@@ -9,9 +9,6 @@
 	
 	$: updateState = 'unknown' as CliUpdateState;
 
-	// TODO: show the user which version they are on and what they would update to?
-
-	// TODO: move to the store and just subscribe to the update mode??
 	const getCliUpdateState = (pkg: GUIPackage | null): CliUpdateState => {
 		if (!pkg) {
 			return 'unknown';
