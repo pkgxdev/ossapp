@@ -112,7 +112,6 @@ jobs:
       - name: build artifacts for publishing and notarization
         run: |
           mkdir -p target
-          cp -r ./modules/desktop/dist/.icon-icns ./target/
           cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
           tar -czvf artifacts.tgz -C ./target/ .
 
@@ -210,8 +209,6 @@ jobs:
         mkdir x86_installer && mkdir arm64_installer
         tar xzf dist/$ZIP_FILE_X86 -C x86_installer/
         tar xzf dist/$ZIP_FILE_ARM64 -C arm64_installer/
-        cp -r ./dist/.icon-icns x86_installer/
-        cp -r ./dist/.icon-icns arm64_installer/
       env:
         ZIP_FILE_X86: ${{ steps.app_files.outputs.zip_x86 }}
         ZIP_FILE_ARM64: ${{ steps.app_files.outputs.zip_arm64 }}
@@ -224,6 +221,7 @@ jobs:
         --window-size 800 400 \
         --icon-size 100 \
         --icon "tea.app" 200 190 \
+        --volicon "./modules/desktop/electron/mac-icon.icns" \
         --hide-extension "tea.app" \
         --app-drop-link 600 185 \
         --sandbox-safe \
@@ -241,6 +239,7 @@ jobs:
         --window-size 800 400 \
         --icon-size 100 \
         --icon "tea.app" 200 190 \
+        --volicon "./modules/desktop/electron/mac-icon.icns" \
         --hide-extension "tea.app" \
         --app-drop-link 600 185 \
         --sandbox-safe \
