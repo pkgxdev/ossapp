@@ -9,9 +9,13 @@
 	
 	$: updateState = 'unknown' as CliUpdateState;
 
+<<<<<<< HEAD
 	// TODO: show the user which version they are on and what they would update to?
 
 	// TODO: move to the store and just subscribe to the update mode??
+=======
+
+>>>>>>> 6dda3304fbc53a32dfe6d899735d8e70a44084fe
 	const getCliUpdateState = (pkg: GUIPackage | null): CliUpdateState => {
 		if (!pkg) {
 			return 'unknown';
@@ -28,9 +32,14 @@
 		return 'up_to_date';
 	}
 
+<<<<<<< HEAD
 	packagesStore.teaPackage.subscribe((pkg) => {
 		const newUpdateState = getCliUpdateState(pkg);
 		console.log("new update mode is", newUpdateState)
+=======
+	packagesStore.subscribeToPackage("tea_xyz", (pkg) => {
+		const newUpdateState = getCliUpdateState(pkg);
+>>>>>>> 6dda3304fbc53a32dfe6d899735d8e70a44084fe
 		if (updateState !== 'updated' ) {
 			updateState = newUpdateState;
 		}
@@ -67,5 +76,12 @@
 		margin-bottom: 16px;
 		border-radius: 4px;
 		padding: 6px;
+<<<<<<< HEAD
 	}
 </style>
+=======
+		z-index: 1;
+		position: relative;
+	}
+</style>
+>>>>>>> 6dda3304fbc53a32dfe6d899735d8e70a44084fe

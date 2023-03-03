@@ -1,6 +1,6 @@
 {
 	"name": "@tea/desktop",
-	"version": "0.0.0",
+	"version": "0.0.3",
 	"private": true,
 	"description": "tea gui app",
 	"author": "tea.xyz",
