@@ -220,8 +220,8 @@ export async function getPackageReviews(full_name: string): Promise<Review[]> {
 	return reviews;
 }
 
-export async function installPackage(full_name: string) {
-	console.log("installing: ", full_name);
+export async function installPackage(pkg: GUIPackage, version?: string) {
+	console.log("installing: ", pkg.full_name);
 	await delay(10000);
 }
 

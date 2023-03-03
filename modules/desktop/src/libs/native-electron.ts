@@ -61,9 +61,11 @@ export async function getPackageReviews(full_name: string): Promise<Review[]> {
 	return reviews;
 }
 
-export async function installPackage(full_name: string) {
+export async function installPackage(pkg: GUIPackage, version?: string) {
 	try {
-		await installPackageCommand(full_name);
+		const latestVersion = pkg?.available_versions?.length ? pkg.available_versions[0] : "";
+		const specificVersion = version || latestVersion;
+		await installPackageCommand(pkg.full_name + (specificVersion ? `@${specificVersion}` : ""));
 	} catch (error) {
 		console.error(error);
 	}
