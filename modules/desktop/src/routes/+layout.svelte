@@ -30,7 +30,7 @@
 	{#each $notificationStore as notification}
 		<Notification {notification} />
 	{/each}
-	<section class="relative pt-24" bind:this={view}>
+	<section class="relative pt-4" bind:this={view}>
 		<div class="content">
 			<TeaUpdate />
 		</div>

@@ -35,15 +35,15 @@
 		placeholder={$t("store-search-placeholder")}
 		{onSearch}
 	/>
-	<ul class="text-gray flex gap-4 pr-4 pt-2 align-middle">
+	<!-- <ul class="text-gray flex gap-4 pr-4 pt-2 align-middle">
 		<button class="icon-filter hover:text-white" />
 		<button class="icon-share hover:text-white" />
 		<button class="icon-star-empty hover:text-white" />
-	</ul>
-	<ProfileNavButton />
+	</ul> -->
 	<SelectLang />
+	<ProfileNavButton />
 </header>
-<menu
+<!-- <menu
 	class="border-gray text-gray flex h-10 gap-4 border border-l-0 border-r-0 border-t-0 pl-4 align-middle leading-10"
 >
 	<a href="/cli" class={currentPath === '/cli' ? 'active' : ''}>{$t('cli.install')}</a>
@@ -53,19 +53,12 @@
 	<a href="https://github.com/teaxyz" target="_blank" rel="noreferrer">
 		<i class="icon-star-empty" /> Github (5.2k)
 	</a>
-</menu>
+</menu> -->
 
 <style>
 	@tailwind base;
 	@tailwind components;
 	@tailwind utilities;
-
-	menu > a:hover {
-		color: white;
-	}
-	menu a.active {
-		color: white;
-	}
 
 	ul button {
 		pointer-events: none;
