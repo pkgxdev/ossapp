@@ -144,8 +144,6 @@ jobs:
           - darwin+aarch64
     steps:
     - uses: teaxyz/setup@v0
-      with:
-        version: 0.24.6
     - uses: actions/checkout@v3
     - run: rm -rf ./*.{dmg,zip} || true
 
