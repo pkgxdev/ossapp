@@ -28,7 +28,9 @@
 <div id="main-layout" class="w-full">
 	<TopBar />
 	{#each $notificationStore as notification}
-		<Notification {notification} />
+		<Notification {notification} onClose={() => {
+			notificationStore.remove(notification.id);
+		}}/>
 	{/each}
 	<section class="relative pt-4" bind:this={view}>
 		<div class="content">
