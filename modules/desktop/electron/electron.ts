@@ -82,22 +82,22 @@ function sendStatusToWindow(text: string, params?: { [key: string]: any }) {
 	mainWindow?.webContents.send("message", text, params || {});
 }
 autoUpdater.on("checking-for-update", () => {
-	sendStatusToWindow("Checking for update...");
+	log.info("checking for tea gui update");
 });
-autoUpdater.on("update-available", (info) => {
-	sendStatusToWindow("Update available.");
+autoUpdater.on("update-available", () => {
+	log.info("update for tea gui available");
 });
-autoUpdater.on("update-not-available", (info) => {
-	sendStatusToWindow("Update not available.");
+autoUpdater.on("update-not-available", () => {
+	log.info("no update for tea gui");
 });
 autoUpdater.on("error", (err) => {
-	sendStatusToWindow("Error in auto-updater. " + err);
+	log.error("auto update:", err);
 });
 autoUpdater.on("download-progress", (progressObj) => {
 	let log_message = "Download speed: " + progressObj.bytesPerSecond;
 	log_message = log_message + " - Downloaded " + progressObj.percent + "%";
 	log_message = log_message + " (" + progressObj.transferred + "/" + progressObj.total + ")";
-	sendStatusToWindow(log_message);
+	log.info("tea gui:", log_message);
 });
 autoUpdater.on("update-downloaded", (info) => {
 	sendStatusToWindow(`A new tea gui(${info.version}) is available. Relaunch the app to update.`, {

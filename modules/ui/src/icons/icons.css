@@ -112,3 +112,27 @@
 .icon-calendar:before {
 	content: "\79";
 }
+.icon-search-icon-1:before {
+	content: "\41";
+}
+.icon-circle-random-20:before {
+	content: "\7a";
+}
+.icon-play-icon:before {
+	content: "\42";
+}
+.icon-email-icon-www:before {
+	content: "\43";
+}
+.icon-hamburger-icon-square:before {
+	content: "\44";
+}
+.icon-exclamation-circle:before {
+	content: "\45";
+}
+.icon-check-circle:before {
+	content: "\46";
+}
+.icon-tea-x-btn:before {
+	content: "\47";
+}
