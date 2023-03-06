@@ -36,7 +36,6 @@
 		<div class="content">
 			<TeaUpdate />
 		</div>
-		<figure />
 		<div class="content">
 			<slot />
 		</div>
@@ -58,15 +57,6 @@
 		box-sizing: border-box;
 	}
 
-	figure {
-		z-index: 0;
-		position: fixed;
-		top: 220px;
-		left: 0px;
-		right: 0px;
-		bottom: 0px;
-		background-image: url('/images/gui-background-grid.svg');
-	}
 	@media screen and (min-width: 1440px) {
 		figure {
 			background-size: cover;
