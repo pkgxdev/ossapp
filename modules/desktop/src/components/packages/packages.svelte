@@ -24,7 +24,6 @@
 
 <header class="border-gray text-primary flex items-center justify-between border bg-black p-4">
 	<span>{title}</span>
-	<a href="/packages" class="font-sono text-sm underline">{$t("package.view-all-cta")}</a>
 </header>
 <ul class="grid grid-cols-3 bg-black">
 	{#if packages.length > 0}
