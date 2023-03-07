@@ -11,35 +11,53 @@
 	import { trackInstall, trackInstallFailed } from '$libs/analytics';
 	import SortingButtons from '$components/search-packages/sorting-buttons.svelte';
 	export let title = 'Packages';
-	export let category = ''; // filter
 
 	let installedOnly = false;
 
 	let sortBy = 'popularity';
 	let sortDirection: 'asc' | 'desc' = 'desc';
+	let limit = 9;
 
 	let packages: GUIPackage[] = [];
 
-	packagesStore.subscribe((ps) => {
-		packages = category ?
-			ps.filter((p) => (p.categories || []).includes(category)) :
-			ps;
-	});
+	const setPackages = (pkgs: GUIPackage[]) => {
+		const sortedPackages = pkgs.sort((a, b) => {
+			if (sortBy === 'popularity') {
+				const aPop = +a.dl_count + a.installs;
+				const bPop = +b.dl_count + b.installs;
+				return sortDirection === 'asc' ? aPop - bPop : bPop - aPop;
+			} else {
+				// most recent
+				const aDate = new Date(a.last_modified);
+				const bDate = new Date(b.last_modified);
+				return sortDirection === 'asc' ? +aDate - +bDate : +bDate - +aDate;
+			}
+		});
+
+		packages = sortedPackages.filter((p) => installedOnly ? [PackageStates.INSTALLED, PackageStates.NEEDS_UPDATE].includes(p.state!) : true);
+	};
+
+	packagesStore.subscribe(setPackages);
 
 	const onSort = (opt: string, dir: 'asc' | 'desc') => {
 		sortBy = opt;
 		sortDirection = dir;
-		// setPackages(packages);
+		setPackages(packages);
 	};
+
+	const toggleInstalledFilter = (installed: boolean) => {
+		installedOnly = installed;
+		setPackages($packagesStore);
+	}
 
 </script>
 
 <header class="flex items-center justify-between my-4">
 	<h1 class="text-primary text-4xl font-bold">{title}</h1>
 	<div class="flex">
-		<section class="border border-gray mr-2 rounded-sm h-10 text-gray font-thin">
-			<button on:click={() => installedOnly = false} class={`px-2 ${installedOnly ? "":"active"}`}>All packages</button>
-			<button on:click={() => installedOnly = true } class={`px-2 ${installedOnly ? "active":""}`}>installed only</button>
+		<section class="border border-gray mr-2 rounded-sm h-10 text-gray font-thin flex">
+			<button on:click={() => toggleInstalledFilter(false)} class={`px-2 ${installedOnly ? "":"active"}`}>All packages</button>
+			<button on:click={() => toggleInstalledFilter(true)} class={`px-2 ${installedOnly ? "active":""}`}>installed only</button>
 		</section>
 		<section class="border-gray h-10 w-48 border rounded-sm">
 			<SortingButtons {onSort} />
@@ -48,24 +66,26 @@
 </header>
 <ul class="grid grid-cols-3 bg-black">
 	{#if packages.length > 0}
-		{#each packages as pkg}
-			<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
-				<Package
-					{pkg}
-					onClick={async () => {
-						try {
-							pkg.state = PackageStates.INSTALLING;
-							await installPackage(pkg);
-							trackInstall(pkg.full_name);
-							pkg.state = PackageStates.INSTALLED;
-						} catch (error) {
-							let message = 'Unknown Error'
-  						if (error instanceof Error) message = error.message
-							trackInstallFailed(pkg.full_name, message || "unknown");
-						}
-					}}
-				/>
-			</div>
+		{#each packages as pkg, index}
+			{#if index < limit}
+				<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
+					<Package
+						{pkg}
+						onClick={async () => {
+							try {
+								pkg.state = PackageStates.INSTALLING;
+								await installPackage(pkg);
+								trackInstall(pkg.full_name);
+								pkg.state = PackageStates.INSTALLED;
+							} catch (error) {
+								let message = 'Unknown Error'
+								if (error instanceof Error) message = error.message
+								trackInstallFailed(pkg.full_name, message || "unknown");
+							}
+						}}
+					/>
+				</div>
+			{/if}
 		{/each}
 	{:else}
 		{#each Array(9) as _}
