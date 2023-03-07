@@ -9,9 +9,8 @@
 </script>
 
 <div>
-	<PageHeader coverUrl="/images/headers/header_bg_1.png">{$t("home.discover-title")}</PageHeader>
 	<section class="mt-8 mb-8">
-		<Packages title={$t("package.foundation-essentials-title")} category="foundation_essentials" />
+		<Packages title={$t("home.discover-title")}/>
 	</section>
 	<PageHeader coverUrl="/images/headers/header_bg_1.png">{$t("home.tutorials-title")}</PageHeader>
 	<section class="mt-8 mb-8">
