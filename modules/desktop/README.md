@@ -33,9 +33,13 @@ pnpm test
 
 ```
 
-## Intuition Building Links
+## i18n
 
-- [Rust module system is weird?](https://www.sheshbabu.com/posts/rust-module-system/)
+Default locale is `english` it is defined in `src/libs/translations/translations.json`. Include all new keys there then this will automatically sync to crowdin once merged to `main`.
+Data from [crowdin](https://crowdin.com) our translation app/community will only be loaded when env var `SYNC_I18N` exists. Currently only configured on top of the GHA CI/CD workflows.
+
+
+## Intuition Building Links
 
 <p align="center">
   <img src="https://github.com/Dax89/electron-sveltekit/blob/master/icon.png" width="256">

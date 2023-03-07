@@ -83,6 +83,7 @@ jobs:
         if: inputs.s3-prefix != 'release'
         run: tea -SE xc dist
         env:
+          SYNC_I18N: 1
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
           DEBUG_BUILD: ${{ inputs.debug }}
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
@@ -97,6 +98,7 @@ jobs:
         if: inputs.s3-prefix == 'release'
         run: tea -SE xc dist
         env:
+          SYNC_I18N: 1
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
           DEBUG_BUILD: ${{ inputs.debug }}
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
