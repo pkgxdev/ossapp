@@ -138,7 +138,7 @@ jobs:
       - name: sync translation
         if: inputs.sync-translation == '1'
         run: |
-          cd modules/desktop && node scripts/update-crowdin-source.cjs
+          cd modules/desktop && tea -SE node scripts/update-crowdin-source.cjs
         env:
           CROWDIN_API_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
 
