@@ -12,6 +12,9 @@ on:
       debug:
         required: true
         type: string
+      sync-translation:
+        required: false
+        type: string
     outputs:
       s3-electron-dist-key:
         description: 'The S3 build key includes the installer files: [zip, dmg, etc, yml] from electron'
@@ -131,6 +134,13 @@ jobs:
           S3_KEY=s3://preview.gui.tea.xyz/$prefix/artifacts.tgz
           aws s3 cp artifacts.tgz $S3_KEY
           echo key=$S3_KEY >> $GITHUB_OUTPUT
+
+      - name: sync translation
+        if: inputs.sync-translation == '1'
+        run: |
+          cd modules/desktop && node scripts/update-crowdin-source.cjs
+        env:
+          CROWDIN_API_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
 
   notarize-mac-installers:
     if: inputs.s3-prefix != 'release'

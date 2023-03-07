@@ -5,7 +5,7 @@ import translations from "./translations.json";
 const config = {
 	initLocale: "en",
 	fallbackLocale: "en",
-	translations,
+	translations
 };
 
 export const { t, l, locales, locale } = new i18n(config);

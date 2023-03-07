@@ -38,10 +38,18 @@ async function main() {
 	const translationsPath = path.join(__dirname, "../src/libs/translations/translations.json");
 
 	defaultEnTranslation.en.lang = translations.en.lang;
-	await fs.writeFileSync(translationsPath, JSON.stringify({
-		...translations,
-		...defaultEnTranslation,
-	}, null, 2), "utf-8");
+	await fs.writeFileSync(
+		translationsPath,
+		JSON.stringify(
+			{
+				...translations,
+				...defaultEnTranslation
+			},
+			null,
+			2
+		),
+		"utf-8"
+	);
 }
 
 main();
