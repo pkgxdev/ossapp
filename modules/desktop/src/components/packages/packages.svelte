@@ -95,6 +95,11 @@
 		{/each}
 	{/if}
 </ul>
+{#if limit < packages.length }
+<footer class="w-full flex border border-gray h-16">
+	<button class="flex-grow h-16" on:click={() => limit += 9 }>show more</button>
+</footer>
+{/if}
 
 <style>
 	button {
