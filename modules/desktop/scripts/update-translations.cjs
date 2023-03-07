@@ -2,6 +2,7 @@ const otaClient = require("@crowdin/ota-client");
 const _ = require("lodash");
 const fs = require("fs");
 const path = require("path");
+const defaultEnTranslation = require("../src/libs/translations/translations.json");
 
 // this read only hash is from crowdin
 const hash = "cf849610ca66250f0954379ct4t";
@@ -10,6 +11,8 @@ const client = new otaClient.default(hash);
 
 async function main() {
 	console.log("getting latest translation!");
+	if (!process.env.SYNC_I18N) return;
+
 	const [languagesList, translationsRaw] = await Promise.all([
 		client.getLanguageObjects(),
 		client.getStrings()
@@ -33,7 +36,20 @@ async function main() {
 	}, {});
 
 	const translationsPath = path.join(__dirname, "../src/libs/translations/translations.json");
-	await fs.writeFileSync(translationsPath, JSON.stringify(translations, null, 2), "utf-8");
+
+	defaultEnTranslation.en.lang = translations.en.lang;
+	await fs.writeFileSync(
+		translationsPath,
+		JSON.stringify(
+			{
+				...translations,
+				...defaultEnTranslation
+			},
+			null,
+			2
+		),
+		"utf-8"
+	);
 }
 
 main();
