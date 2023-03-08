@@ -2,19 +2,21 @@
 	import "../app.css";
 	import type { Package } from "../types";
 	import ImgLoader from "../img-loader/img-loader.svelte";
+	import ProgressCircle from "../progress-circle/progress-circle.svelte";
 
 	export let pkg: Package;
 	export let link: string;
 	export let ctaLabel: string;
+	export let progessLoading: number = 0;
 
 	export let onClickCTA = () => {
 		console.log("do nothing");
 	};
 </script>
 
-<section class="package-card border border-gray p-4">
+<section class="package-card relative h-auto border border-gray p-4">
 	<a href={link}>
-		<figure>
+		<figure class="relative">
 			<ImgLoader
 				class="pkg-image"
 				src={!pkg.thumb_image_url.includes("https://tea.xyz")
@@ -45,6 +47,13 @@
 		</div>
 		<button class="p-2 font-machina" on:click={onClickCTA}>{ctaLabel}</button>
 	</footer>
+	{#if progessLoading > 0 && progessLoading < 100}
+		<div class="absolute top-0 left-0 h-full w-full bg-black bg-opacity-50">
+			<div class="absolute left-0 right-0 top-1/2 m-auto -mt-12 h-24 w-24">
+				<ProgressCircle value={progessLoading} />
+			</div>
+		</div>
+	{/if}
 </section>
 
 <style>
