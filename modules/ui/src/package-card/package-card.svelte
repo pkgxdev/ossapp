@@ -7,7 +7,7 @@
 	export let pkg: Package;
 	export let link: string;
 	export let ctaLabel: string;
-	export let progessLoading: number = 0;
+	export let progessLoading = 0;
 
 	export let onClickCTA = () => {
 		console.log("do nothing");
