@@ -26,7 +26,10 @@
 					<section class="flex-grow p-4 font-sono">
 						<ul class="mb-4 flex">
 							{#each article.tags as tag}
-								<li class="rounded-sm px-2" style={`background-color: ${tagColorDict[tag]}`}>
+								<li
+									class="rounded-sm px-2 text-xs"
+									style={`background-color: ${tagColorDict[tag]}`}
+								>
 									{tag.toLowerCase()}
 								</li>
 							{/each}

@@ -26,10 +26,9 @@
   <div>{$t("home.resources")}</div>
 
   <section class="border border-gray mr-2 rounded-sm h-10 text-gray font-thin flex">
-    <button on:click={() => switchTab("ALL")} class={`px-2 ${tab === "ALL" && "active"}`}>All</button>
-    <button on:click={() => switchTab("ARTICLE")} class={`px-2 ${tab === "ARTICLE" && "active"}`}>Articles</button>
-    <button on:click={() => switchTab("WORKSHOP")} class={`px-2 ${tab === "WORKSHOP" && "active"}`}>Workshops</button>
-
+    <button on:click={() => switchTab("ALL")} class={`px-2 ${tab === "ALL" && "active"}`}>{$t("common.all")}</button>
+    <button on:click={() => switchTab("ARTICLE")} class={`px-2 ${tab === "ARTICLE" && "active"}`}>{$t("common.articles")}</button>
+    <button on:click={() => switchTab("WORKSHOP")} class={`px-2 ${tab === "WORKSHOP" && "active"}`}>{$t("common.workshops")}</button>
   </section>
 </header>
   

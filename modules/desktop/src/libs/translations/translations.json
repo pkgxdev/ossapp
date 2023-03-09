@@ -66,6 +66,11 @@
 			"label": "Filters",
 			"popularity": "Most popular",
 			"most-recent": "Most recent"
+		},
+		"common": {
+			"all": "All",
+			"articles": "Articles",
+			"workshops": "Workshops"
 		}
 	}
 }
