@@ -32,7 +32,7 @@ export default function initPackagesStore() {
 
 	subscribe((v) => packages.push(...v));
 
-	const updatePackageProp = (full_name: string, props: Partial<GUIPackage>) => {
+	const updatePackage = (full_name: string, props: Partial<GUIPackage>) => {
 		update((pkgs) => {
 			const i = pkgs.findIndex((pkg) => pkg.full_name === full_name);
 			if (i >= 0) {
@@ -72,7 +72,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			updatedPackage.license = repoData.license;
 		}
 
-		updatePackageProp(guiPkg.full_name!, updatedPackage);
+		updatePackage(guiPkg.full_name!, updatedPackage);
 	};
 
 	const syncPackageBottlesAndState = async (pkgName: string) => {
@@ -85,7 +85,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 
 		const installedVersions = pkg?.installed_versions?.sort((a, b) => semverCompare(b, a)) || [];
 
-		updatePackageProp(pkgName, {
+		updatePackage(pkgName, {
 			available_versions: availableVersions,
 			state:
 				availableVersions[0] === installedVersions[0]
@@ -112,6 +112,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 					syncPackageData(foundPackage);
 				}
 			});
-		}
+		},
+		updatePackage
 	};
 }

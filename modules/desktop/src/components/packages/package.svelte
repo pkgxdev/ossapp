@@ -53,9 +53,12 @@
 		fakeLoadingProgress = 1;
 		startFakeLoader();
 		await onClick();
-		setTimeout(() => {
-			clearTimeout(fakeTimer);
-			fakeLoadingProgress = 100;
-		}, 1500);
+		await new Promise((resolve) => {
+			setTimeout(() => {
+				clearTimeout(fakeTimer);
+				fakeLoadingProgress = 100;
+				resolve(null);
+			}, 1500);
+		});
 	}}
 />

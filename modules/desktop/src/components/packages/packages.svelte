@@ -12,7 +12,9 @@
 	import SortingButtons from '$components/search-packages/sorting-buttons.svelte';
 	export let title = 'Packages';
 
-	let installedOnly = false;
+	let pkgNeedsUpdateCount = 0;
+
+	export let tab: "ALL" | "INSTALLED" | "INSTALLED_WITH_UPDATES" = "ALL";
 
 	let sortBy = 'popularity';
 	let sortDirection: 'asc' | 'desc' = 'desc';
@@ -21,6 +23,7 @@
 	let packages: GUIPackage[] = [];
 
 	const setPackages = (pkgs: GUIPackage[]) => {
+		pkgNeedsUpdateCount = pkgs.filter((p) => p.state === PackageStates.NEEDS_UPDATE).length;
 		const sortedPackages = pkgs.sort((a, b) => {
 			if (sortBy === 'popularity') {
 				const aPop = +a.dl_count + a.installs;
@@ -34,7 +37,21 @@
 			}
 		});
 
-		packages = sortedPackages.filter((p) => installedOnly ? [PackageStates.INSTALLED, PackageStates.NEEDS_UPDATE].includes(p.state!) : true);
+		const filteredStates = [
+			PackageStates.NEEDS_UPDATE
+		];
+
+		switch (tab) {
+			case "INSTALLED":
+			case "INSTALLED_WITH_UPDATES":
+				if (tab === "INSTALLED") filteredStates.push(PackageStates.INSTALLED);
+				packages = sortedPackages.filter((p) => filteredStates.includes(p.state!));
+				break;
+			case "ALL":
+			default:
+				packages = sortedPackages;
+				break;
+		}
 	};
 
 	packagesStore.subscribe(setPackages);
@@ -45,8 +62,8 @@
 		setPackages(packages);
 	};
 
-	const toggleInstalledFilter = (installed: boolean) => {
-		installedOnly = installed;
+	const switchTab = (nextTab: "ALL" | "INSTALLED" | "INSTALLED_WITH_UPDATES") => {
+		tab = nextTab;
 		setPackages($packagesStore);
 	}
 
@@ -56,8 +73,16 @@
 	<h1 class="text-primary text-4xl font-bold">{title}</h1>
 	<div class="flex">
 		<section class="border border-gray mr-2 rounded-sm h-10 text-gray font-thin flex">
-			<button on:click={() => toggleInstalledFilter(false)} class={`px-2 ${installedOnly ? "":"active"}`}>All packages</button>
-			<button on:click={() => toggleInstalledFilter(true)} class={`px-2 ${installedOnly ? "active":""}`}>installed only</button>
+			<button on:click={() => switchTab("ALL")} class={`px-2 ${tab === "ALL" && "active"}`}>All packages</button>
+			<button on:click={() => switchTab("INSTALLED")} class={`px-2 ${tab === "INSTALLED" && "active"}`}>installed only</button>
+			{#if pkgNeedsUpdateCount}
+				<button on:click={() => switchTab("INSTALLED_WITH_UPDATES")} class={`px-2 ${tab === "INSTALLED_WITH_UPDATES" && "active"}`}>
+					<div class="flex justify-center align-middle">
+						<div>updates</div>
+						<div class="bg-red text-white bg-[red] rounded-sm text-xs h-6 leading-6 px-1 ml-2">{pkgNeedsUpdateCount}</div>
+					</div>
+				</button>
+			{/if}
 		</section>
 		<section class="border-gray h-10 w-48 border rounded-sm">
 			<SortingButtons {onSort} />
@@ -77,6 +102,10 @@
 								await installPackage(pkg);
 								trackInstall(pkg.full_name);
 								pkg.state = PackageStates.INSTALLED;
+
+								packagesStore.updatePackage(pkg.full_name, {
+									state: PackageStates.INSTALLED, // this would also mean its the latest version
+								});
 							} catch (error) {
 								let message = 'Unknown Error'
 								if (error instanceof Error) message = error.message
