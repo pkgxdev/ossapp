@@ -12,7 +12,8 @@
 			"discover-title": "DISCOVER",
 			"asset-title": "ASSET TYPE",
 			"tutorials-title": "TUTORIALS",
-			"os-news-title": "OPEN-SOURCE NEWS"
+			"os-news-title": "OPEN-SOURCE NEWS",
+			"resources": "Resources"
 		},
 		"package": {
 			"top-list-title": "Top packages this week",
