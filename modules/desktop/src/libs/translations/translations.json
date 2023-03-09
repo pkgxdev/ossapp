@@ -12,7 +12,8 @@
 			"discover-title": "DISCOVER",
 			"asset-title": "ASSET TYPE",
 			"tutorials-title": "TUTORIALS",
-			"os-news-title": "OPEN-SOURCE NEWS"
+			"os-news-title": "OPEN-SOURCE NEWS",
+			"resources": "Resources"
 		},
 		"package": {
 			"top-list-title": "Top packages this week",
@@ -65,6 +66,11 @@
 			"label": "Filters",
 			"popularity": "Most popular",
 			"most-recent": "Most recent"
+		},
+		"common": {
+			"all": "All",
+			"articles": "Articles",
+			"workshops": "Workshops"
 		}
 	}
 }

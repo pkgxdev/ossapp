@@ -2,22 +2,17 @@
 <script lang="ts">
 	import '$appcss';
 	import { t } from '$libs/translations'; 
-	import PageHeader from '$components/page-header/page-header.svelte';
-	import EssentialWorkshops from '$components/essential-workshops/essential-workshops.svelte';
 	import Packages from '$components/packages/packages.svelte';
-	import News from '$components/news/news.svelte';
+	import Resources from '$components/resources/resources.svelte';
 </script>
 
 <div>
 	<section class="mt-8 mb-8">
 		<Packages title={$t("home.discover-title")}/>
 	</section>
-	<PageHeader coverUrl="/images/headers/header_bg_1.png">{$t("home.tutorials-title")}</PageHeader>
 	<section class="mt-8 mb-8">
-		<EssentialWorkshops title={$t("post.workshops-title")} ctaLabel={`${$t('post.article-more-cta')} >`} />
+		<Resources/>
 	</section>
-	<PageHeader coverUrl="/images/headers/header_bg_1.png">{$t("home.os-news-title")}</PageHeader>
-	<section class="mt-8">
-		<News />
-	</section>
+
+
 </div>
