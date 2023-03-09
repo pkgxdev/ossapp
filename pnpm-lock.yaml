@@ -42,6 +42,7 @@ importers:
       buffer: ^6.0.3
       concurrently: ^7.6.0
       cross-env: ^7.0.3
+      custom-electron-titlebar: 4.2.0-beta.0
       dayjs: ^1.11.7
       electron: 22.1.0
       electron-builder: ^23.6.0
@@ -93,6 +94,7 @@ importers:
       axios: 1.3.2
       bcryptjs: 2.4.3
       buffer: 6.0.3
+      custom-electron-titlebar: 4.2.0-beta.0_electron@22.1.0
       dayjs: 1.11.7
       electron-context-menu: 3.6.1
       electron-log: 4.4.8
@@ -6005,6 +6007,14 @@ packages:
   /csstype/3.1.1:
     resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
     dev: true
+
+  /custom-electron-titlebar/4.2.0-beta.0_electron@22.1.0:
+    resolution: {integrity: sha512-d2HMG5uwlnTk6Qug37lYUsRFchXgqEyjhR+b9FnyIAN2l+GGnJohLOfmjgzBM3w/9TmuKI4XGvQiiyHujuZskg==}
+    peerDependencies:
+      electron: '>20.0.0'
+    dependencies:
+      electron: 22.1.0
+    dev: false
 
   /data-urls/3.0.2:
     resolution: {integrity: sha512-Jy/tj3ldjZJo63sVAvg6LHt2mHvl4V6AgRAmNDtLdm7faqtsx+aJG42rsyCo9JCoRVKwPFzKlIPx3DIibwSIaQ==}

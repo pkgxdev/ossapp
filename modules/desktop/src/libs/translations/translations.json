@@ -6,7 +6,7 @@
 		"cli": {
 			"install": "install tea"
 		},
-		"store-search-placeholder": "search the tea store",
+		"store-search-placeholder": "type to search",
 		"search": "search",
 		"home": {
 			"discover-title": "DISCOVER",
