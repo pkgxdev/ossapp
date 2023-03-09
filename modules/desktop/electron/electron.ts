@@ -1,5 +1,6 @@
 import windowStateManager from "electron-window-state";
 import { app, BrowserWindow, ipcMain, net } from "electron";
+import { setupTitlebar, attachTitlebarToWindow } from "custom-electron-titlebar/main";
 import * as Sentry from "@sentry/electron";
 import contextMenu from "electron-context-menu";
 import serve from "electron-serve";
@@ -34,6 +35,8 @@ const port = process.env.PORT || 3000;
 const allowDebug = !app.isPackaged || process.env.DEBUG_BUILD === "1";
 let mainWindow: BrowserWindow | null;
 
+setupTitlebar();
+
 function createWindow() {
 	const windowState = windowStateManager({
 		defaultWidth: 800,
@@ -41,11 +44,12 @@ function createWindow() {
 	});
 
 	const mainWindow = new BrowserWindow({
+		titleBarStyle: "hidden",
 		backgroundColor: "black",
 		autoHideMenuBar: true,
 		trafficLightPosition: {
-			x: 17,
-			y: 32
+			x: 14,
+			y: 13
 		},
 		minHeight: 450,
 		minWidth: 500,
@@ -74,6 +78,7 @@ function createWindow() {
 		windowState.saveState(mainWindow);
 	});
 
+	attachTitlebarToWindow(mainWindow);
 	return mainWindow;
 }
 
