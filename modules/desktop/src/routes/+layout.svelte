@@ -39,9 +39,6 @@
 		<div class="content">
 			<slot />
 		</div>
-		<footer class="border-gray mt-8 w-full border border-r-0 bg-black">
-			<FooterLinks />
-		</footer>
 		<SearchPopupResults />
 	</section>
 </div>
@@ -82,9 +79,5 @@
 
 	div {
 		position: relative;
-	}
-
-	footer {
-		height: 100px;
 	}
 </style>
