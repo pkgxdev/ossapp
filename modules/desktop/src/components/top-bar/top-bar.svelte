@@ -4,7 +4,8 @@
 	import { searchStore } from '$libs/stores';
 	import SearchInput from '@tea/ui/search-input/search-input.svelte';
 	import { navStore } from '$libs/stores';
-	import { t } from '$libs/translations'; 
+	import { t } from '$libs/translations';
+	import * as pub from '$env/static/public';
 
 	import ProfileNavButton from './profile-nav-button.svelte';
 
@@ -36,7 +37,7 @@
 		<SearchInput
 			class="w-full border border-gray rounded-sm"
 			size="small"
-			placeholder={$t("store-search-placeholder")}
+			placeholder={`${$t("store-search-placeholder")} rm this v${pub.PUBLIC_VERSION}`}
 			{onSearch}
 		/>
 	</div>
