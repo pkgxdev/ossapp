@@ -12,6 +12,7 @@ export const getSession = async (): Promise<Session | null> => {
 };
 
 export default function initAuthStore() {
+	const user = writable<Developer>();
 	const sessionStore = writable<Session>({});
 	let pollLoop = 0;
 
@@ -24,6 +25,7 @@ export default function initAuthStore() {
 			sessionStore.set(sess);
 			deviceIdStore.set(sess.device_id!);
 			deviceId = sess.device_id!;
+			if (sess.user) user.set(sess.user);
 		}
 	});
 
@@ -35,7 +37,7 @@ export default function initAuthStore() {
 			key: data.key,
 			user: data.user
 		};
-		console.log("localSession:", localSession);
+
 		await electronUpdateSession(localSession);
 		sessionStore.set(localSession);
 	}
@@ -46,12 +48,12 @@ export default function initAuthStore() {
 				pollLoop++;
 				try {
 					const data = await getDeviceAuth(deviceId);
-					console.log("dd", deviceId, data);
 					if (data.status === "SUCCESS") {
 						updateSession({
 							key: data.key,
 							user: data.user
 						});
+						user.set(data.user);
 						timer && clearInterval(timer);
 						timer = null;
 					}
@@ -69,11 +71,10 @@ export default function initAuthStore() {
 	}
 
 	return {
+		user,
+		session: sessionStore,
 		deviceId,
 		deviceIdStore,
-		subscribe: (cb: (u: Developer) => void) => {
-			return sessionStore.subscribe((v) => v?.user && cb(v.user));
-		},
 		pollSession
 	};
 }

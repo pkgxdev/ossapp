@@ -1,37 +1,24 @@
 <script lang="ts">
-	import { authStore } from '$libs/stores';
-	import type { Developer } from '@tea/ui/types';
-	import { baseUrl } from '$libs/v1-client';
-	import { shellOpenExternal } from '@native';
-
-	let user: Developer | null = null;
+	import { authStore, navStore } from '$libs/stores';
+	const { user } = authStore;
 	const deviceId = authStore.deviceIdStore;
+	const { sideNavOpen } = navStore;
 
-	const openGithub = () => {
-		shellOpenExternal(`${baseUrl}/auth/user?device_id=${$deviceId}`)
-		try {
-			authStore.pollSession();
-		} catch (error) {
-			console.error(error);
-		}
-	};
 
-	authStore.subscribe((u) => (user = u));
+
+	const toggleSideNav = () => {
+		console.log("toggle", $sideNavOpen)
+		navStore.sideNavOpen.update((v) => !v);
+	}
+
 </script>
 
-{#if user}
-	<a href="/profile">
-		<section class="flex">
-			<img width="40" height="40" src={user.avatar_url || '/images/bored-ape.png'} alt="profile" />
-			<div class="text-gray p-2">@{user.login}</div>
-		</section>
-	</a>
-{:else}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<section class="flex" on:click={openGithub}>
-		<figure class="p-2">
-			<img width="28" height="28" src="/images/github.png" alt="profile" />
+<button class="flex items-center justify-center py-2" on:click={toggleSideNav}>
+	{#if $user}
+		<figure class="flex rounded-full overflow-clip w-{8} h-{8} mr-1">
+			<img src={$user.avatar_url || '/images/bored-ape.png'} alt="profile" />
 		</figure>
-		<div class="text-gray p-2">Login</div>
-	</section>
-{/if}
+	{:else}
+		<div class="icon-hamburger-icon-square text-xl mt-2 py-4 px-2 text-gray"></div>
+	{/if}
+</button>

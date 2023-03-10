@@ -2,12 +2,14 @@
 	import "../app.css";
 	import type { Package } from "../types";
 	import ImgLoader from "../img-loader/img-loader.svelte";
+	import Button from "../button/button.svelte";
 	import ProgressCircle from "../progress-circle/progress-circle.svelte";
 
 	export let pkg: Package;
 	export let link: string;
 	export let ctaLabel: string;
 	export let progessLoading = 0;
+	export let ctaType: "ghost" | "plain" = "ghost";
 
 	export let onClickCTA = () => {
 		console.log("do nothing");
@@ -35,17 +37,24 @@
 			</article>
 		</figure>
 	</a>
-	<footer class="mt-4 flex items-center justify-between">
+	<footer class="mt-4 flex items-stretch justify-between gap-2">
 		<div>
 			<p>
-				<span class="pk-version text-xs">V&NonBreakingSpace;{pkg.version}</span>
+				<span class="pk-version text-xs">v{pkg.version}</span>
 				<!--
         TODO: uncomment once install counts improve
         <br>
         <span class="package-install-no">>{{- .installs -}}&nbsp;installs</span> -->
 			</p>
 		</div>
-		<button class="p-2 font-machina" on:click={onClickCTA}>{ctaLabel}</button>
+		<Button
+			class="w-1/2 border border-gray p-2 font-machina"
+			onClick={onClickCTA}
+			type={ctaType}
+			color="secondary"
+		>
+			{ctaLabel}
+		</Button>
 	</footer>
 	{#if progessLoading > 0 && progessLoading < 100}
 		<div class="absolute top-0 left-0 h-full w-full bg-black bg-opacity-50">
@@ -105,7 +114,7 @@
 		padding: 0px;
 	}
 
-	button {
+	/* button {
 		background-color: #1a1a1a;
 		border: 0.5px solid #ffffff;
 		color: #fff;
@@ -118,5 +127,5 @@
 	button:hover {
 		background-color: #8000ff;
 		box-shadow: inset 0vw 0vw 0vw 0.223vw #1a1a1a !important;
-	}
+	} */
 </style>

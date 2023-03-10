@@ -39,7 +39,7 @@ setupTitlebar();
 
 function createWindow() {
 	const windowState = windowStateManager({
-		defaultWidth: 800,
+		defaultWidth: 1000,
 		defaultHeight: 600
 	});
 
@@ -51,8 +51,8 @@ function createWindow() {
 			x: 14,
 			y: 13
 		},
-		minHeight: 450,
-		minWidth: 500,
+		minHeight: 600,
+		minWidth: 1000,
 		webPreferences: {
 			contextIsolation: false,
 			nodeIntegration: true,
