@@ -18,7 +18,8 @@
 
 	let sortBy = 'popularity';
 	let sortDirection: 'asc' | 'desc' = 'desc';
-	let limit = 9;
+	const loadMore = 12;
+	let limit = loadMore;
 
 	let packages: GUIPackage[] = [];
 
@@ -126,7 +127,7 @@
 </ul>
 {#if limit < packages.length }
 <footer class="w-full flex border border-gray h-16">
-	<button class="flex-grow h-16" on:click={() => limit += 9 }>show more</button>
+	<button class="flex-grow h-16" on:click={() => limit += loadMore }>show more</button>
 </footer>
 {/if}
 

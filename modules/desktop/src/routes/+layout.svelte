@@ -3,16 +3,18 @@
 	import { navigating } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
 	import TopBar from '$components/top-bar/top-bar.svelte';
-	import FooterLinks from '$components/footer-links/footer-links.svelte';
+	import SideBar from '$components/side-bar/side-bar.svelte';
 	import { navStore, notificationStore } from '$libs/stores';
 
 	import Notification from "@tea/ui/notification/notification.svelte";
 
 	import SearchPopupResults from '$components/search-popup-results/search-popup-results.svelte';
 
-  	import TeaUpdate from '$components/tea-update/tea-update.svelte';
+  import TeaUpdate from '$components/tea-update/tea-update.svelte';
 
 	let view: HTMLElement;
+
+	const { sideNavOpen, setNewPath } = navStore;
 
 	$: if ($navigating) view.scrollTop = 0;
 
@@ -20,12 +22,13 @@
 		if (to && to?.route.id && from && from?.url) {
 			const nextPath = to.url.href.replace(to.url.origin, '');
 			const fromPath = from?.url.href.replace(from.url.origin, '');
-			navStore.setNewPath(nextPath, fromPath || '/');
+			setNewPath(nextPath, fromPath || '/');
 		}
 	});
+
 </script>
 
-<div id="main-layout" class="w-full">
+<div id="main-layout" class={`${$sideNavOpen ? "w-3/4" : "w-full"} transition-all`}>
 	<TopBar />
 	{#each $notificationStore as notification}
 		<Notification {notification} onClose={() => {
@@ -42,6 +45,10 @@
 		<SearchPopupResults />
 	</section>
 </div>
+<aside class={`absolute h-full w-1/4 bg-gray bg-opacity-10 top-0 transition-all  ${$sideNavOpen ? "right-0":"-right-1/4"}`}>
+	<SideBar/>
+</aside>
+
 
 <style>
 	#main-layout {
@@ -49,7 +56,7 @@
 		overflow: hidden;
 	}
 	section {
-		height: calc(100vh - 82px);
+		height: calc(100vh - 42px);
 		overflow-y: scroll;
 		box-sizing: border-box;
 	}
@@ -64,10 +71,6 @@
 		}
 	}
 	@media screen and (max-width: 1440px) {
-		figure {
-			background-size: contain;
-			background-repeat: repeat;
-		}
 		.content {
 			padding: 0vw 3.33vw;
 		}

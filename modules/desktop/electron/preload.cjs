@@ -1,5 +1,3 @@
-import { Titlebar } from "custom-electron-titlebar";
-
 const isVite = () => {
 	try {
 		return window.location.href.includes("is-vite");
@@ -19,10 +17,3 @@ if (!isVite()) {
 		SvelteSentry.init
 	);
 }
-
-window.addEventListener("DOMContentLoaded", () => {
-	// Title bar implemenation
-	new Titlebar({
-		titleHorizontalAlignment: "left"
-	});
-});

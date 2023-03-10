@@ -2,6 +2,7 @@ import { writable } from "svelte/store";
 import { goto } from "$app/navigation";
 
 export default function initNavStore() {
+	const sideNavOpen = writable<boolean>(false);
 	const historyStore = writable<string[]>(["/"]);
 	let history = ["/"];
 
@@ -17,6 +18,7 @@ export default function initNavStore() {
 
 	return {
 		historyStore,
+		sideNavOpen,
 		prevPath: prevPathStore,
 		nextPath: nextPathStore,
 		next: () => {
