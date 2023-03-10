@@ -10,15 +10,14 @@
 	import PackageMetas from '@tea/ui/package-metas/package-metas.svelte';
 	import Markdown from '@tea/ui/markdown/markdown.svelte';
 	import PackageSnippets from '@tea/ui/package-snippets/package-snippets.svelte';
+	import type { GUIPackage } from '$libs/types';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
 
 	import { packagesStore } from '$libs/stores';
 
-	import type { Package } from '@tea/ui/types';
-
-	let pkg: Package;
+	let pkg: GUIPackage;
 
 	let reviews: Review[];
 	let bottles: Bottle[] = [];
@@ -62,7 +61,6 @@
 </script>
 
 <div>
-	<PageHeader coverUrl={pkg.thumb_image_url}>{pkg.full_name}</PageHeader>
 	<section>
 		<PackageBanner {pkg} />
 	</section>
