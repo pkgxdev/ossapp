@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 import { nanoid } from "nanoid";
 
+import { l } from "$libs/translations";
 import { NotificationType } from "@tea/ui/types";
 import type { Notification } from "@tea/ui/types";
 
@@ -14,12 +15,14 @@ export default function initNotificationStore() {
 		update((notifications) => notifications.filter((n) => n.id != id));
 	};
 
-	listenToChannel("message", (message: string, params: any) => {
+	listenToChannel("message", (message: string, params: { [key: string]: string }) => {
 		update((value) => {
 			const newNotification: Notification = {
 				id: nanoid(4),
 				message,
-				type: NotificationType.ACTION_BANNER
+				i18n_key: params["i18n_key"] || "",
+				type: NotificationType.ACTION_BANNER,
+				params
 			};
 			if (params.action) {
 				newNotification.callback_label = params.action;

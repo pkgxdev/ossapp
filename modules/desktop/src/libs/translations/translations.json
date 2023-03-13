@@ -71,6 +71,10 @@
 			"all": "All",
 			"articles": "Articles",
 			"workshops": "Workshops"
+		},
+		"notification": {
+			"gui-downloading": "A new tea gui({{version}}) is being downloaded. Please don't close the app.",
+			"gui-downloaded": "A new tea gui({{version}}) is now available. Relaunch the app to update."
 		}
 	}
 }

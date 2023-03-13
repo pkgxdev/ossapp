@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$appcss';
+	import { t } from "$libs/translations";
 	import { navigating } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
 	import TopBar from '$components/top-bar/top-bar.svelte';
@@ -31,9 +32,16 @@
 <div id="main-layout" class={`${$sideNavOpen ? "w-3/4" : "w-full"} transition-all`}>
 	<TopBar />
 	{#each $notificationStore as notification}
-		<Notification {notification} onClose={() => {
-			notificationStore.remove(notification.id);
-		}}/>
+		<Notification
+			notification={{
+				...notification,
+				// TODO this looks nasty but cleanup later.
+				message: notification.i18n_key ? $t(notification.i18n_key, notification.params) : notification.message
+			}}
+				onClose={() => {
+				notificationStore.remove(notification.id);
+			}}
+		/>
 	{/each}
 	<section class="relative pt-4" bind:this={view}>
 		<div class="content">
