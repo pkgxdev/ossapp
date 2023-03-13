@@ -382,3 +382,5 @@ export const listenToChannel = (channel: string, callback: (msg: string, ...args
 export const relaunch = () => {
 	console.log("relaunch");
 };
+
+export const getProtocolPath = async (): Promise<string> => "";

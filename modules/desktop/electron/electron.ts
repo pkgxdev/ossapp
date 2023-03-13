@@ -1,5 +1,5 @@
 import windowStateManager from "electron-window-state";
-import { app, BrowserWindow, ipcMain, net } from "electron";
+import { app, BrowserWindow, ipcMain, net, dialog } from "electron";
 import { setupTitlebar, attachTitlebarToWindow } from "custom-electron-titlebar/main";
 import * as Sentry from "@sentry/electron";
 import contextMenu from "electron-context-menu";
@@ -12,7 +12,14 @@ import { installPackage, openTerminal } from "./libs/cli";
 import { autoUpdater } from "electron-updater";
 import * as log from "electron-log";
 import path from "path";
-import i18n from "sveltekit-i18n";
+
+/*
+ TODO:
+ - fix global mutable variable
+ - organize the ipc handlers into its own module
+ - create auto updater initialization module
+ */
+let teaProtocolPath = ""; // this should be empty string
 
 autoUpdater.logger = log;
 log.info("App starting...");
@@ -87,6 +94,7 @@ function sendStatusToWindow(text: string, params?: { [key: string]: any }) {
 	log.info(text);
 	mainWindow?.webContents.send("message", text, params || {});
 }
+
 autoUpdater.on("checking-for-update", () => {
 	log.info("checking for tea gui update");
 });
@@ -144,11 +152,30 @@ function createMainWindow() {
 		mainWindow = null;
 	});
 
-	if (!app.isPackaged) loadVite(port);
-	else serveURL(mainWindow);
+	if (mainWindow.isMinimized()) {
+		mainWindow.restore();
+	}
+
+	if (!app.isPackaged) {
+		// dev
+		loadVite(port);
+	} else {
+		serveURL(mainWindow);
+	}
+
+	global.protocol_path = "hello-world";
+}
+
+if (process.defaultApp) {
+	if (process.argv.length >= 2) {
+		app.setAsDefaultProtocolClient("tea", process.execPath, [path.resolve(process.argv[1])]);
+	}
+} else {
+	app.setAsDefaultProtocolClient("tea");
 }
 
 app.once("ready", createMainWindow);
+
 app.on("activate", () => {
 	if (!mainWindow) {
 		createMainWindow();
@@ -157,6 +184,14 @@ app.on("activate", () => {
 app.on("window-all-closed", async () => {
 	await autoUpdater.quitAndInstall();
 	app.quit();
+});
+
+// NOTE: this doesnt work in linux
+// 	you have to loop through process.argv to figure out which url launched the app
+app.on("open-url", (event, url) => {
+	// ie url:  tea://packages/slug
+	event.preventDefault();
+	teaProtocolPath = url.replace("tea:/", "");
 });
 
 ipcMain.handle("get-installed-packages", async () => {
@@ -191,4 +226,10 @@ ipcMain.handle("open-terminal", async (_, data) => {
 
 ipcMain.handle("relaunch", async () => {
 	await autoUpdater.quitAndInstall();
+});
+
+ipcMain.handle("get-protocol-path", async () => {
+	const path = teaProtocolPath;
+	teaProtocolPath = "";
+	return path;
 });

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$appcss';
+	import { goto } from '$app/navigation';
 	import { t } from "$libs/translations";
 	import { navigating } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
@@ -12,6 +13,9 @@
 	import SearchPopupResults from '$components/search-popup-results/search-popup-results.svelte';
 
   import TeaUpdate from '$components/tea-update/tea-update.svelte';
+	import { getProtocolPath } from '@native';
+
+  import { onMount } from 'svelte';
 
 	let view: HTMLElement;
 
@@ -27,6 +31,11 @@
 		}
 	});
 
+	onMount(async () => {
+		// used by the tea:// protocol to suggest a path to open
+		const path = await getProtocolPath();
+		if (path) goto(path);
+	});
 </script>
 
 <div id="main-layout" class={`${$sideNavOpen ? "w-3/4" : "w-full"} transition-all`}>

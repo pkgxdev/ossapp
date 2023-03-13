@@ -11,6 +11,7 @@
 	import Markdown from '@tea/ui/markdown/markdown.svelte';
 	import PackageSnippets from '@tea/ui/package-snippets/package-snippets.svelte';
 	import type { GUIPackage } from '$libs/types';
+	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -60,34 +61,38 @@
 
 </script>
 
-<div>
-	<section>
-		<PackageBanner {pkg} />
-	</section>
-
-	<section class="mt-8 flex gap-8">
-		<div class="w-2/3">
-			<Tabs class="bg-black" {tabs} />
-		</div>
-		<div class="w-1/3">
-			{#if pkg}
-				<PackageMetas {pkg} />
-			{/if}
-		</div>
-	</section>
-	<PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png">SNIPPETS</PageHeader>
-	<section class="mt-8">
-		<PackageSnippets />
-	</section>
-	<!-- <section class="mt-8">
-		<PackageReviews reviews={reviews || []} />
-	</section> -->
-	{#if pkg}
-		<PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png"
-			>YOU MAY ALSO LIKE...</PageHeader
-		>
-		<section class="mt-8">
-			<SuggestedPackages {pkg} />
+{#if pkg}
+	<div>
+		<section>
+			<PackageBanner {pkg} />
 		</section>
-	{/if}
-</div>
+
+		<section class="mt-8 flex gap-8">
+			<div class="w-2/3">
+				<Tabs class="bg-black" {tabs} />
+			</div>
+			<div class="w-1/3">
+				{#if pkg}
+					<PackageMetas {pkg} />
+				{/if}
+			</div>
+		</section>
+		<PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png">SNIPPETS</PageHeader>
+		<section class="mt-8">
+			<PackageSnippets />
+		</section>
+		<!-- <section class="mt-8">
+			<PackageReviews reviews={reviews || []} />
+		</section> -->
+		{#if pkg}
+			<PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png"
+				>YOU MAY ALSO LIKE...</PageHeader
+			>
+			<section class="mt-8">
+				<SuggestedPackages {pkg} />
+			</section>
+		{/if}
+	</div>
+{:else}
+	<Preloader/>
+{/if}
