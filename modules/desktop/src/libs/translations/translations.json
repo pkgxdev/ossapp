@@ -73,8 +73,8 @@
 			"workshops": "Workshops"
 		},
 		"notification": {
-			"gui-downloaded": "A new tea gui is being downloaded. Please don't close the app.",
-			"gui-downloading": "A new tea gui(${info.version}) is now available. Relaunch the app to update."
+			"gui-downloading": "A new tea gui({{version}}) is being downloaded. Please don't close the app.",
+			"gui-downloaded": "A new tea gui({{version}}) is now available. Relaunch the app to update."
 		}
 	}
 }

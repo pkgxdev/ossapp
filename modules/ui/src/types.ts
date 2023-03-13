@@ -124,4 +124,5 @@ export interface Notification {
 	type: NotificationType;
 	callback_label?: string;
 	callback?: () => void;
+	params?: { [key: string]: string };
 }

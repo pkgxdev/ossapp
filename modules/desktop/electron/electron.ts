@@ -12,6 +12,7 @@ import { installPackage, openTerminal } from "./libs/cli";
 import { autoUpdater } from "electron-updater";
 import * as log from "electron-log";
 import path from "path";
+import i18n from "sveltekit-i18n";
 
 autoUpdater.logger = log;
 log.info("App starting...");
@@ -93,7 +94,7 @@ autoUpdater.on("update-available", (info) => {
 	sendStatusToWindow(
 		`A new tea gui(${info.version}) is being downloaded. Please don't close the app.`,
 		{
-			i18nKey: "notification.gui-downloading"
+			i18n_key: "notification.gui-downloading"
 		}
 	);
 });
@@ -111,7 +112,7 @@ autoUpdater.on("download-progress", (progressObj) => {
 });
 autoUpdater.on("update-downloaded", (info) => {
 	sendStatusToWindow(`A new tea gui(${info.version}) is available. Relaunch the app to update.`, {
-		i18nKey: "notification.gui-downloaded",
+		i18n_key: "notification.gui-downloaded",
 		action: "relaunch"
 	});
 });

@@ -9,19 +9,30 @@ import { listenToChannel, relaunch } from "@native";
 
 export default function initNotificationStore() {
 	const notifications: Notification[] = [];
-	const { update, subscribe } = writable<Notification[]>([]);
+	const { update, subscribe } = writable<Notification[]>([
+		{
+			id: "xxx",
+			message: "hello world",
+			i18n_key: "notification.gui-downloading",
+			type: NotificationType.ACTION_BANNER,
+			params: {
+				version: "0.0.8"
+			}
+		}
+	]);
 
 	const remove = (id: string) => {
 		update((notifications) => notifications.filter((n) => n.id != id));
 	};
 
-	listenToChannel("message", (message: string, params: any) => {
+	listenToChannel("message", (message: string, params: { [key: string]: string }) => {
 		update((value) => {
 			const newNotification: Notification = {
 				id: nanoid(4),
 				message,
-				i18n_key: params["i18nKey"] || "",
-				type: NotificationType.ACTION_BANNER
+				i18n_key: params["i18n_key"] || "",
+				type: NotificationType.ACTION_BANNER,
+				params
 			};
 			if (params.action) {
 				newNotification.callback_label = params.action;
