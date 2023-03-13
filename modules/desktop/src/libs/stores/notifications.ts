@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 import { nanoid } from "nanoid";
 
+import { l } from "$libs/translations";
 import { NotificationType } from "@tea/ui/types";
 import type { Notification } from "@tea/ui/types";
 
@@ -19,6 +20,7 @@ export default function initNotificationStore() {
 			const newNotification: Notification = {
 				id: nanoid(4),
 				message,
+				i18n_key: params["i18nKey"] || "",
 				type: NotificationType.ACTION_BANNER
 			};
 			if (params.action) {

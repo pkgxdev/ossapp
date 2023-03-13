@@ -89,8 +89,13 @@ function sendStatusToWindow(text: string, params?: { [key: string]: any }) {
 autoUpdater.on("checking-for-update", () => {
 	log.info("checking for tea gui update");
 });
-autoUpdater.on("update-available", () => {
-	log.info("update for tea gui available");
+autoUpdater.on("update-available", (info) => {
+	sendStatusToWindow(
+		`A new tea gui(${info.version}) is being downloaded. Please don't close the app.`,
+		{
+			i18nKey: "notification.gui-downloading"
+		}
+	);
 });
 autoUpdater.on("update-not-available", () => {
 	log.info("no update for tea gui");
@@ -106,6 +111,7 @@ autoUpdater.on("download-progress", (progressObj) => {
 });
 autoUpdater.on("update-downloaded", (info) => {
 	sendStatusToWindow(`A new tea gui(${info.version}) is available. Relaunch the app to update.`, {
+		i18nKey: "notification.gui-downloaded",
 		action: "relaunch"
 	});
 });
