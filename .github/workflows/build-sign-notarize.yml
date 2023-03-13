@@ -29,7 +29,7 @@ jobs:
       os: ${{ steps.platform.outputs.os }}
       cache-set: ${{ steps.platform.outputs.cache-set }}
     steps:
-      - uses: teaxyz/pantry.core/.github/actions/get-platform@main
+      - uses: teaxyz/brewkit/actions/get-platform@main
         id: platform
         with:
           platform: ${{ inputs.platform }}
