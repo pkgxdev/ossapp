@@ -38,6 +38,19 @@ export default function initNotificationStore() {
 	return {
 		notifications,
 		subscribe,
-		remove
+		remove,
+		add: (partialNotification: Partial<Notification>) => {
+			if (!partialNotification.message) throw new Error("message is required");
+
+			const notification: Notification = {
+				id: nanoid(4),
+				i18n_key: partialNotification.i18n_key || "",
+				type: NotificationType.MESSAGE,
+				message: partialNotification.message || "",
+				...partialNotification
+			};
+
+			update((values) => [notification, ...values]);
+		}
 	};
 }

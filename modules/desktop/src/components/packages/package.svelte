@@ -6,7 +6,7 @@
 	import type { GUIPackage } from '$libs/types';
   import { PackageStates } from '$libs/types';
   import { getPackage } from '@native';
-  import { inc } from 'semver';
+  import { notificationStore } from '$libs/stores';
 
 
 	export let pkg: GUIPackage;
@@ -56,6 +56,9 @@
 		await onClick();
 		await new Promise((resolve) => {
 			setTimeout(() => {
+				notificationStore.add({
+					message: `Package ${pkg.full_name} v${pkg.version} has been installed.`,
+				});
 				clearTimeout(fakeTimer);
 				fakeLoadingProgress = 100;
 				resolve(null);
