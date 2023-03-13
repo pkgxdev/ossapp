@@ -144,3 +144,8 @@ export const listenToChannel = (channel: string, callback: (msg: string, ...args
 };
 
 export const relaunch = () => ipcRenderer.invoke("relaunch");
+
+export const getProtocolPath = async (): Promise<string> => {
+	const path = await ipcRenderer.invoke("get-protocol-path");
+	return path;
+};
