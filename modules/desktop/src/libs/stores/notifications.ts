@@ -9,17 +9,7 @@ import { listenToChannel, relaunch } from "@native";
 
 export default function initNotificationStore() {
 	const notifications: Notification[] = [];
-	const { update, subscribe } = writable<Notification[]>([
-		{
-			id: "xxx",
-			message: "hello world",
-			i18n_key: "notification.gui-downloading",
-			type: NotificationType.ACTION_BANNER,
-			params: {
-				version: "0.0.8"
-			}
-		}
-	]);
+	const { update, subscribe } = writable<Notification[]>([]);
 
 	const remove = (id: string) => {
 		update((notifications) => notifications.filter((n) => n.id != id));
