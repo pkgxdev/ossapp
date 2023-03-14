@@ -211,11 +211,11 @@ app.on("open-url", (event, url) => {
 	}
 
 	teaProtocolPath = rawPath;
-	log.info("open", teaProtocolPath);
-	log.info("has window", !!mainWindow, mainWindow?.isMinimized());
+
 	if (mainWindow && mainWindow.isMinimized()) {
 		mainWindow.restore();
 		log.info("restored");
+		mainWindow?.webContents.send("sync-path");
 	} else if (macWindowClosed) {
 		log.info("open new window");
 		createMainWindow();
