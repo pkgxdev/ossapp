@@ -88,8 +88,8 @@ pnpm dev
 
 ```sh
 pnpm install
-pnpm --filter desktop exec pnpm predist
-pnpm --filter desktop exec pnpm dist
+pnpm --filter tea exec pnpm predist
+pnpm --filter tea exec pnpm dist
 ```
 
 # Dependencies

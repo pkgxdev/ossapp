@@ -7,6 +7,7 @@
 	import TopBar from '$components/top-bar/top-bar.svelte';
 	import SideBar from '$components/side-bar/side-bar.svelte';
 	import { navStore, notificationStore } from '$libs/stores';
+	import { listenToChannel } from "@native";
 
 	import Notification from "@tea/ui/notification/notification.svelte";
 
@@ -31,10 +32,16 @@
 		}
 	});
 
-	onMount(async () => {
+	const syncPath = async () => {
 		// used by the tea:// protocol to suggest a path to open
 		const path = await getProtocolPath();
 		if (path) goto(path);
+	}
+
+	onMount(async () => {
+		// used by the tea:// protocol to suggest a path to open
+		syncPath();
+		listenToChannel("sync-path", syncPath);
 	});
 </script>
 

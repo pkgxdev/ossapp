@@ -1,5 +1,5 @@
 {
-	"name": "@tea/desktop",
+	"name": "tea",
 	"version": "0.0.8",
 	"private": true,
 	"description": "tea gui app",

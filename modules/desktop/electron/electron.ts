@@ -43,6 +43,9 @@ const port = process.env.PORT || 3000;
 const allowDebug = !app.isPackaged || process.env.DEBUG_BUILD === "1";
 let mainWindow: BrowserWindow | null;
 
+// todo: this is awful, there should be a way to check where all windows are closed in mac
+let macWindowClosed = false;
+
 setupTitlebar();
 
 function createWindow() {
@@ -147,14 +150,16 @@ function loadVite(port) {
 
 function createMainWindow() {
 	autoUpdater.checkForUpdatesAndNotify();
-	mainWindow = createWindow();
+	if (mainWindow) {
+		if (mainWindow.isMinimized()) mainWindow.restore();
+		mainWindow.focus();
+	} else {
+		mainWindow = createWindow();
+	}
+
 	mainWindow.once("close", () => {
 		mainWindow = null;
 	});
-
-	if (mainWindow.isMinimized()) {
-		mainWindow.restore();
-	}
 
 	if (!app.isPackaged) {
 		// dev
@@ -162,14 +167,10 @@ function createMainWindow() {
 	} else {
 		serveURL(mainWindow);
 	}
-
-	global.protocol_path = "hello-world";
 }
 
 if (process.defaultApp) {
-	if (process.argv.length >= 2) {
-		app.setAsDefaultProtocolClient("tea", process.execPath, [path.resolve(process.argv[1])]);
-	}
+	app.setAsDefaultProtocolClient("tea", process.execPath, [path.resolve(process.argv[1])]);
 } else {
 	app.setAsDefaultProtocolClient("tea");
 }
@@ -182,8 +183,11 @@ app.on("activate", () => {
 	}
 });
 app.on("window-all-closed", async () => {
-	await autoUpdater.quitAndInstall();
-	app.quit();
+	// mac ux is just minimize them when closed unless forced quite CMD+Q
+	macWindowClosed = true;
+	if (process.platform !== "darwin") {
+		app.quit();
+	}
 });
 
 // NOTE: this doesnt work in linux
@@ -191,7 +195,31 @@ app.on("window-all-closed", async () => {
 app.on("open-url", (event, url) => {
 	// ie url:  tea://packages/slug
 	event.preventDefault();
-	teaProtocolPath = url.replace("tea:/", "");
+
+	const packagesPrefix = "/packages/";
+
+	let rawPath = url.replace("tea:/", "");
+
+	const isPackage = url.includes(packagesPrefix);
+	if (isPackage) {
+		// /packages/github.com/pypa/twine -> /packages/github_com_pypa_twine
+		const packageSlug = rawPath
+			.replace(packagesPrefix, "")
+			.replace(/[^\w\s]/gi, "_")
+			.toLocaleLowerCase();
+		rawPath = [packagesPrefix, packageSlug].join("");
+	}
+
+	teaProtocolPath = rawPath;
+
+	if (mainWindow && mainWindow.isMinimized()) {
+		mainWindow.restore();
+		log.info("restored");
+		mainWindow?.webContents.send("sync-path");
+	} else if (macWindowClosed) {
+		log.info("open new window");
+		createMainWindow();
+	}
 });
 
 ipcMain.handle("get-installed-packages", async () => {
