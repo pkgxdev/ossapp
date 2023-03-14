@@ -191,7 +191,22 @@ app.on("window-all-closed", async () => {
 app.on("open-url", (event, url) => {
 	// ie url:  tea://packages/slug
 	event.preventDefault();
-	teaProtocolPath = url.replace("tea:/", "");
+
+	const packagesPrefix = "/packages/";
+
+	let rawPath = url.replace("tea:/", "");
+
+	const isPackage = url.includes(packagesPrefix);
+	if (isPackage) {
+		// /packages/github.com/pypa/twine -> /packages/github_com_pypa_twine
+		const packageSlug = rawPath
+			.replace(packagesPrefix, "")
+			.replace(/[^\w\s]/gi, "_")
+			.toLocaleLowerCase();
+		rawPath = [packagesPrefix, packageSlug].join("");
+	}
+
+	teaProtocolPath = rawPath;
 });
 
 ipcMain.handle("get-installed-packages", async () => {
