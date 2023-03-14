@@ -182,8 +182,10 @@ app.on("activate", () => {
 	}
 });
 app.on("window-all-closed", async () => {
-	await autoUpdater.quitAndInstall();
-	app.quit();
+	// mac ux is just minimize them when closed unless forced quite CMD+Q
+	if (process.platform !== "darwin") {
+		app.quit();
+	}
 });
 
 // NOTE: this doesnt work in linux
