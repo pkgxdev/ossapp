@@ -1,15 +1,15 @@
 <script lang="ts">
 	import '$appcss';
-	import PageHeader from '$components/page-header/page-header.svelte';
+	// import PageHeader from '$components/page-header/page-header.svelte';
 	import PackageBanner from '$components/package-banner/package-banner.svelte';
-	import type { Review, Bottle } from '@tea/ui/types';
-	import SuggestedPackages from '$components/suggested-packages/suggested-packages.svelte';
+	import type { Bottle } from '@tea/ui/types';
+	// import SuggestedPackages from '$components/suggested-packages/suggested-packages.svelte';
 	import Tabs from '@tea/ui/tabs/tabs.svelte';
 	import type { Tab } from '@tea/ui/types';
 	import Bottles from '@tea/ui/bottles/bottles.svelte';
 	import PackageMetas from '@tea/ui/package-metas/package-metas.svelte';
 	import Markdown from '@tea/ui/markdown/markdown.svelte';
-	import PackageSnippets from '@tea/ui/package-snippets/package-snippets.svelte';
+	// import PackageSnippets from '@tea/ui/package-snippets/package-snippets.svelte';
 	import type { GUIPackage } from '$libs/types';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 
@@ -20,7 +20,7 @@
 
 	let pkg: GUIPackage;
 
-	let reviews: Review[];
+	// let reviews: Review[];
 	let bottles: Bottle[] = [];
 	let versions: string[] = [];
 	let readme: string;
@@ -77,21 +77,21 @@
 				{/if}
 			</div>
 		</section>
-		<PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png">SNIPPETS</PageHeader>
-		<section class="mt-8">
+		<!-- <PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png">SNIPPETS</PageHeader> -->
+		<!-- <section class="mt-8">
 			<PackageSnippets />
-		</section>
+		</section> -->
 		<!-- <section class="mt-8">
 			<PackageReviews reviews={reviews || []} />
 		</section> -->
-		{#if pkg}
+		<!-- {#if pkg}
 			<PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png"
 				>YOU MAY ALSO LIKE...</PageHeader
 			>
 			<section class="mt-8">
 				<SuggestedPackages {pkg} />
 			</section>
-		{/if}
+		{/if} -->
 	</div>
 {:else}
 	<Preloader/>
