@@ -9,8 +9,7 @@
 
 	import { installPackage } from '@native';
 	import { trackInstall, trackInstallFailed } from '$libs/analytics';
-	import SortingButtons from '$components/search-packages/sorting-buttons.svelte';
-	export let title = 'Packages';
+	// import SortingButtons from '$components/search-packages/sorting-buttons.svelte';
 
 	let pkgNeedsUpdateCount = 0;
 
@@ -70,8 +69,8 @@
 
 </script>
 
-<header class="flex items-center justify-between my-4">
-	<h1 class="text-primary text-4xl font-bold">{title}</h1>
+<!-- <header class="flex items-center justify-between z-50 w-full absolute">
+	<h1 class="text-primary text-4xl font-bold">{$t("home.all-packages")}</h1>
 	<div class="flex">
 		<section class="border border-gray mr-2 rounded-sm h-10 text-gray font-thin flex">
 			<button on:click={() => switchTab("ALL")} class={`px-2 ${tab === "ALL" && "active"}`}>All packages</button>
@@ -89,47 +88,49 @@
 			<SortingButtons {onSort} />
 		</section>
 	</div>
-</header>
-<ul class="grid grid-cols-3 bg-black">
-	{#if packages.length > 0}
-		{#each packages as pkg, index}
-			{#if index < limit}
-				<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
-					<Package
-						{pkg}
-						onClick={async () => {
-							try {
-								pkg.state = PackageStates.INSTALLING;
-								await installPackage(pkg);
-								trackInstall(pkg.full_name);
-								pkg.state = PackageStates.INSTALLED;
-
-								packagesStore.updatePackage(pkg.full_name, {
-									state: PackageStates.INSTALLED, // this would also mean its the latest version
-								});
-							} catch (error) {
-								let message = 'Unknown Error'
-								if (error instanceof Error) message = error.message
-								trackInstallFailed(pkg.full_name, message || "unknown");
-							}
-						}}
-					/>
-				</div>
-			{/if}
-		{/each}
-	{:else}
-		{#each Array(9) as _}
-			<section class="h-50 border-gray border p-4">
-				<Preloader />
-			</section>
-		{/each}
+</header> -->
+<div>
+	<ul class="grid grid-cols-3 bg-black">
+		{#if packages.length > 0}
+			{#each packages as pkg, index}
+				{#if index < limit}
+					<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
+						<Package
+							{pkg}
+							onClick={async () => {
+								try {
+									pkg.state = PackageStates.INSTALLING;
+									await installPackage(pkg);
+									trackInstall(pkg.full_name);
+									pkg.state = PackageStates.INSTALLED;
+	
+									packagesStore.updatePackage(pkg.full_name, {
+										state: PackageStates.INSTALLED, // this would also mean its the latest version
+									});
+								} catch (error) {
+									let message = 'Unknown Error'
+									if (error instanceof Error) message = error.message
+									trackInstallFailed(pkg.full_name, message || "unknown");
+								}
+							}}
+						/>
+					</div>
+				{/if}
+			{/each}
+		{:else}
+			{#each Array(9) as _}
+				<section class="h-50 border-gray border p-4">
+					<Preloader />
+				</section>
+			{/each}
+		{/if}
+	</ul>
+	{#if limit < packages.length }
+	<footer class="w-full flex border border-gray h-16">
+		<button class="flex-grow h-16" on:click={() => limit += loadMore }>show more</button>
+	</footer>
 	{/if}
-</ul>
-{#if limit < packages.length }
-<footer class="w-full flex border border-gray h-16">
-	<button class="flex-grow h-16" on:click={() => limit += loadMore }>show more</button>
-</footer>
-{/if}
+</div>
 
 <style>
 	button {

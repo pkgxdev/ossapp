@@ -63,8 +63,8 @@
 		<div class="content">
 			<TeaUpdate />
 		</div>
-		<div class="content">
-			<slot />
+		<div class="content p-2">
+			<slot/>
 		</div>
 		<SearchPopupResults />
 	</section>
@@ -83,21 +83,6 @@
 		height: calc(100vh - 42px);
 		overflow-y: scroll;
 		box-sizing: border-box;
-	}
-
-	@media screen and (min-width: 1440px) {
-		figure {
-			background-size: cover;
-			background-repeat: repeat-y;
-		}
-		.content {
-			padding: 0vw 3.6vw !important;
-		}
-	}
-	@media screen and (max-width: 1440px) {
-		.content {
-			padding: 0vw 3.33vw;
-		}
 	}
 
 	slot {

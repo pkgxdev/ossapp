@@ -9,6 +9,7 @@
 		"store-search-placeholder": "type to search",
 		"search": "search",
 		"home": {
+			"all-packages": "All packages",
 			"discover-title": "DISCOVER",
 			"asset-title": "ASSET TYPE",
 			"tutorials-title": "TUTORIALS",
