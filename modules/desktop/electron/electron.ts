@@ -13,6 +13,7 @@ import { autoUpdater } from "electron-updater";
 import { post } from "./libs/v1-client";
 import * as log from "electron-log";
 import path from "path";
+import { nameToSlug } from "./libs/package";
 
 import Pushy from "pushy-electron";
 
@@ -232,10 +233,7 @@ app.on("open-url", (event, url) => {
 	const isPackage = url.includes(packagesPrefix);
 	if (isPackage) {
 		// /packages/github.com/pypa/twine -> /packages/github_com_pypa_twine
-		const packageSlug = rawPath
-			.replace(packagesPrefix, "")
-			.replace(/[^\w\s]/gi, "_")
-			.toLocaleLowerCase();
+		const packageSlug = nameToSlug(rawPath.replace(packagesPrefix, ""));
 		rawPath = [packagesPrefix, packageSlug].join("");
 	}
 
