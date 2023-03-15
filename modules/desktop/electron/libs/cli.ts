@@ -4,6 +4,10 @@ import { getGuiPath } from "./tea-dir";
 import fs from "fs";
 import path from "path";
 
+import Pushy from "pushy-electron";
+import * as log from "electron-log";
+import { nameToSlug } from "./package";
+
 export async function installPackage(full_name: string) {
 	return await new Promise((resolve, reject) => {
 		let version = "";
@@ -21,9 +25,19 @@ export async function installPackage(full_name: string) {
 			}
 		});
 
-		teaInstallation.on("exit", (code) => {
+		teaInstallation.on("exit", async (code) => {
 			if (code === 0) {
-				resolve({ version: clean(version) });
+				const topic = `packages-${nameToSlug(full_name)}`;
+				try {
+					if (Pushy.isRegistered()) {
+						await Pushy.subscribe(topic);
+						log.info("push: registered to topic ", topic);
+					}
+				} catch (error) {
+					log.error(error);
+				} finally {
+					resolve({ version: clean(version) });
+				}
 			} else {
 				reject(new Error(lastError));
 			}

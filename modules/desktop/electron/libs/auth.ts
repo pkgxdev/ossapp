@@ -15,13 +15,6 @@ interface Session {
 	locale?: string;
 }
 
-export async function initSessionData() {
-	fs.readFileSync(sessionFilePath);
-
-	await mkdirp(sessionFolder);
-	const req = await v1Client.get<{ deviceId: string }>("/auth/registerDevice");
-}
-
 export async function readSessionData(): Promise<Session> {
 	const locale = app.getLocale();
 	try {

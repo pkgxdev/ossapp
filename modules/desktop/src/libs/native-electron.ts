@@ -121,11 +121,6 @@ export async function getPackage(packageName: string): Promise<Partial<Package>>
 	return pkg;
 }
 
-export async function registerDevice(): Promise<string> {
-	const { deviceId } = await apiGet<{ deviceId: string }>("/auth/registerDevice");
-	return deviceId;
-}
-
 export const getSession = async (): Promise<Session | null> => {
 	const session = await ipcRenderer.invoke("get-session");
 	return session;
