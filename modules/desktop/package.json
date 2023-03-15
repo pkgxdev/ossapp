@@ -96,6 +96,7 @@
 		"lorem-ipsum": "^2.0.8",
 		"mixpanel-browser": "^2.45.0",
 		"mkdirp": "^2.1.3",
+		"pushy-electron": "^1.0.11",
 		"renderer": "link:@types/electron/renderer",
 		"semver": "^7.3.8",
 		"svelte-markdown": "^0.2.3",

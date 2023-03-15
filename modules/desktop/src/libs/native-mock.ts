@@ -357,10 +357,6 @@ export async function getPackage(packageName: string): Promise<Partial<Package>>
 	return packages.find((pkg) => pkg.full_name === packageName) || packages[0];
 }
 
-export async function registerDevice(): Promise<string> {
-	return "uuid1234";
-}
-
 export const getSession = async (): Promise<Session | null> => {
 	return null;
 };

@@ -10,8 +10,11 @@ import { readSessionData, writeSessionData } from "./libs/auth";
 import type { Session } from "../src/libs/types";
 import { installPackage, openTerminal } from "./libs/cli";
 import { autoUpdater } from "electron-updater";
+import { post } from "./libs/v1-client";
 import * as log from "electron-log";
 import path from "path";
+
+import Pushy from "pushy-electron";
 
 /*
  TODO:
@@ -89,6 +92,30 @@ function createWindow() {
 		windowState.saveState(mainWindow);
 	});
 
+	mainWindow.webContents.on("did-finish-load", () => {
+		Pushy.listen();
+		// Register device for push notifications
+		Pushy.register({ appId: "64110fb47446e48a2a0e906d" })
+			.then(async (token) => {
+				const { device_id } = await readSessionData();
+				console.log("DEVICE_ID:", device_id, token);
+				if (device_id)
+					await post(`/auth/device/${device_id}/register-push-token`, { push_token: token });
+			})
+			.catch((err) => {
+				// Display error dialog
+				// Pushy.alert(mainWindow, 'Pushy registration error: ' + err.message);
+			});
+
+		// Listen for incoming notifications
+		Pushy.setNotificationListener((data: any) => {
+			// Display an alert with the "message" payload value
+			log.info("push data:", data);
+			// TODO: replace this with something
+			Pushy.alert(mainWindow, data?.message as string);
+		});
+	});
+
 	attachTitlebarToWindow(mainWindow);
 	return mainWindow;
 }
@@ -106,7 +133,7 @@ autoUpdater.on("update-available", (info) => {
 		`A new tea gui(${info.version}) is being downloaded. Please don't close the app.`,
 		{
 			i18n_key: "notification.gui-downloading",
-			version: info.version,
+			version: info.version
 		}
 	);
 });
