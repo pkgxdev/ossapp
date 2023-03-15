@@ -10,14 +10,14 @@ import semverCompare from "semver/functions/compare";
 
 export default function initPackagesStore() {
 	let initialized = false;
-	const { subscribe, set, update } = writable<GUIPackage[]>([]);
-	const packages: GUIPackage[] = [];
+	const packages = writable<GUIPackage[]>([]);
+	// const packages: GUIPackage[] = [];
 	let packagesIndex: Fuse<GUIPackage>;
 
 	if (!initialized) {
 		initialized = true;
 		getPackages().then((pkgs) => {
-			set(pkgs);
+			packages.set(pkgs);
 			packagesIndex = new Fuse(pkgs, {
 				keys: ["name", "full_name", "desc", "categories"]
 			});
@@ -30,10 +30,8 @@ export default function initPackagesStore() {
 		});
 	}
 
-	subscribe((v) => packages.push(...v));
-
 	const updatePackage = (full_name: string, props: Partial<GUIPackage>) => {
-		update((pkgs) => {
+		packages.update((pkgs) => {
 			const i = pkgs.findIndex((pkg) => pkg.full_name === full_name);
 			if (i >= 0) {
 				pkgs[i] = {
@@ -77,26 +75,35 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 
 	const syncPackageBottlesAndState = async (pkgName: string) => {
 		const bottles = await getPackageBottles(pkgName);
-		const pkg = packages.find((p) => p.full_name === pkgName);
 
-		const availableVersions = bottles
-			.map(({ version }) => version)
-			.sort((a, b) => semverCompare(b, a));
+		packages.update((pkgs) => {
+			const i = pkgs.findIndex((pkg) => pkg.full_name === pkgName);
+			if (i >= 0) {
+				const pkg = pkgs[i];
 
-		const installedVersions = pkg?.installed_versions?.sort((a, b) => semverCompare(b, a)) || [];
+				const availableVersions = bottles
+					.map(({ version }) => version)
+					.sort((a, b) => semverCompare(b, a));
 
-		updatePackage(pkgName, {
-			available_versions: availableVersions,
-			state:
-				availableVersions[0] === installedVersions[0]
-					? PackageStates.INSTALLED
-					: PackageStates.NEEDS_UPDATE
+				const installedVersions =
+					pkg?.installed_versions?.sort((a, b) => semverCompare(b, a)) || [];
+
+				pkgs[i] = {
+					...pkg,
+					available_versions: availableVersions,
+					state:
+						availableVersions[0] === installedVersions[0]
+							? PackageStates.INSTALLED
+							: PackageStates.NEEDS_UPDATE
+				};
+			}
+			return pkgs;
 		});
 	};
 
 	return {
 		packages,
-		subscribe,
+		subscribe: packages.subscribe,
 		search: async (term: string, limit = 5): Promise<GUIPackage[]> => {
 			if (!term || !packagesIndex) return [];
 			// TODO: if online, use algolia else use Fuse
@@ -105,7 +112,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			return matchingPackages;
 		},
 		subscribeToPackage: (slug: string, cb: (pkg: GUIPackage) => void) => {
-			subscribe((pkgs) => {
+			packages.subscribe((pkgs) => {
 				const foundPackage = pkgs.find((p) => p.slug === slug) as GUIPackage;
 				if (foundPackage) {
 					cb(foundPackage);

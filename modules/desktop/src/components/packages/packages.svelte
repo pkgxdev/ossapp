@@ -9,22 +9,18 @@
 
 	import { installPackage } from '@native';
 	import { trackInstall, trackInstallFailed } from '$libs/analytics';
-	// import SortingButtons from '$components/search-packages/sorting-buttons.svelte';
 
-	let pkgNeedsUpdateCount = 0;
+	const { packages: allPackages } = packagesStore;
 
-	export let tab: "ALL" | "INSTALLED" | "INSTALLED_WITH_UPDATES" = "ALL";
+	export let stateFilters: {[key: string]: boolean};
+	export let sortBy: "popularity" | "most recent" = 'popularity';
+	export let sortDirection: 'asc' | 'desc' = 'desc';
 
-	let sortBy = 'popularity';
-	let sortDirection: 'asc' | 'desc' = 'desc';
-	const loadMore = 12;
+	const loadMore = 9;
 	let limit = loadMore;
-
-	let packages: GUIPackage[] = [];
-
-	const setPackages = (pkgs: GUIPackage[]) => {
-		pkgNeedsUpdateCount = pkgs.filter((p) => p.state === PackageStates.NEEDS_UPDATE).length;
-		const sortedPackages = pkgs.sort((a, b) => {
+	$: filterExists = Object.keys(stateFilters).some((k) => stateFilters[k]);
+	$: packages = $allPackages
+		.sort((a, b) => {
 			if (sortBy === 'popularity') {
 				const aPop = +a.dl_count + a.installs;
 				const bPop = +b.dl_count + b.installs;
@@ -35,55 +31,16 @@
 				const bDate = new Date(b.last_modified);
 				return sortDirection === 'asc' ? +aDate - +bDate : +bDate - +aDate;
 			}
+		})
+		.filter((pkg) => {
+			if (!filterExists || pkg.state === PackageStates.INSTALLING) return true;
+			return stateFilters[pkg.state];
 		});
-
-		const filteredStates = [
-			PackageStates.NEEDS_UPDATE
-		];
-
-		switch (tab) {
-			case "INSTALLED":
-			case "INSTALLED_WITH_UPDATES":
-				if (tab === "INSTALLED") filteredStates.push(PackageStates.INSTALLED);
-				packages = sortedPackages.filter((p) => filteredStates.includes(p.state!));
-				break;
-			case "ALL":
-			default:
-				packages = sortedPackages;
-				break;
-		}
-	};
-
-	packagesStore.subscribe(setPackages);
-
-	const onSort = (opt: string, dir: 'asc' | 'desc') => {
-		sortBy = opt;
-		sortDirection = dir;
-		setPackages(packages);
-	};
-
-	const switchTab = (nextTab: "ALL" | "INSTALLED" | "INSTALLED_WITH_UPDATES") => {
-		tab = nextTab;
-		setPackages($packagesStore);
-	}
-
 </script>
 
 <!-- <header class="flex items-center justify-between z-50 w-full absolute">
 	<h1 class="text-primary text-4xl font-bold">{$t("home.all-packages")}</h1>
 	<div class="flex">
-		<section class="border border-gray mr-2 rounded-sm h-10 text-gray font-thin flex">
-			<button on:click={() => switchTab("ALL")} class={`px-2 ${tab === "ALL" && "active"}`}>All packages</button>
-			<button on:click={() => switchTab("INSTALLED")} class={`px-2 ${tab === "INSTALLED" && "active"}`}>installed only</button>
-			{#if pkgNeedsUpdateCount}
-				<button on:click={() => switchTab("INSTALLED_WITH_UPDATES")} class={`px-2 ${tab === "INSTALLED_WITH_UPDATES" && "active"}`}>
-					<div class="flex justify-center align-middle">
-						<div>updates</div>
-						<div class="bg-red text-white bg-[red] rounded-sm text-xs h-6 leading-6 px-1 ml-2">{pkgNeedsUpdateCount}</div>
-					</div>
-				</button>
-			{/if}
-		</section>
 		<section class="border-gray h-10 w-48 border rounded-sm">
 			<SortingButtons {onSort} />
 		</section>
