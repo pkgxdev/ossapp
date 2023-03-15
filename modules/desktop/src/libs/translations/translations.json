@@ -64,7 +64,7 @@
 		},
 		"view-all": "view all",
 		"sorting": {
-			"label": "Filters",
+			"label": "Sort by",
 			"popularity": "Most popular",
 			"most-recent": "Most recent"
 		},
