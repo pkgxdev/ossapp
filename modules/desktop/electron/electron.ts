@@ -1,14 +1,10 @@
 import windowStateManager from "electron-window-state";
-import { app, BrowserWindow, ipcMain, net, dialog } from "electron";
+import { app, BrowserWindow, net } from "electron";
 import { setupTitlebar, attachTitlebarToWindow } from "custom-electron-titlebar/main";
 import * as Sentry from "@sentry/electron";
 import contextMenu from "electron-context-menu";
 import serve from "electron-serve";
-
-import { getInstalledPackages } from "./libs/tea-dir";
-import { readSessionData, writeSessionData } from "./libs/auth";
-import type { Session } from "../src/libs/types";
-import { installPackage, openTerminal } from "./libs/cli";
+import { readSessionData } from "./libs/auth";
 import { post } from "./libs/v1-client";
 import * as log from "electron-log";
 import path from "path";
@@ -16,15 +12,15 @@ import { nameToSlug } from "./libs/package";
 
 import Pushy from "pushy-electron";
 
-import { checkUpdater, getUpdater } from "./libs/auto-updater";
+import { checkUpdater } from "./libs/auto-updater";
 
+import initializeHandlers, { setProtocolPath } from "./libs/ipc";
 /*
  TODO:
  - fix global mutable variable
  - organize the ipc handlers into its own module
  - create auto updater initialization module
  */
-let teaProtocolPath = ""; // this should be empty string
 
 log.info("App starting...");
 if (app.isPackaged) {
@@ -51,6 +47,8 @@ let mainWindow: BrowserWindow | null;
 let macWindowClosed = false;
 
 setupTitlebar();
+
+initializeHandlers();
 
 function createWindow() {
 	const windowState = windowStateManager({
@@ -201,7 +199,7 @@ app.on("open-url", (event, url) => {
 		rawPath = [packagesPrefix, packageSlug].join("");
 	}
 
-	teaProtocolPath = rawPath;
+	setProtocolPath(rawPath);
 
 	if (mainWindow && mainWindow.isMinimized()) {
 		mainWindow.restore();
@@ -211,45 +209,4 @@ app.on("open-url", (event, url) => {
 		log.info("open new window");
 		createMainWindow();
 	}
-});
-
-ipcMain.handle("get-installed-packages", async () => {
-	const pkgs = await getInstalledPackages();
-	return pkgs;
-});
-
-ipcMain.handle("get-session", async () => {
-	const session = await readSessionData();
-	return session;
-});
-
-ipcMain.handle("update-session", async (_, data) => {
-	await writeSessionData(data as Session);
-});
-
-ipcMain.handle("install-package", async (_, data) => {
-	const result = await installPackage(data.full_name);
-	return result;
-});
-
-ipcMain.handle("open-terminal", async (_, data) => {
-	const { cmd } = data as { cmd: string };
-	try {
-		// TODO: detect if mac or linux
-		// current openTerminal is only design for Mac
-		await openTerminal(cmd);
-	} catch (error) {
-		console.error("elast:", error);
-	}
-});
-
-ipcMain.handle("relaunch", async () => {
-	const autoUpdater = getUpdater();
-	await autoUpdater.quitAndInstall();
-});
-
-ipcMain.handle("get-protocol-path", async () => {
-	const path = teaProtocolPath;
-	teaProtocolPath = "";
-	return path;
 });
