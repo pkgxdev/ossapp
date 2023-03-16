@@ -8,7 +8,7 @@
 	export let active = false;
 
 	export let type: "ghost" | "plain" = "ghost";
-	export let color: "primary" | "secondary" = "primary";
+	export let color: "primary" | "secondary" | "green" = "primary";
 
 	export let loading = false;
 </script>
@@ -30,13 +30,18 @@
 	}
 
 	button.plain.primary {
-		color: black;
 		background-color: #00ffd0;
+		color: black;
 	}
 
 	button.plain.secondary {
-		color: white;
 		background-color: #8000ff;
+		color: white;
+	}
+
+	button.plain.green {
+		background-color: #00a517;
+		color: white;
 	}
 	button.active {
 		color: black;
@@ -51,5 +56,8 @@
 	}
 	button.secondary:hover {
 		background-color: #8000ff;
+	}
+	button.green:hover {
+		background-color: #00a517;
 	}
 </style>

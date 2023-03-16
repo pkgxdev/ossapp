@@ -60,7 +60,7 @@
 		<header class="text-primary p-4 text-lg">
 			Top Package Results ({packages.length})
 		</header>
-		<ul class="grid grid-cols-3">
+		<ul class="grid grid-cols-3 gap-2">
 			{#if packages.length > 0}
 				{#each packages as pkg}
 					<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>

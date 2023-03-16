@@ -47,7 +47,7 @@
 	</div>
 </header> -->
 <div>
-	<ul class="grid grid-cols-3 bg-black">
+	<ul class="grid grid-cols-3 gap-2 bg-black">
 		{#if packages.length > 0}
 			{#each packages as pkg, index}
 				{#if index < limit}

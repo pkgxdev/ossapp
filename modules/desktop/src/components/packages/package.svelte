@@ -49,7 +49,8 @@
   link={`/packages/${pkg.slug}`}
   ctaLabel={getCTALabel(pkg.state)}
 	progessLoading={+fakeLoadingProgress.toFixed(2)}
-	ctaType={PackageStates.INSTALLED === pkg.state ? "ghost" : "plain"}
+	ctaType="plain"
+	ctaColor={PackageStates.INSTALLED === pkg.state ? "green" : "secondary"}
   onClickCTA={async () => {
 		fakeLoadingProgress = 1;
 		startFakeLoader();
