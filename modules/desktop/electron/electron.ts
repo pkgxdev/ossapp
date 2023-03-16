@@ -9,13 +9,14 @@ import { getInstalledPackages } from "./libs/tea-dir";
 import { readSessionData, writeSessionData } from "./libs/auth";
 import type { Session } from "../src/libs/types";
 import { installPackage, openTerminal } from "./libs/cli";
-import { autoUpdater } from "electron-updater";
 import { post } from "./libs/v1-client";
 import * as log from "electron-log";
 import path from "path";
 import { nameToSlug } from "./libs/package";
 
 import Pushy from "pushy-electron";
+
+import { checkUpdater, getUpdater } from "./libs/auto-updater";
 
 /*
  TODO:
@@ -25,7 +26,6 @@ import Pushy from "pushy-electron";
  */
 let teaProtocolPath = ""; // this should be empty string
 
-autoUpdater.logger = log;
 log.info("App starting...");
 if (app.isPackaged) {
 	Sentry.init({
@@ -121,43 +121,6 @@ function createWindow() {
 	return mainWindow;
 }
 
-function sendStatusToWindow(text: string, params?: { [key: string]: any }) {
-	log.info(text);
-	mainWindow?.webContents.send("message", text, params || {});
-}
-
-autoUpdater.on("checking-for-update", () => {
-	log.info("checking for tea gui update");
-});
-autoUpdater.on("update-available", (info) => {
-	sendStatusToWindow(
-		`A new tea gui(${info.version}) is being downloaded. Please don't close the app.`,
-		{
-			i18n_key: "notification.gui-downloading",
-			version: info.version
-		}
-	);
-});
-autoUpdater.on("update-not-available", () => {
-	log.info("no update for tea gui");
-});
-autoUpdater.on("error", (err) => {
-	log.error("auto update:", err);
-});
-autoUpdater.on("download-progress", (progressObj) => {
-	let log_message = "Download speed: " + progressObj.bytesPerSecond;
-	log_message = log_message + " - Downloaded " + progressObj.percent + "%";
-	log_message = log_message + " (" + progressObj.transferred + "/" + progressObj.total + ")";
-	log.info("tea gui:", log_message);
-});
-autoUpdater.on("update-downloaded", (info) => {
-	sendStatusToWindow(`A new tea gui(${info.version}) is available. Relaunch the app to update.`, {
-		i18n_key: "notification.gui-downloaded",
-		version: info.version,
-		action: "relaunch"
-	});
-});
-
 contextMenu({
 	showLookUpSelection: false,
 	showSearchWithGoogle: false,
@@ -179,13 +142,14 @@ function loadVite(port) {
 }
 
 function createMainWindow() {
-	autoUpdater.checkForUpdatesAndNotify();
 	if (mainWindow) {
 		if (mainWindow.isMinimized()) mainWindow.restore();
 		mainWindow.focus();
 	} else {
 		mainWindow = createWindow();
 	}
+
+	checkUpdater(mainWindow);
 
 	mainWindow.once("close", () => {
 		mainWindow = null;
@@ -280,6 +244,7 @@ ipcMain.handle("open-terminal", async (_, data) => {
 });
 
 ipcMain.handle("relaunch", async () => {
+	const autoUpdater = getUpdater();
 	await autoUpdater.quitAndInstall();
 });
 
