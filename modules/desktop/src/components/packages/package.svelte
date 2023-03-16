@@ -51,19 +51,21 @@
 	progessLoading={+fakeLoadingProgress.toFixed(2)}
 	ctaType="plain"
 	ctaColor={PackageStates.INSTALLED === pkg.state ? "green" : "secondary"}
-  onClickCTA={async () => {
-		fakeLoadingProgress = 1;
-		startFakeLoader();
-		await onClick();
-		await new Promise((resolve) => {
-			setTimeout(() => {
-				notificationStore.add({
-					message: `Package ${pkg.full_name} v${pkg.version} has been installed.`,
+  onClickCTA={((pkg) => {
+		return async () => {
+				fakeLoadingProgress = 1;
+				startFakeLoader();
+				await onClick();
+				await new Promise((resolve) => {
+					setTimeout(() => {
+						notificationStore.add({
+							message: `Package ${pkg.full_name} v${pkg.version} has been installed.`,
+						});
+						clearTimeout(fakeTimer);
+						fakeLoadingProgress = 100;
+						resolve(null);
+					}, 1500);
 				});
-				clearTimeout(fakeTimer);
-				fakeLoadingProgress = 100;
-				resolve(null);
-			}, 1500);
-		});
-	}}
+			}
+	})(pkg)}
 />
