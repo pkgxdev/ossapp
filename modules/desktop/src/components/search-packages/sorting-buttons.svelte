@@ -2,25 +2,27 @@
 	import '$appcss';
 	import { t } from '$libs/translations'; 
 
-	export let onSort: (opt: string, dir: 'asc' | 'desc') => void;
 
-	let sortBy = 'popularity';
+	type SortOption = "popularity" | "most recent";
+	export let onSort: (opt: SortOption, dir: 'asc' | 'desc') => void;
+
+	let sortBy: SortOption = "popularity";
 	let sortDirection: 'asc' | 'desc' = 'desc';
 
-	const sortOptions = ['popularity', 'most recent'];
+	const sortOptions: SortOption[] = ["popularity", "most recent"];
 
 	const optionLabels = {
 		[sortOptions[0]]: $t("sorting.popularity"),
 		[sortOptions[1]]: $t("sorting.most-recent")
 	}
 
-	const setSortBy = (opt: string) => {
+	const setSortBy = (opt: SortOption) => {
 		sortBy = opt;
 		if (onSort) {
 			onSort(sortBy, sortDirection);
 		}
 	};
-	const setSortDir = (opt: string, dir: 'asc' | 'desc') => {
+	const setSortDir = (opt: SortOption, dir: 'asc' | 'desc') => {
 		sortDirection = dir;
 		setSortBy(opt);
 	};

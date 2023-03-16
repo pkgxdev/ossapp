@@ -9,6 +9,7 @@
 		"store-search-placeholder": "type to search",
 		"search": "search",
 		"home": {
+			"all-packages": "All packages",
 			"discover-title": "DISCOVER",
 			"asset-title": "ASSET TYPE",
 			"tutorials-title": "TUTORIALS",
@@ -63,7 +64,7 @@
 		},
 		"view-all": "view all",
 		"sorting": {
-			"label": "Filters",
+			"label": "Sort by",
 			"popularity": "Most popular",
 			"most-recent": "Most recent"
 		},

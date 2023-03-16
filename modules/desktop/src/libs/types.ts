@@ -6,11 +6,11 @@
 import type { Package, Developer } from "@tea/ui/types";
 
 export enum PackageStates {
-	AVAILABLE,
-	INSTALLED,
-	INSTALLING,
-	UNINSTALLED,
-	NEEDS_UPDATE
+	AVAILABLE = "AVAILABLE",
+	INSTALLED = "INSTALLED",
+	INSTALLING = "INSTALLING",
+	UNINSTALLED = "UNINSTALLED",
+	NEEDS_UPDATE = "NEEDS_UPDATE"
 }
 
 export type GUIPackage = Package & {

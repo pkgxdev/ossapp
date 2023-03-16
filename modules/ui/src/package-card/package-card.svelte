@@ -10,37 +10,38 @@
 	export let ctaLabel: string;
 	export let progessLoading = 0;
 	export let ctaType: "ghost" | "plain" = "ghost";
+	export let ctaColor: "green" | "secondary" = "secondary";
 
 	export let onClickCTA = () => {
 		console.log("do nothing");
 	};
 </script>
 
-<section class="package-card relative h-auto border border-gray p-4">
+<section class="package-card relative h-auto border border-gray">
 	<a href={link}>
 		<figure class="relative">
 			<ImgLoader
-				class="pkg-image"
+				class="pkg-image object-cover font-sono"
 				src={!pkg.thumb_image_url.includes("https://tea.xyz")
 					? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
 					: pkg.thumb_image_url}
 				alt={pkg.name}
 			/>
-			<article class="card-thumb-label">
-				<i class="icon-tea-logo-iconasset-1">
-					<!-- TODO: replace with icon.svg -->
-				</i>
-				<h3>{pkg.name}</h3>
-				{#if pkg.maintainer}
-					<h4>&#x2022;&nbsp;{pkg.maintainer}</h4>
-				{/if}
-			</article>
 		</figure>
+		<article class="card-thumb-label">
+			<h3 class="text-bold text-xl font-bold text-white">{pkg.name}</h3>
+			{#if pkg.maintainer}
+				<h4 class="text-sm font-light">&#x2022;&nbsp;{pkg.maintainer}</h4>
+			{/if}
+			{#if pkg.desc}
+				<p class="text-xs font-thin line-clamp-2">{pkg.desc}</p>
+			{/if}
+		</article>
 	</a>
-	<footer class="mt-4 flex items-stretch justify-between gap-2">
+	<footer class="absolute bottom-0 left-0 flex w-full items-stretch justify-between gap-2 p-2">
 		<div>
 			<p>
-				<span class="pk-version text-xs">v{pkg.version}</span>
+				<span class="pk-version text-xs font-extralight">v{pkg.version}</span>
 				<!--
         TODO: uncomment once install counts improve
         <br>
@@ -48,10 +49,10 @@
 			</p>
 		</div>
 		<Button
-			class="w-1/2 border border-gray p-2 font-machina"
+			class="h-8 w-1/2 border border-gray p-2 font-machina text-xs"
 			onClick={onClickCTA}
 			type={ctaType}
-			color="secondary"
+			color={ctaColor}
 		>
 			{ctaLabel}
 		</Button>
@@ -70,11 +71,12 @@
 		background-color: #1a1a1a;
 		transition: all 0.3s;
 		width: 100%;
+		height: 230px;
 	}
 
 	figure {
 		position: relative;
-		min-height: 150px;
+		height: 70px;
 	}
 
 	.package-card :global(.pkg-image) {
@@ -82,50 +84,16 @@
 		width: 100%;
 		height: 100%;
 	}
-	.card-thumb-label i {
-		font-size: 1.5vw;
-		color: black;
-	}
-
-	.card-thumb-label h3 {
-		color: black;
-		font-size: 1.8vw;
-		line-height: 1.8vw;
-		margin: 0px 0px 0.5vw 0vw;
-		padding: 0px;
-	}
 
 	.card-thumb-label {
-		position: absolute;
-		background: rgba(255, 255, 255, 0.9);
-		left: 0;
-		bottom: 0vw;
+		background: rgba(0, 0, 0, 0.9);
 		padding: 1.116vw;
 		text-align: left;
-		width: 90%;
-		height: 40%;
+		width: 100%;
+		height: 110px;
 	}
 
-	.card-thumb-label h4 {
-		color: black;
-		font-size: 0.9vw;
-		line-height: 1vw;
-		margin: 0px;
-		padding: 0px;
+	.card-thumb-label p {
+		color: white;
 	}
-
-	/* button {
-		background-color: #1a1a1a;
-		border: 0.5px solid #ffffff;
-		color: #fff;
-		text-decoration: none;
-		text-transform: uppercase;
-		min-width: 120px;
-		transition: 0.1s linear;
-	}
-
-	button:hover {
-		background-color: #8000ff;
-		box-shadow: inset 0vw 0vw 0vw 0.223vw #1a1a1a !important;
-	} */
 </style>
