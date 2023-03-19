@@ -25,7 +25,7 @@ const { ipcRenderer, shell } = window.require("electron");
 
 export async function getPackages(): Promise<GUIPackage[]> {
 	const [packages, installedPackages] = await Promise.all([
-		apiGet<Package[]>("packages", { nocache: "true" }),
+		apiGet<Package[]>("packages"),
 		ipcRenderer.invoke("get-installed-packages") as { version: string; full_name: string }[]
 	]);
 
