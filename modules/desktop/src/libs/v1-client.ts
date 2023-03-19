@@ -27,9 +27,13 @@ export async function get<T>(
 			params
 		});
 
-		return req.data as T;
+		if (req.status == 200) {
+			return req.data as T;
+		} else {
+			return await get<T>(urlPath, params || {});
+		}
 	} catch (error) {
-		console.error(error);
+		console.error("ERROR", error);
 		return null;
 	}
 }

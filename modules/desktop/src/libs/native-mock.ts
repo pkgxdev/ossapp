@@ -167,10 +167,6 @@ const packages: Package[] = [
 	}
 ];
 
-export async function getAllRemotePackages(): Promise<Package[]> {
-	return packages;
-}
-
 export async function getPackages(): Promise<GUIPackage[]> {
 	return packages.map((pkg) => {
 		return {

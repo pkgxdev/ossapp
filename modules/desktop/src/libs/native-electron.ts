@@ -23,26 +23,9 @@ import { get as apiGet } from "$libs/v1-client";
 
 const { ipcRenderer, shell } = window.require("electron");
 
-export async function getAllRemotePackages(): Promise<Package[]> {
-	let packages: Package[] = [];
-
-	try {
-		const freshPackages = await apiGet<Package[]>("packages");
-		if (freshPackages) {
-			packages = freshPackages;
-		} else {
-			packages = await getAllRemotePackages();
-		}
-	} catch (error) {
-		console.error(error);
-	}
-
-	return packages;
-}
-
 export async function getPackages(): Promise<GUIPackage[]> {
 	const [packages, installedPackages] = await Promise.all([
-		getAllRemotePackages(),
+		apiGet<Package[]>("packages"),
 		ipcRenderer.invoke("get-installed-packages") as { version: string; full_name: string }[]
 	]);
 
