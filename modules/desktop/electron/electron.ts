@@ -4,23 +4,14 @@ import { setupTitlebar, attachTitlebarToWindow } from "custom-electron-titlebar/
 import * as Sentry from "@sentry/electron";
 import contextMenu from "electron-context-menu";
 import serve from "electron-serve";
-import { readSessionData } from "./libs/auth";
-import { post } from "./libs/v1-client";
 import * as log from "electron-log";
 import path from "path";
 import { nameToSlug } from "./libs/package";
 
-import Pushy from "pushy-electron";
-
 import { checkUpdater } from "./libs/auto-updater";
 
 import initializeHandlers, { setProtocolPath } from "./libs/ipc";
-/*
- TODO:
- - fix global mutable variable
- - organize the ipc handlers into its own module
- - create auto updater initialization module
- */
+import initializePushNotification from "./libs/push-notification";
 
 log.info("App starting...");
 if (app.isPackaged) {
@@ -92,27 +83,7 @@ function createWindow() {
 	});
 
 	mainWindow.webContents.on("did-finish-load", () => {
-		Pushy.listen();
-		// Register device for push notifications
-		Pushy.register({ appId: "64110fb47446e48a2a0e906d" })
-			.then(async (token) => {
-				const { device_id } = await readSessionData();
-				console.log("DEVICE_ID:", device_id, token);
-				if (device_id)
-					await post(`/auth/device/${device_id}/register-push-token`, { push_token: token });
-			})
-			.catch((err) => {
-				// Display error dialog
-				// Pushy.alert(mainWindow, 'Pushy registration error: ' + err.message);
-			});
-
-		// Listen for incoming notifications
-		Pushy.setNotificationListener((data: any) => {
-			// Display an alert with the "message" payload value
-			log.info("push data:", data);
-			// TODO: replace this with something
-			Pushy.alert(mainWindow, data?.message as string);
-		});
+		initializePushNotification(mainWindow);
 	});
 
 	attachTitlebarToWindow(mainWindow);
