@@ -7,18 +7,18 @@
 
   const { packages } = packagesStore;
 
-	export let stateFilters = {
-		[PackageStates.AVAILABLE]: false,
-		[PackageStates.NEEDS_UPDATE]: false,
-		[PackageStates.INSTALLED]: false,
-	}
+	// export let stateFilters = {
+	// 	[PackageStates.AVAILABLE]: false,
+	// 	[PackageStates.NEEDS_UPDATE]: false,
+	// 	[PackageStates.INSTALLED]: false,
+	// }
 
   $: needsUpdateCount = $packages.filter((p) => p.state === PackageStates.NEEDS_UPDATE).length;
 </script>
 
 <aside class="border border-t-0 border-b-0 border-gray p-2">
-  <ul class="flex flex-col gap-4 pt-4 pl-2">
-    <MenuButton label="Installed" icon="tea-checkmark"/>
+  <ul class="flex flex-col pt-4 pl-1">
+    <MenuButton label="Installed" icon="tea-checkmark" active={true}/>
     <MenuButton label="Updates available" icon="update"/>
     <MenuButton label="Recently updated" icon="back-in-time"/>
     <MenuButton label="Popular" icon="bar-chart"/>

@@ -28,7 +28,7 @@
 		[PackageStates.NEEDS_UPDATE]: needsUpdateCount ? stateFilters[PackageStates.NEEDS_UPDATE] : false,
 	}} {sortBy} {sortDirection}/>
 </div>
-<SideMenu bind:stateFilters={stateFilters} />
+<SideMenu />
 <header class={`transition-all px-2 flex justify-between items-center align-middle ${$sideNavOpen ? "min": ""} ${$notificationStore.length ? "lower": ""}`}>
 	<h1 class="text-primary mt-4 text-2xl font-bold">{$t("home.all-packages")}</h1>
 	<section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">
