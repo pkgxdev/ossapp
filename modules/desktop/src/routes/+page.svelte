@@ -29,7 +29,7 @@
 		[PackageStates.NEEDS_UPDATE]: needsUpdateCount ? stateFilters[PackageStates.NEEDS_UPDATE] : false,
 	}} {sortBy} {sortDirection}/>
 </div>
-<aside class={`border border-gray p-2 ${$notificationStore.length ? "lower": ""}`}>
+<aside class={`border border-t-0 border-b-0 border-gray p-2 ${$notificationStore.length ? "lower": ""}`}>
 	<h2 class="text-xl text-primary">Search OSS</h2>
 	<h3 class="text-lg text-primary">Status</h3>
 	<ul>
@@ -65,9 +65,9 @@
 
 	aside {
 		position: fixed;
-		top: 100px;
-		left: 10px;
-		height: calc(100% - 110px);
+		top: 40px;
+		left: 0px;
+		height: calc(100% - 40px);
 		width: 190px;
 	}
 	aside.lower {
@@ -76,9 +76,9 @@
 	header {
 		position: fixed;
 		top: 40px;
-		left: 0px;
+		left: 190px;
 		height: 50px;
-		width: 100%;
+		width: calc(100% - 190px);
 		background-image: linear-gradient(black, rgba(0,0,0,0.6), rgba(0,0,0,0));
 	}
 
@@ -87,6 +87,6 @@
 	}
 
 	header.min {
-		width: 75%;
+		width: calc(75% - 190px);
 	}
 </style>
