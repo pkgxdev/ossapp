@@ -15,8 +15,13 @@ export const setProtocolPath = (path: string) => {
 
 export default function initializeHandlers() {
 	ipcMain.handle("get-installed-packages", async () => {
-		const pkgs = await getInstalledPackages();
-		return pkgs;
+		try {
+			const pkgs = await getInstalledPackages();
+			return pkgs;
+		} catch (error) {
+			console.error(error);
+			return [];
+		}
 	});
 
 	ipcMain.handle("get-session", async () => {
