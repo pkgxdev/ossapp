@@ -28,7 +28,7 @@
 	};
 </script>
 
-<section class="sorting-container font-machina bg-black text-gray">
+<section class="sorting-container bg-black text-gray">
 	<div class="dropdown">
 		<div class="dropdown-title">{$t("sorting.label")}</div>
 		<ul class="dropdown-content column flex">

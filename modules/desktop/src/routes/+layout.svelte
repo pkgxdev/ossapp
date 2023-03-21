@@ -45,7 +45,7 @@
 	});
 </script>
 
-<div id="main-layout" class={`${$sideNavOpen ? "w-3/4" : "w-full"} transition-all`}>
+<div id="main-layout" class={`${$sideNavOpen ? "w-3/4" : "w-full"} transition-all font-inter`}>
 	<TopBar />
 	{#each $notificationStore as notification}
 		<Notification

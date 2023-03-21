@@ -19,7 +19,7 @@
 		<img class="h-24 w-full object-cover" src={content.img_url} alt={content.title} />
 	</figure>
 	<article class="p-4">
-		<p class="font-sono text-xs line-clamp-3">{content.copy}</p>
+		<p class="text-xs line-clamp-3">{content.copy}</p>
 		{#if content.link}
 			<a href={content.link || "#"}>
 				<button class="mt-2 text-primary">{content.cta_label}</button>

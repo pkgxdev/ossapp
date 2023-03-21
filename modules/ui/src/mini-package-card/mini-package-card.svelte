@@ -13,7 +13,7 @@
 	};
 </script>
 
-<section class="box-content flex h-24 w-full border border-gray font-sono">
+<section class="box-content flex h-24 w-full border border-gray">
 	<figure class="relative w-24">
 		<ImgLoader
 			class="pkg-image object-contain"
@@ -41,10 +41,10 @@
 		</div>
 		{#if link}
 			<a href={link}>
-				<button class="h-6 w-full font-machina text-xs">{ctaLabel}</button>
+				<button class="h-6 w-full text-xs">{ctaLabel}</button>
 			</a>
 		{:else}
-			<button class="h-6 w-full font-machina text-xs" on:click={onClickCTA}>{ctaLabel}</button>
+			<button class="h-6 w-full text-xs" on:click={onClickCTA}>{ctaLabel}</button>
 		{/if}
 	</footer>
 </section>

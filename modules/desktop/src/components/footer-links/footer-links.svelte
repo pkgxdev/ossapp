@@ -4,7 +4,7 @@
 	import * as pub from '$env/static/public';
 </script>
 
-<footer class="font-machina relative h-auto w-full bg-black">
+<footer class="relative h-auto w-full bg-black">
 	<section class="p-4 px-16 py-16">
 		<h3 class="text-primary mb-5 text-2xl">{$t("footer.quick-links-title").toUpperCase()}</h3>
 		<menu class="flex gap-4">
@@ -70,23 +70,6 @@
 
 <style>
 	h3 {
-		font-family: 'pp-neue-machina', sans-serif;
 		color: #00ffd0;
-	}
-
-	p,
-	.nav-item {
-		font-family: 'sono', sans-serif;
-		color: #ffffff;
-	}
-
-	.list-group-item {
-		font-family: 'pp-neue-machina', sans-serif;
-		text-transform: uppercase;
-		transition: 0.1s ease-in;
-	}
-
-	.list-group-item:hover {
-		padding-left: 1vw;
 	}
 </style>

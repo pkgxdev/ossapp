@@ -48,7 +48,7 @@
 	}
 
 	section input {
-		font-family: "pp-neue-machina", sans-serif;
+		font-family: "mona-sans", sans-serif;
 		color: #00ffd0;
 		margin-bottom: -5px;
 		min-width: 60%;

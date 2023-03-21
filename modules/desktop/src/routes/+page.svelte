@@ -20,7 +20,7 @@
 </div>
 <SideMenu bind:activeOption={sideMenuOption}/>
 <header class={`transition-all px-2 flex justify-between items-center align-middle ${$sideNavOpen ? "min": ""} ${$notificationStore.length ? "lower": ""}`}>
-	<h1 class="text-primary mt-4 pl-3 text-2xl font-bold">{$t(`side-menu-title.${sideMenuOption}`)}</h1>
+	<h1 class="text-primary mt-4 pl-3 text-2xl font-bold font-mona">{$t(`side-menu-title.${sideMenuOption}`)}</h1>
 	<section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">
 		<SortingButtons onSort={(prop, dir) => {
 			sortBy = prop;

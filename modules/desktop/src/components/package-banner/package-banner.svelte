@@ -44,7 +44,7 @@
 					<span>{pkg.homepage}</span>
 				</a>
 			{/if}
-			<p class="font-sono mt-4 text-sm">{pkg.desc}</p>
+			<p class="mt-4 text-sm">{pkg.desc}</p>
 			<menu class="h-10 grid grid-cols-2 gap-4 mt-4 text-xs">
 				{#if pkg.state === PackageStates.INSTALLED}
 					<Button type="plain" color="primary">
