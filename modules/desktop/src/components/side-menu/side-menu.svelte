@@ -61,7 +61,7 @@
 <style>
 	aside {
 		position: fixed;
-		top: 40px;
+		top: 48px;
 		left: 0px;
 		height: calc(100% - 40px);
 		width: 190px;

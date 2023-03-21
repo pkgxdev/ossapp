@@ -38,7 +38,7 @@
 
 	header {
 		position: fixed;
-		top: 40px;
+		top: 48px;
 		left: 190px;
 		height: 50px;
 		width: calc(100% - 190px);

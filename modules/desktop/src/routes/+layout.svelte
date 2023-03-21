@@ -80,7 +80,7 @@
 		overflow: hidden;
 	}
 	section {
-		height: calc(100vh - 42px);
+		height: calc(100vh - 50px);
 		overflow-y: scroll;
 		box-sizing: border-box;
 	}
