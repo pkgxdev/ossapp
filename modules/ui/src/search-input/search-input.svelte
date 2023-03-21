@@ -48,7 +48,6 @@
 	}
 
 	section input {
-		font-family: "mona-sans", sans-serif;
 		color: #00ffd0;
 		margin-bottom: -5px;
 		min-width: 60%;
