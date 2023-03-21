@@ -3,6 +3,7 @@ import { ipcMain } from "electron";
 import { getInstalledPackages } from "./tea-dir";
 import { readSessionData, writeSessionData } from "./auth";
 import type { Session } from "../../src/libs/types";
+import * as log from "electron-log";
 
 import { installPackage, openTerminal } from "./cli";
 
@@ -15,22 +16,41 @@ export const setProtocolPath = (path: string) => {
 
 export default function initializeHandlers() {
 	ipcMain.handle("get-installed-packages", async () => {
-		const pkgs = await getInstalledPackages();
-		return pkgs;
+		try {
+			const pkgs = await getInstalledPackages();
+			return pkgs;
+		} catch (error) {
+			log.error(error);
+			return [];
+		}
 	});
 
 	ipcMain.handle("get-session", async () => {
-		const session = await readSessionData();
-		return session;
+		try {
+			const session = await readSessionData();
+			return session;
+		} catch (error) {
+			log.error(error);
+			return {};
+		}
 	});
 
 	ipcMain.handle("update-session", async (_, data) => {
-		await writeSessionData(data as Session);
+		try {
+			await writeSessionData(data as Session);
+		} catch (error) {
+			log.error(error);
+		}
 	});
 
 	ipcMain.handle("install-package", async (_, data) => {
-		const result = await installPackage(data.full_name);
-		return result;
+		try {
+			const result = await installPackage(data.full_name);
+			return result;
+		} catch (error) {
+			log.error(error);
+			return error;
+		}
 	});
 
 	ipcMain.handle("open-terminal", async (_, data) => {
@@ -45,8 +65,12 @@ export default function initializeHandlers() {
 	});
 
 	ipcMain.handle("relaunch", async () => {
-		const autoUpdater = getUpdater();
-		await autoUpdater.quitAndInstall();
+		try {
+			const autoUpdater = getUpdater();
+			await autoUpdater.quitAndInstall();
+		} catch (error) {
+			log.error(error);
+		}
 	});
 
 	ipcMain.handle("get-protocol-path", async () => {
