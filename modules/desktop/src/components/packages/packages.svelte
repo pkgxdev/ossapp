@@ -1,8 +1,9 @@
 <script lang="ts">
 	import '$appcss';
-	import { t } from '$libs/translations';
+	// import { t } from '$libs/translations';
 	import type { GUIPackage } from '$libs/types';
-	import { PackageStates } from '$libs/types';
+	import moment from "moment";
+	import { PackageStates, SideMenuOptions } from '$libs/types';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import Package from "./package.svelte";
 	import { packagesStore } from '$libs/stores';
@@ -11,14 +12,33 @@
 	import { trackInstall, trackInstallFailed } from '$libs/analytics';
 
 	const { packages: allPackages } = packagesStore;
+	export let packageFilter: SideMenuOptions = SideMenuOptions.all;
 
-	export let stateFilters: {[key: string]: boolean};
 	export let sortBy: "popularity" | "most recent" = 'popularity';
 	export let sortDirection: 'asc' | 'desc' = 'desc';
 
 	const loadMore = 9;
 	let limit = loadMore;
-	$: filterExists = Object.keys(stateFilters).some((k) => stateFilters[k]);
+
+	// TODO: figure out a better type strategy here so that this breaks if SideMenuOptions is updated
+	const pkgFilters: { [key:string]: (pkg: GUIPackage) => boolean } = {
+		[SideMenuOptions.all]: (_pkg: GUIPackage) => true,
+		[SideMenuOptions.installed]: (pkg: GUIPackage) => pkg.state === PackageStates.INSTALLED,
+		[SideMenuOptions.installed_updates_available]: (pkg: GUIPackage) => pkg.state === PackageStates.NEEDS_UPDATE,
+		[SideMenuOptions.recently_updated]: (pkg: GUIPackage) => {
+			return moment(pkg.last_modified).isAfter(moment().subtract(30, "days"));
+		},
+		[SideMenuOptions.new_packages]: (_pkg: GUIPackage) => {
+			// todo: use pkg.created_at but its depends on https://github.com/teaxyz/kettle/issues/119
+			return true;
+		},
+		[SideMenuOptions.popular]: (pkg: GUIPackage) => pkg.categories.includes(SideMenuOptions.popular),
+		[SideMenuOptions.featured]: (pkg: GUIPackage) => pkg.categories.includes(SideMenuOptions.featured),
+		[SideMenuOptions.essentials]: (pkg: GUIPackage) => pkg.categories.includes(SideMenuOptions.essentials),
+		[SideMenuOptions.star_struct]: (pkg: GUIPackage) => pkg.categories.includes(SideMenuOptions.star_struct),
+		[SideMenuOptions.made_by_tea]: (pkg: GUIPackage) => pkg.full_name.includes("tea.xyz"),
+	}
+
 	$: packages = $allPackages
 		.sort((a, b) => {
 			if (sortBy === 'popularity') {
@@ -32,20 +52,9 @@
 				return sortDirection === 'asc' ? +aDate - +bDate : +bDate - +aDate;
 			}
 		})
-		.filter((pkg) => {
-			if (!filterExists || pkg.state === PackageStates.INSTALLING) return true;
-			return stateFilters[pkg.state];
-		});
+		.filter(pkgFilters[packageFilter] || pkgFilters.all);
 </script>
 
-<!-- <header class="flex items-center justify-between z-50 w-full absolute">
-	<h1 class="text-primary text-4xl font-bold">{$t("home.all-packages")}</h1>
-	<div class="flex">
-		<section class="border-gray h-10 w-48 border rounded-sm">
-			<SortingButtons {onSort} />
-		</section>
-	</div>
-</header> -->
 <div>
 	<ul class="grid grid-cols-3 gap-2 bg-black">
 		{#if packages.length > 0}

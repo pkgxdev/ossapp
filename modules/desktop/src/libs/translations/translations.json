@@ -76,6 +76,18 @@
 		"notification": {
 			"gui-downloading": "A new tea gui({{version}}) is being downloaded. Please don't close the app.",
 			"gui-downloaded": "A new tea gui({{version}}) is now available. Relaunch the app to update."
+		},
+		"side-menu-title": {
+			"all": "All Packages",
+			"installed": "Installed Packages",
+			"installed_updates_available": "Available Updates",
+			"recently_updated": "Recently Updated",
+			"new_packages": "New Packages",
+			"popular": "Popular",
+			"featured": "Featured",
+			"essentials": "Essentials",
+			"star_struct": "Star-struct Heavyweights",
+			"made_by_tea": "Made by Tea.xyz"
 		}
 	}
 }

@@ -51,3 +51,16 @@ export interface Session {
 	user?: Developer;
 	locale?: string;
 }
+
+export enum SideMenuOptions {
+	all = "all",
+	installed = "installed",
+	installed_updates_available = "installed_updates_available",
+	recently_updated = "recently_updated",
+	new_packages = "new_packages",
+	popular = "popular",
+	featured = "featured",
+	essentials = "essentials",
+	star_struct = "star_struct",
+	made_by_tea = "made_by_tea"
+}
