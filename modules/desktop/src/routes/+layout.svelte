@@ -1,19 +1,14 @@
 <script lang="ts">
 	import '$appcss';
 	import { goto } from '$app/navigation';
-	import { t } from "$libs/translations";
 	import { navigating } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
 	import TopBar from '$components/top-bar/top-bar.svelte';
 	import SideBar from '$components/side-bar/side-bar.svelte';
-	import { navStore, notificationStore } from '$libs/stores';
+	import { navStore } from '$libs/stores';
 	import { listenToChannel } from "@native";
 
-	import Notification from "@tea/ui/notification/notification.svelte";
-
 	import SearchPopupResults from '$components/search-popup-results/search-popup-results.svelte';
-
-  import TeaUpdate from '$components/tea-update/tea-update.svelte';
 	import { getProtocolPath } from '@native';
 
   import { onMount } from 'svelte';
@@ -47,22 +42,7 @@
 
 <div id="main-layout" class={`${$sideNavOpen ? "w-3/4" : "w-full"} transition-all font-inter`}>
 	<TopBar />
-	{#each $notificationStore as notification}
-		<Notification
-			notification={{
-				...notification,
-				// TODO this looks nasty but cleanup later.
-				message: notification.i18n_key ? $t(notification.i18n_key, notification.params) : notification.message
-			}}
-				onClose={() => {
-				notificationStore.remove(notification.id);
-			}}
-		/>
-	{/each}
 	<section class="relative pt-4" bind:this={view}>
-		<div class="content">
-			<TeaUpdate />
-		</div>
 		<div class="content p-2">
 			<slot/>
 		</div>

@@ -9,7 +9,7 @@
 	export let onClose: () => void;
 </script>
 
-<div class=" flex w-full items-center justify-between bg-accent px-4 py-2">
+<div class=" flex w-full items-center justify-between rounded-md bg-accent px-4 py-2">
 	<div class="text-white">{notification.message}</div>
 	<div class="flex items-center gap-4">
 		{#if notification.callback}
