@@ -15,7 +15,7 @@
 
 <button
 	type="button"
-	class={`w-full p-2 font-machina text-gray ${clazz} ${active ? "active" : ""} ${type} ${color} ${
+	class={`w-full p-2 text-gray ${clazz} ${active ? "active" : ""} ${type} ${color} ${
 		loading ? "animate-pulse" : ""
 	}`}
 	on:click={() => onClick && onClick()}

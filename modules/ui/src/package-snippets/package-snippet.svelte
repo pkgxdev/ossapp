@@ -35,10 +35,10 @@
 		<h3>{snippet.user}/{snippet.files[0].name}</h3>
 		<date class="text-xs">{snippet.created_at}</date>
 	</article>
-	<p class="font-machina text-xs text-primary">{snippet.files.length} file/s</p>
-	<p class="font-machina text-xs text-primary">{snippet.forks.length} forks</p>
-	<p class="font-machina text-xs text-primary">{snippet.comments.length} comments</p>
-	<p class="font-machina text-xs text-primary">{snippet.stars} stars</p>
+	<p class="text-xs text-primary">{snippet.files.length} file/s</p>
+	<p class="text-xs text-primary">{snippet.forks.length} forks</p>
+	<p class="text-xs text-primary">{snippet.comments.length} comments</p>
+	<p class="text-xs text-primary">{snippet.stars} stars</p>
 </header>
 {#if active}
 	<section class="mt-4">

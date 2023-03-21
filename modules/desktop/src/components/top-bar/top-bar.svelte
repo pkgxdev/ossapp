@@ -21,9 +21,9 @@
 	});
 </script>
 
-<header class="border-gray flex w-full border border-l-0 border-r-0 h-10" style="-webkit-app-region: drag">
+<header class="border-gray flex items-center w-full border border-l-0 border-r-0 h-12" style="-webkit-app-region: drag">
 	<div class="w-16 mr-2">
-		<!-- just spacing for the close/expand/ buttons in title bar
+		<!-- just spacing for the traffice-lights buttons in title bar
 			todo: handle this different when on linux probably move to right
 		-->
 	</div>
@@ -33,9 +33,9 @@
 			<button on:click={navStore.next} class={$nextPath ? 'active' : ''}>&#8594</button>
 		</ul>
 	{/if}
-	<div class="p-1 flex-grow h-8">
+	<div class="px-2 flex-grow">
 		<SearchInput
-			class="w-full border border-gray rounded-sm"
+			class="w-full border border-gray rounded-sm h-9"
 			size="small"
 			placeholder={`${$t("store-search-placeholder")} rm this v${pub.PUBLIC_VERSION}`}
 			{onSearch}
@@ -48,6 +48,11 @@
 	@tailwind base;
 	@tailwind components;
 	@tailwind utilities;
+
+	header {
+		background: rgba(26,26,26,0.9);
+		backdrop-filter: blur(2px);
+	}
 
 	ul button {
 		pointer-events: none;

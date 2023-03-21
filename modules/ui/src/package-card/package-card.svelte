@@ -21,7 +21,7 @@
 	<a href={link}>
 		<figure class="relative">
 			<ImgLoader
-				class="pkg-image object-cover font-sono"
+				class="pkg-image object-cover"
 				src={!pkg.thumb_image_url.includes("https://tea.xyz")
 					? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
 					: pkg.thumb_image_url}
@@ -29,7 +29,7 @@
 			/>
 		</figure>
 		<article class="card-thumb-label">
-			<h3 class="text-bold text-xl font-bold text-white">{pkg.name}</h3>
+			<h3 class="text-bold font-mona text-xl font-bold text-white">{pkg.name}</h3>
 			{#if pkg.maintainer}
 				<h4 class="text-sm font-light">&#x2022;&nbsp;{pkg.maintainer}</h4>
 			{/if}
@@ -49,7 +49,7 @@
 			</p>
 		</div>
 		<Button
-			class="h-8 w-1/2 border border-gray p-2 font-machina text-xs"
+			class="h-8 w-1/2 border border-gray p-2 text-xs"
 			onClick={onClickCTA}
 			type={ctaType}
 			color={ctaColor}

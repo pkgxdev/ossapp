@@ -25,14 +25,14 @@ module.exports = {
 		},
 		extend: {
 			fontFamily: {
-				sono: ["sono", "sans-serif"],
-				machina: ["pp-neue-machina", "sans-serif"]
+				inter: ["inter", "sans-serif"],
+				mona: ["mona-sans", "sans-serif"]
 			},
 			typography: {
 				excerpt: {
 					css: {
 						p: {
-							fontFamily: "font-machina",
+							fontFamily: "font-inter",
 							fontSize: "font-2xl"
 						}
 					}

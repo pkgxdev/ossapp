@@ -23,7 +23,7 @@
 						src={article.thumb_image_url}
 						alt={article.title}
 					/>
-					<section class="flex-grow p-4 font-sono">
+					<section class="flex-grow p-4">
 						<ul class="mb-4 flex">
 							{#each article.tags as tag}
 								<li

@@ -29,7 +29,7 @@
 </script>
 
 <header class="border-gray text-primary border bg-black p-4">REVIEWS ({reviews.length})</header>
-<section class="font-machina flex flex-row flex-wrap bg-black">
+<section class="flex flex-row flex-wrap bg-black">
 	<div class="border-gray w-1/3 border-0 border-l-2 border-b-2 p-4">
 		{#each col1 as review}
 			<ReviewCard {review} />

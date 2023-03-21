@@ -15,7 +15,7 @@
 			{versions.length} version{versions.length === 1 ? "" : "s"} bottled
 		</h4>
 	</div>
-	<table class="w-full table-auto border border-gray font-sono">
+	<table class="w-full table-auto border border-gray">
 		<thead>
 			<tr>
 				<th class="border border-gray px-2 py-4">version</th>

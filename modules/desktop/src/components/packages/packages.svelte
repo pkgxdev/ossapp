@@ -40,19 +40,19 @@
 	}
 
 	$: packages = $allPackages
+		.filter(pkgFilters[packageFilter] || pkgFilters.all)
 		.sort((a, b) => {
-			if (sortBy === 'popularity') {
+			if (sortBy === "popularity") {
 				const aPop = +a.dl_count + a.installs;
 				const bPop = +b.dl_count + b.installs;
-				return sortDirection === 'asc' ? aPop - bPop : bPop - aPop;
+				return sortDirection === "asc" ? aPop - bPop : bPop - aPop;
 			} else {
 				// most recent
 				const aDate = new Date(a.last_modified);
 				const bDate = new Date(b.last_modified);
-				return sortDirection === 'asc' ? +aDate - +bDate : +bDate - +aDate;
+				return sortDirection === "asc" ? +aDate - +bDate : +bDate - +aDate;
 			}
-		})
-		.filter(pkgFilters[packageFilter] || pkgFilters.all);
+		});
 </script>
 
 <div>

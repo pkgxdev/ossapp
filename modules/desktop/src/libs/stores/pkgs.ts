@@ -7,6 +7,18 @@ import { getPackage, getPackageBottles } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 import semverCompare from "semver/functions/compare";
+import { notificationStore } from "../stores";
+import { openTerminal } from "@native";
+import { NotificationType } from "@tea/ui/types";
+
+const installTea = async () => {
+	console.log("installing tea...");
+	try {
+		openTerminal(`sh <(curl https://tea.xyz)`);
+	} catch (error) {
+		console.log("install failed");
+	}
+};
 
 export default function initPackagesStore() {
 	let initialized = false;
@@ -22,8 +34,11 @@ export default function initPackagesStore() {
 				keys: ["name", "full_name", "desc", "categories"]
 			});
 
+			const teaCliName = "tea.xyz";
 			pkgs.forEach((pkg) => {
-				if (pkg.state === PackageStates.INSTALLED) {
+				if (pkg.full_name === teaCliName) {
+					syncTeaCliPackage(pkg);
+				} else if (pkg.state === PackageStates.INSTALLED) {
 					syncPackageBottlesAndState(pkg.full_name);
 				}
 			});
@@ -73,32 +88,65 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		updatePackage(guiPkg.full_name!, updatedPackage);
 	};
 
-	const syncPackageBottlesAndState = async (pkgName: string) => {
+	const syncPackageBottlesAndState = async (pkgName: string): Promise<GUIPackage | void> => {
 		const bottles = await getPackageBottles(pkgName);
+		return new Promise((resolve) => {
+			packages.update((pkgs) => {
+				const i = pkgs.findIndex((pkg) => pkg.full_name === pkgName);
+				if (i >= 0) {
+					const pkg = pkgs[i];
 
-		packages.update((pkgs) => {
-			const i = pkgs.findIndex((pkg) => pkg.full_name === pkgName);
-			if (i >= 0) {
-				const pkg = pkgs[i];
+					const availableVersionsRaw = bottles
+						.map(({ version }) => version)
+						.sort((a, b) => semverCompare(b, a));
 
-				const availableVersions = bottles
-					.map(({ version }) => version)
-					.sort((a, b) => semverCompare(b, a));
+					const availableVersions = new Set(availableVersionsRaw);
 
-				const installedVersions =
-					pkg?.installed_versions?.sort((a, b) => semverCompare(b, a)) || [];
+					const installedVersions =
+						pkg?.installed_versions?.sort((a, b) => semverCompare(b, a)) || [];
 
-				pkgs[i] = {
-					...pkg,
-					available_versions: availableVersions,
-					state:
-						availableVersions[0] === installedVersions[0]
-							? PackageStates.INSTALLED
-							: PackageStates.NEEDS_UPDATE
-				};
-			}
-			return pkgs;
+					const it = availableVersions.values();
+					const latestVersion = it.next().value;
+
+					pkgs[i] = {
+						...pkg,
+						available_versions: Array.from(availableVersions),
+						state:
+							latestVersion === installedVersions[0]
+								? PackageStates.INSTALLED
+								: PackageStates.NEEDS_UPDATE
+					};
+
+					resolve(pkgs[i]);
+				} else {
+					resolve();
+				}
+				return pkgs;
+			});
 		});
+	};
+
+	const syncTeaCliPackage = async (cliPkg: GUIPackage) => {
+		const updatedPkg = await syncPackageBottlesAndState(cliPkg.full_name);
+		if (updatedPkg && updatedPkg.state === PackageStates.INSTALLED) return;
+
+		if (!updatedPkg || updatedPkg.state === PackageStates.AVAILABLE) {
+			notificationStore.add({
+				message: "install cli",
+				i18n_key: "package.install-tea-cli",
+				type: NotificationType.ACTION_BANNER,
+				callback: installTea,
+				callback_label: "INSTALL"
+			});
+		} else if (updatedPkg.state === PackageStates.NEEDS_UPDATE) {
+			notificationStore.add({
+				message: "install cli",
+				i18n_key: "package.update-tea-cli",
+				type: NotificationType.ACTION_BANNER,
+				callback: installTea,
+				callback_label: "UPDATE"
+			});
+		}
 	};
 
 	return {
