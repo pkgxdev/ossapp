@@ -139,3 +139,21 @@
 .icon-world:before {
 	content: "\48";
 }
+.icon-update:before {
+	content: "\49";
+}
+.icon-back-in-time:before {
+	content: "\4a";
+}
+.icon-bar-chart:before {
+	content: "\4b";
+}
+.icon-lightbulb:before {
+	content: "\4c";
+}
+.icon-square:before {
+	content: "\4d";
+}
+.icon-birthday-cake:before {
+	content: "\4e";
+}
