@@ -4,10 +4,11 @@
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import Package from "$components/packages/package.svelte";
 	import { PackageStates } from '$libs/types';
+	import PackageResult from "./package-search-result.svelte";
 	// import Posts from '@tea/ui/posts/posts.svelte';
 
 	import { installPackage } from '@native';
-	import type { AirtablePost } from '@tea/ui/types';
+	// import type { AirtablePost } from '@tea/ui/types';
 	let term: string;
 	let packages: GUIPackage[] = [];
 	// let articles: AirtablePost[] = []; // news, blogs, etc
@@ -60,11 +61,11 @@
 		<header class="text-primary p-4 text-lg">
 			Top Package Results ({packages.length})
 		</header>
-		<ul class="grid grid-cols-3 gap-2">
+		<ul class="flex flex-col gap-2 p-2">
 			{#if packages.length > 0}
 				{#each packages as pkg}
 					<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
-						<Package
+						<PackageResult
 							{pkg}
 							onClick={async () => {
 								try {
