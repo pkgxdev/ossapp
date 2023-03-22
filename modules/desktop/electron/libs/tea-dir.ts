@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { app } from "electron";
 import semver from "semver";
+import * as log from "electron-log";
 
 type Dir = {
 	name: string;
@@ -22,7 +23,7 @@ export const getGuiPath = () => {
 
 export async function getInstalledPackages() {
 	const pkgsPath = getTeaPath();
-
+	log.info("recusively reading:", pkgsPath);
 	const folders = await deepReadDir({
 		dir: pkgsPath,
 		continueDeeper: (name: string) => !semver.valid(name),
@@ -40,6 +41,7 @@ export async function getInstalledPackages() {
 			};
 		});
 
+	log.info("found installed packages:", pkgs.length);
 	return pkgs;
 }
 
@@ -47,6 +49,7 @@ const semverTest =
 	/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/g;
 
 export const getPkgBottles = (packageDir: Dir): string[] => {
+	log.info("getting installed bottle for ", packageDir);
 	const bottles: string[] = [];
 
 	const pkg = packageDir.path.split(".tea/")[1];
@@ -63,7 +66,10 @@ export const getPkgBottles = (packageDir: Dir): string[] => {
 		bottles.push(...childBottles);
 	}
 
-	return bottles.filter((b) => b !== undefined).sort(); // ie: ["gohugo.io/v*", "gohugo.io/v0", "gohugo.io/v0.108", "gohugo.io/v0.108.0"]
+	const foundBottles = bottles.filter((b) => b !== undefined).sort(); // ie: ["gohugo.io/v*", "gohugo.io/v0", "gohugo.io/v0.108", "gohugo.io/v0.108.0"]
+
+	log.info(`Found ${foundBottles.length} bottles from `, packageDir);
+	return foundBottles;
 };
 
 const deepReadDir = async ({
@@ -91,7 +97,7 @@ const deepReadDir = async ({
 			}
 		}
 	} catch (e) {
-		console.log(e);
+		log.error(e);
 	}
 	return arrayOfFiles;
 };
