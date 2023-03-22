@@ -8,10 +8,9 @@ export default function initialize(mainWindow: BrowserWindow) {
 	Pushy.listen();
 	// Register device for push notifications
 	Pushy.register({ appId: "64110fb47446e48a2a0e906d" })
-		.then(async (token) => {
+		.then(async (push_token) => {
 			const { device_id } = await readSessionData();
-			if (device_id)
-				await post(`/auth/device/${device_id}/register-push-token`, { push_token: token });
+			if (device_id) await post(`/auth/device/${device_id}/register-push-token`, { push_token });
 		})
 		.catch((err) => {
 			log.error(err);

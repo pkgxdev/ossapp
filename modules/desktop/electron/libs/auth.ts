@@ -9,7 +9,7 @@ import * as log from "electron-log";
 const sessionFilePath = path.join(getTeaPath(), "tea.xyz/gui/tmp.dat");
 const sessionFolder = path.join(getTeaPath(), "tea.xyz/gui");
 
-interface Session {
+export interface Session {
 	device_id?: string;
 	key?: string;
 	user?: any;
