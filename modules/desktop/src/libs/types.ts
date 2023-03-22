@@ -42,7 +42,7 @@ export enum AuthStatus {
 
 export type DeviceAuth = {
 	status: AuthStatus;
-	user: Developer;
+	user?: Developer;
 	key: string;
 };
 export interface Session {

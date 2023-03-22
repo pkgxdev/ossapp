@@ -50,6 +50,7 @@ export async function openTerminal(cmd: string) {
 	try {
 		// TODO SECURITY: escape the cmd if possible or create whitelist of acceptable commands
 		scriptPath = await createCommandScriptFile(cmd);
+		if (!scriptPath) throw new Error("unable to create Applse Script");
 		let stdout = ``;
 		let stderr = ``;
 
@@ -72,33 +73,38 @@ export async function openTerminal(cmd: string) {
 			});
 		});
 	} catch (error) {
-		console.error("root:", error);
+		log.error("openTerminal:", error);
 	} finally {
 		if (scriptPath) await fs.unlinkSync(scriptPath);
 	}
 }
 
 const createCommandScriptFile = async (cmd: string): Promise<string> => {
-	const guiFolder = getGuiPath();
-	const tmpFilePath = path.join(guiFolder, `${+new Date()}.scpt`);
-	const command = `"${cmd.replace(/"/g, '\\"')}"`;
-	const script = `
-		tell application "iTerm"
-			activate
-			if application "iTerm" is running then
-					try
-							tell the first window to create tab with default profile
-					on error
-							create window with default profile
-					end try
-			end if
+	try {
+		const guiFolder = getGuiPath();
+		const tmpFilePath = path.join(guiFolder, `${+new Date()}.scpt`);
+		const command = `"${cmd.replace(/"/g, '\\"')}"`;
+		const script = `
+			tell application "iTerm"
+				activate
+				if application "iTerm" is running then
+						try
+								tell the first window to create tab with default profile
+						on error
+								create window with default profile
+						end try
+				end if
+	
+				delay 0.1
+	
+				tell the first window to tell current session to write text ${command}
+			end tell
+		`.trim();
 
-			delay 0.1
-
-			tell the first window to tell current session to write text ${command}
-		end tell
-	`.trim();
-
-	await fs.writeFileSync(tmpFilePath, script, "utf-8");
-	return tmpFilePath;
+		await fs.writeFileSync(tmpFilePath, script, "utf-8");
+		return tmpFilePath;
+	} catch (error) {
+		log.error(error);
+		return "";
+	}
 };

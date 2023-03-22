@@ -40,6 +40,8 @@ jobs:
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
     steps:
       - uses: teaxyz/setup@v0
+        with:
+          version: 0.25.0
       - uses: actions/checkout@v3
 
       - name: get gui version
@@ -156,6 +158,8 @@ jobs:
           - darwin+aarch64
     steps:
     - uses: teaxyz/setup@v0
+      with:
+        version: 0.25.0
     - uses: actions/checkout@v3
     - run: rm -rf ./*.{dmg,zip} || true
 

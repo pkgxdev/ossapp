@@ -17,7 +17,9 @@ export const setProtocolPath = (path: string) => {
 export default function initializeHandlers() {
 	ipcMain.handle("get-installed-packages", async () => {
 		try {
+			log.info("getting installed packages");
 			const pkgs = await getInstalledPackages();
+			log.info(`got installed packages: ${pkgs.length}`);
 			return pkgs;
 		} catch (error) {
 			log.error(error);
@@ -27,7 +29,9 @@ export default function initializeHandlers() {
 
 	ipcMain.handle("get-session", async () => {
 		try {
+			log.info("getting session");
 			const session = await readSessionData();
+			log.info(session ? "found session data" : "no session data found");
 			return session;
 		} catch (error) {
 			log.error(error);
@@ -37,6 +41,7 @@ export default function initializeHandlers() {
 
 	ipcMain.handle("update-session", async (_, data) => {
 		try {
+			log.info("updating session data with", data); // rm this
 			await writeSessionData(data as Session);
 		} catch (error) {
 			log.error(error);
@@ -45,6 +50,7 @@ export default function initializeHandlers() {
 
 	ipcMain.handle("install-package", async (_, data) => {
 		try {
+			log.info("installing package:", data.full_name);
 			const result = await installPackage(data.full_name);
 			return result;
 		} catch (error) {
@@ -58,9 +64,10 @@ export default function initializeHandlers() {
 		try {
 			// TODO: detect if mac or linux
 			// current openTerminal is only design for Mac
+			log.info("open terminal w/ cmd:", cmd);
 			await openTerminal(cmd);
 		} catch (error) {
-			console.error("elast:", error);
+			log.error(error);
 		}
 	});
 

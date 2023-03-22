@@ -53,7 +53,7 @@ export default function initAuthStore() {
 							key: data.key,
 							user: data.user
 						});
-						user.set(data.user);
+						user.set(data.user!);
 						timer && clearInterval(timer);
 						timer = null;
 					}

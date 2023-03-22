@@ -229,31 +229,6 @@ function delay(ms: number) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export async function getFeaturedCourses(): Promise<Course[]> {
-	const mockCourses: Course[] = [
-		{
-			title: "Developing With Tea",
-			sub_title: "by Mxcl",
-			link: "#",
-			banner_image_url: "https://tea.xyz/Images/packages/mesonbuild_com.jpg"
-		},
-		{
-			title: "Brewing Tea",
-			sub_title: "by Mxcl",
-			link: "#",
-			banner_image_url: "https://tea.xyz/Images/packages/tea_xyz_gx_cc.jpg"
-		},
-		{
-			title: "Harvesting Tea",
-			sub_title: "by Mxcl",
-			link: "#",
-			banner_image_url: "https://tea.xyz/Images/packages/ipfs_tech.jpg"
-		}
-	];
-
-	return mockCourses;
-}
-
 export async function getTopPackages(): Promise<GUIPackage[]> {
 	await delay(500);
 	return packages.slice(0, 9).map((pkg) => {
@@ -309,30 +284,6 @@ export async function getAllPosts(type: string): Promise<AirtablePost[]> {
 	];
 
 	return posts;
-}
-
-export async function getCategorizedPackages(): Promise<Category[]> {
-	const mockPackages = packages.slice(0, 9).map((pkg) => ({
-		...pkg,
-		state: PackageStates.AVAILABLE
-	}));
-	return [
-		{
-			label: "framework essentials",
-			cta_label: "View all essentials >",
-			packages: mockPackages
-		},
-		{
-			label: "star-struck heavyweights",
-			cta_label: "View all star-strucks >",
-			packages: mockPackages
-		},
-		{
-			label: "simply delightful",
-			cta_label: "View all delightful packages >",
-			packages: mockPackages
-		}
-	];
 }
 
 export async function getDeviceAuth(deviceId: string): Promise<any> {
