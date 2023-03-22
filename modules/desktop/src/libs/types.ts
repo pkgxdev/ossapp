@@ -64,3 +64,5 @@ export enum SideMenuOptions {
 	star_struct = "star_struct",
 	made_by_tea = "made_by_tea"
 }
+
+export type InstalledPackage = { version: string; full_name: string };

@@ -16,7 +16,7 @@ import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
 import { type GUIPackage, type DeviceAuth, type Session, AuthStatus } from "./types";
 
 import * as mock from "./native-mock";
-import { PackageStates } from "./types";
+import { PackageStates, type InstalledPackage } from "./types";
 import { installPackageCommand } from "./native/cli";
 
 import { get as apiGet } from "$libs/v1-client";
@@ -26,7 +26,7 @@ const log = window.require("electron-log");
 const { ipcRenderer, shell } = window.require("electron");
 
 let retryLimit = 0;
-async function getDistPackages(): Promise<Package[]> {
+export async function getDistPackages(): Promise<Package[]> {
 	let packages: Package[] = [];
 	try {
 		const req = await axios.get<Package[]>(
@@ -39,13 +39,26 @@ async function getDistPackages(): Promise<Package[]> {
 		log.error("getDistPackagesList:", error);
 		if (retryLimit < 3) packages = await getDistPackages();
 	}
+	retryLimit = 0;
 	return packages;
+}
+
+export async function getInstalledPackages(): Promise<InstalledPackage[]> {
+	let pkgs: InstalledPackage[] = [];
+	try {
+		log.info("getting installed packages");
+		pkgs = (await ipcRenderer.invoke("get-installed-packages")) as InstalledPackage[];
+		log.info("got installed packages:", pkgs.length);
+	} catch (error) {
+		log.error(error);
+	}
+	return pkgs;
 }
 
 export async function getPackages(): Promise<GUIPackage[]> {
 	const [packages, installedPackages] = await Promise.all([
 		getDistPackages(),
-		ipcRenderer.invoke("get-installed-packages") as { version: string; full_name: string }[]
+		ipcRenderer.invoke("get-installed-packages") as InstalledPackage[]
 	]);
 
 	// sorts all packages from highest -> lowest

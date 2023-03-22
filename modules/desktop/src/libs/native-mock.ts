@@ -167,6 +167,11 @@ const packages: Package[] = [
 	}
 ];
 
+export const getInstalledPackages = () => [];
+export async function getDistPackages(): Promise<Package[]> {
+	return packages;
+}
+
 export async function getPackages(): Promise<GUIPackage[]> {
 	return packages.map((pkg) => {
 		return {

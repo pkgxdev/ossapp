@@ -1,14 +1,19 @@
 import { writable } from "svelte/store";
 import type { GUIPackage } from "../types";
 import { PackageStates } from "../types";
-import { getPackages } from "@native";
+// import { getPackages } from "@native";
 import Fuse from "fuse.js";
-import { getPackage, getPackageBottles } from "@native";
+import {
+	getPackage,
+	getDistPackages,
+	getPackageBottles,
+	openTerminal,
+	getInstalledPackages
+} from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 import semverCompare from "semver/functions/compare";
 import { notificationStore } from "../stores";
-import { openTerminal } from "@native";
 import { NotificationType } from "@tea/ui/types";
 
 const log = window.require("electron-log");
@@ -30,19 +35,43 @@ export default function initPackagesStore() {
 
 	if (!initialized) {
 		initialized = true;
-		getPackages().then(async (pkgs) => {
-			packages.set(pkgs);
-			packagesIndex = new Fuse(pkgs, {
+		getDistPackages().then(async (pkgs) => {
+			const guiPkgs: GUIPackage[] = pkgs.map((p) => ({
+				...p,
+				state: PackageStates.AVAILABLE
+			}));
+
+			packages.set(guiPkgs);
+			log.info("initialized packages store with ", guiPkgs.length);
+			packagesIndex = new Fuse(guiPkgs, {
 				keys: ["name", "full_name", "desc", "categories"]
 			});
 
 			try {
-				const teaCliName = "tea.xyz";
-				for (const pkg of pkgs) {
+				const installedPackageBottles = await getInstalledPackages();
+				installedPackageBottles.sort((a, b) => semverCompare(b.version, a.version));
+
+				const installedPkgs = [...new Set(installedPackageBottles.map((p) => p.full_name))];
+
+				for (const installedPkg of installedPkgs) {
+					const pkg = guiPkgs.find((p) => p.full_name === installedPkg);
+					if (pkg) {
+						const installedVersions = installedPackageBottles
+							.filter((p) => p.full_name === pkg.full_name)
+							.map((p) => p.version);
+
+						updatePackage(pkg.full_name, {
+							installed_versions: installedVersions,
+							state: PackageStates.INSTALLED
+						});
+					}
+				}
+
+				for (const pkg of installedPackageBottles) {
 					log.info(`syncing ${pkg.full_name}`);
-					if (pkg.full_name === teaCliName) {
-						await syncTeaCliPackage(pkg);
-					} else if (pkg.state === PackageStates.INSTALLED) {
+					if (pkg.full_name === "tea.xyz") {
+						await syncTeaCliPackage();
+					} else {
 						await syncPackageBottlesAndState(pkg.full_name);
 					}
 					log.info(`synced ${pkg.full_name}`);
@@ -134,8 +163,8 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		});
 	};
 
-	const syncTeaCliPackage = async (cliPkg: GUIPackage) => {
-		const updatedPkg = await syncPackageBottlesAndState(cliPkg.full_name);
+	const syncTeaCliPackage = async () => {
+		const updatedPkg = await syncPackageBottlesAndState("tea.xyz");
 		if (updatedPkg && updatedPkg.state === PackageStates.INSTALLED) return;
 
 		if (!updatedPkg || updatedPkg.state === PackageStates.AVAILABLE) {
