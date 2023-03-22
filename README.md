@@ -97,7 +97,7 @@ pnpm --filter tea exec pnpm dist
 | Project                           |  Version  |
 |-----------------------------------|-----------|
 | nodejs.org                        | =18.13.0  |
-| pnpm.io                           | =7.18     |
+| pnpm.io                           | =7.18.2     |
 | xcfile.dev                        | >=0.0.110 |
 | python.org                        | >=3.10    |
 | openssl.org                       | >=1.1     |
