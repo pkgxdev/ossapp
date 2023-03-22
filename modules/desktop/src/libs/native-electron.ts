@@ -13,14 +13,21 @@
 
 import semverCompare from "semver/functions/compare";
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
-import { type GUIPackage, type Course, type Category, type DeviceAuth, type Session, AuthStatus } from "./types";
+import {
+	type GUIPackage,
+	type Course,
+	type Category,
+	type DeviceAuth,
+	type Session,
+	AuthStatus
+} from "./types";
 
 import * as mock from "./native-mock";
 import { PackageStates } from "./types";
 import { installPackageCommand } from "./native/cli";
 
 import { get as apiGet } from "$libs/v1-client";
-const log = window.require('electron-log');
+const log = window.require("electron-log");
 const { ipcRenderer, shell } = window.require("electron");
 
 let retryLimit = 0;
@@ -125,7 +132,7 @@ export async function getAllPosts(tag?: string): Promise<AirtablePost[]> {
 export async function getDeviceAuth(deviceId: string): Promise<DeviceAuth> {
 	let auth: DeviceAuth = {
 		status: AuthStatus.UNKNOWN,
-		key: "",
+		key: ""
 	};
 	try {
 		const data = await apiGet<DeviceAuth>(`/auth/device/${deviceId}`);
@@ -141,20 +148,18 @@ export async function getPackageBottles(packageName: string): Promise<Bottle[]> 
 	try {
 		const pkg = await apiGet<Package>(`packages/${packageName.replaceAll("/", ":")}`);
 		log.info(`got ${pkg?.bottles?.length || 0} bottles for ${packageName}`);
-		return pkg && pkg.bottles || [];
+		return (pkg && pkg.bottles) || [];
 	} catch (error) {
 		log.error(error);
 		return [];
 	}
 }
 
-const retryGetPackage: { [key:string]: number} = {};
+const retryGetPackage: { [key: string]: number } = {};
 export async function getPackage(packageName: string): Promise<Partial<Package>> {
 	let pkg: Partial<Package> = {};
 	try {
-		const data = await apiGet<Partial<Package>>(
-			`packages/${packageName.replaceAll("/", ":")}`
-		);
+		const data = await apiGet<Partial<Package>>(`packages/${packageName.replaceAll("/", ":")}`);
 		if (data) {
 			pkg = data;
 		} else {
@@ -177,7 +182,7 @@ export const getSession = async (): Promise<Session | null> => {
 	try {
 		log.info("getting local session data");
 		const session = await ipcRenderer.invoke("get-session");
-		log.info("local session data ", session ? "found": "not found");
+		log.info("local session data ", session ? "found" : "not found");
 		return session;
 	} catch (error) {
 		log.error(error);
