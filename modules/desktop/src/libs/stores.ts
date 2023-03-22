@@ -66,7 +66,7 @@ function initPosts() {
 
 	if (!initialized) {
 		initialized = true;
-		getAllPosts().then(set);
+		// getAllPosts().then(set);
 	}
 
 	subscribe((v) => {

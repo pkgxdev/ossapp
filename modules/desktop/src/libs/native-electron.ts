@@ -92,23 +92,6 @@ export async function installPackage(pkg: GUIPackage, version?: string) {
 	}
 }
 
-export async function getFeaturedCourses(): Promise<Course[]> {
-	try {
-		const posts = await apiGet<AirtablePost[]>("posts", { tag: "featured_course" });
-		return (posts || []).map((post) => {
-			return {
-				title: post.title,
-				sub_title: post.sub_title,
-				banner_image_url: post.thumb_image_url,
-				link: post.link
-			} as Course;
-		});
-	} catch (error) {
-		log.error(error);
-		return [];
-	}
-}
-
 export async function getTopPackages(): Promise<GUIPackage[]> {
 	const packages = await mock.getTopPackages();
 	return packages;

@@ -11,6 +11,8 @@ import { notificationStore } from "../stores";
 import { openTerminal } from "@native";
 import { NotificationType } from "@tea/ui/types";
 
+const log = window.require("electron-log");
+
 const installTea = async () => {
 	console.log("installing tea...");
 	try {
@@ -28,20 +30,26 @@ export default function initPackagesStore() {
 
 	if (!initialized) {
 		initialized = true;
-		getPackages().then((pkgs) => {
+		getPackages().then(async (pkgs) => {
 			packages.set(pkgs);
 			packagesIndex = new Fuse(pkgs, {
 				keys: ["name", "full_name", "desc", "categories"]
 			});
 
-			const teaCliName = "tea.xyz";
-			pkgs.forEach((pkg) => {
-				if (pkg.full_name === teaCliName) {
-					syncTeaCliPackage(pkg);
-				} else if (pkg.state === PackageStates.INSTALLED) {
-					syncPackageBottlesAndState(pkg.full_name);
+			try {
+				const teaCliName = "tea.xyz";
+				for (const pkg of pkgs) {
+					log.info(`syncing ${pkg.full_name}`);
+					if (pkg.full_name === teaCliName) {
+						await syncTeaCliPackage(pkg);
+					} else if (pkg.state === PackageStates.INSTALLED) {
+						await syncPackageBottlesAndState(pkg.full_name);
+					}
+					log.info(`synced ${pkg.full_name}`);
 				}
-			});
+			} catch (error) {
+				log.error(error);
+			}
 		});
 	}
 
