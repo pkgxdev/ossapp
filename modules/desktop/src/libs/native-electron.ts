@@ -13,20 +13,15 @@
 
 import semverCompare from "semver/functions/compare";
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
-import {
-	type GUIPackage,
-	type Course,
-	type Category,
-	type DeviceAuth,
-	type Session,
-	AuthStatus
-} from "./types";
+import { type GUIPackage, type DeviceAuth, type Session, AuthStatus } from "./types";
 
 import * as mock from "./native-mock";
 import { PackageStates } from "./types";
 import { installPackageCommand } from "./native/cli";
 
 import { get as apiGet } from "$libs/v1-client";
+import axios from "axios";
+
 const log = window.require("electron-log");
 const { ipcRenderer, shell } = window.require("electron");
 
@@ -34,8 +29,11 @@ let retryLimit = 0;
 async function getDistPackages(): Promise<Package[]> {
 	let packages: Package[] = [];
 	try {
-		const resultingPackages = await apiGet<Package[]>("packages");
-		if (resultingPackages) packages = resultingPackages;
+		const req = await axios.get<Package[]>(
+			"https://s3.amazonaws.com/preview.gui.tea.xyz/packages.json"
+		);
+		log.info("packages received:", req.data.length);
+		packages = req.data;
 	} catch (error) {
 		retryLimit++;
 		log.error("getDistPackagesList:", error);
