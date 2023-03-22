@@ -311,30 +311,6 @@ export async function getAllPosts(type: string): Promise<AirtablePost[]> {
 	return posts;
 }
 
-export async function getCategorizedPackages(): Promise<Category[]> {
-	const mockPackages = packages.slice(0, 9).map((pkg) => ({
-		...pkg,
-		state: PackageStates.AVAILABLE
-	}));
-	return [
-		{
-			label: "framework essentials",
-			cta_label: "View all essentials >",
-			packages: mockPackages
-		},
-		{
-			label: "star-struck heavyweights",
-			cta_label: "View all star-strucks >",
-			packages: mockPackages
-		},
-		{
-			label: "simply delightful",
-			cta_label: "View all delightful packages >",
-			packages: mockPackages
-		}
-	];
-}
-
 export async function getDeviceAuth(deviceId: string): Promise<any> {
 	const data = await v1Client.get<any>(`/auth/device/${deviceId}`);
 	return data;
