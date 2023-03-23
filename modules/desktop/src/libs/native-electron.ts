@@ -13,57 +13,63 @@
 
 import semverCompare from "semver/functions/compare";
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
-import {
-	type GUIPackage,
-	type Course,
-	type Category,
-	type DeviceAuth,
-	type Session,
-	AuthStatus
-} from "./types";
+import { type GUIPackage, type DeviceAuth, type Session, AuthStatus } from "./types";
 
 import * as mock from "./native-mock";
-import { PackageStates } from "./types";
+import { PackageStates, type InstalledPackage } from "./types";
 import { installPackageCommand } from "./native/cli";
 
 import { get as apiGet } from "$libs/v1-client";
+import axios from "axios";
+
 const log = window.require("electron-log");
 const { ipcRenderer, shell } = window.require("electron");
 
 let retryLimit = 0;
-async function getDistPackages(): Promise<Package[]> {
+export async function getDistPackages(): Promise<Package[]> {
 	let packages: Package[] = [];
 	try {
-		const resultingPackages = await apiGet<Package[]>("packages");
-		if (resultingPackages) packages = resultingPackages;
+		const req = await axios.get<Package[]>(
+			"https://s3.amazonaws.com/preview.gui.tea.xyz/packages.json"
+		);
+		log.info("packages received:", req.data.length);
+		packages = req.data;
 	} catch (error) {
 		retryLimit++;
 		log.error("getDistPackagesList:", error);
 		if (retryLimit < 3) packages = await getDistPackages();
 	}
+	retryLimit = 0;
 	return packages;
+}
+
+export async function getInstalledPackages(): Promise<InstalledPackage[]> {
+	let pkgs: InstalledPackage[] = [];
+	try {
+		log.info("getting installed packages");
+		pkgs = (await ipcRenderer.invoke("get-installed-packages")) as InstalledPackage[];
+		log.info("got installed packages:", pkgs.length);
+	} catch (error) {
+		log.error(error);
+	}
+	return pkgs;
 }
 
 export async function getPackages(): Promise<GUIPackage[]> {
 	const [packages, installedPackages] = await Promise.all([
 		getDistPackages(),
-		ipcRenderer.invoke("get-installed-packages") as { version: string; full_name: string }[]
+		ipcRenderer.invoke("get-installed-packages") as InstalledPackage[]
 	]);
-
-	// sorts all packages from highest -> lowest
-	installedPackages.sort((a, b) => semverCompare(b.version, a.version));
 
 	// NOTE: its not ideal to get bottles or set package states here maybe do it async in the package store init
 	// --- it has noticeable slowness
 	log.info(`native: installed ${installedPackages.length} out of ${(packages || []).length}`);
 	return (packages || []).map((pkg) => {
-		const installedVersions = installedPackages
-			.filter((p) => p.full_name === pkg.full_name)
-			.map((p) => p.version);
+		const installedPkg = installedPackages.find((p) => p.full_name === pkg.full_name);
 		return {
 			...pkg,
-			state: installedVersions.length ? PackageStates.INSTALLED : PackageStates.AVAILABLE,
-			installed_versions: installedVersions
+			state: installedPkg ? PackageStates.INSTALLED : PackageStates.AVAILABLE,
+			installed_versions: installedPkg?.installed_versions || []
 		};
 	});
 }

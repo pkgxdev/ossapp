@@ -3,7 +3,7 @@
 // 		please use the package @tea/ui/src/types.ts
 //		things that go there are shared types/shapes like ie: Package
 
-import type { Package, Developer } from "@tea/ui/types";
+import type { Package, Developer, Bottle } from "@tea/ui/types";
 
 export enum PackageStates {
 	AVAILABLE = "AVAILABLE",
@@ -64,3 +64,5 @@ export enum SideMenuOptions {
 	star_struct = "star_struct",
 	made_by_tea = "made_by_tea"
 }
+
+export type InstalledPackage = Require<Pick<GUIPackage, "full_name" | "installed_versions">>;

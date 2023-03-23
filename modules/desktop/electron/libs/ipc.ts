@@ -2,7 +2,7 @@ import { ipcMain } from "electron";
 
 import { getInstalledPackages } from "./tea-dir";
 import { readSessionData, writeSessionData } from "./auth";
-import type { Session } from "../../src/libs/types";
+import type { Session, InstalledPackage } from "../../src/libs/types";
 import * as log from "electron-log";
 
 import { installPackage, openTerminal } from "./cli";
