@@ -336,3 +336,7 @@ export const relaunch = () => {
 };
 
 export const getProtocolPath = async (): Promise<string> => "";
+
+export const submitLogs = async () => {
+	return "synced!";
+};

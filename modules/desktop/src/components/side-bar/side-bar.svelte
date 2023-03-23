@@ -13,6 +13,11 @@
 			console.error(error);
 		}
 	};
+
+  let submittedMessage = "hello";
+  const submitLogs = async () => {
+    console.log("log")
+  }
 </script>
 <nav class="bg-opacity-20 w-full h-full p-4">
   {#if $user}
@@ -29,4 +34,12 @@
     </button>
   {/if}
   <SelectLang/>
+  <button
+    class="mt-2 border transition-all border-gray rounded-sm w-full mb-2 h-8 text-center hover:bg-gray focus:bg-primary"
+    on:click={submitLogs}>
+    SUBMIT LOGS
+  </button>
+  {#if submittedMessage}
+    <p class="text-gray text-xs mt-2">{submittedMessage}</p>
+  {/if}
 </nav>

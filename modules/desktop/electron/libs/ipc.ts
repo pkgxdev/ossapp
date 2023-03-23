@@ -2,7 +2,7 @@ import { ipcMain } from "electron";
 
 import { getInstalledPackages } from "./tea-dir";
 import { readSessionData, writeSessionData } from "./auth";
-import type { Session, InstalledPackage } from "../../src/libs/types";
+import type { Session } from "../../src/libs/types";
 import * as log from "electron-log";
 
 import { installPackage, openTerminal } from "./cli";
@@ -84,5 +84,16 @@ export default function initializeHandlers() {
 		const path = teaProtocolPath;
 		teaProtocolPath = "";
 		return path;
+	});
+
+	ipcMain.handle("submit-logs", async () => {
+		try {
+			log.info("syncing logs");
+
+			return "hello";
+		} catch (error) {
+			log.error(error);
+			return error.message;
+		}
 	});
 }
