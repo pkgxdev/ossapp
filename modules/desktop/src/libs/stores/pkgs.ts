@@ -84,7 +84,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				const i = pkgs.findIndex((pkg) => pkg.full_name === pkgName);
 				if (i >= 0) {
 					const pkg = pkgs[i];
-					console.log(bottles, pkg);
 
 					const availableVersionsRaw = bottles
 						.map(({ version }) => version)
