@@ -1,7 +1,6 @@
 import { writable } from "svelte/store";
-import type { GUIPackage } from "../types";
+import type { GUIPackage, InstalledPackage } from "../types";
 import { PackageStates } from "../types";
-// import { getPackages } from "@native";
 import Fuse from "fuse.js";
 import {
 	getPackage,
@@ -15,72 +14,25 @@ import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 import semverCompare from "semver/functions/compare";
 import { notificationStore } from "../stores";
 import { NotificationType } from "@tea/ui/types";
+import type { Package } from "@tea/ui/types";
 
 const log = window.require("electron-log");
 
 const installTea = async () => {
-	console.log("installing tea...");
+	log.info("installing tea...");
 	try {
 		openTerminal(`sh <(curl https://tea.xyz)`);
 	} catch (error) {
-		console.log("install failed");
+		log.error("install failed", error);
 	}
 };
 
 export default function initPackagesStore() {
 	let initialized = false;
+	const syncProgress = writable<number>(0); // TODO: maybe use this in the UI someday
 	const packages = writable<GUIPackage[]>([]);
-	// const packages: GUIPackage[] = [];
+
 	let packagesIndex: Fuse<GUIPackage>;
-
-	if (!initialized) {
-		initialized = true;
-		getDistPackages().then(async (pkgs) => {
-			const guiPkgs: GUIPackage[] = pkgs.map((p) => ({
-				...p,
-				state: PackageStates.AVAILABLE
-			}));
-
-			packages.set(guiPkgs);
-			log.info("initialized packages store with ", guiPkgs.length);
-			packagesIndex = new Fuse(guiPkgs, {
-				keys: ["name", "full_name", "desc", "categories"]
-			});
-
-			try {
-				const installedPackageBottles = await getInstalledPackages();
-				installedPackageBottles.sort((a, b) => semverCompare(b.version, a.version));
-
-				const installedPkgs = [...new Set(installedPackageBottles.map((p) => p.full_name))];
-
-				for (const installedPkg of installedPkgs) {
-					const pkg = guiPkgs.find((p) => p.full_name === installedPkg);
-					if (pkg) {
-						const installedVersions = installedPackageBottles
-							.filter((p) => p.full_name === pkg.full_name)
-							.map((p) => p.version);
-
-						updatePackage(pkg.full_name, {
-							installed_versions: installedVersions,
-							state: PackageStates.INSTALLED
-						});
-					}
-				}
-
-				for (const pkg of installedPackageBottles) {
-					log.info(`syncing ${pkg.full_name}`);
-					if (pkg.full_name === "tea.xyz") {
-						await syncTeaCliPackage();
-					} else {
-						await syncPackageBottlesAndState(pkg.full_name);
-					}
-					log.info(`synced ${pkg.full_name}`);
-				}
-			} catch (error) {
-				log.error(error);
-			}
-		});
-	}
 
 	const updatePackage = (full_name: string, props: Partial<GUIPackage>) => {
 		packages.update((pkgs) => {
@@ -132,6 +84,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				const i = pkgs.findIndex((pkg) => pkg.full_name === pkgName);
 				if (i >= 0) {
 					const pkg = pkgs[i];
+					console.log(bottles, pkg);
 
 					const availableVersionsRaw = bottles
 						.map(({ version }) => version)
@@ -163,31 +116,76 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		});
 	};
 
-	const syncTeaCliPackage = async () => {
-		const updatedPkg = await syncPackageBottlesAndState("tea.xyz");
-		if (updatedPkg && updatedPkg.state === PackageStates.INSTALLED) return;
-
-		if (!updatedPkg || updatedPkg.state === PackageStates.AVAILABLE) {
-			notificationStore.add({
-				message: "install cli",
-				i18n_key: "package.install-tea-cli",
-				type: NotificationType.ACTION_BANNER,
-				callback: installTea,
-				callback_label: "INSTALL"
-			});
-		} else if (updatedPkg.state === PackageStates.NEEDS_UPDATE) {
+	const checkTeaCLIPackage = async (teaPkg: Package, installedTeaCliPkg?: InstalledPackage) => {
+		const doNothing =
+			installedTeaCliPkg && installedTeaCliPkg.installed_versions[0] === teaPkg.version;
+		console.log("tea", teaPkg, installedTeaCliPkg);
+		if (!doNothing) {
+			let action = installedTeaCliPkg ? "INSTALL" : "UPDATE";
 			notificationStore.add({
 				message: "install cli",
 				i18n_key: "package.update-tea-cli",
 				type: NotificationType.ACTION_BANNER,
 				callback: installTea,
-				callback_label: "UPDATE"
+				callback_label: action
 			});
 		}
 	};
 
+	const init = async function () {
+		log.info("packages store: try initialize");
+		if (!initialized) {
+			log.info("packages store: initializing...");
+			initialized = true;
+			const pkgs = await getDistPackages();
+			const guiPkgs: GUIPackage[] = pkgs.map((p) => ({
+				...p,
+				state: PackageStates.AVAILABLE
+			}));
+
+			// set packages data so that i can render something in the UI already
+			packages.set(guiPkgs);
+			log.info("initialized packages store with ", guiPkgs.length);
+			packagesIndex = new Fuse(guiPkgs, {
+				keys: ["name", "full_name", "desc", "categories"]
+			});
+			log.info("initialized packages fuse index");
+
+			try {
+				const installedPkgs: InstalledPackage[] = await getInstalledPackages();
+
+				log.info("sync test for tea-cli");
+				const installedTea = installedPkgs.find((p) => p.full_name === "tea.xyz");
+				const distTea = pkgs.find((p) => p.full_name === "tea.xyz");
+				if (distTea) await checkTeaCLIPackage(distTea, installedTea);
+
+				log.info("set NEEDS_UPDATE state to pkgs");
+				let progressCount = 0;
+				for (const iPkg of installedPkgs) {
+					progressCount++;
+					const pkg = guiPkgs.find((p) => p.full_name === iPkg.full_name);
+					if (pkg) {
+						const isUpdated = pkg.version === iPkg.installed_versions[0];
+						updatePackage(pkg.full_name, {
+							installed_versions: iPkg.installed_versions,
+							state: isUpdated ? PackageStates.INSTALLED : PackageStates.NEEDS_UPDATE
+						});
+						log.info(`getting available bottles for ${pkg.full_name}`);
+						await syncPackageBottlesAndState(iPkg.full_name);
+					}
+					log.info(`synced ${iPkg.full_name} ${progressCount}/${installedPkgs.length}`);
+					syncProgress.set(+(progressCount / installedPkgs.length).toFixed(2));
+				}
+			} catch (error) {
+				log.error(error);
+			}
+		}
+		log.info("packages store: initialized!");
+	};
+
 	return {
 		packages,
+		syncProgress,
 		subscribe: packages.subscribe,
 		search: async (term: string, limit = 5): Promise<GUIPackage[]> => {
 			if (!term || !packagesIndex) return [];
@@ -205,6 +203,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				}
 			});
 		},
-		updatePackage
+		updatePackage,
+		init
 	};
 }

@@ -5,7 +5,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import TopBar from '$components/top-bar/top-bar.svelte';
 	import SideBar from '$components/side-bar/side-bar.svelte';
-	import { navStore } from '$libs/stores';
+	import { navStore, packagesStore } from '$libs/stores';
 	import { listenToChannel } from "@native";
 
 	import SearchPopupResults from '$components/search-popup-results/search-popup-results.svelte';
@@ -37,6 +37,7 @@
 		// used by the tea:// protocol to suggest a path to open
 		syncPath();
 		listenToChannel("sync-path", syncPath);
+		packagesStore.init();
 	});
 </script>
 

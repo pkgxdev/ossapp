@@ -4,6 +4,8 @@ import path from "path";
 import { app } from "electron";
 import semver from "semver";
 import * as log from "electron-log";
+import type { InstalledPackage } from "../../src/libs/types";
+import semverCompare from "semver/functions/compare";
 
 type Dir = {
 	name: string;
@@ -21,7 +23,7 @@ export const getGuiPath = () => {
 	return path.join(getTeaPath(), "tea.xyz/gui");
 };
 
-export async function getInstalledPackages() {
+export async function getInstalledPackages(): Promise<InstalledPackage[]> {
 	const pkgsPath = getTeaPath();
 	log.info("recusively reading:", pkgsPath);
 	const folders = await deepReadDir({
@@ -30,19 +32,32 @@ export async function getInstalledPackages() {
 		filter: (name: string) => !!semver.valid(name)
 	});
 
-	const pkgs = folders
+	const bottles = folders
 		.map((p: string) => p.split(".tea/")[1])
 		.map((p: string) => {
 			const path = p.trim().split("/");
 			const version = path.pop();
 			return {
-				version: semver.clean(version || ""),
+				version: semver.clean(version || "") || "",
 				full_name: path.join("/")
 			};
-		});
+		})
+		.sort((a, b) => semverCompare(b.version, a.version));
 
-	log.info("found installed packages:", pkgs.length);
-	return pkgs;
+	log.info("installed bottles:", bottles.length);
+
+	return bottles.reduce<InstalledPackage[]>((pkgs, bottle) => {
+		const pkg = pkgs.find((v) => v.full_name === bottle.full_name);
+		if (pkg) {
+			pkg.installed_versions.push(bottle.version);
+		} else {
+			pkgs.push({
+				full_name: bottle.full_name,
+				installed_versions: [bottle.version]
+			});
+		}
+		return pkgs;
+	}, []);
 }
 
 const semverTest =

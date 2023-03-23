@@ -61,20 +61,15 @@ export async function getPackages(): Promise<GUIPackage[]> {
 		ipcRenderer.invoke("get-installed-packages") as InstalledPackage[]
 	]);
 
-	// sorts all packages from highest -> lowest
-	installedPackages.sort((a, b) => semverCompare(b.version, a.version));
-
 	// NOTE: its not ideal to get bottles or set package states here maybe do it async in the package store init
 	// --- it has noticeable slowness
 	log.info(`native: installed ${installedPackages.length} out of ${(packages || []).length}`);
 	return (packages || []).map((pkg) => {
-		const installedVersions = installedPackages
-			.filter((p) => p.full_name === pkg.full_name)
-			.map((p) => p.version);
+		const installedPkg = installedPackages.find((p) => p.full_name === pkg.full_name);
 		return {
 			...pkg,
-			state: installedVersions.length ? PackageStates.INSTALLED : PackageStates.AVAILABLE,
-			installed_versions: installedVersions
+			state: installedPkg ? PackageStates.INSTALLED : PackageStates.AVAILABLE,
+			installed_versions: installedPkg?.installed_versions || []
 		};
 	});
 }
