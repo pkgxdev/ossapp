@@ -117,10 +117,10 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	};
 
 	const checkTeaCLIPackage = async (teaPkg: Package, installedTeaCliPkg?: InstalledPackage) => {
-		const doNothing =
+		const isLatest =
 			installedTeaCliPkg && installedTeaCliPkg.installed_versions[0] === teaPkg.version;
-		console.log("tea", teaPkg, installedTeaCliPkg);
-		if (!doNothing) {
+		log.inf("check Tea-CLI if latest:", !isLatest);
+		if (!isLatest) {
 			notificationStore.add({
 				message: "install cli",
 				i18n_key: "package.update-tea-cli",
