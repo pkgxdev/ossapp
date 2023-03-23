@@ -39,7 +39,7 @@ async function createInitialSessionFile(): Promise<Session> {
 		if (fs.existsSync(sessionFilePath)) {
 			log.info("session file exists!");
 			const sessionBuffer = await fs.readFileSync(sessionFilePath);
-			const session = JSON.parse(sessionBuffer.toString()) as Session;
+			session = JSON.parse(sessionBuffer.toString()) as Session;
 			session.locale = locale;
 		} else {
 			log.info("session file does not exists!");
@@ -65,7 +65,7 @@ export async function readSessionData(): Promise<Session> {
 	log.info("read session data.");
 	const data = await initialized;
 	log.info("initialized session exists:", !!data);
-	if (sessionMemory) {
+	if (sessionMemory?.device_id) {
 		log.info("use session cache");
 		return sessionMemory;
 	}
