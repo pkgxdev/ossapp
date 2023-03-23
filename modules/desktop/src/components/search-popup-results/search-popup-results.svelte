@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { searchStore } from '$libs/stores';
 	import type { GUIPackage } from '$libs/types';
+	import { t } from '$libs/translations';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import Package from "$components/packages/package.svelte";
 	import { PackageStates } from '$libs/types';
@@ -42,6 +43,17 @@
 	const onClose = () => {
 		term = '';
 	};
+
+
+	const getCTALabel = (state: PackageStates): string => {
+		return {
+			[PackageStates.AVAILABLE]: $t("package.install-label").toUpperCase(),
+			[PackageStates.INSTALLED]: $t("package.installed-label").toUpperCase(),
+			[PackageStates.INSTALLING]: $t("package.installing-label").toUpperCase(),
+			[PackageStates.UNINSTALLED]: $t("package.reinstall-label").toUpperCase(),
+			[PackageStates.NEEDS_UPDATE]: $t("package.needs-update-label").toUpperCase(),
+		}[state];
+	};
 </script>
 
 <section class={term ? 'show' : ''}>
@@ -50,16 +62,10 @@
 	<div class="border-gray z-20 border bg-black">
 		<header class="flex justify-between p-4">
 			<div class="text-primary text-2xl">Showing search results for `{term}`</div>
-
 			<button on:click={onClose}>&#x2715</button>
 		</header>
-		<menu class="bg-accent flex h-8 w-full gap-4 px-4 text-xs">
-			<button>packages ({packages.length})</button>
-			<!-- <button>articles ({articles.length})</button>
-			<button>workshops ({workshops.length})</button> -->
-		</menu>
-		<header class="text-primary p-4 text-lg">
-			Top Package Results ({packages.length})
+		<header class="text-gray p-4 text-lg">
+			Packages ({packages.length})
 		</header>
 		<ul class="flex flex-col gap-2 p-2">
 			{#if packages.length > 0}
@@ -67,10 +73,12 @@
 					<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
 						<PackageResult
 							{pkg}
+							ctaLabel={getCTALabel(pkg.state)}
+							ctaColor={pkg.state === PackageStates.INSTALLED ? "green": "secondary"}
 							onClick={async () => {
 								try {
 									pkg.state = PackageStates.INSTALLING;
-									await installPackage(pkg);
+									await installPackage(pkg, pkg.version);
 									pkg.state = PackageStates.INSTALLED;
 								} catch (error) {
 									console.error(error);

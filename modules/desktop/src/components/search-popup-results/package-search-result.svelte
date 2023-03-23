@@ -3,7 +3,7 @@
 	import Button from "@tea/ui/button/button.svelte";
   import ImgLoader from "@tea/ui/img-loader/img-loader.svelte";
   export let pkg:GUIPackage;
-
+  export let ctaLabel = "INSTALL";
 	export let ctaType: "ghost" | "plain" = "plain";
 	export let ctaColor: "green" | "secondary" = "secondary";
   export let onClick: () => void;
@@ -27,7 +27,8 @@
       onClick={onClick}
       type={ctaType}
       color={ctaColor}
-    >INSTALL</Button>
+    >{ctaLabel}
+    </Button>
     <footer class="text-xs text-center mt-2">v{pkg.version}</footer>
   </aside>
 </figure>
