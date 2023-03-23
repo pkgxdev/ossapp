@@ -87,7 +87,7 @@ export const getPkgBottles = (packageDir: Dir): string[] => {
 	return foundBottles;
 };
 
-const deepReadDir = async ({
+export const deepReadDir = async ({
 	dir,
 	continueDeeper,
 	filter

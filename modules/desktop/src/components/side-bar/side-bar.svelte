@@ -2,7 +2,7 @@
 	import { authStore } from '$libs/stores';
 	import SelectLang from '$components/select-lang/select-lang.svelte';
 	import { baseUrl } from '$libs/v1-client';
-	import { shellOpenExternal } from '@native';
+	import { shellOpenExternal, submitLogs } from '@native';
   const { user, deviceIdStore } = authStore;
 
   const openGithub = () => {
@@ -14,9 +14,13 @@
 		}
 	};
 
-  let submittedMessage = "hello";
-  const submitLogs = async () => {
-    console.log("log")
+  let submittedMessage = "";
+  const onSubmitLogs = async () => {
+    if (submittedMessage !== "syncing...") {
+      submittedMessage = "syncing..."
+      const msg = await submitLogs();
+      submittedMessage = msg;
+    }
   }
 </script>
 <nav class="bg-opacity-20 w-full h-full p-4">
@@ -35,8 +39,8 @@
   {/if}
   <SelectLang/>
   <button
-    class="mt-2 border transition-all border-gray rounded-sm w-full mb-2 h-8 text-center hover:bg-gray focus:bg-primary"
-    on:click={submitLogs}>
+    class={`mt-2 border transition-all border-gray rounded-sm w-full mb-2 h-8 text-center hover:bg-gray focus:bg-secondary ${submittedMessage === "syncing..." && "animate-pulse"}`}
+    on:click={onSubmitLogs}>
     SUBMIT LOGS
   </button>
   {#if submittedMessage}

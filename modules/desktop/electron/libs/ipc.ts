@@ -1,13 +1,17 @@
-import { ipcMain } from "electron";
-
+import { ipcMain, app } from "electron";
+import { createReadStream, statSync } from "fs";
 import { getInstalledPackages } from "./tea-dir";
 import { readSessionData, writeSessionData } from "./auth";
 import type { Session } from "../../src/libs/types";
 import * as log from "electron-log";
+import { post } from "./v1-client";
+import { deepReadDir } from "./tea-dir";
+import path from "path";
 
 import { installPackage, openTerminal } from "./cli";
 
 import { getUpdater } from "./auto-updater";
+import fetch from "node-fetch";
 let teaProtocolPath = ""; // this should be empty string
 
 export const setProtocolPath = (path: string) => {
@@ -89,8 +93,38 @@ export default function initializeHandlers() {
 	ipcMain.handle("submit-logs", async () => {
 		try {
 			log.info("syncing logs");
+			const logDir = path.join(app.getPath("home"), "Library/Logs/tea");
+			// ['/Users/neil/Library/Logs/tea/main.log']
+			const logFiles = await deepReadDir({ dir: logDir });
+			let deviceId = "";
+			const files = logFiles.map((p) => {
+				const paths = p.split("/");
+				deviceId = paths[2]; // temp hack use developers username instead of gui_id
+				return paths.pop();
+			});
 
-			return "hello";
+			const signedUrls = await post<{ [key: string]: string }>(`/gui/${deviceId}/sync-log-files`, {
+				files
+			});
+			if (signedUrls) {
+				for (const key in signedUrls) {
+					const fileIndex = files.indexOf(key);
+					const filePath = logFiles[fileIndex];
+					if (filePath) {
+						const payload = createReadStream(filePath);
+						const response = await fetch(signedUrls[key], {
+							method: "PUT",
+							body: payload,
+							headers: {
+								"Content-Length": statSync(filePath).size.toString()
+							}
+						});
+						log.info("uploading log:", key, response.status);
+					}
+				}
+			}
+
+			return `log files(${logFiles.length}) has been uploaded to S3 logs/${deviceId}`;
 		} catch (error) {
 			log.error(error);
 			return error.message;
