@@ -121,13 +121,12 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			installedTeaCliPkg && installedTeaCliPkg.installed_versions[0] === teaPkg.version;
 		console.log("tea", teaPkg, installedTeaCliPkg);
 		if (!doNothing) {
-			let action = installedTeaCliPkg ? "INSTALL" : "UPDATE";
 			notificationStore.add({
 				message: "install cli",
 				i18n_key: "package.update-tea-cli",
 				type: NotificationType.ACTION_BANNER,
 				callback: installTea,
-				callback_label: action
+				callback_label: installedTeaCliPkg ? "INSTALL" : "UPDATE"
 			});
 		}
 	};
