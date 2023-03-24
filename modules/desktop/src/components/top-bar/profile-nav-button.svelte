@@ -7,7 +7,6 @@
 
 
 	const toggleSideNav = () => {
-		console.log("toggle", $sideNavOpen)
 		navStore.sideNavOpen.update((v) => !v);
 	}
 

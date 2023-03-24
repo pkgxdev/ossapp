@@ -115,17 +115,16 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		});
 	};
 
-	const checkTeaCLIPackage = async (teaPkg: Package, installedTeaCliPkg?: InstalledPackage) => {
-		const isLatest =
-			installedTeaCliPkg && installedTeaCliPkg.installed_versions[0] === teaPkg.version;
-		log.info("check Tea-CLI if latest:", !isLatest);
-		if (!isLatest) {
+	const checkTeaCLIPackage = async (teaPkg: Package) => {
+		const guiPkg = await syncPackageBottlesAndState(teaPkg.full_name);
+		log.info("check Tea-CLI if state:", guiPkg?.state);
+		if (guiPkg?.state === PackageStates.NEEDS_UPDATE && guiPkg?.installed_versions?.length) {
 			notificationStore.add({
 				message: "install cli",
 				i18n_key: "package.update-tea-cli",
 				type: NotificationType.ACTION_BANNER,
 				callback: installTea,
-				callback_label: installedTeaCliPkg ? "INSTALL" : "UPDATE"
+				callback_label: "UPDATE"
 			});
 		}
 	};
@@ -153,9 +152,8 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				const installedPkgs: InstalledPackage[] = await getInstalledPackages();
 
 				log.info("sync test for tea-cli");
-				const installedTea = installedPkgs.find((p) => p.full_name === "tea.xyz");
 				const distTea = pkgs.find((p) => p.full_name === "tea.xyz");
-				if (distTea) await checkTeaCLIPackage(distTea, installedTea);
+				if (distTea) await checkTeaCLIPackage(distTea);
 
 				log.info("set NEEDS_UPDATE state to pkgs");
 				let progressCount = 0;
