@@ -32,8 +32,8 @@
 	}
 </script>
 
-<section class="border-gray mt-4 border bg-black">
-	<header class="flex p-2">
+<section class="mt-4 bg-black">
+	<header class="flex">
 		<figure class="grow-1 w-1/3">
 			<img width={260} src={pkg.thumb_image_url} alt={pkg.full_name} />
 		</figure>
@@ -67,5 +67,4 @@
 			</menu>
 		</article>
 	</header>
-
 </section>

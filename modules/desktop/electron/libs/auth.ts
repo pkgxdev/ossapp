@@ -2,7 +2,6 @@ import { mkdirp } from "mkdirp";
 import path from "path";
 import fs from "fs";
 import { getTeaPath } from "./tea-dir";
-import * as v1Client from "./v1-client";
 import { app } from "electron";
 import * as log from "electron-log";
 import axios from "axios";
@@ -44,16 +43,11 @@ async function createInitialSessionFile(): Promise<Session> {
 		} else {
 			log.info("session file does not exists!");
 			await mkdirp(sessionFolder);
-			const req = await axios.get<{ deviceId: string }>(
-				"https://api.tea.xyz/v1/auth/registerDevice"
-			);
-			const data = { device_id: "", locale };
-			if (req && req.data.deviceId) {
-				data.device_id = req.data.deviceId;
-				log.info("got device_id", data);
-				await writeSessionData(data);
-			}
-			session = data;
+			const data = {
+				device_id: await getDeviceId(),
+				locale
+			};
+			await writeSessionData(data);
 		}
 	} catch (error) {
 		log.error(error);
@@ -61,10 +55,28 @@ async function createInitialSessionFile(): Promise<Session> {
 	return session;
 }
 
+let deviceIdRetryCount = 0;
+async function getDeviceId() {
+	let deviceId = "";
+	try {
+		const req = await axios.get<{ deviceId: string }>("https://api.tea.xyz/v1/auth/registerDevice");
+		deviceId = req.data.deviceId;
+	} catch (error) {
+		log.error(error);
+	}
+
+	if (deviceIdRetryCount < 3 && !deviceId) {
+		deviceIdRetryCount++;
+		deviceId = await getDeviceId();
+	}
+
+	return deviceId;
+}
+
 export async function readSessionData(): Promise<Session> {
 	log.info("read session data.");
 	const data = await initialized;
-	log.info("initialized session exists:", !!data);
+	log.info("initialized session exists:", data);
 	if (sessionMemory?.device_id) {
 		log.info("use session cache");
 		return sessionMemory;
