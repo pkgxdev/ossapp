@@ -27,77 +27,70 @@
 	};
 </script>
 
-<section class="bg-black">
-	<h1 class="border border-gray p-4 text-primary">METADATA</h1>
-	<ul class="border border-t-0 border-gray p-4">
+<section class="bg-black pt-2">
+	<h1 class="text-primary">Metadata</h1>
+	<ul class="mb-10 flex flex-col gap-2">
 		{#if pkg?.bottles}
-			<li class="border border-gray p-4">
-				<i class="icon-calendar" />
-				<span class="ml-4">{dayjs().to(dayjs(pkg?.bottles[0].last_modified_at))}</span>
+			<li>
+				<span>{dayjs().to(dayjs(pkg?.bottles[0].last_modified_at))}</span>
 			</li>
 		{/if}
 		{#if pkg?.license}
-			<li class="border border-gray p-4">
-				<i class="icon-calendar" />
-				<span class="ml-4">{pkg.license}</span>
+			<li>
+				<span>{pkg.license}</span>
 			</li>
 		{/if}
 		{#if pkg?.bottles}
-			<li class="border border-gray p-4">
-				<i class="icon-calendar" />
-				<span class="ml-4">{computeFileSize(pkg?.bottles[0].bytes)}</span>
+			<li>
+				<span>{computeFileSize(pkg?.bottles[0].bytes)}</span>
 			</li>
 		{/if}
 	</ul>
-	<h1 class="border border-t-0 border-gray p-4 text-primary">HOMEPAGE</h1>
-	<ul class="border border-t-0 border-gray p-4">
-		<li class="border border-gray p-4">
-			<i class="icon-calendar" />
+	<h1 class="text-primary">Homepage</h1>
+	<ul class="mb-10 flex flex-col gap-2">
+		<li>
 			<a target="_blank" rel="noreferrer" href={pkg.homepage}>
-				<span class="ml-4">{pkg.homepage}</span>
+				<span>{pkg.homepage}</span>
 			</a>
 		</li>
 	</ul>
 	{#if pkg.documentation_url}
-		<h1 class="border border-t-0 border-gray p-4 text-primary">DOCUMENTATION</h1>
-		<ul class="border border-t-0 border-gray p-4">
-			<li class="border border-gray p-4">
-				<i class="icon-calendar" />
-				<span class="ml-4">{pkg.documentation_url}</span>
+		<h1 class="text-primary">Documentation</h1>
+		<ul class="mb-10 flex flex-col gap-2">
+			<li>
 				<a target="_blank" rel="noreferrer" href={pkg.documentation_url}>
-					<span class="ml-4">{pkg.documentation_url}</span>
+					<span>{pkg.documentation_url}</span>
 				</a>
 			</li>
 		</ul>
 	{/if}
 	{#if pkg.github}
-		<h1 class="border border-t-0 border-gray p-4 text-primary">GITHUB REPOSITORY</h1>
-		<ul class="border border-t-0 border-gray p-4">
-			<li class="border border-gray p-4">
-				<i class="icon-calendar" />
+		<h1 class="text-primary">Github Repository</h1>
+		<ul class="mb-10 flex flex-col gap-2">
+			<li>
 				<a target="_blank" rel="noreferrer" href={`https://github.com/${pkg.github}`}>
-					<span class="ml-4">{pkg.github}</span>
+					<span>{pkg.github}</span>
 				</a>
 			</li>
 		</ul>
 	{/if}
 	{#if pkg.contributors?.length}
-		<h1 class="border border-t-0 border-gray p-4 text-primary">CONTRIBUTORS</h1>
-		<ul class="border border-t-0 border-gray p-4">
+		<h1 class="text-primary">Contributors</h1>
+		<ul class="mb-10 flex flex-col gap-2">
 			{#each pkg.contributors as contributor}
-				<a href={`https://github.com/${contributor.login}`} rel="noreferrer" target="_blank">
-					<li class="flex items-center border border-gray p-4">
-						<figure class="h-5 w-5 bg-gray">
-							<img src={contributor.avatar_url} alt={contributor.login} />
-						</figure>
-						<span class="ml-4">{contributor.login}</span>
-					</li>
-				</a>
+				<li>
+					<!-- <figure class="h-5 w-5 bg-gray">
+						<img src={contributor.avatar_url} alt={contributor.login} />
+					</figure> -->
+					<a href={`https://github.com/${contributor.login}`} rel="noreferrer" target="_blank">
+						<span>{contributor.login}</span>
+					</a>
+				</li>
 			{/each}
 		</ul>
 	{/if}
 
-	{#if pkg.categories?.length}
+	<!-- {#if pkg.categories?.length}
 		<h1 class="border border-t-0 border-gray p-4 text-primary">CATEGORIES</h1>
 		<ul class="border border-t-0 border-gray p-4">
 			{#each pkg.categories as category}
@@ -107,5 +100,16 @@
 				</li>
 			{/each}
 		</ul>
-	{/if}
+	{/if} -->
 </section>
+
+<style>
+	ul {
+		margin-top: 10px;
+	}
+	ul > li {
+		border-top: gray 1px solid;
+		height: 36px;
+		padding-top: 10px;
+	}
+</style>

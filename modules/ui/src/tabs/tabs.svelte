@@ -19,10 +19,10 @@
 	});
 </script>
 
-<section class={`relative h-auto border border-gray ${clazz || ""}`}>
-	<menu class="flex border border-gray">
+<section class={`relative h-auto ${clazz || ""}`}>
+	<menu class="flex gap-1">
 		{#each tabs as tab}
-			<div class="border border-y-0 border-l-0 border-gray text-white">
+			<div class="border border-x-0 border-t-0 border-gray text-white">
 				<Button onClick={() => (active = tab.label)}>
 					<span class={tab.label === active ? "text-white" : ""}>{tab.label}</span>
 				</Button>

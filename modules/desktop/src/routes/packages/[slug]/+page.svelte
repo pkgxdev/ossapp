@@ -62,7 +62,7 @@
 </script>
 
 {#if pkg}
-	<div class="bg-black">
+	<div class="bg-black px-16">
 		<section>
 			<PackageBanner {pkg} />
 		</section>
