@@ -5,13 +5,11 @@ import Fuse from "fuse.js";
 import {
 	getPackage,
 	getDistPackages,
-	getPackageBottles,
 	openTerminal,
 	getInstalledPackages
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
-import semverCompare from "semver/functions/compare";
 import { notificationStore } from "../stores";
 import { NotificationType } from "@tea/ui/types";
 import type { Package } from "@tea/ui/types";
@@ -77,48 +75,11 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		updatePackage(guiPkg.full_name!, updatedPackage);
 	};
 
-	const syncPackageBottlesAndState = async (pkgName: string): Promise<GUIPackage | void> => {
-		const bottles = await getPackageBottles(pkgName);
-		return new Promise((resolve) => {
-			packages.update((pkgs) => {
-				const i = pkgs.findIndex((pkg) => pkg.full_name === pkgName);
-				if (i >= 0) {
-					const pkg = pkgs[i];
-
-					const availableVersionsRaw = bottles
-						.map(({ version }) => version)
-						.sort((a, b) => semverCompare(b, a));
-
-					const availableVersions = new Set(availableVersionsRaw);
-
-					const installedVersions =
-						pkg?.installed_versions?.sort((a, b) => semverCompare(b, a)) || [];
-
-					const it = availableVersions.values();
-					const latestVersion = it.next().value;
-
-					pkgs[i] = {
-						...pkg,
-						available_versions: Array.from(availableVersions),
-						state:
-							latestVersion === installedVersions[0]
-								? PackageStates.INSTALLED
-								: PackageStates.NEEDS_UPDATE
-					};
-
-					resolve(pkgs[i]);
-				} else {
-					resolve();
-				}
-				return pkgs;
-			});
-		});
-	};
-
-	const checkTeaCLIPackage = async (teaPkg: Package) => {
-		const guiPkg = await syncPackageBottlesAndState(teaPkg.full_name);
-		log.info("check Tea-CLI if state:", guiPkg?.state);
-		if (guiPkg?.state === PackageStates.NEEDS_UPDATE && guiPkg?.installed_versions?.length) {
+	const checkTeaCLIPackage = async (teaPkg: Package, installedPkg?: InstalledPackage) => {
+		const isUpToDate = teaPkg.version === installedPkg?.installed_versions[0]
+		log.info("check if Tea-CLI is up to date:", isUpToDate);
+		//TODO: Is there where we handle the case of tea not being installed at all?
+		if (!isUpToDate) {
 			notificationStore.add({
 				message: "install cli",
 				i18n_key: "package.update-tea-cli",
@@ -153,7 +114,8 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 
 				log.info("sync test for tea-cli");
 				const distTea = pkgs.find((p) => p.full_name === "tea.xyz");
-				if (distTea) await checkTeaCLIPackage(distTea);
+				const installedTeaVersions = installedPkgs.find((p) => p.full_name === "tea.xyz")
+				if (distTea) await checkTeaCLIPackage(distTea, installedTeaVersions);
 
 				log.info("set NEEDS_UPDATE state to pkgs");
 				let progressCount = 0;
@@ -166,10 +128,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 							installed_versions: iPkg.installed_versions,
 							state: isUpdated ? PackageStates.INSTALLED : PackageStates.NEEDS_UPDATE
 						});
-						log.info(`getting available bottles for ${pkg.full_name}`);
-						await syncPackageBottlesAndState(iPkg.full_name);
 					}
-					log.info(`synced ${iPkg.full_name} ${progressCount}/${installedPkgs.length}`);
 					syncProgress.set(+(progressCount / installedPkgs.length).toFixed(2));
 				}
 			} catch (error) {
