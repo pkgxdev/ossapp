@@ -2,12 +2,7 @@ import { writable } from "svelte/store";
 import type { GUIPackage, InstalledPackage } from "../types";
 import { PackageStates } from "../types";
 import Fuse from "fuse.js";
-import {
-	getPackage,
-	getDistPackages,
-	openTerminal,
-	getInstalledPackages
-} from "@native";
+import { getPackage, getDistPackages, openTerminal, getInstalledPackages } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 import { notificationStore } from "../stores";
@@ -76,7 +71,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	};
 
 	const checkTeaCLIPackage = async (teaPkg: Package, installedPkg?: InstalledPackage) => {
-		const isUpToDate = teaPkg.version === installedPkg?.installed_versions[0]
+		const isUpToDate = teaPkg.version === installedPkg?.installed_versions[0];
 		log.info("check if Tea-CLI is up to date:", isUpToDate);
 		//TODO: Is there where we handle the case of tea not being installed at all?
 		if (!isUpToDate) {
@@ -114,7 +109,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 
 				log.info("sync test for tea-cli");
 				const distTea = pkgs.find((p) => p.full_name === "tea.xyz");
-				const installedTeaVersions = installedPkgs.find((p) => p.full_name === "tea.xyz")
+				const installedTeaVersions = installedPkgs.find((p) => p.full_name === "tea.xyz");
 				if (distTea) await checkTeaCLIPackage(distTea, installedTeaVersions);
 
 				log.info("set NEEDS_UPDATE state to pkgs");
