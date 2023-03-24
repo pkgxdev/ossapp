@@ -1,12 +1,10 @@
 <script lang="ts">
   import Button from "@tea/ui/button/button.svelte";
   import { PackageStates, type GUIPackage } from "$libs/types";
-	import { openTerminal, isTeaInstalled } from '@native';
+	import { openTerminal, isPackageInstalled } from '@native';
   import { packagesStore } from "$libs/stores";
 
   export let tea:GUIPackage|undefined;
-
-  export let teaCliInstalled = false;
 
   let installing = false;
   
@@ -15,7 +13,7 @@
     if (checkTeaPoll) return;
     return new Promise((resolve) => {
       checkTeaPoll = setInterval(async () => {
-        const installed = await isTeaInstalled();
+        const installed = await isPackageInstalled("tea.xyz", tea?.version);
         if (installed && checkTeaPoll) {
           clearInterval(checkTeaPoll);
           checkTeaPoll = null;
@@ -31,7 +29,10 @@
 		try {
 			openTerminal(`sh <(curl https://tea.xyz)`);
       await checkInstalled();
-      packagesStore.updatePackage("tea.xyz", { state: PackageStates.INSTALLED });
+      packagesStore.updatePackage("tea.xyz", {
+        state: PackageStates.INSTALLED,
+        installed_versions: [tea?.version || "latest"]
+      });
 		} catch (error) {
 			console.log("install failed")
 		} finally {
@@ -51,9 +52,9 @@
       <Button type="plain" color="secondary" class={`w-7/12 ${installing && "animate-pulse"}`}
         onClick={onOpenTerminal}
       >
-        {teaCliInstalled ? "UPDATE":"INSTALL"} TEA CLI {tea?tea.version:"latest"}
+        INSTALL TEA CLI v{tea?tea.version:"latest"}
       </Button>
-      <p class="text-gray text-sm mt-2">tea cli is required in order to use our app. Clicking the link above will automatically {teaCliInstalled ? "update":"install"} it via your command-line.</p>
+      <p class="text-gray text-sm mt-2">tea cli is required in order to use our app. Clicking the link above will automatically install it via your command-line.</p>
     </div>
   </article>
 </section>

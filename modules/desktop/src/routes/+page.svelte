@@ -37,7 +37,7 @@
 	</div>
 </header>
 
-{#if !teaPkg || teaPkg?.state !== PackageStates.INSTALLED}
+{#if !teaPkg || PackageStates.AVAILABLE === teaPkg?.state || !teaPkg?.installed_versions?.length }
 	<WelcomeModal tea={teaPkg} />
 {/if}
 <style>

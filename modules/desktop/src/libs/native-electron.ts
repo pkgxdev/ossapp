@@ -213,10 +213,10 @@ export const submitLogs = async () => {
 	return response;
 };
 
-export const isTeaInstalled = async (version?: string): Promise<boolean> => {
+export const isPackageInstalled = async (fullName: string, version?: string): Promise<boolean> => {
 	let isInstalled = false;
 	const pkgs = await getInstalledPackages();
-	const teaPkg = pkgs.find((p) => p.full_name === "tea.xyz");
+	const teaPkg = pkgs.find((p) => p.full_name === fullName);
 
 	if (teaPkg) {
 		isInstalled = true;

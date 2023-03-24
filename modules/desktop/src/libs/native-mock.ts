@@ -341,6 +341,6 @@ export const submitLogs = async () => {
 	return "synced!";
 };
 
-export const isTeaInstalled = async (_v?: string): Promise<boolean> => {
+export const isPackageInstalled = async (_v?: string): Promise<boolean> => {
 	return true;
 };
