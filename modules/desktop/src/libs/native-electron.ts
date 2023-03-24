@@ -212,3 +212,18 @@ export const submitLogs = async () => {
 	const response = await ipcRenderer.invoke("submit-logs");
 	return response;
 };
+
+export const isTeaInstalled = async (version?: string): Promise<boolean> => {
+	let isInstalled = false;
+	const pkgs = await getInstalledPackages();
+	const teaPkg = pkgs.find((p) => p.full_name === "tea.xyz");
+
+	if (teaPkg) {
+		isInstalled = true;
+		if (version) {
+			isInstalled = teaPkg.installed_versions.includes(version);
+		}
+	}
+
+	return isInstalled;
+};

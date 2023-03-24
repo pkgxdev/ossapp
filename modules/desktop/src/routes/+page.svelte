@@ -1,19 +1,23 @@
 <script lang="ts">
 	import '$appcss';
 	import { t } from '$libs/translations';
-	import { navStore, packagesStore, notificationStore } from '$libs/stores';
+	import { navStore, packagesStore } from '$libs/stores';
 	import Packages from '$components/packages/packages.svelte';
-	import { SideMenuOptions } from '$libs/types';
+	import { PackageStates, SideMenuOptions } from '$libs/types';
 	import SortingButtons from "$components/search-packages/sorting-buttons.svelte";
 	import SideMenu from "$components/side-menu/side-menu.svelte";
 	import NotificationBar from '$components/notification-bar/notification-bar.svelte';
+	import WelcomeModal from '$components/welcome-modal/welcome-modal.svelte';
 
 	const { sideNavOpen } = navStore; // right side not left
+	const { packages } = packagesStore;
 
 	let sideMenuOption = SideMenuOptions.all;
 
 	let sortBy: "popularity" | "most recent" = "popularity";
 	let sortDirection: "asc" | "desc" = "desc";
+
+	$: teaPkg = $packages.find((p) => p.full_name === "tea.xyz");
 </script>
 
 <div id="package-container">
@@ -33,6 +37,9 @@
 	</div>
 </header>
 
+{#if !teaPkg || teaPkg?.state !== PackageStates.INSTALLED}
+	<WelcomeModal tea={teaPkg} />
+{/if}
 <style>
 	#package-container {
 		padding-top: 50px;
