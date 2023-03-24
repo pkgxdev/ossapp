@@ -3,10 +3,10 @@
     "author": "neil molina <neil@tea.xyz>",
     "private": true,
     "scripts": {
-        "dev": "pnpm --filter desktop exec pnpm electron",
+        "dev": "pnpm --filter tea exec pnpm electron",
         "release": "sh ./.github/update-latest-binary.sh",
-        "build:desktop": "pnpm --filter desktop exec pnpm package",
-        "web:desktop": "BUILD_FOR=preview pnpm --filter desktop dev"
+        "build:desktop": "pnpm --filter tea exec pnpm package",
+        "web:desktop": "BUILD_FOR=preview pnpm --filter tea dev"
     },
     "workspaces": {
         "packages": [
