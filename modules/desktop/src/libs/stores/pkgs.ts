@@ -2,12 +2,19 @@ import { writable } from "svelte/store";
 import type { GUIPackage, InstalledPackage } from "../types";
 import { PackageStates } from "../types";
 import Fuse from "fuse.js";
-import { getPackage, getDistPackages, openTerminal, getInstalledPackages } from "@native";
+import {
+	getPackage,
+	getDistPackages,
+	openTerminal,
+	getInstalledPackages,
+	installPackage
+} from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 import { notificationStore } from "../stores";
 import { NotificationType } from "@tea/ui/types";
 import type { Package } from "@tea/ui/types";
+import { trackInstall, trackInstallFailed } from "$libs/analytics";
 
 const log = window.require("electron-log");
 
@@ -133,6 +140,19 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		log.info("packages store: initialized!");
 	};
 
+	const installPkg = async (pkg: GUIPackage, version?: string) => {
+		try {
+			updatePackage(pkg.full_name, { state: PackageStates.INSTALLING });
+			await installPackage(pkg, version || pkg.version);
+			trackInstall(pkg.full_name);
+			updatePackage(pkg.full_name, { state: PackageStates.INSTALLED });
+		} catch (error) {
+			let message = "Unknown Error";
+			if (error instanceof Error) message = error.message;
+			trackInstallFailed(pkg.full_name, message || "unknown");
+		}
+	};
+
 	return {
 		packages,
 		syncProgress,
@@ -154,6 +174,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			});
 		},
 		updatePackage,
-		init
+		init,
+		installPkg
 	};
 }

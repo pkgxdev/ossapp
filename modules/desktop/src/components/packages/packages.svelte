@@ -8,9 +8,6 @@
 	import Package from "./package.svelte";
 	import { packagesStore } from '$libs/stores';
 
-	import { installPackage } from '@native';
-	import { trackInstall, trackInstallFailed } from '$libs/analytics';
-
 	const { packages: allPackages } = packagesStore;
 	export let packageFilter: SideMenuOptions = SideMenuOptions.all;
 
@@ -63,22 +60,7 @@
 					<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
 						<Package
 							{pkg}
-							onClick={async () => {
-								try {
-									pkg.state = PackageStates.INSTALLING;
-									await installPackage(pkg);
-									trackInstall(pkg.full_name);
-									pkg.state = PackageStates.INSTALLED;
-	
-									packagesStore.updatePackage(pkg.full_name, {
-										state: PackageStates.INSTALLED, // this would also mean its the latest version
-									});
-								} catch (error) {
-									let message = 'Unknown Error'
-									if (error instanceof Error) message = error.message
-									trackInstallFailed(pkg.full_name, message || "unknown");
-								}
-							}}
+							onClick={() => packagesStore.installPkg(pkg)}
 						/>
 					</div>
 				{/if}
