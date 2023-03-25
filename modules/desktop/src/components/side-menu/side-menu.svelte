@@ -63,7 +63,8 @@
 		position: fixed;
 		top: 48px;
 		left: 0px;
-		height: calc(100% - 40px);
+		height: calc(100% - 40px - 35px); /* win.height - title-bar.height - footer.height */
 		width: 190px;
+		box-sizing: border-box;
 	}
 </style>

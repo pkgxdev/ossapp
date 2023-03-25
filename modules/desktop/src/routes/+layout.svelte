@@ -5,6 +5,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import TopBar from '$components/top-bar/top-bar.svelte';
 	import SideBar from '$components/side-bar/side-bar.svelte';
+	import Footer from '$components/footer/footer.svelte';
 	import { navStore, packagesStore } from '$libs/stores';
 	import { listenToChannel } from "@native";
 
@@ -49,6 +50,7 @@
 		</div>
 		<SearchPopupResults />
 	</section>
+	<Footer/>
 </div>
 <aside class={`absolute h-full w-1/4 bg-gray bg-opacity-10 top-0 transition-all  ${$sideNavOpen ? "right-0":"-right-1/4"}`}>
 	<SideBar/>
@@ -61,7 +63,7 @@
 		overflow: hidden;
 	}
 	section {
-		height: calc(100vh - 50px);
+		height: calc(100vh - 50px - 25px); /* win.height - header - footer */
 		overflow-y: scroll;
 		box-sizing: border-box;
 	}

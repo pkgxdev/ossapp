@@ -121,7 +121,7 @@
 <style>
 	section {
 		position: fixed;
-		top: 80px;
+		top: 48px;
 		left: 0px;
 		right: 0;
 		background: rgba(0, 0, 0, 0.7);
