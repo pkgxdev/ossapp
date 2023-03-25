@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '$appcss';
-	import * as log from "electron-log";
 	import { t } from '$libs/translations';
 	import { navStore, packagesStore } from '$libs/stores';
 	import Packages from '$components/packages/packages.svelte';
@@ -10,6 +9,8 @@
 	import NotificationBar from '$components/notification-bar/notification-bar.svelte';
 	import WelcomeModal from '$components/welcome-modal/welcome-modal.svelte';
 	import Button from "@tea/ui/button/button.svelte";
+
+	const log = window.require("electron-log");
 
 	const { sideNavOpen } = navStore; // right side not left
 	const { packages } = packagesStore;
@@ -21,7 +22,7 @@
 
 	let updating = false;
 
-	const pkgsToUpdate = $packages.filter((p: GUIPackage) => p.state === PackageStates.NEEDS_UPDATE);
+	$: pkgsToUpdate = $packages.filter((p: GUIPackage) => p.state === PackageStates.NEEDS_UPDATE);
 	async function updateAll() {
 		updating = true;
 		for(const pkg of pkgsToUpdate) {
@@ -65,7 +66,7 @@
 				onClick={updateAll}
 			>
 					{$t(`package.update-all`)} [{needsUpdateCount}]
-			</Button>
+			</Button> 
 		{/if}
 	</div>
 </header>
