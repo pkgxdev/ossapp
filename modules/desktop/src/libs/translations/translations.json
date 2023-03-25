@@ -17,6 +17,7 @@
 			"resources": "Resources"
 		},
 		"package": {
+			"update-all": "UPDATE ALL",
 			"top-list-title": "Top packages this week",
 			"browse-cta": "Browse packages",
 			"what-title": "What are packages?",

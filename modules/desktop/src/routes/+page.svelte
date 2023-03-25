@@ -1,13 +1,15 @@
 <script lang="ts">
 	import '$appcss';
+	import * as log from "electron-log";
 	import { t } from '$libs/translations';
 	import { navStore, packagesStore } from '$libs/stores';
 	import Packages from '$components/packages/packages.svelte';
-	import { PackageStates, SideMenuOptions } from '$libs/types';
-	import SortingButtons from "$components/search-packages/sorting-buttons.svelte";
+	import { PackageStates, SideMenuOptions, type GUIPackage } from '$libs/types';
+	// import SortingButtons from "$components/search-packages/sorting-buttons.svelte";
 	import SideMenu from "$components/side-menu/side-menu.svelte";
 	import NotificationBar from '$components/notification-bar/notification-bar.svelte';
 	import WelcomeModal from '$components/welcome-modal/welcome-modal.svelte';
+	import Button from "@tea/ui/button/button.svelte";
 
 	const { sideNavOpen } = navStore; // right side not left
 	const { packages } = packagesStore;
@@ -17,7 +19,24 @@
 	let sortBy: "popularity" | "most recent" = "popularity";
 	let sortDirection: "asc" | "desc" = "desc";
 
+	let updating = false;
+
+	const pkgsToUpdate = $packages.filter((p: GUIPackage) => p.state === PackageStates.NEEDS_UPDATE);
+	async function updateAll() {
+		updating = true;
+		for(const pkg of pkgsToUpdate) {
+			try {
+				await packagesStore.installPkg(pkg);
+			} catch (error) {
+				log.error(error);
+			}
+		}
+		updating = false;
+		sideMenuOption = SideMenuOptions.all;
+	}
+
 	$: teaPkg = $packages.find((p) => p.full_name === "tea.xyz");
+	$: needsUpdateCount = pkgsToUpdate.length;
 </script>
 
 <div id="package-container">
@@ -28,12 +47,26 @@
 	<NotificationBar />
 	<div class="flex justify-between items-center align-middle">
 		<h1 class="text-primary mt-4 pl-3 text-2xl font-bold font-mona">{$t(`side-menu-title.${sideMenuOption}`)}</h1>
+		<!-- 
 		<section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">
+			
+			we might bring it back?
 			<SortingButtons onSort={(prop, dir) => {
 				sortBy = prop;
 				sortDirection = dir;
 			}} />
 		</section>
+		 -->
+		{#if needsUpdateCount}
+			<Button
+				class={`w-48 h-8 text-xs mr-4 ${updating && "animate-pulse"}`}
+				type="plain"
+				color="secondary"
+				onClick={updateAll}
+			>
+					{$t(`package.update-all`)} [{needsUpdateCount}]
+			</Button>
+		{/if}
 	</div>
 </header>
 
