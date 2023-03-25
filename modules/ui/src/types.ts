@@ -7,12 +7,14 @@ export interface Review {
 }
 export interface Package {
 	slug: string;
+	// TODO:  this field should be deprecated and instead be presented as a latest version PER architecture
 	version: string;
 	full_name: string;
 	name: string;
 	maintainer: string;
 	homepage: string;
 	last_modified: Date | string;
+	created: Date | string;
 	thumb_image_url: string;
 	thumb_image_name: string;
 	desc: string;
