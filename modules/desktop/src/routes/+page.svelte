@@ -25,6 +25,7 @@
 	$: pkgsToUpdate = $packages.filter((p: GUIPackage) => p.state === PackageStates.NEEDS_UPDATE);
 	async function updateAll() {
 		updating = true;
+		log.info(`updating: ${pkgsToUpdate.length} packages`);
 		for(const pkg of pkgsToUpdate) {
 			try {
 				await packagesStore.installPkg(pkg);
