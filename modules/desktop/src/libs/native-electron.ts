@@ -81,16 +81,15 @@ export async function getFeaturedPackages(): Promise<Package[]> {
 
 export async function getPackageReviews(full_name: string): Promise<Review[]> {
 	console.log(`getting reviews for ${full_name}`);
-	const reviews: Review[] = await apiGet<Review[]>(
-		`packages/${full_name.replaceAll("/", ":")}/reviews`
-	);
+	const reviews: Review[] =
+		(await apiGet<Review[]>(`packages/${full_name.replaceAll("/", ":")}/reviews`)) ?? [];
 
 	return reviews;
 }
 
 export async function installPackage(pkg: GUIPackage, version?: string) {
 	try {
-		const latestVersion = pkg?.available_versions?.length ? pkg.available_versions[0] : "";
+		const latestVersion = pkg.version;
 		const specificVersion = version || latestVersion;
 		await installPackageCommand(pkg.full_name + (specificVersion ? `@${specificVersion}` : ""));
 	} catch (error) {

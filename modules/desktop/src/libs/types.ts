@@ -17,7 +17,6 @@ export type GUIPackage = Package & {
 	state: PackageStates;
 	installed_versions?: string[];
 	synced?: boolean;
-	available_versions?: string[];
 };
 
 export type Course = {
@@ -65,4 +64,4 @@ export enum SideMenuOptions {
 	made_by_tea = "made_by_tea"
 }
 
-export type InstalledPackage = Require<Pick<GUIPackage, "full_name" | "installed_versions">>;
+export type InstalledPackage = Required<Pick<GUIPackage, "full_name" | "installed_versions">>;
