@@ -8,7 +8,7 @@
   import { getPackage } from '@native';
   import { notificationStore } from '$libs/stores';
 
-
+	export let tab = "all";
 	export let pkg: GUIPackage;
   export let onClick: () => void;
 
@@ -46,7 +46,7 @@
 
 <PackageCard
   {pkg}
-  link={`/packages/${pkg.slug}`}
+  link={`/packages/${pkg.slug}?tab=${tab}`}
   ctaLabel={getCTALabel(pkg.state)}
 	progessLoading={+fakeLoadingProgress.toFixed(2)}
 	ctaType="plain"

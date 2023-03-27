@@ -59,6 +59,7 @@
 				{#if index < limit}
 					<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
 						<Package
+							tab={packageFilter}
 							{pkg}
 							onClick={() => packagesStore.installPkg(pkg)}
 						/>

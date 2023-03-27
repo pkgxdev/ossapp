@@ -1,5 +1,7 @@
 <script lang="ts">
 	import '$appcss';
+
+	import { page } from '$app/stores';
 	// import PageHeader from '$components/page-header/page-header.svelte';
 	import PackageBanner from '$components/package-banner/package-banner.svelte';
 	import type { Bottle } from '@tea/ui/types';
@@ -14,7 +16,7 @@
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 
 	/** @type {import('./$types').PageData} */
-	export let data;
+	export let data: { slug:string, content:string, title:string };
 
 	import { packagesStore } from '$libs/stores';
 
@@ -58,13 +60,17 @@
 			];
 		}
 	});
+	const url = $page.url;
 
+	const tab = url.searchParams.get("tab");
 </script>
 <header class="mx-16 pb-5 mb-10 text-gray border border-x-0 border-t-0">
 	<a class="hover:text-white hover:opacity-80 cursor-default" href="/">home</a>
 	>
-	<a class="hover:text-white hover:opacity-80 cursor-default" href="/?tab=installed">available updates</a>
-	>
+	{#if tab !== "all"}
+		<a class="hover:text-white hover:opacity-80 cursor-default" href={`/?tab=${tab || "all"}`}>{tab || "all"}</a>
+		>
+	{/if}
 	<span class="text-white">{pkg.full_name}</span>
 </header>
 {#if pkg}
