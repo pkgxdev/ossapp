@@ -7,11 +7,12 @@ import {
 	getDistPackages,
 	openTerminal,
 	getInstalledPackages,
-	installPackage
+	installPackage,
+	getPackageBottles
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
-import { notificationStore } from "../stores";
+import { notificationStore, packagesStore } from "../stores";
 import { NotificationType } from "@tea/ui/types";
 import type { Package } from "@tea/ui/types";
 import { trackInstall, trackInstallFailed } from "$libs/analytics";
@@ -157,6 +158,19 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		}
 	};
 
+	const fetchPackageBottles = async (pkgName: string) => {
+		// TODO: this api should take an architecture argument or else an architecture filter should be applied downstreawm
+		const bottles = await getPackageBottles(pkgName)
+
+		packages.update((pkgs) => {
+			const pkg = pkgs.find(p => p.full_name === pkgName)
+			if (pkg) {
+				pkg.bottles = bottles
+			}
+			return pkgs
+		});
+	}
+
 	return {
 		packages,
 		syncProgress,
@@ -178,6 +192,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				}
 			});
 		},
+		fetchPackageBottles,
 		updatePackage,
 		init,
 		installPkg

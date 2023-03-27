@@ -2,17 +2,18 @@
 	import "../app.css";
 	import type { Package } from "../types";
 	import ImgLoader from "../img-loader/img-loader.svelte";
-	import Button from "../button/button.svelte";
 	import ProgressCircle from "../progress-circle/progress-circle.svelte";
+  import InstallButton from "./install-button.svelte";
 
 	export let pkg: Package;
+	export let availableVersions: string[];
 	export let link: string;
 	export let ctaLabel: string;
 	export let progessLoading = 0;
 	export let ctaType: "ghost" | "plain" = "ghost";
 	export let ctaColor: "green" | "secondary" = "secondary";
 
-	export let onClickCTA = () => {
+	export let onClickCTA = async (verson: string) => {
 		console.log("do nothing");
 	};
 </script>
@@ -48,14 +49,7 @@
         <span class="package-install-no">>{{- .installs -}}&nbsp;installs</span> -->
 			</p>
 		</div>
-		<Button
-			class="h-8 w-1/2 border border-gray p-2 text-xs"
-			onClick={onClickCTA}
-			type={ctaType}
-			color={ctaColor}
-		>
-			{ctaLabel}
-		</Button>
+		<InstallButton {ctaLabel} {ctaColor} {ctaType} {onClickCTA} {availableVersions} />
 	</footer>
 	{#if progessLoading > 0 && progessLoading < 100}
 		<div class="absolute top-0 left-0 h-full w-full bg-black bg-opacity-50">

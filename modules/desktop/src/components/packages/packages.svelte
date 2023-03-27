@@ -61,7 +61,7 @@
 						<Package
 							tab={packageFilter}
 							{pkg}
-							onClick={() => packagesStore.installPkg(pkg)}
+							onClick={(version) => packagesStore.installPkg(pkg, version)}
 						/>
 					</div>
 				{/if}

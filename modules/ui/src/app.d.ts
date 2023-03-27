@@ -9,3 +9,10 @@ declare namespace App {
 	// interface Error {}
 	// interface Platform {}
 }
+
+// Declare custom event handlers here to make typscript happy.
+declare namespace svelte.JSX {
+  interface HTMLAttributes<T> {
+    onclick_outside: () => void
+  }
+}

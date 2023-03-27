@@ -91,6 +91,7 @@ export async function installPackage(pkg: GUIPackage, version?: string) {
 	try {
 		const latestVersion = pkg.version;
 		const specificVersion = version || latestVersion;
+		console.log(`installing package: ${pkg.name} version: ${specificVersion}`)
 		await installPackageCommand(pkg.full_name + (specificVersion ? `@${specificVersion}` : ""));
 	} catch (error) {
 		log.error("installPackage:", error);
