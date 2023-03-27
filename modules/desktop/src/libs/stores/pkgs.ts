@@ -120,9 +120,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				if (distTea) await checkTeaCLIPackage(distTea, installedTeaVersions);
 
 				log.info("set NEEDS_UPDATE state to pkgs");
-				let progressCount = 0;
-				for (const iPkg of installedPkgs) {
-					progressCount++;
+				for (const [i, iPkg] of installedPkgs.entries()) {
 					const pkg = guiPkgs.find((p) => p.full_name === iPkg.full_name);
 					if (pkg) {
 						const isUpdated = pkg.version === iPkg.installed_versions[0];
@@ -131,10 +129,11 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 							state: isUpdated ? PackageStates.INSTALLED : PackageStates.NEEDS_UPDATE
 						});
 					}
-					syncProgress.set(+(progressCount / installedPkgs.length).toFixed(2));
+					syncProgress.set(+((i + 1) / installedPkgs.length).toFixed(2));
 				}
 			} catch (error) {
 				log.error(error);
+			} finally {
 			}
 		}
 		log.info("packages store: initialized!");
