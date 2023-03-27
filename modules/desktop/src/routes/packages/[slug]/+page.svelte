@@ -60,7 +60,13 @@
 	});
 
 </script>
-
+<header class="px-16 text-gray">
+	<a class="hover:text-white hover:opacity-80" href="/">home</a>
+	>
+	<a class="hover:text-white hover:opacity-80" href="/?tab=installed">available updates</a>
+	>
+	<span class="text-white">{pkg.full_name}</span>
+</header>
 {#if pkg}
 	<div class="bg-black px-16">
 		<section>
