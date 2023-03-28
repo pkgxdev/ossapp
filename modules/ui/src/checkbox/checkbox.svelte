@@ -14,7 +14,7 @@
 <style>
 	label {
 		position: relative;
-		cursor: pointer;
+		cursor: auto;
 		-webkit-user-select: none;
 		-moz-user-select: none;
 		-ms-user-select: none;
@@ -29,7 +29,7 @@
 	}
 	label input {
 		opacity: 0;
-		cursor: pointer;
+		cursor: auto;
 		height: 0;
 		width: 0;
 	}
