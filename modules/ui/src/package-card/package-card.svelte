@@ -3,7 +3,7 @@
 	import type { Package } from "../types";
 	import ImgLoader from "../img-loader/img-loader.svelte";
 	import ProgressCircle from "../progress-circle/progress-circle.svelte";
-  import InstallButton from "./install-button.svelte";
+	import InstallButton from "./install-button.svelte";
 
 	export let pkg: Package;
 	export let availableVersions: string[];
