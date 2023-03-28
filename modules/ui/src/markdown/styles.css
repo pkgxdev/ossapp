@@ -225,7 +225,7 @@
 }
 
 .markdown-body details summary {
-	cursor: pointer;
+	cursor: auto;
 }
 
 .markdown-body details:not([open]) > *:not(summary) {
@@ -918,7 +918,7 @@
 }
 
 .markdown-body .task-list-item.enabled label {
-	cursor: pointer;
+	cursor: auto;
 }
 
 .markdown-body .task-list-item + .task-list-item {

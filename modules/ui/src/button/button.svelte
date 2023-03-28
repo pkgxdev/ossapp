@@ -27,6 +27,7 @@
 	button {
 		min-width: 100px;
 		transition: 0.2s ease-in-out;
+		cursor: auto;
 	}
 
 	button.plain.primary {
