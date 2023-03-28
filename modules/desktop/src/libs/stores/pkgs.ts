@@ -133,7 +133,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				}
 			} catch (error) {
 				log.error(error);
-			} finally {
 			}
 		}
 		log.info("packages store: initialized!");
