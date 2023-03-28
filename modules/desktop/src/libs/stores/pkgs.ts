@@ -31,6 +31,7 @@ export default function initPackagesStore() {
 	let initialized = false;
 	const syncProgress = writable<number>(0); // TODO: maybe use this in the UI someday
 	const packages = writable<GUIPackage[]>([]);
+	const requireTeaCli = writable<boolean>(false);
 
 	let packagesIndex: Fuse<GUIPackage>;
 
@@ -78,6 +79,11 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	};
 
 	const checkTeaCLIPackage = async (teaPkg: Package, installedPkg?: InstalledPackage) => {
+		if (!installedPkg) {
+			requireTeaCli.set(true);
+			return;
+		}
+
 		const isUpToDate = teaPkg.version === installedPkg?.installed_versions[0];
 		log.info("check if Tea-CLI is up to date:", isUpToDate);
 		//TODO: Is there where we handle the case of tea not being installed at all?
@@ -116,13 +122,11 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 
 				log.info("sync test for tea-cli");
 				const distTea = pkgs.find((p) => p.full_name === "tea.xyz");
-				const installedTeaVersions = installedPkgs.find((p) => p.full_name === "tea.xyz");
-				if (distTea) await checkTeaCLIPackage(distTea, installedTeaVersions);
+				const installedTeaPkg = installedPkgs.find((p) => p.full_name === "tea.xyz");
+				if (distTea) await checkTeaCLIPackage(distTea, installedTeaPkg);
 
 				log.info("set NEEDS_UPDATE state to pkgs");
-				let progressCount = 0;
-				for (const iPkg of installedPkgs) {
-					progressCount++;
+				for (const [i, iPkg] of installedPkgs.entries()) {
 					const pkg = guiPkgs.find((p) => p.full_name === iPkg.full_name);
 					if (pkg) {
 						const isUpdated = pkg.version === iPkg.installed_versions[0];
@@ -131,7 +135,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 							state: isUpdated ? PackageStates.INSTALLED : PackageStates.NEEDS_UPDATE
 						});
 					}
-					syncProgress.set(+(progressCount / installedPkgs.length).toFixed(2));
+					syncProgress.set(+((i + 1) / installedPkgs.length).toFixed(2));
 				}
 			} catch (error) {
 				log.error(error);
@@ -156,6 +160,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	return {
 		packages,
 		syncProgress,
+		requireTeaCli,
 		subscribe: packages.subscribe,
 		search: async (term: string, limit = 5): Promise<GUIPackage[]> => {
 			if (!term || !packagesIndex) return [];
