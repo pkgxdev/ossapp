@@ -16,7 +16,7 @@
 	const log = window.require("electron-log");
 
 	const { sideNavOpen } = navStore; // right side not left
-	const { packages } = packagesStore;
+	const { packages, requireTeaCli } = packagesStore;
 
 	const url = $page.url;
 
@@ -77,7 +77,7 @@
 	</div>
 </header>
 
-{#if !teaPkg || PackageStates.AVAILABLE === teaPkg?.state || !teaPkg?.installed_versions?.length }
+{#if $requireTeaCli }
 	<WelcomeModal tea={teaPkg} />
 {/if}
 <style>
