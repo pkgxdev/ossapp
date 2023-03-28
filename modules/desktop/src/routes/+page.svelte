@@ -1,5 +1,7 @@
 <script lang="ts">
 	import '$appcss';
+
+	import { page } from '$app/stores';
 	import { t } from '$libs/translations';
 	import { navStore, packagesStore } from '$libs/stores';
 	import Packages from '$components/packages/packages.svelte';
@@ -10,12 +12,15 @@
 	import WelcomeModal from '$components/welcome-modal/welcome-modal.svelte';
 	import Button from "@tea/ui/button/button.svelte";
 
+
 	const log = window.require("electron-log");
 
 	const { sideNavOpen } = navStore; // right side not left
 	const { packages } = packagesStore;
 
-	let sideMenuOption = SideMenuOptions.all;
+	const url = $page.url;
+
+	let sideMenuOption = url.searchParams.get("tab") as SideMenuOptions || SideMenuOptions.all;
 
 	let sortBy: "popularity" | "most recent" = "popularity";
 	let sortDirection: "asc" | "desc" = "desc";
