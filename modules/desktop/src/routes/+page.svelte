@@ -102,7 +102,7 @@
 	}
 
 	header.min {
-		width: calc(75% - 190px);
+		width: calc(75% - 15px);
 	}
 
 	header.scrolling {
