@@ -13,7 +13,7 @@
 	export let ctaType: "ghost" | "plain" = "ghost";
 	export let ctaColor: "green" | "secondary" = "secondary";
 
-	export let onClickCTA = async (verson: string) => {
+	export let onClickCTA = async (_version: string) => {
 		console.log("do nothing");
 	};
 </script>
