@@ -1,16 +1,14 @@
 <script lang="ts">
-	import clickOutside from "../lib/clickOutside";
-	import Button from "../button/button.svelte";
+	import type { GUIPackage } from "$libs/types";
+	import clickOutside from "@tea/ui/lib/clickOutside";
+	import PackageStateButton from "./package-state-button.svelte";
 
-	export let ctaLabel: string;
-	export let ctaType: "ghost" | "plain" = "ghost";
-	export let ctaColor: "green" | "secondary" = "secondary";
+	export let pkg: GUIPackage;
+	export let availableVersions: string[] = [];
 
 	export let onClickCTA = async (_version: string) => {
 		console.log("do nothing");
 	};
-
-	export let availableVersions: string[] = [];
 
 	$: isOpened = false;
 
@@ -22,23 +20,18 @@
 	const handleClickOutside = () => (isOpened = false);
 </script>
 
-<div class="dropdown" use:clickOutside on:click_outside={handleClickOutside}>
-	<Button
-		class="h-8 border border-gray p-2 text-xs"
-		type={ctaType}
-		color={ctaColor}
-		onClick={() => (isOpened = !isOpened)}
-	>
-		{ctaLabel}
-	</Button>
-	<div class="version-list" class:visible={isOpened}>
-		{#each availableVersions as version, idx}
-			{#if idx !== 0}<hr class="divider" />{/if}
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div class="version-item text-xs" on:click={() => handleClick(version)}>
-				v{version + (idx === 0 ? " (latest)" : "")}
-			</div>
-		{/each}
+<div class="flex flex-col justify-end">
+	<div class="dropdown" use:clickOutside on:click_outside={handleClickOutside}>
+		<PackageStateButton {pkg} onClick={() => (isOpened = !isOpened)} />
+		<div class="version-list" class:visible={isOpened}>
+			{#each availableVersions as version, idx}
+				{#if idx !== 0}<hr class="divider" />{/if}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<div class="version-item text-xs" on:click={() => handleClick(version)}>
+					v{version + (idx === 0 ? " (latest)" : "")}
+				</div>
+			{/each}
+		</div>
 	</div>
 </div>
 
@@ -46,7 +39,7 @@
 	.version-list {
 		display: none;
 		position: absolute;
-		margin-top: 4px;
+		margin-top: 6px;
 		width: 100%;
 		z-index: 1;
 		background-color: #1a1a1a;
