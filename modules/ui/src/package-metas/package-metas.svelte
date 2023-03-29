@@ -2,6 +2,7 @@
 	import type { Package } from "../types";
 	import dayjs from "dayjs";
 	import relativeTime from "dayjs/plugin/relativeTime";
+	import { shellOpenExternal } from "@native";
 
 	dayjs.extend(relativeTime);
 
@@ -48,29 +49,26 @@
 	</ul>
 	<h1 class="text-primary">Homepage</h1>
 	<ul class="mb-10 flex flex-col gap-2">
-		<li>
-			<a target="_blank" rel="noreferrer" href={pkg.homepage}>
-				<span>{pkg.homepage}</span>
-			</a>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<li on:click={() => shellOpenExternal(pkg.homepage)}>
+			<span>{pkg.homepage}</span>
 		</li>
 	</ul>
 	{#if pkg.documentation_url}
 		<h1 class="text-primary">Documentation</h1>
 		<ul class="mb-10 flex flex-col gap-2">
-			<li>
-				<a target="_blank" rel="noreferrer" href={pkg.documentation_url}>
-					<span>{pkg.documentation_url}</span>
-				</a>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<li on:click={() => shellOpenExternal(pkg.documentation_url)}>
+				<span>{pkg.documentation_url}</span>
 			</li>
 		</ul>
 	{/if}
 	{#if pkg.github}
 		<h1 class="text-primary">Github Repository</h1>
 		<ul class="mb-10 flex flex-col gap-2">
-			<li>
-				<a target="_blank" rel="noreferrer" href={`https://github.com/${pkg.github}`}>
-					<span>{pkg.github}</span>
-				</a>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<li on:click={() => shellOpenExternal(`https://github.com/${pkg.github}`)}>
+				<span>{pkg.github}</span>
 			</li>
 		</ul>
 	{/if}
@@ -78,13 +76,12 @@
 		<h1 class="text-primary">Contributors</h1>
 		<ul class="mb-10 flex flex-col gap-2">
 			{#each pkg.contributors as contributor}
-				<li>
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<li on:click={() => shellOpenExternal(`https://github.com/${contributor.login}`)}>
 					<!-- <figure class="h-5 w-5 bg-gray">
 						<img src={contributor.avatar_url} alt={contributor.login} />
 					</figure> -->
-					<a href={`https://github.com/${contributor.login}`} rel="noreferrer" target="_blank">
-						<span>{contributor.login}</span>
-					</a>
+					<span>{contributor.login}</span>
 				</li>
 			{/each}
 		</ul>
