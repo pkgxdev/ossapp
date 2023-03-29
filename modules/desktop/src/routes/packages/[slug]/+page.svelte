@@ -64,7 +64,7 @@
 
 	const tab = url.searchParams.get("tab");
 </script>
-<header class="mx-16 pb-5 mb-10 text-gray border border-x-0 border-t-0">
+<header class="mx-16 py-5 mb-10 text-gray border border-x-0 border-t-0">
 	<a class="hover:text-white hover:opacity-80 cursor-default" href="/">home</a>
 	>
 	{#if tab !== "all"}

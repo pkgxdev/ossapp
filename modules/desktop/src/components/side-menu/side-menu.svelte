@@ -60,10 +60,10 @@
 
 <style>
 	aside {
-		position: fixed;
-		top: 48px;
+		position: absolute;
 		left: 0px;
-		height: calc(100% - 40px - 35px); /* win.height - title-bar.height - footer.height */
+		top: 0px;
+		height: calc(100vh - 48px - 27px); /* win.height - title-bar.height - footer.height */
 		width: 190px;
 		box-sizing: border-box;
 	}

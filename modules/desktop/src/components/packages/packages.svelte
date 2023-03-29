@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$appcss';
+	import InfiniteScroll from "svelte-infinite-scroll";
 	// import { t } from '$libs/translations';
 	import type { GUIPackage } from '$libs/types';
 	import moment from "moment";
@@ -13,6 +14,8 @@
 
 	export let sortBy: "popularity" | "most recent" = 'popularity';
 	export let sortDirection: 'asc' | 'desc' = 'desc';
+
+	export let scrollY = 0;
 
 	const loadMore = 9;
 	let limit = loadMore;
@@ -35,6 +38,11 @@
 		[SideMenuOptions.made_by_tea]: (pkg: GUIPackage) => pkg.full_name.includes("tea.xyz"),
 	}
 
+	const onScroll = (e: Event) => {
+		const target = e.target as HTMLInputElement;
+		scrollY = target.scrollTop || 0;
+	}
+
 	$: packages = $allPackages
 		.filter(pkgFilters[packageFilter] || pkgFilters.all)
 		.sort((a, b) => {
@@ -52,7 +60,9 @@
 </script>
 
 <div>
-	<ul class="grid grid-cols-3 gap-2 bg-black">
+	<ul class="grid grid-cols-3 gap-2 bg-black"
+		on:scroll={onScroll}
+	>
 		{#if packages.length > 0}
 			{#each packages as pkg, index}
 				{#if index < limit}
@@ -72,26 +82,38 @@
 				</section>
 			{/each}
 		{/if}
+		<InfiniteScroll threshold={100} on:loadMore={() => limit += loadMore} />
 	</ul>
-	{#if limit < packages.length }
-	<footer class="w-full flex border border-gray h-16">
-		<button class="flex-grow h-16" on:click={() => limit += loadMore }>show more</button>
-	</footer>
-	{/if}
 </div>
 
 <style>
-	button {
-		height: 100%;
-		text-decoration: none;
-		min-width: 120px;
-		transition: 0.1s linear;
+	ul {
+		margin-top: 0px;
+		padding-top: 60px;
+		max-height: calc(100vh - 95px);
+		overflow-y: scroll;
+		overflow-x: hidden;
+		padding-right: 4px;
 	}
 
-	button:hover, button.active {
-		color: white;
-		background-color: #8000ff;
-		box-shadow: inset 0vw 0vw 0vw 0.223vw #1a1a1a !important;
-		box-sizing: border-box;
+	/* width */
+	::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #272626; 
+	}
+	
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #949494;
+		border-radius: 4px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: white; 
 	}
 </style>

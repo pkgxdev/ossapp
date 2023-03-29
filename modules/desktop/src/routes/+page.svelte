@@ -27,6 +27,8 @@
 
 	let updating = false;
 
+	let packagesScrollY = 0;
+
 	$: pkgsToUpdate = $packages.filter((p: GUIPackage) => p.state === PackageStates.NEEDS_UPDATE);
 	async function updateAll() {
 		updating = true;
@@ -47,13 +49,12 @@
 </script>
 
 <div id="package-container">
-	<Packages packageFilter={sideMenuOption} {sortBy} {sortDirection}/>
+	<Packages packageFilter={sideMenuOption} {sortBy} {sortDirection} bind:scrollY={packagesScrollY}/>
 </div>
-<SideMenu bind:activeOption={sideMenuOption}/>
-<header class={`transition-all px-2 flex flex-col ${$sideNavOpen ? "min": ""}`}>
+<header class={`transition-all px-2 flex flex-col ${$sideNavOpen ? "min": ""} ${packagesScrollY > 100 && 'scrolling'}`}>
 	<NotificationBar />
 	<div class="flex justify-between items-center align-middle">
-		<h1 class="text-primary mt-4 pl-3 text-2xl font-bold font-mona">{$t(`side-menu-title.${sideMenuOption}`)}</h1>
+		<h1 class="text-primary pl-3 text-2xl font-bold font-mona">{$t(`side-menu-title.${sideMenuOption}`)}</h1>
 		<!-- 
 		<section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">
 			
@@ -76,32 +77,37 @@
 		{/if}
 	</div>
 </header>
-
+<SideMenu bind:activeOption={sideMenuOption}/>
 {#if $requireTeaCli }
 	<WelcomeModal tea={teaPkg} />
 {/if}
 <style>
 	#package-container {
-		padding-top: 50px;
 		width: calc(100% - 200px);
 		margin-left: 200px;
 	}
 
 	header {
-		position: fixed;
-		top: 48px;
+		position: absolute;
+		top: 0px;
 		left: 190px;
-		height: 150px;
-		width: calc(100% - 190px);
+		height: 72px;
+		width: calc(100% - 190px - 18px);
 		background-image: linear-gradient(rgba(26,26,26,1), rgba(26,26,26,0));
-		padding-bottom: 80px;
+		padding-top: 15px;
 	}
 
 	header.lower {
-		top: 80px;
+		top: 32px;
 	}
 
 	header.min {
 		width: calc(75% - 190px);
+	}
+
+	header.scrolling {
+		height: 60px;
+		background-color: rgba(26,26,26,1);
+		padding-top: 5px;
 	}
 </style>

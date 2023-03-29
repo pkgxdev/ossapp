@@ -73,6 +73,7 @@ importers:
       semver: ^7.3.8
       svelte: ^3.55.1
       svelte-check: ^2.8.0
+      svelte-infinite-scroll: ^2.0.1
       svelte-markdown: ^0.2.3
       svelte-preprocess: ^5.0.1
       svelte-watch-resize: ^1.0.3
@@ -114,6 +115,7 @@ importers:
       pushy-electron: 1.0.11
       renderer: link:@types/electron/renderer
       semver: 7.3.8
+      svelte-infinite-scroll: 2.0.1
       svelte-markdown: 0.2.3_svelte@3.55.1
       svelte-watch-resize: 1.0.3
       sveltekit-i18n: 2.2.2_svelte@3.55.1
@@ -12003,6 +12005,10 @@ packages:
     dependencies:
       svelte: 3.55.1
     dev: true
+
+  /svelte-infinite-scroll/2.0.1:
+    resolution: {integrity: sha512-goTHCfOHRDCs8C5MeSuIc6LlAQ8zVQ+M4Y3LyvrDjx5rqSSxSrdCuQwIyWYNcO6j6/mnqRro3QB64ClBzfn+Wg==}
+    dev: false
 
   /svelte-markdown/0.2.3_svelte@3.55.0:
     resolution: {integrity: sha512-2h680NzTXnAD0CXhxe3GeHl6W+ayG4iKQRl+BIDRw+R0mUE0OiNxP1Vt8Rn+aWevB/LBiBIPCAwvL+0BkG057A==}

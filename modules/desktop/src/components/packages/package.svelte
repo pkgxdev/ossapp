@@ -9,6 +9,7 @@
   import { packagesStore, notificationStore } from '$libs/stores';
   import { onMount } from 'svelte';
 	import semverCompare from "semver/functions/compare";
+	import { clean } from "semver";
 
 	export let tab = "all";
 	export let pkg: GUIPackage;
@@ -71,7 +72,11 @@
 			versionSet.add(b.version)
 		}
 
-		return Array.from(versionSet).sort((a, b) => semverCompare(b, a));
+		return Array.from(versionSet).sort((a, b) => semverCompare(cleanVersion(b), cleanVersion(a)));
+	}
+
+	const cleanVersion = (version: string) => {
+		return clean(version) || '0.0.0';
 	}
 
 	onMount(() => {

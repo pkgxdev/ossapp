@@ -100,6 +100,7 @@
 		"pushy-electron": "^1.0.11",
 		"renderer": "link:@types/electron/renderer",
 		"semver": "^7.3.8",
+		"svelte-infinite-scroll": "^2.0.1",
 		"svelte-markdown": "^0.2.3",
 		"svelte-watch-resize": "^1.0.3",
 		"sveltekit-i18n": "^2.2.2",
