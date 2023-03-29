@@ -90,7 +90,7 @@
 	ul {
 		margin-top: 0px;
 		padding-top: 60px;
-		max-height: calc(100vh - 48px - 12px - 40px);
+		max-height: calc(100vh - 95px);
 		overflow-y: scroll;
 		overflow-x: hidden;
 		padding-right: 4px;

@@ -51,7 +51,6 @@
 <div id="package-container">
 	<Packages packageFilter={sideMenuOption} {sortBy} {sortDirection} bind:scrollY={packagesScrollY}/>
 </div>
-<SideMenu bind:activeOption={sideMenuOption}/>
 <header class={`transition-all px-2 flex flex-col ${$sideNavOpen ? "min": ""} ${packagesScrollY > 100 && 'scrolling'}`}>
 	<NotificationBar />
 	<div class="flex justify-between items-center align-middle">
@@ -78,7 +77,7 @@
 		{/if}
 	</div>
 </header>
-
+<SideMenu bind:activeOption={sideMenuOption}/>
 {#if $requireTeaCli }
 	<WelcomeModal tea={teaPkg} />
 {/if}
