@@ -82,7 +82,6 @@
 {/if}
 <style>
 	#package-container {
-		padding-top: 50px;
 		width: calc(100% - 200px);
 		margin-left: 200px;
 	}

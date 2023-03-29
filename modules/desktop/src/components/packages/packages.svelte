@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$appcss';
+	import InfiniteScroll from "svelte-infinite-scroll";
 	// import { t } from '$libs/translations';
 	import type { GUIPackage } from '$libs/types';
 	import moment from "moment";
@@ -73,15 +74,38 @@
 				</section>
 			{/each}
 		{/if}
+		<InfiniteScroll threshold={100} on:loadMore={() => limit += loadMore} />
 	</ul>
-	{#if limit < packages.length }
-	<footer class="w-full flex border border-gray h-16">
-		<button class="flex-grow h-16" on:click={() => limit += loadMore }>show more</button>
-	</footer>
-	{/if}
 </div>
 
 <style>
+	ul {
+		max-height: calc(100vh - 48px - 27px - 40px);
+		overflow-y: scroll;
+		overflow-x: hidden;
+		padding-right: 4px;
+	}
+
+	/* width */
+	::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #272626; 
+	}
+	
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #949494;
+		border-radius: 4px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: white; 
+	}
 	button {
 		height: 100%;
 		text-decoration: none;
