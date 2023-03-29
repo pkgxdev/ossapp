@@ -26,9 +26,8 @@
 		[SideMenuOptions.recently_updated]: (pkg: GUIPackage) => {
 			return moment(pkg.last_modified).isAfter(moment().subtract(30, "days"));
 		},
-		[SideMenuOptions.new_packages]: (_pkg: GUIPackage) => {
-			// todo: use pkg.created_at but its depends on https://github.com/teaxyz/kettle/issues/119
-			return true;
+		[SideMenuOptions.new_packages]: (pkg: GUIPackage) => {
+			return moment(pkg.created).isAfter(moment().subtract(30, "days"));
 		},
 		[SideMenuOptions.popular]: (pkg: GUIPackage) => pkg.categories.includes(SideMenuOptions.popular),
 		[SideMenuOptions.featured]: (pkg: GUIPackage) => pkg.categories.includes(SideMenuOptions.featured),
@@ -62,7 +61,7 @@
 						<Package
 							tab={packageFilter}
 							{pkg}
-							onClick={() => packagesStore.installPkg(pkg)}
+							onClick={(version) => packagesStore.installPkg(pkg, version)}
 						/>
 					</div>
 				{/if}

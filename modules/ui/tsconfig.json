@@ -21,6 +21,7 @@
 	},
 	"include": [
 		"ambient.d.ts",
+		"./src/app.d.ts",
 		"./types/**/$types.d.ts",
 		"../vite.config.ts",
 		"../src/**/*.js",
