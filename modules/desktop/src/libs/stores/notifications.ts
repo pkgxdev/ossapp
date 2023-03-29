@@ -1,7 +1,6 @@
 import { writable } from "svelte/store";
 import { nanoid } from "nanoid";
 
-import { l } from "$libs/translations";
 import { NotificationType } from "@tea/ui/types";
 import type { Notification } from "@tea/ui/types";
 

@@ -6,11 +6,13 @@
 	import type { GUIPackage } from '$libs/types';
   import { PackageStates } from '$libs/types';
   import { getPackage } from '@native';
-  import { notificationStore } from '$libs/stores';
+  import { packagesStore, notificationStore } from '$libs/stores';
+  import { onMount } from 'svelte';
+	import semverCompare from "semver/functions/compare";
 
 	export let tab = "all";
 	export let pkg: GUIPackage;
-  export let onClick: () => void;
+  export let onClick: (version: string) => void;
 
 	let fakeLoadingProgress = 0;
 
@@ -41,31 +43,50 @@
 			fakeLoadingProgress = fakeLoadingProgress + addProgress;
 		}, ms);
 	}
+
+	const onClickCTA = async (version: string) => {
+		fakeLoadingProgress = 1;
+		startFakeLoader();
+		await onClick(version);
+		await new Promise((resolve) => {
+			setTimeout(() => {
+				notificationStore.add({
+					message: `Package ${pkg.full_name} v${pkg.version} has been installed.`,
+				});
+				clearTimeout(fakeTimer);
+				fakeLoadingProgress = 100;
+				resolve(null);
+			}, 1500);
+		});
+	}
+
+	const findAvailableVersions = (pkg: GUIPackage) => {
+		// default to just showing the latest if bottles haven't loaded yet
+		if (!pkg.bottles) {
+			return [pkg.version]
+		}
+
+		const versionSet = new Set<string>()
+		for (const b of pkg.bottles) {
+			versionSet.add(b.version)
+		}
+
+		return Array.from(versionSet).sort((a, b) => semverCompare(b, a));
+	}
+
+	onMount(() => {
+		packagesStore.fetchPackageBottles(pkg.full_name)
+	});
 </script>
 
 
 <PackageCard
   {pkg}
+	availableVersions={findAvailableVersions(pkg)}
   link={`/packages/${pkg.slug}?tab=${tab}`}
   ctaLabel={getCTALabel(pkg.state)}
 	progessLoading={+fakeLoadingProgress.toFixed(2)}
 	ctaType="plain"
 	ctaColor={PackageStates.INSTALLED === pkg.state ? "green" : "secondary"}
-  onClickCTA={((pkg) => {
-		return async () => {
-				fakeLoadingProgress = 1;
-				startFakeLoader();
-				await onClick();
-				await new Promise((resolve) => {
-					setTimeout(() => {
-						notificationStore.add({
-							message: `Package ${pkg.full_name} v${pkg.version} has been installed.`,
-						});
-						clearTimeout(fakeTimer);
-						fakeLoadingProgress = 100;
-						resolve(null);
-					}, 1500);
-				});
-			}
-	})(pkg)}
+  {onClickCTA}
 />

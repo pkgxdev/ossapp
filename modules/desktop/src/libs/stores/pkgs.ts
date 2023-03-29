@@ -7,7 +7,8 @@ import {
 	getDistPackages,
 	openTerminal,
 	getInstalledPackages,
-	installPackage
+	installPackage,
+	getPackageBottles
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
@@ -157,6 +158,12 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		}
 	};
 
+	const fetchPackageBottles = async (pkgName: string) => {
+		// TODO: this api should take an architecture argument or else an architecture filter should be applied downstreawm
+		const bottles = await getPackageBottles(pkgName);
+		updatePackage(pkgName, { bottles });
+	};
+
 	return {
 		packages,
 		syncProgress,
@@ -178,6 +185,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				}
 			});
 		},
+		fetchPackageBottles,
 		updatePackage,
 		init,
 		installPkg
