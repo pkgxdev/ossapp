@@ -44,7 +44,7 @@
 
 <div id="main-layout" class={`${$sideNavOpen ? "w-3/4" : "w-full"} transition-all font-inter`}>
 	<TopBar />
-	<section class="relative pt-4" bind:this={view}>
+	<section class="relative" bind:this={view}>
 		<div class="content p-2">
 			<slot/>
 		</div>

@@ -15,6 +15,8 @@
 	export let sortBy: "popularity" | "most recent" = 'popularity';
 	export let sortDirection: 'asc' | 'desc' = 'desc';
 
+	export let scrollY = 0;
+
 	const loadMore = 9;
 	let limit = loadMore;
 
@@ -36,6 +38,11 @@
 		[SideMenuOptions.made_by_tea]: (pkg: GUIPackage) => pkg.full_name.includes("tea.xyz"),
 	}
 
+	const onScroll = (e: Event) => {
+		const target = e.target as HTMLInputElement;
+		scrollY = target.scrollTop || 0;
+	}
+
 	$: packages = $allPackages
 		.filter(pkgFilters[packageFilter] || pkgFilters.all)
 		.sort((a, b) => {
@@ -53,7 +60,9 @@
 </script>
 
 <div>
-	<ul class="grid grid-cols-3 gap-2 bg-black">
+	<ul class="grid grid-cols-3 gap-2 bg-black"
+		on:scroll={onScroll}
+	>
 		{#if packages.length > 0}
 			{#each packages as pkg, index}
 				{#if index < limit}
@@ -79,7 +88,9 @@
 
 <style>
 	ul {
-		max-height: calc(100vh - 48px - 27px - 40px);
+		margin-top: 0px;
+		padding-top: 60px;
+		max-height: calc(100vh - 48px - 12px - 40px);
 		overflow-y: scroll;
 		overflow-x: hidden;
 		padding-right: 4px;
@@ -104,18 +115,5 @@
 	/* Handle on hover */
 	::-webkit-scrollbar-thumb:hover {
 		background: white; 
-	}
-	button {
-		height: 100%;
-		text-decoration: none;
-		min-width: 120px;
-		transition: 0.1s linear;
-	}
-
-	button:hover, button.active {
-		color: white;
-		background-color: #8000ff;
-		box-shadow: inset 0vw 0vw 0vw 0.223vw #1a1a1a !important;
-		box-sizing: border-box;
 	}
 </style>
