@@ -68,6 +68,9 @@
 		height: 230px;
 		cursor: auto;
 	}
+	section:hover {
+		background-color: #252525;
+	}
 
 	figure {
 		position: relative;
@@ -81,7 +84,6 @@
 	}
 
 	.card-thumb-label {
-		background: rgba(0, 0, 0, 0.9);
 		padding: 1.116vw;
 		text-align: left;
 		width: 100%;
