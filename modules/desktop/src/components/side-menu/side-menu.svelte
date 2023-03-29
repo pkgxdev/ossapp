@@ -31,10 +31,10 @@
 			active={activeOption === SideMenuOptions.recently_updated}
 			on:click={() => selectToggle(SideMenuOptions.recently_updated)}
 		/>
-    <!-- <MenuButton label="New packages" icon="birthday-cake"
+    <MenuButton label="New packages" icon="birthday-cake"
 			active={activeOption === SideMenuOptions.new_packages}
 			on:click={() => selectToggle(SideMenuOptions.new_packages)}
-		/> -->
+		/>
     <MenuButton label="Popular" icon="bar-chart"
 			active={activeOption === SideMenuOptions.popular}
 			on:click={() => selectToggle(SideMenuOptions.popular)}
