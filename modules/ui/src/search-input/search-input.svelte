@@ -21,7 +21,7 @@
 	<div class="icon pl-4">
 		<i class="icon-search-icon" />
 	</div>
-	<input type="search" class="flex-grow pb-2" {placeholder} on:keyup={onChange} />
+	<input type="search" class="flex-grow pb-2 text-sm" {placeholder} on:keyup={onChange} />
 </section>
 
 <!-- <input type="search" class="w-full bg-black h-12 p-4 border border-x-0 border-gray"/> -->
@@ -49,7 +49,7 @@
 
 	section input {
 		color: #00ffd0;
-		margin-bottom: -5px;
+		margin-bottom: -2px;
 		min-width: 60%;
 		padding: 0px;
 		background-color: #1a1a1a !important;
@@ -57,6 +57,7 @@
 		color: #00ffd0;
 		outline: none;
 		border-radius: 0px;
+		line-height: 34px;
 	}
 
 	section.medium input {
@@ -65,6 +66,7 @@
 	section.large input {
 		font-size: 32px;
 	}
+
 	section input::placeholder {
 		/* Chrome, Firefox, Opera, Safari 10.1+ */
 		color: #949494;
