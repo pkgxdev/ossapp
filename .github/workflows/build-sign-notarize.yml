@@ -269,7 +269,7 @@ jobs:
         mv $x86dmg dist
         mv $arm64dmg dist
         tea -E pnpm install
-        tea +nodejs.org@18 node .github/create-correct-release-yaml.js ./dist
+        tea -E node .github/create-correct-release-yaml.js ./dist
         tar -czvf dist.tgz -C dist/ .
       env:
         x86dmg: ${{ steps.app_files.outputs.dmg_x86 }}

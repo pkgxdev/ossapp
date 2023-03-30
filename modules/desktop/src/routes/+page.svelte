@@ -3,7 +3,7 @@
 
 	import { page } from '$app/stores';
 	import { t } from '$libs/translations';
-	import { navStore, packagesStore } from '$libs/stores';
+	import { navStore, packagesStore, notificationStore } from '$libs/stores';
 	import Packages from '$components/packages/packages.svelte';
 	import { PackageStates, SideMenuOptions, type GUIPackage } from '$libs/types';
 	// import SortingButtons from "$components/search-packages/sorting-buttons.svelte";
@@ -36,6 +36,9 @@
 		for(const pkg of pkgsToUpdate) {
 			try {
 				await packagesStore.installPkg(pkg);
+				notificationStore.add({
+					message: `Package ${pkg.full_name} has been updated to  v${pkg.version}.`,
+				});
 			} catch (error) {
 				log.error(error);
 			}

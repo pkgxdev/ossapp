@@ -17,6 +17,7 @@ export type GUIPackage = Package & {
 	state: PackageStates;
 	installed_versions?: string[];
 	synced?: boolean;
+	install_progress_percentage?: number;
 };
 
 export type Course = {
