@@ -11,7 +11,6 @@
  *  - connect to a local platform api and returns a data
  */
 
-import semverCompare from "semver/functions/compare";
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
 import { type GUIPackage, type DeviceAuth, type Session, AuthStatus } from "./types";
 
@@ -21,26 +20,24 @@ import { installPackageCommand } from "./native/cli";
 
 import { get as apiGet } from "$libs/v1-client";
 import axios from "axios";
+import withRetry from "./utils/retry";
 
 const log = window.require("electron-log");
 const { ipcRenderer, shell } = window.require("electron");
 
-let retryLimit = 0;
 export async function getDistPackages(): Promise<Package[]> {
-	let packages: Package[] = [];
 	try {
-		const req = await axios.get<Package[]>(
-			"https://s3.amazonaws.com/preview.gui.tea.xyz/packages.json"
-		);
-		log.info("packages received:", req.data.length);
-		packages = req.data;
+		return withRetry(async () => {
+			const req = await axios.get<Package[]>(
+				"https://s3.amazonaws.com/preview.gui.tea.xyz/packages.json"
+			);
+			log.info("packages received:", req.data.length);
+			return req.data;
+		});
 	} catch (error) {
-		retryLimit++;
 		log.error("getDistPackagesList:", error);
-		if (retryLimit < 3) packages = await getDistPackages();
+		return [];
 	}
-	retryLimit = 0;
-	return packages;
 }
 
 export async function getInstalledPackages(): Promise<InstalledPackage[]> {
@@ -135,36 +132,31 @@ export async function getDeviceAuth(deviceId: string): Promise<DeviceAuth> {
 
 export async function getPackageBottles(packageName: string): Promise<Bottle[]> {
 	try {
-		const pkg = await apiGet<Package>(`packages/${packageName.replaceAll("/", ":")}`);
-		log.info(`got ${pkg?.bottles?.length || 0} bottles for ${packageName}`);
-		return (pkg && pkg.bottles) || [];
+		return withRetry(async () => {
+			const pkg = await apiGet<Package>(`packages/${packageName.replaceAll("/", ":")}`);
+			log.info(`got ${pkg?.bottles?.length || 0} bottles for ${packageName}`);
+			return (pkg && pkg.bottles) || [];
+		});
 	} catch (error) {
-		log.error(error);
+		log.error("getPackageBottles:", error);
 		return [];
 	}
 }
 
-const retryGetPackage: { [key: string]: number } = {};
 export async function getPackage(packageName: string): Promise<Partial<Package>> {
-	let pkg: Partial<Package> = {};
 	try {
-		const data = await apiGet<Partial<Package>>(`packages/${packageName.replaceAll("/", ":")}`);
-		if (data) {
-			pkg = data;
-		} else {
-			throw new Error(`package:${packageName} not found`);
-		}
+		return await withRetry(async () => {
+			const data = await apiGet<Partial<Package>>(`packages/${packageName.replaceAll("/", ":")}`);
+			if (data) {
+				return data;
+			} else {
+				throw new Error(`package:${packageName} not found`);
+			}
+		});
 	} catch (error) {
-		log.error(error);
-		retryGetPackage[packageName] = (retryGetPackage[packageName] || 0) + 1;
-		if (retryGetPackage[packageName] < 3) {
-			pkg = await getPackage(packageName);
-		} else {
-			log.info(`failed to get package:${packageName} after 3 tries`);
-		}
+		log.error("getPackage:", error);
+		return {};
 	}
-
-	return pkg;
 }
 
 export const getSession = async (): Promise<Session | null> => {

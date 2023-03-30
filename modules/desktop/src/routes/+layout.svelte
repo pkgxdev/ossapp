@@ -45,7 +45,7 @@
 <div id="main-layout" class={`${$sideNavOpen ? "w-3/4" : "w-full"} transition-all font-inter border border-gray rounded-xl`}>
 	<TopBar />
 	<section class="relative" bind:this={view}>
-		<div class="content p-2">
+		<div class="content px-2">
 			<slot/>
 		</div>
 		<SearchPopupResults />

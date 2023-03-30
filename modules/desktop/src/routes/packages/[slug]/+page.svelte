@@ -74,14 +74,14 @@
 	<span class="text-white">{pkg.full_name}</span>
 </header>
 {#if pkg}
-	<div class="bg-black px-16">
+	<div class="px-16">
 		<section>
 			<PackageBanner {pkg} />
 		</section>
 
 		<section class="mt-8 flex gap-8">
 			<div class="w-2/3">
-				<Tabs class="bg-black" {tabs} />
+				<Tabs {tabs} />
 			</div>
 			<div class="w-1/3">
 				{#if pkg}
