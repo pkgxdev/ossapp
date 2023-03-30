@@ -42,7 +42,7 @@
 	});
 </script>
 
-<div id="main-layout" class={`${$sideNavOpen ? "w-3/4" : "w-full"} transition-all font-inter border border-gray rounded-xl`}>
+<div id="main-layout" class="transition-all font-inter border border-gray rounded-xl">
 	<TopBar />
 	<section class="relative" bind:this={view}>
 		<div class="content px-2">
@@ -52,7 +52,7 @@
 	</section>
 	<Footer/>
 </div>
-<aside class={`absolute h-full w-1/4 bg-gray bg-opacity-10 top-0 transition-all  ${$sideNavOpen ? "right-0":"-right-1/4"}`}>
+<aside class={`fixed border border-gray rounded-md  bg-black transition-all  ${$sideNavOpen && "open"}`}>
 	<SideBar/>
 </aside>
 
@@ -74,5 +74,19 @@
 
 	div {
 		position: relative;
+	}
+
+	aside {
+		top: 52px;
+		right: 5px;
+		width: 190px;
+		overflow: clip;
+		height: 0px;
+		opacity: 0;
+	}
+	
+	aside.open {
+		height: auto;
+		opacity: 1;
 	}
 </style>

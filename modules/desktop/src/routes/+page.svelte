@@ -3,7 +3,7 @@
 
 	import { page } from '$app/stores';
 	import { t } from '$libs/translations';
-	import { navStore, packagesStore, notificationStore } from '$libs/stores';
+	import { packagesStore, notificationStore } from '$libs/stores';
 	import Packages from '$components/packages/packages.svelte';
 	import { PackageStates, SideMenuOptions, type GUIPackage } from '$libs/types';
 	// import SortingButtons from "$components/search-packages/sorting-buttons.svelte";
@@ -15,7 +15,6 @@
 
 	const log = window.require("electron-log");
 
-	const { sideNavOpen } = navStore; // right side not left
 	const { packages, requireTeaCli } = packagesStore;
 
 	const url = $page.url;
@@ -54,7 +53,7 @@
 <div id="package-container">
 	<Packages packageFilter={sideMenuOption} {sortBy} {sortDirection} bind:scrollY={packagesScrollY}/>
 </div>
-<header class={`transition-all pl-2 flex flex-col ${$sideNavOpen ? "min": ""} ${packagesScrollY > 100 && 'scrolling'}`}>
+<header class={`transition-all pl-2 flex flex-col ${packagesScrollY > 100 && 'scrolling'}`}>
 	<NotificationBar />
 	<div class="flex justify-between items-center align-middle">
 		<h1 class="text-primary pl-3 text-2xl font-bold font-mona">{$t(`side-menu-title.${sideMenuOption}`)}</h1>
@@ -102,10 +101,6 @@
 
 	header.lower {
 		top: 32px;
-	}
-
-	header.min {
-		width: calc(75% - 15px);
 	}
 
 	header.scrolling {
