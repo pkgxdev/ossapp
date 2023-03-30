@@ -24,7 +24,9 @@
 	const pkgFilters: { [key:string]: (pkg: GUIPackage) => boolean } = {
 		[SideMenuOptions.all]: (_pkg: GUIPackage) => true,
 		[SideMenuOptions.installed]: (pkg: GUIPackage) => pkg.state === PackageStates.INSTALLED,
-		[SideMenuOptions.installed_updates_available]: (pkg: GUIPackage) => pkg.state === PackageStates.NEEDS_UPDATE,
+		[SideMenuOptions.installed_updates_available]: (pkg: GUIPackage) => {
+			return [PackageStates.INSTALLING, PackageStates.NEEDS_UPDATE].includes(pkg.state);
+		},
 		[SideMenuOptions.recently_updated]: (pkg: GUIPackage) => {
 			return moment(pkg.last_modified).isAfter(moment().subtract(30, "days"));
 		},
@@ -90,7 +92,7 @@
 	ul {
 		margin-top: 0px;
 		padding-top: 60px;
-		max-height: calc(100vh - 95px);
+		height: calc(100vh - 95px);
 		overflow-y: scroll;
 		overflow-x: hidden;
 		padding-right: 4px;

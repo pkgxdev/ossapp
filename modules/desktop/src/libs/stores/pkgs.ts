@@ -146,8 +146,14 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	};
 
 	const installPkg = async (pkg: GUIPackage, version?: string) => {
+		let fakeTimer: NodeJS.Timer | null = null;
 		try {
 			updatePackage(pkg.full_name, { state: PackageStates.INSTALLING });
+
+			fakeTimer = withFakeLoader(pkg, (progress) => {
+				updatePackage(pkg.full_name, { install_progress_percentage: progress });
+			});
+
 			await installPackage(pkg, version || pkg.version);
 			trackInstall(pkg.full_name);
 			updatePackage(pkg.full_name, { state: PackageStates.INSTALLED });
@@ -155,6 +161,9 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			let message = "Unknown Error";
 			if (error instanceof Error) message = error.message;
 			trackInstallFailed(pkg.full_name, message || "unknown");
+		} finally {
+			fakeTimer && clearTimeout(fakeTimer);
+			updatePackage(pkg.full_name, { install_progress_percentage: 100 });
 		}
 	};
 
@@ -191,3 +200,22 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		installPkg
 	};
 }
+
+const withFakeLoader = (pkg: GUIPackage, callback: (progress: number) => void): NodeJS.Timer => {
+	let fakeLoadingProgress = 1;
+	const ms = 100;
+	const assumedDlSpeedMb = 1024 * 1024 * 3; // 3mbps
+	const size = pkg?.bottles?.length ? pkg.bottles[0].bytes : assumedDlSpeedMb * 10;
+	const eta = size / assumedDlSpeedMb;
+
+	const increment = 1 / eta / 10;
+
+	const fakeTimer = setInterval(() => {
+		const progressLeft = 100 - fakeLoadingProgress;
+		const addProgress = progressLeft * increment;
+		fakeLoadingProgress = fakeLoadingProgress + addProgress;
+		callback(+fakeLoadingProgress.toFixed(2));
+	}, ms);
+
+	return fakeTimer;
+};
