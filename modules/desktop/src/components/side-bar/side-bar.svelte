@@ -23,27 +23,34 @@
     }
   }
 </script>
-<nav class="bg-opacity-20 w-full h-full p-4">
+<nav class="w-full p-2 text-sm">
   {#if $user}
-    <section class="flex rounded-full mb-2">
+    <section class="flex rounded-full mb-2 pl-1">
       <img width="40" height="40" src={$user?.avatar_url || '/images/bored-ape.png'} alt="profile" />
       <div class="text-gray p-2">@{$user?.login}</div>
     </section>
   {:else}
-    <button class="flex border border-gray rounded-sm w-full mb-2 h-8 items-center" on:click={openGithub}>
-      <figure class="p-2">
-        <img width="18" height="18" src="/images/github.png" alt="profile" />
-      </figure>
-      <div class="text-gray">Login</div>
+    <button
+      class={`mt-2 transition-all rounded-sm w-full h-8 pl-1 text-left hover:bg-gray hover:border focus:bg-secondary ${submittedMessage === "syncing..." && "animate-pulse"}`}
+      on:click={openGithub}>
+      login
     </button>
   {/if}
+  <hr class="mt-2 border border-gray border-b-0  border-t-0"/>
   <SelectLang/>
+  <hr class="mt-2 border border-gray border-b-0  border-t-0"/>
   <button
-    class={`mt-2 border transition-all border-gray rounded-sm w-full mb-2 h-8 text-center hover:bg-gray focus:bg-secondary ${submittedMessage === "syncing..." && "animate-pulse"}`}
+    class={`mt-2 transition-all rounded-sm w-full h-8 pl-1 text-left hover:bg-gray  hover:border focus:bg-secondary ${submittedMessage === "syncing..." && "animate-pulse"}`}
     on:click={onSubmitLogs}>
-    SUBMIT LOGS
+    submit logs
   </button>
   {#if submittedMessage}
     <p class="text-gray text-xs mt-2">{submittedMessage}</p>
   {/if}
 </nav>
+
+<style>
+  hr {
+    border-width: 1px;
+  }
+</style>
