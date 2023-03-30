@@ -5,7 +5,7 @@
 	import Notification from "@tea/ui/notification/notification.svelte";
 </script>
 
-<div class="w-full flex flex-col gap-1 py-2 pl-2 pr-4">
+<div class="w-full flex flex-col gap-1 py-2 px-2">
   {#each $notificationStore as notification}
     <Notification
       notification={{

@@ -1,7 +1,7 @@
 <script>
   import * as pub from '$env/static/public';
 </script>
-<footer class="w-full border-gray flex items-center justify-between border pr-2 rounded-b-xl overflow-clip"> 
+<footer class="w-full border-gray flex items-center justify-between border pr-2 border-x-0 border-b-0 overflow-clip"> 
   <figure class="text-center">
     <i class="icon-tea-logo-iconasset-1 text-black"/>
   </figure>

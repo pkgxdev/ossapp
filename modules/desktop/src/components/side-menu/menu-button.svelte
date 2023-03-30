@@ -8,7 +8,7 @@
 
 <button on:click class={`text-xs w-full flex transition-all rounded-sm hover:bg-opacity-25 border-gray hover:border p-2 gap-2 items-center align-middle text-left hover:bg-gray box-border ${active && 'active'}`}>
   <i class={`icon-${icon} mt-1`}/>
-  <div class="font-thin">{label}</div>
+  <div class="font-thin text-sm">{label}</div>
 </button>
 
 <style>

@@ -1,26 +1,15 @@
 <script lang="ts">
 	import '$appcss';
 	import '@tea/ui/icons/icons.css';
-	import type { Bottle } from '@tea/ui/types';
 	import Button from '@tea/ui/button/button.svelte';
-	import { onMount } from 'svelte';
-	import { getPackageBottles } from '@native';
 
 	import { installPackage } from '@native';
   import { PackageStates, type GUIPackage } from '$libs/types';
 	import { packagesStore  } from '$libs/stores';
+	import { shellOpenExternal } from '@native';
 
 	export let pkg: GUIPackage;
-	let bottles: Bottle[] = [];
-
 	let installing = false;
-	onMount(async () => {
-		try {
-			bottles = await getPackageBottles(pkg.full_name);
-		} catch (err) {
-			console.error(err);
-		}
-	});
 
 	const install = async () => {
 		installing = true;
@@ -30,6 +19,7 @@
 			state: PackageStates.INSTALLED,
 		});
 	}
+
 </script>
 
 <section class="mt-4 bg-black">
@@ -60,9 +50,9 @@
 					</Button>
 				{/if}
 				{#if pkg.github}
-					<a href={`https://github.com/${pkg.github}`} target="_blank" rel="noreferrer">
-						<Button class="border border-gray h-10">View on github</Button>
-					</a>
+					<Button class="border border-gray h-10" onClick={() => {
+						shellOpenExternal(`https://github.com/${pkg.github}`)
+					}}>View on github</Button>
 				{/if}
 			</menu>
 		</article>
