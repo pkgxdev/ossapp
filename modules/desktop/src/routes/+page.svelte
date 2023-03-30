@@ -54,7 +54,7 @@
 <div id="package-container">
 	<Packages packageFilter={sideMenuOption} {sortBy} {sortDirection} bind:scrollY={packagesScrollY}/>
 </div>
-<header class={`transition-all px-2 flex flex-col ${$sideNavOpen ? "min": ""} ${packagesScrollY > 100 && 'scrolling'}`}>
+<header class={`transition-all pl-2 flex flex-col ${$sideNavOpen ? "min": ""} ${packagesScrollY > 100 && 'scrolling'}`}>
 	<NotificationBar />
 	<div class="flex justify-between items-center align-middle">
 		<h1 class="text-primary pl-3 text-2xl font-bold font-mona">{$t(`side-menu-title.${sideMenuOption}`)}</h1>
@@ -70,7 +70,7 @@
 		 -->
 		{#if needsUpdateCount}
 			<Button
-				class={`w-48 h-8 text-xs mr-4 ${updating && "animate-pulse"}`}
+				class={`w-48 h-8 text-xs ${updating && "animate-pulse"}`}
 				type="plain"
 				color="secondary"
 				onClick={updateAll}

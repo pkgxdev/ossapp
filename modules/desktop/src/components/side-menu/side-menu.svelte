@@ -15,7 +15,7 @@
 	}
 </script>
 
-<aside class="border border-t-0 border-b-0 border-gray p-2">
+<aside class="border border-t-0 border-b-0 border-l-0 border-gray p-2">
   <ul class="flex flex-col pt-4 gap-1 pl-1">
     <MenuButton label="Installed" icon="tea-checkmark"
 			active={activeOption === SideMenuOptions.installed}

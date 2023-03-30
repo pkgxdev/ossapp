@@ -20,7 +20,7 @@
 	});
 </script>
 
-<header class="border-gray flex items-center justify-between border w-full h-12 pr-2 rounded-t-xl" style="-webkit-app-region: drag">
+<header class="border-gray flex items-center justify-between border w-full h-12 pr-2 border-t-0 border-x-0" style="-webkit-app-region: drag">
 	<ul class="text-gray flex h-10 gap-2 align-middle leading-10 pl-20">
 		<a href="/">
 			<div class="home-btn transition-all text-xl w-12 rounded-md text-center"><i class="icon-tea-logo-iconasset-1"/></div>
