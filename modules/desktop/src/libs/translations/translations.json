@@ -70,6 +70,7 @@
 			"most-recent": "Most recent"
 		},
 		"common": {
+			"home": "home",
 			"all": "All",
 			"articles": "Articles",
 			"workshops": "Workshops"
@@ -88,6 +89,17 @@
 			"featured": "Featured",
 			"essentials": "Essentials",
 			"star_struct": "Star-struct Heavyweights",
+			"made_by_tea": "Made by Tea.xyz"
+		},
+		"tags": {
+			"all": "all",
+			"updates_available": "Updates available",
+			"recently_updated": "Recently updated",
+			"new_packages": "New packages",
+			"popular": "Popular",
+			"featured": "Featured",
+			"essentials": "Essentials",
+			"star_struct": "Star-struct",
 			"made_by_tea": "Made by Tea.xyz"
 		}
 	}

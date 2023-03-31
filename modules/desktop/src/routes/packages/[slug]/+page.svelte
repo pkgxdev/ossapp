@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$appcss';
+	import { t } from '$libs/translations'; 
 
 	import { page } from '$app/stores';
 	// import PageHeader from '$components/page-header/page-header.svelte';
@@ -65,10 +66,10 @@
 	const tab = url.searchParams.get("tab");
 </script>
 <header class="mx-16 py-5 mb-10 text-gray border border-x-0 border-t-0">
-	<a class="hover:text-white hover:opacity-80 cursor-default" href="/">home</a>
+	<a class="hover:text-white hover:opacity-80 cursor-default" href="/">{$t("common.home")}</a>
 	>
 	{#if tab !== "all"}
-		<a class="hover:text-white hover:opacity-80 cursor-default" href={`/?tab=${tab || "all"}`}>{tab || "all"}</a>
+		<a class="hover:text-white hover:opacity-80 cursor-default" href={`/?tab=${tab || "all"}`}>{$t(`tags.${tab}`) || "all"}</a>
 		>
 	{/if}
 	<span class="text-white">{pkg.full_name}</span>

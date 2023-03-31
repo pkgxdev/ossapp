@@ -3,7 +3,7 @@
 	import { PackageStates, SideMenuOptions } from '$libs/types';
 	import { packagesStore } from '$libs/stores';
   import MenuButton from './menu-button.svelte';
-
+	import { t } from '$libs/translations'; 
   const { packages } = packagesStore;
 
 	export let activeOption:SideMenuOptions;
@@ -23,43 +23,43 @@
 		/>
 		<hr/>
 		{#if needsUpdateCount}
-    	<MenuButton label="Updates available" icon="update"
+    	<MenuButton label={$t("tags.updates_available")} icon="update"
 				active={activeOption === SideMenuOptions.installed_updates_available}
 				on:click={() => selectToggle(SideMenuOptions.installed_updates_available)}
 			/>
 			<hr/>
 		{/if}
-    <MenuButton label="Recently updated" icon="back-in-time"
+    <MenuButton label={$t("tags.recently_updated")} icon="back-in-time"
 			active={activeOption === SideMenuOptions.recently_updated}
 			on:click={() => selectToggle(SideMenuOptions.recently_updated)}
 		/>
 		<hr/>
-    <MenuButton label="New packages" icon="birthday-cake"
+    <MenuButton label={$t("tags.new_packages")} icon="birthday-cake"
 			active={activeOption === SideMenuOptions.new_packages}
 			on:click={() => selectToggle(SideMenuOptions.new_packages)}
 		/>
 		<hr/>
-    <MenuButton label="Popular" icon="bar-chart"
+    <MenuButton label={$t("tags.popular")} icon="bar-chart"
 			active={activeOption === SideMenuOptions.popular}
 			on:click={() => selectToggle(SideMenuOptions.popular)}
 		/>
 		<hr/>
-    <MenuButton label="Featured" icon="lightbulb"
+    <MenuButton label={$t("tags.featured")} icon="lightbulb"
 			active={activeOption === SideMenuOptions.featured}
 			on:click={() => selectToggle(SideMenuOptions.featured)}
 		/>
 		<hr/>
-    <MenuButton label="Essentials" icon="square"
+    <MenuButton label={$t("tags.essentials")} icon="square"
 			active={activeOption === SideMenuOptions.essentials}
 			on:click={() => selectToggle(SideMenuOptions.essentials)}
 		/>
 		<hr/>
-    <MenuButton label="Star-struct" icon="star-full"
+    <MenuButton label={$t("tags.star_struct")} icon="star-full"
 			active={activeOption === SideMenuOptions.star_struct}
 			on:click={() => selectToggle(SideMenuOptions.star_struct)}
 		/>
 		<hr/>
-    <MenuButton label="Made by tea" icon="tea-logo-iconasset-1"
+    <MenuButton label={$t("tags.made_by_tea")} icon="tea-logo-iconasset-1"
 			active={activeOption === SideMenuOptions.made_by_tea}
 			on:click={() => selectToggle(SideMenuOptions.made_by_tea)}
 		/>
