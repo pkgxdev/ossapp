@@ -45,7 +45,7 @@
 <div id="main-layout" class="transition-all font-inter border border-gray rounded-xl">
 	<TopBar />
 	<section class="relative" bind:this={view}>
-		<div class="content px-2">
+		<div class="content">
 			<slot/>
 		</div>
 		<SearchPopupResults />
@@ -88,5 +88,10 @@
 	aside.open {
 		height: auto;
 		opacity: 1;
+	}
+
+	.content {
+		padding-left: 4px;
+		padding-right: 4px;
 	}
 </style>
