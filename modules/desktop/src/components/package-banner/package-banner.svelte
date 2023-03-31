@@ -50,7 +50,7 @@
 					</Button>
 				{/if}
 				{#if pkg.github}
-					<Button class="border border-gray h-10" onClick={() => {
+					<Button class="h-10" type="plain" color="black" onClick={() => {
 						shellOpenExternal(`https://github.com/${pkg.github}`)
 					}}>View on github</Button>
 				{/if}
