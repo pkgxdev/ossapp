@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$appcss';
+	import { watchResize } from "svelte-watch-resize";
 	import InfiniteScroll from "svelte-infinite-scroll";
 	// import { t } from '$libs/translations';
 	import type { GUIPackage } from '$libs/types';
@@ -17,7 +18,7 @@
 
 	export let scrollY = 0;
 
-	const loadMore = 9;
+	let loadMore = 9;
 	let limit = loadMore;
 
 	// TODO: figure out a better type strategy here so that this breaks if SideMenuOptions is updated
@@ -66,10 +67,21 @@
 				return sortDirection === "asc" ? +aDate - +bDate : +bDate - +aDate;
 			}
 		});
+
+	const onResize = (node: HTMLElement) => {
+		const assumedCardHeight = 250;
+		const cardRows = Math.floor(packages.length / 3);
+		const minCardRows = Math.floor(node.scrollHeight / assumedCardHeight);
+		if (cardRows < minCardRows) {
+			const addLimit = 3 * (minCardRows - cardRows);
+			limit += addLimit;
+		}
+	}
 </script>
 
 <div>
 	<ul class="grid grid-cols-3 gap-2 bg-black"
+		use:watchResize={onResize}
 		on:scroll={onScroll}
 	>
 		{#if packages.length > 0}
