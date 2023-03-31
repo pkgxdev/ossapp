@@ -1,24 +1,22 @@
 <script lang="ts">
-	import "../app.css";
-	import type { Package } from "../types";
-	import ImgLoader from "../img-loader/img-loader.svelte";
-	import ProgressCircle from "../progress-circle/progress-circle.svelte";
+	import "../../app.css";
+	import ImgLoader from "@tea/ui/img-loader/img-loader.svelte";
+	import ProgressCircle from "@tea/ui/progress-circle/progress-circle.svelte";
 	import InstallButton from "./install-button.svelte";
+	import type { GUIPackage } from "$libs/types";
+	import VersionLabel from "./version-label.svelte";
 
-	export let pkg: Package;
+	export let pkg: GUIPackage;
 	export let availableVersions: string[];
 	export let link: string;
-	export let ctaLabel: string;
 	export let progessLoading = 0;
-	export let ctaType: "ghost" | "plain" = "ghost";
-	export let ctaColor: "green" | "secondary" = "secondary";
 
 	export let onClickCTA = async (_version: string) => {
 		console.log("do nothing");
 	};
 </script>
 
-<section class="package-card relative h-auto border border-gray">
+<section class="package-card border-gray relative h-auto border">
 	<a href={link}>
 		<figure class="relative">
 			<ImgLoader
@@ -35,21 +33,13 @@
 				<h4 class="text-sm font-light">&#x2022;&nbsp;{pkg.maintainer}</h4>
 			{/if}
 			{#if pkg.desc}
-				<p class="text-xs font-thin line-clamp-2">{pkg.desc}</p>
+				<p class="line-clamp-2 text-xs font-thin">{pkg.desc}</p>
 			{/if}
 		</article>
 	</a>
 	<footer class="absolute bottom-0 left-0 flex w-full items-stretch justify-between gap-2 p-2">
-		<div>
-			<p>
-				<span class="pk-version text-xs font-extralight">v{pkg.version}</span>
-				<!--
-        TODO: uncomment once install counts improve
-        <br>
-        <span class="package-install-no">>{{- .installs -}}&nbsp;installs</span> -->
-			</p>
-		</div>
-		<InstallButton {ctaLabel} {ctaColor} {ctaType} {onClickCTA} {availableVersions} />
+		<VersionLabel {pkg} {availableVersions} />
+		<InstallButton {pkg} {availableVersions} {onClickCTA} />
 	</footer>
 	{#if progessLoading > 0 && progessLoading < 100}
 		<div class="absolute top-0 left-0 h-full w-full bg-black bg-opacity-50">

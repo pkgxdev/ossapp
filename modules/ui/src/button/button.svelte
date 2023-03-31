@@ -7,8 +7,8 @@
 	export let onClick: undefined | (() => void) = undefined;
 	export let active = false;
 
-	export let type: "ghost" | "plain" = "ghost";
-	export let color: "primary" | "secondary" | "green" = "primary";
+	export let type: "outline" | "ghost" | "plain" = "ghost";
+	export let color: "primary" | "secondary" | "green" | "black" = "primary";
 
 	export let loading = false;
 </script>
@@ -44,9 +44,16 @@
 		background-color: #00a517;
 		color: white;
 	}
+
+	button.plain.black {
+		background-color: #1a1a1a;
+		color: white;
+	}
+
 	button.active {
 		color: black;
 	}
+
 	button:hover {
 		box-shadow: inset 0px 0px 0px 5px #1a1a1a;
 		background-color: #00ffd0;
@@ -60,5 +67,9 @@
 	}
 	button.green:hover {
 		background-color: #00a517;
+	}
+	button.black:hover {
+		box-shadow: inset 0px 0px 0px 5px #949494;
+		background-color: #1a1a1a;
 	}
 </style>

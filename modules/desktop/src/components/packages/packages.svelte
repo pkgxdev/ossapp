@@ -23,9 +23,16 @@
 	// TODO: figure out a better type strategy here so that this breaks if SideMenuOptions is updated
 	const pkgFilters: { [key:string]: (pkg: GUIPackage) => boolean } = {
 		[SideMenuOptions.all]: (_pkg: GUIPackage) => true,
-		[SideMenuOptions.installed]: (pkg: GUIPackage) => pkg.state === PackageStates.INSTALLED,
+		[SideMenuOptions.installed]: (pkg: GUIPackage) => {
+			return [
+				PackageStates.INSTALLED,
+				PackageStates.INSTALLING,
+				PackageStates.NEEDS_UPDATE,
+				PackageStates.UPDATING
+			].includes(pkg.state);
+		},
 		[SideMenuOptions.installed_updates_available]: (pkg: GUIPackage) => {
-			return [PackageStates.INSTALLING, PackageStates.NEEDS_UPDATE].includes(pkg.state);
+			return [PackageStates.UPDATING, PackageStates.NEEDS_UPDATE].includes(pkg.state);
 		},
 		[SideMenuOptions.recently_updated]: (pkg: GUIPackage) => {
 			return moment(pkg.last_modified).isAfter(moment().subtract(30, "days"));

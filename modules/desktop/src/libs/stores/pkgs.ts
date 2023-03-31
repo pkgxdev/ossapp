@@ -148,7 +148,12 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	const installPkg = async (pkg: GUIPackage, version?: string) => {
 		let fakeTimer: NodeJS.Timer | null = null;
 		try {
-			updatePackage(pkg.full_name, { state: PackageStates.INSTALLING });
+			const state: PackageStates =
+				pkg.state === PackageStates.NEEDS_UPDATE
+					? PackageStates.UPDATING
+					: PackageStates.INSTALLING;
+
+			updatePackage(pkg.full_name, { state });
 
 			fakeTimer = withFakeLoader(pkg, (progress) => {
 				updatePackage(pkg.full_name, { install_progress_percentage: progress });
