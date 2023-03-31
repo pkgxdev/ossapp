@@ -24,7 +24,12 @@
 	const pkgFilters: { [key:string]: (pkg: GUIPackage) => boolean } = {
 		[SideMenuOptions.all]: (_pkg: GUIPackage) => true,
 		[SideMenuOptions.installed]: (pkg: GUIPackage) => {
-			return [PackageStates.INSTALLED, PackageStates.UPDATING].includes(pkg.state);
+			return [
+				PackageStates.INSTALLED,
+				PackageStates.INSTALLING,
+				PackageStates.NEEDS_UPDATE,
+				PackageStates.UPDATING
+			].includes(pkg.state);
 		},
 		[SideMenuOptions.installed_updates_available]: (pkg: GUIPackage) => {
 			return [PackageStates.UPDATING, PackageStates.NEEDS_UPDATE].includes(pkg.state);
