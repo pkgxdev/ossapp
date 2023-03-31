@@ -3,6 +3,8 @@
 	import Button from "@tea/ui/button/button.svelte";
 	import { t } from "$libs/translations";
 
+	export let buttonSize: "small" | "large" = "small";
+
 	export let pkg: GUIPackage;
 	export let onClick = () => {
 		console.log("do nothing");
@@ -22,7 +24,7 @@
 </script>
 
 <Button
-	class="h-8 w-full border text-xs text-white "
+	class={`w-full border text-xs text-white ${buttonSize === "small" ? "h-8" : "h-10"}`}
 	type="plain"
 	color={getColor(pkg.state)}
 	{onClick}

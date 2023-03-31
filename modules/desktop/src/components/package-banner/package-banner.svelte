@@ -1,12 +1,14 @@
 <script lang="ts">
-	import '$appcss';
-	import '@tea/ui/icons/icons.css';
-	import Button from '@tea/ui/button/button.svelte';
+	import "$appcss";
+	import "@tea/ui/icons/icons.css";
+	import Button from "@tea/ui/button/button.svelte";
 
-	import { installPackage } from '@native';
-  import { PackageStates, type GUIPackage } from '$libs/types';
-	import { packagesStore  } from '$libs/stores';
-	import { shellOpenExternal } from '@native';
+	import { installPackage } from "@native";
+	import { PackageStates, type GUIPackage } from "$libs/types";
+	import { packagesStore } from "$libs/stores";
+	import { shellOpenExternal } from "@native";
+	import InstallButton from "$components/install-button/install-button.svelte";
+	import { findAvailableVersions } from "$libs/packages/pkg-utils";
 
 	export let pkg: GUIPackage;
 	let installing = false;
@@ -16,10 +18,9 @@
 		await installPackage(pkg);
 		installing = false;
 		packagesStore.updatePackage(pkg.full_name, {
-			state: PackageStates.INSTALLED,
+			state: PackageStates.INSTALLED
 		});
-	}
-
+	};
 </script>
 
 <section class="mt-4 bg-black">
@@ -35,24 +36,20 @@
 				</a>
 			{/if}
 			<p class="mt-4 text-sm">{pkg.desc}</p>
-			<menu class="h-10 grid grid-cols-2 gap-4 mt-4 text-xs">
-				{#if pkg.state === PackageStates.INSTALLED}
-					<Button type="plain" color="primary">
-						Latest version installed v{pkg.version}
-					</Button>
-				{:else if pkg.state === PackageStates.AVAILABLE}
-					<Button type="plain" color="secondary" onClick={install} loading={installing}>
-						{installing ? "Installing" : "Install"} v{pkg.version}
-					</Button>
-				{:else if pkg.state === PackageStates.NEEDS_UPDATE}
-					<Button type="plain" color="secondary" onClick={install} loading={installing}>
-						{installing ? "Updating" : "Update"}  to v{pkg.version}
-					</Button>
-				{/if}
+			<menu class="mt-4 grid h-10 grid-cols-2 gap-4 text-xs">
+				<InstallButton
+					buttonSize="large"
+					{pkg}
+					availableVersions={findAvailableVersions(pkg)}
+					onClick={install}
+				/>
 				{#if pkg.github}
-					<Button class="border border-gray h-10" onClick={() => {
-						shellOpenExternal(`https://github.com/${pkg.github}`)
-					}}>View on github</Button>
+					<Button
+						class="border-gray h-10 border"
+						onClick={() => {
+							shellOpenExternal(`https://github.com/${pkg.github}`);
+						}}>View on github</Button
+					>
 				{/if}
 			</menu>
 		</article>

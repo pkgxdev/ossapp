@@ -1,37 +1,44 @@
 <script lang="ts">
-	import type { GUIPackage } from "$libs/types";
+	import Package from "$components/packages/package.svelte";
+	import { PackageStates, type GUIPackage } from "$libs/types";
 	import clickOutside from "@tea/ui/lib/clickOutside";
 	import PackageStateButton from "./package-state-button.svelte";
 
+	export let buttonSize: "small" | "large" = "small";
 	export let pkg: GUIPackage;
 	export let availableVersions: string[] = [];
 
-	export let onClickCTA = async (_version: string) => {
+	export let onClick = async (_version: string) => {
 		console.log("do nothing");
 	};
 
 	$: isOpened = false;
 
+	const toggleOpen = () => {
+		if ([PackageStates.INSTALLING, PackageStates.UPDATING].includes(pkg.state)) {
+			return;
+		}
+		isOpened = !isOpened;
+	};
+
 	const handleClick = (version: string) => {
 		isOpened = false;
-		onClickCTA(version);
+		onClick(version);
 	};
 
 	const handleClickOutside = () => (isOpened = false);
 </script>
 
-<div class="flex flex-col justify-end">
-	<div class="dropdown" use:clickOutside on:click_outside={handleClickOutside}>
-		<PackageStateButton {pkg} onClick={() => (isOpened = !isOpened)} />
-		<div class="version-list" class:visible={isOpened}>
-			{#each availableVersions as version, idx}
-				{#if idx !== 0}<hr class="divider" />{/if}
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<div class="version-item text-xs" on:click={() => handleClick(version)}>
-					v{version + (idx === 0 ? " (latest)" : "")}
-				</div>
-			{/each}
-		</div>
+<div class="dropdown" use:clickOutside on:click_outside={handleClickOutside}>
+	<PackageStateButton {buttonSize} {pkg} onClick={toggleOpen} />
+	<div class="version-list" class:visible={isOpened}>
+		{#each availableVersions as version, idx}
+			{#if idx !== 0}<hr class="divider" />{/if}
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<div class="version-item text-xs" on:click={() => handleClick(version)}>
+				v{version + (idx === 0 ? " (latest)" : "")}
+			</div>
+		{/each}
 	</div>
 </div>
 
@@ -67,7 +74,7 @@
 	.dropdown {
 		position: relative;
 		display: inline-block;
-		width: 130px;
+		min-width: 130px;
 	}
 
 	.divider {
