@@ -21,36 +21,44 @@
 			active={activeOption === SideMenuOptions.installed}
 			on:click={() => selectToggle(SideMenuOptions.installed)}
 		/>
+		<hr/>
 		{#if needsUpdateCount}
     	<MenuButton label="Updates available" icon="update"
 				active={activeOption === SideMenuOptions.installed_updates_available}
 				on:click={() => selectToggle(SideMenuOptions.installed_updates_available)}
 			/>
+			<hr/>
 		{/if}
     <MenuButton label="Recently updated" icon="back-in-time"
 			active={activeOption === SideMenuOptions.recently_updated}
 			on:click={() => selectToggle(SideMenuOptions.recently_updated)}
 		/>
+		<hr/>
     <MenuButton label="New packages" icon="birthday-cake"
 			active={activeOption === SideMenuOptions.new_packages}
 			on:click={() => selectToggle(SideMenuOptions.new_packages)}
 		/>
+		<hr/>
     <MenuButton label="Popular" icon="bar-chart"
 			active={activeOption === SideMenuOptions.popular}
 			on:click={() => selectToggle(SideMenuOptions.popular)}
 		/>
+		<hr/>
     <MenuButton label="Featured" icon="lightbulb"
 			active={activeOption === SideMenuOptions.featured}
 			on:click={() => selectToggle(SideMenuOptions.featured)}
 		/>
+		<hr/>
     <MenuButton label="Essentials" icon="square"
 			active={activeOption === SideMenuOptions.essentials}
 			on:click={() => selectToggle(SideMenuOptions.essentials)}
 		/>
+		<hr/>
     <MenuButton label="Star-struct" icon="star-full"
 			active={activeOption === SideMenuOptions.star_struct}
 			on:click={() => selectToggle(SideMenuOptions.star_struct)}
 		/>
+		<hr/>
     <MenuButton label="Made by tea" icon="tea-logo-iconasset-1"
 			active={activeOption === SideMenuOptions.made_by_tea}
 			on:click={() => selectToggle(SideMenuOptions.made_by_tea)}
@@ -66,5 +74,9 @@
 		height: calc(100vh - 48px - 27px); /* win.height - title-bar.height - footer.height */
 		width: 190px;
 		box-sizing: border-box;
+	}
+
+	hr {
+		border-top: 1px solid #272626;
 	}
 </style>

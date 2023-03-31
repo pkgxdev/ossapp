@@ -53,10 +53,10 @@
 <div id="package-container">
 	<Packages packageFilter={sideMenuOption} {sortBy} {sortDirection} bind:scrollY={packagesScrollY}/>
 </div>
-<header class={`transition-all pl-2 flex flex-col ${packagesScrollY > 100 && 'scrolling'}`}>
+<header class="transition-all px-2 flex flex-col" class:scrolling={packagesScrollY > 100}>
 	<NotificationBar />
-	<div class="flex justify-between items-center align-middle">
-		<h1 class="text-primary pl-3 text-2xl font-bold font-mona">{$t(`side-menu-title.${sideMenuOption}`)}</h1>
+	<div class="flex justify-between items-center">
+		<h1 class="text-primary pl-3 pt-2 text-2xl font-bold font-mona">{$t(`side-menu-title.${sideMenuOption}`)}</h1>
 		<!-- 
 		<section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">
 			
@@ -94,18 +94,14 @@
 		top: 0px;
 		left: 190px;
 		height: 72px;
-		width: calc(100% - 190px - 18px);
+		width: calc(100% - 190px - 10px);
 		background-image: linear-gradient(rgba(26,26,26,1), rgba(26,26,26,0));
 		padding-top: 15px;
 	}
 
-	header.lower {
-		top: 32px;
-	}
-
 	header.scrolling {
 		height: 60px;
-		background-color: rgba(26,26,26,1);
+		background-color: #222222;
 		padding-top: 5px;
 	}
 </style>

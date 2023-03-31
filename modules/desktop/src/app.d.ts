@@ -7,3 +7,12 @@ declare namespace App {
 	// interface Error {}
 	// interface Platform {}
 }
+
+// Declare custom event handlers here to make typscript happy.
+declare namespace svelte.JSX {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	interface HTMLAttributes<T> {
+		onclick_outside: () => void;
+		leave_delay: () => void;
+	}
+}

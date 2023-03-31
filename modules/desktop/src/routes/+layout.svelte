@@ -45,16 +45,18 @@
 <div id="main-layout" class="transition-all font-inter border border-gray rounded-xl">
 	<TopBar />
 	<section class="relative" bind:this={view}>
-		<div class="content px-2">
+		<div class="content">
 			<slot/>
 		</div>
 		<SearchPopupResults />
 	</section>
 	<Footer/>
 </div>
-<aside class={`fixed border border-gray rounded-md  bg-black transition-all  ${$sideNavOpen && "open"}`}>
-	<SideBar/>
-</aside>
+{#if $sideNavOpen}
+	<aside class="fixed border border-gray rounded-md  bg-black transition-all">
+		<SideBar/>
+	</aside>
+{/if}
 
 
 <style>
@@ -81,12 +83,12 @@
 		right: 5px;
 		width: 190px;
 		overflow: clip;
-		height: 0px;
-		opacity: 0;
-	}
-	
-	aside.open {
 		height: auto;
 		opacity: 1;
+	}
+
+	.content {
+		padding-left: 4px;
+		padding-right: 4px;
 	}
 </style>

@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { authStore } from '$libs/stores';
+	import { authStore, navStore } from '$libs/stores';
 	import SelectLang from '$components/select-lang/select-lang.svelte';
 	import { baseUrl } from '$libs/v1-client';
 	import { shellOpenExternal, submitLogs } from '@native';
+  import mouseLeaveDelay from "@tea/ui/lib/mouse-leave-delay";
+
   const { user, deviceIdStore } = authStore;
 
   const openGithub = () => {
@@ -22,8 +24,13 @@
       submittedMessage = msg;
     }
   }
+
+  const hidePopup = () => {
+    console.log("hide poup")
+    navStore.sideNavOpen.set(false);
+  }
 </script>
-<nav class="w-full p-2 text-sm">
+<nav class="w-full p-2 text-sm" use:mouseLeaveDelay on:leave_delay={() => hidePopup()}>
   {#if $user}
     <section class="flex rounded-full mb-2 pl-1">
       <img width="40" height="40" src={$user?.avatar_url || '/images/bored-ape.png'} alt="profile" />
