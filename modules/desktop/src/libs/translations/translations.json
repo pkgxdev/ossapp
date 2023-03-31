@@ -35,7 +35,13 @@
 			"install-tea-label": "Install tea cli",
 			"update-tea-label": "Update now",
 			"install-tea-cli": "This app requires our command-line interface",
-			"update-tea-cli": "An update is available for tea cli"
+			"update-tea-cli": "An update is available for tea cli",
+			"cta-AVAILABLE": "INSTALL",
+			"cta-INSTALLED": "INSTALLED",
+			"cta-INSTALLING": "INSTALLING",
+			"cta-UNINSTALLED": "RE-INSTALL",
+			"cta-NEEDS_UPDATE": "UPDATE",
+			"cta-UPDATING": "UPDATING"
 		},
 		"script": {
 			"top-list-title": "Top scripts this week",
@@ -70,6 +76,7 @@
 			"most-recent": "Most recent"
 		},
 		"common": {
+			"home": "home",
 			"all": "All",
 			"articles": "Articles",
 			"workshops": "Workshops"
@@ -88,6 +95,17 @@
 			"featured": "Featured",
 			"essentials": "Essentials",
 			"star_struct": "Star-struct Heavyweights",
+			"made_by_tea": "Made by Tea.xyz"
+		},
+		"tags": {
+			"all": "all",
+			"updates_available": "Updates available",
+			"recently_updated": "Recently updated",
+			"new_packages": "New packages",
+			"popular": "Popular",
+			"featured": "Featured",
+			"essentials": "Essentials",
+			"star_struct": "Star-struct",
 			"made_by_tea": "Made by Tea.xyz"
 		}
 	}

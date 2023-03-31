@@ -8,17 +8,6 @@
 		console.log("do nothing");
 	};
 
-	const getLabel = (state: PackageStates): string => {
-		return {
-			[PackageStates.AVAILABLE]: $t("package.install-label").toUpperCase(),
-			[PackageStates.INSTALLED]: $t("package.installed-label").toUpperCase(),
-			[PackageStates.INSTALLING]: $t("package.installing-label").toUpperCase(),
-			[PackageStates.UNINSTALLED]: $t("package.reinstall-label").toUpperCase(),
-			[PackageStates.NEEDS_UPDATE]: $t("package.needs-update-label").toUpperCase(),
-			[PackageStates.UPDATING]: $t("package.needs-update-label").toUpperCase()
-		}[state];
-	};
-
 	const getColor = (state: PackageStates): "primary" | "secondary" | "black" => {
 		if (state === PackageStates.INSTALLED) {
 			return "black";
@@ -28,6 +17,8 @@
 		}
 		return "primary";
 	};
+
+	$: ctaLabel = $t(`package.cta-${pkg.state}`);
 </script>
 
 <Button
@@ -39,16 +30,16 @@
 	{#if pkg.state === PackageStates.INSTALLED}
 		<div class="flex items-center justify-center">
 			<i class="icon-check-circle mr-2 flex" />
-			<span>{getLabel(pkg.state)}</span>
+			<span>{ctaLabel}</span>
 		</div>
 	{:else if pkg.state === PackageStates.AVAILABLE || pkg.state === PackageStates.INSTALLING}
 		<div class="flex items-center justify-between">
-			<span class="ml-1">{getLabel(pkg.state)}</span>
+			<span class="ml-1">{ctaLabel}</span>
 			<i class="icon-downward-arrow mr-1 flex" />
 		</div>
 	{:else}
 		<div class="flex items-center justify-center">
-			{getLabel(pkg.state)}
+			{ctaLabel}
 		</div>
 	{/if}
 </Button>

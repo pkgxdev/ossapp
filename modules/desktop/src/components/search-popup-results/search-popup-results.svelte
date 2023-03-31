@@ -43,17 +43,6 @@
 	const onClose = () => {
 		term = '';
 	};
-
-
-	const getCTALabel = (state: PackageStates): string => {
-		return {
-			[PackageStates.AVAILABLE]: $t("package.install-label").toUpperCase(),
-			[PackageStates.INSTALLED]: $t("package.installed-label").toUpperCase(),
-			[PackageStates.INSTALLING]: $t("package.installing-label").toUpperCase(),
-			[PackageStates.UNINSTALLED]: $t("package.reinstall-label").toUpperCase(),
-			[PackageStates.NEEDS_UPDATE]: $t("package.needs-update-label").toUpperCase(),
-		}[state];
-	};
 </script>
 
 <section class={term ? 'show' : ''}>
@@ -73,7 +62,7 @@
 					<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
 						<PackageResult
 							{pkg}
-							ctaLabel={getCTALabel(pkg.state)}
+							ctaLabel={$t(`package.cta-${pkg.state}`)}
 							ctaColor={pkg.state === PackageStates.INSTALLED ? "green": "secondary"}
 							onClick={async () => {
 								try {
