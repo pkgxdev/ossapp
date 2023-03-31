@@ -52,9 +52,11 @@
 	</section>
 	<Footer/>
 </div>
-<aside class={`fixed border border-gray rounded-md  bg-black transition-all  ${$sideNavOpen && "open"}`}>
-	<SideBar/>
-</aside>
+{#if $sideNavOpen}
+	<aside class="fixed border border-gray rounded-md  bg-black transition-all">
+		<SideBar/>
+	</aside>
+{/if}
 
 
 <style>
@@ -81,11 +83,6 @@
 		right: 5px;
 		width: 190px;
 		overflow: clip;
-		height: 0px;
-		opacity: 0;
-	}
-	
-	aside.open {
 		height: auto;
 		opacity: 1;
 	}

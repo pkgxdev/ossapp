@@ -3,6 +3,7 @@
   import { PackageStates, type GUIPackage } from "$libs/types";
 	import { openTerminal, isPackageInstalled } from '@native';
   import { packagesStore } from "$libs/stores";
+	import clickOutside from "@tea/ui/lib/clickOutside";
 
   const log = window.require("electron-log");
 
@@ -55,10 +56,7 @@
 </script>
 
 <section class="fixed z-10 top-0 left-0 flex items-center justify-center">
-  <button id="btn-cover" class="opacity-0 absolute" on:click={() => {
-    close();
-  }}></button>
-  <aside class="relative">
+  <aside class="relative" use:clickOutside on:click_outside={() => close()}>
     <article class="flex margin-auto p-2 border border-gray rounded-md">
       <figure>
         <img  class="object-contain" src="/images/welcome-bg.png" alt="welcome"/>
@@ -84,7 +82,7 @@
 </section>
 
 <style>
-  section, #btn-cover {
+  section {
     width: 100%;
     height: 100vh;
     background: rgba(0,0,0, 0.5);
