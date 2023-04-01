@@ -2,7 +2,7 @@
 	import "../../app.css";
 	import ImgLoader from "@tea/ui/img-loader/img-loader.svelte";
 	import ProgressCircle from "@tea/ui/progress-circle/progress-circle.svelte";
-	import InstallButton from "./install-button.svelte";
+	import InstallButton from "../install-button/install-button.svelte";
 	import type { GUIPackage } from "$libs/types";
 	import VersionLabel from "./version-label.svelte";
 
@@ -39,7 +39,9 @@
 	</a>
 	<footer class="absolute bottom-0 left-0 flex w-full items-stretch justify-between gap-2 p-2">
 		<VersionLabel {pkg} {availableVersions} />
-		<InstallButton {pkg} {availableVersions} {onClickCTA} />
+		<div class="flex flex-col justify-end">
+			<InstallButton {pkg} {availableVersions} onClick={onClickCTA} />
+		</div>
 	</footer>
 	{#if progessLoading > 0 && progessLoading < 100}
 		<div class="absolute top-0 left-0 h-full w-full bg-black bg-opacity-50">
