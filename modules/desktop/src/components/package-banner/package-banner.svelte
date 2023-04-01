@@ -44,12 +44,9 @@
 					onClick={install}
 				/>
 				{#if pkg.github}
-					<Button
-						class="border-gray h-10 border"
-						onClick={() => {
-							shellOpenExternal(`https://github.com/${pkg.github}`);
-						}}>View on github</Button
-					>
+					<Button class="h-10" type="plain" color="black" onClick={() => {
+						shellOpenExternal(`https://github.com/${pkg.github}`)
+					}}>View on github</Button>
 				{/if}
 			</menu>
 		</article>

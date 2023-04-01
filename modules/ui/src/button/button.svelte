@@ -13,63 +13,105 @@
 	export let loading = false;
 </script>
 
-<button
-	type="button"
-	class={`w-full p-2 text-gray ${clazz} ${active ? "active" : ""} ${type} ${color} ${
-		loading ? "animate-pulse" : ""
-	}`}
-	on:click={() => onClick && onClick()}
->
-	<slot />
-</button>
+<div class="button-container">
+	<button
+		type="button"
+		class={`w-full p-2 text-gray ${clazz} ${active ? "active" : ""} ${type} ${color} ${
+			loading ? "animate-pulse" : ""
+		}`}
+		on:click={() => onClick && onClick()}
+	>
+		<slot />
+	</button>
+</div>
 
 <style>
+	.button-container {
+		position: relative;
+	}
+
+	/* pseudo element for hover effect - width will transition on hover */
+	button::before {
+		position: absolute;
+		content: "";
+		transition-duration: 0.2s;
+		z-index: -1;
+		inset: 0px auto auto 0px;
+		width: 0px;
+		height: 100%;
+		opacity: 1;
+	}
+
+	button:hover::before {
+		width: 100%;
+		height: 100%;
+		opacity: 1;
+	}
+
 	button {
+		z-index: 0;
 		min-width: 100px;
-		transition: 0.2s ease-in-out;
-		cursor: auto;
-	}
-
-	button.plain.primary {
-		background-color: #00ffd0;
-		color: black;
-	}
-
-	button.plain.secondary {
-		background-color: #8000ff;
-		color: white;
-	}
-
-	button.plain.green {
-		background-color: #00a517;
-		color: white;
-	}
-
-	button.plain.black {
-		background-color: #1a1a1a;
-		color: white;
-	}
-
-	button.active {
-		color: black;
+		position: relative;
 	}
 
 	button:hover {
-		box-shadow: inset 0px 0px 0px 5px #1a1a1a;
-		background-color: #00ffd0;
-		color: #1a1a1a;
+		transition: color 0.3s ease 0s, background 0s ease 0.3s;
 	}
-	button.primary:hover {
-		background-color: #00ffd0;
+
+	/* primary */
+	button.plain.primary {
+		background: #00ffd0;
+		border: 1px solid #00ffd0;
+		color: black;
 	}
-	button.secondary:hover {
-		background-color: #8000ff;
+
+	button.plain.primary.active {
+		background: #01997d;
 	}
-	button.green:hover {
-		background-color: #00a517;
+
+	button.primary::before {
+		background: #0ecaa7;
 	}
+
+	/* secondary */
+	button.plain.secondary {
+		background: #8000ff;
+		border: 1px solid #8000ff;
+		color: white;
+	}
+
+	button.plain.secondary.active {
+		background: #410182;
+	}
+
+	button.secondary::before {
+		background: #6000bf;
+	}
+
+	/* green */
+	button.plain.green {
+		background: #00a517;
+		color: white;
+	}
+
+	button.green::before {
+		background: #8000ff;
+	}
+
+	/* black */
+	button.plain.black {
+		background: #1a1a1a;
+		color: white;
+		border: 1px solid white;
+	}
+
+	button.black::before {
+		background: #e1e1e1;
+	}
+
+	/* black button inverts colors on hover */
 	button.black:hover {
-		box-shadow: inset 0px 0px 0px 5px #949494;
-		background-color: #1a1a1a;
+		color: #1a1a1a;
+		background: #e1e1e1;
 	}
 </style>
