@@ -62,6 +62,7 @@
 					<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
 						<PackageResult
 							{pkg}
+							{onClose}
 							ctaLabel={$t(`package.cta-${pkg.state}`)}
 							ctaColor={pkg.state === PackageStates.INSTALLED ? "green": "secondary"}
 							onClick={async () => {
