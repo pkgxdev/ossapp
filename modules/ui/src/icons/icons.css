@@ -163,3 +163,21 @@
 .icon-downward-arrow:before {
 	content: "\50";
 }
+.icon-your-latest-versionasset-4:before {
+	content: "\51";
+}
+.icon-versions-available:before {
+	content: "\52";
+}
+.icon-version-available:before {
+	content: "\53";
+}
+.icon-latest-version:before {
+	content: "\54";
+}
+.icon-arrow-left:before {
+	content: "\55";
+}
+.icon-arrow-right:before {
+	content: "\56";
+}
