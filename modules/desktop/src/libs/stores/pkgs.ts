@@ -79,26 +79,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		updatePackage(guiPkg.full_name!, updatedPackage);
 	};
 
-	const checkTeaCLIPackage = async (teaPkg: Package, installedPkg?: InstalledPackage) => {
-		if (!installedPkg) {
-			requireTeaCli.set(true);
-			return;
-		}
-
-		const isUpToDate = teaPkg.version === installedPkg?.installed_versions[0];
-		log.info("check if Tea-CLI is up to date:", isUpToDate);
-		//TODO: Is there where we handle the case of tea not being installed at all?
-		if (!isUpToDate) {
-			notificationStore.add({
-				message: "install cli",
-				i18n_key: "package.update-tea-cli",
-				type: NotificationType.ACTION_BANNER,
-				callback: installTea,
-				callback_label: "UPDATE"
-			});
-		}
-	};
-
 	const init = async function () {
 		log.info("packages store: try initialize");
 		if (!initialized) {
@@ -120,11 +100,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 
 			try {
 				const installedPkgs: InstalledPackage[] = await getInstalledPackages();
-
-				log.info("sync test for tea-cli");
-				const distTea = pkgs.find((p) => p.full_name === "tea.xyz");
-				const installedTeaPkg = installedPkgs.find((p) => p.full_name === "tea.xyz");
-				if (distTea) await checkTeaCLIPackage(distTea, installedTeaPkg);
 
 				log.info("set NEEDS_UPDATE state to pkgs");
 				for (const [i, iPkg] of installedPkgs.entries()) {

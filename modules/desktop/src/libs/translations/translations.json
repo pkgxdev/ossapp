@@ -34,8 +34,6 @@
 			"details": "details",
 			"install-tea-label": "Install tea cli",
 			"update-tea-label": "Update now",
-			"install-tea-cli": "This app requires our command-line interface",
-			"update-tea-cli": "An update is available for tea cli",
 			"cta-AVAILABLE": "INSTALL",
 			"cta-INSTALLED": "INSTALLED",
 			"cta-INSTALLING": "INSTALLING",
