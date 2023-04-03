@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 import { app } from "electron";
-import semver from "semver";
+import semver, { SemVer } from "semver";
 import * as log from "electron-log";
 import type { InstalledPackage } from "../../src/libs/types";
 import semverCompare from "semver/functions/compare";
@@ -13,6 +13,8 @@ type Dir = {
 	path: string;
 	children?: Dir[];
 };
+
+type ParsedVersion = { version: SemVer; full_name: string };
 
 export const getTeaPath = () => {
 	const homePath = app.getPath("home");
@@ -28,7 +30,7 @@ export const getGuiPath = () => {
 
 export async function getInstalledPackages(): Promise<InstalledPackage[]> {
 	const pkgsPath = getTeaPath();
-	log.info("recusively reading:", pkgsPath);
+	log.info("recursively reading:", pkgsPath);
 	const folders = await deepReadDir({
 		dir: pkgsPath,
 		continueDeeper: (name: string) => !semver.valid(name),
@@ -37,14 +39,8 @@ export async function getInstalledPackages(): Promise<InstalledPackage[]> {
 
 	const bottles = folders
 		.map((p: string) => p.split(".tea/")[1])
-		.map((p: string) => {
-			const path = p.trim().split("/");
-			const version = path.pop();
-			return {
-				version: semver.clean(version || "") || "",
-				full_name: path.join("/")
-			};
-		})
+		.map(parseVersionFromPath)
+		.filter((v): v is ParsedVersion => !!v)
 		.sort((a, b) => semverCompare(b.version, a.version));
 
 	log.info("installed bottles:", bottles.length);
@@ -62,6 +58,20 @@ export async function getInstalledPackages(): Promise<InstalledPackage[]> {
 		return pkgs;
 	}, []);
 }
+
+const parseVersionFromPath = (versionPath: string): ParsedVersion | null => {
+	try {
+		const path = versionPath.trim().split("/");
+		const version = path.pop();
+		return {
+			version: new SemVer(semver.clean(version || "") || ""),
+			full_name: path.join("/")
+		};
+	} catch (e) {
+		log.error("error parsing version from path: ", versionPath);
+		return null;
+	}
+};
 
 const semverTest =
 	/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/g;
