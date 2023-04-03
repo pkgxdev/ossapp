@@ -11,7 +11,9 @@ import { nameToSlug } from "./libs/package";
 import { checkUpdater } from "./libs/auto-updater";
 
 import initializeHandlers, { setProtocolPath } from "./libs/ipc";
-import initializePushNotification from "./libs/push-notification";
+import initializePushNotification, {
+	syncPackageTopicSubscriptions
+} from "./libs/push-notification";
 
 log.info("App starting...");
 if (app.isPackaged) {
@@ -130,6 +132,8 @@ function createMainWindow() {
 	} else {
 		serveURL(mainWindow);
 	}
+
+	syncPackageTopicSubscriptions();
 }
 
 if (process.defaultApp) {

@@ -6,6 +6,7 @@ import semver from "semver";
 import * as log from "electron-log";
 import type { InstalledPackage } from "../../src/libs/types";
 import semverCompare from "semver/functions/compare";
+import { mkdirp } from "mkdirp";
 
 type Dir = {
 	name: string;
@@ -18,6 +19,8 @@ export const getTeaPath = () => {
 	const teaPath = path.join(homePath, "./.tea");
 	return teaPath;
 };
+
+const guiFolder = path.join(getTeaPath(), "tea.xyz/gui");
 
 export const getGuiPath = () => {
 	return path.join(getTeaPath(), "tea.xyz/gui");
@@ -116,3 +119,34 @@ export const deepReadDir = async ({
 	}
 	return arrayOfFiles;
 };
+
+const listFilePath = path.join(getGuiPath(), "installed.json");
+export const getPackagesInstalledList = async (): Promise<InstalledPackage[]> => {
+	let list: InstalledPackage[] = [];
+	try {
+		if (fs.existsSync(listFilePath)) {
+			log.info("gui/installed.json file exists!");
+			const listBuffer = await fs.readFileSync(listFilePath);
+			list = JSON.parse(listBuffer.toString()) as InstalledPackage[];
+		} else {
+			log.info("gui/installed.json does not exists!");
+			await mkdirp(guiFolder);
+			await updatePackageInstalledList([]);
+		}
+	} catch (error) {
+		log.error(error);
+	}
+	return list;
+};
+
+export async function updatePackageInstalledList(list: InstalledPackage[]) {
+	try {
+		log.info("creating:", listFilePath);
+		await mkdirp(guiFolder);
+		await fs.writeFileSync(listFilePath, JSON.stringify(list), {
+			encoding: "utf-8"
+		});
+	} catch (error) {
+		log.error(error);
+	}
+}

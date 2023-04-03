@@ -7,6 +7,7 @@ import path from "path";
 import Pushy from "pushy-electron";
 import * as log from "electron-log";
 import { nameToSlug } from "./package";
+import { subscribeToPackageTopic } from "./push-notification";
 
 export async function installPackage(full_name: string) {
 	return await new Promise((resolve, reject) => {
@@ -27,12 +28,8 @@ export async function installPackage(full_name: string) {
 
 		teaInstallation.on("exit", async (code) => {
 			if (code === 0) {
-				const topic = `packages-${nameToSlug(full_name)}`;
 				try {
-					if (Pushy.isRegistered()) {
-						await Pushy.subscribe(topic);
-						log.info("push: registered to topic ", topic);
-					}
+					await subscribeToPackageTopic(full_name);
 				} catch (error) {
 					log.error(error);
 				} finally {
