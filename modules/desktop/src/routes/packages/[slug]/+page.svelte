@@ -5,7 +5,6 @@
 	import { page } from '$app/stores';
 	// import PageHeader from '$components/page-header/page-header.svelte';
 	import PackageBanner from '$components/package-banner/package-banner.svelte';
-	import type { Bottle } from '@tea/ui/types';
 	// import SuggestedPackages from '$components/suggested-packages/suggested-packages.svelte';
 	import Tabs from '@tea/ui/tabs/tabs.svelte';
 	import type { Tab } from '@tea/ui/types';
@@ -13,57 +12,45 @@
 	import PackageMetas from '@tea/ui/package-metas/package-metas.svelte';
 	import Markdown from '@tea/ui/markdown/markdown.svelte';
 	// import PackageSnippets from '@tea/ui/package-snippets/package-snippets.svelte';
-	import type { GUIPackage } from '$libs/types';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data: { slug:string, content:string, title:string };
 
 	import { packagesStore } from '$libs/stores';
+  import { onMount } from 'svelte';
 
-	let pkg: GUIPackage;
+	const { packages } = packagesStore;
+
+	$: pkg = $packages.find((p) => p.slug === data?.slug);
 
 	// let reviews: Review[];
-	let bottles: Bottle[] = [];
-	let versions: string[] = [];
-	let readme: string;
+	$: bottles = pkg?.bottles || [];
+	$: versions = [...new Set(bottles.map((b) => b.version))];
+	$: readme = pkg?.readme_md || '';
 
-	let tabs: Tab[] = [];
-
-	packagesStore.subscribeToPackage(data?.slug, (p) => {
-		pkg = p;
-
-		if (!bottles.length && pkg.bottles) {
-			const newVersion =  pkg.bottles.map((b) => b.version);
-			versions = [...new Set(newVersion)];
-			bottles.push(...pkg.bottles);
-			tabs = [
-				...tabs,
-				{
-					label: `versions (${versions.length || 0})`,
-					component: Bottles,
-					props: {
-						bottles
-					}
-				}
-			];
+	$: tabs = [
+		readme !== '' && {
+			label: $t("common.details"),
+			component: Markdown,
+			props: { pkg, source: readme }
+		},
+		bottles?.length && {
+			label: `${$t("common.versions")} (${versions.length || 0})`,
+			component: Bottles,
+			props: {
+				bottles
+			}
 		}
+	].filter((t) => t && t?.label) as unknown as Tab[];
 
-		if (!readme && pkg.readme_md) {
-			readme = pkg.readme_md;
-			tabs = [
-				{
-					label: 'details',
-					component: Markdown,
-					props: { pkg, source: readme }
-				},
-				...tabs,
-			];
-		}
-	});
 	const url = $page.url;
 
 	const tab = url.searchParams.get("tab");
+
+	onMount(() => {
+		packagesStore.syncPackageData(pkg);
+	})
 </script>
 <header class="mx-16 py-5 mb-10 text-gray border border-x-0 border-t-0">
 	<a class="hover:text-white hover:opacity-80 cursor-default" href="/">{$t("common.home")}</a>
@@ -72,7 +59,7 @@
 		<a class="hover:text-white hover:opacity-80 cursor-default" href={`/?tab=${tab || "all"}`}>{$t(`tags.${tab}`) || "all"}</a>
 		>
 	{/if}
-	<span class="text-white">{pkg.full_name}</span>
+	<span class="text-white">{pkg?.full_name}</span>
 </header>
 {#if pkg}
 	<div class="px-16">
@@ -82,7 +69,7 @@
 
 		<section class="mt-8 flex gap-8">
 			<div class="w-2/3">
-				<Tabs {tabs} />
+				<Tabs {tabs} defaultTab={$t("common.details")} />
 			</div>
 			<div class="w-1/3">
 				{#if pkg}

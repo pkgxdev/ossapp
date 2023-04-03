@@ -1,6 +1,7 @@
 <script lang="ts">
 	import "$appcss";
 	import "@tea/ui/icons/icons.css";
+	import { t } from '$libs/translations'; 
 	import Button from "@tea/ui/button/button.svelte";
 
 	import { installPackage } from "@native";
@@ -50,7 +51,7 @@
 						color="black"
 						onClick={() => {
 							shellOpenExternal(`https://github.com/${pkg.github}`);
-						}}>View on github</Button
+						}}>{$t("common.view-on-github")}</Button
 					>
 				{/if}
 			</menu>

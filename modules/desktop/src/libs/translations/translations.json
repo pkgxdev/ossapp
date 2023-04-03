@@ -77,7 +77,15 @@
 			"home": "home",
 			"all": "All",
 			"articles": "Articles",
-			"workshops": "Workshops"
+			"workshops": "Workshops",
+			"details": "details",
+			"versions": "versions",
+			"metadata": "Metadata",
+			"homepage": "Homepage",
+			"documentation": "Documentation",
+			"github-repository": "Github Repository",
+			"contributors": "Contributors",
+			"view-on-github": "View on github"
 		},
 		"notification": {
 			"gui-downloading": "A new tea gui({{version}}) is being downloaded. Please don't close the app.",
@@ -97,6 +105,7 @@
 		},
 		"tags": {
 			"all": "all",
+			"installed": "installed",
 			"updates_available": "Updates available",
 			"recently_updated": "Recently updated",
 			"new_packages": "New packages",
