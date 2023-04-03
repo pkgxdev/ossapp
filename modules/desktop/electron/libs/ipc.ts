@@ -12,6 +12,8 @@ import { installPackage, openTerminal } from "./cli";
 
 import { getUpdater } from "./auto-updater";
 import fetch from "node-fetch";
+
+import { syncPackageTopicSubscriptions } from "./push-notification";
 let teaProtocolPath = ""; // this should be empty string
 
 export const setProtocolPath = (path: string) => {
