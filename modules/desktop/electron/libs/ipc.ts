@@ -2,7 +2,7 @@ import { ipcMain, app } from "electron";
 import { createReadStream, statSync } from "fs";
 import { getInstalledPackages } from "./tea-dir";
 import { readSessionData, writeSessionData } from "./auth";
-import type { Session } from "../../src/libs/types";
+import type { Packages, Session } from "../../src/libs/types";
 import * as log from "electron-log";
 import { post } from "./v1-client";
 import { deepReadDir, deletePackageFolder } from "./tea-dir";
@@ -13,7 +13,7 @@ import { installPackage, openTerminal } from "./cli";
 import { getUpdater } from "./auto-updater";
 import fetch from "node-fetch";
 
-import { syncPackageTopicSubscriptions } from "./push-notification";
+import { loadPackageCache, writePackageCache } from "./package";
 let teaProtocolPath = ""; // this should be empty string
 
 export const setProtocolPath = (path: string) => {
@@ -156,4 +156,21 @@ export default function initializeHandlers() {
 			return error;
 		}
 	);
+
+	ipcMain.handle("write-package-cache", async (_, data) => {
+		try {
+			await writePackageCache(data as Packages);
+		} catch (error) {
+			log.error(error);
+		}
+	});
+
+	ipcMain.handle("load-package-cache", async () => {
+		try {
+			return await loadPackageCache();
+		} catch (error) {
+			log.error(error);
+			return { version: "1", packages: {} };
+		}
+	});
 }

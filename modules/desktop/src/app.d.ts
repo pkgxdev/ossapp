@@ -12,7 +12,7 @@ declare namespace App {
 declare namespace svelte.JSX {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	interface HTMLAttributes<T> {
-		onclick_outside: () => void;
-		leave_delay: () => void;
+		onclick_outside?: () => void;
+		leave_delay?: () => void;
 	}
 }

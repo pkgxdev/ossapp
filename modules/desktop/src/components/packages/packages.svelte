@@ -10,7 +10,7 @@
 	import Package from "./package.svelte";
 	import { packagesStore } from "$libs/stores";
 
-	const { packages: allPackages } = packagesStore;
+	const { packageList: allPackages } = packagesStore;
 	export let packageFilter: SideMenuOptions = SideMenuOptions.all;
 
 	export let sortBy: "popularity" | "most recent" = "most recent";
