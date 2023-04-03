@@ -82,11 +82,11 @@
 </script>
 
 <div>
-	<ul class="grid grid-cols-3 gap-2 bg-black" use:watchResize={onResize} on:scroll={onScroll}>
+	<ul class="flex flex-wrap bg-black" use:watchResize={onResize} on:scroll={onScroll}>
 		{#if packages.length > 0}
 			{#each packages as pkg, index}
 				{#if index < limit}
-					<div class={pkg.state === PackageStates.INSTALLING ? "animate-pulse" : ""}>
+					<div class="w-1/3 p-1" class:animate-puls={pkg.state === PackageStates.INSTALLING}>
 						<Package
 							tab={packageFilter}
 							{pkg}
