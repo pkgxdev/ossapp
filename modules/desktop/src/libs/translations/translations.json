@@ -3,58 +3,15 @@
 		"lang": {
 			"en": "English"
 		},
-		"cli": {
-			"install": "install tea"
-		},
 		"store-search-placeholder": "type to search",
-		"search": "search",
-		"home": {
-			"all-packages": "All packages",
-			"discover-title": "DISCOVER",
-			"asset-title": "ASSET TYPE",
-			"tutorials-title": "TUTORIALS",
-			"os-news-title": "OPEN-SOURCE NEWS",
-			"resources": "Resources"
-		},
 		"package": {
 			"update-all": "UPDATE ALL",
-			"top-list-title": "Top packages this week",
-			"browse-cta": "Browse packages",
-			"what-title": "What are packages?",
-			"short-description": "Collections of files aggregated to form larger frameworks & functions. Think Python or Node.js.",
-			"foundation-essentials-title": "FOUNDATION ESSENTIALS",
-			"view-all-cta": "View all packages",
-			"install-label": "install",
-			"installed-label": "installed",
-			"installing-label": "installing",
-			"reinstall-label": "re-install",
-			"needs-update-label": "update",
-			"my-installs-title": "my installs",
-			"check-for-updates": "check for updates",
-			"details": "details",
-			"install-tea-label": "Install tea cli",
-			"update-tea-label": "Update now",
-			"install-tea-cli": "This app requires our command-line interface",
-			"update-tea-cli": "An update is available for tea cli",
 			"cta-AVAILABLE": "INSTALL",
 			"cta-INSTALLED": "INSTALLED",
 			"cta-INSTALLING": "INSTALLING",
 			"cta-UNINSTALLED": "RE-INSTALL",
 			"cta-NEEDS_UPDATE": "UPDATE",
 			"cta-UPDATING": "UPDATING"
-		},
-		"script": {
-			"top-list-title": "Top scripts this week",
-			"view-all-cta": "View all scripts",
-			"use-label": "use",
-			"browse-cta": "Browse scripts",
-			"what-title": "What are scripts?",
-			"short-description": "Invisible applications that chain packages together in order to perform cool actions on your computer."
-		},
-		"post": {
-			"workshops-title": "workshops to get started",
-			"article-more-cta": "Read more articles",
-			"read-more-cta": "read more"
 		},
 		"footer": {
 			"quick-links-title": "quick links",
@@ -79,7 +36,15 @@
 			"home": "home",
 			"all": "All",
 			"articles": "Articles",
-			"workshops": "Workshops"
+			"workshops": "Workshops",
+			"details": "details",
+			"versions": "versions",
+			"metadata": "Metadata",
+			"homepage": "Homepage",
+			"documentation": "Documentation",
+			"github-repository": "Github Repository",
+			"contributors": "Contributors",
+			"view-on-github": "View on github"
 		},
 		"notification": {
 			"gui-downloading": "A new tea gui({{version}}) is being downloaded. Please don't close the app.",
@@ -99,6 +64,7 @@
 		},
 		"tags": {
 			"all": "all",
+			"installed": "installed",
 			"updates_available": "Updates available",
 			"recently_updated": "Recently updated",
 			"new_packages": "New packages",

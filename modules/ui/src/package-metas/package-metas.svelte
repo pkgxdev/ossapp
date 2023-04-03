@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Package } from "../types";
+	import { t } from "$libs/translations";
 	import dayjs from "dayjs";
 	import relativeTime from "dayjs/plugin/relativeTime";
 	import { shellOpenExternal } from "@native";
@@ -29,7 +30,7 @@
 </script>
 
 <section class="bg-black pt-2">
-	<h1 class="text-primary">Metadata</h1>
+	<h1 class="text-primary">{$t("common.metadata")}</h1>
 	<ul class="mb-10 flex flex-col gap-2">
 		{#if pkg?.bottles}
 			<li>
@@ -47,7 +48,7 @@
 			</li>
 		{/if}
 	</ul>
-	<h1 class="text-primary">Homepage</h1>
+	<h1 class="text-primary">{$t("common.homepage")}</h1>
 	<ul class="mb-10 flex flex-col gap-2">
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<li on:click={() => shellOpenExternal(pkg.homepage)}>
@@ -55,7 +56,7 @@
 		</li>
 	</ul>
 	{#if pkg.documentation_url}
-		<h1 class="text-primary">Documentation</h1>
+		<h1 class="text-primary">{$t("common.documentation")}</h1>
 		<ul class="mb-10 flex flex-col gap-2">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<li on:click={() => shellOpenExternal(pkg.documentation_url)}>
@@ -64,7 +65,7 @@
 		</ul>
 	{/if}
 	{#if pkg.github}
-		<h1 class="text-primary">Github Repository</h1>
+		<h1 class="text-primary">{$t("common.github-repository")}</h1>
 		<ul class="mb-10 flex flex-col gap-2">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<li on:click={() => shellOpenExternal(`https://github.com/${pkg.github}`)}>
@@ -73,7 +74,7 @@
 		</ul>
 	{/if}
 	{#if pkg.contributors?.length}
-		<h1 class="text-primary">Contributors</h1>
+		<h1 class="text-primary">{$t("common.contributors")}</h1>
 		<ul class="mb-10 flex flex-col gap-2">
 			{#each pkg.contributors as contributor}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->

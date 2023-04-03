@@ -9,12 +9,19 @@
 	import Button from "../button/button.svelte";
 
 	export let tabs: Tab[] = [];
+	export let defaultTab: string;
 
 	let active: string;
 
+	let dirty = false;
+
 	afterUpdate(() => {
 		if (tabs.length && !active) {
-			active = tabs[0].label;
+			if (!defaultTab) {
+				active = tabs[0].label;
+			} else if (!dirty) {
+				active = defaultTab;
+			}
 		}
 	});
 </script>
@@ -23,8 +30,13 @@
 	<menu class="flex gap-1">
 		{#each tabs as tab}
 			<div class="border border-x-0 border-t-0 border-gray text-white">
-				<Button onClick={() => (active = tab.label)}>
-					<span class={tab.label === active ? "text-white" : ""}>{tab.label}</span>
+				<Button
+					onClick={() => {
+						dirty = true;
+						active = tab.label;
+					}}
+				>
+					<span class:text-white={tab.label === active}>{tab.label}</span>
 				</Button>
 			</div>
 		{/each}

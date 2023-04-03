@@ -17,7 +17,7 @@
 
 <PanelHeader {title} {ctaLabel} ctaLink="/" />
 {#if courses.length}
-	<Posts posts={courses} readMoreCta={$t("post.read-more-cta")} linkTarget="_blank" />
+	<Posts posts={courses} linkTarget="_blank" />
 {:else}
 	<section class="border-gray h-64 border bg-black p-4">
 		<Preloader />

@@ -12,7 +12,7 @@
 	postsStore.subscribeByTag('news', (posts) => (news = posts));
 </script>
 
-<PanelHeader title={$t("home.os-news-title")} ctaLabel={`${$t("post.article-more-cta")} >`} ctaLink="/" />
+<PanelHeader title="OPEN-SOURCE NEWS" ctaLabel="Read more articles" ctaLink="/" />
 {#if news.length}
 	<Posts posts={news} linkTarget="_blank" />
 {:else}

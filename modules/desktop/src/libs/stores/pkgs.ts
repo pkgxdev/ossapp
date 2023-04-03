@@ -5,28 +5,16 @@ import Fuse from "fuse.js";
 import {
 	getPackage,
 	getDistPackages,
-	openTerminal,
 	getInstalledPackages,
 	installPackage,
 	getPackageBottles
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
-import { notificationStore } from "../stores";
-import { NotificationType } from "@tea/ui/types";
 import type { Package } from "@tea/ui/types";
 import { trackInstall, trackInstallFailed } from "$libs/analytics";
 
 const log = window.require("electron-log");
-
-const installTea = async () => {
-	log.info("installing tea...");
-	try {
-		openTerminal(`sh <(curl https://tea.xyz)`);
-	} catch (error) {
-		log.error("install failed", error);
-	}
-};
 
 export default function initPackagesStore() {
 	let initialized = false;
@@ -49,8 +37,8 @@ export default function initPackagesStore() {
 		});
 	};
 
-	const syncPackageData = async (guiPkg: Partial<GUIPackage>) => {
-		if (guiPkg.synced) return;
+	const syncPackageData = async (guiPkg: Partial<GUIPackage> | undefined) => {
+		if (!guiPkg || guiPkg.synced) return;
 
 		const pkg = await getPackage(guiPkg.full_name!); // ATM: pkg only bottles and github:string
 		const readmeMd = `# ${guiPkg.full_name} #
@@ -87,16 +75,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 
 		const isUpToDate = teaPkg.version === installedPkg?.installed_versions[0];
 		log.info("check if Tea-CLI is up to date:", isUpToDate);
-		//TODO: Is there where we handle the case of tea not being installed at all?
-		if (!isUpToDate) {
-			notificationStore.add({
-				message: "install cli",
-				i18n_key: "package.update-tea-cli",
-				type: NotificationType.ACTION_BANNER,
-				callback: installTea,
-				callback_label: "UPDATE"
-			});
-		}
 	};
 
 	const init = async function () {
@@ -202,7 +180,8 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		fetchPackageBottles,
 		updatePackage,
 		init,
-		installPkg
+		installPkg,
+		syncPackageData
 	};
 }
 
