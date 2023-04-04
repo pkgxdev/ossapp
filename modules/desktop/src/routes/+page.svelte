@@ -62,7 +62,7 @@
 <div id="package-container">
 	<Packages packageFilter={sideMenuOption} {sortBy} {sortDirection} bind:scrollY={packagesScrollY}/>
 </div>
-<header class="transition-all px-2 flex flex-col" class:scrolling={packagesScrollY > 100}>
+<header class="transition-all px-2 flex flex-col z-10" class:scrolling={packagesScrollY > 100}>
 	<NotificationBar />
 	<div class="flex justify-between items-center">
 		<h1 class="text-primary pl-3 text-2xl font-bold font-mona">{$t(`side-menu-title.${sideMenuOption}`)}</h1>
