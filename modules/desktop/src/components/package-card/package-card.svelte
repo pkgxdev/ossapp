@@ -65,7 +65,6 @@
 		transition: all 0.3s;
 		width: 100%;
 		height: 230px;
-		cursor: auto;
 	}
 	section:hover {
 		background-color: #252525;

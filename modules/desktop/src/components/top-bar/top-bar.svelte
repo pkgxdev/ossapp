@@ -55,7 +55,6 @@
 		line-height: 40px;
 		padding-left: 3px;
 		background-color: rgba(34, 34, 34, 1);
-		cursor: auto;
 	}
 	.home-btn:hover {
 		background-size: cover;
@@ -65,7 +64,6 @@
 	}
 	ul button {
 		pointer-events: none;
-		cursor: auto;
 	}
 
 	ul button.active {

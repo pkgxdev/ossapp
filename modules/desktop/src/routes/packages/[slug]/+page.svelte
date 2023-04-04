@@ -53,10 +53,10 @@
 	})
 </script>
 <header class="mx-16 py-5 mb-10 text-gray border border-x-0 border-t-0">
-	<a class="hover:text-white hover:opacity-80 cursor-default" href="/">{$t("common.home")}</a>
+	<a class="hover:text-white hover:opacity-80" href="/">{$t("common.home")}</a>
 	>
 	{#if tab !== "all"}
-		<a class="hover:text-white hover:opacity-80 cursor-default" href={`/?tab=${tab || "all"}`}>{$t(`tags.${tab}`) || "all"}</a>
+		<a class="hover:text-white hover:opacity-80" href={`/?tab=${tab || "all"}`}>{$t(`tags.${tab}`) || "all"}</a>
 		>
 	{/if}
 	<span class="text-white">{pkg?.full_name}</span>

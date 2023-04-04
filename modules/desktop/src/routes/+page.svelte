@@ -65,7 +65,7 @@
 <header class="transition-all px-2 flex flex-col" class:scrolling={packagesScrollY > 100}>
 	<NotificationBar />
 	<div class="flex justify-between items-center">
-		<h1 class="text-primary pl-3 pt-2 text-2xl font-bold font-mona">{$t(`side-menu-title.${sideMenuOption}`)}</h1>
+		<h1 class="text-primary pl-3 text-2xl font-bold font-mona">{$t(`side-menu-title.${sideMenuOption}`)}</h1>
 		<!-- 
 		<section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">
 			
@@ -108,9 +108,17 @@
 		padding-top: 15px;
 	}
 
+	header h1 {
+		padding-top: 8px;
+	}
+
 	header.scrolling {
 		height: 60px;
 		background-color: #222222;
 		padding-top: 5px;
+	}
+
+	header.scrolling h1 {
+		padding-top: 0px;
 	}
 </style>

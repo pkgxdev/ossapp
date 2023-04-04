@@ -73,7 +73,7 @@
       </div>
     </article>
 
-    <button class="icon-tea-x-btn absolute text-gray top-5 right-5 cursor-default"
+    <button class="icon-tea-x-btn absolute text-gray top-5 right-5"
       on:click={() => {
         close()
       }}

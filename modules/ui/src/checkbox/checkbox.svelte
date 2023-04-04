@@ -14,7 +14,6 @@
 <style>
 	label {
 		position: relative;
-		cursor: auto;
 		-webkit-user-select: none;
 		-moz-user-select: none;
 		-ms-user-select: none;
