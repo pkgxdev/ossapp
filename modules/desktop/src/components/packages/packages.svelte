@@ -97,8 +97,10 @@
 			{/each}
 		{:else}
 			{#each Array(9) as _}
-				<section class="h-50 border-gray border p-4">
-					<Preloader />
+				<section class="w-1/3 p-1 h-{238}">
+					<div class="border-gray border w-full h-full">
+						<Preloader />
+					</div>
 				</section>
 			{/each}
 		{/if}
