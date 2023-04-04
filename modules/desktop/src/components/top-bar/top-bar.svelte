@@ -22,11 +22,11 @@
 
 <header class="border-gray flex items-center justify-between border w-full h-12 pr-2 border-t-0 border-x-0" style="-webkit-app-region: drag">
 	<ul class="text-gray flex h-10 gap-2 align-middle leading-10 pl-20">
-		<a href="/">
+		<a href="/?tab=all">
 			<div class="home-btn transition-all text-xl w-12 rounded-md text-center"><i class="icon-tea-logo-iconasset-1"/></div>
 		</a>
-		<button on:click={navStore.back} class={$prevPath ? 'active' : 'opacity-50'}>&#8592</button>
-		<button on:click={navStore.next} class={$nextPath ? 'active' : 'opacity-50'}>&#8594</button>
+		<button on:click={navStore.back} class:active={$prevPath} class="opacity-50 pt-1 text-xs"><i class="icon-arrow-left"/></button>
+		<button on:click={navStore.next} class:active={$nextPath} class="opacity-50 pt-1 text-xs"><i class="icon-arrow-right"/></button>
 	</ul>
 	<div class="px-2 w-1/3">
 		<SearchInput
@@ -55,7 +55,6 @@
 		line-height: 40px;
 		padding-left: 3px;
 		background-color: rgba(34, 34, 34, 1);
-		cursor: auto;
 	}
 	.home-btn:hover {
 		background-size: cover;
@@ -65,11 +64,11 @@
 	}
 	ul button {
 		pointer-events: none;
-		cursor: auto;
 	}
 
 	ul button.active {
 		color: white;
 		pointer-events: all;
+		opacity: 1;
 	}
 </style>

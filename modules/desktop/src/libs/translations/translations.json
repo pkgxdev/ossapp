@@ -65,14 +65,14 @@
 		"tags": {
 			"all": "all",
 			"installed": "installed",
-			"updates_available": "Updates available",
+			"installed_updates_available": "Updates available",
 			"recently_updated": "Recently updated",
 			"new_packages": "New packages",
 			"popular": "Popular",
 			"featured": "Featured",
 			"essentials": "Essentials",
-			"star_struct": "Star-struct",
-			"made_by_tea": "Made by Tea.xyz"
+			"star_struct": "Star-struck",
+			"made_by_tea": "Made by tea.xyz"
 		}
 	}
 }

@@ -7,7 +7,10 @@
 
   const { user, deviceIdStore } = authStore;
 
+  let authenticating = false;
+
   const openGithub = () => {
+    authenticating = true;
 		shellOpenExternal(`${baseUrl}/auth/user?device_id=${$deviceIdStore}`)
 		try {
 			authStore.pollSession();
@@ -32,13 +35,14 @@
 </script>
 <nav class="w-full p-2 text-sm" use:mouseLeaveDelay on:leave_delay={() => hidePopup()}>
   {#if $user}
-    <section class="flex rounded-full mb-2 pl-1">
-      <img width="40" height="40" src={$user?.avatar_url || '/images/bored-ape.png'} alt="profile" />
-      <div class="text-gray p-2">@{$user?.login}</div>
+    <section class="flex items-center justify-between p-1 hover:bg-gray hover:border hover:border-white  rounded-sm hover:bg-opacity-90 hover:text-black">
+      <div class="text-white">@{$user?.login}</div>
+      <img id="avatar" class="rounded-sm" src={$user?.avatar_url || '/images/bored-ape.png'} alt="profile" />
     </section>
   {:else}
     <button
-      class={`mt-2 transition-all rounded-sm w-full h-8 pl-1 text-left hover:bg-gray hover:border focus:bg-secondary ${submittedMessage === "syncing..." && "animate-pulse"}`}
+      class="mt-2 p-1 transition-all rounded-sm w-full h-8 text-left hover:bg-gray hover:border focus:bg-secondary bg-opacity-40"
+      class:animate-pulse={authenticating}
       on:click={openGithub}>
       login
     </button>
@@ -47,7 +51,8 @@
   <SelectLang/>
   <hr class="mt-2 border border-gray border-b-0  border-t-0"/>
   <button
-    class={`mt-2 transition-all rounded-sm w-full h-8 pl-1 text-left hover:bg-gray  hover:border focus:bg-secondary ${submittedMessage === "syncing..." && "animate-pulse"}`}
+    class="mt-2 p-1 transition-all rounded-sm w-full h-8 text-left hover:bg-gray hover:border focus:bg-secondary"
+    class:animate-pulse={submittedMessage === "syncing..."}
     on:click={onSubmitLogs}>
     submit logs
   </button>
@@ -59,5 +64,10 @@
 <style>
   hr {
     border-width: 1px;
+  }
+
+  #avatar {
+    height: 24px !important;
+    width: 24px !important;
   }
 </style>

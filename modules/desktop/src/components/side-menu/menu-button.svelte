@@ -15,7 +15,6 @@
   button {
     box-sizing: border-box;
     height: 37px;
-    cursor: auto;
   }
   button.active {
     background: rgba(148, 148, 148, 0.5);

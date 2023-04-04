@@ -11,6 +11,6 @@
 	};
 </script>
 
-<section class="markdown-body p-4">
+<section class="markdown-body py-4">
 	<SvelteMarkdown {source} {renderers} />
 </section>

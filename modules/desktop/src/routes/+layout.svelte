@@ -53,7 +53,7 @@
 	<Footer/>
 </div>
 {#if $sideNavOpen}
-	<aside class="fixed border border-gray rounded-md  bg-black transition-all">
+	<aside class="fixed z-50 border border-gray rounded-md  bg-black transition-all">
 		<SideBar/>
 	</aside>
 {/if}
