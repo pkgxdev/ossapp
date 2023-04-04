@@ -21,7 +21,13 @@
 		isOpened = !isOpened;
 	};
 
+	const isInstalled = (version: string) => pkg.installed_versions?.includes(version);
+
 	const handleClick = (version: string) => {
+		if (isInstalled(version)) {
+			return;
+		}
+
 		isOpened = false;
 		onClick(version);
 	};
@@ -35,8 +41,20 @@
 		{#each availableVersions as version, idx}
 			{#if idx !== 0}<hr class="divider" />{/if}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div class="version-item text-xs" on:click={() => handleClick(version)}>
-				v{version + (idx === 0 ? " (latest)" : "")}
+			<div
+				class="version-item flex items-center justify-start gap-x-1 text-xs"
+				class:installable-version={!isInstalled(version)}
+				on:click={() => handleClick(version)}
+			>
+				<div class:installed-text={isInstalled(version)}>v{version}</div>
+				{#if idx === 0}
+					<div class="latest-version">(latest)</div>
+				{/if}
+				{#if isInstalled(version)}
+					<div class="flex grow justify-end">
+						<i class="installed-text icon-check-circle flex" />
+					</div>
+				{/if}
 			</div>
 		{/each}
 	</div>
@@ -58,7 +76,6 @@
 	}
 
 	.version-item {
-		cursor: pointer;
 		margin: 4px 6px;
 		padding: 4px 6px;
 		height: auto;
@@ -66,7 +83,11 @@
 		white-space: nowrap;
 	}
 
-	.version-item:hover {
+	.installable-version {
+		cursor: pointer;
+	}
+
+	.installable-version:hover {
 		border: 1px solid #949494;
 		background-color: rgba(148, 148, 148, 0.35);
 	}
@@ -81,6 +102,14 @@
 		border: 1px solid #272626;
 		margin-left: 8px;
 		margin-right: 8px;
+	}
+
+	.installed-text {
+		color: #00ffd0;
+	}
+
+	.latest-version {
+		color: #af5fff;
 	}
 
 	.visible {
