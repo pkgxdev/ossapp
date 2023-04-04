@@ -19,7 +19,7 @@
 	export let scrollY = 0;
 
 	let loadMore = 9;
-	let limit = loadMore;
+	let limit = loadMore + 9;
 
 	// TODO: figure out a better type strategy here so that this breaks if SideMenuOptions is updated
 	const pkgFilters: { [key: string]: (pkg: GUIPackage) => boolean } = {
