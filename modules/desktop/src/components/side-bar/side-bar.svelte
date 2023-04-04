@@ -30,7 +30,7 @@
 
   const hidePopup = () => {
     console.log("hide poup")
-    // navStore.sideNavOpen.set(false);
+    navStore.sideNavOpen.set(false);
   }
 </script>
 <nav class="w-full p-2 text-sm" use:mouseLeaveDelay on:leave_delay={() => hidePopup()}>
