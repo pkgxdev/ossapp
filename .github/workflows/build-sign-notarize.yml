@@ -235,7 +235,7 @@ jobs:
         --window-size 800 400 \
         --icon-size 100 \
         --icon "tea.app" 200 190 \
-        --volicon "./modules/desktop/electron/mac-icon.icns" \
+        --volicon "./modules/desktop/electron/icon.icns" \
         --hide-extension "tea.app" \
         --app-drop-link 600 185 \
         --sandbox-safe \
@@ -253,7 +253,7 @@ jobs:
         --window-size 800 400 \
         --icon-size 100 \
         --icon "tea.app" 200 190 \
-        --volicon "./modules/desktop/electron/mac-icon.icns" \
+        --volicon "./modules/desktop/electron/icon.icns" \
         --hide-extension "tea.app" \
         --app-drop-link 600 185 \
         --sandbox-safe \

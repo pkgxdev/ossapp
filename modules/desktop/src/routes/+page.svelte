@@ -22,7 +22,7 @@
 
 	let sideMenuOption = url.searchParams.get("tab") as SideMenuOptions || SideMenuOptions.all;
 
-	let sortBy: "popularity" | "most recent" = "popularity";
+	let sortBy: "popularity" | "most recent" = "most recent";
 	let sortDirection: "asc" | "desc" = "desc";
 
 	let updating = false;
