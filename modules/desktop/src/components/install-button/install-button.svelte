@@ -35,7 +35,7 @@
 	const handleClickOutside = () => (isOpened = false);
 </script>
 
-<div class="dropdown" use:clickOutside on:click_outside={handleClickOutside}>
+<div class="dropdown z-10" use:clickOutside on:click_outside={handleClickOutside}>
 	<PackageStateButton {buttonSize} {pkg} onClick={toggleOpen} />
 	<div class="version-list" class:visible={isOpened}>
 		{#each availableVersions as version, idx}
@@ -66,7 +66,6 @@
 		position: absolute;
 		margin-top: 6px;
 		width: 100%;
-		z-index: 1;
 		background-color: #1a1a1a;
 		border: 0.5px solid #949494;
 		box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);

@@ -86,7 +86,7 @@
 		{#if packages.length > 0}
 			{#each packages as pkg, index}
 				{#if index < limit}
-					<div class="w-1/3 p-1" class:animate-puls={pkg.state === PackageStates.INSTALLING}>
+					<div class="w-1/3 p-1 z-1" class:animate-puls={pkg.state === PackageStates.INSTALLING}>
 						<Package
 							tab={packageFilter}
 							{pkg}
