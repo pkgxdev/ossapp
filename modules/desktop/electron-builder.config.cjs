@@ -14,7 +14,7 @@ module.exports = {
 		icon: "./icon.png"
 	},
 	mac: {
-		icon: "./electron/mac-icon.icns",
+		icon: "./electron/icon.icns",
 		target: {
 			target: "default",
 			arch: ["x64", "arm64"]
