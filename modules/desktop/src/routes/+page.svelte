@@ -3,6 +3,7 @@
 
 	import { page } from '$app/stores';
 	import { t } from '$libs/translations';
+	import { afterNavigate } from '$app/navigation';
 	import { packagesStore, notificationStore } from '$libs/stores';
 	import Packages from '$components/packages/packages.svelte';
 	import { PackageStates, SideMenuOptions, type GUIPackage } from '$libs/types';
@@ -48,6 +49,14 @@
 
 	$: teaPkg = $packages.find((p) => p.full_name === "tea.xyz");
 	$: needsUpdateCount = pkgsToUpdate.length;
+
+	
+	afterNavigate(({ from, to }) => {
+		if (to?.url?.pathname === "/") {
+			const tab = to.url.searchParams.get("tab")
+			sideMenuOption = !tab ? SideMenuOptions.all : tab as SideMenuOptions;
+		}
+	});
 </script>
 
 <div id="package-container">

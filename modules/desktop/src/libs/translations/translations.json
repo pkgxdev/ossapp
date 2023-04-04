@@ -65,7 +65,7 @@
 		"tags": {
 			"all": "all",
 			"installed": "installed",
-			"updates_available": "Updates available",
+			"installed_updates_available": "Updates available",
 			"recently_updated": "Recently updated",
 			"new_packages": "New packages",
 			"popular": "Popular",
