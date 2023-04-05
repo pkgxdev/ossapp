@@ -51,9 +51,9 @@
 			on:click={() => goto(`/?tab=${SideMenuOptions.essentials}`)}
 		/>
 		<hr/>
-    <MenuButton label={$t("tags.star_struct")} icon="star-full"
-			active={activeOption === SideMenuOptions.star_struct}
-			on:click={() => goto(`/?tab=${SideMenuOptions.star_struct}`)}
+    <MenuButton label={$t("tags.starstruck")} icon="star-full"
+			active={activeOption === SideMenuOptions.starstruck}
+			on:click={() => goto(`/?tab=${SideMenuOptions.starstruck}`)}
 		/>
 		<hr/>
     <MenuButton label={$t("tags.made_by_tea")} icon="tea-logo-iconasset-1"

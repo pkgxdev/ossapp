@@ -62,7 +62,7 @@ export enum SideMenuOptions {
 	popular = "popular",
 	featured = "featured",
 	essentials = "essentials",
-	star_struct = "star_struct",
+	starstruck = "starstruck",
 	made_by_tea = "made_by_tea"
 }
 

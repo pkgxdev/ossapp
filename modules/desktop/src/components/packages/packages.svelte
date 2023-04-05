@@ -47,8 +47,8 @@
 			pkg.categories.includes(SideMenuOptions.featured),
 		[SideMenuOptions.essentials]: (pkg: GUIPackage) =>
 			pkg.categories.includes(SideMenuOptions.essentials),
-		[SideMenuOptions.star_struct]: (pkg: GUIPackage) =>
-			pkg.categories.includes(SideMenuOptions.star_struct),
+		[SideMenuOptions.starstruck]: (pkg: GUIPackage) =>
+			pkg.categories.includes(SideMenuOptions.starstruck),
 		[SideMenuOptions.made_by_tea]: (pkg: GUIPackage) => pkg.full_name.includes("tea.xyz")
 	};
 
