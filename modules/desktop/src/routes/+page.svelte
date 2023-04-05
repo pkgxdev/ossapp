@@ -28,6 +28,8 @@
 	let updating = false;
 
 	let packagesScrollY = 0;
+	$: currentUpdatingPkg = $packages.find((p) => p.state === PackageStates.UPDATING)
+	$: updatingMessage = `updating ${currentUpdatingPkg?.full_name} (${currentUpdatingPkg?.install_progress_percentage}%)`;
 
 	$: pkgsToUpdate = $packages.filter((p: GUIPackage) => p.state === PackageStates.NEEDS_UPDATE);
 	async function updateAll() {
@@ -36,9 +38,6 @@
 		for(const pkg of pkgsToUpdate) {
 			try {
 				await packagesStore.installPkg(pkg);
-				notificationStore.add({
-					message: `Package ${pkg.full_name} has been updated to  v${pkg.version}.`,
-				});
 			} catch (error) {
 				log.error(error);
 			}
@@ -76,15 +75,21 @@
 			}} />
 		</section>
 		 -->
-		{#if needsUpdateCount}
+		{#if needsUpdateCount && sideMenuOption === SideMenuOptions.installed_updates_available}
+		 <div class="flex items-center text-sm">
+			{#if currentUpdatingPkg}
+				<p class="text-gray px-2">{updatingMessage}</p>
+			{/if}
 			<Button
-				class={`w-48 h-8 text-xs ${updating && "animate-pulse"}`}
+				class="w-48 h-8 text-xs"
+				loading={updating}
 				type="plain"
 				color="secondary"
 				onClick={updateAll}
 			>
 					{$t(`package.update-all`)} [{needsUpdateCount}]
 			</Button> 
+		 </div>
 		{/if}
 	</div>
 </header>

@@ -20,7 +20,10 @@
 		/>
 		<hr/>
 		{#if needsUpdateCount}
-    	<MenuButton label={$t("tags.installed_updates_available")} icon="update"
+    	<MenuButton
+				count={needsUpdateCount}
+				label={$t("tags.installed_updates_available")}
+				icon="update"
 				active={activeOption === SideMenuOptions.installed_updates_available}
 				on:click={() => goto(`/?tab=${SideMenuOptions.installed_updates_available}`)}
 			/>
