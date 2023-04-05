@@ -59,7 +59,7 @@
 			"popular": "Popular",
 			"featured": "Featured",
 			"essentials": "Essentials",
-			"star_struct": "Star-struct Heavyweights",
+			"starstruck": "Starstruck Heavyweights",
 			"made_by_tea": "Made by Tea.xyz"
 		},
 		"tags": {
@@ -71,7 +71,7 @@
 			"popular": "Popular",
 			"featured": "Featured",
 			"essentials": "Essentials",
-			"star_struct": "Star-struck",
+			"starstruck": "Starstruck",
 			"made_by_tea": "Made by tea.xyz"
 		}
 	}
