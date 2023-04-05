@@ -33,8 +33,8 @@ export async function getInstalledPackages(): Promise<InstalledPackage[]> {
 	log.info("recursively reading:", pkgsPath);
 	const folders = await deepReadDir({
 		dir: pkgsPath,
-		continueDeeper: (name: string) => !semver.valid(name),
-		filter: (name: string) => !!semver.valid(name)
+		continueDeeper: (name: string) => !semver.valid(name) && name !== ".tea",
+		filter: (name: string) => !!semver.valid(name) && name !== ".tea"
 	});
 
 	const bottles = folders
