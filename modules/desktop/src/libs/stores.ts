@@ -95,44 +95,35 @@ export const postsStore = initPosts();
 
 function initSearchStore() {
 	const searching = writable<boolean>(false);
-	const { subscribe, set } = writable<string>("");
 	const packagesSearch = writable<GUIPackage[]>([]);
 	const postsSearch = writable<AirtablePost[]>([]);
 
 	// TODO:
 	// should use algolia if user is somehow online
 
-	const packagesFound: GUIPackage[] = [];
-
-	let term = "";
-
-	subscribe((v) => (term = v));
-	packagesSearch.subscribe((v) => packagesFound.push(...v));
-
 	return {
-		term,
 		searching,
 		packagesSearch,
 		postsSearch,
-		packagesFound,
-		subscribe,
 		search: async (term: string) => {
 			searching.set(true);
 			try {
 				if (term) {
-					const [resultPkgs, resultPosts] = await Promise.all([
-						packagesStore.search(term, 5),
-						postsStore.search(term, 10)
+					const [
+						resultPkgs
+						// resultPosts
+					] = await Promise.all([
+						packagesStore.search(term, 5)
+						// postsStore.search(term, 10)
 					]);
 					packagesSearch.set(resultPkgs);
-					postsSearch.set(resultPosts);
+					// postsSearch.set(resultPosts);
 				} else {
 					packagesSearch.set([]);
-					postsSearch.set([]);
+					// postsSearch.set([]);
 				}
-				set(term);
-			} finally {
-				searching.set(false);
+			} catch (error) {
+				console.error(error);
 			}
 		}
 	};

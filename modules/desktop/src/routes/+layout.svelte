@@ -6,8 +6,9 @@
 	import TopBar from '$components/top-bar/top-bar.svelte';
 	import PopoutMenu from '$components/popout-menu/popout-menu.svelte';
 	import Footer from '$components/footer/footer.svelte';
-	import { navStore, packagesStore } from '$libs/stores';
+	import { navStore, packagesStore, searchStore } from '$libs/stores';
 	import { listenToChannel } from "@native";
+	import Mousetrap from 'mousetrap';
 
 	import SearchPopupResults from '$components/search-popup-results/search-popup-results.svelte';
 	import { getProtocolPath } from '@native';
@@ -38,6 +39,12 @@
 		// used by the tea:// protocol to suggest a path to open
 		syncPath();
 		listenToChannel("sync-path", syncPath);
+		Mousetrap.bind(['command+k', 'ctrl+k'], function() {
+				searchStore.searching.set(true);
+        // return false to prevent default browser behavior
+        // and stop event from bubbling
+        return false;
+    });
 		packagesStore.init();
 	});
 </script>

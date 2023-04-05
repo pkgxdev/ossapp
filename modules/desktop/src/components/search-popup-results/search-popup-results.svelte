@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { searchStore } from '$libs/stores';
 	import type { GUIPackage } from '$libs/types';
+	import SearchInput from '@tea/ui/search-input/search-input.svelte';
 	import { t } from '$libs/translations';
 	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
 	import Package from "$components/packages/package.svelte";
@@ -9,19 +10,17 @@
 	// import Posts from '@tea/ui/posts/posts.svelte';
 
 	import { installPackage } from '@native';
+
+	const { searching, packagesSearch } = searchStore;
 	// import type { AirtablePost } from '@tea/ui/types';
 	let term: string;
-	let packages: GUIPackage[] = [];
 	// let articles: AirtablePost[] = []; // news, blogs, etc
 	// let workshops: AirtablePost[] = []; // workshops, course
 	let loading = true;
 
-	searchStore.subscribe((v) => {
-		term = v;
-	});
-	searchStore.packagesSearch.subscribe((pkgs) => {
-		packages = pkgs;
-	});
+	// searchStore.packagesSearch.subscribe((pkgs) => {
+	// 	packages = pkgs;
+	// });
 	// searchStore.postsSearch.subscribe((posts) => {
 	// 	let partialArticles: AirtablePost[] = [];
 	// 	let partialWorkshops: AirtablePost[] = [];
@@ -42,110 +41,132 @@
 
 	const onClose = () => {
 		term = '';
+		searchStore.searching.set(false);
 	};
 </script>
-
-<section class={term ? 'show' : ''}>
+{#if $searching}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<figure on:click={onClose} />
-	<div class="border-gray z-20 border bg-black">
-		<header class="flex justify-between p-4">
-			<div class="text-primary text-2xl">Showing search results for `{term}`</div>
-			<button on:click={onClose}>&#x2715</button>
+	<div id="bg-close" class="z-40" on:click={onClose}></div>
+	<section class="z-50">
+		<header class="flex border border-gray border-t-0 border-x-0">
+			<SearchInput
+				class="w-full  rounded-sm h-9"
+				size="small"
+				placeholder={`${$t("store-search-placeholder")}`}
+				onSearch={(search) => {
+					term = search;
+					searchStore.search(search);
+				}}
+			/>
+			<button class="mr-2" on:click={onClose}>&#x2715</button>
 		</header>
-		<header class="text-gray p-4 text-lg">
-			Packages ({packages.length})
-		</header>
-		<ul class="flex flex-col gap-2 p-2">
-			{#if packages.length > 0}
-				{#each packages as pkg}
-					<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
-						<PackageResult
-							{pkg}
-							{onClose}
-							ctaLabel={$t(`package.cta-${pkg.state}`)}
-							ctaColor={pkg.state === PackageStates.INSTALLED ? "green": "secondary"}
-							onClick={async () => {
-								try {
-									pkg.state = PackageStates.INSTALLING;
-									await installPackage(pkg, pkg.version);
-									pkg.state = PackageStates.INSTALLED;
-								} catch (error) {
-									console.error(error);
-								}
-							}}
-						/>
-					</div>
-				{/each}
-			{:else if loading}
-				{#each Array(12) as _}
-					<section class="h-50 border-gray border p-4">
+		{#if term}
+			<div class="z-20 bg-black">
+				<header class="flex justify-between p-4">
+					<div class="text-primary text-2xl">Showing search results for `{term}`</div>
+				</header>
+				<header class="text-gray p-4 text-lg">
+					Packages ({$packagesSearch.length})
+				</header>
+				<ul class="flex flex-col gap-2 p-2">
+					{#if $packagesSearch.length > 0}
+						{#each $packagesSearch as pkg}
+							<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
+								<PackageResult
+									{pkg}
+									{onClose}
+									onClick={async () => {
+										try {
+											pkg.state = PackageStates.INSTALLING;
+											await installPackage(pkg, pkg.version);
+											pkg.state = PackageStates.INSTALLED;
+										} catch (error) {
+											console.error(error);
+										}
+									}}
+								/>
+							</div>
+						{/each}
+					{/if}
+				</ul>
+				<!-- <header class="text-primary p-4 text-lg">
+					Top Article Results ({articles.length})
+				</header>
+				{#if articles.length}
+					<Posts posts={articles} linkTarget="_blank" />
+				{:else if loading}
+					<section class="border-gray h-64 border bg-black p-4">
 						<Preloader />
 					</section>
-				{/each}
-			{/if}
-		</ul>
-		<!-- <header class="text-primary p-4 text-lg">
-			Top Article Results ({articles.length})
-		</header>
-		{#if articles.length}
-			<Posts posts={articles} linkTarget="_blank" />
-		{:else if loading}
-			<section class="border-gray h-64 border bg-black p-4">
-				<Preloader />
-			</section>
+				{/if}
+				<header class="text-primary p-4 text-lg">
+					Top Workshop Results ({workshops.length})
+				</header>
+				{#if workshops.length}
+					<Posts posts={workshops} linkTarget="_blank" />
+				{:else if loading}
+					<section class="border-gray h-64 border bg-black p-4">
+						<Preloader />
+					</section>
+				{/if} -->
+			</div>
 		{/if}
-		<header class="text-primary p-4 text-lg">
-			Top Workshop Results ({workshops.length})
-		</header>
-		{#if workshops.length}
-			<Posts posts={workshops} linkTarget="_blank" />
-		{:else if loading}
-			<section class="border-gray h-64 border bg-black p-4">
-				<Preloader />
-			</section>
-		{/if} -->
-	</div>
-</section>
+	</section>
+{/if}
 
 <style>
+	#bg-close {
+		position: fixed;
+		width: calc(100vw - 2px);
+		height: calc(100vh - 2px);
+		top: 1px;
+		left: 1px;
+		background: rgba(0, 0, 0, 0.7);
+		border-radius: 12px;
+	}
 	section {
 		position: fixed;
-		top: 48px;
-		left: 0px;
-		right: 0;
+		top: 50px;
+		left: 50px;
+		right: 50px;
+		bottom: 50px;
 		background: rgba(0, 0, 0, 0.7);
 		transition: opacity 0.3s ease-in-out;
-		opacity: 0%;
+		opacity: 1;
 		overflow: hidden;
-		height: 0px;
-	}
-
-	section.show {
-		padding: 36px;
-		z-index: 10;
-	}
-
-	section > figure {
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-	}
-	section.show {
-		opacity: 100%;
-		height: 100%;
+		height: auto;
+		border: gray 1px solid;
+		border-radius: 12px;
 	}
 
 	section > div {
 		position: relative;
-		height: 0%;
+		margin-top: 2px;
+		height: calc(100% - 40px);
+		width: 100%;
 		transition: height 0.6s ease-in-out;
 		overflow-y: scroll;
 	}
 
-	section.show > div {
-		height: 90%;
+
+	/* width */
+	::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #272626;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #949494;
+		border-radius: 4px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: white;
 	}
 </style>

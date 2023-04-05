@@ -4,7 +4,12 @@
 	let clazz = "";
 	export { clazz as class };
 	export let size: "small" | "medium" | "large" = "small";
-	export let onSearch: (text: string) => void;
+	export let onSearch = (text: string) => {
+		console.log(text);
+	};
+	export let onFocus = () => {
+		console.log("focus");
+	};
 	export let placeholder = "search_";
 
 	let timer: NodeJS.Timeout;
@@ -12,7 +17,7 @@
 		const t = e.target as HTMLInputElement;
 		clearTimeout(timer);
 		timer = setTimeout(() => {
-			onSearch && onSearch(t.value);
+			onSearch(t.value);
 		}, 300);
 	};
 </script>
@@ -21,7 +26,13 @@
 	<div class="icon pl-4">
 		<i class="icon-search-icon" />
 	</div>
-	<input type="search" class="flex-grow pb-2 text-sm" {placeholder} on:keyup={onChange} />
+	<input
+		type="search"
+		class="flex-grow pb-2 text-sm"
+		{placeholder}
+		on:keyup={onChange}
+		on:focus={onFocus}
+	/>
 </section>
 
 <!-- <input type="search" class="w-full bg-black h-12 p-4 border border-x-0 border-gray"/> -->

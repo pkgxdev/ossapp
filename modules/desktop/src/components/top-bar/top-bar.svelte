@@ -10,10 +10,6 @@
 
 	let { nextPath, prevPath } = navStore;
 
-	const onSearch = (term: string) => {
-		searchStore.search(term);
-	};
-
 	let currentPath: string;
 	beforeUpdate(async () => {
 		currentPath = $page.url.pathname;
@@ -33,7 +29,9 @@
 			class="w-full border border-gray rounded-sm h-9"
 			size="small"
 			placeholder={`${$t("store-search-placeholder")}`}
-			{onSearch}
+			onFocus={() => {
+				searchStore.searching.set(true);
+			}}
 		/>
 	</div>
 	<ProfileNavButton />
