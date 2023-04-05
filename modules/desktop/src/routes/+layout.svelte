@@ -4,7 +4,7 @@
 	import { navigating } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
 	import TopBar from '$components/top-bar/top-bar.svelte';
-	import SideBar from '$components/side-bar/side-bar.svelte';
+	import PopoutMenu from '$components/popout-menu/popout-menu.svelte';
 	import Footer from '$components/footer/footer.svelte';
 	import { navStore, packagesStore } from '$libs/stores';
 	import { listenToChannel } from "@native";
@@ -54,7 +54,7 @@
 </div>
 {#if $sideNavOpen}
 	<aside class="fixed z-50 border border-gray rounded-md  bg-black transition-all">
-		<SideBar/>
+		<PopoutMenu/>
 	</aside>
 {/if}
 

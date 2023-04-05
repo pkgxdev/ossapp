@@ -29,7 +29,6 @@
   }
 
   const hidePopup = () => {
-    console.log("hide poup")
     navStore.sideNavOpen.set(false);
   }
 </script>
@@ -49,7 +48,7 @@
   {/if}
   <hr class="mt-2 border border-gray border-b-0  border-t-0"/>
   <SelectLang/>
-  <hr class="mt-2 border border-gray border-b-0  border-t-0"/>
+  <hr class="border border-gray border-b-0  border-t-0"/>
   <button
     class="mt-2 p-1 transition-all rounded-sm w-full h-8 text-left hover:bg-gray hover:border focus:bg-secondary"
     class:animate-pulse={submittedMessage === "syncing..."}
