@@ -13,6 +13,7 @@ import {
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 import type { Package } from "@tea/ui/types";
 import { trackInstall, trackInstallFailed } from "$libs/analytics";
+import { addInstalledVersion } from "$libs/packages/pkg-utils";
 
 const log = window.require("electron-log");
 
@@ -137,9 +138,14 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				updatePackage(pkg.full_name, { install_progress_percentage: progress });
 			});
 
-			await installPackage(pkg, version || pkg.version);
+			const versionToInstall = version || pkg.version;
+			await installPackage(pkg, versionToInstall);
 			trackInstall(pkg.full_name);
-			updatePackage(pkg.full_name, { state: PackageStates.INSTALLED });
+
+			updatePackage(pkg.full_name, {
+				state: PackageStates.INSTALLED,
+				installed_versions: addInstalledVersion(pkg.installed_versions, versionToInstall)
+			});
 		} catch (error) {
 			let message = "Unknown Error";
 			if (error instanceof Error) message = error.message;

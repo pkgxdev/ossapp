@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Package from "$components/packages/package.svelte";
 	import { PackageStates, type GUIPackage } from "$libs/types";
 	import clickOutside from "@tea/ui/lib/clickOutside";
 	import PackageStateButton from "./package-state-button.svelte";
