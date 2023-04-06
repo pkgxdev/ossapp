@@ -37,7 +37,8 @@ export async function subscribeToPackageTopic(pkgFullname: string) {
 	try {
 		if (Pushy.isRegistered()) {
 			const slug = nameToSlug(pkgFullname);
-			const topic = `packages-${slug}`;
+			const platformArch = getTopicArch();
+			const topic = `packages-${slug}_${platformArch}`;
 			await Pushy.subscribe(topic);
 			log.info("push: registered to pkg-topic: ", topic);
 		} else {
@@ -92,4 +93,17 @@ export async function syncPackageTopicSubscriptions() {
 	} catch (error) {
 		log.error(error);
 	}
+}
+
+enum PlatformArch {
+	DarwinAarch64 = "darwin_aarch64",
+	DarwinX86_64 = "darwin_x86-64",
+	LinuxAarch64 = "linux_aarch64",
+	LinuxX86_64 = "linux_x86-64"
+}
+
+export function getTopicArch() {
+	const arch = (process.arch as string) === "aarch64" ? "aarch64" : "x86-64";
+	const platform = process.platform === "darwin" ? "darwin" : "linux";
+	return `${platform}_${arch}` as PlatformArch;
 }
