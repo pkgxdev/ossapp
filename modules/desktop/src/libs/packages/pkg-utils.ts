@@ -18,3 +18,17 @@ export const findAvailableVersions = (pkg: GUIPackage) => {
 };
 
 export const cleanVersion = (version: string) => clean(version) || "0.0.0";
+
+// Add a new version to the list of installed versions while maintaining the sort order
+export const addInstalledVersion = (
+	installedVersions: string[] | undefined,
+	newVersion: string
+) => {
+	if (!installedVersions) {
+		return [newVersion];
+	}
+
+	return [...installedVersions, newVersion].sort((a, b) =>
+		semverCompare(cleanVersion(b), cleanVersion(a))
+	);
+};

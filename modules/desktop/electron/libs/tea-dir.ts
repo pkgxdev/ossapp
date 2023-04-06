@@ -14,7 +14,7 @@ type Dir = {
 	children?: Dir[];
 };
 
-type ParsedVersion = { version: SemVer; full_name: string };
+type ParsedVersion = { full_name: string; semVer: SemVer };
 
 export const getTeaPath = () => {
 	const homePath = app.getPath("home");
@@ -33,26 +33,26 @@ export async function getInstalledPackages(): Promise<InstalledPackage[]> {
 	log.info("recursively reading:", pkgsPath);
 	const folders = await deepReadDir({
 		dir: pkgsPath,
-		continueDeeper: (name: string) => !semver.valid(name),
-		filter: (name: string) => !!semver.valid(name)
+		continueDeeper: (name: string) => !semver.valid(name) && name !== ".tea",
+		filter: (name: string) => !!semver.valid(name) && name !== ".tea"
 	});
 
 	const bottles = folders
 		.map((p: string) => p.split(".tea/")[1])
 		.map(parseVersionFromPath)
 		.filter((v): v is ParsedVersion => !!v)
-		.sort((a, b) => semverCompare(b.version, a.version));
+		.sort((a, b) => semverCompare(b.semVer, a.semVer));
 
 	log.info("installed bottles:", bottles.length);
 
 	return bottles.reduce<InstalledPackage[]>((pkgs, bottle) => {
 		const pkg = pkgs.find((v) => v.full_name === bottle.full_name);
 		if (pkg) {
-			pkg.installed_versions.push(bottle.version);
+			pkg.installed_versions.push(bottle.semVer.version);
 		} else {
 			pkgs.push({
 				full_name: bottle.full_name,
-				installed_versions: [bottle.version]
+				installed_versions: [bottle.semVer.version]
 			});
 		}
 		return pkgs;
@@ -64,7 +64,7 @@ const parseVersionFromPath = (versionPath: string): ParsedVersion | null => {
 		const path = versionPath.trim().split("/");
 		const version = path.pop();
 		return {
-			version: new SemVer(semver.clean(version || "") || ""),
+			semVer: new SemVer(semver.clean(version || "") || ""),
 			full_name: path.join("/")
 		};
 	} catch (e) {
