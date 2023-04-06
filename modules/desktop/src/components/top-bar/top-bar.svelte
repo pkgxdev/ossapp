@@ -10,10 +10,6 @@
 
 	let { nextPath, prevPath } = navStore;
 
-	const onSearch = (term: string) => {
-		searchStore.search(term);
-	};
-
 	let currentPath: string;
 	beforeUpdate(async () => {
 		currentPath = $page.url.pathname;
@@ -28,13 +24,19 @@
 		<button on:click={navStore.back} class:active={$prevPath} class="opacity-50 pt-1 text-xs"><i class="icon-arrow-left"/></button>
 		<button on:click={navStore.next} class:active={$nextPath} class="opacity-50 pt-1 text-xs"><i class="icon-arrow-right"/></button>
 	</ul>
-	<div class="px-2 w-1/3">
+	<div class="px-2 w-1/3 relative">
 		<SearchInput
 			class="w-full border border-gray rounded-sm h-9"
 			size="small"
 			placeholder={`${$t("store-search-placeholder")}`}
-			{onSearch}
+			onFocus={() => {
+				searchStore.searching.set(true);
+			}}
 		/>
+		<kbd class="absolute top-0 right-3 opacity-50 bg-gray text-white px-2 mt-1 rounded-sm flex items-center">
+			<i class="text-lg">⌘</i>
+			<span class="text-xs">K</span>
+		</kbd>
 	</div>
 	<ProfileNavButton />
 </header>
