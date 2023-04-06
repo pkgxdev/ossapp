@@ -106,7 +106,6 @@ function initSearchStore() {
 		packagesSearch,
 		postsSearch,
 		search: async (term: string) => {
-			searching.set(true);
 			try {
 				if (term) {
 					const [

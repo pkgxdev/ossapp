@@ -46,7 +46,7 @@
 		searchStore.searching.set(false);
 	};
 </script>
-{#if $searching}
+{#if $searching === true}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div id="bg-close" class="z-40" on:click={onClose}></div>
 	<section class="z-50">
@@ -55,6 +55,7 @@
 				<SearchInput
 					class="w-full  rounded-sm h-9"
 					size="small"
+					autofocus={true}
 					placeholder={`${$t("store-search-placeholder")}`}
 					onSearch={(search) => {
 						term = search;

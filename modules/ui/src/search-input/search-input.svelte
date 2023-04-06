@@ -14,6 +14,8 @@
 	};
 	export let placeholder = "search_";
 
+	export let autofocus = false;
+
 	let searchInput: HTMLInputElement;
 
 	let timer: NodeJS.Timeout;
@@ -26,7 +28,7 @@
 	};
 
 	onMount(() => {
-		searchInput.focus();
+		if (autofocus) searchInput.focus();
 		Mousetrap.bind(["ctrl+shift+del"], function () {
 			searchInput.value = "";
 			return false;
