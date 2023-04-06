@@ -15,7 +15,7 @@
 	};
 </script>
 
-<section class="package-card relative h-auto border border-gray">
+<section class="package-card border-gray relative h-auto border">
 	<a href={link}>
 		<figure class="relative">
 			<ImgLoader
@@ -32,22 +32,13 @@
 				<h4 class="text-sm font-light">&#x2022;&nbsp;{pkg.maintainer}</h4>
 			{/if}
 			{#if pkg.desc}
-				<p class="text-xs font-thin line-clamp-2">{pkg.desc}</p>
+				<p class="line-clamp-2 text-xs font-thin">{pkg.desc}</p>
 			{/if}
 		</article>
 	</a>
-	<footer class="absolute bottom-0 left-0 flex w-full items-stretch justify-between gap-2 p-2">
-		<div class="m-2 flex w-full items-center justify-between">
-			<div class="flex-1">
-				<div class="pk-version flex items-center whitespace-nowrap text-xs font-extralight">
-					<i class="icon-versions-available mr-1 flex" />
-					{availableVersions.length} {availableVersions.length === 1 ? "version" : "versions"}
-				</div>
-			</div>
-			<div class="flex-1"><!-- Spacer --></div>
-			<div class="flex-[2_2_0%]">
-				<InstallButton {pkg} {availableVersions} onClick={onClickCTA} />
-			</div>
+	<footer class="absolute bottom-0 left-0 flex w-full p-3">
+		<div class="install-button">
+			<InstallButton {pkg} {availableVersions} onClick={onClickCTA} />
 		</div>
 	</footer>
 	{#if progessLoading > 0 && progessLoading < 100}
@@ -89,5 +80,21 @@
 
 	.card-thumb-label p {
 		color: white;
+	}
+
+	.install-button {
+		min-width: 100%;
+	}
+
+	@media screen and (min-width: 650px) {
+		.install-button {
+			min-width: 60%;
+		}
+	}
+
+	@media screen and (min-width: 1000px) {
+		.install-button {
+			min-width: 50%;
+		}
 	}
 </style>

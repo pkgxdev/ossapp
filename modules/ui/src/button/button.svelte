@@ -27,6 +27,9 @@
 <style>
 	.button-container {
 		position: relative;
+		min-width: 100px;
+		width: 100%;
+		height: 100%;
 	}
 
 	/* pseudo element for hover effect - width will transition on hover */
@@ -49,7 +52,6 @@
 
 	button {
 		z-index: 0;
-		min-width: 100px;
 		position: relative;
 	}
 

@@ -81,12 +81,12 @@
 	};
 </script>
 
-<div class="h-full w-full relative">
+<div class="relative h-full w-full">
 	<ul class="flex flex-wrap bg-black" use:watchResize={onResize} on:scroll={onScroll}>
 		{#if packages.length > 0}
 			{#each packages as pkg, index}
 				{#if index < limit}
-					<div class="w-1/3 p-1 z-1" class:animate-puls={pkg.state === PackageStates.INSTALLING}>
+					<div class="card z-1 p-1" class:animate-puls={pkg.state === PackageStates.INSTALLING}>
 						<Package
 							tab={packageFilter}
 							{pkg}
@@ -97,8 +97,8 @@
 			{/each}
 		{:else}
 			{#each Array(9) as _}
-				<section class="w-1/3 p-1 h-{238}">
-					<div class="border-gray border w-full h-full">
+				<section class="card p-1 h-{238}">
+					<div class="border-gray h-full w-full border">
 						<Preloader />
 					</div>
 				</section>
@@ -137,5 +137,21 @@
 	/* Handle on hover */
 	::-webkit-scrollbar-thumb:hover {
 		background: white;
+	}
+
+	.card {
+		width: 100%;
+	}
+
+	@media screen and (min-width: 650px) {
+		.card {
+			width: 50%;
+		}
+	}
+
+	@media screen and (min-width: 1000px) {
+		.card {
+			width: 33.333333%;
+		}
 	}
 </style>
