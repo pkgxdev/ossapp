@@ -18,8 +18,10 @@
 	let view: HTMLElement;
 
 	const { sideNavOpen, setNewPath } = navStore;
+	const { searching } = searchStore;
 
 	$: if ($navigating) view.scrollTop = 0;
+	
 
 	afterNavigate(({ from, to }) => {
 		if (to && to?.route.id && from && from?.url) {
@@ -40,7 +42,7 @@
 		syncPath();
 		listenToChannel("sync-path", syncPath);
 		Mousetrap.bind(['command+k', 'ctrl+k'], function() {
-				searchStore.searching.set(true);
+				searchStore.searching.set(!$searching);
         // return false to prevent default browser behavior
         // and stop event from bubbling
         return false;

@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { onMount } from "svelte";
 	import "../app.css";
+	import Mousetrap from "mousetrap";
 
 	let clazz = "";
 	export { clazz as class };
@@ -12,6 +14,8 @@
 	};
 	export let placeholder = "search_";
 
+	let searchInput: HTMLInputElement;
+
 	let timer: NodeJS.Timeout;
 	const onChange = (e: KeyboardEvent) => {
 		const t = e.target as HTMLInputElement;
@@ -20,6 +24,18 @@
 			onSearch(t.value);
 		}, 300);
 	};
+
+	onMount(() => {
+		searchInput.focus();
+		Mousetrap.bind(["ctrl+shift+del"], function () {
+			searchInput.value = "";
+			return false;
+		});
+
+		Mousetrap.prototype.stopCallback = () => {
+			return false;
+		};
+	});
 </script>
 
 <section class={`flex items-center pb-1 ${size} ${clazz}`}>
@@ -27,6 +43,7 @@
 		<i class="icon-search-icon" />
 	</div>
 	<input
+		bind:this={searchInput}
 		type="search"
 		class="flex-grow pb-2 text-sm"
 		{placeholder}
@@ -82,5 +99,12 @@
 		/* Chrome, Firefox, Opera, Safari 10.1+ */
 		color: #949494;
 		opacity: 1; /* Firefox */
+	}
+
+	input[type="search"]::-webkit-search-decoration,
+	input[type="search"]::-webkit-search-cancel-button,
+	input[type="search"]::-webkit-search-results-button,
+	input[type="search"]::-webkit-search-results-decoration {
+		display: none;
 	}
 </style>

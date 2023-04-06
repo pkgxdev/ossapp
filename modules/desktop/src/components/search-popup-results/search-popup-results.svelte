@@ -7,9 +7,11 @@
 	import Package from "$components/packages/package.svelte";
 	import { PackageStates } from '$libs/types';
 	import PackageResult from "./package-search-result.svelte";
+	import Mousetrap from 'mousetrap';
 	// import Posts from '@tea/ui/posts/posts.svelte';
 
 	import { installPackage } from '@native';
+  import { onMount } from 'svelte';
 
 	const { searching, packagesSearch } = searchStore;
 	// import type { AirtablePost } from '@tea/ui/types';
@@ -48,23 +50,28 @@
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div id="bg-close" class="z-40" on:click={onClose}></div>
 	<section class="z-50">
-		<header class="flex border border-gray border-t-0 border-x-0">
-			<SearchInput
-				class="w-full  rounded-sm h-9"
-				size="small"
-				placeholder={`${$t("store-search-placeholder")}`}
-				onSearch={(search) => {
-					term = search;
-					searchStore.search(search);
-				}}
-			/>
+		<header class="flex border border-gray border-t-0 border-x-0 bg-black">
+			<div class="relative w-full">
+				<SearchInput
+					class="w-full  rounded-sm h-9"
+					size="small"
+					placeholder={`${$t("store-search-placeholder")}`}
+					onSearch={(search) => {
+						term = search;
+						searchStore.search(search);
+					}}
+				/>
+				<div class="absolute top-2 right-3 opacity-50 flex items-center gap-1">
+					<button class="text-xs mt-1">clear</button>
+					<kbd class=" bg-gray text-white px-2 mt-1 rounded-sm flex items-center">
+						<span class="text-xs">ctrl + shift + del</span>
+					</kbd>
+				</div>
+			</div>
 			<button class="mr-2" on:click={onClose}>&#x2715</button>
 		</header>
 		{#if term}
 			<div class="z-20 bg-black">
-				<header class="flex justify-between p-4">
-					<div class="text-primary text-2xl">Showing search results for `{term}`</div>
-				</header>
 				<header class="text-gray p-4 text-lg">
 					Packages ({$packagesSearch.length})
 				</header>
@@ -109,6 +116,10 @@
 						<Preloader />
 					</section>
 				{/if} -->
+			</div>
+		{:else}
+			<div class="w-full h-full flex flex-col justify-center bg-black">
+				<p class="text-gray text-center">start typing to search</p>
 			</div>
 		{/if}
 	</section>
