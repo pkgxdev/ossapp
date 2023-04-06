@@ -76,7 +76,12 @@ async function getDeviceId() {
 export async function readSessionData(): Promise<Session> {
 	log.info("read session data.");
 	const data = await initialized;
-	log.info("initialized session exists:", data);
+	log.info(
+		"initialized session device_id:",
+		data?.device_id,
+		"developer_id:",
+		data?.user?.developer_id
+	);
 	if (sessionMemory?.device_id) {
 		log.info("use session cache");
 		return sessionMemory;
