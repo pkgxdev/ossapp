@@ -58,57 +58,64 @@
 	});
 </script>
 
-<div id="package-container">
-	<Packages packageFilter={sideMenuOption} {sortBy} {sortDirection} bind:scrollY={packagesScrollY}/>
-</div>
-<header class="transition-all px-2 flex flex-col z-20" class:scrolling={packagesScrollY > 100}>
+<div id="content" class="flex flex-col">
 	<NotificationBar />
-	<div class="flex justify-between items-center">
-		<h1 class="text-primary pl-3 text-2xl font-bold font-mona">{$t(`side-menu-title.${sideMenuOption}`)}</h1>
-		<!-- 
-		<section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">
-			
-			we might bring it back?
-			<SortingButtons onSort={(prop, dir) => {
-				sortBy = prop;
-				sortDirection = dir;
-			}} />
-		</section>
-		 -->
-		{#if needsUpdateCount && sideMenuOption === SideMenuOptions.installed_updates_available}
-		 <div class="flex items-center text-sm">
-			{#if currentUpdatingPkg}
-				<p class="text-gray px-2">{updatingMessage}</p>
+	<article class="w-full h-auto flex-grow overflow-hidden relative">
+		<ul class="px-2">
+			<Packages packageFilter={sideMenuOption} {sortBy} {sortDirection} bind:scrollY={packagesScrollY}/>
+		</ul>
+		<header class="flex justify-between items-center z-30" class:scrolling={packagesScrollY > 150}>
+			<h1 class="text-primary pl-3 text-2xl font-bold font-mona">
+				{$t(`side-menu-title.${sideMenuOption}`)}
+			</h1>
+			<!-- 
+			<section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">
+				
+				we might bring it back?
+				<SortingButtons onSort={(prop, dir) => {
+					sortBy = prop;
+					sortDirection = dir;
+				}} />
+			</section>
+			 -->
+			{#if needsUpdateCount && sideMenuOption === SideMenuOptions.installed_updates_available}
+			 <div class="flex items-center text-sm pr-2">
+				{#if currentUpdatingPkg}
+					<p class="text-gray px-2">{updatingMessage}</p>
+				{/if}
+				<Button
+					class="w-48 h-8 text-xs"
+					loading={updating}
+					type="plain"
+					color="secondary"
+					onClick={updateAll}
+				>
+						{$t(`package.update-all`)} [{needsUpdateCount}]
+				</Button> 
+			 </div>
 			{/if}
-			<Button
-				class="w-48 h-8 text-xs"
-				loading={updating}
-				type="plain"
-				color="secondary"
-				onClick={updateAll}
-			>
-					{$t(`package.update-all`)} [{needsUpdateCount}]
-			</Button> 
-		 </div>
-		{/if}
-	</div>
-</header>
+		</header>
+	</article>
+</div>
+
 <SideMenu bind:activeOption={sideMenuOption}/>
 {#if $requireTeaCli }
 	<WelcomeModal tea={teaPkg} />
 {/if}
 <style>
-	#package-container {
-		width: calc(100% - 200px);
-		margin-left: 200px;
+	#content {
+		width: calc(100vw - 191px);
+		margin-left: 185px;
+		height: calc(100vh - 48px - 27px);
+		overflow: hidden;
 	}
 
 	header {
 		position: absolute;
 		top: 0px;
-		left: 190px;
+		left: 1px;
 		height: 72px;
-		width: calc(100% - 190px - 10px);
+		width: 100%;
 		background-image: linear-gradient(rgba(26,26,26,1), rgba(26,26,26,0));
 		padding-top: 15px;
 	}
