@@ -24,24 +24,66 @@
 </script>
 
 <Button
-	class={`w-full border text-xs text-white ${buttonSize === "small" ? "h-8" : "h-10"}`}
+	class={`w-full border p-0 text-xs text-white ${buttonSize === "small" ? "h-8" : "h-10"}`}
 	type="plain"
 	color={getColor(pkg.state)}
 	{onClick}
 >
-	{#if pkg.state === PackageStates.INSTALLED}
-		<div class="flex items-center justify-center">
-			<i class="icon-check-circle mr-2 flex" />
-			<span>{ctaLabel}</span>
+	<div class="version-button">
+		<div class="flex h-full flex-col justify-center p-2">
+			{#if pkg.state === PackageStates.INSTALLED}
+				<div class="flex items-center justify-center">
+					<i class="icon-check-circle mr-2 flex" />
+					<div>{ctaLabel}</div>
+				</div>
+			{:else if pkg.state === PackageStates.AVAILABLE}
+				<div class="flex items-center justify-between gap-x-2">
+					<div class="flex items-center gap-x-2">
+						<div>{ctaLabel}</div>
+						<div class="version-label install">{pkg.version}</div>
+					</div>
+					<i class="icon-downward-arrow flex" />
+				</div>
+			{:else if pkg.state === PackageStates.NEEDS_UPDATE}
+				<div class="flex items-center justify-center gap-x-2">
+					<div>{ctaLabel}</div>
+					<div class="version-label update">{pkg.version}</div>
+				</div>
+			{:else}
+				<div class="flex items-center justify-center">
+					{ctaLabel}
+				</div>
+			{/if}
 		</div>
-	{:else if pkg.state === PackageStates.AVAILABLE || pkg.state === PackageStates.INSTALLING}
-		<div class="flex items-center justify-between">
-			<span class="ml-1">{ctaLabel}</span>
-			<i class="icon-downward-arrow mr-1 flex" />
-		</div>
-	{:else}
-		<div class="flex items-center justify-center">
-			{ctaLabel}
-		</div>
-	{/if}
+		<!-- This slot holds the drop down menu and it inside of the button so that the 
+		hover effect remain on the button while the user is hovering the dropdown items-->
+		<slot />
+	</div>
 </Button>
+
+<style>
+	.version-label {
+		font-size: 10px;
+		line-height: 12px;
+		padding: 0 4px;
+		border-radius: 2px;
+	}
+
+	.install {
+		background-color: #dcb8ff;
+		color: #8000ff;
+	}
+
+	.update {
+		background-color: #04957a;
+		color: #00ffd0;
+	}
+
+	.version-button:hover .install {
+		background-color: white;
+	}
+
+	.version-button:hover .update {
+		background-color: #1a1a1a;
+	}
+</style>
