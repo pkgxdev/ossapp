@@ -19,8 +19,8 @@ importers:
       '@electron/notarize': ^1.2.3
       '@playwright/experimental-ct-svelte': ^1.29.2
       '@playwright/test': 1.25.0
-      '@sentry/electron': ^4.3.0
-      '@sentry/svelte': ^7.38.0
+      '@sentry/electron': ^4.4.0
+      '@sentry/svelte': ^7.47.0
       '@sveltejs/adapter-auto': ^1.0.0
       '@sveltejs/adapter-node': ^1.0.0-next.101
       '@sveltejs/adapter-static': ^1.0.0-next.48
@@ -92,8 +92,8 @@ importers:
     dependencies:
       '@crowdin/ota-client': 0.7.0
       '@electron/asar': 3.2.3
-      '@sentry/electron': 4.3.0
-      '@sentry/svelte': 7.38.0_svelte@3.55.1
+      '@sentry/electron': 4.4.0
+      '@sentry/svelte': 7.47.0_svelte@3.55.1
       '@types/electron': 1.6.10
       '@types/mousetrap': 1.6.11
       '@vitest/coverage-c8': 0.27.1_jsdom@21.0.0
@@ -2437,67 +2437,90 @@ packages:
       rollup: 3.7.5
     dev: true
 
-  /@sentry/browser/7.37.1:
-    resolution: {integrity: sha512-MfVbKzEVHKVH6ZyMCKLtPXvMtRCvxqQzrnK735sYW6EyMpcMYhukBU0pq7ws1E/KaCZjAJi1wDx2nqf2yPIVdQ==}
+  /@sentry-internal/tracing/7.46.0:
+    resolution: {integrity: sha512-KYoppa7PPL8Er7bdPoxTNUfIY804JL7hhOEomQHYD22rLynwQ4AaLm3YEY75QWwcGb0B7ZDMV+tSumW7Rxuwuw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.37.1
-      '@sentry/replay': 7.37.1
-      '@sentry/types': 7.37.1
-      '@sentry/utils': 7.37.1
+      '@sentry/core': 7.46.0
+      '@sentry/types': 7.46.0
+      '@sentry/utils': 7.46.0
       tslib: 1.14.1
     dev: false
 
-  /@sentry/browser/7.38.0:
-    resolution: {integrity: sha512-rPJr+2jRYL29PeMYA2JgzYKTZQx6bc3T9evbAdIh0n+popSjpVyOpOMV/3l6A7KZeeix3dpp6eUZUxTJukqriQ==}
+  /@sentry-internal/tracing/7.47.0:
+    resolution: {integrity: sha512-udpHnCzF8DQsWf0gQwd0XFGp6Y8MOiwnl8vGt2ohqZGS3m1+IxoRLXsSkD8qmvN6KKDnwbaAvYnK0z0L+AW95g==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.38.0
-      '@sentry/replay': 7.38.0
-      '@sentry/types': 7.38.0
-      '@sentry/utils': 7.38.0
+      '@sentry/core': 7.47.0
+      '@sentry/types': 7.47.0
+      '@sentry/utils': 7.47.0
       tslib: 1.14.1
     dev: false
 
-  /@sentry/core/7.37.1:
-    resolution: {integrity: sha512-eS5hoFDjAOl7POZg6K77J0oiypiqR1782oVSB49UkjK+D8tCZzZ5PxPMv0b/O0310p7x4oZ3WGRJaWEN3vY4KQ==}
+  /@sentry/browser/7.46.0:
+    resolution: {integrity: sha512-4rX9hKPjxzfH5LhZzO5DlS5NXQ8qZg2ibepaqEgcDHrpYh5813mjjnE4OQA8wiZ6WuG3xKFgHBrGeliD5jXz9w==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.37.1
-      '@sentry/utils': 7.37.1
+      '@sentry-internal/tracing': 7.46.0
+      '@sentry/core': 7.46.0
+      '@sentry/replay': 7.46.0
+      '@sentry/types': 7.46.0
+      '@sentry/utils': 7.46.0
       tslib: 1.14.1
     dev: false
 
-  /@sentry/core/7.38.0:
-    resolution: {integrity: sha512-+hXh/SO3Ie6WC2b+wi01xLhyVREdkRXS5QBmCiv3z2ks2HvYXp7PoKSXJvNKiwCP+pBD+enOnM1YEzM2yEy5yw==}
+  /@sentry/browser/7.47.0:
+    resolution: {integrity: sha512-L0t07kS/G1UGVZ9fpD6HLuaX8vVBqAGWgu+1uweXthYozu/N7ZAsakjU/Ozu6FSXj1mO3NOJZhOn/goIZLSj5A==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.38.0
-      '@sentry/utils': 7.38.0
+      '@sentry-internal/tracing': 7.47.0
+      '@sentry/core': 7.47.0
+      '@sentry/replay': 7.47.0
+      '@sentry/types': 7.47.0
+      '@sentry/utils': 7.47.0
       tslib: 1.14.1
     dev: false
 
-  /@sentry/electron/4.3.0:
-    resolution: {integrity: sha512-LqFMvgycMd+Mcs4Km9S8YBtaHISHSiIUVUz6mgAr2khKY6SNhkW9A4GcoOKtzRJreqYLVeBSbaUVttQfQ4Ot7g==}
+  /@sentry/core/7.46.0:
+    resolution: {integrity: sha512-BnNHGh/ZTztqQedFko7vb2u6yLs/kWesOQNivav32ZbsEpVCjcmG1gOJXh2YmGIvj3jXOC9a4xfIuh+lYFcA6A==}
+    engines: {node: '>=8'}
     dependencies:
-      '@sentry/browser': 7.37.1
-      '@sentry/core': 7.37.1
-      '@sentry/node': 7.37.1
-      '@sentry/types': 7.37.1
-      '@sentry/utils': 7.37.1
+      '@sentry/types': 7.46.0
+      '@sentry/utils': 7.46.0
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/core/7.47.0:
+    resolution: {integrity: sha512-EFhZhKdMu7wKmWYZwbgTi8FNZ7Fq+HdlXiZWNz51Bqe3pHmfAkdHtAEs0Buo0v623MKA0CA4EjXIazGUM34XTg==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry/types': 7.47.0
+      '@sentry/utils': 7.47.0
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/electron/4.4.0:
+    resolution: {integrity: sha512-E6uggv/aujDMImO3JE46MIVrE9uZXWwR5Pm2EWwaqVYEY4+twnH4pWX/NG0PheGKSW1177FjPkcvEyCwq0pElg==}
+    dependencies:
+      '@sentry/browser': 7.46.0
+      '@sentry/core': 7.46.0
+      '@sentry/node': 7.46.0
+      '@sentry/types': 7.46.0
+      '@sentry/utils': 7.46.0
       deepmerge: 4.3.0
       tslib: 2.5.0
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@sentry/node/7.37.1:
-    resolution: {integrity: sha512-nGerngIo5JwinJgl7m0SaL/xI+YRBlhb53gbkuLSAAcnoitBFzbp7LjywsqYFTWuWDIyk7O2t124GNxtolBAgA==}
+  /@sentry/node/7.46.0:
+    resolution: {integrity: sha512-+GrgJMCye2WXGarRiU5IJHCK27xg7xbPc2XjGojBKbBoZfqxVAWbXEK4bnBQgRGP1pCmrU/M6ZhVgR3dP580xA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.37.1
-      '@sentry/types': 7.37.1
-      '@sentry/utils': 7.37.1
+      '@sentry-internal/tracing': 7.46.0
+      '@sentry/core': 7.46.0
+      '@sentry/types': 7.46.0
+      '@sentry/utils': 7.46.0
       cookie: 0.4.2
       https-proxy-agent: 5.0.1
       lru_map: 0.3.3
@@ -2506,61 +2529,61 @@ packages:
       - supports-color
     dev: false
 
-  /@sentry/replay/7.37.1:
-    resolution: {integrity: sha512-3sHOE/oPirdvJbOn0IA/wpds12Sm2WaEtiAeC0+5Gg5mxQzFBLRrsA1Mz/ifzPGwr+ETn3sCyPCnd9b3PWaWMQ==}
+  /@sentry/replay/7.46.0:
+    resolution: {integrity: sha512-rHsAFdeEu47JRy6mEwwN+M+zTTWlOFWw9sR/eDCvik2lxAXBN2mXvf/N/MN9zQB3+QnS13ke+SvwVW7CshLOXg==}
     engines: {node: '>=12'}
     dependencies:
-      '@sentry/core': 7.37.1
-      '@sentry/types': 7.37.1
-      '@sentry/utils': 7.37.1
+      '@sentry/core': 7.46.0
+      '@sentry/types': 7.46.0
+      '@sentry/utils': 7.46.0
     dev: false
 
-  /@sentry/replay/7.38.0:
-    resolution: {integrity: sha512-Ai78/OIYedny605x8uS0n/a5uj7qnuevogGD6agLat9lGc8DFvC07m2iS+EFyGOwtQzyDlRYJvYkHL8peR3crQ==}
+  /@sentry/replay/7.47.0:
+    resolution: {integrity: sha512-BFpVZVmwlezZ83y0L43TCTJY142Fxh+z+qZSwTag5HlhmIpBKw/WKg06ajOhrYJbCBkhHmeOvyKkxX0jnc39ZA==}
     engines: {node: '>=12'}
     dependencies:
-      '@sentry/core': 7.38.0
-      '@sentry/types': 7.38.0
-      '@sentry/utils': 7.38.0
+      '@sentry/core': 7.47.0
+      '@sentry/types': 7.47.0
+      '@sentry/utils': 7.47.0
     dev: false
 
-  /@sentry/svelte/7.38.0_svelte@3.55.1:
-    resolution: {integrity: sha512-9+4t7keeu0S22GMEZ0edscHgj46DRFqIfHTLpgNMModOb+H1F3M083OvcLIKVjZDY9saGBDbYdjolrcv0H507g==}
+  /@sentry/svelte/7.47.0_svelte@3.55.1:
+    resolution: {integrity: sha512-oxuefbpCs+aVAyLIDZM2jyayJzSnCo39/MI800442uS+sOR0MXq/OKcfbiqytwbjX4zvsj4m+E0/pL9rY1yOMw==}
     engines: {node: '>=8'}
     peerDependencies:
       svelte: 3.x
     dependencies:
-      '@sentry/browser': 7.38.0
-      '@sentry/types': 7.38.0
-      '@sentry/utils': 7.38.0
+      '@sentry/browser': 7.47.0
+      '@sentry/types': 7.47.0
+      '@sentry/utils': 7.47.0
       magic-string: 0.26.7
       svelte: 3.55.1
       tslib: 1.14.1
     dev: false
 
-  /@sentry/types/7.37.1:
-    resolution: {integrity: sha512-c2HWyWSgVA0V4+DSW2qVb0yjftrb1X/q2CzCom+ayjGHO72qyWC+9Tc+7ZfotU1mapRjqUWBgkXkbGmao8N8Ug==}
+  /@sentry/types/7.46.0:
+    resolution: {integrity: sha512-2FMEMgt2h6u7AoELhNhu9L54GAh67KKfK2pJ1kEXJHmWxM9FSCkizjLs/t+49xtY7jEXr8qYq8bV967VfDPQ9g==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/types/7.38.0:
-    resolution: {integrity: sha512-NKOALR6pNUMzUrsk2m+dkPrO8uGNvNh1LD0BCPswKNjC2qHo1h1mDGCgBmF9+EWyii8ZoACTIsxvsda+MBf97Q==}
+  /@sentry/types/7.47.0:
+    resolution: {integrity: sha512-GxXocplN0j1+uczovHrfkykl9wvkamDtWxlPUQgyGlbLGZn+UH1Y79D4D58COaFWGEZdSNKr62gZAjfEYu9nQA==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/utils/7.37.1:
-    resolution: {integrity: sha512-/4mJOyDsfysx+5TXyJgSI+Ihw2/0EVJbrHjCyXPDXW5ADwbtU8VdBZ0unOmF0hk4QfftqwM9cyEu3BN4iBJsEA==}
+  /@sentry/utils/7.46.0:
+    resolution: {integrity: sha512-elRezDAF84guMG0OVIIZEWm6wUpgbda4HGks98CFnPsrnMm3N1bdBI9XdlxYLtf+ir5KsGR5YlEIf/a0kRUwAQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.37.1
+      '@sentry/types': 7.46.0
       tslib: 1.14.1
     dev: false
 
-  /@sentry/utils/7.38.0:
-    resolution: {integrity: sha512-MgbI3YmYuyyhUtvcXkgGBqjOW+nuLLNGUdWCK+C4kObf8VbLt3dSE/7SEMT6TSHLYQmxs2BxFgx5Agn97m68kQ==}
+  /@sentry/utils/7.47.0:
+    resolution: {integrity: sha512-A89SaOLp6XeZfByeYo2C8Ecye/YAtk/gENuyOUhQEdMulI6mZdjqtHAp7pTMVgkBc/YNARVuoa+kR/IdRrTPkQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.38.0
+      '@sentry/types': 7.47.0
       tslib: 1.14.1
     dev: false
 
@@ -2679,7 +2702,7 @@ packages:
       '@storybook/components': 7.0.0-alpha.51
       '@storybook/csf-plugin': 7.0.0-alpha.51
       '@storybook/csf-tools': 7.0.0-alpha.51
-      '@storybook/mdx2-csf': 1.0.0-next.5
+      '@storybook/mdx2-csf': 1.0.0-next.8
       '@storybook/node-logger': 7.0.0-alpha.51
       '@storybook/postinstall': 7.0.0-alpha.51
       '@storybook/preview-web': 7.0.0-alpha.51
@@ -2778,7 +2801,7 @@ packages:
       '@storybook/addons': 7.0.0-alpha.51
       '@storybook/client-logger': 7.0.0-alpha.51
       '@storybook/core-events': 7.0.0-alpha.51
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/router': 7.0.0-alpha.51
       '@storybook/types': 7.0.0-alpha.51
       global: 4.4.0
@@ -2983,7 +3006,7 @@ packages:
       '@storybook/channels': 7.0.0-alpha.51
       '@storybook/client-logger': 7.0.0-alpha.51
       '@storybook/core-events': 7.0.0-alpha.51
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/router': 7.0.0-alpha.51
       '@storybook/theming': 7.0.0-alpha.51
       '@storybook/types': 7.0.0-alpha.51
@@ -3009,7 +3032,7 @@ packages:
       '@storybook/channels': 7.0.0-alpha.51
       '@storybook/client-logger': 7.0.0-alpha.51
       '@storybook/core-events': 7.0.0-alpha.51
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/router': 7.0.0-alpha.51_wcqkhtmu7mswc6yz4uyexck3ty
       '@storybook/theming': 7.0.0-alpha.51_wcqkhtmu7mswc6yz4uyexck3ty
       '@storybook/types': 7.0.0-alpha.51
@@ -3039,7 +3062,7 @@ packages:
       '@storybook/client-logger': 7.0.0-alpha.51
       '@storybook/components': 7.0.0-alpha.51
       '@storybook/core-events': 7.0.0-alpha.51
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/docs-tools': 7.0.0-alpha.51_typescript@4.9.3
       '@storybook/preview-web': 7.0.0-alpha.51
       '@storybook/store': 7.0.0-alpha.51
@@ -3093,7 +3116,7 @@ packages:
       '@storybook/client-api': 7.0.0-alpha.51
       '@storybook/client-logger': 7.0.0-alpha.51
       '@storybook/core-common': 7.0.0-alpha.51_typescript@4.9.3
-      '@storybook/mdx2-csf': 1.0.0-next.5
+      '@storybook/mdx2-csf': 1.0.0-next.8
       '@storybook/node-logger': 7.0.0-alpha.51
       '@storybook/preview-web': 7.0.0-alpha.51
       '@storybook/source-loader': 7.0.0-alpha.51
@@ -3208,7 +3231,7 @@ packages:
     dependencies:
       '@storybook/addons': 7.0.0-alpha.51
       '@storybook/client-logger': 7.0.0-alpha.51
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/store': 7.0.0-alpha.51
       '@storybook/types': 7.0.0-alpha.51
       '@types/qs': 6.9.7
@@ -3230,7 +3253,7 @@ packages:
     dependencies:
       '@storybook/addons': 7.0.0-alpha.51_wcqkhtmu7mswc6yz4uyexck3ty
       '@storybook/client-logger': 7.0.0-alpha.51
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/store': 7.0.0-alpha.51_wcqkhtmu7mswc6yz4uyexck3ty
       '@storybook/types': 7.0.0-alpha.51
       '@types/qs': 6.9.7
@@ -3263,7 +3286,7 @@ packages:
     resolution: {integrity: sha512-EXom5OEAyWLE6epiaDTaKbFbE24c/c0Iz5WmQ5Rid+0dSee6LShi2FHuk/Bd1H/YLEOyPA/JfczxpEgAxgXhIw==}
     dependencies:
       '@babel/types': 7.20.2
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/csf-tools': 7.0.0-alpha.51
       '@storybook/node-logger': 7.0.0-alpha.51
       '@storybook/types': 7.0.0-alpha.51
@@ -3286,7 +3309,7 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@storybook/client-logger': 7.0.0-alpha.51
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/theming': 7.0.0-alpha.51
       '@storybook/types': 7.0.0-alpha.51
       memoizerific: 1.11.3
@@ -3310,7 +3333,7 @@ packages:
       '@storybook/client-api': 7.0.0-alpha.51_wcqkhtmu7mswc6yz4uyexck3ty
       '@storybook/client-logger': 7.0.0-alpha.51
       '@storybook/core-events': 7.0.0-alpha.51
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/preview-web': 7.0.0-alpha.51_wcqkhtmu7mswc6yz4uyexck3ty
       '@storybook/store': 7.0.0-alpha.51_wcqkhtmu7mswc6yz4uyexck3ty
       '@storybook/types': 7.0.0-alpha.51
@@ -3338,7 +3361,7 @@ packages:
       '@storybook/client-api': 7.0.0-alpha.51
       '@storybook/client-logger': 7.0.0-alpha.51
       '@storybook/core-events': 7.0.0-alpha.51
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/preview-web': 7.0.0-alpha.51
       '@storybook/store': 7.0.0-alpha.51
       '@storybook/types': 7.0.0-alpha.51
@@ -3462,7 +3485,7 @@ packages:
       '@storybook/core-client': 7.0.0-alpha.51_typescript@4.9.3
       '@storybook/core-common': 7.0.0-alpha.51_typescript@4.9.3
       '@storybook/core-events': 7.0.0-alpha.51
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/csf-tools': 7.0.0-alpha.51
       '@storybook/docs-mdx': 0.0.1-canary.12433cf.0
       '@storybook/node-logger': 7.0.0-alpha.51
@@ -3519,7 +3542,7 @@ packages:
     resolution: {integrity: sha512-8nm1ciFU6e5q9kOjuyYvZ6ovw+fdXCxxuN6Ud9z/4/GCDSkhuwRdCuqFvlIoPQefM5JFGaDd0yi7Gy6SRz/dCw==}
     dependencies:
       '@babel/types': 7.20.2
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/types': 7.0.0-alpha.51
       fs-extra: 9.1.0
       ts-dedent: 2.2.0
@@ -3539,8 +3562,8 @@ packages:
       lodash: 4.17.21
     dev: true
 
-  /@storybook/csf/0.0.2-next.10:
-    resolution: {integrity: sha512-m2PFgBP/xRIF85VrDhvesn9ktaD2pN3VUjvMqkAL/cINp/3qXsCyI81uw7N5VEOkQAbWrY2FcydnvEPDEdE8fA==}
+  /@storybook/csf/0.0.2-next.11:
+    resolution: {integrity: sha512-xGt0YSVxZb43sKmEf1GIQD8xEbo+c+S6khDEL7Qu/pYA0gh5z3WUuhOlovnelYj/YJod+XRsfVvk23AaRfUJ4Q==}
     dependencies:
       type-fest: 2.19.0
     dev: true
@@ -3620,8 +3643,8 @@ packages:
     resolution: {integrity: sha512-SgjcpweoAWnKvbZ1uINCGcSU1BtNJP2xR0x9obNw+qp6pi0OsOo1iA1DTgB0gJM0vc3BgrKgCMlJ76v/wlRB+Q==}
     dev: true
 
-  /@storybook/mdx2-csf/1.0.0-next.5:
-    resolution: {integrity: sha512-02w0sgGZaK1agT050yCVhJ+o4rLHANWvLKWjQjeAsYbjneLC5ITt+3GDB4jRiWwJboZ8dHW1fGSK1Vg5fA34aQ==}
+  /@storybook/mdx2-csf/1.0.0-next.8:
+    resolution: {integrity: sha512-t2O5s/HHTH5evZVHgVtCWTZgMZ/CaqDu3xVGgjVbKeTvpPAbi0Waab5SSX8T9PG5jNDei/x+jpAVCcNMOHoWzg==}
     dev: true
 
   /@storybook/node-logger/7.0.0-alpha.51:
@@ -3733,7 +3756,7 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/types': 7.0.0-alpha.51
       estraverse: 5.3.0
       lodash: 4.17.21
@@ -3751,7 +3774,7 @@ packages:
       '@storybook/addons': 7.0.0-alpha.51
       '@storybook/client-logger': 7.0.0-alpha.51
       '@storybook/core-events': 7.0.0-alpha.51
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/types': 7.0.0-alpha.51
       dequal: 2.0.3
       global: 4.4.0
@@ -3774,7 +3797,7 @@ packages:
       '@storybook/addons': 7.0.0-alpha.51_wcqkhtmu7mswc6yz4uyexck3ty
       '@storybook/client-logger': 7.0.0-alpha.51
       '@storybook/core-events': 7.0.0-alpha.51
-      '@storybook/csf': 0.0.2-next.10
+      '@storybook/csf': 0.0.2-next.11
       '@storybook/types': 7.0.0-alpha.51
       dequal: 2.0.3
       global: 4.4.0
@@ -4790,7 +4813,7 @@ packages:
       esbuild: '>=0.10.0'
     dependencies:
       esbuild: 0.14.54
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: true
 
   /abab/2.0.6:
@@ -5072,7 +5095,7 @@ packages:
     resolution: {integrity: sha512-O0yuUDnZeQDL+ncNGlJ78BiO4jnYI3bvMsD5prT0/nsgijG/LpNBIr63gTjVTNsiGkgQhiyCShTgxt8oXOrklA==}
     engines: {node: '>=4'}
     dependencies:
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: true
 
   /astral-regex/2.0.0:
@@ -11065,7 +11088,7 @@ packages:
       ast-types: 0.14.2
       esprima: 4.0.1
       source-map: 0.6.1
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: true
 
   /rechoir/0.6.2:
