@@ -6,7 +6,7 @@
 	export let buttonSize: "small" | "large" = "small";
 
 	export let pkg: GUIPackage;
-	export let onClick = () => {
+	export let onClick = (evt?: MouseEvent) => {
 		console.log("do nothing");
 	};
 

@@ -4,7 +4,7 @@
 
 	// export let size: 'large' | 'medium' | 'small' = 'medium';
 
-	export let onClick: undefined | (() => void) = undefined;
+	export let onClick: undefined | ((evt?: MouseEvent) => void) = undefined;
 	export let active = false;
 
 	export let type: "outline" | "ghost" | "plain" = "ghost";
@@ -19,7 +19,7 @@
 		class="w-full p-2 text-gray {clazz} {type} {color}"
 		class:active
 		class:animate-pulse={loading}
-		on:click={() => onClick && onClick()}
+		on:click={(evt) => onClick && onClick(evt)}
 	>
 		<slot />
 	</button>
