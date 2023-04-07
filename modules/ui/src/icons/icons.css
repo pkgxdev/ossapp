@@ -181,3 +181,6 @@
 .icon-arrow-right:before {
 	content: "\56";
 }
+.icon-scissors:before {
+	content: "\58";
+}

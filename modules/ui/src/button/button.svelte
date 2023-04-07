@@ -8,7 +8,7 @@
 	export let active = false;
 
 	export let type: "outline" | "ghost" | "plain" = "ghost";
-	export let color: "primary" | "secondary" | "green" | "black" = "primary";
+	export let color: "primary" | "secondary" | "green" | "black" | "blue" = "primary";
 
 	export let loading = false;
 </script>
@@ -16,8 +16,9 @@
 <div class="button-container">
 	<button
 		type="button"
-		class={`w-full p-2 text-gray ${clazz} ${active ? "active" : ""} ${type} ${color}`}
-		class:animate-puls={loading}
+		class={`w-full p-2 text-gray ${clazz} ${type} ${color}`}
+		class:active
+		class:animate-pulse={loading}
 		on:click={() => onClick && onClick()}
 	>
 		<slot />
@@ -114,5 +115,15 @@
 	button.black:hover {
 		color: #1a1a1a;
 		background: #e1e1e1;
+	}
+
+	/* green */
+	button.plain.blue {
+		background: #013b99;
+		color: white;
+	}
+
+	button.blue::before {
+		background: #2675f5;
 	}
 </style>
