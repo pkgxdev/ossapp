@@ -47,6 +47,10 @@
         // and stop event from bubbling
         return false;
     });
+		Mousetrap.bind(['esc'], function() {
+				searchStore.searching.set(false);
+        return false;
+    });
 		packagesStore.init();
 	});
 </script>
