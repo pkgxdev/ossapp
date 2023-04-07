@@ -1,6 +1,5 @@
-export default function mouseLeaveDelay(element: HTMLElement) {
+export default function mouseLeaveDelay(element: HTMLElement, timeout = 600) {
 	let isOut = false;
-	const timeout = 600;
 
 	const handleEnter = () => {
 		isOut = false;

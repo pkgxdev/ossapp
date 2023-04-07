@@ -32,7 +32,7 @@
     navStore.sideNavOpen.set(false);
   }
 </script>
-<nav class="w-full p-2 text-sm" use:mouseLeaveDelay on:leave_delay={() => hidePopup()}>
+<nav class="w-full p-2 text-sm" use:mouseLeaveDelay={2000} on:leave_delay={() => hidePopup()}>
   {#if $user}
     <section class="flex items-center justify-between p-1 hover:bg-gray hover:border hover:border-white  rounded-sm hover:bg-opacity-90 hover:text-black">
       <div class="text-white">@{$user?.login}</div>
