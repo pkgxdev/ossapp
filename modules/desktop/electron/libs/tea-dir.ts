@@ -163,8 +163,9 @@ export async function updatePackageInstalledList(list: InstalledPackage[]) {
 
 export async function deletePackageFolder(fullName, version) {
 	try {
-		const foldPath = path.join(getTeaPath(), fullName, version);
-		await fs.rmSync(foldPath, { recursive: true, force: true });
+		const foldPath = path.join(getTeaPath(), fullName, `v${version}`);
+		console.log(foldPath);
+		await fs.rmdirSync(foldPath, { recursive: true });
 	} catch (error) {
 		log.error(error);
 	}
