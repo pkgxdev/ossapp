@@ -132,4 +132,13 @@ export default function initializeHandlers() {
 			return error.message;
 		}
 	});
+
+	ipcMain.handle("set-badge-count", async (_, { count }) => {
+		console.log("set badge count:", count);
+		if (count) {
+			app.dock.setBadge(count.toString());
+		} else {
+			app.dock.setBadge("");
+		}
+	});
 }

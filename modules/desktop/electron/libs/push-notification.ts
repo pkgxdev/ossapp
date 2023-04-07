@@ -11,7 +11,6 @@ import {
 } from "./tea-dir";
 import { app } from "electron";
 
-let pushCount = 0;
 export default function initialize(mainWindow: BrowserWindow) {
 	Pushy.listen();
 	// Register device for push notifications
@@ -32,8 +31,10 @@ export default function initialize(mainWindow: BrowserWindow) {
 		log.info("push data:", data);
 		// TODO: replace this with something
 		Pushy.alert(mainWindow, data?.message as string);
-		pushCount++;
-		if (pushCount) app.dock.setBadge(pushCount.toString());
+		const v = app.dock.getBadge();
+		if (!v) {
+			app.dock.setBadge("1");
+		}
 	});
 }
 
