@@ -1,10 +1,24 @@
 <script lang="ts">
+	import mouseLeaveDelay from "../lib/mouse-leave-delay";
 	export let options: { label: string; value: string; selected?: boolean }[] = [];
 	export let label = "";
 	export let value = "";
+
+	export let expanded = false;
+
+	const unexpand = () => {
+		console.log("unexpand");
+		expanded = false;
+	};
 </script>
 
-<section class="cursor-pointer">
+<section
+	class="cursor-pointer"
+	class:expanded
+	use:mouseLeaveDelay={3000}
+	on:mouseenter={() => (expanded = true)}
+	on:leave_delay={() => unexpand()}
+>
 	<header
 		class="mt-2 flex h-8 justify-between rounded-sm px-1 hover:border hover:bg-gray focus:bg-secondary"
 	>
@@ -39,17 +53,17 @@
 		overflow: hidden;
 	}
 
-	section:hover {
+	section.expanded {
 		height: auto;
 	}
-	section:hover header {
+	section.expanded header {
 		margin-bottom: 10px;
 	}
 
-	section:hover hr {
+	section.expanded hr {
 		display: block;
 	}
-	section:hover .dropdown {
+	section.expanded .dropdown {
 		max-height: 100px;
 		overflow-y: scroll;
 		margin-bottom: 10px;
@@ -72,7 +86,7 @@
 	}
 
 	/* Handle on hover */
-	::-webkit-scrollbar-thumb:hover {
+	::-webkit-scrollbar-thumb.expanded {
 		background: white;
 	}
 
