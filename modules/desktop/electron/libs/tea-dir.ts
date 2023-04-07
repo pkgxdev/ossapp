@@ -160,3 +160,12 @@ export async function updatePackageInstalledList(list: InstalledPackage[]) {
 		log.error(error);
 	}
 }
+
+export async function deletePackageFolder(fullName, version) {
+	try {
+		const foldPath = path.join(getTeaPath(), fullName, version);
+		await fs.rmSync(foldPath, { recursive: true, force: true });
+	} catch (error) {
+		log.error(error);
+	}
+}
