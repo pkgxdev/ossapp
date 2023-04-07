@@ -7,7 +7,8 @@ import {
 	getDistPackages,
 	getInstalledPackages,
 	installPackage,
-	getPackageBottles
+	getPackageBottles,
+	setBadgeCount
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
@@ -34,6 +35,7 @@ export default function initPackagesStore() {
 					...props
 				};
 			}
+			setBadgeCountFromPkgs(pkgs);
 			return pkgs;
 		});
 	};
@@ -117,6 +119,8 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 					}
 					syncProgress.set(+((i + 1) / installedPkgs.length).toFixed(2));
 				}
+
+				setBadgeCountFromPkgs(guiPkgs);
 			} catch (error) {
 				log.error(error);
 			}
@@ -208,4 +212,13 @@ const withFakeLoader = (pkg: GUIPackage, callback: (progress: number) => void): 
 	}, ms);
 
 	return fakeTimer;
+};
+
+const setBadgeCountFromPkgs = (pkgs: GUIPackage[]) => {
+	try {
+		const needsUpdateCount = pkgs.filter((p) => p.state === PackageStates.NEEDS_UPDATE).length;
+		setBadgeCount(needsUpdateCount);
+	} catch (error) {
+		log.error(error);
+	}
 };

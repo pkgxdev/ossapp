@@ -344,3 +344,7 @@ export const submitLogs = async () => {
 export const isPackageInstalled = async (_v?: string): Promise<boolean> => {
 	return true;
 };
+
+export const setBadgeCount = async (count: number) => {
+	console.log("set badge count", count);
+};

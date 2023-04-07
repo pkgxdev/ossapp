@@ -219,3 +219,11 @@ export const isPackageInstalled = async (fullName: string, version?: string): Pr
 
 	return isInstalled;
 };
+
+export const setBadgeCount = async (count: number) => {
+	try {
+		await ipcRenderer.invoke("set-badge-count", { count });
+	} catch (error) {
+		log.error(error);
+	}
+};
