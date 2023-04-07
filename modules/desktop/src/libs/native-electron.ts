@@ -227,3 +227,11 @@ export const setBadgeCount = async (count: number) => {
 		log.error(error);
 	}
 };
+
+export const deletePackage = async (args: { fullName: string; version: string }) => {
+	try {
+		await ipcRenderer.invoke("delete-package", args);
+	} catch (error) {
+		log.error(error);
+	}
+};

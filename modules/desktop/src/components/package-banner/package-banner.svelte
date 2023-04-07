@@ -3,6 +3,7 @@
 	import "@tea/ui/icons/icons.css";
 	import { t } from '$libs/translations'; 
 	import Button from "@tea/ui/button/button.svelte";
+	import semverCompare from "semver/functions/compare";
 
 	import { installPackage } from "@native";
 	import { PackageStates, type GUIPackage } from "$libs/types";
@@ -10,9 +11,11 @@
 	import { shellOpenExternal } from "@native";
 	import InstallButton from "$components/install-button/install-button.svelte";
 	import { findAvailableVersions } from "$libs/packages/pkg-utils";
+	
 
 	export let pkg: GUIPackage;
 	let installing = false;
+	let pruning = false
 
 	const install = async () => {
 		installing = true;
@@ -22,6 +25,17 @@
 			state: PackageStates.INSTALLED
 		});
 	};
+
+	const prune = async () => {
+		pruning = true;
+		const versions = (pkg?.installed_versions || []).sort((a, b) => semverCompare(b, a));
+		for(const [i,v] of versions.entries()) {
+			if (i) { // skip the latest version = 0
+				await packagesStore.deletePkg(pkg, v);
+			}
+		}
+		pruning = false;
+	}
 </script>
 
 <section class="mt-4 bg-black">
@@ -37,13 +51,27 @@
 				</a>
 			{/if}
 			<p class="mt-4 text-sm">{pkg.desc}</p>
-			<menu class="mt-4 grid h-10 grid-cols-2 gap-4 text-xs">
+			<menu class="mt-4 grid h-10 grid-cols-3 gap-4 text-xs">
 				<InstallButton
 					buttonSize="large"
 					{pkg}
 					availableVersions={findAvailableVersions(pkg)}
 					onClick={install}
 				/>
+				{#if (pkg?.installed_versions?.length || 0) > 1}
+					<Button
+						class="h-10"
+						type="plain"
+						color="blue"
+						onClick={prune}
+						loading={pruning}
+					>
+						<div class="w-full version-item flex items-center justify-center gap-x-1 text-xs" >
+							<div class="icon-scissors"/>
+							<div>{$t("package.cta-PRUNE")}</div>
+						</div>
+					</Button>
+				{/if}
 				{#if pkg.github}
 					<Button
 						class="h-10"

@@ -5,7 +5,7 @@ import { readSessionData, writeSessionData } from "./auth";
 import type { Session } from "../../src/libs/types";
 import * as log from "electron-log";
 import { post } from "./v1-client";
-import { deepReadDir } from "./tea-dir";
+import { deepReadDir, deletePackageFolder } from "./tea-dir";
 import path from "path";
 
 import { installPackage, openTerminal } from "./cli";
@@ -141,4 +141,19 @@ export default function initializeHandlers() {
 			app.dock.setBadge("");
 		}
 	});
+
+	ipcMain.handle(
+		"delete-package",
+		async (_, { fullName, version }: { fullName: string; version: string }) => {
+			let error = "";
+			try {
+				log.info("deleting package:", fullName);
+				await deletePackageFolder(fullName, version);
+			} catch (e) {
+				log.error(e);
+				error = e.message;
+			}
+			return error;
+		}
+	);
 }

@@ -5,6 +5,7 @@ const white = "#fff";
 const gray = "#949494";
 const purple = "#8000FF";
 const green = "#00A517";
+const blue = "#013B99";
 
 module.exports = {
 	content: ["./src/**/*.{html,js,svelte,ts}"],
@@ -15,6 +16,7 @@ module.exports = {
 			accent: purple,
 			green,
 			teal,
+			blue,
 			purple: {
 				700: purple,
 				900: "#B076EC"

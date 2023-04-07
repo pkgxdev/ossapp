@@ -7,6 +7,7 @@ import {
 	getDistPackages,
 	getInstalledPackages,
 	installPackage,
+	deletePackage,
 	getPackageBottles,
 	setBadgeCount
 } from "@native";
@@ -166,6 +167,18 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		updatePackage(pkgName, { bottles });
 	};
 
+	const deletePkg = async (pkg: GUIPackage, version: string) => {
+		try {
+			log.info("deleting package: ", pkg.full_name, " version: ", version);
+			await deletePackage({ fullName: pkg.full_name, version });
+			updatePackage(pkg.full_name, {
+				installed_versions: pkg.installed_versions?.filter((v) => v !== version)
+			});
+		} catch (error) {
+			log.error(error);
+		}
+	};
+
 	return {
 		packages,
 		syncProgress,
@@ -191,7 +204,8 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		updatePackage,
 		init,
 		installPkg,
-		syncPackageData
+		syncPackageData,
+		deletePkg
 	};
 }
 

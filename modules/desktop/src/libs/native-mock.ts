@@ -348,3 +348,7 @@ export const isPackageInstalled = async (_v?: string): Promise<boolean> => {
 export const setBadgeCount = async (count: number) => {
 	console.log("set badge count", count);
 };
+
+export const deletePackage = async (args: { fullName: string; version: string }) => {
+	console.log("delete package", args);
+};

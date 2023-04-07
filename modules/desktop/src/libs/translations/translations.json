@@ -11,7 +11,9 @@
 			"cta-INSTALLING": "INSTALLING",
 			"cta-UNINSTALLED": "RE-INSTALL",
 			"cta-NEEDS_UPDATE": "UPDATE",
-			"cta-UPDATING": "UPDATING"
+			"cta-UPDATING": "UPDATING",
+			"cta-PRUNE": "PRUNE",
+			"cta-PRUNING": "PRUNING"
 		},
 		"footer": {
 			"quick-links-title": "quick links",
