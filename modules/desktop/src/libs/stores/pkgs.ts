@@ -217,15 +217,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			const matchingPackages: GUIPackage[] = res.map((v) => v.item);
 			return matchingPackages;
 		},
-		subscribeToPackage: (slug: string, cb: (pkg: GUIPackage) => void) => {
-			packageList.subscribe((pkgs) => {
-				const foundPackage = pkgs.find((p) => p.slug === slug) as GUIPackage;
-				if (foundPackage) {
-					cb(foundPackage);
-					syncPackageData(foundPackage);
-				}
-			});
-		},
 		fetchPackageBottles,
 		updatePackage,
 		init,
