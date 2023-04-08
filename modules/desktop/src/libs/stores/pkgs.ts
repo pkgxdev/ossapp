@@ -27,15 +27,15 @@ export default function initPackagesStore() {
 
 	const syncProgress = writable<number>(0); // TODO: maybe use this in the UI someday
 
-	const packages = writable<Packages>({ version: "0", packages: {} });
-	const packageList = derived(packages, ($packages) => Object.values($packages.packages));
+	const packageMap = writable<Packages>({ version: "0", packages: {} });
+	const packageList = derived(packageMap, ($packages) => Object.values($packages.packages));
 
 	const requireTeaCli = writable<boolean>(false);
 
 	let packagesIndex: Fuse<GUIPackage>;
 
 	const updateAllPackages = (guiPkgs: GUIPackage[]) => {
-		packages.update((pkgs) => {
+		packageMap.update((pkgs) => {
 			guiPkgs.forEach((pkg) => {
 				const oldPkg = pkgs.packages[pkg.full_name];
 				pkgs.packages[pkg.full_name] = { ...oldPkg, ...pkg };
@@ -46,7 +46,7 @@ export default function initPackagesStore() {
 	};
 
 	const updatePackage = (full_name: string, props: Partial<GUIPackage>) => {
-		packages.update((pkgs) => {
+		packageMap.update((pkgs) => {
 			const pkg = pkgs.packages[full_name];
 			pkgs.packages[full_name] = { ...pkg, ...props };
 			setBadgeCountFromPkgs(pkgs);
@@ -97,11 +97,11 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	const init = async function () {
 		log.info("packages store: try initialize");
 
-		const cachedPkgs: Packages = await loadPackageCache();
-		log.info(`Loaded ${Object.keys(cachedPkgs.packages).length} packages from cache`);
-		packages.set(cachedPkgs);
-
 		if (!initialized) {
+			const cachedPkgs: Packages = await loadPackageCache();
+			log.info(`Loaded ${Object.keys(cachedPkgs.packages).length} packages from cache`);
+			packageMap.set(cachedPkgs);
+
 			log.info("packages store: initializing...");
 			initialized = true;
 			const pkgs = await getDistPackages();
@@ -202,7 +202,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	};
 
 	const writePackageCacheWithDebounce = withDebounce(writePackageCache);
-	packages.subscribe(async (pkgs) => {
+	packageMap.subscribe(async (pkgs) => {
 		writePackageCacheWithDebounce(pkgs);
 	});
 
