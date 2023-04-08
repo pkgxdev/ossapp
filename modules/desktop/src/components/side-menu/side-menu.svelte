@@ -5,11 +5,11 @@
   import MenuButton from './menu-button.svelte';
 	import { t } from '$libs/translations'; 
   import { goto } from '$app/navigation';
-  const { packages } = packagesStore;
+  const { packageList } = packagesStore;
 
 	export let activeOption:SideMenuOptions;
 
-  $: needsUpdateCount = $packages.filter((p) => p.state === PackageStates.NEEDS_UPDATE).length;
+  $: needsUpdateCount = $packageList.filter((p) => p.state === PackageStates.NEEDS_UPDATE).length;
 </script>
 
 <aside class="border border-t-0 border-b-0 border-l-0 border-gray p-2">

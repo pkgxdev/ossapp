@@ -14,6 +14,11 @@ export enum PackageStates {
 	UPDATING = "UPDATING"
 }
 
+export type Packages = {
+	version: string;
+	packages: { [full_name: string]: GUIPackage };
+};
+
 export type GUIPackage = Package & {
 	state: PackageStates;
 	installed_versions?: string[];

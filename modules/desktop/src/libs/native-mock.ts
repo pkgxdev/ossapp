@@ -6,7 +6,7 @@
  *  * make cors work with api.tea.xyz/v1
  */
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
-import type { GUIPackage, Course, Category, Session } from "./types";
+import type { GUIPackage, Course, Category, Session, Packages } from "./types";
 import { PackageStates } from "./types";
 import { loremIpsum } from "lorem-ipsum";
 import _ from "lodash";
@@ -28,7 +28,8 @@ const packages: Package[] = [
 		desc: "Fast and user friendly build system",
 		thumb_image_url: "https://tea.xyz/Images/packages/mesonbuild_com.jpg",
 		installs: 0,
-		categories: ["foundation_essentials"]
+		categories: ["foundation_essentials"],
+		created: "2022-10-06T15:45:08.000Z"
 	},
 	{
 		slug: "pixman_org",
@@ -43,7 +44,8 @@ const packages: Package[] = [
 		desc: "Pixman is a library that provides low-level pixel manipulation features such as image compositing and trapezoid rasterization.",
 		thumb_image_url: "https://tea.xyz/Images/packages/pixman_org.jpg",
 		installs: 0,
-		categories: ["foundation_essentials"]
+		categories: ["foundation_essentials"],
+		created: "2022-09-26T19:37:47.000Z"
 	},
 	{
 		slug: "freedesktop_org_pkg_config",
@@ -58,7 +60,8 @@ const packages: Package[] = [
 		desc: "Manage compile and link flags for libraries",
 		thumb_image_url: "https://tea.xyz/Images/packages/freedesktop_org_pkg_config.jpg",
 		installs: 0,
-		categories: ["foundation_essentials"]
+		categories: ["foundation_essentials"],
+		created: "2022-10-20T01:32:15.000Z"
 	},
 	{
 		slug: "gnu_org_gettext",
@@ -73,7 +76,8 @@ const packages: Package[] = [
 		desc: "GNU internationalization (i18n) and localization (l10n) library",
 		thumb_image_url: "https://tea.xyz/Images/packages/gnu_org_gettext.jpg",
 		installs: 0,
-		categories: ["foundation_essentials"]
+		categories: ["foundation_essentials"],
+		created: "2022-10-20T01:23:46.000Z"
 	},
 	{
 		slug: "ipfs_tech",
@@ -88,7 +92,8 @@ const packages: Package[] = [
 		desc: "Peer-to-peer hypermedia protocol",
 		thumb_image_url: "https://tea.xyz/Images/packages/ipfs_tech.jpg",
 		installs: 0,
-		categories: ["foundation_essentials"]
+		categories: ["foundation_essentials"],
+		created: "2022-10-19T21:36:52.000Z"
 	},
 	{
 		slug: "nixos_org_patchelf",
@@ -103,7 +108,8 @@ const packages: Package[] = [
 		desc: "PatchELF is a simple utility for modifying existing ELF executables and libraries.",
 		thumb_image_url: "https://tea.xyz/Images/packages/nixos_org_patchelf.jpg",
 		installs: 0,
-		categories: ["top_packages", "foundation_essentials"]
+		categories: ["top_packages", "foundation_essentials"],
+		created: "2022-09-27T04:50:44.000Z"
 	},
 	{
 		slug: "tea_xyz",
@@ -118,7 +124,8 @@ const packages: Package[] = [
 		desc: "Website of tea.xyz",
 		thumb_image_url: "https://tea.xyz/Images/packages/tea_xyz.jpg",
 		installs: 0,
-		categories: ["top_packages", "foundation_essentials"]
+		categories: ["top_packages", "foundation_essentials"],
+		created: "2022-10-19T19:13:51.000Z"
 	},
 	{
 		slug: "charm_sh_gum",
@@ -133,7 +140,8 @@ const packages: Package[] = [
 		desc: "",
 		thumb_image_url: "https://tea.xyz/Images/packages/charm_sh_gum.jpg",
 		installs: 0,
-		categories: ["top_packages", "foundation_essentials"]
+		categories: ["top_packages", "foundation_essentials"],
+		created: "2022-10-21T02:15:16.000Z"
 	},
 	{
 		slug: "pyyaml_org",
@@ -148,7 +156,8 @@ const packages: Package[] = [
 		desc: "YAML framework for Python",
 		thumb_image_url: "https://tea.xyz/Images/packages/pyyaml_org.jpg",
 		installs: 0,
-		categories: ["top_packages", "foundation_essentials"]
+		categories: ["top_packages", "foundation_essentials"],
+		created: "2022-10-03T15:35:14.000Z"
 	},
 	{
 		slug: "tea_xyz_gx_cc",
@@ -163,7 +172,8 @@ const packages: Package[] = [
 		desc: "",
 		thumb_image_url: "https://tea.xyz/Images/packages/tea_xyz_gx_cc.jpg",
 		installs: 0,
-		categories: ["top_packages", "foundation_essentials"]
+		categories: ["top_packages", "foundation_essentials"],
+		created: "2022-10-19T16:47:44.000Z"
 	}
 ];
 
@@ -351,4 +361,12 @@ export const setBadgeCount = async (count: number) => {
 
 export const deletePackage = async (args: { fullName: string; version: string }) => {
 	console.log("delete package", args);
+};
+
+export const loadPackageCache = async () => {
+	return { version: "1", packages: {} };
+};
+
+export const writePackageCache = async (pkgs: Packages) => {
+	console.log("write package cache", pkgs);
 };

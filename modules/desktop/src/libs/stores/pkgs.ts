@@ -1,5 +1,5 @@
-import { writable } from "svelte/store";
-import type { GUIPackage, InstalledPackage } from "../types";
+import { derived, writable } from "svelte/store";
+import type { GUIPackage, InstalledPackage, Packages } from "../types";
 import { PackageStates } from "../types";
 import Fuse from "fuse.js";
 import {
@@ -9,33 +9,46 @@ import {
 	installPackage,
 	deletePackage,
 	getPackageBottles,
-	setBadgeCount
+	setBadgeCount,
+	loadPackageCache,
+	writePackageCache
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 import type { Package } from "@tea/ui/types";
 import { trackInstall, trackInstallFailed } from "$libs/analytics";
 import { addInstalledVersion } from "$libs/packages/pkg-utils";
+import withDebounce from "$libs/utils/debounce";
 
 const log = window.require("electron-log");
 
 export default function initPackagesStore() {
 	let initialized = false;
+
 	const syncProgress = writable<number>(0); // TODO: maybe use this in the UI someday
-	const packages = writable<GUIPackage[]>([]);
+
+	const packageMap = writable<Packages>({ version: "0", packages: {} });
+	const packageList = derived(packageMap, ($packages) => Object.values($packages.packages));
+
 	const requireTeaCli = writable<boolean>(false);
 
 	let packagesIndex: Fuse<GUIPackage>;
 
+	const updateAllPackages = (guiPkgs: GUIPackage[]) => {
+		packageMap.update((pkgs) => {
+			guiPkgs.forEach((pkg) => {
+				const oldPkg = pkgs.packages[pkg.full_name];
+				pkgs.packages[pkg.full_name] = { ...oldPkg, ...pkg };
+			});
+			setBadgeCountFromPkgs(pkgs);
+			return pkgs;
+		});
+	};
+
 	const updatePackage = (full_name: string, props: Partial<GUIPackage>) => {
-		packages.update((pkgs) => {
-			const i = pkgs.findIndex((pkg) => pkg.full_name === full_name);
-			if (i >= 0) {
-				pkgs[i] = {
-					...pkgs[i],
-					...props
-				};
-			}
+		packageMap.update((pkgs) => {
+			const pkg = pkgs.packages[full_name];
+			pkgs.packages[full_name] = { ...pkg, ...props };
 			setBadgeCountFromPkgs(pkgs);
 			return pkgs;
 		});
@@ -83,7 +96,12 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 
 	const init = async function () {
 		log.info("packages store: try initialize");
+
 		if (!initialized) {
+			const cachedPkgs: Packages = await loadPackageCache();
+			log.info(`Loaded ${Object.keys(cachedPkgs.packages).length} packages from cache`);
+			packageMap.set(cachedPkgs);
+
 			log.info("packages store: initializing...");
 			initialized = true;
 			const pkgs = await getDistPackages();
@@ -93,8 +111,9 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			}));
 
 			// set packages data so that i can render something in the UI already
-			packages.set(guiPkgs);
+			updateAllPackages(guiPkgs);
 			log.info("initialized packages store with ", guiPkgs.length);
+
 			packagesIndex = new Fuse(guiPkgs, {
 				keys: ["name", "full_name", "desc", "categories"]
 			});
@@ -121,7 +140,8 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 					syncProgress.set(+((i + 1) / installedPkgs.length).toFixed(2));
 				}
 
-				setBadgeCountFromPkgs(guiPkgs);
+				// TODO: I think this can just get deleted, updatePackage should be enough
+				//setBadgeCountFromPkgs(guiPkgs);
 			} catch (error) {
 				log.error(error);
 			}
@@ -164,7 +184,9 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	const fetchPackageBottles = async (pkgName: string) => {
 		// TODO: this api should take an architecture argument or else an architecture filter should be applied downstreawm
 		const bottles = await getPackageBottles(pkgName);
-		updatePackage(pkgName, { bottles });
+		if (bottles?.length) {
+			updatePackage(pkgName, { bottles });
+		}
 	};
 
 	const deletePkg = async (pkg: GUIPackage, version: string) => {
@@ -179,26 +201,21 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		}
 	};
 
+	const writePackageCacheWithDebounce = withDebounce(writePackageCache);
+	packageMap.subscribe(async (pkgs) => {
+		writePackageCacheWithDebounce(pkgs);
+	});
+
 	return {
-		packages,
+		packageList,
 		syncProgress,
 		requireTeaCli,
-		subscribe: packages.subscribe,
 		search: async (term: string, limit = 5): Promise<GUIPackage[]> => {
 			if (!term || !packagesIndex) return [];
 			// TODO: if online, use algolia else use Fuse
 			const res = packagesIndex.search(term, { limit });
 			const matchingPackages: GUIPackage[] = res.map((v) => v.item);
 			return matchingPackages;
-		},
-		subscribeToPackage: (slug: string, cb: (pkg: GUIPackage) => void) => {
-			packages.subscribe((pkgs) => {
-				const foundPackage = pkgs.find((p) => p.slug === slug) as GUIPackage;
-				if (foundPackage) {
-					cb(foundPackage);
-					syncPackageData(foundPackage);
-				}
-			});
 		},
 		fetchPackageBottles,
 		updatePackage,
@@ -228,9 +245,11 @@ const withFakeLoader = (pkg: GUIPackage, callback: (progress: number) => void): 
 	return fakeTimer;
 };
 
-const setBadgeCountFromPkgs = (pkgs: GUIPackage[]) => {
+const setBadgeCountFromPkgs = (pkgs: Packages) => {
 	try {
-		const needsUpdateCount = pkgs.filter((p) => p.state === PackageStates.NEEDS_UPDATE).length;
+		const needsUpdateCount = Object.values(pkgs.packages).filter(
+			(p) => p.state === PackageStates.NEEDS_UPDATE
+		).length;
 		setBadgeCount(needsUpdateCount);
 	} catch (error) {
 		log.error(error);

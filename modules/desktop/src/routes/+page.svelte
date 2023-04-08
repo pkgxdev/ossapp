@@ -16,7 +16,7 @@
 
 	const log = window.require("electron-log");
 
-	const { packages, requireTeaCli } = packagesStore;
+	const { packageList, requireTeaCli } = packagesStore;
 
 	const url = $page.url;
 
@@ -28,10 +28,10 @@
 	let updating = false;
 
 	let packagesScrollY = 0;
-	$: currentUpdatingPkg = $packages.find((p) => p.state === PackageStates.UPDATING)
+	$: currentUpdatingPkg = $packageList.find((p) => p.state === PackageStates.UPDATING)
 	$: updatingMessage = `updating ${currentUpdatingPkg?.full_name} (${currentUpdatingPkg?.install_progress_percentage}%)`;
 
-	$: pkgsToUpdate = $packages.filter((p: GUIPackage) => p.state === PackageStates.NEEDS_UPDATE);
+	$: pkgsToUpdate = $packageList.filter((p: GUIPackage) => p.state === PackageStates.NEEDS_UPDATE);
 	async function updateAll() {
 		updating = true;
 		log.info(`updating: ${pkgsToUpdate.length} packages`);
@@ -46,7 +46,7 @@
 		sideMenuOption = SideMenuOptions.all;
 	}
 
-	$: teaPkg = $packages.find((p) => p.full_name === "tea.xyz");
+	$: teaPkg = $packageList.find((p) => p.full_name === "tea.xyz");
 	$: needsUpdateCount = pkgsToUpdate.length;
 
 	

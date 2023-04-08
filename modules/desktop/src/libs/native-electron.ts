@@ -12,7 +12,7 @@
  */
 
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
-import { type GUIPackage, type DeviceAuth, type Session, AuthStatus } from "./types";
+import { type GUIPackage, type DeviceAuth, type Session, AuthStatus, type Packages } from "./types";
 
 import * as mock from "./native-mock";
 import { PackageStates, type InstalledPackage } from "./types";
@@ -231,6 +231,22 @@ export const setBadgeCount = async (count: number) => {
 export const deletePackage = async (args: { fullName: string; version: string }) => {
 	try {
 		await ipcRenderer.invoke("delete-package", args);
+	} catch (error) {
+		log.error(error);
+	}
+};
+
+export const loadPackageCache = async () => {
+	try {
+		return await ipcRenderer.invoke("load-package-cache");
+	} catch (error) {
+		log.error(error);
+	}
+};
+
+export const writePackageCache = async (pkgs: Packages) => {
+	try {
+		await ipcRenderer.invoke("write-package-cache", pkgs);
 	} catch (error) {
 		log.error(error);
 	}

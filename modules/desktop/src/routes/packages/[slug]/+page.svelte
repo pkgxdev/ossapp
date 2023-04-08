@@ -20,9 +20,9 @@
 	import { packagesStore } from '$libs/stores';
   import { onMount } from 'svelte';
 
-	const { packages } = packagesStore;
+	const { packageList } = packagesStore;
 
-	$: pkg = $packages.find((p) => p.slug === data?.slug);
+	$: pkg = $packageList.find((p) => p.slug === data?.slug);
 
 	// let reviews: Review[];
 	$: bottles = pkg?.bottles || [];
