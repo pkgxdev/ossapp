@@ -44,6 +44,9 @@ export async function subscribeToPackageTopic(pkgFullname: string) {
 			const slug = nameToSlug(pkgFullname);
 			const platformArch = getTopicArch();
 			const topic = `packages-${slug}_${platformArch}`;
+
+			// override rules for brewkit_mnt
+
 			await Pushy.subscribe(topic);
 			log.info("push: registered to pkg-topic: ", topic);
 		} else {
@@ -108,7 +111,7 @@ enum PlatformArch {
 }
 
 export function getTopicArch() {
-	const arch = (process.arch as string) === "aarch64" ? "aarch64" : "x86-64";
+	const arch = (process.arch as string) === "arm64" ? "aarch64" : "x86-64";
 	const platform = process.platform === "darwin" ? "darwin" : "linux";
 	return `${platform}_${arch}` as PlatformArch;
 }
