@@ -42,10 +42,12 @@ export async function subscribeToPackageTopic(pkgFullname: string) {
 	try {
 		if (Pushy.isRegistered()) {
 			const slug = nameToSlug(pkgFullname);
-			const platformArch = getTopicArch();
-			const topic = `packages-${slug}_${platformArch}`;
 
 			// override rules for brewkit_mnt
+			if (slug.includes("brewkit_mnt")) return;
+
+			const platformArch = getTopicArch();
+			const topic = `packages-${slug}_${platformArch}`;
 
 			await Pushy.subscribe(topic);
 			log.info("push: registered to pkg-topic: ", topic);
