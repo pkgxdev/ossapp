@@ -57,18 +57,20 @@ export default function initPackagesStore() {
 	const syncPackageData = async (guiPkg: Partial<GUIPackage> | undefined) => {
 		if (!guiPkg || guiPkg.synced) return;
 
-		const pkg = await getPackage(guiPkg.full_name!); // ATM: pkg only bottles and github:string
+		const { bottles, github } = await getPackage(guiPkg.full_name!); // ATM: pkg only bottles and github:string
+
 		const readmeMd = `# ${guiPkg.full_name} #
 To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		`;
 
 		const updatedPackage: Partial<GUIPackage> = {
-			...pkg,
+			bottles,
+			github: github || undefined,
 			readme_md: readmeMd,
 			synced: true
 		};
-		if (pkg.github) {
-			const [owner, repo] = pkg.github.split("/");
+		if (github) {
+			const [owner, repo] = github.split("/");
 			const [readme, contributors, repoData] = await Promise.all([
 				getReadme(owner, repo),
 				getContributors(owner, repo),
