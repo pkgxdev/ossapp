@@ -40,7 +40,7 @@
 	});
 </script>
 
-<section class={`flex items-center pb-1 ${size} ${clazz}`}>
+<section class="flex items-center pb-1 {size} {clazz}">
 	<div class="icon pl-4">
 		<i class="icon-search-icon" />
 	</div>

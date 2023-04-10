@@ -28,7 +28,7 @@
 		<SearchInput
 			class="w-full border border-gray rounded-sm h-9"
 			size="small"
-			placeholder={`${$t("store-search-placeholder")}`}
+			placeholder="{$t("store-search-placeholder")}"
 			onFocus={() => {
 				searchStore.searching.set(true);
 			}}

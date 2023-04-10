@@ -64,7 +64,8 @@
       <div class="flex-grow mt-20 px-12 relative">
         <h1 class="text-primary text-4xl mb-4">Welcome to the tea app!</h1>
         <p class="font-inter mb-4">This app is your gateway into the world of open-source software. Easily explore and manage packages with a click of a button. This app will notify you of any available software updates to ensure you’re safe and secure. Under the hood is the powerful tea cli.</p>
-        <Button type="plain" color="secondary" class={`w-7/12 ${installing && "animate-pulse"}`}
+        <Button type="plain" color="secondary" class="w-7/12"
+          loading={installing}
           onClick={onOpenTerminal}
         >
           INSTALL TEA CLI v{tea?tea.version:"latest"}

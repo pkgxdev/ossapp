@@ -16,7 +16,7 @@
 <div class="button-container">
 	<button
 		type="button"
-		class={`w-full p-2 text-gray ${clazz} ${type} ${color}`}
+		class="w-full p-2 text-gray {clazz} {type} {color}"
 		class:active
 		class:animate-pulse={loading}
 		on:click={() => onClick && onClick()}
