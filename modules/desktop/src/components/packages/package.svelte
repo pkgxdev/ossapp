@@ -26,7 +26,7 @@
 <PackageCard
 	{pkg}
 	availableVersions={findAvailableVersions(pkg)}
-	link={`/packages/${pkg.slug}?tab=${tab}`}
+	link="/packages/{pkg.slug}?tab={tab}"
 	progessLoading={pkg.install_progress_percentage}
 	{onClickCTA}
 />

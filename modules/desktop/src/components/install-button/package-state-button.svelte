@@ -24,7 +24,7 @@
 </script>
 
 <Button
-	class={`w-full border p-0 text-xs text-white ${buttonSize === "small" ? "h-8" : "h-10"}`}
+	class="w-full border p-0 text-xs text-white {buttonSize === "small" ? "h-8" : "h-10"}"
 	type="plain"
 	color={getColor(pkg.state)}
 	{onClick}

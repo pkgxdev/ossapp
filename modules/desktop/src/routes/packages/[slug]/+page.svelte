@@ -56,7 +56,7 @@
 	<a class="hover:text-white hover:opacity-80" href="/">{$t("common.home")}</a>
 	>
 	{#if tab !== "all"}
-		<a class="hover:text-white hover:opacity-80" href={`/?tab=${tab || "all"}`}>{$t(`tags.${tab}`) || "all"}</a>
+		<a class="hover:text-white hover:opacity-80" href="/?tab={tab || "all"}">{$t(`tags.${tab}`) || "all"}</a>
 		>
 	{/if}
 	<span class="text-white">{pkg?.full_name}</span>

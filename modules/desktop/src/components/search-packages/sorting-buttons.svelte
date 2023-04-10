@@ -35,7 +35,8 @@
 			{#each sortOptions as option}
 				<li class="flex items-center">
 					<button
-						class={`sort-btn ${sortBy === option ? 'active' : ''}`}
+						class="sort-btn"
+						class:active={sortBy === option}
 						on:click={() => setSortBy(option)}
 					>
 						{optionLabels[option]}

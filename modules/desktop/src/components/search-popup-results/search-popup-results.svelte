@@ -56,7 +56,7 @@
 					class="w-full  rounded-sm h-9"
 					size="small"
 					autofocus={true}
-					placeholder={`${$t("store-search-placeholder")}`}
+					placeholder="{$t("store-search-placeholder")}"
 					onSearch={(search) => {
 						term = search;
 						searchStore.search(search);

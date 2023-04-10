@@ -23,7 +23,7 @@
 </script>
 
 <header class="flex items-center gap-4 px-4">
-	<button class={`${active ? "rotate-90" : "hover:rorate-90"}`} on:click={() => (active = !active)}>
+	<button class={active ? "rotate-90" : "hover:rorate-90"} on:click={() => (active = !active)}>
 		<i class="icon-enter-arrow" />
 	</button>
 	<figure class="h-8 w-8 overflow-clip rounded-full bg-gray">
