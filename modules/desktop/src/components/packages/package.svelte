@@ -14,7 +14,7 @@
 	const onClickCTA = async (version: string) => {
 		await onClick(version);
 		notificationStore.add({
-			message: `Package ${pkg.full_name} v${pkg.version} has been installed.`
+			message: `Package ${pkg.full_name} v${version || pkg.version} has been installed.`
 		});
 	};
 
