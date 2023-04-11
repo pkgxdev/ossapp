@@ -1,15 +1,23 @@
 <script lang="ts">
   import Button from "@tea/ui/button/button.svelte";
   import { PackageStates, type GUIPackage } from "$libs/types";
-	import { openTerminal, isPackageInstalled } from '@native';
+	import { openTerminal, isPackageInstalled, installTeaCli } from '@native';
   import { packagesStore } from "$libs/stores";
 	import clickOutside from "@tea/ui/lib/clickOutside";
+  import ProgressBar from "@tea/ui/progress-bar/progress-bar.svelte";
+  import { onMount } from "svelte";
+
+  import { withFakeLoader } from "$libs/stores/pkgs";
 
   const log = window.require("electron-log");
 
   export let tea:GUIPackage|undefined;
 
   let installing = false;
+  let installProgress = 0;
+  let message:string;
+  let errorMessage = "";
+  let fakeTimer: NodeJS.Timer;
   
   let checkTeaPoll: NodeJS.Timer | null;
   const checkInstalled = async () => {
@@ -53,9 +61,35 @@
       installing = false;
     }
 	}
+
+  const setupCli = async () => {
+    installing = true;
+    if (tea) {
+      fakeTimer = withFakeLoader(tea, (p) => {
+        installProgress = p;
+      })
+      try {
+        message = await installTeaCli(tea.version);
+        console.log("MESSAGE:", message)
+        if (message != "success") {
+          errorMessage = message;
+        }
+      } catch (error) {
+        console.log("install failed cli", error)
+      } finally {
+        clearInterval(fakeTimer);
+        installing = false;
+        installProgress = 100;
+      }
+    }
+  }
+
+  onMount(() => {
+    setupCli();
+  })
 </script>
 
-<section class="fixed z-10 top-0 left-0 flex items-center justify-center">
+<section class="fixed z-50 top-0 left-0 flex items-center justify-center">
   <aside class="relative" use:clickOutside on:click_outside={() => close()}>
     <article class="flex margin-auto p-2 border border-gray rounded-md">
       <figure>
@@ -64,13 +98,30 @@
       <div class="flex-grow mt-20 px-12 relative">
         <h1 class="text-primary text-4xl mb-4">Welcome to the tea app!</h1>
         <p class="font-inter mb-4">This app is your gateway into the world of open-source software. Easily explore and manage packages with a click of a button. This app will notify you of any available software updates to ensure you’re safe and secure. Under the hood is the powerful tea cli.</p>
-        <Button type="plain" color="secondary" class="w-7/12"
-          loading={installing}
-          onClick={onOpenTerminal}
-        >
-          INSTALL TEA CLI v{tea?tea.version:"latest"}
-        </Button>
-        <p class="text-gray text-sm mt-2">tea cli is required in order to use our app. Clicking the link above will automatically install it via your command-line.</p>
+
+        {#if !errorMessage}
+          {#if installProgress != 100}
+            <ProgressBar width={installProgress} />
+            <p class="text-gray text-sm mt-2">initializing the app. please wait for a few seconds</p>
+          {:else}
+            <p class="text-gray text-sm mt-2">setup was succesfull!</p>
+            <Button type="plain" color="secondary" class="w-7/12"
+              onClick={() => close()}
+            >
+              EXPLORE OPEN-SOURCE
+            </Button>
+          {/if}
+        {:else}
+          <div class="h-10 w-7/12">
+            <Button type="plain" color="secondary"
+              loading={installing}
+              onClick={onOpenTerminal}
+            >
+              INSTALL TEA CLI v{tea?tea.version:"latest"}
+            </Button>
+          </div>
+          <p class="text-gray text-sm mt-2">tea cli is required in order to use our app. Clicking the link above will automatically install it via your command-line.</p>
+        {/if}
       </div>
     </article>
 

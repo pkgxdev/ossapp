@@ -228,7 +228,10 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	};
 }
 
-const withFakeLoader = (pkg: GUIPackage, callback: (progress: number) => void): NodeJS.Timer => {
+export const withFakeLoader = (
+	pkg: GUIPackage,
+	callback: (progress: number) => void
+): NodeJS.Timer => {
 	let fakeLoadingProgress = 1;
 	const ms = 100;
 	const assumedDlSpeedMb = 1024 * 1024 * 3; // 3mbps

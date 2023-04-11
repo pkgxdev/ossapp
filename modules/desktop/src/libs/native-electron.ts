@@ -251,3 +251,8 @@ export const writePackageCache = async (pkgs: Packages) => {
 		log.error(error);
 	}
 };
+
+export const installTeaCli = async (version: string): Promise<string> => {
+	const res = await ipcRenderer.invoke("install-tea-cli", { version });
+	return res;
+};
