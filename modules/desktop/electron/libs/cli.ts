@@ -1,12 +1,11 @@
-import { spawn } from "child_process";
+import { spawn, execSync } from "child_process";
 import { clean } from "semver";
 import { getGuiPath } from "./tea-dir";
 import fs from "fs";
 import path from "path";
+import axios from "axios";
 
-import Pushy from "pushy-electron";
 import * as log from "electron-log";
-import { nameToSlug } from "./package";
 import { subscribeToPackageTopic } from "./push-notification";
 
 export async function installPackage(full_name: string) {
@@ -73,6 +72,19 @@ export async function openTerminal(cmd: string) {
 		log.error("openTerminal:", error);
 	} finally {
 		if (scriptPath) await fs.unlinkSync(scriptPath);
+	}
+}
+
+export async function installTeaCli(version: string): Promise<string> {
+	try {
+		log.info("installing tea-cli");
+		const command = 'TEA_YES=1 bash -c "sh <(curl https://tea.xyz)"';
+		const output = execSync(command, { encoding: "utf-8" });
+		log.info("tea-cli installed");
+		return "success";
+	} catch (error) {
+		log.error(error);
+		return error.message;
 	}
 }
 

@@ -8,7 +8,7 @@ import { post } from "./v1-client";
 import { deepReadDir, deletePackageFolder } from "./tea-dir";
 import path from "path";
 
-import { installPackage, openTerminal } from "./cli";
+import { installPackage, openTerminal, installTeaCli } from "./cli";
 
 import { getUpdater } from "./auto-updater";
 import fetch from "node-fetch";
@@ -171,6 +171,17 @@ export default function initializeHandlers() {
 		} catch (error) {
 			log.error(error);
 			return { version: "1", packages: {} };
+		}
+	});
+
+	ipcMain.handle("install-tea-cli", async (_, data) => {
+		try {
+			log.info("installing tea cli");
+			await installTeaCli(data.version);
+			return "success";
+		} catch (error) {
+			log.error(error);
+			return error.message;
 		}
 	});
 }

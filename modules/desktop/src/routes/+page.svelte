@@ -99,7 +99,7 @@
 </div>
 
 <SideMenu bind:activeOption={sideMenuOption}/>
-{#if $requireTeaCli }
+{#if $requireTeaCli && teaPkg }
 	<WelcomeModal tea={teaPkg} />
 {/if}
 <style>

@@ -370,3 +370,7 @@ export const loadPackageCache = async () => {
 export const writePackageCache = async (pkgs: Packages) => {
 	console.log("write package cache", pkgs);
 };
+
+export const installTeaCli = async (): Promise<string> => {
+	return "success";
+};
