@@ -11,6 +11,7 @@
 	import { shellOpenExternal } from "@native";
 	import InstallButton from "$components/install-button/install-button.svelte";
 	import { findAvailableVersions } from "$libs/packages/pkg-utils";
+	import { trimGithubSlug } from "$libs/github";
 	
 
 	export let pkg: GUIPackage;
@@ -46,9 +47,8 @@
 		<article class="w-2/3 p-4 pt-8">
 			<h3 class="text-primary text-3xl">{pkg.full_name}</h3>
 			{#if pkg.homepage}
-				<a target="_blank" rel="noreferrer" href={pkg.homepage}>
-					<span>{pkg.homepage}</span>
-				</a>
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<span on:click={() => shellOpenExternal(pkg.homepage)} >{pkg.homepage}</span>
 			{/if}
 			<p class="mt-4 text-sm">{pkg.desc}</p>
 			<menu class="mt-4 grid h-10 grid-cols-3 gap-4 text-xs">
@@ -78,7 +78,10 @@
 						type="plain"
 						color="black"
 						onClick={() => {
-							shellOpenExternal(`https://github.com/${pkg.github}`);
+							if (pkg.github) {
+								const slug = trimGithubSlug(pkg.github);
+								shellOpenExternal(`https://github.com/${slug}`);
+							}
 						}}>{$t("common.view-on-github")}</Button
 					>
 				{/if}
