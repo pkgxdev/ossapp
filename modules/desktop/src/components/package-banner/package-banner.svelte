@@ -11,6 +11,7 @@
 	import { shellOpenExternal } from "@native";
 	import InstallButton from "$components/install-button/install-button.svelte";
 	import { findAvailableVersions } from "$libs/packages/pkg-utils";
+	import { trimGithubSlug } from "$libs/github";
 	
 
 	export let pkg: GUIPackage;
@@ -77,7 +78,10 @@
 						type="plain"
 						color="black"
 						onClick={() => {
-							shellOpenExternal(`https://github.com/${pkg.github}`);
+							if (pkg.github) {
+								const slug = trimGithubSlug(pkg.github);
+								shellOpenExternal(`https://github.com/${slug}`);
+							}
 						}}>{$t("common.view-on-github")}</Button
 					>
 				{/if}

@@ -4,7 +4,6 @@
 	import dayjs from "dayjs";
 	import relativeTime from "dayjs/plugin/relativeTime";
 	import { shellOpenExternal } from "@native";
-
 	dayjs.extend(relativeTime);
 
 	export let pkg: Package;
@@ -27,6 +26,7 @@
 
 		return `${(n / divisor).toFixed(2)} ${unit}`;
 	};
+	console.log(pkg);
 </script>
 
 <section class="bg-black pt-2">

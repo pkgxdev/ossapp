@@ -46,3 +46,8 @@ export async function getRepoAsPackage(owner: string, repo: string): Promise<Par
 	}
 	return pkg;
 }
+
+export const trimGithubSlug = (slug: string): string => {
+	const [owner, repo] = slug.split("/");
+	return [owner, repo].join("/");
+};

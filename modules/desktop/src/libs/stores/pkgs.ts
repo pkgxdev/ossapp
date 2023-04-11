@@ -19,6 +19,7 @@ import type { Package } from "@tea/ui/types";
 import { trackInstall, trackInstallFailed } from "$libs/analytics";
 import { addInstalledVersion } from "$libs/packages/pkg-utils";
 import withDebounce from "$libs/utils/debounce";
+import { trimGithubSlug } from "$libs/github";
 
 const log = window.require("electron-log");
 
@@ -55,7 +56,7 @@ export default function initPackagesStore() {
 	};
 
 	const syncPackageData = async (guiPkg: Partial<GUIPackage> | undefined) => {
-		if (!guiPkg || guiPkg.synced) return;
+		if (!guiPkg) return;
 
 		const pkg = await getPackage(guiPkg.full_name!); // ATM: pkg only bottles and github:string
 		const readmeMd = `# ${guiPkg.full_name} #
@@ -65,7 +66,8 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		const updatedPackage: Partial<GUIPackage> = {
 			...pkg,
 			readme_md: readmeMd,
-			synced: true
+			synced: true,
+			github: pkg.github ? trimGithubSlug(pkg.github) : ""
 		};
 		if (pkg.github) {
 			const [owner, repo] = pkg.github.split("/");
