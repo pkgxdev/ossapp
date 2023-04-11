@@ -38,7 +38,7 @@
 
 <div class="dropdown z-10" use:clickOutside on:click_outside={handleClickOutside}>
 	<PackageStateButton {buttonSize} {pkg} onClick={toggleOpen}>
-		<div class="pt-1">
+		<div class="pt-2">
 			<div class="version-list" class:visible={isOpened}>
 				{#each availableVersions as version, idx}
 					{#if idx !== 0}<hr class="divider" />{/if}

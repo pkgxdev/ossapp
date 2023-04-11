@@ -38,7 +38,7 @@
 	color={getColor(pkg.state)}
 	{onClick}
 >
-	<div class="version-button">
+	<div class="version-button h-full">
 		<div class="flex h-full flex-col justify-center p-2">
 			{#if pkg.state === PackageStates.AVAILABLE}
 				<div class="flex items-center justify-between gap-x-2">
