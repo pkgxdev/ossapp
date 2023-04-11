@@ -36,26 +36,28 @@
 
 <div class="dropdown z-10" use:clickOutside on:click_outside={handleClickOutside}>
 	<PackageStateButton {buttonSize} {pkg} onClick={toggleOpen}>
-		<div class="version-list" class:visible={isOpened}>
-			{#each availableVersions as version, idx}
-				{#if idx !== 0}<hr class="divider" />{/if}
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<div
-					class="version-item flex items-center justify-start gap-x-1 text-xs"
-					class:installable-version={!isInstalled(version)}
-					on:click={() => handleClick(version)}
-				>
-					<div class:installed-text={isInstalled(version)}>v{version}</div>
-					{#if idx === 0}
-						<div class="latest-version">(latest)</div>
-					{/if}
-					{#if isInstalled(version)}
-						<div class="flex grow justify-end">
-							<i class="installed-text icon-check-circle flex" />
-						</div>
-					{/if}
-				</div>
-			{/each}
+		<div class="pt-1">
+			<div class="version-list" class:visible={isOpened}>
+				{#each availableVersions as version, idx}
+					{#if idx !== 0}<hr class="divider" />{/if}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<div
+						class="version-item flex items-center justify-start gap-x-1 text-xs"
+						class:installable-version={!isInstalled(version)}
+						on:click={() => handleClick(version)}
+					>
+						<div class:installed-text={isInstalled(version)}>v{version}</div>
+						{#if idx === 0}
+							<div class="latest-version">(latest)</div>
+						{/if}
+						{#if isInstalled(version)}
+							<div class="flex grow justify-end">
+								<i class="installed-text icon-check-circle flex" />
+							</div>
+						{/if}
+					</div>
+				{/each}
+			</div>
 		</div>
 	</PackageStateButton>
 </div>
@@ -64,7 +66,6 @@
 	.version-list {
 		display: none;
 		position: absolute;
-		margin-top: 6px;
 		width: 100%;
 		color: white;
 		background-color: #1a1a1a;

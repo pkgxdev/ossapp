@@ -108,13 +108,13 @@
 	}
 
 	button.black::before {
-		background: #e1e1e1;
+		background: white;
 	}
 
 	/* black button inverts colors on hover */
 	button.black:hover {
 		color: #1a1a1a;
-		background: #e1e1e1;
+		background: white;
 	}
 
 	/* green */
