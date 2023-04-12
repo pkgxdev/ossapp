@@ -27,41 +27,45 @@
 	class="package-card border-gray relative h-auto border"
 	style="background-image: url({imgUrl})"
 >
+	<aside class="blur-sm">
+		<figure style="background-image: url({imgUrl})"></figure>
+	</aside>
 	<a href={link}>
-		<div class="package-card-content flex h-full w-full flex-col justify-between">
+		<div class="package-card-content absolute flex h-full w-full flex-col justify-between">
 			<div class="hint-container">
 				<div class="hint">
 					<div class="text-xs">view more details</div>
 					<div class="hint-icon"><i class="icon-upward-arrow" /></div>
 				</div>
 			</div>
-			<div class="content-container">
-				<article class="card-thumb-label">
+			<div class="content-container relative">
+				<article class="card-thumb-label relative">
 					<h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">{pkg.name}</h3>
 					<p class="line-clamp-2 h-[32px] text-xs font-thin">{pkg.desc ?? ""}</p>
 				</article>
-				<div class="mt-3.5 flex w-full">
+				<div class="mt-3.5 flex w-full relative">
 					<div class="install-button">
 						<InstallButton {pkg} {availableVersions} onClick={onClickCTA}
 							uninstall={onUninstall}
 						/>
 					</div>
 				</div>
-				<div class="mt-1 h-[10px] leading-[10px]">
+				<div class="mt-1 h-[10px] leading-[10px] relative">
 					{#if pkg.state === "NEEDS_UPDATE"}
 						<span class="text-[0.5rem]">Updating from v{findRecentInstalledVersion(pkg)}</span>
 					{/if}
 				</div>
-				{#if progessLoading > 0 && progessLoading < 100}
-					<div class="absolute left-0 top-0 h-full w-full bg-black bg-opacity-50">
-						<div class="absolute left-0 right-0 top-1/2 m-auto -mt-12 h-24 w-24">
-							<ProgressCircle value={progessLoading} />
-						</div>
-					</div>
-				{/if}
 			</div>
 		</div>
 	</a>
+
+	{#if progessLoading > 0 && progessLoading < 100}
+		<div class="absolute z-40 left-0 top-0 h-full w-full bg-black bg-opacity-50">
+			<div class="absolute left-0 right-0 top-1/2 m-auto -mt-12 h-24 w-24">
+				<ProgressCircle value={progessLoading} />
+			</div>
+		</div>
+	{/if}
 </section>
 
 <style>
@@ -69,6 +73,26 @@
 		transition: all 0.3s;
 		width: 100%;
 		height: 340px;
+		background-size: cover;
+		box-sizing: border-box;
+	}
+
+	aside {
+		position: absolute;
+		bottom: 0px;
+		left: 0px;
+		width: 100%;
+		height: 50%;
+		overflow: hidden;
+	}
+	figure {
+		position: absolute;
+		bottom: 0px;
+		left: 0px;
+		width: 100%;
+		height: 340px;
+		background-size: cover;
+		background-repeat: no-repeat;
 	}
 
 	.content-container {

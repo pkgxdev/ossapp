@@ -52,7 +52,7 @@
 	<ul class="mb-10 flex flex-col gap-2">
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<li on:click={() => shellOpenExternal(pkg.homepage)}>
-			<span>{pkg.homepage}</span>
+			<span class="cursor-pointer hover:text-primary">{pkg.homepage}</span>
 		</li>
 	</ul>
 	{#if pkg.documentation_url}
@@ -60,7 +60,7 @@
 		<ul class="mb-10 flex flex-col gap-2">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<li on:click={() => shellOpenExternal(pkg.documentation_url)}>
-				<span>{pkg.documentation_url}</span>
+				<span class="cursor-pointer hover:text-primary">{pkg.documentation_url}</span>
 			</li>
 		</ul>
 	{/if}
@@ -69,20 +69,20 @@
 		<ul class="mb-10 flex flex-col gap-2">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<li on:click={() => shellOpenExternal(`https://github.com/${pkg.github}`)}>
-				<span>{pkg.github}</span>
+				<span class="cursor-pointer hover:text-primary">{pkg.github}</span>
 			</li>
 		</ul>
 	{/if}
 	{#if pkg.contributors?.length}
 		<h1 class="text-primary">{$t("common.contributors")}</h1>
 		<ul class="mb-10 flex flex-col gap-2">
-			{#each pkg.contributors as contributor}
+			{#each (pkg.contributors || []).filter((c) => !c.login.includes("[bot]")) as contributor}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<li on:click={() => shellOpenExternal(`https://github.com/${contributor.login}`)}>
 					<!-- <figure class="h-5 w-5 bg-gray">
 						<img src={contributor.avatar_url} alt={contributor.login} />
 					</figure> -->
-					<span>{contributor.login}</span>
+					<span class="cursor-pointer hover:text-primary">{contributor.login}</span>
 				</li>
 			{/each}
 		</ul>
