@@ -10,7 +10,7 @@
 	export let link: string;
 	export let progessLoading = 0;
 
-	const imgUrl = !pkg.thumb_image_url.includes("https://tea.xyz")
+	$: imgUrl = !pkg.thumb_image_url.includes("https://tea.xyz")
 		? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
 		: pkg.thumb_image_url;
 
@@ -20,17 +20,25 @@
 
 	export let onUninstall = async () => {
 		console.log("do nothing");
-	}
+	};
+
+	// Using this instead of css :active because there is a button inside of a button
+	let isActive = false;
+	const activate = () => (isActive = true);
+	const deactivate = () => (isActive = false);
+
+	const preventPropagation = (evt: MouseEvent) => evt.stopPropagation();
 </script>
 
 <section
-	class="package-card border-gray relative h-auto border"
+	class="package-card border-gray relative h-auto border bg-center"
+	class:active={isActive}
 	style="background-image: url({imgUrl})"
 >
 	<aside class="blur-sm">
-		<figure style="background-image: url({imgUrl})"></figure>
+		<figure class="bg-center" style="background-image: url({imgUrl})" />
 	</aside>
-	<a href={link}>
+	<a href={link} on:mousedown={activate} on:mouseup={deactivate} on:mouseleave={deactivate}>
 		<div class="package-card-content absolute flex h-full w-full flex-col justify-between">
 			<div class="hint-container">
 				<div class="hint">
@@ -43,14 +51,12 @@
 					<h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">{pkg.name}</h3>
 					<p class="line-clamp-2 h-[32px] text-xs font-thin">{pkg.desc ?? ""}</p>
 				</article>
-				<div class="mt-3.5 flex w-full relative">
-					<div class="install-button">
-						<InstallButton {pkg} {availableVersions} onClick={onClickCTA}
-							uninstall={onUninstall}
-						/>
+				<div class="relative mt-3.5 flex w-full">
+					<div class="install-button" on:mousedown={preventPropagation}>
+						<InstallButton {pkg} {availableVersions} onClick={onClickCTA} uninstall={onUninstall} />
 					</div>
 				</div>
-				<div class="mt-1 h-[10px] leading-[10px] relative">
+				<div class="relative mt-1 h-[10px] leading-[10px]">
 					{#if pkg.state === "NEEDS_UPDATE"}
 						<span class="text-[0.5rem]">Updating from v{findRecentInstalledVersion(pkg)}</span>
 					{/if}
@@ -60,7 +66,7 @@
 	</a>
 
 	{#if progessLoading > 0 && progessLoading < 100}
-		<div class="absolute z-40 left-0 top-0 h-full w-full bg-black bg-opacity-50">
+		<div class="absolute left-0 top-0 z-40 h-full w-full bg-black bg-opacity-50">
 			<div class="absolute left-0 right-0 top-1/2 m-auto -mt-12 h-24 w-24">
 				<ProgressCircle value={progessLoading} />
 			</div>
@@ -77,6 +83,23 @@
 		box-sizing: border-box;
 	}
 
+	section.active::before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(26, 26, 26, 0.7);
+		z-index: 2;
+		content: "";
+		pointer-events: none;
+	}
+
+	section.package-card:active {
+		border-color: #8000ff;
+		box-shadow: 0px 0px 0px 2px rgba(128, 0, 255, 0.5);
+	}
+
 	aside {
 		position: absolute;
 		bottom: 0px;
@@ -85,6 +108,7 @@
 		height: 50%;
 		overflow: hidden;
 	}
+
 	figure {
 		position: absolute;
 		bottom: 0px;
@@ -133,12 +157,6 @@
 
 	.package-card {
 		background-size: cover;
-	}
-
-	.package-card:active {
-		border-color: #8000ff;
-		box-shadow: 0px 0px 0px 2px rgba(128, 0, 255, 0.5);
-		mix-blend-mode: overlay;
 	}
 
 	.package-card:hover .hint {

@@ -20,6 +20,10 @@
 		return "primary";
 	};
 
+	const isActive = (state: PackageStates): boolean => {
+		return state === PackageStates.INSTALLING || state === PackageStates.UPDATING;
+	};
+
 	const badgeClass: Record<PackageStates, string> = {
 		[PackageStates.AVAILABLE]: "install-badge",
 		[PackageStates.INSTALLING]: "install-badge",
@@ -36,6 +40,7 @@
 	class="w-full border p-0 text-xs text-white {buttonSize === 'small' ? 'h-8' : 'h-10'}"
 	type="plain"
 	color={getColor(pkg.state)}
+	active={isActive(pkg.state)}
 	{onClick}
 >
 	<div class="version-button h-full">

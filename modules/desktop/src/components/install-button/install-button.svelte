@@ -52,7 +52,8 @@
 			<div class="version-list" class:visible={isOpened}>
 				{#if (pkg?.installed_versions || []).length > 0}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<div class="version-item flex items-center justify-start gap-x-1 text-xs"
+					<div
+						class="version-item flex items-center justify-start gap-x-1 text-xs"
 						on:click={(evt) => handleClick(evt, "")}
 					>
 						<div>uninstall</div>
@@ -139,8 +140,8 @@
 		display: block;
 	}
 
-		/* width */
-		::-webkit-scrollbar {
+	/* width */
+	::-webkit-scrollbar {
 		width: 6px;
 	}
 
