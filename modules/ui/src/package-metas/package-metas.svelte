@@ -76,13 +76,13 @@
 	{#if pkg.contributors?.length}
 		<h1 class="text-primary">{$t("common.contributors")}</h1>
 		<ul class="mb-10 flex flex-col gap-2">
-			{#each pkg.contributors as contributor}
+			{#each (pkg.contributors || []).filter((c) => !c.login.includes("[bot]")) as contributor}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<li on:click={() => shellOpenExternal(`https://github.com/${contributor.login}`)}>
 					<!-- <figure class="h-5 w-5 bg-gray">
 						<img src={contributor.avatar_url} alt={contributor.login} />
 					</figure> -->
-					<span>{contributor.login}</span>
+					<span class="cursor-pointer hover:text-primary">{contributor.login}</span>
 				</li>
 			{/each}
 		</ul>
