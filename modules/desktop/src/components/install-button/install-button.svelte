@@ -76,6 +76,7 @@
 		border-radius: 2px;
 		max-height: 160px;
 		overflow-y: auto;
+		overflow-x: hidden;
 	}
 
 	.version-item {
@@ -117,5 +118,26 @@
 
 	.visible {
 		display: block;
+	}
+
+		/* width */
+		::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #272626;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #949494;
+		border-radius: 4px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: white;
 	}
 </style>
