@@ -52,7 +52,7 @@
 	<ul class="mb-10 flex flex-col gap-2">
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<li on:click={() => shellOpenExternal(pkg.homepage)}>
-			<span>{pkg.homepage}</span>
+			<span class="cursor-pointer hover:text-primary">{pkg.homepage}</span>
 		</li>
 	</ul>
 	{#if pkg.documentation_url}
@@ -60,7 +60,7 @@
 		<ul class="mb-10 flex flex-col gap-2">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<li on:click={() => shellOpenExternal(pkg.documentation_url)}>
-				<span>{pkg.documentation_url}</span>
+				<span class="cursor-pointer hover:text-primary">{pkg.documentation_url}</span>
 			</li>
 		</ul>
 	{/if}
@@ -69,7 +69,7 @@
 		<ul class="mb-10 flex flex-col gap-2">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<li on:click={() => shellOpenExternal(`https://github.com/${pkg.github}`)}>
-				<span>{pkg.github}</span>
+				<span class="cursor-pointer hover:text-primary">{pkg.github}</span>
 			</li>
 		</ul>
 	{/if}
