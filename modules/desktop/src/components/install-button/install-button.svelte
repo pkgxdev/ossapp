@@ -13,7 +13,9 @@
 
 	$: isOpened = false;
 
-	const toggleOpen = () => {
+	const toggleOpen = (evt?: MouseEvent) => {
+		evt?.preventDefault();
+
 		if ([PackageStates.INSTALLING, PackageStates.UPDATING].includes(pkg.state)) {
 			return;
 		}
@@ -22,7 +24,7 @@
 
 	const isInstalled = (version: string) => pkg.installed_versions?.includes(version);
 
-	const handleClick = (version: string) => {
+	const handleClick = (evt: MouseEvent, version: string) => {
 		if (isInstalled(version)) {
 			return;
 		}
@@ -36,7 +38,7 @@
 
 <div class="dropdown z-10" use:clickOutside on:click_outside={handleClickOutside}>
 	<PackageStateButton {buttonSize} {pkg} onClick={toggleOpen}>
-		<div class="pt-1">
+		<div class="pt-2">
 			<div class="version-list" class:visible={isOpened}>
 				{#each availableVersions as version, idx}
 					{#if idx !== 0}<hr class="divider" />{/if}
@@ -44,7 +46,7 @@
 					<div
 						class="version-item flex items-center justify-start gap-x-1 text-xs"
 						class:installable-version={!isInstalled(version)}
-						on:click={() => handleClick(version)}
+						on:click={(evt) => handleClick(evt, version)}
 					>
 						<div class:installed-text={isInstalled(version)}>v{version}</div>
 						{#if idx === 0}

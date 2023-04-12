@@ -1,81 +1,123 @@
 <script lang="ts">
 	import "../../app.css";
-	import ImgLoader from "@tea/ui/img-loader/img-loader.svelte";
 	import ProgressCircle from "@tea/ui/progress-circle/progress-circle.svelte";
 	import InstallButton from "../install-button/install-button.svelte";
 	import type { GUIPackage } from "$libs/types";
+	import { findRecentInstalledVersion } from "$libs/packages/pkg-utils";
 
 	export let pkg: GUIPackage;
 	export let availableVersions: string[];
 	export let link: string;
 	export let progessLoading = 0;
 
+	const imgUrl = !pkg.thumb_image_url.includes("https://tea.xyz")
+		? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
+		: pkg.thumb_image_url;
+
 	export let onClickCTA = async (_version: string) => {
 		console.log("do nothing");
 	};
 </script>
 
-<section class="package-card border-gray relative h-auto border">
+<section
+	class="package-card border-gray relative h-auto border"
+	style="background-image: url({imgUrl})"
+>
 	<a href={link}>
-		<figure class="relative">
-			<ImgLoader
-				class="pkg-image object-cover"
-				src={!pkg.thumb_image_url.includes("https://tea.xyz")
-					? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
-					: pkg.thumb_image_url}
-				alt={pkg.name}
-			/>
-		</figure>
-		<article class="card-thumb-label">
-			<h3 class="text-bold font-mona text-xl font-bold text-white">{pkg.name}</h3>
-			{#if pkg.maintainer}
-				<h4 class="text-sm font-light">&#x2022;&nbsp;{pkg.maintainer}</h4>
-			{/if}
-			{#if pkg.desc}
-				<p class="line-clamp-2 text-xs font-thin">{pkg.desc}</p>
-			{/if}
-		</article>
-	</a>
-	<footer class="absolute bottom-0 left-0 flex w-full p-3">
-		<div class="install-button">
-			<InstallButton {pkg} {availableVersions} onClick={onClickCTA} />
-		</div>
-	</footer>
-	{#if progessLoading > 0 && progessLoading < 100}
-		<div class="absolute left-0 top-0 h-full w-full bg-black bg-opacity-50">
-			<div class="absolute left-0 right-0 top-1/2 m-auto -mt-12 h-24 w-24">
-				<ProgressCircle value={progessLoading} />
+		<div class="package-card-content flex h-full w-full flex-col justify-between">
+			<div class="hint-container">
+				<div class="hint">
+					<div class="text-xs">view more details</div>
+					<div class="hint-icon"><i class="icon-upward-arrow" /></div>
+				</div>
+			</div>
+			<div class="content-container">
+				<article class="card-thumb-label">
+					<h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">{pkg.name}</h3>
+					<p class="line-clamp-2 h-[32px] text-xs font-thin">{pkg.desc ?? ""}</p>
+				</article>
+				<div class="mt-3.5 flex w-full">
+					<div class="install-button">
+						<InstallButton {pkg} {availableVersions} onClick={onClickCTA} />
+					</div>
+				</div>
+				<div class="mt-1 h-[10px] leading-[10px]">
+					{#if pkg.state === "NEEDS_UPDATE"}
+						<span class="text-[0.5rem]">Updating from v{findRecentInstalledVersion(pkg)}</span>
+					{/if}
+				</div>
+				{#if progessLoading > 0 && progessLoading < 100}
+					<div class="absolute left-0 top-0 h-full w-full bg-black bg-opacity-50">
+						<div class="absolute left-0 right-0 top-1/2 m-auto -mt-12 h-24 w-24">
+							<ProgressCircle value={progessLoading} />
+						</div>
+					</div>
+				{/if}
 			</div>
 		</div>
-	{/if}
+	</a>
 </section>
 
 <style>
 	section {
-		background-color: #1a1a1a;
 		transition: all 0.3s;
 		width: 100%;
-		height: 230px;
-	}
-	section:hover {
-		background-color: #252525;
+		height: 340px;
 	}
 
-	figure {
-		position: relative;
-		height: 70px;
+	.content-container {
+		height: 50%;
+		background: linear-gradient(180deg, rgba(26, 26, 26, 0.3) 0%, rgba(26, 26, 26, 0.75) 72.92%);
+		display: flex;
+		flex-direction: column;
+		padding: 28px 14px;
+		justify-content: space-between;
 	}
 
-	.package-card :global(.pkg-image) {
-		width: 100%;
-		height: 100%;
+	.hint-container {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.hint {
+		width: 60%;
+		height: 24px;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		column-gap: 0.5rem;
+		background: linear-gradient(270deg, #e1e1e1 66.29%, rgba(225, 225, 225, 0) 100%);
+		color: #1a1a1a;
+		visibility: hidden;
+	}
+
+	.hint-icon {
+		background: #8000ff;
+		height: 24px;
+		width: 24px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #e1e1e1;
+	}
+
+	.package-card {
+		background-size: cover;
+	}
+
+	.package-card:active {
+		border-color: #8000ff;
+		box-shadow: 0px 0px 0px 2px rgba(128, 0, 255, 0.5);
+		mix-blend-mode: overlay;
+	}
+
+	.package-card:hover .hint {
+		visibility: visible;
 	}
 
 	.card-thumb-label {
-		padding: 1.116vw;
 		text-align: left;
 		width: 100%;
-		height: 110px;
 	}
 
 	.card-thumb-label p {

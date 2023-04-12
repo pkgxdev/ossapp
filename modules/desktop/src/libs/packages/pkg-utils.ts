@@ -1,4 +1,5 @@
 import type { GUIPackage } from "$libs/types";
+import type { Package } from "@tea/ui/types";
 import { clean } from "semver";
 import semverCompare from "semver/functions/compare";
 
@@ -31,4 +32,9 @@ export const addInstalledVersion = (
 	return [...installedVersions, newVersion].sort((a, b) =>
 		semverCompare(cleanVersion(b), cleanVersion(a))
 	);
+};
+
+export const findRecentInstalledVersion = (pkg: GUIPackage) => {
+	// this assumes that the versions are already sorted
+	return pkg.installed_versions?.[0];
 };
