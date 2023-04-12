@@ -1,24 +1,25 @@
 <script lang="ts">
-	import '$appcss';
-	import { t } from '$libs/translations'; 
+	import "$appcss";
+	import { t } from "$libs/translations";
 
-	import { page } from '$app/stores';
+	import { page } from "$app/stores";
 	// import PageHeader from '$components/page-header/page-header.svelte';
-	import PackageBanner from '$components/package-banner/package-banner.svelte';
+	import PackageBanner from "$components/package-banner/package-banner.svelte";
 	// import SuggestedPackages from '$components/suggested-packages/suggested-packages.svelte';
-	import Tabs from '@tea/ui/tabs/tabs.svelte';
-	import type { Tab } from '@tea/ui/types';
-	import Bottles from '@tea/ui/bottles/bottles.svelte';
-	import PackageMetas from '@tea/ui/package-metas/package-metas.svelte';
-	import Markdown from '@tea/ui/markdown/markdown.svelte';
+	import Tabs from "@tea/ui/tabs/tabs.svelte";
+	import type { Tab } from "@tea/ui/types";
+	import Bottles from "@tea/ui/bottles/bottles.svelte";
+	import PackageMetas from "@tea/ui/package-metas/package-metas.svelte";
+	import Markdown from "@tea/ui/markdown/markdown.svelte";
 	// import PackageSnippets from '@tea/ui/package-snippets/package-snippets.svelte';
-	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
+	import Preloader from "@tea/ui/Preloader/Preloader.svelte";
 
 	/** @type {import('./$types').PageData} */
-	export let data: { slug:string, content:string, title:string };
+	export let data: { slug: string; content: string; title: string };
 
-	import { packagesStore } from '$libs/stores';
-  import { onMount } from 'svelte';
+	import { packagesStore } from "$libs/stores";
+	import { onMount } from "svelte";
+	import NotificationBar from "$components/notification-bar/notification-bar.svelte";
 
 	const { packageList } = packagesStore;
 
@@ -27,10 +28,10 @@
 	// let reviews: Review[];
 	$: bottles = pkg?.bottles || [];
 	$: versions = [...new Set(bottles.map((b) => b.version))];
-	$: readme = pkg?.readme_md || '';
+	$: readme = pkg?.readme_md || "";
 
 	$: tabs = [
-		readme !== '' && {
+		readme !== "" && {
 			label: $t("common.details"),
 			component: Markdown,
 			props: { pkg, source: readme }
@@ -50,17 +51,23 @@
 
 	onMount(() => {
 		packagesStore.syncPackageData(pkg);
-	})
+	});
 </script>
-<header class="mx-16 py-5 mb-10 text-gray border border-x-0 border-t-0">
+
+<header class="text-gray mx-16 mb-4 border border-x-0 border-t-0 py-5">
 	<a class="hover:text-white hover:opacity-80" href="/">{$t("common.home")}</a>
 	>
 	{#if tab !== "all"}
-		<a class="hover:text-white hover:opacity-80" href="/?tab={tab || "all"}">{$t(`tags.${tab}`) || "all"}</a>
+		<a class="hover:text-white hover:opacity-80" href="/?tab={tab || 'all'}"
+			>{$t(`tags.${tab}`) || "all"}</a
+		>
 		>
 	{/if}
 	<span class="text-white">{pkg?.full_name}</span>
 </header>
+<div class="mx-16 mb-4">
+	<NotificationBar />
+</div>
 {#if pkg}
 	<div class="px-16">
 		<section>
@@ -94,5 +101,5 @@
 		{/if} -->
 	</div>
 {:else}
-	<Preloader/>
+	<Preloader />
 {/if}

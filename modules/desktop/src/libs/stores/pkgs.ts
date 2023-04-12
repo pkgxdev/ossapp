@@ -15,11 +15,12 @@ import {
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
-import type { Package } from "@tea/ui/types";
+import { NotificationType, type Package } from "@tea/ui/types";
 import { trackInstall, trackInstallFailed } from "$libs/analytics";
 import { addInstalledVersion } from "$libs/packages/pkg-utils";
 import withDebounce from "$libs/utils/debounce";
 import { trimGithubSlug } from "$libs/github";
+import { notificationStore } from "$libs/stores";
 
 const log = window.require("electron-log");
 
@@ -136,6 +137,9 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 
 	const installPkg = async (pkg: GUIPackage, version?: string) => {
 		let fakeTimer: NodeJS.Timer | null = null;
+		const originalState = pkg.state;
+		const versionToInstall = version || pkg.version;
+
 		try {
 			const state: PackageStates =
 				pkg.state === PackageStates.NEEDS_UPDATE
@@ -148,7 +152,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				updatePackage(pkg.full_name, { install_progress_percentage: progress });
 			});
 
-			const versionToInstall = version || pkg.version;
 			await installPackage(pkg, versionToInstall);
 			trackInstall(pkg.full_name);
 
@@ -156,10 +159,22 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				state: PackageStates.INSTALLED,
 				installed_versions: addInstalledVersion(pkg.installed_versions, versionToInstall)
 			});
+
+			notificationStore.add({
+				message: `Package ${pkg.full_name} v${versionToInstall} has been installed.`
+			});
 		} catch (error) {
 			let message = "Unknown Error";
 			if (error instanceof Error) message = error.message;
 			trackInstallFailed(pkg.full_name, message || "unknown");
+
+			//FIXME: probably need a refresh package state function instead of this
+			updatePackage(pkg.full_name, { state: originalState });
+
+			notificationStore.add({
+				message: `Package ${pkg.full_name} v${versionToInstall} failed to install.`,
+				type: NotificationType.ERROR
+			});
 		} finally {
 			fakeTimer && clearTimeout(fakeTimer);
 			updatePackage(pkg.full_name, { install_progress_percentage: 100 });
