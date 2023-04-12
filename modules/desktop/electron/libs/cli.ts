@@ -1,44 +1,23 @@
-import { spawn, execSync } from "child_process";
+import { spawn, execSync, exec } from "child_process";
 import { clean } from "semver";
 import { getGuiPath } from "./tea-dir";
 import fs from "fs";
 import path from "path";
-import axios from "axios";
+import initializeTeaCli from "./initialize";
 
 import * as log from "electron-log";
 import { subscribeToPackageTopic } from "./push-notification";
 
+const destinationDirectory = getGuiPath();
+
+export const cliBinPath = path.join(destinationDirectory, "tea");
+
 export async function installPackage(full_name: string) {
-	return await new Promise((resolve, reject) => {
-		let version = "";
-		let lastError = "";
-		const teaInstallation = spawn("/usr/local/bin/tea", [`+${full_name}`, "true"]);
+	const teaVersion = await initializeTeaCli();
 
-		teaInstallation.stdout.on("data", (data) => {
-			console.log("stdout:", data);
-		});
-
-		teaInstallation.stderr.on("data", (err) => {
-			lastError = err.toString();
-			if (lastError && lastError.includes("installed") && lastError.includes(full_name)) {
-				version = lastError.split("/").pop() || "";
-			}
-		});
-
-		teaInstallation.on("exit", async (code) => {
-			if (code === 0) {
-				try {
-					await subscribeToPackageTopic(full_name);
-				} catch (error) {
-					log.error(error);
-				} finally {
-					resolve({ version: clean(version) });
-				}
-			} else {
-				reject(new Error(lastError));
-			}
-		});
-	});
+	if (!teaVersion) throw new Error("no tea");
+	log.info(`installing package ${full_name}`);
+	await execSync(`cd ${destinationDirectory} && ./tea +${full_name} true`);
 }
 
 export async function openTerminal(cmd: string) {

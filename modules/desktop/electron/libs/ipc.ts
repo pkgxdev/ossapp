@@ -176,7 +176,7 @@ export default function initializeHandlers() {
 		}
 	});
 
-	ipcMain.handle("install-tea-cli", async (_, data) => {
+	ipcMain.handle("get-tea-version", async () => {
 		try {
 			log.info("installing tea cli");
 			const version = await initializeTeaCli();
@@ -184,10 +184,10 @@ export default function initializeHandlers() {
 				throw new Error("failed to install tea cli");
 			}
 
-			return "success";
+			return { version, message: "" };
 		} catch (error) {
 			log.error(error);
-			return error.message;
+			return { version: "", message: error.message };
 		}
 	});
 }

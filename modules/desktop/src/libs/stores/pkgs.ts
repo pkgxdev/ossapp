@@ -31,8 +31,6 @@ export default function initPackagesStore() {
 	const packageMap = writable<Packages>({ version: "0", packages: {} });
 	const packageList = derived(packageMap, ($packages) => Object.values($packages.packages));
 
-	const requireTeaCli = writable<boolean>(false);
-
 	let packagesIndex: Fuse<GUIPackage>;
 
 	const updateAllPackages = (guiPkgs: GUIPackage[]) => {
@@ -86,16 +84,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		updatePackage(guiPkg.full_name!, updatedPackage);
 	};
 
-	const checkTeaCLIPackage = async (teaPkg: Package, installedPkg?: InstalledPackage) => {
-		if (!installedPkg) {
-			requireTeaCli.set(true);
-			return;
-		}
-
-		const isUpToDate = teaPkg.version === installedPkg?.installed_versions[0];
-		log.info("check if Tea-CLI is up to date:", isUpToDate);
-	};
-
 	const init = async function () {
 		log.info("packages store: try initialize");
 
@@ -123,11 +111,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 
 			try {
 				const installedPkgs: InstalledPackage[] = await getInstalledPackages();
-
-				log.info("sync test for tea-cli");
-				const distTea = pkgs.find((p) => p.full_name === "tea.xyz");
-				const installedTeaPkg = installedPkgs.find((p) => p.full_name === "tea.xyz");
-				if (distTea) await checkTeaCLIPackage(distTea, installedTeaPkg);
 
 				log.info("set NEEDS_UPDATE state to pkgs");
 				for (const [i, iPkg] of installedPkgs.entries()) {
@@ -211,7 +194,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	return {
 		packageList,
 		syncProgress,
-		requireTeaCli,
 		search: async (term: string, limit = 5): Promise<GUIPackage[]> => {
 			if (!term || !packagesIndex) return [];
 			// TODO: if online, use algolia else use Fuse
