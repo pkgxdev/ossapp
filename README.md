@@ -20,14 +20,10 @@ This repository contains tea/gui \[[notion]\].
 To develop within an electron view:
 
 ```
-$ pnpm dev:desktop
-```
+$ xc build
+# ^^ not always required
 
-To develop in your local browser:
-
-```
-$ pnpm web:desktop
-$ open localhost:8080
+$ xc dev
 ```
 
 
