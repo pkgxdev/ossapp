@@ -374,3 +374,7 @@ export const writePackageCache = async (pkgs: Packages) => {
 export const installTeaCli = async (): Promise<{ version: string; message: string }> => {
 	return { version: "0.0.0", message: "" };
 };
+
+export const topbarDoubleClick = async () => {
+	console.log("topbar double click");
+};
