@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 	import { t } from '$libs/translations';
 	import { afterNavigate } from '$app/navigation';
-	import { packagesStore } from '$libs/stores';
+	import { packagesStore, navStore } from '$libs/stores';
 	import Packages from '$components/packages/packages.svelte';
 	import { PackageStates, SideMenuOptions, type GUIPackage } from '$libs/types';
 	// import SortingButtons from "$components/search-packages/sorting-buttons.svelte";
@@ -16,7 +16,8 @@
 
 	const log = window.require("electron-log");
 
-	const { packageList, requireTeaCli } = packagesStore;
+	const { packageList } = packagesStore;
+	const { showWelcome } = navStore;
 
 	const url = $page.url;
 
@@ -99,8 +100,8 @@
 </div>
 
 <SideMenu bind:activeOption={sideMenuOption}/>
-{#if $requireTeaCli && teaPkg }
-	<WelcomeModal tea={teaPkg} />
+{#if $showWelcome }
+	<WelcomeModal />
 {/if}
 <style>
 	#content {

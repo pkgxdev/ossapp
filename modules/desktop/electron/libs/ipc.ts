@@ -10,6 +10,8 @@ import path from "path";
 
 import { installPackage, openTerminal, installTeaCli } from "./cli";
 
+import initializeTeaCli from "./initialize";
+
 import { getUpdater } from "./auto-updater";
 import fetch from "node-fetch";
 
@@ -174,14 +176,18 @@ export default function initializeHandlers() {
 		}
 	});
 
-	ipcMain.handle("install-tea-cli", async (_, data) => {
+	ipcMain.handle("get-tea-version", async () => {
 		try {
 			log.info("installing tea cli");
-			await installTeaCli(data.version);
-			return "success";
+			const version = await initializeTeaCli();
+			if (!version) {
+				throw new Error("failed to install tea cli");
+			}
+
+			return { version, message: "" };
 		} catch (error) {
 			log.error(error);
-			return error.message;
+			return { version: "", message: error.message };
 		}
 	});
 }

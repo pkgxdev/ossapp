@@ -1,44 +1,23 @@
-import { spawn, execSync } from "child_process";
+import { spawn, exec } from "child_process";
 import { clean } from "semver";
 import { getGuiPath } from "./tea-dir";
 import fs from "fs";
 import path from "path";
-import axios from "axios";
+import initializeTeaCli from "./initialize";
 
 import * as log from "electron-log";
 import { subscribeToPackageTopic } from "./push-notification";
 
+const destinationDirectory = getGuiPath();
+
+export const cliBinPath = path.join(destinationDirectory, "tea");
+
 export async function installPackage(full_name: string) {
-	return await new Promise((resolve, reject) => {
-		let version = "";
-		let lastError = "";
-		const teaInstallation = spawn("/usr/local/bin/tea", [`+${full_name}`, "true"]);
+	const teaVersion = await initializeTeaCli();
 
-		teaInstallation.stdout.on("data", (data) => {
-			console.log("stdout:", data);
-		});
-
-		teaInstallation.stderr.on("data", (err) => {
-			lastError = err.toString();
-			if (lastError && lastError.includes("installed") && lastError.includes(full_name)) {
-				version = lastError.split("/").pop() || "";
-			}
-		});
-
-		teaInstallation.on("exit", async (code) => {
-			if (code === 0) {
-				try {
-					await subscribeToPackageTopic(full_name);
-				} catch (error) {
-					log.error(error);
-				} finally {
-					resolve({ version: clean(version) });
-				}
-			} else {
-				reject(new Error(lastError));
-			}
-		});
-	});
+	if (!teaVersion) throw new Error("no tea");
+	log.info(`installing package ${full_name}`);
+	await asyncExec(`cd ${destinationDirectory} && ./tea +${full_name} true`);
 }
 
 export async function openTerminal(cmd: string) {
@@ -75,19 +54,6 @@ export async function openTerminal(cmd: string) {
 	}
 }
 
-export async function installTeaCli(version: string): Promise<string> {
-	try {
-		log.info("installing tea-cli");
-		const command = 'TEA_YES=1 bash -c "sh <(curl https://tea.xyz)"';
-		const output = execSync(command, { encoding: "utf-8" });
-		log.info("tea-cli installed");
-		return "success";
-	} catch (error) {
-		log.error(error);
-		return error.message;
-	}
-}
-
 const createCommandScriptFile = async (cmd: string): Promise<string> => {
 	try {
 		const guiFolder = getGuiPath();
@@ -117,3 +83,17 @@ const createCommandScriptFile = async (cmd: string): Promise<string> => {
 		return "";
 	}
 };
+
+export async function asyncExec(cmd: string): Promise<string> {
+	return new Promise((resolve, reject) => {
+		exec(cmd, (err, stdout) => {
+			if (err) {
+				console.log("err:", err);
+				reject(err);
+				return;
+			}
+			console.log("stdout:", stdout);
+			resolve(stdout);
+		});
+	});
+}
