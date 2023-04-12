@@ -17,6 +17,10 @@
 	export let onClickCTA = async (_version: string) => {
 		console.log("do nothing");
 	};
+
+	export let onUninstall = async () => {
+		console.log("do nothing");
+	}
 </script>
 
 <section
@@ -38,7 +42,9 @@
 				</article>
 				<div class="mt-3.5 flex w-full">
 					<div class="install-button">
-						<InstallButton {pkg} {availableVersions} onClick={onClickCTA} />
+						<InstallButton {pkg} {availableVersions} onClick={onClickCTA}
+							uninstall={onUninstall}
+						/>
 					</div>
 				</div>
 				<div class="mt-1 h-[10px] leading-[10px]">

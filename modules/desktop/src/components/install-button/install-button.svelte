@@ -11,6 +11,10 @@
 		console.log("do nothing");
 	};
 
+	export let uninstall = async () => {
+		console.log("do nothing");
+	};
+
 	$: isOpened = false;
 
 	const toggleOpen = (evt?: MouseEvent) => {
@@ -24,13 +28,19 @@
 
 	const isInstalled = (version: string) => pkg.installed_versions?.includes(version);
 
+	$: installedVersions = pkg.installed_versions || [];
+
 	const handleClick = (evt: MouseEvent, version: string) => {
 		if (isInstalled(version)) {
 			return;
 		}
 
 		isOpened = false;
-		onClick(version);
+		if (version) {
+			onClick(version);
+		} else {
+			uninstall();
+		}
 	};
 
 	const handleClickOutside = () => (isOpened = false);
@@ -40,19 +50,28 @@
 	<PackageStateButton {buttonSize} {pkg} onClick={toggleOpen}>
 		<div class="pt-2">
 			<div class="version-list" class:visible={isOpened}>
+				{#if (pkg?.installed_versions || []).length > 0}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<div class="version-item flex items-center justify-start gap-x-1 text-xs"
+						on:click={(evt) => handleClick(evt, "")}
+					>
+						<div>uninstall</div>
+					</div>
+					<hr class="divider" />
+				{/if}
 				{#each availableVersions as version, idx}
 					{#if idx !== 0}<hr class="divider" />{/if}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<div
 						class="version-item flex items-center justify-start gap-x-1 text-xs"
-						class:installable-version={!isInstalled(version)}
+						class:installable-version={!installedVersions.includes(version)}
 						on:click={(evt) => handleClick(evt, version)}
 					>
-						<div class:installed-text={isInstalled(version)}>v{version}</div>
+						<div class:installed-text={installedVersions.includes(version)}>v{version}</div>
 						{#if idx === 0}
 							<div class="latest-version">(latest)</div>
 						{/if}
-						{#if isInstalled(version)}
+						{#if installedVersions.includes(version)}
 							<div class="flex grow justify-end">
 								<i class="installed-text icon-check-circle flex" />
 							</div>

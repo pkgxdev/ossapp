@@ -166,6 +166,21 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		}
 	};
 
+	const uninstallPkg = async (pkg: GUIPackage) => {
+		try {
+			for (const v of pkg.installed_versions || []) {
+				await deletePkg(pkg, v);
+			}
+			setTimeout(() => {
+				updatePackage(pkg.full_name, {
+					state: PackageStates.AVAILABLE
+				});
+			}, 3000);
+		} catch (error) {
+			log.error(error);
+		}
+	};
+
 	const fetchPackageBottles = async (pkgName: string) => {
 		// TODO: this api should take an architecture argument or else an architecture filter should be applied downstreawm
 		const bottles = await getPackageBottles(pkgName);
@@ -205,6 +220,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		updatePackage,
 		init,
 		installPkg,
+		uninstallPkg,
 		syncPackageData,
 		deletePkg
 	};
