@@ -15,6 +15,8 @@ import initializePushNotification, {
 	syncPackageTopicSubscriptions
 } from "./libs/push-notification";
 
+import init from "./libs/initialize";
+
 log.info("App starting...");
 if (app.isPackaged) {
 	Sentry.init({
@@ -31,6 +33,9 @@ if (app.isPackaged) {
 		}
 	});
 }
+
+init();
+
 const serveURL = serve({ directory: "." });
 const port = process.env.PORT || 3000;
 const allowDebug = !app.isPackaged || process.env.DEBUG_BUILD === "1";
