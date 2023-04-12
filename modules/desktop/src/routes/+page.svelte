@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 	import { t } from '$libs/translations';
 	import { afterNavigate } from '$app/navigation';
-	import { packagesStore, notificationStore } from '$libs/stores';
+	import { packagesStore } from '$libs/stores';
 	import Packages from '$components/packages/packages.svelte';
 	import { PackageStates, SideMenuOptions, type GUIPackage } from '$libs/types';
 	// import SortingButtons from "$components/search-packages/sorting-buttons.svelte";

@@ -29,4 +29,7 @@
 	link="/packages/{pkg.slug}?tab={tab}"
 	progessLoading={pkg.install_progress_percentage}
 	{onClickCTA}
+	onUninstall={async () => {
+		packagesStore.uninstallPkg(pkg);
+	}}
 />

@@ -57,6 +57,9 @@
 					{pkg}
 					availableVersions={findAvailableVersions(pkg)}
 					onClick={install}
+					uninstall={async () => {
+						packagesStore.uninstallPkg(pkg);
+					}}
 				/>
 				{#if (pkg?.installed_versions?.length || 0) > 1}
 					<Button
