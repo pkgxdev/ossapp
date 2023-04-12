@@ -3,7 +3,7 @@
 		"lang": {
 			"en": "English"
 		},
-		"store-search-placeholder": "type to search",
+		"store-search-placeholder": "search packages",
 		"package": {
 			"update-all": "UPDATE ALL",
 			"cta-AVAILABLE": "INSTALL",
