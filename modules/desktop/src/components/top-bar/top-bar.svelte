@@ -33,9 +33,9 @@
 				searchStore.searching.set(true);
 			}}
 		/>
-		<kbd class="absolute top-0 right-3 opacity-50 bg-gray text-white px-2 mt-1 rounded-sm flex items-center">
-			<i class="text-lg">⌘</i>
-			<span class="text-xs">K</span>
+		<kbd class="absolute top-0 right-3 opacity-50 bg-gray text-white px-2 mt-1 rounded-sm flex items-center" style="letter-spacing: 0.5pt">
+			<span class="text-lg">⌘</span>
+			<span class="text-xs" style="font-size: smaller">K</span>
 		</kbd>
 	</div>
 	<ProfileNavButton />
