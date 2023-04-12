@@ -1,4 +1,4 @@
-import { spawn, execSync, exec } from "child_process";
+import { spawn, exec } from "child_process";
 import { clean } from "semver";
 import { getGuiPath } from "./tea-dir";
 import fs from "fs";
@@ -17,7 +17,7 @@ export async function installPackage(full_name: string) {
 
 	if (!teaVersion) throw new Error("no tea");
 	log.info(`installing package ${full_name}`);
-	await execSync(`cd ${destinationDirectory} && ./tea +${full_name} true`);
+	await asyncExec(`cd ${destinationDirectory} && ./tea +${full_name} true`);
 }
 
 export async function openTerminal(cmd: string) {
@@ -54,19 +54,6 @@ export async function openTerminal(cmd: string) {
 	}
 }
 
-export async function installTeaCli(version: string): Promise<string> {
-	try {
-		log.info("installing tea-cli");
-		const command = 'TEA_YES=1 bash -c "sh <(curl https://tea.xyz)"';
-		const output = execSync(command, { encoding: "utf-8" });
-		log.info("tea-cli installed");
-		return "success";
-	} catch (error) {
-		log.error(error);
-		return error.message;
-	}
-}
-
 const createCommandScriptFile = async (cmd: string): Promise<string> => {
 	try {
 		const guiFolder = getGuiPath();
@@ -96,3 +83,17 @@ const createCommandScriptFile = async (cmd: string): Promise<string> => {
 		return "";
 	}
 };
+
+export async function asyncExec(cmd: string): Promise<string> {
+	return new Promise((resolve, reject) => {
+		exec(cmd, (err, stdout) => {
+			if (err) {
+				console.log("err:", err);
+				reject(err);
+				return;
+			}
+			console.log("stdout:", stdout);
+			resolve(stdout);
+		});
+	});
+}
