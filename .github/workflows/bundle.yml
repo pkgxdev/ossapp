@@ -43,5 +43,6 @@ jobs:
           name: darwin+aarch64
           path: ./tea-darwin+aarch64.zip
       - run: ls -lha
+      - run: cd ./tea-darwin+x86-64.zip && ls
       # - run: ./tea-darwin+aarch64 --version
 
