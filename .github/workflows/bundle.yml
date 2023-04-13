@@ -3,7 +3,7 @@ name: "deploy"
 on:
   push:
     branches:
-      - bundle-tea-cli
+      - bundled-tea-cli
 
 jobs:
   compile:
