@@ -44,11 +44,12 @@
 				searchStore.searching.set(true);
 			}}
 		/>
+
 		<kbd
-			class="bg-gray absolute top-0 right-3 mt-1 flex items-center rounded-sm px-2 text-white opacity-50"
+			class="bg-gray absolute top-0 right-3 mt-1 opacity-50 text-white flex items-center rounded-sm px-2" style="letter-spacing: 0.5pt"
 		>
-			<i class="text-lg">⌘</i>
-			<span class="text-xs">K</span>
+			<span class="text-lg">⌘</span>
+			<span class="text-xs" style="font-size: smaller">K</span>
 		</kbd>
 	</div>
 	<ProfileNavButton />
