@@ -43,6 +43,7 @@ jobs:
           name: darwin+aarch64
           path: ./tea-darwin+aarch64
       - run: ls tea-darwin+x86-64
-      # - run: ./tea-darwin+x86-64 --version
+      - run: chmod +x ./tea-darwin+x86-64
+      - run: ./tea-darwin+x86-64 --version
       # - run: ./tea-darwin+aarch64 --version
 
