@@ -7,9 +7,16 @@ import { nameToSlug } from "./package";
 import {
 	getInstalledPackages,
 	getPackagesInstalledList,
-	updatePackageInstalledList
+	updatePackageInstalledList,
+	getGuiPath
 } from "./tea-dir";
 import { app } from "electron";
+import { promisify } from "util";
+import fs from "fs";
+import path from "path";
+
+const readFile = promisify(fs.readFile);
+const writeFile = promisify(fs.writeFile);
 
 export default function initialize(mainWindow: BrowserWindow) {
 	Pushy.listen();
@@ -26,14 +33,21 @@ export default function initialize(mainWindow: BrowserWindow) {
 		});
 
 	// Listen for incoming notifications
-	Pushy.setNotificationListener((data: any) => {
+	Pushy.setNotificationListener(async (data: any) => {
 		// Display an alert with the "message" payload value
-		log.info("push data:", data);
-		// TODO: replace this with something
-		Pushy.alert(mainWindow, data?.message as string);
-		const v = app.dock.getBadge();
-		if (!v) {
-			app.dock.setBadge("1");
+		const isDup = await wasReceivedBefore(data);
+
+		if (!isDup) {
+			Pushy.alert(mainWindow, data?.message as string);
+			log.info("new notification received", data.url, data.version);
+			const v = app.dock.getBadge();
+			if (!v) {
+				app.dock.setBadge("1");
+			} else {
+				app.dock.setBadge((parseInt(v) + 1).toString());
+			}
+		} else {
+			log.info("notification was already received before", data);
 		}
 	});
 }
@@ -116,4 +130,37 @@ export function getTopicArch() {
 	const arch = (process.arch as string) === "arm64" ? "aarch64" : "x86-64";
 	const platform = process.platform === "darwin" ? "darwin" : "linux";
 	return `${platform}_${arch}` as PlatformArch;
+}
+
+async function wasReceivedBefore({
+	url,
+	version
+}: {
+	url: string;
+	version: string;
+}): Promise<boolean> {
+	let received = false;
+	const pkg = url.replace("tea://packages/", "");
+	const searchString = `${pkg}:::${version}`;
+	const notificationPath = path.join(getGuiPath(), "notifications");
+	try {
+		const fileContent = await readFile(notificationPath, "utf-8");
+
+		if (fileContent.includes(searchString)) {
+			log.info("user has already been notified before of ", searchString);
+			received = true;
+		} else {
+			const appendString = fileContent ? `\n${searchString}` : searchString;
+			await writeFile(notificationPath, fileContent + appendString, "utf-8");
+		}
+	} catch (error) {
+		if (error.code === "ENOENT") {
+			// If the file does not exist, create the file and write the string
+			await writeFile(notificationPath, searchString, "utf-8");
+			log.info("notification file created with the ", searchString);
+		} else {
+			log.error("Error processing the file:", error);
+		}
+	}
+	return received;
 }
