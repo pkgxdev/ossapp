@@ -107,7 +107,7 @@
 	#content {
 		width: calc(100vw - 191px);
 		margin-left: 185px;
-		height: calc(100vh - 48px - 27px);
+		height: calc(100vh - 48px);
 		overflow: hidden;
 	}
 

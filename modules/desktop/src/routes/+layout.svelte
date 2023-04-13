@@ -74,7 +74,7 @@
 		overflow: hidden;
 	}
 	section {
-		height: calc(100vh - 50px - 25px); /* win.height - header - footer */
+		height: calc(100vh - 50px); /* win.height - header*/
 		overflow-y: auto;
 		box-sizing: border-box;
 	}

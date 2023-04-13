@@ -71,7 +71,7 @@
 		position: absolute;
 		left: 0px;
 		top: 0px;
-		height: calc(100vh - 48px - 27px); /* win.height - title-bar.height - footer.height */
+		height: calc(100vh - 48px); /* win.height - title-bar.height */
 		width: 190px;
 		box-sizing: border-box;
 	}
