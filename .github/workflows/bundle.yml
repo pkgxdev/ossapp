@@ -25,11 +25,11 @@ jobs:
           repository: 'teaxyz/cli'
           ref: 'v0.27'
       - run: tea -E deno task compile
-      - run: mv tea tea-${{ matrix.platform.build-id }}
+      - run: zip tea-${{ matrix.platform.build-id }}.zip tea
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.platform.build-id }}
-          path: ./tea-${{ matrix.platform.build-id }}
+          path: tea-${{ matrix.platform.build-id }}.zip
   build:
     needs: [compile]
     runs-on: macos-latest
@@ -37,13 +37,11 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: darwin+x86-64
-          path: ./tea-darwin+x86-64
+          path: ./tea-darwin+x86-64.zip
       - uses: actions/download-artifact@v3
         with:
           name: darwin+aarch64
-          path: ./tea-darwin+aarch64
-      - run: ls tea-darwin+x86-64
-      - run: chmod +x ./tea-darwin+x86-64
-      - run: ./tea-darwin+x86-64 --version
+          path: ./tea-darwin+aarch64.zip
+      - run: ls -lha
       # - run: ./tea-darwin+aarch64 --version
 
