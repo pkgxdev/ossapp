@@ -1,0 +1,27 @@
+name: "deploy"
+
+on:
+  push:
+    branches:
+      - bundle-tea-cli
+
+jobs:
+  compile:
+    strategy:
+      matrix:
+        platform:
+        - os: macos-11
+          build-id: darwin+x86-64
+        - os: [self-hosted, macOS, ARM64]
+          build-id: darwin+aarch64
+    runs-on: ${{ matrix.platform.os }}
+    name: ${{ matrix.platform.build-id }}
+    steps:
+      - uses: teaxyz/setup@v0
+        with:
+          version: 0.26.2
+      - uses: actions/checkout@v3
+        with:
+          repository: 'teaxyz/cli'
+          ref: 'v0.27'
+      - run: tea -E deno task compile
