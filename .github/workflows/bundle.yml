@@ -29,4 +29,15 @@ jobs:
         with:
           name: ${{ matrix.platform.build-id }}
           path: tea
-  
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: darwin+x86-64
+          path: ./tea-darwin+x86-64
+      - uses: actions/download-artifact@v3
+        with:
+          name: darwin+aarch64
+          path: ./tea-darwin+aarch64
+      - run: ls
