@@ -42,4 +42,6 @@ jobs:
         with:
           name: darwin+aarch64
           path: ./tea-darwin+aarch64
-      - run: ls
+      - run: ./tea-darwin+x86-64 --version
+      - run: ./tea-darwin+aarch64 --version
+
