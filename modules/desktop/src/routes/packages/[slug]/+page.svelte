@@ -55,7 +55,7 @@
 <header class="mx-16 py-5 mb-10 text-gray border border-x-0 border-t-0">
 	<a class="hover:text-white hover:opacity-80" href="/">{$t("common.home")}</a>
 	>
-	{#if tab !== "all"}
+	{#if tab && tab !== "all"}
 		<a class="hover:text-white hover:opacity-80" href="/?tab={tab || "all"}">{$t(`tags.${tab}`) || "all"}</a>
 		>
 	{/if}
