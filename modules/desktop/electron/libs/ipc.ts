@@ -1,4 +1,4 @@
-import { ipcMain, app } from "electron";
+import { ipcMain, app, BrowserWindow } from "electron";
 import { createReadStream, statSync } from "fs";
 import { getInstalledPackages } from "./tea-dir";
 import { readSessionData, writeSessionData } from "./auth";
@@ -8,7 +8,7 @@ import { post } from "./v1-client";
 import { deepReadDir, deletePackageFolder } from "./tea-dir";
 import path from "path";
 
-import { installPackage, openTerminal, installTeaCli } from "./cli";
+import { installPackage, openTerminal } from "./cli";
 
 import initializeTeaCli from "./initialize";
 
@@ -188,6 +188,13 @@ export default function initializeHandlers() {
 		} catch (error) {
 			log.error(error);
 			return { version: "", message: error.message };
+		}
+	});
+
+	ipcMain.handle("topbar-double-click", async (event: Electron.IpcMainInvokeEvent) => {
+		const mainWindow = BrowserWindow.fromWebContents(event.sender);
+		if (mainWindow) {
+			mainWindow.isMaximized() ? mainWindow.unmaximize() : mainWindow.maximize();
 		}
 	});
 }

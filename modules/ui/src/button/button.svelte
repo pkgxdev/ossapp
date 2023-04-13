@@ -71,6 +71,14 @@
 		background: #01997d;
 	}
 
+	button.plain.primary:active {
+		background: #01997d;
+	}
+
+	button.plain.primary:active::before {
+		background: #01997d;
+	}
+
 	button.primary::before {
 		background: #0ecaa7;
 	}
@@ -83,6 +91,14 @@
 	}
 
 	button.plain.secondary.active {
+		background: #410182;
+	}
+
+	button.plain.secondary:active {
+		background: #410182;
+	}
+
+	button.plain.secondary:active::before {
 		background: #410182;
 	}
 
@@ -111,19 +127,36 @@
 		background: white;
 	}
 
+	button.plain.black:active {
+		background: #e1e1e1;
+	}
+
+	button.plain.black:active::before {
+		background: #e1e1e1;
+	}
+
 	/* black button inverts colors on hover */
 	button.black:hover {
 		color: #1a1a1a;
 		background: white;
 	}
 
-	/* green */
+	/* blue */
 	button.plain.blue {
-		background: #013b99;
+		background: #2675f5;
+		border: 1px solid #2675f5;
 		color: white;
 	}
 
 	button.blue::before {
-		background: #2675f5;
+		background: #013b99;
+	}
+
+	button.plain.blue:active {
+		background: #012765;
+	}
+
+	button.plain.blue:active::before {
+		background: #012765;
 	}
 </style>

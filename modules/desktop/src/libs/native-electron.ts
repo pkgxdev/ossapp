@@ -256,3 +256,11 @@ export const installTeaCli = async (): Promise<string> => {
 	const res = await ipcRenderer.invoke("install-tea-cli");
 	return res.version;
 };
+
+export const topbarDoubleClick = async () => {
+	try {
+		ipcRenderer.invoke("topbar-double-click");
+	} catch (error) {
+		log.error(error);
+	}
+};
