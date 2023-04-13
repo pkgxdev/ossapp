@@ -25,3 +25,8 @@ jobs:
           repository: 'teaxyz/cli'
           ref: 'v0.27'
       - run: tea -E deno task compile
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.platform.build-id }}
+          path: tea
+  
