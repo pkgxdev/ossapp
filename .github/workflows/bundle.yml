@@ -10,10 +10,8 @@ jobs:
     strategy:
       matrix:
         platform:
-        # - os: macos-11
-        #   build-id: darwin+x86-64
-        - os: [self-hosted, macOS, ARM64]
-          build-id: darwin+aarch64
+        - os: macos-11
+          build-id: darwin+x86-64
     runs-on: ${{ matrix.platform.os }}
     name: ${{ matrix.platform.build-id }}
     steps:
@@ -24,13 +22,15 @@ jobs:
         with:
           repository: 'teaxyz/cli'
           ref: 'v0.27'
-      - run: tea -E deno task compile
-      - run: codesign -dv --verbose=4 ./tea
-      - run: mv tea tea-${{ matrix.platform.build-id }}
+      - run: mkdir bins
+      - run: tea -E deno compile --target x86_64-apple-darwin --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea-x86-64 src/app.ts
+      - run: tea -E deno compile --target aarch64-apple-darwin --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea-arm64 src/app.ts
+      - run: codesign -dv --verbose=4 ./bins/tea-x86-64
+      - run: codesign -dv --verbose=4 ./bins/tea-arm64
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.platform.build-id }}
-          path: tea-${{ matrix.platform.build-id }}
+          path: ./bins
   # build_desktop:
   #   needs: [compile]
   #   strategy:
