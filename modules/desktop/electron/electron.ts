@@ -181,10 +181,13 @@ app.on("open-url", (event, url) => {
 
 	setProtocolPath(rawPath);
 
-	if (mainWindow && mainWindow.isMinimized()) {
-		mainWindow.restore();
-		log.info("restored");
-		mainWindow?.webContents.send("sync-path");
+	if (mainWindow) {
+		if (mainWindow.isMinimized()) {
+			mainWindow.restore();
+			log.info("restored");
+		}
+		mainWindow.webContents.send("sync-path");
+		log.info("synced path", rawPath);
 	} else if (macWindowClosed) {
 		log.info("open new window");
 		createMainWindow();

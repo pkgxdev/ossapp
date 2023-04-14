@@ -57,10 +57,8 @@
 <header class="text-gray mx-16 mb-4 border border-x-0 border-t-0 py-5">
 	<a class="hover:text-white hover:opacity-80" href="/">{$t("common.home")}</a>
 	>
-	{#if tab !== "all"}
-		<a class="hover:text-white hover:opacity-80" href="/?tab={tab || 'all'}"
-			>{$t(`tags.${tab}`) || "all"}</a
-		>
+	{#if tab && tab !== "all"}
+		<a class="hover:text-white hover:opacity-80" href="/?tab={tab || "all"}">{$t(`tags.${tab}`) || "all"}</a>
 		>
 	{/if}
 	<span class="text-white">{pkg?.full_name}</span>
