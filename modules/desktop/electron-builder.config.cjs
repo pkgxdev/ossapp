@@ -7,7 +7,7 @@ const _ = require("lodash");
 module.exports = {
 	appId: "xyz.tea.gui",
 	productName: "tea",
-	asar: false,
+	asar: true,
 	directories: { output: "dist" },
 	files: ["electron/dist/electron.cjs", { from: "build", to: "" }],
 	linux: {
@@ -59,14 +59,5 @@ module.exports = {
 		// url: "https://d2ovumu63qzbn6.cloudfront.net/"
 		url: "https://s3.amazonaws.com/preview.gui.tea.xyz/release"
 	},
-	extraResources: [
-		{
-			from: "resources/tea-x86-64",
-			to: "tea-x86-64"
-		},
-		{
-			from: "resources/tea-arm64",
-			to: "tea-arm64"
-		},
-	],
+	asarUnpack: ["**/tea-x86-64", "**/tea-arm64"],
 };
