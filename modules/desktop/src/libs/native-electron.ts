@@ -157,9 +157,8 @@ export async function getPackage(packageName: string): Promise<Partial<Package>>
 
 export const getSession = async (): Promise<Session | null> => {
 	try {
-		log.info("getting local session data");
 		const session = await ipcRenderer.invoke("get-session");
-		log.info("local session data ", session ? "found" : "not found");
+		if (!session) throw new Error("no session found");
 		return session;
 	} catch (error) {
 		log.error(error);
