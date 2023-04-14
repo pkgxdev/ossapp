@@ -35,7 +35,7 @@ jobs:
           platform: ${{ inputs.platform }}
   build:
     needs: [get-platform]
-    runs-on: ${{ fromJson(needs.get-platform.outputs.os) }}
+    runs-on: [self-hosted, macOS, ARM64]
     outputs:
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
     steps:
