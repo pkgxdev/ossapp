@@ -20,7 +20,7 @@
 	on:leave_delay={() => unexpand()}
 >
 	<header
-		class="mt-1 flex h-8 items-center justify-between px-1 hover:outline outline-gray outline-1 hover:bg-gray hover:bg-opacity-25 focus:bg-secondary"
+		class="mt-1 flex h-8 items-center justify-between px-1 outline-1 outline-gray hover:bg-gray hover:bg-opacity-25 hover:outline focus:bg-secondary"
 	>
 		<span>{label || value}</span>
 		<i class="icon-downward-arrow mt-1" />
@@ -29,7 +29,7 @@
 	<div class="dropdown pr-2 transition-all">
 		{#each options as option}
 			<button
-				class="flex h-6 w-full items-center justify-between gap-x-1 px-2 m-[1px] text-xs hover:bg-gray outline-gray hover:outline outline-1 hover:bg-opacity-25"
+				class="m-[1px] flex h-6 w-full items-center justify-between gap-x-1 px-2 text-xs outline-1 outline-gray hover:bg-gray hover:bg-opacity-25 hover:outline"
 				on:click={() => (value = option.value)}
 			>
 				<div>{option.label}</div>
