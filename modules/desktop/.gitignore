@@ -10,3 +10,4 @@ coverage/*
 dist/*
 electron/dist/*
 electron/package.json
+external/*

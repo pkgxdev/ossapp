@@ -95,7 +95,7 @@ jobs:
             ./modules/desktop/build
 
       - name: build dev
-        if: inputs.s3-prefix != 'release'
+        if: inputs.s3-prefix != 'release' || inputs.s3-prefix != 'bundle-test'
         run: tea -SE xc dist
         env:
           SYNC_I18N: 1
@@ -110,7 +110,7 @@ jobs:
 
       # slower build but dmg output is much nicer looking
       - name: build release
-        if: inputs.s3-prefix == 'release'
+        if: inputs.s3-prefix == 'release' || inputs.s3-prefix == 'bundle-test'
         run: tea -SE xc dist
         env:
           SYNC_I18N: 1

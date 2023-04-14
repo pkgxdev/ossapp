@@ -9,7 +9,7 @@ module.exports = {
 	productName: "tea",
 	asar: true,
 	directories: { output: "dist" },
-	files: ["electron/dist/electron.cjs", { from: "build", to: "" }],
+	files: ["electron/dist/electron.cjs", { from: "build", to: "" }, "external/**/*"],
 	linux: {
 		icon: "./icon.png"
 	},
@@ -59,8 +59,5 @@ module.exports = {
 		// url: "https://d2ovumu63qzbn6.cloudfront.net/"
 		url: "https://s3.amazonaws.com/preview.gui.tea.xyz/release"
 	},
-	asarUnpack: ["resources/*"],
-	dmg: {
-		sign: false
-	}
+	asarUnpack: ["external/**/*"]
 };
