@@ -155,7 +155,7 @@ jobs:
           CROWDIN_API_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
 
   notarize-mac-installers:
-    if: inputs.s3-prefix != 'release'
+    if: inputs.s3-prefix != 'release' && inputs.s3-prefix != 'bundle-test'
     # TODO: run only for mac, create separate Job for linux
     needs: [get-platform, build]
     runs-on: macos-11
