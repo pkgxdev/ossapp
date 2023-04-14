@@ -6,36 +6,16 @@ on:
       - bundled-tea-cli
 
 jobs:
-  compile:
-    strategy:
-      matrix:
-        platform:
-        - os: macos-11
-          build-id: darwin+x86-64
-    runs-on: ${{ matrix.platform.os }}
-    name: ${{ matrix.platform.build-id }}
-    steps:
-      - uses: teaxyz/setup@v0
-        with:
-          version: 0.26.2
-      - uses: actions/checkout@v3
-        with:
-          repository: 'teaxyz/cli'
-          ref: 'v0.27'
-      - run: mkdir bins
-      - run: tea -E deno compile --target x86_64-apple-darwin --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea-x86-64 src/app.ts
-      - run: tea -E deno compile --target aarch64-apple-darwin --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea-arm64 src/app.ts
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.platform.build-id }}
-          path: ./bins
+  build_cli:
+    uses: ./.github/workflows/build-cli.yml
+    secrets: inherit
   build_desktop:
-    needs: [compile]
+    needs: [build_cli]
     strategy:
       matrix:
         platform:
           # X86+64 is built with ARM64 also
-          - darwin+x86-64
+          - darwin+aarch64
     uses: ./.github/workflows/build-sign-notarize.yml
     with:
       platform: ${{ matrix.platform }}

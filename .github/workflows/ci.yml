@@ -124,137 +124,138 @@ jobs:
             https://${{steps.preview_setup.outputs.domain}}
             ```
             copy-paste into a browser to view
-  build_desktop:
-    needs: [changes, test]
-    # if: needs.changes.outputs.desktop == 'true'
-    strategy:
-      matrix:
-        platform:
-          # X86+64 is built with ARM64 also
-          - darwin+aarch64
-    uses: ./.github/workflows/build-sign-notarize.yml
-    with:
-      platform: ${{ matrix.platform }}
-      s3-prefix: ${{ needs.changes.outputs.preview_folder || 'dev-pr' }}
-      debug: 1
-    secrets: inherit
-  upload:
-    needs: [build_desktop, changes]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform:
-          # x86 included already in aarch64
-          - name: darwin+aarch64
-            id: mac_m1
-          # - name: linux+x86-64
-          #   id: linux
-          # - name: linux+aarch64
-          #   id: linux_arm64
-    steps:
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
-    - name: s3 artifact download
-      env:
-        S3_INSTALLER_KEY: ${{ needs.build_desktop.outputs.s3-custom-notarized-installers-key }}
-      run: aws s3 cp $S3_INSTALLER_KEY dist.tgz
+  # TEMP DISABLE: we are not using this much at the moment for preview testing
+  # build_desktop:
+  #   needs: [changes, test]
+  #   # if: needs.changes.outputs.desktop == 'true'
+  #   strategy:
+  #     matrix:
+  #       platform:
+  #         # X86+64 is built with ARM64 also
+  #         - darwin+aarch64
+  #   uses: ./.github/workflows/build-sign-notarize.yml
+  #   with:
+  #     platform: ${{ matrix.platform }}
+  #     s3-prefix: ${{ needs.changes.outputs.preview_folder || 'dev-pr' }}
+  #     debug: 1
+  #   secrets: inherit
+  # upload:
+  #   needs: [build_desktop, changes]
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       platform:
+  #         # x86 included already in aarch64
+  #         - name: darwin+aarch64
+  #           id: mac_m1
+  #         # - name: linux+x86-64
+  #         #   id: linux
+  #         # - name: linux+aarch64
+  #         #   id: linux_arm64
+  #   steps:
+  #   - uses: aws-actions/configure-aws-credentials@v1
+  #     with:
+  #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #       aws-region: us-east-1
+  #   - name: s3 artifact download
+  #     env:
+  #       S3_INSTALLER_KEY: ${{ needs.build_desktop.outputs.s3-custom-notarized-installers-key }}
+  #     run: aws s3 cp $S3_INSTALLER_KEY dist.tgz
 
-    - run: mkdir dist
-    - run: tar xzf dist.tgz -C dist
+  #   - run: mkdir dist
+  #   - run: tar xzf dist.tgz -C dist
 
-    - name: get installer filenames of arm64 and x86+64
-      id: app_files
-      working-directory: ./dist
-      run: |
-        ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
-        X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
-        ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
-        X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
-        echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
-        echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
-        echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
-        echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
+  #   - name: get installer filenames of arm64 and x86+64
+  #     id: app_files
+  #     working-directory: ./dist
+  #     run: |
+  #       ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
+  #       X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
+  #       ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
+  #       X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
+  #       echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
+  #       echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
+  #       echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
+  #       echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
 
-    - name: build platform output
-      id: build_platform
-      env:
-        platform: ${{ matrix.platform.name }}
-      run: |
-        BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
-        EXTENSION=dmg
-        case $platform in
-          "linux+x86-64")
-            BUILD_PLATFORM="amd64"
-            EXTENSION="deb"
-            ;;
-          "linux+aarch64")
-            BUILD_PLATFORM="aarch64"
-            EXTENSION="deb"
-            ;;
-          "darwin+aarch64")
-            BUILD_PLATFORM="aarch64"
-            EXTENSION="dmg"
-            ;;
-          "darwin+x86-64")
-            BUILD_PLATFORM="x64"
-            EXTENSION="dmg"
-            ;;
-          *)
-            echo "Unknown platform $platform"
-            exit 1
-            ;;
-        esac
-        echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
-        echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
+  #   - name: build platform output
+  #     id: build_platform
+  #     env:
+  #       platform: ${{ matrix.platform.name }}
+  #     run: |
+  #       BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
+  #       EXTENSION=dmg
+  #       case $platform in
+  #         "linux+x86-64")
+  #           BUILD_PLATFORM="amd64"
+  #           EXTENSION="deb"
+  #           ;;
+  #         "linux+aarch64")
+  #           BUILD_PLATFORM="aarch64"
+  #           EXTENSION="deb"
+  #           ;;
+  #         "darwin+aarch64")
+  #           BUILD_PLATFORM="aarch64"
+  #           EXTENSION="dmg"
+  #           ;;
+  #         "darwin+x86-64")
+  #           BUILD_PLATFORM="x64"
+  #           EXTENSION="dmg"
+  #           ;;
+  #         *)
+  #           echo "Unknown platform $platform"
+  #           exit 1
+  #           ;;
+  #       esac
+  #       echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
+  #       echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
 
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+  #   - uses: aws-actions/configure-aws-credentials@v1
+  #     with:
+  #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #       aws-region: us-east-1
 
-    - name: cp package images from prod to preview bucket
-      env:
-        prefix: ${{ needs.changes.outputs.preview_folder }}
-      run: |
-        cd dist && \
-        aws s3 sync . \
-          "s3://preview.gui.tea.xyz/$prefix/"
+  #   - name: cp package images from prod to preview bucket
+  #     env:
+  #       prefix: ${{ needs.changes.outputs.preview_folder }}
+  #     run: |
+  #       cd dist && \
+  #       aws s3 sync . \
+  #         "s3://preview.gui.tea.xyz/$prefix/"
 
-    - name: comment install for Linux
-      if: startsWith(matrix.platform.name, 'linux')
-      uses: mshick/add-pr-comment@v2
-      with:
-        message-id: ${{ matrix.platform.id }}-comment
-        message: |
-          **installer for Linux ${{ matrix.platform.name }} is at**:
-          ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.build_platform.outputs.filename }}
-          ```
-          copy-paste into a browser to download
+  #   - name: comment install for Linux
+  #     if: startsWith(matrix.platform.name, 'linux')
+  #     uses: mshick/add-pr-comment@v2
+  #     with:
+  #       message-id: ${{ matrix.platform.id }}-comment
+  #       message: |
+  #         **installer for Linux ${{ matrix.platform.name }} is at**:
+  #         ```bash
+  #         http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.build_platform.outputs.filename }}
+  #         ```
+  #         copy-paste into a browser to download
 
-    - name: comment install for MacOS
-      if: startsWith(matrix.platform.name, 'darwin')
-      uses: mshick/add-pr-comment@v2
-      with:
-        message-id: darwin+aarch64-comment
-        message: |
-          **installers for MacOS darwin+aarch64 is at**:
-          ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_arm64 }}
-          ```
-          copy-paste into a browser to download
-    - name: comment install for MacOS
-      if: startsWith(matrix.platform.name, 'darwin')
-      uses: mshick/add-pr-comment@v2
-      with:
-        message-id: darwin+x86-64-comment
-        message: |
-          **installers for MacOS darwin+x86-64 is at**:
-          ```bash
-          http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_x86 }}
-          ```
-          copy-paste into a browser to download
+  #   - name: comment install for MacOS
+  #     if: startsWith(matrix.platform.name, 'darwin')
+  #     uses: mshick/add-pr-comment@v2
+  #     with:
+  #       message-id: darwin+aarch64-comment
+  #       message: |
+  #         **installers for MacOS darwin+aarch64 is at**:
+  #         ```bash
+  #         http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_arm64 }}
+  #         ```
+  #         copy-paste into a browser to download
+  #   - name: comment install for MacOS
+  #     if: startsWith(matrix.platform.name, 'darwin')
+  #     uses: mshick/add-pr-comment@v2
+  #     with:
+  #       message-id: darwin+x86-64-comment
+  #       message: |
+  #         **installers for MacOS darwin+x86-64 is at**:
+  #         ```bash
+  #         http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_x86 }}
+  #         ```
+  #         copy-paste into a browser to download
