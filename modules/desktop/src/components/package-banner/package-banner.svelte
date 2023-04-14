@@ -5,7 +5,7 @@
 	import Button from "@tea/ui/button/button.svelte";
 	import semverCompare from "semver/functions/compare";
 
-	import { PackageStates, type GUIPackage } from "$libs/types";
+	import type { GUIPackage } from "$libs/types";
 	import { packagesStore } from "$libs/stores";
 	import { shellOpenExternal } from "@native";
 	import InstallButton from "$components/install-button/install-button.svelte";
@@ -20,9 +20,6 @@
 		installing = true;
 		await packagesStore.installPkg(pkg, version);
 		installing = false;
-		packagesStore.updatePackage(pkg.full_name, {
-			state: PackageStates.INSTALLED
-		});
 	};
 
 	const prune = async () => {
@@ -41,7 +38,7 @@
 <section class="mt-4 bg-black">
 	<header class="flex">
 		<figure class="grow-1 w-1/3">
-			<img width={260} src={pkg.thumb_image_url} alt={pkg.full_name} />
+			<img class="w-full" src={pkg.thumb_image_url} alt={pkg.full_name} />
 		</figure>
 		<article class="w-2/3 p-4 pt-8">
 			<h3 class="text-primary text-3xl">{pkg.full_name}</h3>
