@@ -75,7 +75,6 @@
 	}
 	section {
 		height: calc(100vh - 50px); /* win.height - header*/
-		overflow-y: auto;
 		box-sizing: border-box;
 	}
 
