@@ -29,19 +29,25 @@ jobs:
         with:
           name: ${{ matrix.platform.build-id }}
           path: ./bins
-  build_desktop:
-    needs: [compile]
-    strategy:
-      matrix:
-        platform:
-          # X86+64 is built with ARM64 also
-          - darwin+x86-64
-    uses: ./.github/workflows/build-sign-notarize.yml
-    with:
-      platform: ${{ matrix.platform }}
-      s3-prefix: bundle-test
-      debug: 0
-    secrets: inherit
+      - name: replace old DMG files in dist folder
+        run: tar -czvf bins.tgz -C bins/ .
+
+      - name: s3 cli upload
+        run: |
+          aws s3 cp bins.tgz s3://preview.gui.tea.xyz/bundle-test/bin.tgz
+  # build_desktop:
+  #   needs: [compile]
+  #   strategy:
+  #     matrix:
+  #       platform:
+  #         # X86+64 is built with ARM64 also
+  #         - darwin+x86-64
+  #   uses: ./.github/workflows/build-sign-notarize.yml
+  #   with:
+  #     platform: ${{ matrix.platform }}
+  #     s3-prefix: bundle-test
+  #     debug: 0
+  #   secrets: inherit
 
   # build:
   #   needs: [compile]
