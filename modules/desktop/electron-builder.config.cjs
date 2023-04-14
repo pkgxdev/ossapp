@@ -61,8 +61,12 @@ module.exports = {
 	},
 	extraResources: [
 		{
-			from: "resources/tea-darwin+x86-64",
-			to: "tea-darwin+x86-64"
-		}
+			from: "resources/tea-x86-64",
+			to: "tea-x86-64"
+		},
+		{
+			from: "resources/tea-arm64",
+			to: "tea-arm64"
+		},
 	],
 };
