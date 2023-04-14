@@ -23,6 +23,10 @@ jobs:
       - run: mkdir bins
       - run: tea -E deno compile --target x86_64-apple-darwin --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea-x86-64 src/app.ts
       - run: tea -E deno compile --target aarch64-apple-darwin --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea-arm64 src/app.ts
+      - name: rm attributes
+        run: |
+          xattr -c bins/tea-x86-64
+          xattr -c bins/tea-arm64
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.platform.build-id }}
