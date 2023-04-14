@@ -120,10 +120,13 @@ export async function readSessionData(): Promise<Session> {
 		const locale = app.getLocale();
 		const sessionBuffer = await fs.readFileSync(sessionFilePath);
 		const session = JSON.parse(sessionBuffer.toString()) as Session;
+		if (!session?.device_id) throw new Error("device_id is empty!");
+
 		session.locale = locale;
 		sessionMemory = session;
 		log.info("re-read session data done");
 	} catch (error) {
+		sessionMemory = await createInitialSessionFile();
 		log.error(error);
 	}
 	return sessionMemory;

@@ -12,17 +12,21 @@
 
   const openGithub = async () => {
     authenticating = true;
-		try {
-      const session = await getSession();
-      if (session && session.device_id) {
-		    shellOpenExternal(`${baseUrl}/auth/user?device_id=${session.device_id}`)
+    if (!authenticating) {
+      try {
+        const session = await getSession();
+        if (session && session.device_id) {
+          shellOpenExternal(`${baseUrl}/auth/user?device_id=${session.device_id}`);
+          authStore.pollSession();
+        } else {
+          throw new Error("possible no internet connection");
+        }
+      } catch (error) {
+        submittedMessage = (error as Error).message;
+        console.error(error);
+      } finally {
+        authenticating = false;
       }
-			authStore.pollSession();
-		} catch (error) {
-      submittedMessage = (error as Error).message;
-			console.error(error);
-		} finally {
-      authenticating = false;
     }
 	};
 
