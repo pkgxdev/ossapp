@@ -50,7 +50,7 @@ jobs:
 
       - run: |
           mkdir -p modules/desktop/resources
-          mv tea-darwin+x86-64 modules/desktop/resources/tea-darwin+x86-64
+          mb bins/* modules/desktop/resources
   
       - name: get gui version
         id: gui-version

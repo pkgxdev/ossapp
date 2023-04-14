@@ -25,25 +25,23 @@ jobs:
       - run: mkdir bins
       - run: tea -E deno compile --target x86_64-apple-darwin --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea-x86-64 src/app.ts
       - run: tea -E deno compile --target aarch64-apple-darwin --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea-arm64 src/app.ts
-      - run: codesign -dv --verbose=4 ./bins/tea-x86-64
-      - run: codesign -dv --verbose=4 ./bins/tea-arm64
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.platform.build-id }}
           path: ./bins
-  # build_desktop:
-  #   needs: [compile]
-  #   strategy:
-  #     matrix:
-  #       platform:
-  #         # X86+64 is built with ARM64 also
-  #         - darwin+x86-64
-  #   uses: ./.github/workflows/build-sign-notarize.yml
-  #   with:
-  #     platform: ${{ matrix.platform }}
-  #     s3-prefix: release
-  #     debug: 0
-  #   secrets: inherit
+  build_desktop:
+    needs: [compile]
+    strategy:
+      matrix:
+        platform:
+          # X86+64 is built with ARM64 also
+          - darwin+x86-64
+    uses: ./.github/workflows/build-sign-notarize.yml
+    with:
+      platform: ${{ matrix.platform }}
+      s3-prefix: release
+      debug: 0
+    secrets: inherit
 
   # build:
   #   needs: [compile]
