@@ -1,5 +1,8 @@
 name: build-cli
 
+on:
+  workflow_call:
+
 jobs:
   compile:
     strategy:
