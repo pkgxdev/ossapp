@@ -38,7 +38,7 @@
 <section class="mt-4 bg-black">
 	<header class="flex">
 		<figure class="grow-1 w-1/3">
-			<img width={260} src={pkg.thumb_image_url} alt={pkg.full_name} />
+			<img class="w-full" src={pkg.thumb_image_url} alt={pkg.full_name} />
 		</figure>
 		<article class="w-2/3 p-4 pt-8">
 			<h3 class="text-primary text-3xl">{pkg.full_name}</h3>

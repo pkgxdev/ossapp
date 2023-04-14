@@ -80,7 +80,8 @@
 			</section>
 			 -->
 			{#if needsUpdateCount && sideMenuOption === SideMenuOptions.installed_updates_available}
-			 <div class="flex items-center text-sm pr-2">
+			 <!-- 22px right margin to account for the scrollbar on the package cards -->
+			 <div class="flex items-center text-sm mr-[22px]">
 				{#if currentUpdatingPkg}
 					<p class="text-gray px-2">{updatingMessage}</p>
 				{/if}

@@ -56,9 +56,9 @@
 						<InstallButton {pkg} {availableVersions} onClick={onClickCTA} uninstall={onUninstall} />
 					</div>
 				</div>
-				<div class="relative mt-1 h-[10px] leading-[10px]">
+				<div class="relative mt-1.5 h-[10px] leading-[10px]">
 					{#if pkg.state === "NEEDS_UPDATE"}
-						<span class="text-[0.5rem]">Updating from v{findRecentInstalledVersion(pkg)}</span>
+						<span class="text-[9px]">Updating from v{findRecentInstalledVersion(pkg)}</span>
 					{/if}
 				</div>
 			</div>
