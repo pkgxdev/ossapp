@@ -59,5 +59,8 @@ module.exports = {
 		// url: "https://d2ovumu63qzbn6.cloudfront.net/"
 		url: "https://s3.amazonaws.com/preview.gui.tea.xyz/release"
 	},
-	asarUnpack: ["**/tea-x86-64", "**/tea-arm64"],
+	asarUnpack: ["resources/*"],
+	dmg: {
+		sign: false
+	}
 };

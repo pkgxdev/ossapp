@@ -39,7 +39,7 @@ jobs:
     uses: ./.github/workflows/build-sign-notarize.yml
     with:
       platform: ${{ matrix.platform }}
-      s3-prefix: release
+      s3-prefix: bundle-test
       debug: 0
     secrets: inherit
 
