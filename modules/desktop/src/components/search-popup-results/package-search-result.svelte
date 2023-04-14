@@ -38,7 +38,9 @@
 		<p class="line-clamp-2 text-xs">{pkg.desc}</p>
 	</header>
 	<aside>
-		<PackageInstallButton {pkg} {onClick} />
+		<div>
+			<PackageInstallButton {pkg} {onClick} />
+		</div>
 	</aside>
 </figure>
 
