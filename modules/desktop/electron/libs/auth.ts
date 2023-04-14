@@ -29,29 +29,57 @@ const initialized: Promise<Session> = new Promise((resolve, reject) => {
 	}
 });
 
-async function createInitialSessionFile(): Promise<Session> {
+async function addEmptySessionFile(): Promise<Session> {
+	const locale = app.getLocale();
+	await mkdirp(sessionFolder);
+	const data = {
+		device_id: await getDeviceId(),
+		locale
+	};
+	await writeSessionData(data);
+	log.info("new session file created");
+	return data;
+}
+
+export async function createInitialSessionFile(): Promise<Session> {
+	// TODO: this looks nasty, refactor this
+	// the app is too dependent that this function succeeds
 	let session = {
 		...sessionMemory
 	};
+	const locale = app.getLocale();
+
 	try {
-		const locale = app.getLocale();
 		if (fs.existsSync(sessionFilePath)) {
 			log.info("session file exists!");
 			const sessionBuffer = await fs.readFileSync(sessionFilePath);
-			session = JSON.parse(sessionBuffer.toString()) as Session;
-			session.locale = locale;
-		} else {
-			log.info("session file does not exists!");
-			await mkdirp(sessionFolder);
-			const data = {
-				device_id: await getDeviceId(),
-				locale
-			};
-			await writeSessionData(data);
+			const sessionData = JSON.parse(sessionBuffer.toString()) as Session;
+
+			if (!sessionData?.device_id) {
+				throw new Error("device_id is empty!");
+			} else {
+				session = sessionData;
+				session.locale = locale;
+			}
 		}
 	} catch (error) {
 		log.error(error);
 	}
+
+	if (!session?.device_id) {
+		try {
+			const newSession = await addEmptySessionFile();
+			if (newSession) {
+				session = newSession;
+				session.locale = locale;
+			}
+		} catch (error) {
+			log.error(error);
+		}
+	}
+
+	sessionMemory = session;
+
 	return session;
 }
 
@@ -83,19 +111,22 @@ export async function readSessionData(): Promise<Session> {
 		data?.user?.developer_id
 	);
 	if (sessionMemory?.device_id) {
-		log.info("use session cache");
+		log.debug("use session cache");
 		return sessionMemory;
 	}
 
 	try {
-		log.info("reading session data");
+		log.info("re-reading session data");
 		const locale = app.getLocale();
 		const sessionBuffer = await fs.readFileSync(sessionFilePath);
 		const session = JSON.parse(sessionBuffer.toString()) as Session;
+		if (!session?.device_id) throw new Error("device_id is empty!");
+
 		session.locale = locale;
 		sessionMemory = session;
-		log.info("read session data");
+		log.info("re-read session data done");
 	} catch (error) {
+		sessionMemory = await createInitialSessionFile();
 		log.error(error);
 	}
 	return sessionMemory;
@@ -107,6 +138,9 @@ export async function writeSessionData(data: Session) {
 			...sessionMemory,
 			...data
 		};
+
+		if (!sessionMemory.device_id) throw new Error("writing without device_id is not allowed!");
+
 		log.info("creating:", sessionFolder);
 		await mkdirp(sessionFolder);
 		log.info("writing session data:", data); // rm this

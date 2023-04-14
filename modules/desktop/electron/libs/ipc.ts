@@ -39,7 +39,7 @@ export default function initializeHandlers() {
 		try {
 			log.info("getting session");
 			const session = await readSessionData();
-			log.info(session ? "found session data" : "no session data found");
+			log.debug(session ? "found session data" : "no session data found");
 			return session;
 		} catch (error) {
 			log.error(error);

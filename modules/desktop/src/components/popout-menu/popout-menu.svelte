@@ -4,19 +4,30 @@
 	import { baseUrl } from '$libs/v1-client';
 	import { shellOpenExternal, submitLogs } from '@native';
   import mouseLeaveDelay from "@tea/ui/lib/mouse-leave-delay";
+  import { getSession } from '@native';
 
-  const { user, deviceIdStore } = authStore;
+  const { user } = authStore;
 
   let authenticating = false;
 
-  const openGithub = () => {
+  const openGithub = async () => {
     authenticating = true;
-		shellOpenExternal(`${baseUrl}/auth/user?device_id=${$deviceIdStore}`)
-		try {
-			authStore.pollSession();
-		} catch (error) {
-			console.error(error);
-		}
+    if (!authenticating) {
+      try {
+        const session = await getSession();
+        if (session && session.device_id) {
+          shellOpenExternal(`${baseUrl}/auth/user?device_id=${session.device_id}`);
+          authStore.pollSession();
+        } else {
+          throw new Error("possible no internet connection");
+        }
+      } catch (error) {
+        submittedMessage = (error as Error).message;
+        console.error(error);
+      } finally {
+        authenticating = false;
+      }
+    }
 	};
 
   let submittedMessage = "";

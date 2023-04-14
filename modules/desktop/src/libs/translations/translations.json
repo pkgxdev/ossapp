@@ -46,7 +46,7 @@
 			"documentation": "Documentation",
 			"github-repository": "Github Repository",
 			"contributors": "Contributors",
-			"view-on-github": "VIEW ON GitHub"
+			"view-on-github": "VIEW ON GITHUB"
 		},
 		"notification": {
 			"gui-downloading": "A new tea gui({{version}}) is being downloaded. Please don't close the app.",

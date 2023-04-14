@@ -87,11 +87,7 @@
 			{#each packages as pkg, index}
 				{#if index < limit}
 					<div class="card z-1 p-1" class:animate-puls={pkg.state === PackageStates.INSTALLING}>
-						<Package
-							tab={packageFilter}
-							{pkg}
-							onClick={(version) => packagesStore.installPkg(pkg, version)}
-						/>
+						<Package tab={packageFilter} {pkg} />
 					</div>
 				{/if}
 			{/each}
@@ -112,7 +108,7 @@
 	ul {
 		margin-top: 0px;
 		padding-top: 80px;
-		height: calc(100vh - 76px);
+		height: calc(100vh - 49px);
 		overflow-y: scroll;
 		overflow-x: hidden;
 		padding-right: 4px;
