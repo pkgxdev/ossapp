@@ -47,6 +47,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: darwin+x86-64
+          path: ./bins
 
       - name: move tea-cli binary to resources
         run: |
