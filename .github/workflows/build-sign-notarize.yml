@@ -48,9 +48,10 @@ jobs:
         with:
           name: darwin+x86-64
 
-      - run: |
+      - name: move tea-cli binary to resources
+        run: |
           mkdir -p modules/desktop/resources
-          mb bins/* modules/desktop/resources
+          mv bins/* modules/desktop/resources
   
       - name: get gui version
         id: gui-version
