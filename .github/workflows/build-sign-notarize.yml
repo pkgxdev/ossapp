@@ -51,8 +51,8 @@ jobs:
 
       - name: move tea-cli binary to resources
         run: |
-          mkdir -p modules/desktop/resources
-          mv bins/* modules/desktop/resources
+          mkdir -p modules/desktop/external
+          mv bins/* modules/desktop/external
   
       - name: get gui version
         id: gui-version
