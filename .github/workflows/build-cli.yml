@@ -31,4 +31,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.platform.build-id }}
-          path: bin.zip
+          path: bins.zip
