@@ -97,24 +97,28 @@ jobs:
             ./modules/desktop/.svelte-kit
             ./modules/desktop/build
 
-      - name: build dev
-        if: inputs.s3-prefix != 'release' && inputs.s3-prefix != 'bundle-test'
-        run: tea -SE xc dist
-        env:
-          SYNC_I18N: 1
-          PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
-          DEBUG_BUILD: ${{ inputs.debug }}
-          PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
-          USE_HARD_LINKS: false
-          CSC_FOR_PULL_REQUEST: true
-          CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-          CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-          CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-
-      # slower build but dmg output is much nicer looking
       - name: build release
         if: inputs.s3-prefix == 'release' || inputs.s3-prefix == 'bundle-test'
-        run: tea -SE xc dist
+        run: |
+          retry_count=0
+          max_retries=3
+          while true; do
+            echo "Attempt #$((retry_count+1))"
+            set +e
+            tea -SE xc dist
+            exit_code=$?
+            set -e
+            if [ $exit_code -eq 0 ]; then
+              echo "Step succeeded"
+              break
+            elif [ $retry_count -ge $((max_retries-1)) ]; then
+              echo "Step failed after $max_retries retries"
+              exit $exit_code
+            else
+              echo "Step failed, retrying..."
+              retry_count=$((retry_count+1))
+            fi
+          done
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
           SYNC_I18N: 1
