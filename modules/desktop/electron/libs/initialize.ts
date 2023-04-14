@@ -46,6 +46,7 @@ export async function initializeTeaCli(): Promise<string> {
 	}
 }
 
-export default async function initialize() {
-	await Promise.all([initializeTeaCli(), createInitialSessionFile()]);
+export default async function initialize(): Promise<string> {
+	const [version] = await Promise.all([initializeTeaCli(), createInitialSessionFile()]);
+	return version;
 }
