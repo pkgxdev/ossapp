@@ -25,7 +25,7 @@ jobs:
           repository: 'teaxyz/cli'
           ref: 'v0.27'
       - run: tea -E deno task compile
-      - run: codesign --remove-signature ./tea
+      - run: codesign -dv --verbose=4 ./tea
       - run: mv tea tea-${{ matrix.platform.build-id }}
       - uses: actions/upload-artifact@v3
         with:
