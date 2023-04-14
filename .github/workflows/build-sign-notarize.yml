@@ -48,6 +48,10 @@ jobs:
         with:
           name: darwin+x86-64
           path: ./bins
+      - name: Unzip binary
+        run: |
+          mkdir bins
+          unzip bins.zip -d bins
 
       - name: move tea-cli binary to resources
         run: |

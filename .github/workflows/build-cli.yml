@@ -27,7 +27,8 @@ jobs:
         run: |
           xattr -c bins/tea-x86-64
           xattr -c bins/tea-arm64
+          zip -r bins.zip bins
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.platform.build-id }}
-          path: ./bins
+          path: bin.zip
