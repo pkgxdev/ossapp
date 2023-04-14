@@ -1,14 +1,14 @@
 <script lang="ts">
-	import InstallButton from "$components/install-button/install-button.svelte";
 	import type { GUIPackage } from "$libs/types";
 	import { packagesStore } from "$libs/stores";
 	import { onMount } from "svelte";
 
 	import ImgLoader from "@tea/ui/img-loader/img-loader.svelte";
 	import { findAvailableVersions } from "$libs/packages/pkg-utils";
-  import { goto } from "$app/navigation";
+	import { goto } from "$app/navigation";
+	import PackageInstallButton from "$components/package-install-button/package-install-button.svelte";
 	export let pkg: GUIPackage;
-	export let onClick: (_version: string) => Promise<void>;
+	export let onClick: () => Promise<void>;
 	export let onClose: () => void;
 
 	onMount(() => {
@@ -20,7 +20,7 @@
 	const gotoPackagePage = () => {
 		goto(`/packages/${pkg.slug}?tab=all`);
 		onClose();
-	}
+	};
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -38,13 +38,20 @@
 		<p class="line-clamp-2 text-xs">{pkg.desc}</p>
 	</header>
 	<aside>
-		<InstallButton {pkg} {availableVersions} {onClick} />
-		<footer class="mt-2 text-center text-xs">v{pkg.version}</footer>
+		<PackageInstallButton {pkg} {onClick} />
 	</aside>
 </figure>
 
 <style>
 	figure:hover {
 		background-color: #252525;
+	}
+
+	aside {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-width: 140px;
+		margin-right: 22px;
 	}
 </style>

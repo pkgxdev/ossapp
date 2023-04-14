@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PackageStates, type GUIPackage } from "$libs/types";
 	import clickOutside from "@tea/ui/lib/clickOutside";
-	import PackageStateButton from "./package-state-button.svelte";
+	import PackageStateButton from "./package-install-button.svelte";
 
 	export let buttonSize: "small" | "large" = "small";
 	export let pkg: GUIPackage;
@@ -48,7 +48,7 @@
 
 <div class="dropdown z-10" use:clickOutside on:click_outside={handleClickOutside}>
 	<PackageStateButton {buttonSize} {pkg} onClick={toggleOpen}>
-		<div class="pt-2">
+		<div slot="selector" class="pt-2">
 			<div class="version-list" class:visible={isOpened}>
 				{#if (pkg?.installed_versions || []).length > 0}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -112,7 +112,7 @@
 	}
 
 	.installable-version:hover {
-		border: 1px solid #949494;
+		outline: 1px solid #949494;
 		background-color: rgba(148, 148, 148, 0.35);
 	}
 
