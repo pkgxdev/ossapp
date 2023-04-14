@@ -117,7 +117,8 @@ export interface ListActionItem {
 
 export enum NotificationType {
 	MESSAGE,
-	ACTION_BANNER
+	ACTION_BANNER,
+	ERROR
 }
 export interface Notification {
 	id: string;
