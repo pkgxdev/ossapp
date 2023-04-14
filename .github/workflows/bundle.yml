@@ -29,43 +29,16 @@ jobs:
         with:
           name: ${{ matrix.platform.build-id }}
           path: ./bins
-      - name: replace old DMG files in dist folder
-        run: tar -czvf bins.tgz -C bins/ .
-
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: s3 cli upload
-        run: |
-          aws s3 cp bins.tgz s3://preview.gui.tea.xyz/bundle-test/bin.tgz
-  # build_desktop:
-  #   needs: [compile]
-  #   strategy:
-  #     matrix:
-  #       platform:
-  #         # X86+64 is built with ARM64 also
-  #         - darwin+x86-64
-  #   uses: ./.github/workflows/build-sign-notarize.yml
-  #   with:
-  #     platform: ${{ matrix.platform }}
-  #     s3-prefix: bundle-test
-  #     debug: 0
-  #   secrets: inherit
-
-  # build:
-  #   needs: [compile]
-  #   runs-on: macos-latest
-  #   steps:
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         name: darwin+x86-64
-  #     # - uses: actions/download-artifact@v3
-  #     #   with:
-  #     #     name: darwin+aarch64
-  #     - run: ls -lha
-  #     - run: chmod +x tea-darwin+x86-64
-  #     - run: ./tea-darwin+x86-64 --version
-  #     # - run: ./tea-darwin+aarch64 --version
-
+  build_desktop:
+    needs: [compile]
+    strategy:
+      matrix:
+        platform:
+          # X86+64 is built with ARM64 also
+          - darwin+x86-64
+    uses: ./.github/workflows/build-sign-notarize.yml
+    with:
+      platform: ${{ matrix.platform }}
+      s3-prefix: bundle-test
+      debug: 0
+    secrets: inherit
