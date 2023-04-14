@@ -15,7 +15,7 @@
 		"build:main": "cp package.json electron && cd ./electron && vite  --config ./vite.config.js build --base . && rm package.json",
 		"pack": "electron-builder --dir --config electron-builder.config.cjs",
 		"predist": "node ./scripts/update-translations.cjs",
-		"dist": "CSC_IDENTITY_AUTO_DISCOVERY=false pnpm build && electron-builder --config electron-builder.config.cjs",
+		"dist": "pnpm build && electron-builder --config electron-builder.config.cjs",
 		"package": "pnpm build && electron-builder --config electron-builder.config.cjs",
 		"dev:package": "pnpm build && electron-builder --config electron-builder.config.cjs --dir",
 		"electron": "concurrently --kill-others \"vite dev\" \"electron electron/dist/electron.cjs\"",
