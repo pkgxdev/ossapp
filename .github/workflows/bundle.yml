@@ -30,18 +30,32 @@ jobs:
         with:
           name: ${{ matrix.platform.build-id }}
           path: tea-${{ matrix.platform.build-id }}
-  build:
+  build_desktop:
     needs: [compile]
-    runs-on: macos-latest
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: darwin+x86-64
-      # - uses: actions/download-artifact@v3
-      #   with:
-      #     name: darwin+aarch64
-      - run: ls -lha
-      - run: chmod +x tea-darwin+x86-64
-      - run: ./tea-darwin+x86-64 --version
-      # - run: ./tea-darwin+aarch64 --version
+    strategy:
+      matrix:
+        platform:
+          # X86+64 is built with ARM64 also
+          - darwin+x86-64
+    uses: ./.github/workflows/build-sign-notarize.yml
+    with:
+      platform: ${{ matrix.platform }}
+      s3-prefix: release
+      debug: 0
+    secrets: inherit
+
+  # build:
+  #   needs: [compile]
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/download-artifact@v3
+  #       with:
+  #         name: darwin+x86-64
+  #     # - uses: actions/download-artifact@v3
+  #     #   with:
+  #     #     name: darwin+aarch64
+  #     - run: ls -lha
+  #     - run: chmod +x tea-darwin+x86-64
+  #     - run: ./tea-darwin+x86-64 --version
+  #     # - run: ./tea-darwin+aarch64 --version
 
