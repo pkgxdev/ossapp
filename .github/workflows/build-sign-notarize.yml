@@ -23,18 +23,7 @@ on:
         description: 'The S3 build key includes the installer files: [zip, dmg, etc, yml] from notarization strategy done outside of electron'
         value: ${{ jobs.notarize-mac-installers.outputs.s3-installers-key }}
 jobs:
-  get-platform:
-    runs-on: ubuntu-latest
-    outputs:
-      os: ${{ steps.platform.outputs.os }}
-      cache-set: ${{ steps.platform.outputs.cache-set }}
-    steps:
-      - uses: teaxyz/brewkit/actions/get-platform@main
-        id: platform
-        with:
-          platform: ${{ inputs.platform }}
   build:
-    needs: [get-platform]
     runs-on: macos-latest
     outputs:
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
