@@ -23,11 +23,11 @@ jobs:
           repository: 'teaxyz/cli'
           ref: 'v0.28'
       - run: mkdir bins
-      - run: tea -E deno compile --target $target --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea-x86-64 src/app.ts
+      - run: tea -E deno compile --target $target --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea src/app.ts
         env:
           target: ${{ matrix.platform.build-id }}
-      - name: zip
-        run: zip -r bins.zip bins
+      - name: ditto
+        run: ditto -ck --rsrc --sequesterRsrc bins bins.zip
 
       - uses: aws-actions/configure-aws-credentials@v1
         with:
