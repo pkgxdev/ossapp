@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: teaxyz/setup@v0
         with:
-          version: 0.28
+          version: 0.28.0
       - uses: actions/checkout@v3
         with:
           repository: 'teaxyz/cli'
