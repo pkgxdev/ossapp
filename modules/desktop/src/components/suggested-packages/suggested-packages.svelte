@@ -1,13 +1,12 @@
 <script lang="ts">
-	import '$appcss';
-	import type { GUIPackage } from '$libs/types';
-	import type { Package } from '@tea/ui/types';
-	import { PackageStates } from '$libs/types';
-	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
+	import "$appcss";
+	import type { GUIPackage } from "$libs/types";
+	import type { Package } from "@tea/ui/types";
+	import { PackageStates } from "$libs/types";
+	import Preloader from "@tea/ui/Preloader/Preloader.svelte";
 	import PackageCard from "$components/packages/package.svelte";
-	import { onMount } from 'svelte';
-	import { installPackage } from '@native';
-	import { packagesStore } from '$libs/stores';
+	import { onMount } from "svelte";
+	import { packagesStore } from "$libs/stores";
 
 	export let pkg: Package;
 
@@ -27,19 +26,8 @@
 <ul class="grid grid-cols-3 bg-black">
 	{#if packages.length > 0}
 		{#each packages as pkg}
-			<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
-				<PackageCard
-					{pkg}
-					onClick={async () => {
-						try {
-							pkg.state = PackageStates.INSTALLING;
-							await installPackage(pkg);
-							pkg.state = PackageStates.INSTALLED;
-						} catch (error) {
-							console.error(error);
-						}
-					}}
-				/>
+			<div class={pkg.state === PackageStates.INSTALLING ? "animate-pulse" : ""}>
+				<PackageCard {pkg} />
 			</div>
 		{/each}
 	{:else}
