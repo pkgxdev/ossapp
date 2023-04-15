@@ -9,16 +9,16 @@ jobs:
   build_cli:
     uses: ./.github/workflows/build-cli.yml
     secrets: inherit
-  build_desktop:
-    needs: [build_cli]
-    strategy:
-      matrix:
-        platform:
-          # X86+64 is built with ARM64 also
-          - darwin+aarch64
-    uses: ./.github/workflows/build-sign-notarize.yml
-    with:
-      platform: ${{ matrix.platform }}
-      s3-prefix: bundle-test
-      debug: 0
-    secrets: inherit
+  # build_desktop:
+  #   needs: [build_cli]
+  #   strategy:
+  #     matrix:
+  #       platform:
+  #         # X86+64 is built with ARM64 also
+  #         - darwin+aarch64
+  #   uses: ./.github/workflows/build-sign-notarize.yml
+  #   with:
+  #     platform: ${{ matrix.platform }}
+  #     s3-prefix: bundle-test
+  #     debug: 0
+  #   secrets: inherit

@@ -9,7 +9,9 @@ jobs:
       matrix:
         platform:
         - os: macos-11
-          build-id: darwin+x86-64
+          build-id: x86_64-apple-darwin
+        - os: [self-hosted, macOS, ARM64]
+          build-id: aarch64-apple-darwin
     runs-on: ${{ matrix.platform.os }}
     name: ${{ matrix.platform.build-id }}
     steps:
@@ -21,14 +23,28 @@ jobs:
           repository: 'teaxyz/cli'
           ref: 'v0.27'
       - run: mkdir bins
-      - run: tea -E deno compile --target x86_64-apple-darwin --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea-x86-64 src/app.ts
-      - run: tea -E deno compile --target aarch64-apple-darwin --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea-arm64 src/app.ts
-      - name: rm attributes
-        run: |
-          xattr -c bins/tea-x86-64
-          xattr -c bins/tea-arm64
-          zip -r bins.zip bins
-      - uses: actions/upload-artifact@v3
+      - run: tea -E deno compile --target $target --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea-x86-64 src/app.ts
+        env:
+          target: ${{ matrix.platform.build-id }}
+      - name: zip
+        run: zip -r bins.zip bins
+
+      - uses: aws-actions/configure-aws-credentials@v1
         with:
-          name: ${{ matrix.platform.build-id }}
-          path: bins.zip
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: s3 artifact upload
+        id: s3-artifact-uploader
+        env:
+          prefix: cli
+          build: ${{ matrix.platform.build-id }}
+        run: |
+          S3_KEY=s3://preview.gui.tea.xyz/$prefix/$build.tgz
+          aws s3 cp bins.zip $S3_KEY
+          echo key=$S3_KEY >> $GITHUB_OUTPUT
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: ${{ matrix.platform.build-id }}
+      #     path: bins.zip
