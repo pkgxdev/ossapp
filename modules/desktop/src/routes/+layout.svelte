@@ -63,7 +63,7 @@
 	</section>
 </div>
 {#if $sideNavOpen}
-	<aside class="border-gray fixed z-50 rounded-md border  bg-black transition-all">
+	<aside class="border-gray fixed z-50 rounded-sm border  bg-black transition-all">
 		<PopoutMenu />
 	</aside>
 {/if}

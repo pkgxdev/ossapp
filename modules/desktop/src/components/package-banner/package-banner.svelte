@@ -8,9 +8,9 @@
 	import type { GUIPackage } from "$libs/types";
 	import { packagesStore } from "$libs/stores";
 	import { shellOpenExternal } from "@native";
-	import InstallButton from "$components/install-button/install-button.svelte";
 	import { findAvailableVersions } from "$libs/packages/pkg-utils";
 	import { trimGithubSlug } from "$libs/github";
+	import PackageVersionSelector from "$components/package-install-button/package-version-selector.svelte";
 
 	export let pkg: GUIPackage;
 	let installing = false;
@@ -51,7 +51,7 @@
 			{/if}
 			<p class="mt-4 text-sm">{pkg.desc}</p>
 			<menu class="mt-4 grid h-10 grid-cols-3 gap-4 text-xs">
-				<InstallButton
+				<PackageVersionSelector
 					buttonSize="large"
 					{pkg}
 					availableVersions={findAvailableVersions(pkg)}

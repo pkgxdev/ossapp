@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { searchStore } from '$libs/stores';
-	import type { GUIPackage } from '$libs/types';
-	import SearchInput from '@tea/ui/search-input/search-input.svelte';
-	import { t } from '$libs/translations';
-	import Preloader from '@tea/ui/Preloader/Preloader.svelte';
+	import { packagesStore, searchStore } from "$libs/stores";
+	import type { GUIPackage } from "$libs/types";
+	import SearchInput from "@tea/ui/search-input/search-input.svelte";
+	import { t } from "$libs/translations";
+	import Preloader from "@tea/ui/Preloader/Preloader.svelte";
 	import Package from "$components/packages/package.svelte";
-	import { PackageStates } from '$libs/types';
+	import { PackageStates } from "$libs/types";
 	import PackageResult from "./package-search-result.svelte";
-	import Mousetrap from 'mousetrap';
+	import Mousetrap from "mousetrap";
 	// import Posts from '@tea/ui/posts/posts.svelte';
 
-	import { installPackage } from '@native';
-  import { onMount } from 'svelte';
+	import { installPackage } from "@native";
+	import { onMount } from "svelte";
 
 	const { searching, packagesSearch } = searchStore;
 	// import type { AirtablePost } from '@tea/ui/types';
@@ -42,30 +42,32 @@
 	searchStore.searching.subscribe((v) => (loading = v));
 
 	const onClose = () => {
-		term = '';
+		term = "";
 		searchStore.searching.set(false);
 	};
 </script>
+
 {#if $searching === true}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<div id="bg-close" class="z-40" on:click={onClose}></div>
+	<div id="bg-close" class="z-40" on:click={onClose} />
 	<section class="z-50">
-		<header class="flex border border-gray border-t-0 border-x-0 bg-black">
+		<header class="border-gray flex border border-x-0 border-t-0 bg-black">
 			<div class="relative w-full">
 				<SearchInput
-					class="w-full  rounded-sm h-9"
+					class="h-9  w-full rounded-sm"
 					size="small"
 					autofocus={true}
-					placeholder="{$t("store-search-placeholder")}"
+					placeholder={$t("store-search-placeholder")}
 					onSearch={(search) => {
 						term = search;
 						searchStore.search(search);
 					}}
 				/>
-				<div class="absolute top-2 right-3 opacity-50 flex items-center gap-1">
-					<button class="text-xs mt-1">clear</button>
-					<kbd class=" bg-gray text-white px-2 mt-1 rounded-sm flex items-center">
-						<span class="text-xs">ctrl + shift + del</span>
+				<div class="absolute top-2 right-3 flex items-center gap-1 pt-[1px] opacity-50">
+					<span class="mr-1 text-xs">clear</span>
+					<kbd class=" bg-gray flex items-center rounded-sm px-2 pt-[1px] text-white">
+						<span class="mr-1.5 text-lg leading-4">⌘</span>
+						<span class="text-xs">+ shift + del</span>
 					</kbd>
 				</div>
 			</div>
@@ -79,18 +81,21 @@
 				<ul class="flex flex-col gap-2 p-2">
 					{#if $packagesSearch.length > 0}
 						{#each $packagesSearch as pkg}
-							<div class={pkg.state === PackageStates.INSTALLING ? 'animate-pulse' : ''}>
+							<div class={pkg.state === PackageStates.INSTALLING ? "animate-pulse" : ""}>
 								<PackageResult
 									{pkg}
 									{onClose}
 									onClick={async () => {
-										try {
-											pkg.state = PackageStates.INSTALLING;
-											await installPackage(pkg, pkg.version);
-											pkg.state = PackageStates.INSTALLED;
-										} catch (error) {
-											console.error(error);
+										if (
+											[
+												PackageStates.INSTALLED,
+												PackageStates.INSTALLING,
+												PackageStates.UPDATING
+											].includes(pkg.state)
+										) {
+											return;
 										}
+										packagesStore.installPkg(pkg);
 									}}
 								/>
 							</div>
@@ -119,7 +124,7 @@
 				{/if} -->
 			</div>
 		{:else}
-			<div class="w-full h-full flex flex-col justify-center bg-black">
+			<div class="flex h-full w-full flex-col justify-center bg-black">
 				<p class="text-gray text-center">start typing to search</p>
 			</div>
 		{/if}
@@ -159,7 +164,6 @@
 		transition: height 0.6s ease-in-out;
 		overflow-y: scroll;
 	}
-
 
 	/* width */
 	::-webkit-scrollbar {

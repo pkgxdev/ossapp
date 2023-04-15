@@ -1,12 +1,11 @@
 <script lang="ts">
 	import "../../app.css";
 	import ProgressCircle from "@tea/ui/progress-circle/progress-circle.svelte";
-	import InstallButton from "../install-button/install-button.svelte";
 	import type { GUIPackage } from "$libs/types";
 	import { findRecentInstalledVersion } from "$libs/packages/pkg-utils";
+	import PackageInstallButton from "$components/package-install-button/package-install-button.svelte";
 
 	export let pkg: GUIPackage;
-	export let availableVersions: string[];
 	export let link: string;
 	export let progessLoading = 0;
 
@@ -14,11 +13,7 @@
 		? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
 		: pkg.thumb_image_url;
 
-	export let onClickCTA = async (_version: string) => {
-		console.log("do nothing");
-	};
-
-	export let onUninstall = async () => {
+	export let onClickCTA = async () => {
 		console.log("do nothing");
 	};
 
@@ -53,7 +48,14 @@
 				</article>
 				<div class="relative mt-3.5 flex w-full">
 					<div class="install-button" on:mousedown={preventPropagation}>
-						<InstallButton {pkg} {availableVersions} onClick={onClickCTA} uninstall={onUninstall} />
+						<PackageInstallButton
+							{pkg}
+							onClick={(evt) => {
+								// prevent default to prevent the link that this button is inside of from being followed
+								evt?.preventDefault();
+								onClickCTA();
+							}}
+						/>
 					</div>
 				</div>
 				<div class="relative mt-1.5 h-[10px] leading-[10px]">

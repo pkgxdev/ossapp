@@ -27,12 +27,17 @@
 		}, 300);
 	};
 
+	const clearInput = () => {
+		searchInput.value = "";
+		onSearch("");
+		return false;
+	};
+
 	onMount(() => {
 		if (autofocus) searchInput.focus();
-		Mousetrap.bind(["ctrl+shift+del"], function () {
-			searchInput.value = "";
-			return false;
-		});
+
+		Mousetrap.bind(["command+shift+backspace"], clearInput);
+		Mousetrap.bind(["command+shift+del"], clearInput);
 
 		Mousetrap.prototype.stopCallback = () => {
 			return false;
