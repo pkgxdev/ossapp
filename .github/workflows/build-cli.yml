@@ -17,11 +17,11 @@ jobs:
     steps:
       - uses: teaxyz/setup@v0
         with:
-          version: 0.26.2
+          version: 0.28
       - uses: actions/checkout@v3
         with:
           repository: 'teaxyz/cli'
-          ref: 'v0.27'
+          ref: 'v0.28'
       - run: mkdir bins
       - run: tea -E deno compile --target $target --allow-read --allow-write --allow-net --allow-run --allow-env --unstable --output bins/tea-x86-64 src/app.ts
         env:
