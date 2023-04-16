@@ -1,18 +1,17 @@
 <script lang="ts">
-	import '$appcss';
+	import "$appcss";
 
-	import { page } from '$app/stores';
-	import { t } from '$libs/translations';
-	import { afterNavigate } from '$app/navigation';
-	import { packagesStore, navStore } from '$libs/stores';
-	import Packages from '$components/packages/packages.svelte';
-	import { PackageStates, SideMenuOptions, type GUIPackage } from '$libs/types';
+	import { page } from "$app/stores";
+	import { t } from "$libs/translations";
+	import { afterNavigate } from "$app/navigation";
+	import { packagesStore, navStore } from "$libs/stores";
+	import Packages from "$components/packages/packages.svelte";
+	import { PackageStates, SideMenuOptions, type GUIPackage } from "$libs/types";
 	// import SortingButtons from "$components/search-packages/sorting-buttons.svelte";
 	import SideMenu from "$components/side-menu/side-menu.svelte";
-	import NotificationBar from '$components/notification-bar/notification-bar.svelte';
-	import WelcomeModal from '$components/welcome-modal/welcome-modal.svelte';
+	import NotificationBar from "$components/notification-bar/notification-bar.svelte";
+	import WelcomeModal from "$components/welcome-modal/welcome-modal.svelte";
 	import Button from "@tea/ui/button/button.svelte";
-
 
 	const log = window.require("electron-log");
 
@@ -21,7 +20,7 @@
 
 	const url = $page.url;
 
-	let sideMenuOption = url.searchParams.get("tab") as SideMenuOptions || SideMenuOptions.all;
+	let sideMenuOption = (url.searchParams.get("tab") as SideMenuOptions) || SideMenuOptions.all;
 
 	let sortBy: "popularity" | "most recent" = "most recent";
 	let sortDirection: "asc" | "desc" = "desc";
@@ -29,14 +28,14 @@
 	let updating = false;
 
 	let packagesScrollY = 0;
-	$: currentUpdatingPkg = $packageList.find((p) => p.state === PackageStates.UPDATING)
+	$: currentUpdatingPkg = $packageList.find((p) => p.state === PackageStates.UPDATING);
 	$: updatingMessage = `updating ${currentUpdatingPkg?.full_name} (${currentUpdatingPkg?.install_progress_percentage}%)`;
 
 	$: pkgsToUpdate = $packageList.filter((p: GUIPackage) => p.state === PackageStates.NEEDS_UPDATE);
 	async function updateAll() {
 		updating = true;
 		log.info(`updating: ${pkgsToUpdate.length} packages`);
-		for(const pkg of pkgsToUpdate) {
+		for (const pkg of pkgsToUpdate) {
 			try {
 				await packagesStore.installPkg(pkg);
 			} catch (error) {
@@ -50,23 +49,27 @@
 	$: teaPkg = $packageList.find((p) => p.full_name === "tea.xyz");
 	$: needsUpdateCount = pkgsToUpdate.length;
 
-	
 	afterNavigate(({ from, to }) => {
 		if (to?.url?.pathname === "/") {
-			const tab = to.url.searchParams.get("tab")
-			sideMenuOption = !tab ? SideMenuOptions.all : tab as SideMenuOptions;
+			const tab = to.url.searchParams.get("tab");
+			sideMenuOption = !tab ? SideMenuOptions.all : (tab as SideMenuOptions);
 		}
 	});
 </script>
 
 <div id="content" class="flex flex-col">
 	<NotificationBar />
-	<article class="w-full h-auto flex-grow overflow-hidden relative">
+	<article class="relative h-auto w-full flex-grow overflow-hidden">
 		<ul class="px-2">
-			<Packages packageFilter={sideMenuOption} {sortBy} {sortDirection} bind:scrollY={packagesScrollY}/>
+			<Packages
+				packageFilter={sideMenuOption}
+				{sortBy}
+				{sortDirection}
+				bind:scrollY={packagesScrollY}
+			/>
 		</ul>
-		<header class="flex justify-between items-center z-30" class:scrolling={packagesScrollY > 150}>
-			<h1 class="text-primary pl-3 text-2xl font-bold font-mona">
+		<header class="z-30 flex items-center justify-between" class:scrolling={packagesScrollY > 150}>
+			<h1 class="text-primary font-mona pl-3 text-2xl font-bold">
 				{$t(`side-menu-title.${sideMenuOption}`)}
 			</h1>
 			<!-- 
@@ -80,34 +83,35 @@
 			</section>
 			 -->
 			{#if needsUpdateCount && sideMenuOption === SideMenuOptions.installed_updates_available}
-			 <!-- 22px right margin to account for the scrollbar on the package cards -->
-			 <div class="flex items-center text-sm mr-[22px]">
-				{#if currentUpdatingPkg}
-					<p class="text-gray px-2">{updatingMessage}</p>
-				{/if}
-				<Button
-					class="w-48 h-8 text-xs"
-					loading={updating}
-					type="plain"
-					color="secondary"
-					onClick={updateAll}
-				>
+				<!-- 22px right margin to account for the scrollbar on the package cards -->
+				<div class="mr-[22px] flex items-center text-sm">
+					{#if currentUpdatingPkg}
+						<p class="text-gray px-2">{updatingMessage}</p>
+					{/if}
+					<Button
+						class="h-8 w-48 text-xs"
+						loading={updating}
+						type="plain"
+						color="secondary"
+						onClick={updateAll}
+					>
 						{$t(`package.update-all`)} [{needsUpdateCount}]
-				</Button> 
-			 </div>
+					</Button>
+				</div>
 			{/if}
 		</header>
 	</article>
 </div>
 
-<SideMenu bind:activeOption={sideMenuOption}/>
-{#if $showWelcome }
+<SideMenu bind:activeOption={sideMenuOption} />
+{#if $showWelcome}
 	<WelcomeModal />
 {/if}
+
 <style>
 	#content {
-		width: calc(100vw - 191px);
-		margin-left: 185px;
+		width: calc(100vw - 211px);
+		margin-left: 205px;
 		height: calc(100vh - 48px);
 		overflow: hidden;
 	}
@@ -118,7 +122,7 @@
 		left: 1px;
 		height: 72px;
 		width: 100%;
-		background-image: linear-gradient(rgba(26,26,26,1), rgba(26,26,26,0));
+		background-image: linear-gradient(rgba(26, 26, 26, 1), rgba(26, 26, 26, 0));
 		padding-top: 15px;
 	}
 
