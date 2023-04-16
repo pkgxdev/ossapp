@@ -112,7 +112,7 @@
 	#content {
 		width: calc(100vw - 211px);
 		margin-left: 205px;
-		height: calc(100vh - 48px);
+		height: calc(100vh - 50px);
 		overflow: hidden;
 	}
 
