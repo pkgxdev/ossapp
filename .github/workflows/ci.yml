@@ -156,8 +156,9 @@ jobs:
         aws-region: us-east-1
     - name: s3 artifact download
       env:
+        installer_key: ${{ needs.build_desktop.ouputs.s3-custom-notarized-installers-key }}
         prefix: ${{ needs.changes.outputs.preview_folder || 'dev-pr' }}
-      run: aws s3 cp s3://preview.gui.tea.xyz/$prefix/artifacts.tgz dist.tgz
+      run: aws s3 cp $installer_key dist.tgz
 
     - run: mkdir dist
     - run: tar xzf dist.tgz -C dist
