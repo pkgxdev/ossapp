@@ -197,6 +197,7 @@ jobs:
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        APPLE_IDENTITY: ${{ secrets.APPLE_IDENTITY }}
         ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
 
     - name: codesign & notarize .app x86+64
@@ -206,6 +207,7 @@ jobs:
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        APPLE_IDENTITY: ${{ secrets.APPLE_IDENTITY }}
         ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
 
     # prepare for DMG creation
