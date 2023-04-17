@@ -42,9 +42,9 @@ jobs:
       - name: copy cli bins
         run: |
           external_folder=modules/desktop/external
-          mkdir $external
-          aws s3 cp $x64_key $external/tea-x86-64
-          aws s3 cp $arm64_key $external/tea-arm64
+          mkdir $exterexternal_foldernal
+          aws s3 cp $x64_key $external_folder/tea-x86-64
+          aws s3 cp $arm64_key $external_folder/tea-arm64
         env:
           x64_key: s3://www.tea.xyz/tea-darwin+x86-64
           arm64_key: s3://www.tea.xyz/tea-darwin+aarch64
