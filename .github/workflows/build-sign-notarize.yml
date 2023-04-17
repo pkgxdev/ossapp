@@ -88,7 +88,7 @@ jobs:
             ./modules/desktop/build
 
       - name: build release
-        run: tea xc dist
+        run: tea -E xc dist
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
           SYNC_I18N: 1
