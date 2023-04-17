@@ -24,7 +24,7 @@ on:
         value: ${{ jobs.notarize-mac-installers.outputs.s3-installers-key }}
 jobs:
   build:
-    runs-on: macos-11
+    runs-on: macos-10.15
     outputs:
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
     steps:
