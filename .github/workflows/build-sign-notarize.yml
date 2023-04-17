@@ -92,6 +92,7 @@ jobs:
       - name: build release
         if: inputs.s3-prefix == 'release' || inputs.s3-prefix == 'bundle-test'
         run: |
+          security find-identity -v -p codesigning
           tea -E pnpm install
           tea -E pnpm --filter tea exec pnpm predist
           cd modules/desktop
@@ -101,6 +102,7 @@ jobs:
           SYNC_I18N: 1
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
           DEBUG_BUILD: ${{ inputs.debug }}
+          DEBUG: electron-osx-sign*
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           USE_HARD_LINKS: false
           CSC_FOR_PULL_REQUEST: true
