@@ -85,7 +85,7 @@ pnpm dev
 ```sh
 pnpm install
 pnpm --filter tea exec pnpm predist
-cd modules/desktop && CSC_IDENTITY_AUTO_DISCOVERY=false pnpm dist
+CSC_IDENTITY_AUTO_DISCOVERY=false pnpm --filter tea exec pnpm dist
 ```
 
 # Dependencies
