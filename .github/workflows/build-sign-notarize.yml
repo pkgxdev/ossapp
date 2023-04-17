@@ -115,7 +115,7 @@ jobs:
       - name: build artifacts for publishing
         run: |
           mkdir -p target
-          cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
+          cp ./modules/desktop/dist/* ./target/
           tar -czvf artifacts.tgz -C ./target/ .
 
       - name: s3 artifact upload
@@ -193,7 +193,9 @@ jobs:
     # sometimes this might fail because exact the same zip has been uploaded already
     - name: codesign and notarize .app arm64
       run: |
-        codesign --sign "$APPLE_IDENTITY" --force --preserve-metadata=entitlements,requirements,flags,runtime dist/$ZIP_FILE || true
+        rm dist/$ZIP_FILE
+        codesign --sign "$APPLE_IDENTITY" --force --preserve-metadata=entitlements,requirements,flags,runtime dist/mac-arm64/tea.app || true
+        zip -r dist/$ZIP_FILE -j dist/mac-arm64/tea.app
         xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE || true
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -203,7 +205,9 @@ jobs:
 
     - name: codesign & notarize .app x86+64
       run: |
-        codesign --sign "$APPLE_IDENTITY" --force --preserve-metadata=entitlements,requirements,flags,runtime dist/$ZIP_FILE || true
+        rm dist/$ZIP_FILE
+        codesign --sign "$APPLE_IDENTITY" --force --preserve-metadata=entitlements,requirements,flags,runtime dist/mac/tea.app || true
+        zip -r dist/$ZIP_FILE -j dist/mac/tea.app
         xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE || true
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
