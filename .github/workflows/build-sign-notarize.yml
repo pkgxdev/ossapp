@@ -87,6 +87,12 @@ jobs:
             ./modules/desktop/.svelte-kit
             ./modules/desktop/build
 
+      - uses: teaxyz/brewkit/actions/setup-codesign@v0
+        if: startsWith(matrix.platform.build-id, 'darwin+')
+        with:
+            p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+            p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
+
       - name: build release
         run: tea -E xc dist
         env:
@@ -105,25 +111,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-      - uses: teaxyz/brewkit/actions/setup-codesign@v0
-        if: startsWith(matrix.platform.build-id, 'darwin+')
-        with:
-            p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
-            p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
-      - run: |
-          codesign --sign "$APPLE_IDENTITY" --force --preserve-metadata=entitlements,requirements,flags,runtime ./modules/desktop/dist/*.{zip,dmg} || true
-        env:
-          APPLE_IDENTITY: ${{ secrets.APPLE_IDENTITY }}
-          CSC_IDENTITY_AUTO_DISCOVERY: false
-      - name: notarize .app
-        run: |
-          xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file ./modules/desktop/dist/*.zip || true
-        env:
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-          ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
 
-      - name: build artifacts for publishing and notarization
+      - name: build artifacts for publishing
         run: |
           mkdir -p target
           cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
