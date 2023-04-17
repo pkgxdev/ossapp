@@ -29,8 +29,6 @@ jobs:
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
     steps:
       - uses: teaxyz/setup@v0
-        with:
-          version: 0.26.2
       - uses: actions/checkout@v3
 
       - uses: aws-actions/configure-aws-credentials@v1
