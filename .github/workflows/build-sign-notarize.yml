@@ -95,7 +95,7 @@ jobs:
           tea -E pnpm install
           tea -E pnpm --filter tea exec pnpm predist
           cd modules/desktop
-          CSC_IDENTITY_AUTO_DISCOVERY=false pnpm dist
+          CSC_IDENTITY_AUTO_DISCOVERY=false tea -E pnpm dist
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
           SYNC_I18N: 1
