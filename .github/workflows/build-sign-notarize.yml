@@ -33,18 +33,21 @@ jobs:
           version: 0.26.2
       - uses: actions/checkout@v3
 
-      - uses: actions/download-artifact@v3
+      - uses: aws-actions/configure-aws-credentials@v1
         with:
-          name: darwin+x86-64
-      - name: Unzip binary
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      
+      - name: copy cli bins
         run: |
-          mkdir bins
-          unzip bins.zip -d bins
-
-      - name: move tea-cli binary to resources
-        run: |
-          mkdir -p modules/desktop/external
-          mv bins/* modules/desktop/external
+          external_folder=modules/desktop/external
+          mkdir $external
+          aws s3 cp $x64_key $external/tea-x86-64
+          aws s3 cp $arm64_key $external/tea-arm64
+        env:
+          x64_key: s3://www.tea.xyz/tea-darwin+x86-64
+          arm64_key: s3://www.tea.xyz/tea-darwin+aarch64
   
       - name: get gui version
         id: gui-version
@@ -88,26 +91,7 @@ jobs:
 
       - name: build release
         if: inputs.s3-prefix == 'release' || inputs.s3-prefix == 'bundle-test'
-        run: |
-          retry_count=0
-          max_retries=3
-          while true; do
-            echo "Attempt #$((retry_count+1))"
-            set +e
-            tea -SE xc dist
-            exit_code=$?
-            set -e
-            if [ $exit_code -eq 0 ]; then
-              echo "Step succeeded"
-              break
-            elif [ $retry_count -ge $((max_retries-1)) ]; then
-              echo "Step failed after $max_retries retries"
-              exit $exit_code
-            else
-              echo "Step failed, retrying..."
-              retry_count=$((retry_count+1))
-            fi
-          done
+        run: tea -SE xc dist
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
           SYNC_I18N: 1
@@ -129,11 +113,6 @@ jobs:
           cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
           tar -czvf artifacts.tgz -C ./target/ .
 
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
 
       - name: s3 artifact upload
         id: s3-artifact-uploader
