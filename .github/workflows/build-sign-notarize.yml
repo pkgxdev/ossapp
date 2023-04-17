@@ -88,7 +88,6 @@ jobs:
             ./modules/desktop/build
 
       - uses: teaxyz/brewkit/actions/setup-codesign@v0
-        if: startsWith(matrix.platform.build-id, 'darwin+')
         with:
             p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
             p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
