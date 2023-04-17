@@ -24,7 +24,7 @@ on:
         value: ${{ jobs.notarize-mac-installers.outputs.s3-installers-key }}
 jobs:
   build:
-    runs-on: macos-10.15
+    runs-on: [self-hosted, macOS, ARM64]
     outputs:
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
     steps:
@@ -96,7 +96,8 @@ jobs:
           tea -E pnpm install
           tea -E pnpm --filter tea exec pnpm predist
           cd modules/desktop
-          CSC_IDENTITY_AUTO_DISCOVERY=false tea -E pnpm dist
+          export CSC_IDENTITY_AUTO_DISCOVERY=false
+          tea -E pnpm dist
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
           SYNC_I18N: 1
@@ -106,9 +107,9 @@ jobs:
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           USE_HARD_LINKS: false
           CSC_FOR_PULL_REQUEST: true
-          CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-          CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-          CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+          # CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+          # CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+          # CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
