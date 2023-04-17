@@ -55,12 +55,14 @@
 
 <div id="main-layout" class="font-inter border-gray rounded-xl border transition-all">
 	<TopBar />
-	<section class="relative" bind:this={view}>
-		<div class="content">
-			<slot />
-		</div>
-		<SearchPopupResults />
-	</section>
+	<div class="scroll-manager relative">
+		<section class="relative" bind:this={view}>
+			<div class="content">
+				<slot />
+			</div>
+			<SearchPopupResults />
+		</section>
+	</div>
 </div>
 {#if $sideNavOpen}
 	<aside class="border-gray fixed z-50 rounded-sm border  bg-black transition-all">
@@ -73,8 +75,15 @@
 		height: 100vh;
 		overflow: hidden;
 	}
+
+	.scroll-manager {
+		height: 100%;
+		overflow: hidden;
+		padding-right: 8px;
+	}
 	section {
 		height: calc(100vh - 50px); /* win.height - header*/
+		overflow-y: auto;
 		box-sizing: border-box;
 	}
 
@@ -89,14 +98,39 @@
 	aside {
 		top: 52px;
 		right: 5px;
-		width: 190px;
+		width: 210px;
 		overflow: clip;
 		height: auto;
 		opacity: 1;
 	}
 
 	.content {
+		height: auto;
+		overflow-y: hidden;
 		padding-left: 4px;
 		padding-right: 4px;
+		overflow-x: hidden;
+	}
+
+
+	/* width */
+	::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #272626;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #949494;
+		border-radius: 4px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: white;
 	}
 </style>
