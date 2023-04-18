@@ -73,7 +73,10 @@
 				</div>
 				<div class="relative mt-1.5 h-[10px] leading-[10px]">
 					{#if pkg.state === "NEEDS_UPDATE"}
-						<span class="text-[9px]">Updating from v{findRecentInstalledVersion(pkg)}</span>
+						<span class="text-[10px]">
+              <span class="opacity-70">you have</span>
+              v{findRecentInstalledVersion(pkg)}
+            </span>
 					{/if}
 				</div>
 			</div>
