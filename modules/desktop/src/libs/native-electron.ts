@@ -91,6 +91,13 @@ export async function installPackage(pkg: GUIPackage, version?: string) {
 	await installPackageCommand(pkg.full_name + (specificVersion ? `@${specificVersion}` : ""));
 }
 
+export async function syncPantry() {
+	const res = await ipcRenderer.invoke("sync-pantry");
+	if (res instanceof Error) {
+		throw res;
+	}
+}
+
 export async function getTopPackages(): Promise<GUIPackage[]> {
 	const packages = await mock.getTopPackages();
 	return packages;

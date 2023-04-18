@@ -8,7 +8,7 @@ import { post } from "./v1-client";
 import { deepReadDir, deletePackageFolder } from "./tea-dir";
 import path from "path";
 
-import { installPackage, openTerminal } from "./cli";
+import { installPackage, openTerminal, syncPantry } from "./cli";
 
 import initializeTeaCli from "./initialize";
 
@@ -61,6 +61,15 @@ export default function initializeHandlers() {
 			log.info("installing package:", data.full_name);
 			const result = await installPackage(data.full_name);
 			return result;
+		} catch (error) {
+			log.error(error);
+			return error;
+		}
+	});
+
+	ipcMain.handle("sync-pantry", async () => {
+		try {
+			return await syncPantry();
 		} catch (error) {
 			log.error(error);
 			return error;

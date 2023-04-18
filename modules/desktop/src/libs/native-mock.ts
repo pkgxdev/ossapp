@@ -240,6 +240,11 @@ export async function installPackage(pkg: GUIPackage, version?: string) {
 	await delay(10000);
 }
 
+export async function syncPantry() {
+	console.log("syncing pantry");
+	await delay(1000);
+}
+
 function delay(ms: number) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
