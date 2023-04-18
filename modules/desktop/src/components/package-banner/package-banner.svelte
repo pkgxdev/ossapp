@@ -3,12 +3,13 @@
 	import "@tea/ui/icons/icons.css";
 	import { t } from "$libs/translations";
 	import Button from "@tea/ui/button/button.svelte";
+	import ToolTip from "@tea/ui/tool-tip/tool-tip.svelte";
 	import semverCompare from "semver/functions/compare";
 
 	import type { GUIPackage } from "$libs/types";
 	import { packagesStore } from "$libs/stores";
 	import { shellOpenExternal } from "@native";
-	import { findAvailableVersions } from "$libs/packages/pkg-utils";
+	import { findAvailableVersions, findRecentInstalledVersion } from "$libs/packages/pkg-utils";
 	import { trimGithubSlug } from "$libs/github";
 	import PackageVersionSelector from "$components/package-install-button/package-version-selector.svelte";
 
@@ -61,12 +62,25 @@
 					}}
 				/>
 				{#if (pkg?.installed_versions?.length || 0) > 1}
-					<Button class="h-10" type="plain" color="blue" onClick={prune} loading={pruning}>
-						<div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
-							<div class="icon-scissors" />
-							<div>{$t("package.cta-PRUNE")}</div>
+					<ToolTip>
+						<Button
+							slot="target"
+							class="h-10"
+							type="plain"
+							color="blue"
+							onClick={prune}
+							loading={pruning}
+						>
+							<div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
+								<div class="icon-scissors" />
+								<div>{$t("package.cta-PRUNE")}</div>
+							</div>
+						</Button>
+						<div slot="tooltip-content" class="flex flex-col items-center">
+							<div>Removes {pkg.installed_versions?.length ?? 0 - 1} old versions</div>
+							<div>Keeps latest (v{findRecentInstalledVersion(pkg)})</div>
 						</div>
-					</Button>
+					</ToolTip>
 				{/if}
 				{#if pkg.github}
 					<Button

@@ -82,7 +82,7 @@
 </script>
 
 <div class="relative h-full w-full">
-	<ul class="flex flex-wrap bg-black" use:watchResize={onResize} on:scroll={onScroll}>
+	<ul class="flex flex-wrap content-start bg-black" use:watchResize={onResize} on:scroll={onScroll}>
 		{#if packages.length > 0}
 			{#each packages as pkg, index}
 				{#if index < limit}
