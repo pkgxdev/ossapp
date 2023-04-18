@@ -3,12 +3,14 @@
 	import "@tea/ui/icons/icons.css";
 	import { t } from "$libs/translations";
 	import Button from "@tea/ui/button/button.svelte";
+	import ToolTip from "@tea/ui/tool-tip/tool-tip.svelte";
 	import semverCompare from "semver/functions/compare";
+	import ProgressCircle from "@tea/ui/progress-circle/progress-circle.svelte";
 
 	import type { GUIPackage } from "$libs/types";
 	import { packagesStore } from "$libs/stores";
 	import { shellOpenExternal } from "@native";
-	import { findAvailableVersions } from "$libs/packages/pkg-utils";
+	import { findAvailableVersions, findRecentInstalledVersion } from "$libs/packages/pkg-utils";
 	import { trimGithubSlug } from "$libs/github";
 	import PackageVersionSelector from "$components/package-install-button/package-version-selector.svelte";
 
@@ -37,8 +39,15 @@
 
 <section class="mt-4 bg-black">
 	<header class="flex">
-		<figure class="grow-1 w-1/3">
+		<figure class="grow-1 w-1/3 relative">
 			<img class="w-full" src={pkg.thumb_image_url} alt={pkg.full_name} />
+			{#if pkg.install_progress_percentage && pkg.install_progress_percentage < 100}
+				<div class="absolute left-0 top-0 z-40 h-full w-full bg-black bg-opacity-50">
+					<div class="absolute left-0 right-0 top-1/2 m-auto -mt-12 h-24 w-24">
+						<ProgressCircle value={pkg.install_progress_percentage} />
+					</div>
+				</div>
+			{/if}
 		</figure>
 		<article class="w-2/3 p-4 pt-8">
 			<h3 class="text-primary text-3xl">{pkg.full_name}</h3>
@@ -61,12 +70,25 @@
 					}}
 				/>
 				{#if (pkg?.installed_versions?.length || 0) > 1}
-					<Button class="h-10" type="plain" color="blue" onClick={prune} loading={pruning}>
-						<div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
-							<div class="icon-scissors" />
-							<div>{$t("package.cta-PRUNE")}</div>
+					<ToolTip>
+						<Button
+							slot="target"
+							class="h-10"
+							type="plain"
+							color="blue"
+							onClick={prune}
+							loading={pruning}
+						>
+							<div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
+								<div class="icon-scissors" />
+								<div>{$t("package.cta-PRUNE")}</div>
+							</div>
+						</Button>
+						<div slot="tooltip-content" class="flex flex-col items-center">
+							<div>Removes {pkg.installed_versions?.length ?? 0 - 1} old versions</div>
+							<div>Keeps latest (v{findRecentInstalledVersion(pkg)})</div>
 						</div>
-					</Button>
+					</ToolTip>
 				{/if}
 				{#if pkg.github}
 					<Button

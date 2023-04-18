@@ -1,9 +1,10 @@
 <script lang="ts">
 	import "../../app.css";
 	import ProgressCircle from "@tea/ui/progress-circle/progress-circle.svelte";
-	import type { GUIPackage } from "$libs/types";
+	import { PackageStates, type GUIPackage } from "$libs/types";
 	import { findRecentInstalledVersion } from "$libs/packages/pkg-utils";
 	import PackageInstallButton from "$components/package-install-button/package-install-button.svelte";
+	import PackageInstalledBadge from "$components/package-install-button/package-installed-badge.svelte";
 
 	export let pkg: GUIPackage;
 	export let link: string;
@@ -15,6 +16,10 @@
 
 	export let onClickCTA = async () => {
 		console.log("do nothing");
+	};
+
+	const fixPackageName = (title: string) => {
+		return title.replace("-", "\u2011");
 	};
 
 	// Using this instead of css :active because there is a button inside of a button
@@ -43,19 +48,27 @@
 			</div>
 			<div class="content-container relative">
 				<article class="card-thumb-label relative">
-					<h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">{pkg.name}</h3>
+					<h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">
+						{fixPackageName(pkg.name)}
+					</h3>
 					<p class="line-clamp-2 h-[32px] text-xs font-thin">{pkg.desc ?? ""}</p>
 				</article>
 				<div class="relative mt-3.5 flex w-full">
 					<div class="install-button" on:mousedown={preventPropagation}>
-						<PackageInstallButton
-							{pkg}
-							onClick={(evt) => {
-								// prevent default to prevent the link that this button is inside of from being followed
-								evt?.preventDefault();
-								onClickCTA();
-							}}
-						/>
+						{#if pkg.state === PackageStates.INSTALLED}
+							<PackageInstalledBadge version={pkg.version} />
+						{:else}
+							<div on:mousedown={preventPropagation}>
+								<PackageInstallButton
+									{pkg}
+									onClick={(evt) => {
+										// prevent default to prevent the link that this button is inside of from being followed
+										evt?.preventDefault();
+										onClickCTA();
+									}}
+								/>
+							</div>
+						{/if}
 					</div>
 				</div>
 				<div class="relative mt-1.5 h-[10px] leading-[10px]">

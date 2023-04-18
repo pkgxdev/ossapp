@@ -24,7 +24,7 @@ export default function initNotificationStore() {
 				params
 			};
 			if (params.action) {
-				newNotification.callback_label = params.action;
+				newNotification.callback_label = params.action.toUpperCase();
 				newNotification.callback = () => {
 					relaunch();
 					remove(newNotification.id); // not sure yet

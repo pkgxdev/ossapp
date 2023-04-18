@@ -4,18 +4,19 @@
 	import { onMount } from "svelte";
 
 	import ImgLoader from "@tea/ui/img-loader/img-loader.svelte";
-	import { findAvailableVersions } from "$libs/packages/pkg-utils";
 	import { goto } from "$app/navigation";
 	import PackageInstallButton from "$components/package-install-button/package-install-button.svelte";
-	export let pkg: GUIPackage;
+	export let pkg: GUIPackage; // Fuse package search result probably not updated
 	export let onClick: () => Promise<void>;
 	export let onClose: () => void;
+
+	const { packageList } = packagesStore;
+
+	$: updatedPkg = $packageList.find((p) => p.full_name === pkg.full_name);
 
 	onMount(() => {
 		packagesStore.fetchPackageBottles(pkg.full_name);
 	});
-
-	const availableVersions = findAvailableVersions(pkg);
 
 	const gotoPackagePage = () => {
 		goto(`/packages/${pkg.slug}?tab=all`);
@@ -39,7 +40,9 @@
 	</header>
 	<aside>
 		<div>
-			<PackageInstallButton {pkg} {onClick} />
+			{#if updatedPkg}
+				<PackageInstallButton pkg={updatedPkg} {onClick} />
+			{/if}
 		</div>
 	</aside>
 </figure>

@@ -22,7 +22,7 @@
 	<div class="flex items-center gap-4">
 		{#if notification.callback}
 			<button
-				class="h-10 w-32 rounded-sm bg-white"
+				class="h-10 w-32 rounded-sm bg-white text-black"
 				on:click={() => {
 					if (notification.callback) {
 						notification.callback();
@@ -47,6 +47,11 @@
 	}
 
 	.alert-notification {
+		background-color: #8000ff;
+		color: #ffffff;
+	}
+
+	.action-banner-notification {
 		background-color: #8000ff;
 		color: #ffffff;
 	}

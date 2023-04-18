@@ -67,8 +67,8 @@
 		</button>
 	{/if}
 	<hr class="mt-1" />
-	<SelectLang />
-	<hr />
+	<!-- <SelectLang />
+	<hr /> -->
 	<button
 		class="hover:bg-gray outline-gray focus:bg-secondary h-8 w-full p-1 text-left outline-1 transition-all hover:bg-opacity-25 hover:outline"
 		class:animate-pulse={submittedMessage === "syncing..."}
