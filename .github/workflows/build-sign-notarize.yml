@@ -194,20 +194,19 @@ jobs:
     - name: codesign and notarize .app arm64
       run: |
         rm dist/$ZIP_FILE
-        echo $LOGF
-        codesign --sign "$APPLE_ID" --force --preserve-metadata=entitlements,requirements,flags,runtime dist/mac-arm64/tea.app
+        codesign --sign "$APPLE_ID" --force --options runtime dist/mac-arm64/tea.app
         codesign --verify --deep --strict --verbose=2 dist/mac-arm64/tea.app
         cd dist/mac-arm64/ && zip -r ../$ZIP_FILE tea.app && cd ../..
         xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE
       env:
-        LOGF: PREFIX_${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
         APPLE_ID: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
         ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
+
     - name: codesign & notarize .app x86+64
       run: |
         rm dist/$ZIP_FILE
-        codesign --sign "$APPLE_ID" --force --preserve-metadata=entitlements,requirements,flags,runtime dist/mac/tea.app
+        codesign --sign "$APPLE_ID" --force --options runtime dist/mac/tea.app
         codesign --verify --deep --strict --verbose=2 dist/mac/tea.app
         cd dist/mac/ && zip -r ../$ZIP_FILE tea.app && cd ../..
         xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE
