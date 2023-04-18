@@ -115,7 +115,7 @@ jobs:
       - name: build artifacts for publishing
         run: |
           mkdir -p target
-          cp ./modules/desktop/dist/* ./target/
+          cp -r ./modules/desktop/dist/* ./target/
           tar -czvf artifacts.tgz -C ./target/ .
 
       - name: s3 artifact upload
