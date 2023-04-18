@@ -30,7 +30,7 @@
 
 {#if $user}
 	<section
-		class="border-gray text-gray group flex h-[28px] w-[120px] items-center justify-between rounded-sm border pl-1 text-sm transition-all 
+		class="border-gray text-gray group flex h-[28px] w-[120px] items-center justify-between rounded-sm border pl-2 text-sm transition-all 
   hover:bg-[#e1e1e1] hover:text-black"
 	>
 		<div class="text-gray line-clamp-1 group-hover:text-black">@{$user?.login}</div>
@@ -53,6 +53,7 @@
 
 <style>
 	#avatar {
+    padding: 1px;
 		height: 26px !important;
 		width: 26px !important;
 	}
