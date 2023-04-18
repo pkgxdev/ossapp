@@ -63,11 +63,11 @@
 						searchStore.search(search);
 					}}
 				/>
-				<div class="absolute top-2 right-3 flex items-center gap-1 pt-[1px] opacity-50">
+				<div class="absolute top-1 right-4 flex items-center gap-1 pt-[1px] opacity-50">
 					<span class="mr-1 text-xs">clear</span>
 					<kbd class=" bg-gray flex items-center rounded-sm px-2 pt-[1px] text-white">
-						<span class="mr-1.5 text-lg leading-4">⌘</span>
-						<span class="text-xs">+ shift + del</span>
+            <!-- using apple system ui font as our default renders the symbols wonky -->
+						<span class="" style="font-family: system-ui, -apple-system, sans-serif">⌘⇧⌫</span>
 					</kbd>
 				</div>
 			</div>
