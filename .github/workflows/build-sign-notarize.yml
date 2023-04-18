@@ -191,29 +191,28 @@ jobs:
           p12-password: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
     # sometimes this might fail because exact the same zip has been uploaded already
-    - name: codesign and notarize .app arm64
+    - name: codesign .app arm64
       run: |
         rm dist/$ZIP_FILE
         codesign --sign "$APPLE_ID" --force --options runtime dist/mac-arm64/tea.app
         codesign --verify --deep --strict --verbose=2 dist/mac-arm64/tea.app
         cd dist/mac-arm64/ && zip -r ../$ZIP_FILE tea.app && cd ../..
-        xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE
       env:
         APPLE_ID: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
         ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
 
-    - name: codesign & notarize .app x86+64
-      run: |
-        rm dist/$ZIP_FILE
-        codesign --sign "$APPLE_ID" --force --options runtime dist/mac/tea.app
-        codesign --verify --deep --strict --verbose=2 dist/mac/tea.app
-        cd dist/mac/ && zip -r ../$ZIP_FILE tea.app && cd ../..
-        xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE
-      env:
-        APPLE_ID: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
+    # - name: codesign & notarize .app x86+64
+    #   run: |
+    #     rm dist/$ZIP_FILE
+    #     codesign --sign "$APPLE_ID" --force --options runtime dist/mac/tea.app
+    #     codesign --verify --deep --strict --verbose=2 dist/mac/tea.app
+    #     cd dist/mac/ && zip -r ../$ZIP_FILE tea.app && cd ../..
+    #     xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE
+    #   env:
+    #     APPLE_ID: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+    #     APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+    #     ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
 
     # prepare for DMG creation
     - name: prepare installer folders
@@ -225,23 +224,23 @@ jobs:
         ZIP_FILE_X86: ${{ steps.app_files.outputs.zip_x86 }}
         ZIP_FILE_ARM64: ${{ steps.app_files.outputs.zip_arm64 }}
 
-    - name: create x86 dmg
-      run: |
-        tea +github.com/create-dmg/create-dmg create-dmg \
-        --volname "Tea Installer" \
-        --window-pos 200 120 \
-        --window-size 800 400 \
-        --icon-size 100 \
-        --icon "tea.app" 200 190 \
-        --volicon "./modules/desktop/electron/icon.icns" \
-        --hide-extension "tea.app" \
-        --app-drop-link 600 185 \
-        --sandbox-safe \
-        "$filename" \
-        "$installer_folder"
-      env:
-        filename: ${{ steps.app_files.outputs.dmg_x86 }}
-        installer_folder: x86_installer/
+    # - name: create x86 dmg
+    #   run: |
+    #     tea +github.com/create-dmg/create-dmg create-dmg \
+    #     --volname "Tea Installer" \
+    #     --window-pos 200 120 \
+    #     --window-size 800 400 \
+    #     --icon-size 100 \
+    #     --icon "tea.app" 200 190 \
+    #     --volicon "./modules/desktop/electron/icon.icns" \
+    #     --hide-extension "tea.app" \
+    #     --app-drop-link 600 185 \
+    #     --sandbox-safe \
+    #     "$filename" \
+    #     "$installer_folder"
+    #   env:
+    #     filename: ${{ steps.app_files.outputs.dmg_x86 }}
+    #     installer_folder: x86_installer/
 
     - name: create arm64 dmg
       run: |
@@ -260,6 +259,14 @@ jobs:
       env:
         filename: ${{ steps.app_files.outputs.dmg_arm64 }}
         installer_folder: arm64_installer/
+
+    - name: notarize .dmg arm64
+      run: |
+        xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file $DMG_FILE
+      env:
+        APPLE_ID: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        DMG_FILE: ${{ steps.app_files.outputs.dmg_arm64 }}
 
     # finalize dist artifacts
     - name: replace old DMG files in dist folder
