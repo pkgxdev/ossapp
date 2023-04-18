@@ -197,6 +197,7 @@ jobs:
         rm dist/$ZIP_FILE
         xattr -cr dist/mac-arm64/tea.app
         codesign --sign "$APPLE_ID" --force --options runtime dist/mac-arm64/tea.app/Contents/Frameworks/ReactiveObjC.framework/Versions/Current
+        codesign --sign "$APPLE_ID" --force --options runtime dist/mac-arm64/tea.app/Contents/Frameworks/Electron\ Framework.framework/Versions/Current
         codesign --sign "$APPLE_ID" --deep --force --options runtime dist/mac-arm64/tea.app
         codesign --verify --deep --strict --verbose=2 dist/mac-arm64/tea.app
         cd dist/mac-arm64/ && zip -r ../$ZIP_FILE tea.app && cd ../..
