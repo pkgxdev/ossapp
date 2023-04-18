@@ -17,7 +17,7 @@ export async function installPackage(full_name: string) {
 
 	if (!teaVersion) throw new Error("no tea");
 	log.info(`installing package ${full_name}`);
-	await asyncExec(`cd ${destinationDirectory} && ./tea +${full_name} true`);
+	await asyncExec(`cd ${destinationDirectory} && ./tea -S +${full_name} true`);
 }
 
 export async function openTerminal(cmd: string) {
