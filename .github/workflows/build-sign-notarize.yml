@@ -187,33 +187,33 @@ jobs:
 
     - uses: teaxyz/brewkit/actions/setup-codesign@v0
       with:
-          p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
-          p12-password: ${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}
+          p12-file-base64: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+          p12-password: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
     # sometimes this might fail because exact the same zip has been uploaded already
     - name: codesign and notarize .app arm64
       run: |
-        echo "$APPLE_ID" "$APPLE_IDENTITY"
         rm dist/$ZIP_FILE
-        codesign --sign "$APPLE_IDENTITY" --force --preserve-metadata=entitlements,requirements,flags,runtime dist/mac-arm64/tea.app
+        echo $LOGF
+        codesign --sign "$APPLE_ID" --force --preserve-metadata=entitlements,requirements,flags,runtime dist/mac-arm64/tea.app
+        codesign --verify --deep --strict --verbose=2 dist/mac-arm64/tea.app
         cd dist/mac-arm64/ && zip -r ../$ZIP_FILE tea.app && cd ../..
         xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE
       env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
+        LOGF: PREFIX_${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+        APPLE_ID: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        APPLE_IDENTITY: ${{ secrets.APPLE_IDENTITY }}
         ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
-
     - name: codesign & notarize .app x86+64
       run: |
         rm dist/$ZIP_FILE
-        codesign --sign "$APPLE_IDENTITY" --force --preserve-metadata=entitlements,requirements,flags,runtime dist/mac/tea.app
+        codesign --sign "$APPLE_ID" --force --preserve-metadata=entitlements,requirements,flags,runtime dist/mac/tea.app
+        codesign --verify --deep --strict --verbose=2 dist/mac/tea.app
         cd dist/mac/ && zip -r ../$ZIP_FILE tea.app && cd ../..
         xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE
       env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_ID: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        APPLE_IDENTITY: ${{ secrets.APPLE_IDENTITY }}
         ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
 
     # prepare for DMG creation
