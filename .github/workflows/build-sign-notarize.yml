@@ -195,7 +195,7 @@ jobs:
       run: |
         rm dist/$ZIP_FILE
         codesign --sign "$APPLE_IDENTITY" --force --preserve-metadata=entitlements,requirements,flags,runtime dist/mac-arm64/tea.app || true
-        zip -r dist/$ZIP_FILE -j dist/mac-arm64/tea.app
+        cd dist/mac-arm64/ && zip -r ../$ZIP_FILE tea.app && cd ../..
         xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE || true
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -207,7 +207,7 @@ jobs:
       run: |
         rm dist/$ZIP_FILE
         codesign --sign "$APPLE_IDENTITY" --force --preserve-metadata=entitlements,requirements,flags,runtime dist/mac/tea.app || true
-        zip -r dist/$ZIP_FILE -j dist/mac/tea.app
+        cd dist/mac/ && zip -r ../$ZIP_FILE tea.app && cd ../..
         xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "com.tea.xyz" --file dist/$ZIP_FILE || true
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
