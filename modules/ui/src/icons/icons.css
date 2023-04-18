@@ -190,3 +190,12 @@
 .icon-check-circle-o:before {
 	content: "\59";
 }
+.icon-cog:before {
+	content: "\5a";
+}
+.icon-bug:before {
+	content: "\30";
+}
+.icon-gear:before {
+	content: "\31";
+}

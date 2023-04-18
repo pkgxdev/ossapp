@@ -84,19 +84,21 @@
 			 -->
 			{#if needsUpdateCount && sideMenuOption === SideMenuOptions.installed_updates_available}
 				<!-- 22px right margin to account for the scrollbar on the package cards -->
-				<div class="mr-[22px] flex items-center text-sm">
+				<div class="mr-[22px] flex items-center justify-end text-sm">
 					{#if currentUpdatingPkg}
 						<p class="text-gray px-2">{updatingMessage}</p>
 					{/if}
-					<Button
-						class="h-8 w-48 text-xs"
-						loading={updating}
-						type="plain"
-						color="secondary"
-						onClick={updateAll}
-					>
-						{$t(`package.update-all`)} [{needsUpdateCount}]
-					</Button>
+					<div>
+						<Button
+							class="h-8 w-48 text-xs"
+							loading={updating}
+							type="plain"
+							color="secondary"
+							onClick={updateAll}
+						>
+							{$t(`package.update-all`)} [{needsUpdateCount}]
+						</Button>
+					</div>
 				</div>
 			{/if}
 		</header>

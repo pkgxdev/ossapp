@@ -6,7 +6,7 @@
 	import { navStore } from "$libs/stores";
 	import { t } from "$libs/translations";
 
-	import ProfileNavButton from "./profile-nav-button.svelte";
+	import TopBarMenu from "./top-bar-menu.svelte";
 	import { topbarDoubleClick } from "$libs/native-electron";
 
 	let { nextPath, prevPath } = navStore;
@@ -46,13 +46,14 @@
 		/>
 
 		<kbd
-			class="bg-gray absolute top-0 right-3 mt-1 opacity-50 text-white flex items-center rounded-sm px-2" style="letter-spacing: 0.5pt"
+			class="bg-gray pointer-events-none absolute top-0 right-3 mt-1 flex items-center rounded-sm px-2 text-white opacity-50"
+			style="letter-spacing: 0.5pt"
 		>
 			<span class="text-lg">⌘</span>
 			<span class="text-xs" style="font-size: smaller">K</span>
 		</kbd>
 	</div>
-	<ProfileNavButton />
+	<TopBarMenu />
 </header>
 
 <style>

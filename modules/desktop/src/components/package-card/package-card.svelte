@@ -42,7 +42,7 @@
 		<div class="package-card-content absolute flex h-full w-full flex-col justify-between">
 			<div class="hint-container">
 				<div class="hint">
-					<div class="text-xs">view more details</div>
+					<div class="line-clamp-1 text-xs">view more details</div>
 					<div class="hint-icon"><i class="icon-upward-arrow" /></div>
 				</div>
 			</div>
@@ -56,7 +56,9 @@
 				<div class="relative mt-3.5 flex w-full">
 					<div class="install-button" on:mousedown={preventPropagation}>
 						{#if pkg.state === PackageStates.INSTALLED}
-							<PackageInstalledBadge version={pkg.version} />
+							<div>
+								<PackageInstalledBadge version={pkg.version} />
+							</div>
 						{:else}
 							<div on:mousedown={preventPropagation}>
 								<PackageInstallButton
@@ -74,9 +76,9 @@
 				<div class="relative mt-1.5 h-[10px] leading-[10px]">
 					{#if pkg.state === "NEEDS_UPDATE"}
 						<span class="text-[10px]">
-              <span class="opacity-70">you have</span>
-              v{findRecentInstalledVersion(pkg)}
-            </span>
+							<span class="opacity-70">you have</span>
+							v{findRecentInstalledVersion(pkg)}
+						</span>
 					{/if}
 				</div>
 			</div>
@@ -152,7 +154,8 @@
 	}
 
 	.hint {
-		width: 60%;
+		width: auto;
+		padding-left: 30%;
 		height: 24px;
 		display: flex;
 		align-items: center;
