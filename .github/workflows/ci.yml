@@ -122,7 +122,8 @@ jobs:
             copy-paste into a browser to view
   # TEMP DISABLE: we are not using this much at the moment for preview testing
   build_desktop:
-    needs: [changes, test, build_svelte]
+    # needs: [changes, test, build_svelte]
+    needs: [changes]
     # if: needs.changes.outputs.desktop == 'true'
     strategy:
       matrix:
