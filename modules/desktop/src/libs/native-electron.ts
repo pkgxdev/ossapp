@@ -23,7 +23,6 @@ import {
 
 import * as mock from "./native-mock";
 import { PackageStates, type InstalledPackage } from "./types";
-import { installPackageCommand } from "./native/cli";
 
 import { get as apiGet } from "$libs/v1-client";
 import axios from "axios";
@@ -94,8 +93,16 @@ export async function getPackageReviews(full_name: string): Promise<Review[]> {
 export async function installPackage(pkg: GUIPackage, version?: string) {
 	const latestVersion = pkg.version;
 	const specificVersion = version || latestVersion;
+
 	log.info(`installing package: ${pkg.name} version: ${specificVersion}`);
-	await installPackageCommand(pkg.full_name + (specificVersion ? `@${specificVersion}` : ""));
+	const res = await ipcRenderer.invoke("install-package", {
+		full_name: pkg.full_name,
+		version: specificVersion
+	});
+
+	if (res instanceof Error) {
+		throw res;
+	}
 }
 
 export async function syncPantry() {

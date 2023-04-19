@@ -46,7 +46,7 @@ let macWindowClosed = false;
 
 setupTitlebar();
 
-initializeHandlers();
+initializeHandlers({ notifyMainWindow });
 
 function createWindow() {
 	const windowState = windowStateManager({
@@ -193,3 +193,9 @@ app.on("open-url", (event, url) => {
 		createMainWindow();
 	}
 });
+
+function notifyMainWindow(channel: string, data: unknown) {
+	if (mainWindow) {
+		mainWindow.webContents.send(channel, data);
+	}
+}
