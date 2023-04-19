@@ -83,6 +83,10 @@
 		background: #0ecaa7;
 	}
 
+	button.ghost.primary:hover {
+		color: white;
+	}
+
 	/* secondary */
 	button.plain.secondary {
 		background: #8000ff;
