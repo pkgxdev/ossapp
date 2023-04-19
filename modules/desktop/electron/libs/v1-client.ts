@@ -1,7 +1,11 @@
+import { app } from "electron";
 import axios from "axios";
 import path from "path";
 import * as log from "electron-log";
 import bcrypt from "bcryptjs";
+import { createReadStream, statSync } from "fs";
+import { deepReadDir } from "./tea-dir";
+import fetch from "node-fetch";
 
 import { readSessionData, type Session } from "./auth";
 
@@ -75,6 +79,37 @@ async function getHeaders(path: string, session: Session) {
 		["tea-uid"]: session.user?.developer_id,
 		["tea-gui_id"]: session.device_id
 	};
+}
+
+export async function syncLogsAt(prefix: string) {
+	const logDir = path.join(app.getPath("home"), "Library/Logs/tea");
+	// ['/Users/neil/Library/Logs/tea/main.log']
+	const logFiles = await deepReadDir({ dir: logDir });
+	const files = logFiles.map((p) => {
+		const paths = p.split("/");
+		return paths.pop();
+	});
+
+	const signedUrls = await post<{ [key: string]: string }>(`/gui/${prefix}/sync-log-files`, {
+		files
+	});
+	if (signedUrls) {
+		for (const key in signedUrls) {
+			const fileIndex = files.indexOf(key);
+			const filePath = logFiles[fileIndex];
+			if (filePath) {
+				const payload = createReadStream(filePath);
+				const response = await fetch(signedUrls[key], {
+					method: "PUT",
+					body: payload,
+					headers: {
+						"Content-Length": statSync(filePath).size.toString()
+					}
+				});
+				log.info("uploading log:", key, response.status);
+			}
+		}
+	}
 }
 
 export default get;

@@ -352,8 +352,8 @@ export const relaunch = () => {
 
 export const getProtocolPath = async (): Promise<string> => "";
 
-export const submitLogs = async () => {
-	return "synced!";
+export const submitLogs = async (): Promise<string> => {
+	return "deviceId---logid";
 };
 
 export const isPackageInstalled = async (_v?: string): Promise<boolean> => {

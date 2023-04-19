@@ -202,7 +202,7 @@ export const getProtocolPath = async (): Promise<string> => {
 	return path;
 };
 
-export const submitLogs = async () => {
+export const submitLogs = async (): Promise<string> => {
 	const response = await ipcRenderer.invoke("submit-logs");
 	return response;
 };
