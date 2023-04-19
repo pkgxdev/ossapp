@@ -1,5 +1,5 @@
 import { ipcMain, app, BrowserWindow } from "electron";
-import { getInstalledPackages } from "./tea-dir";
+import { deletePackageFolder, getInstalledPackages } from "./tea-dir";
 import { readSessionData, writeSessionData } from "./auth";
 import type { Packages, Session } from "../../src/libs/types";
 import * as log from "electron-log";
@@ -133,15 +133,13 @@ export default function initializeHandlers() {
 	ipcMain.handle(
 		"delete-package",
 		async (_, { fullName, version }: { fullName: string; version: string }) => {
-			let error = "";
 			try {
 				log.info("deleting package:", fullName);
 				await deletePackageFolder(fullName, version);
 			} catch (e) {
 				log.error(e);
-				error = e.message;
+				return e;
 			}
-			return error;
 		}
 	);
 

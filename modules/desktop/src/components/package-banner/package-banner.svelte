@@ -30,7 +30,11 @@
 		for (const [i, v] of versions.entries()) {
 			if (i) {
 				// skip the latest version = 0
-				await packagesStore.deletePkg(pkg, v);
+				try {
+					await packagesStore.deletePkg(pkg, v);
+				} catch (e) {
+					console.error(e);
+				}
 			}
 		}
 		pruning = false;
@@ -39,7 +43,7 @@
 
 <section class="mt-4 bg-black">
 	<header class="flex">
-		<figure class="grow-1 w-1/3 relative">
+		<figure class="grow-1 relative w-1/3">
 			<img class="w-full" src={pkg.thumb_image_url} alt={pkg.full_name} />
 			{#if pkg.install_progress_percentage && pkg.install_progress_percentage < 100}
 				<div class="absolute left-0 top-0 z-40 h-full w-full bg-black bg-opacity-50">

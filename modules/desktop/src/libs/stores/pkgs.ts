@@ -222,6 +222,10 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			}, 3000);
 		} catch (error) {
 			log.error(error);
+			notificationStore.add({
+				message: `Package ${pkg.full_name} failed to uninstall.`,
+				type: NotificationType.ERROR
+			});
 		}
 	};
 
@@ -234,15 +238,11 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	};
 
 	const deletePkg = async (pkg: GUIPackage, version: string) => {
-		try {
-			log.info("deleting package: ", pkg.full_name, " version: ", version);
-			await deletePackage({ fullName: pkg.full_name, version });
-			updatePackage(pkg.full_name, {
-				installed_versions: pkg.installed_versions?.filter((v) => v !== version)
-			});
-		} catch (error) {
-			log.error(error);
-		}
+		log.info("deleting package: ", pkg.full_name, " version: ", version);
+		await deletePackage({ fullName: pkg.full_name, version });
+		updatePackage(pkg.full_name, {
+			installed_versions: pkg.installed_versions?.filter((v) => v !== version)
+		});
 	};
 
 	const writePackageCacheWithDebounce = withDebounce(writePackageCache);

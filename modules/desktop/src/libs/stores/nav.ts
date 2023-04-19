@@ -1,7 +1,6 @@
 import { writable } from "svelte/store";
 import { goto } from "$app/navigation";
 
-import { installTeaCli } from "@native";
 const log = window.require("electron-log");
 
 export default function initNavStore() {
@@ -20,12 +19,6 @@ export default function initNavStore() {
 
 	let isMovingNext = false;
 	let isMovingBack = false;
-
-	installTeaCli().then((version: string) => {
-		if (!version) {
-			showWelcome.set(true);
-		}
-	});
 
 	return {
 		showWelcome,

@@ -231,10 +231,9 @@ export const setBadgeCount = async (count: number) => {
 };
 
 export const deletePackage = async (args: { fullName: string; version: string }) => {
-	try {
-		await ipcRenderer.invoke("delete-package", args);
-	} catch (error) {
-		log.error(error);
+	const result = await ipcRenderer.invoke("delete-package", args);
+	if (result instanceof Error) {
+		throw result;
 	}
 };
 
@@ -252,11 +251,6 @@ export const writePackageCache = async (pkgs: Packages) => {
 	} catch (error) {
 		log.error(error);
 	}
-};
-
-export const installTeaCli = async (): Promise<string> => {
-	const res = await ipcRenderer.invoke("install-tea-cli");
-	return res.version;
 };
 
 export const topbarDoubleClick = async () => {
