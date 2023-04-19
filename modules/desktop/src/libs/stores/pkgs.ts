@@ -11,7 +11,8 @@ import {
 	getPackageBottles,
 	setBadgeCount,
 	loadPackageCache,
-	writePackageCache
+	writePackageCache,
+	syncPantry
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
@@ -21,11 +22,16 @@ import { addInstalledVersion } from "$libs/packages/pkg-utils";
 import withDebounce from "$libs/utils/debounce";
 import { trimGithubSlug } from "$libs/github";
 import { notificationStore } from "$libs/stores";
+import withRetry from "$libs/utils/retry";
 
 const log = window.require("electron-log");
 
+const packageRefreshInterval = 1000 * 60 * 60; // 1 hour
+
 export default function initPackagesStore() {
 	let initialized = false;
+	let isDestroyed = false;
+	let refreshTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
 	const syncProgress = writable<number>(0); // TODO: maybe use this in the UI someday
 
@@ -93,46 +99,69 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			log.info(`Loaded ${Object.keys(cachedPkgs.packages).length} packages from cache`);
 			packageMap.set(cachedPkgs);
 
-			log.info("packages store: initializing...");
+			await refreshPackages();
 			initialized = true;
-			const pkgs = await getDistPackages();
-			const guiPkgs: GUIPackage[] = pkgs.map((p) => ({
-				...p,
-				state: PackageStates.AVAILABLE
-			}));
+		}
+		log.info("packages store: initialized!");
+	};
 
+	const refreshPackages = async () => {
+		if (isDestroyed) return;
+
+		log.info("packages store: refreshing...");
+
+		const pkgs = await getDistPackages();
+		const guiPkgs: GUIPackage[] = pkgs.map((p) => ({
+			...p,
+			state: PackageStates.AVAILABLE
+		}));
+
+		if (!initialized) {
 			// set packages data so that i can render something in the UI already
 			updateAllPackages(guiPkgs);
 			log.info("initialized packages store with ", guiPkgs.length);
-
-			packagesIndex = new Fuse(guiPkgs, {
-				keys: ["name", "full_name", "desc", "categories"]
-			});
-			log.info("initialized packages fuse index");
-
-			try {
-				const installedPkgs: InstalledPackage[] = await getInstalledPackages();
-
-				log.info("set NEEDS_UPDATE state to pkgs");
-				for (const [i, iPkg] of installedPkgs.entries()) {
-					const pkg = guiPkgs.find((p) => p.full_name === iPkg.full_name);
-					if (pkg) {
-						const isUpdated = pkg.version === iPkg.installed_versions[0];
-						updatePackage(pkg.full_name, {
-							installed_versions: iPkg.installed_versions,
-							state: isUpdated ? PackageStates.INSTALLED : PackageStates.NEEDS_UPDATE
-						});
-					}
-					syncProgress.set(+((i + 1) / installedPkgs.length).toFixed(2));
-				}
-
-				// TODO: I think this can just get deleted, updatePackage should be enough
-				//setBadgeCountFromPkgs(guiPkgs);
-			} catch (error) {
-				log.error(error);
-			}
 		}
-		log.info("packages store: initialized!");
+
+		packagesIndex = new Fuse(guiPkgs, {
+			keys: ["name", "full_name", "desc", "categories"]
+		});
+		log.info("refreshed packages fuse index");
+
+		try {
+			const installedPkgs: InstalledPackage[] = await getInstalledPackages();
+
+			log.info("set NEEDS_UPDATE state to pkgs");
+			for (const [i, iPkg] of installedPkgs.entries()) {
+				const pkg = guiPkgs.find((p) => p.full_name === iPkg.full_name);
+				if (pkg) {
+					const isUpdated = pkg.version === iPkg.installed_versions[0];
+					updatePackage(pkg.full_name, {
+						installed_versions: iPkg.installed_versions,
+						state: isUpdated ? PackageStates.INSTALLED : PackageStates.NEEDS_UPDATE
+					});
+				}
+				syncProgress.set(+((i + 1) / installedPkgs.length).toFixed(2));
+			}
+		} catch (error) {
+			log.error(error);
+		}
+
+		try {
+			await withRetry(syncPantry);
+		} catch (err) {
+			log.error(err);
+		}
+
+		refreshTimeoutId = setTimeout(() => refreshPackages(), packageRefreshInterval); // refresh every hour
+	};
+
+	// Destructor for the package store
+	const destroy = () => {
+		isDestroyed = true;
+		if (refreshTimeoutId) {
+			clearTimeout(refreshTimeoutId);
+		}
+		log.info("packages store: destroyed");
 	};
 
 	const installPkg = async (pkg: GUIPackage, version?: string) => {
@@ -237,7 +266,8 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		installPkg,
 		uninstallPkg,
 		syncPackageData,
-		deletePkg
+		deletePkg,
+		destroy
 	};
 }
 

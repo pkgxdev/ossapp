@@ -1,12 +1,10 @@
 import { spawn, exec } from "child_process";
-import { clean } from "semver";
 import { getGuiPath } from "./tea-dir";
 import fs from "fs";
 import path from "path";
 import initializeTeaCli from "./initialize";
 
 import * as log from "electron-log";
-import { subscribeToPackageTopic } from "./push-notification";
 
 const destinationDirectory = getGuiPath();
 
@@ -96,4 +94,12 @@ export async function asyncExec(cmd: string): Promise<string> {
 			resolve(stdout);
 		});
 	});
+}
+
+export async function syncPantry() {
+	const teaVersion = await initializeTeaCli();
+
+	if (!teaVersion) throw new Error("no tea");
+	log.info("Syncing pantry");
+	await asyncExec(`cd '${destinationDirectory}' && ./tea -S`);
 }

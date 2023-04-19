@@ -12,7 +12,7 @@
 	import SearchPopupResults from "$components/search-popup-results/search-popup-results.svelte";
 	import { getProtocolPath } from "@native";
 
-	import { onMount } from "svelte";
+	import { onDestroy, onMount } from "svelte";
 
 	let view: HTMLElement;
 
@@ -50,6 +50,10 @@
 			return false;
 		});
 		packagesStore.init();
+	});
+
+	onDestroy(() => {
+		packagesStore.destroy();
 	});
 </script>
 
