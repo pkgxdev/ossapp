@@ -21,7 +21,6 @@ export default function mouseLeaveDelay(element: HTMLElement, timeout = 600) {
 		timeoutId = setTimeout(() => {
 			if (isOut && element) {
 				element.dispatchEvent(new CustomEvent("leave_delay"));
-				onDestroy();
 			}
 		}, timeout);
 	};

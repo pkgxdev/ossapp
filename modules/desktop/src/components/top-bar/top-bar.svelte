@@ -18,7 +18,7 @@
 </script>
 
 <header
-	class="border-gray flex h-12 w-full items-center justify-between border border-x-0 border-t-0 pr-2"
+	class="border-gray relative z-20 flex h-12 w-full items-center justify-between border border-x-0 border-t-0 pr-2"
 	style="-webkit-app-region: drag"
 	on:dblclick={topbarDoubleClick}
 >

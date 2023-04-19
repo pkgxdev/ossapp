@@ -12,7 +12,7 @@ export const getSession = async (): Promise<Session | null> => {
 };
 
 export default function initAuthStore() {
-	const user = writable<Developer>();
+	const user = writable<Developer | undefined>();
 	const sessionStore = writable<Session>({});
 	let pollLoop = 0;
 
@@ -70,11 +70,17 @@ export default function initAuthStore() {
 		}
 	}
 
+	function clearSession() {
+		updateSession({ key: undefined, user: undefined });
+		user.set(undefined);
+	}
+
 	return {
 		user,
 		session: sessionStore,
 		deviceId,
 		deviceIdStore,
-		pollSession
+		pollSession,
+		clearSession
 	};
 }

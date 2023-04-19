@@ -59,7 +59,7 @@
 
 <div id="main-layout" class="font-inter border-gray rounded-xl border transition-all">
 	<TopBar />
-	<div class="scroll-manager relative">
+	<div class="scroll-manager relative z-10">
 		<section class="relative" bind:this={view}>
 			<div class="content">
 				<slot />
@@ -115,7 +115,6 @@
 		padding-right: 4px;
 		overflow-x: hidden;
 	}
-
 
 	/* width */
 	::-webkit-scrollbar {
