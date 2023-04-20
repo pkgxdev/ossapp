@@ -260,3 +260,12 @@ export const topbarDoubleClick = async () => {
 		log.error(error);
 	}
 };
+
+export const cacheImageURL = async (url: string): Promise<string | undefined> => {
+	try {
+		const cachedSrc = await ipcRenderer.invoke("cache-image", url);
+		return cachedSrc;
+	} catch (error) {
+		log.error("Failed to cache image:", error);
+	}
+};

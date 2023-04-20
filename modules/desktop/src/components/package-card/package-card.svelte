@@ -5,14 +5,16 @@
 	import { findRecentInstalledVersion } from "$libs/packages/pkg-utils";
 	import PackageInstallButton from "$components/package-install-button/package-install-button.svelte";
 	import PackageInstalledBadge from "$components/package-install-button/package-installed-badge.svelte";
+  import { onMount } from "svelte";
+	import { packagesStore } from "$libs/stores";
 
 	export let pkg: GUIPackage;
 	export let link: string;
 	export let progessLoading = 0;
 
-	$: imgUrl = !pkg.thumb_image_url.includes("https://tea.xyz")
+	$: imgUrl = pkg?.cached_image_url || (!pkg.thumb_image_url.includes("https://tea.xyz")
 		? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
-		: pkg.thumb_image_url;
+		: pkg.thumb_image_url);
 
 	export let onClickCTA = async () => {
 		console.log("do nothing");
@@ -28,6 +30,10 @@
 	const deactivate = () => (isActive = false);
 
 	const preventPropagation = (evt: MouseEvent) => evt.stopPropagation();
+
+	onMount(() => {
+		if (pkg && !pkg?.cached_image_url) packagesStore.cachePkgImage(pkg);
+	});
 </script>
 
 <section

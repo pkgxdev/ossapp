@@ -1,5 +1,5 @@
 import { ipcMain, app, BrowserWindow } from "electron";
-import { deletePackageFolder, getInstalledPackages } from "./tea-dir";
+import { deletePackageFolder, getInstalledPackages, cacheImage } from "./tea-dir";
 import { readSessionData, writeSessionData } from "./auth";
 import type { Packages, Session } from "../../src/libs/types";
 import * as log from "electron-log";
@@ -179,6 +179,17 @@ export default function initializeHandlers() {
 		const mainWindow = BrowserWindow.fromWebContents(event.sender);
 		if (mainWindow) {
 			mainWindow.isMaximized() ? mainWindow.unmaximize() : mainWindow.maximize();
+		}
+	});
+
+	ipcMain.handle("cache-image", async (_event, url) => {
+		try {
+			log.info("caching:", url);
+			const cachedImagePath = await cacheImage(url);
+			return cachedImagePath;
+		} catch (error) {
+			log.error("Failed to cache image:", error);
+			throw error;
 		}
 	});
 }
