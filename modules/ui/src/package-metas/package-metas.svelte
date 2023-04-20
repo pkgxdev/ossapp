@@ -20,11 +20,14 @@
 			unit = "MB";
 			divisor = 1024 ** 2;
 		} else if (n > 1024) {
-			unit = "KB";
+			unit = "kB";
 			divisor = 1024;
 		}
 
-		return `${(n / divisor).toFixed(2)} ${unit}`;
+    const N = n / divisor;
+    const decimals = n < 10 ? 2 : 1;  // it’s more informative to show more decimals but only for smaller numbers
+
+		return `${N.toFixed(decimals)} ${unit}`;
 	};
 	console.log(pkg);
 </script>
