@@ -87,11 +87,6 @@ jobs:
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
 
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
 
     # update and replace latest release bin in s3
     - name: Set tag
@@ -100,11 +95,25 @@ jobs:
 
     # TODO: 
     # - configure correct blockmap and checksum hash on latest-mac.yml
+    - name: cp latest as previous release
+      run: |
+        aws s3 cp \
+          s3://dist.tea.xyz/tea.xyz/gui/tea-latest-arm64.dmg \
+          s3://dist.tea.xyz/tea.xyz/gui/tea-previous-arm64.dmg
+        aws s3 cp \
+          s3://dist.tea.xyz/tea.xyz/gui/tea-latest.dmg \
+          s3://dist.tea.xyz/tea.xyz/gui/tea-previous.dmg
     - name: publish release
       run: |
         cd dist && \
         aws s3 sync . \
           "s3://preview.gui.tea.xyz/release/"
+        aws s3 cp $ARM_URL s3://dist.tea.xyz/tea.xyz/gui/tea-latest-arm64.dmg
+        aws s3 cp $X86_URL s3://dist.tea.xyz/tea.xyz/gui/tea-previous-arm64.dmg
+      env:
+        ARM_URL:  s3://preview.gui.tea.xyz/release/${{ steps.app_files.outputs.dmg_arm64 }}
+        X86_URL:  s3://preview.gui.tea.xyz/release/${{ steps.app_files.outputs.dmg_x86 }}
+
     - uses: actions/setup-node@v3
       with:
         node-version: 18
