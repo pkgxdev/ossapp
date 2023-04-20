@@ -24,9 +24,9 @@
 			divisor = 1024;
 		}
 
-    const N = n / divisor;
-    // going for 3 significant figures
-    const decimals = N < 10 ? 2 : N < 100 ? 1 : 0;
+		const N = n / divisor;
+		// going for 3 significant figures
+		const decimals = N < 10 ? 2 : N < 100 ? 1 : 0;
 
 		return `${N.toFixed(decimals)} ${unit}`;
 	};
