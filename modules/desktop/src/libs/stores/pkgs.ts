@@ -12,7 +12,8 @@ import {
 	setBadgeCount,
 	loadPackageCache,
 	writePackageCache,
-	syncPantry
+	syncPantry,
+	cacheImageURL
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
@@ -250,6 +251,13 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		writePackageCacheWithDebounce(pkgs);
 	});
 
+	const cachePkgImage = async (pkg: GUIPackage) => {
+		const cacheFileURL = await cacheImageURL(pkg.thumb_image_url);
+		if (cacheFileURL) {
+			updatePackage(pkg.full_name, { cached_image_url: cacheFileURL });
+		}
+	};
+
 	return {
 		packageList,
 		syncProgress,
@@ -267,7 +275,8 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		uninstallPkg,
 		syncPackageData,
 		deletePkg,
-		destroy
+		destroy,
+		cachePkgImage
 	};
 }
 

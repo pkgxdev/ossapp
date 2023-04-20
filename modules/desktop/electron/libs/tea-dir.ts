@@ -7,6 +7,7 @@ import * as log from "electron-log";
 import type { InstalledPackage } from "../../src/libs/types";
 import semverCompare from "semver/functions/compare";
 import { mkdirp } from "mkdirp";
+import fetch from "node-fetch";
 
 type Dir = {
 	name: string;
@@ -169,4 +170,35 @@ export async function deletePackageFolder(fullName, version) {
 	} catch (error) {
 		log.error(error);
 	}
+}
+
+async function downloadImage(url: string, imagePath: string): Promise<void> {
+	const response = await fetch(url);
+	await new Promise<void>((resolve, reject) => {
+		const fileStream = fs.createWriteStream(imagePath);
+		response.body.pipe(fileStream);
+		fileStream.on("finish", () => resolve());
+		fileStream.on("error", (error) => reject(error));
+	});
+}
+
+export async function cacheImage(url: string): Promise<string> {
+	const imageFolder = path.join(getGuiPath(), "cached_images");
+	const imageName = path.basename(url);
+	const imagePath = path.join(imageFolder, imageName);
+
+	await mkdirp(imageFolder);
+
+	if (!fs.existsSync(imagePath)) {
+		try {
+			await downloadImage(url, imagePath);
+			console.log("Image downloaded and cached:", imagePath);
+		} catch (error) {
+			console.error("Failed to download image:", error);
+		}
+	} else {
+		console.log("Image already cached:", imagePath);
+	}
+
+	return `file://${imagePath}`;
 }
