@@ -37,7 +37,7 @@
 	<ul class="mb-10 flex flex-col gap-2">
 		{#if pkg?.bottles}
 			<li>
-				<span>{dayjs().to(dayjs(pkg?.bottles[0].last_modified_at))}</span>
+				<span>Updated {dayjs().to(dayjs(pkg?.bottles[0].last_modified_at))}</span>
 			</li>
 		{/if}
 		{#if pkg?.license}
