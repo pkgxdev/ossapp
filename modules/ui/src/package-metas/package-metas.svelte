@@ -25,7 +25,8 @@
 		}
 
     const N = n / divisor;
-    const decimals = n < 10 ? 2 : 1;  // it’s more informative to show more decimals but only for smaller numbers
+    // going for 3 significant figures
+    const decimals = N < 10 ? 2 : N < 100 ? 1 : 0;
 
 		return `${N.toFixed(decimals)} ${unit}`;
 	};
