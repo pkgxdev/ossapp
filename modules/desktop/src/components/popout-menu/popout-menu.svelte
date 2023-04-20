@@ -18,8 +18,24 @@
 </script>
 
 <nav class="w-full p-2 text-sm" use:mouseLeaveDelay={2000} on:leave_delay={() => hidePopup()}>
-	<!-- <SelectLang />
-	<hr /> -->
+	<button
+		class="hover:bg-gray outline-gray focus:bg-secondary h-8 w-full p-1 text-left outline-1 transition-all hover:bg-opacity-25 hover:outline"
+	>
+		language
+	</button>
+	<hr />
+	<button
+		class="hover:bg-gray outline-gray focus:bg-secondary h-8 w-full p-1 text-left outline-1 transition-all hover:bg-opacity-25 hover:outline"
+	>
+		docs
+	</button>
+	<hr />
+	<button
+		class="hover:bg-gray outline-gray focus:bg-secondary h-8 w-full p-1 text-left outline-1 transition-all hover:bg-opacity-25 hover:outline"
+	>
+		update tea
+	</button>
+	<hr />
 	<button
 		class="hover:bg-gray outline-gray focus:bg-secondary h-8 w-full p-1 text-left outline-1 transition-all hover:bg-opacity-25 hover:outline"
 		class:animate-pulse={submittedMessage === "syncing..."}

@@ -43,9 +43,11 @@
 			return false;
 		};
 	});
+
+	const preventDoubleClick = (evt: MouseEvent) => evt.stopPropagation();
 </script>
 
-<section class="flex items-center pb-1 {size} {clazz}">
+<section class="flex items-center pb-1 {size} {clazz}" on:dblclick={preventDoubleClick}>
 	<div class="icon pl-4">
 		<i class="icon-search-icon" />
 	</div>
