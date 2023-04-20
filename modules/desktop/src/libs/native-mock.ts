@@ -383,3 +383,7 @@ export const installTeaCli = async (): Promise<{ version: string; message: strin
 export const topbarDoubleClick = async () => {
 	console.log("topbar double click");
 };
+
+export const cacheImageURL = async (url: string): Promise<string | undefined> => {
+	return undefined;
+};

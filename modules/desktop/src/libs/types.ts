@@ -24,6 +24,7 @@ export type GUIPackage = Package & {
 	installed_versions?: string[];
 	synced?: boolean;
 	install_progress_percentage?: number;
+	cached_image_url?: string;
 };
 
 export type Course = {
