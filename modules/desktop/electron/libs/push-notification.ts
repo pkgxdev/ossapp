@@ -2,7 +2,7 @@ import Pushy from "pushy-electron";
 import { readSessionData } from "./auth";
 import { post } from "./v1-client";
 import * as log from "electron-log";
-import { BrowserWindow } from "electron";
+import { Notification, BrowserWindow } from "electron";
 import { nameToSlug } from "./package";
 import {
 	getInstalledPackages,
@@ -24,6 +24,7 @@ export default function initialize(mainWindow: BrowserWindow) {
 	Pushy.register({ appId: "643647948f3b62fb34b29989" })
 		.then(async (push_token) => {
 			const { device_id } = await readSessionData();
+			log.info(`Registering device ${device_id} for push notifications with token: ${push_token}`);
 			if (device_id) await post(`/auth/device/${device_id}/register-push-token`, { push_token });
 		})
 		.catch((err) => {
@@ -34,20 +35,27 @@ export default function initialize(mainWindow: BrowserWindow) {
 
 	// Listen for incoming notifications
 	Pushy.setNotificationListener(async (data: any) => {
-		// Display an alert with the "message" payload value
-		const isDup = await wasReceivedBefore(data);
+		try {
+			log.info("new notification received", data);
 
-		if (!isDup) {
-			Pushy.alert(mainWindow, data?.message as string);
-			log.info("new notification received", data.url, data.version);
-			const v = app.dock.getBadge();
-			if (!v) {
-				app.dock.setBadge("1");
+			const isDup = await wasReceivedBefore(data);
+			if (!isDup) {
+				new Notification({
+					title: "tea",
+					body: data?.message as string
+				}).show();
+
+				const v = app.dock.getBadge();
+				if (!v) {
+					app.dock.setBadge("1");
+				} else {
+					app.dock.setBadge((parseInt(v) + 1).toString());
+				}
 			} else {
-				app.dock.setBadge((parseInt(v) + 1).toString());
+				log.info("notification was already received before", data);
 			}
-		} else {
-			log.info("notification was already received before", data);
+		} catch (error) {
+			log.error("notification listener", error);
 		}
 	});
 }
@@ -139,6 +147,8 @@ async function wasReceivedBefore({
 	url: string;
 	version: string;
 }): Promise<boolean> {
+	if (!url || !version) return false;
+
 	let received = false;
 	const pkg = url.replace("tea://packages/", "");
 	const searchString = `${pkg}:::${version}`;
