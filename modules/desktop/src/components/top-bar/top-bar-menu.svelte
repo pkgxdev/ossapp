@@ -10,7 +10,7 @@
 
 	const submitBugReport = async () => {
 		const logId = await submitLogs();
-		const bugFormUrl = `https://airtable.com/shravDxWeNwwpPkFV?prefill_log_id=${logId}`;
+		const bugFormUrl = `https://airtable.com/shravDxWeNwwpPkFV?prefill_log_id=${logId}&hide_log_id=true`;
 		shellOpenExternal(bugFormUrl);
 	}
 </script>
