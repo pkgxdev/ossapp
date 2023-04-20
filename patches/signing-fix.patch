@@ -1,0 +1,16 @@
+diff -ru a/node_modules/electron-osx-sign/util.js b/node_modules/electron-osx-sign/util.js
+--- a/node_modules/electron-osx-sign/util.js	2023-04-20 18:27:18
++++ b/node_modules/electron-osx-sign/util.js	2023-04-20 18:28:50
+@@ -44,6 +44,12 @@
+   return new Promise(function (resolve, reject) {
+     child.execFile(file, args, options, function (err, stdout, stderr) {
+       if (err) {
++        if (stderr.match(/main executable failed strict validation/)) {
++          // This is a warning, not an error
++          debugwarn('Warning executing file:', '\n', '> Stderr:', stderr)
++          resolve(stdout)
++          return
++        }
+         debuglog('Error executing file:', '\n',
+           '> Stdout:', stdout, '\n',
+           '> Stderr:', stderr)

@@ -84,6 +84,7 @@ pnpm dev
 
 ```sh
 pnpm install
+patch -p1 -i patches/signing-fix.patch
 pnpm --filter tea exec pnpm predist
 pnpm --filter tea exec pnpm dist
 ```
@@ -96,6 +97,7 @@ pnpm --filter tea exec pnpm dist
 | pnpm.io                           | =7.18.2   |
 | xcfile.dev                        | >=0.0.110 |
 | python.org                        | >=3.10    |
+| gnu.org/patch                     | ^2        |
 
 [aws/cli]: https://aws.amazon.com/cli/
 [`xc`]: https://xcfile.dev
