@@ -83,6 +83,21 @@ jobs:
           path: |
             ./modules/desktop/.svelte-kit
             ./modules/desktop/build
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: copy cli bins
+        run: |
+          external_folder=modules/desktop/external
+          mkdir $external_folder
+          aws s3 cp $x64_key $external_folder/tea-x86-64
+          aws s3 cp $arm64_key $external_folder/tea-arm64
+        env:
+          x64_key: s3://www.tea.xyz/tea-darwin+x86-64
+          arm64_key: s3://www.tea.xyz/tea-darwin+aarch64
 
       - name: build dev
         if: inputs.s3-prefix != 'release'
@@ -121,12 +136,6 @@ jobs:
           mkdir -p target
           cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
           tar -czvf artifacts.tgz -C ./target/ .
-
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
 
       - name: s3 artifact upload
         id: s3-artifact-uploader

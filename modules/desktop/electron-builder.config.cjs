@@ -7,9 +7,10 @@ const _ = require("lodash");
 module.exports = {
 	appId: "xyz.tea.gui",
 	productName: "tea",
-	asar: false,
+	asar: true,
 	directories: { output: "dist" },
-	files: ["electron/dist/electron.cjs", { from: "build", to: "" }],
+	files: ["electron/dist/electron.cjs", { from: "build", to: "" }, "external/**/*"],
+	asarUnpack: ["external/**/*"],
 	linux: {
 		icon: "./icon.png"
 	},
