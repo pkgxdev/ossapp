@@ -48,6 +48,7 @@
 	ul {
 		margin-top: 0px;
 		padding-top: 80px;
+    padding-bottom: 8px;
 		height: calc(100vh - 49px);
 		overflow-y: scroll;
 		overflow-x: hidden;
