@@ -64,27 +64,30 @@ The following can be run with [`xc`], eg. `xc build`
 
 ```sh
 pnpm install
+patch -p1 -i patches/signing-fix.patch -N || true
 ```
 
 ## Build
 
+requires: Setup
+
 ```sh
-pnpm install
 pnpm build:desktop
 ```
 
 ## Dev
 
+requires: Setup
+
 ```sh
-pnpm install
 pnpm dev
 ```
 
 ## Dist
 
+requires: Setup
+
 ```sh
-pnpm install
-patch -p1 -i patches/signing-fix.patch
 pnpm --filter tea exec pnpm predist
 pnpm --filter tea exec pnpm dist
 ```

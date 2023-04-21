@@ -9,8 +9,7 @@ module.exports = {
 	productName: "tea",
 	asar: true,
 	directories: { output: "dist" },
-	files: ["electron/dist/electron.cjs", { from: "build", to: "" }, "external/**/*"],
-	asarUnpack: ["external/**/*"],
+	files: ["electron/dist/electron.cjs", { from: "build", to: "" }],
 	linux: {
 		icon: "./icon.png"
 	},
@@ -20,11 +19,11 @@ module.exports = {
 			target: "default",
 			arch: ["x64", "arm64"]
 		},
-		// https://github.com/electron-userland/electron-builder/issues/3940
-		hardenedRuntime: true,
-		gatekeeperAssess: false,
-		entitlements: "./mac_build_files/entitlements.mac.inherit.plist",
-		entitlementsInherit: "./mac_build_files/entitlements.mac.inherit.plist"
+		extraResources: [{
+			from: "./external/",
+			to: "cli",
+			filter: ["tea-*"]
+		}]
 	},
 	afterSign: async (params) => {
 		if (process.platform !== "darwin") {
