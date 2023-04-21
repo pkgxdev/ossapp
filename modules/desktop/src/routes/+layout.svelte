@@ -4,7 +4,6 @@
 	import { navigating } from "$app/stores";
 	import { afterNavigate } from "$app/navigation";
 	import TopBar from "$components/top-bar/top-bar.svelte";
-	import PopoutMenu from "$components/popout-menu/popout-menu.svelte";
 	import { navStore, packagesStore, searchStore } from "$libs/stores";
 	import { listenToChannel } from "@native";
 	import Mousetrap from "mousetrap";
@@ -16,7 +15,7 @@
 
 	let view: HTMLElement;
 
-	const { sideNavOpen, setNewPath } = navStore;
+	const { setNewPath } = navStore;
 	const { searching } = searchStore;
 
 	$: if ($navigating) view.scrollTop = 0;
@@ -68,11 +67,6 @@
 		</section>
 	</div>
 </div>
-{#if $sideNavOpen}
-	<aside class="border-gray fixed z-50 rounded-sm border  bg-black transition-all">
-		<PopoutMenu />
-	</aside>
-{/if}
 
 <style>
 	#main-layout {

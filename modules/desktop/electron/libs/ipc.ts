@@ -8,7 +8,7 @@ import { installPackage, openTerminal, syncPantry } from "./cli";
 
 import initializeTeaCli from "./initialize";
 
-import { getUpdater } from "./auto-updater";
+import { getAutoUpdateStatus, getUpdater } from "./auto-updater";
 
 import { loadPackageCache, writePackageCache } from "./package";
 import { nanoid } from "nanoid";
@@ -86,6 +86,7 @@ export default function initializeHandlers() {
 
 	ipcMain.handle("relaunch", async () => {
 		try {
+			log.info("relaunching app");
 			const autoUpdater = getUpdater();
 			await autoUpdater.quitAndInstall();
 		} catch (error) {
@@ -190,6 +191,15 @@ export default function initializeHandlers() {
 		} catch (error) {
 			log.error("Failed to cache image:", error);
 			throw error;
+		}
+	});
+
+	ipcMain.handle("get-auto-update-status", async () => {
+		try {
+			log.info("getting auto update status");
+			return getAutoUpdateStatus();
+		} catch (error) {
+			log.error(error);
 		}
 	});
 }

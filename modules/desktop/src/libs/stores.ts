@@ -9,6 +9,7 @@ import initAuthStore from "./stores/auth";
 import initNavStore from "./stores/nav";
 import initPackagesStore from "./stores/pkgs";
 import initNotificationStore from "./stores/notifications";
+import initAppUpdateStore from "./stores/update";
 
 export const featuredPackages = writable<Package[]>([]);
 
@@ -135,3 +136,5 @@ export const authStore = initAuthStore();
 export const navStore = initNavStore();
 
 export const notificationStore = initNotificationStore();
+
+export const appUpdateStore = initAppUpdateStore();
