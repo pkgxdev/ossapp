@@ -19,11 +19,13 @@ module.exports = {
 			target: "default",
 			arch: ["x64", "arm64"]
 		},
-		extraResources: [{
-			from: "./external/",
-			to: "cli",
-			filter: ["tea-*"]
-		}]
+		extraResources: [
+			{
+				from: "./external/",
+				to: "cli",
+				filter: ["tea-*"]
+			}
+		]
 	},
 	afterSign: async (params) => {
 		if (process.platform !== "darwin") {
