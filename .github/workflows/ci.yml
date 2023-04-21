@@ -96,7 +96,7 @@ jobs:
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           BUILD_FOR:  preview
 
-      - uses: aws-actions/configure-aws-credentials@v1
+      - uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -152,7 +152,7 @@ jobs:
           # - name: linux+aarch64
           #   id: linux_arm64
     steps:
-    - uses: aws-actions/configure-aws-credentials@v1
+    - uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -210,7 +210,7 @@ jobs:
         echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
         echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
 
-    - uses: aws-actions/configure-aws-credentials@v1
+    - uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
