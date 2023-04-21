@@ -21,10 +21,10 @@ module.exports = {
 			arch: ["x64", "arm64"]
 		},
 		// https://github.com/electron-userland/electron-builder/issues/3940
-		"hardenedRuntime": true,
-		"gatekeeperAssess": false,
-		"entitlements": "./mac_build_files/entitlements.mac.inherit.plist",
-		"entitlementsInherit": "./mac_build_files/entitlements.mac.inherit.plist",
+		hardenedRuntime: true,
+		gatekeeperAssess: false,
+		entitlements: "./mac_build_files/entitlements.mac.inherit.plist",
+		entitlementsInherit: "./mac_build_files/entitlements.mac.inherit.plist"
 	},
 	afterSign: async (params) => {
 		if (process.platform !== "darwin") {
