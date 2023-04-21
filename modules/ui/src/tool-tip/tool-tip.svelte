@@ -1,11 +1,13 @@
 <script lang="ts">
+	let clazz = "";
+	export { clazz as class };
 	// TODO: this tool tip assumes it is below the target element, when multiple directions are needed, this will need to be updated
 </script>
 
 <div class="group relative">
 	<slot name="target" />
 	<div
-		class="tooltip invisible absolute top-full mt-4 w-full min-w-max border border-gray bg-black transition-all group-hover:visible"
+		class="tooltip invisible absolute top-full mt-4 w-full min-w-max border border-gray bg-black transition-all group-hover:visible {clazz}"
 	>
 		<div class="px-6 py-2">
 			<slot name="tooltip-content" />
