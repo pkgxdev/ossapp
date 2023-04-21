@@ -11,9 +11,7 @@
 <figure class="gallery-item relative h-full w-full" style={`width:${width}px`}>
 	<ImgLoader
 		class="featured-img"
-		src={!imageUrl.includes("https://tea.xyz")
-			? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
-			: imageUrl}
+		src={!imageUrl.includes("https://tea.xyz") ? "/images/default-thumb.jpg" : imageUrl}
 		alt={title}
 	/>
 

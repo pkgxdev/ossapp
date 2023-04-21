@@ -262,6 +262,7 @@ export const topbarDoubleClick = async () => {
 };
 
 export const cacheImageURL = async (url: string): Promise<string | undefined> => {
+	if (!url) return "";
 	try {
 		const cachedSrc = await ipcRenderer.invoke("cache-image", url);
 		return cachedSrc;

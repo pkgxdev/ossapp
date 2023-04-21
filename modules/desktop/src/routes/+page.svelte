@@ -6,6 +6,7 @@
 	import { afterNavigate } from "$app/navigation";
 	import { packagesStore, navStore } from "$libs/stores";
 	import Packages from "$components/packages/packages.svelte";
+	import DiscoverPackages from "$components/discover-packages/discover-packages.svelte";
 	import { PackageStates, SideMenuOptions, type GUIPackage } from "$libs/types";
 	// import SortingButtons from "$components/search-packages/sorting-buttons.svelte";
 	import SideMenu from "$components/side-menu/side-menu.svelte";
@@ -61,16 +62,22 @@
 	<NotificationBar />
 	<article class="relative h-auto w-full flex-grow overflow-hidden">
 		<ul class="px-2">
-			<Packages
-				packageFilter={sideMenuOption}
-				{sortBy}
-				{sortDirection}
-				bind:scrollY={packagesScrollY}
-			/>
+			{#if sideMenuOption == SideMenuOptions.discover}
+				<DiscoverPackages 
+					bind:scrollY={packagesScrollY}
+				/>
+			{:else}
+				<Packages
+					packageFilter={sideMenuOption}
+					{sortBy}
+					{sortDirection}
+					bind:scrollY={packagesScrollY}
+				/>
+			{/if}
 		</ul>
 		<header class="z-30 flex items-center justify-between" class:scrolling={packagesScrollY > 150}>
 			<h1 class="text-primary font-mona pl-3 text-2xl font-bold">
-				{$t(`side-menu-title.${sideMenuOption}`)}
+				{$t(`side-menu-title.${sideMenuOption}`).toUpperCase()}
 			</h1>
 			<!-- 
 			<section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">

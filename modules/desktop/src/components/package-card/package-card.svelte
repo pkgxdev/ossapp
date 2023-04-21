@@ -12,10 +12,12 @@
 	export let link: string;
 	export let progessLoading = 0;
 
-	$: imgUrl = pkg?.cached_image_url || (!pkg.thumb_image_url.includes("https://tea.xyz")
-		? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
-		: pkg.thumb_image_url);
+	export let orientation: "bottom" | "right" | "left" = "bottom";
 
+	$: imgUrl = pkg?.cached_image_url || (!pkg.thumb_image_url.includes("https://tea.xyz")
+		? "/images/default-thumb.jpg"
+		: pkg.thumb_image_url);
+	console.info("pkg", pkg)
 	export let onClickCTA = async () => {
 		console.log("do nothing");
 	};
@@ -41,18 +43,18 @@
 	class:active={isActive}
 	style="background-image: url({imgUrl})"
 >
-	<aside class="blur-sm">
+	<aside class="blur-sm" class:left={orientation === "left"} class:right={orientation === "right"}>
 		<figure class="bg-center" style="background-image: url({imgUrl})" />
 	</aside>
 	<a href={link} on:mousedown={activate} on:mouseup={deactivate} on:mouseleave={deactivate}>
-		<div class="package-card-content absolute flex h-full w-full flex-col justify-between">
+		<div class="package-card-content absolute  h-full w-full flex-col justify-between">
 			<div class="hint-container">
 				<div class="hint">
 					<div class="line-clamp-1 text-xs">view more details</div>
 					<div class="hint-icon"><i class="icon-upward-arrow" /></div>
 				</div>
 			</div>
-			<div class="content-container relative">
+			<div class="content-container absolute bottom-0 left-0 w-full"  class:left={orientation === "left"} class:right={orientation === "right"}>
 				<article class="card-thumb-label relative">
 					<h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">
 						{fixPackageName(pkg.name)}
@@ -135,6 +137,11 @@
 		overflow: hidden;
 	}
 
+	aside.left {
+		height: 100%;
+		width: 40%;
+	}
+
 	figure {
 		position: absolute;
 		bottom: 0px;
@@ -145,22 +152,35 @@
 		background-repeat: no-repeat;
 	}
 
+	aside.left figure {
+		height: 100%;
+		width: 250%;
+	}
+
 	.content-container {
 		height: 50%;
 		background: linear-gradient(180deg, rgba(26, 26, 26, 0.3) 0%, rgba(26, 26, 26, 0.75) 72.92%);
 		display: flex;
 		flex-direction: column;
 		padding: 28px 14px;
-		justify-content: space-between;
+		justify-content: center;
+	}
+
+	.content-container.left {
+		height: 100%;
+		width: 40%;
 	}
 
 	.hint-container {
+		position: absolute;
+		top: 0px;
+		right: 0px;
 		display: flex;
 		justify-content: flex-end;
 	}
 
 	.hint {
-		width: auto;
+		min-width: 240px;
 		padding-left: 30%;
 		height: 24px;
 		display: flex;

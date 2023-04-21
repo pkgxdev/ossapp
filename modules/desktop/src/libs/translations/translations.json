@@ -53,6 +53,7 @@
 			"gui-downloaded": "A new tea gui({{version}}) is now available. Relaunch the app to update."
 		},
 		"side-menu-title": {
+			"discover": "discover",
 			"all": "All Packages",
 			"installed": "Installed Packages",
 			"installed_updates_available": "Available Updates",
@@ -62,9 +63,10 @@
 			"featured": "Featured",
 			"essentials": "Essentials",
 			"starstruck": "Starstruck Heavyweights",
-			"made_by_tea": "Made by Tea.xyz"
+			"made_by_tea": "made by tea"
 		},
 		"tags": {
+			"discover": "discover",
 			"all": "all",
 			"installed": "installed",
 			"installed_updates_available": "Updates available",
@@ -74,7 +76,7 @@
 			"featured": "Featured",
 			"essentials": "Essentials",
 			"starstruck": "Starstruck",
-			"made_by_tea": "Made by tea.xyz"
+			"made_by_tea": "Made by tea"
 		}
 	}
 }

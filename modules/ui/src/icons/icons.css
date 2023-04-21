@@ -199,3 +199,12 @@
 .icon-gear:before {
 	content: "\31";
 }
+.icon-apple:before {
+	content: "\32";
+}
+.icon-map:before {
+	content: "\33";
+}
+.icon-grid:before {
+	content: "\34";
+}
