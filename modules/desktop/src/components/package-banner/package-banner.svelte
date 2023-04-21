@@ -64,12 +64,14 @@
 			{/if}
 			<p class="mt-4 text-sm">{pkg.desc}</p>
 			<menu class="mt-4 grid h-10 grid-cols-4 gap-4 text-xs">
-				<PackageVersionSelector
-					buttonSize="large"
-					{pkg}
-					availableVersions={findAvailableVersions(pkg)}
-					onClick={install}
-				/>
+				<div class="min-w-1/4">
+					<PackageVersionSelector
+						buttonSize="large"
+						{pkg}
+						availableVersions={findAvailableVersions(pkg)}
+						onClick={install}
+					/>
+				</div>
 				{#if (pkg?.installed_versions?.length || 0) > 0}
 					<ToolTip>
 						<Button
@@ -83,7 +85,7 @@
 							loading={pruning}
 						>
 							<div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
-								<div class="icon-scissors" />
+								<div class="icon-trash" />
 								<div>{$t("package.cta-UNINSTALL")}</div>
 							</div>
 						</Button>
