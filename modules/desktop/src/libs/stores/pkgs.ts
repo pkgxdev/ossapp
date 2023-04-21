@@ -218,7 +218,8 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			}
 			setTimeout(() => {
 				updatePackage(pkg.full_name, {
-					state: PackageStates.AVAILABLE
+					state: PackageStates.AVAILABLE,
+					installed_versions: [],
 				});
 			}, 3000);
 		} catch (error) {
