@@ -21,7 +21,7 @@
 
 	const url = $page.url;
 
-	let sideMenuOption = (url.searchParams.get("tab") as SideMenuOptions) || SideMenuOptions.all;
+	let sideMenuOption = (url.searchParams.get("tab") as SideMenuOptions) || SideMenuOptions.discover;
 
 	let sortBy: "popularity" | "most recent" = "most recent";
 	let sortDirection: "asc" | "desc" = "desc";
@@ -47,13 +47,12 @@
 		sideMenuOption = SideMenuOptions.all;
 	}
 
-	$: teaPkg = $packageList.find((p) => p.full_name === "tea.xyz");
 	$: needsUpdateCount = pkgsToUpdate.length;
 
 	afterNavigate(({ from, to }) => {
 		if (to?.url?.pathname === "/") {
 			const tab = to.url.searchParams.get("tab");
-			sideMenuOption = !tab ? SideMenuOptions.all : (tab as SideMenuOptions);
+			sideMenuOption = !tab ? SideMenuOptions.discover : (tab as SideMenuOptions);
 		}
 	});
 </script>

@@ -12,12 +12,11 @@
 	export let link: string;
 	export let progessLoading = 0;
 
-	export let orientation: "bottom" | "right" | "left" = "bottom";
+	export let layout: "bottom" | "right" | "left" = "bottom";
 
 	$: imgUrl = pkg?.cached_image_url || (!pkg.thumb_image_url.includes("https://tea.xyz")
 		? "/images/default-thumb.jpg"
 		: pkg.thumb_image_url);
-	console.info("pkg", pkg)
 	export let onClickCTA = async () => {
 		console.log("do nothing");
 	};
@@ -39,11 +38,11 @@
 </script>
 
 <section
-	class="package-card border-gray relative h-auto border bg-center"
+	class="package-card border-gray relative h-auto border bg-center {layout}"
 	class:active={isActive}
 	style="background-image: url({imgUrl})"
 >
-	<aside class="blur-sm" class:left={orientation === "left"} class:right={orientation === "right"}>
+	<aside class="blur-sm {layout}">
 		<figure class="bg-center" style="background-image: url({imgUrl})" />
 	</aside>
 	<a href={link} on:mousedown={activate} on:mouseup={deactivate} on:mouseleave={deactivate}>
@@ -54,7 +53,8 @@
 					<div class="hint-icon"><i class="icon-upward-arrow" /></div>
 				</div>
 			</div>
-			<div class="content-container absolute bottom-0 left-0 w-full"  class:left={orientation === "left"} class:right={orientation === "right"}>
+			<div class="content-container absolute bottom-0 w-full {layout}"
+			>
 				<article class="card-thumb-label relative">
 					<h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">
 						{fixPackageName(pkg.name)}
@@ -110,6 +110,9 @@
 		background-size: cover;
 		box-sizing: border-box;
 	}
+	section.right {
+		height: 220px;
+	}
 
 	section.active::before {
 		position: absolute;
@@ -131,15 +134,22 @@
 	aside {
 		position: absolute;
 		bottom: 0px;
-		left: 0px;
 		width: 100%;
 		height: 50%;
 		overflow: hidden;
+	}
+	aside.bottom {
+		left: 0px;
 	}
 
 	aside.left {
 		height: 100%;
 		width: 40%;
+	}
+
+	aside.right {
+		height: 100%;
+		width: 60%;
 	}
 
 	figure {
@@ -151,7 +161,10 @@
 		background-size: cover;
 		background-repeat: no-repeat;
 	}
-
+	aside.right figure {
+		height: 100%;
+		width: 150%;
+	}
 	aside.left figure {
 		height: 100%;
 		width: 250%;
@@ -165,10 +178,19 @@
 		padding: 28px 14px;
 		justify-content: center;
 	}
+	.content-container.bottom {
+		left: 0px;
+	}
 
 	.content-container.left {
 		height: 100%;
 		width: 40%;
+		left: 0px;
+	}
+	.content-container.right {
+		height: 100%;
+		width: 60%;
+		right: 0px;
 	}
 
 	.hint-container {

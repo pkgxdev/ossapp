@@ -1,10 +1,7 @@
 <script lang="ts">
 	import "$appcss";
-	import { watchResize } from "svelte-watch-resize";
 	// import { t } from '$libs/translations';
-	import type { GUIPackage } from "$libs/types";
-	import moment from "moment";
-	import { PackageStates, SideMenuOptions } from "$libs/types";
+	import { SideMenuOptions } from "$libs/types";
 	import Preloader from "@tea/ui/Preloader/Preloader.svelte";
 	import Package from "$components/packages/package.svelte";
 	import { packagesStore } from "$libs/stores";
@@ -12,48 +9,28 @@
 	const { packageList: allPackages } = packagesStore;
 	export let packageFilter: SideMenuOptions = SideMenuOptions.discover;
 
-	export let sortBy: "popularity" | "most recent" = "most recent";
-	export let sortDirection: "asc" | "desc" = "desc";
-
 	export let scrollY = 0;
-
-	let loadMore = 9;
-	let limit = loadMore + 9;
 
 	const onScroll = (e: Event) => {
 		const target = e.target as HTMLInputElement;
 		scrollY = target.scrollTop || 0;
 	};
 
-	$: packages = $allPackages.filter((p) => p.categories.includes(SideMenuOptions.discover)).sort((a, b) => {
-    const aPop = +a.dl_count + a.installs;
-    const bPop = +b.dl_count + b.installs;
-    return bPop - aPop;
-	});
-
-	const onResize = (node: HTMLElement) => {
-		const assumedCardHeight = 250;
-		const cardRows = Math.floor(packages.length / 3);
-		const minCardRows = Math.floor(node.scrollHeight / assumedCardHeight);
-		if (cardRows < minCardRows) {
-			const addLimit = 3 * (minCardRows - cardRows);
-			limit += addLimit;
-		}
-	};
+	$: packages = $allPackages
+    .filter((p) => p.categories.includes(SideMenuOptions.discover))
+    .sort((a, b) => {
+      return a.manual_sorting - b.manual_sorting;
+    });
+  console.log("test",packages)
 </script>
 
 <div class="relative h-full w-full">
-	<ul class="flex flex-wrap content-start bg-black" use:watchResize={onResize} on:scroll={onScroll}>
-		{#if packages.slice(1).length > 0}
-      <div class="z-1 p-1 w-full">
-        <Package tab={packageFilter} pkg={packages[0]} orientation="left" />
-      </div>
-			{#each packages.slice(1) as pkg, index}
-				{#if index < limit}
-					<div class="card z-1 p-1">
-						<Package tab={packageFilter} {pkg} />
-					</div>
-				{/if}
+	<ul class="grid grid-cols-2 bg-black"  on:scroll={onScroll}>
+		{#if packages.length > 0}
+			{#each packages as pkg}
+        <div class="z-1 p-1" class:col-span-2={["left", "right"].includes(pkg.card_layout)}>
+          <Package tab={packageFilter} {pkg} layout={pkg.card_layout}/>
+        </div>
 			{/each}
 		{:else}
 			{#each Array(9) as _}
@@ -96,15 +73,5 @@
 	/* Handle on hover */
 	::-webkit-scrollbar-thumb:hover {
 		background: white;
-	}
-
-	.card {
-		width: 100%;
-	}
-
-	@media screen and (min-width: 650px) {
-		.card {
-			width: 50%;
-		}
 	}
 </style>

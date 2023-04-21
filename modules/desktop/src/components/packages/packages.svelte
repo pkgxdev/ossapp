@@ -87,7 +87,7 @@
 			{#each packages as pkg, index}
 				{#if index < limit}
 					<div class="card z-1 p-1" class:animate-puls={pkg.state === PackageStates.INSTALLING}>
-						<Package tab={packageFilter} {pkg} orientation="vertical"/>
+						<Package tab={packageFilter} {pkg} layout="vertical"/>
 					</div>
 				{/if}
 			{/each}
