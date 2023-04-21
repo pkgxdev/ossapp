@@ -18,7 +18,7 @@
 		<ImgLoader
 			class="pkg-image object-contain"
 			src={!pkg.thumb_image_url.includes("https://tea.xyz")
-				? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
+				? "/images/default-thumb.jpg"
 				: pkg.thumb_image_url}
 			alt={pkg.name}
 		/>

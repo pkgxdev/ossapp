@@ -60,6 +60,7 @@ export interface Session {
 }
 
 export enum SideMenuOptions {
+	discover = "discover",
 	all = "all",
 	installed = "installed",
 	installed_updates_available = "installed_updates_available",

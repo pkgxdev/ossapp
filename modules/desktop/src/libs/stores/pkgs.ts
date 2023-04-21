@@ -252,9 +252,11 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	});
 
 	const cachePkgImage = async (pkg: GUIPackage) => {
-		const cacheFileURL = await cacheImageURL(pkg.thumb_image_url);
-		if (cacheFileURL) {
-			updatePackage(pkg.full_name, { cached_image_url: cacheFileURL });
+		if (pkg.thumb_image_url && !pkg.thumb_image_url.includes("package-thumb-nolabel4.jpg")) {
+			const cacheFileURL = await cacheImageURL(pkg.thumb_image_url);
+			if (cacheFileURL) {
+				updatePackage(pkg.full_name, { cached_image_url: cacheFileURL });
+			}
 		}
 	};
 

@@ -30,7 +30,7 @@
 		on:click={() => gotoPackagePage()}
 		class="pkg-image h-16 w-16 object-cover"
 		src={!pkg.thumb_image_url.includes("https://tea.xyz")
-			? "https://tea.xyz/Images/package-thumb-nolabel4.jpg"
+			? "/images/default-thumb.jpg"
 			: pkg.thumb_image_url}
 		alt={pkg.name}
 	/>

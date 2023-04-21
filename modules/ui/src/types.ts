@@ -32,6 +32,8 @@ export interface Package {
 	github?: string;
 	contributors?: Contributor[];
 	readme_md?: string;
+	manual_sorting: number;
+	card_layout: "bottom" | "right" | "left";
 }
 
 export type AirtablePost = {
