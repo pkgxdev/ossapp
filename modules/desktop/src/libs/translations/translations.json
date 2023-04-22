@@ -10,6 +10,7 @@
 			"cta-INSTALLED": "INSTALLED",
 			"cta-INSTALLING": "INSTALLING",
 			"cta-UNINSTALLED": "RE-INSTALL",
+			"cta-UNINSTALL": "UNINSTALL",
 			"cta-NEEDS_UPDATE": "UPDATE",
 			"cta-UPDATING": "UPDATING",
 			"cta-PRUNE": "PRUNE",

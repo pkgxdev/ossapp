@@ -63,16 +63,37 @@
 				>
 			{/if}
 			<p class="mt-4 text-sm">{pkg.desc}</p>
-			<menu class="mt-4 grid h-10 grid-cols-3 gap-4 text-xs">
-				<PackageVersionSelector
-					buttonSize="large"
-					{pkg}
-					availableVersions={findAvailableVersions(pkg)}
-					onClick={install}
-					uninstall={async () => {
-						packagesStore.uninstallPkg(pkg);
-					}}
-				/>
+			<menu class="mt-4 flex h-10 gap-4 text-xs">
+				<div class="min-w-[150px]">
+					<PackageVersionSelector
+						buttonSize="large"
+						{pkg}
+						availableVersions={findAvailableVersions(pkg)}
+						onClick={install}
+					/>
+				</div>
+				{#if (pkg?.installed_versions?.length || 0) > 0}
+					<ToolTip class="ml-[-80px]">
+						<Button
+							slot="target"
+							class="h-10"
+							type="plain"
+							color="blue"
+							onClick={async () => {
+								packagesStore.uninstallPkg(pkg);
+							}}
+							loading={pruning}
+						>
+							<div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
+								<div class="icon-trash" />
+								<div>{$t("package.cta-UNINSTALL")}</div>
+							</div>
+						</Button>
+						<div slot="tooltip-content" class="flex flex-col items-center">
+							<div>Removes all the versions of the package</div>
+						</div>
+					</ToolTip>
+				{/if}
 				{#if (pkg?.installed_versions?.length || 0) > 1}
 					<ToolTip>
 						<Button
@@ -95,17 +116,17 @@
 					</ToolTip>
 				{/if}
 				{#if pkg.github}
-					<Button
-						class="h-10"
-						type="plain"
-						color="black"
-						onClick={() => {
+					<button
+						class="border-gray group flex h-[40px] w-[40px] items-center justify-center rounded-sm border hover:bg-[#e1e1e1]"
+						on:click={() => {
 							if (pkg.github) {
 								const slug = trimGithubSlug(pkg.github);
 								shellOpenExternal(`https://github.com/${slug}`);
 							}
-						}}>{$t("common.view-on-github")}</Button
+						}}
 					>
+						<div class="icon-github text-xl text-gray flex group-hover:text-black" />
+					</button>
 				{/if}
 			</menu>
 		</article>

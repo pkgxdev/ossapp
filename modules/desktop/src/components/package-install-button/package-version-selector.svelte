@@ -11,10 +11,6 @@
 		console.log("do nothing");
 	};
 
-	export let uninstall = async () => {
-		console.log("do nothing");
-	};
-
 	$: isOpened = false;
 
 	const toggleOpen = (evt?: MouseEvent) => {
@@ -38,8 +34,6 @@
 		isOpened = false;
 		if (version) {
 			onClick(version);
-		} else {
-			uninstall();
 		}
 	};
 
@@ -50,16 +44,6 @@
 	<PackageStateButton {buttonSize} {pkg} onClick={toggleOpen}>
 		<div slot="selector" class="pt-2">
 			<div class="version-list" class:visible={isOpened}>
-				{#if (pkg?.installed_versions || []).length > 0}
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<div
-						class="version-item flex items-center justify-start gap-x-1 text-xs"
-						on:click={(evt) => handleClick(evt, "")}
-					>
-						<div>uninstall</div>
-					</div>
-					<hr class="divider" />
-				{/if}
 				{#each availableVersions as version, idx}
 					{#if idx !== 0}<hr class="divider" />{/if}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->

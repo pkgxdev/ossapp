@@ -208,3 +208,6 @@
 .icon-grid:before {
 	content: "\34";
 }
+.icon-trash:before {
+	content: "\35";
+}
