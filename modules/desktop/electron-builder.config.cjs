@@ -7,7 +7,7 @@ const _ = require("lodash");
 module.exports = {
 	appId: "xyz.tea.gui",
 	productName: "tea",
-	asar: true,
+	asar: false,
 	directories: { output: "dist" },
 	files: ["electron/dist/electron.cjs", { from: "build", to: "" }],
 	linux: {
@@ -19,7 +19,7 @@ module.exports = {
 			target: "default",
 			arch: ["x64", "arm64"]
 		},
-		extraFiles: [
+		extraResources: [
 			{
 				from: "./external/",
 				to: "cli",
