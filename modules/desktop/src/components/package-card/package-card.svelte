@@ -143,31 +143,37 @@
 	}
 
 	aside.left {
+		left: 0px;
 		height: 100%;
 		width: 40%;
 	}
 
 	aside.right {
 		height: 100%;
+		right: 0px;
 		width: 60%;
 	}
 
 	figure {
 		position: absolute;
 		bottom: 0px;
-		left: 0px;
 		width: 100%;
 		height: 340px;
 		background-size: cover;
 		background-repeat: no-repeat;
 	}
+	aside.bottom {
+		left: 0px;
+	}
 	aside.right figure {
 		height: 100%;
 		width: 150%;
+		right: 0px;
 	}
 	aside.left figure {
 		height: 100%;
 		width: 250%;
+		left: 0px;
 	}
 
 	.content-container {

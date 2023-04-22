@@ -212,14 +212,18 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	};
 
 	const uninstallPkg = async (pkg: GUIPackage) => {
+		let fakeTimer: NodeJS.Timer | null = null;
 		try {
+			fakeTimer = withFakeLoader(pkg, (progress) => {
+				updatePackage(pkg.full_name, { install_progress_percentage: progress });
+			});
 			for (const v of pkg.installed_versions || []) {
 				await deletePkg(pkg, v);
 			}
 			setTimeout(() => {
 				updatePackage(pkg.full_name, {
 					state: PackageStates.AVAILABLE,
-					installed_versions: [],
+					installed_versions: []
 				});
 			}, 3000);
 		} catch (error) {
@@ -228,6 +232,9 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				message: `Package ${pkg.full_name} failed to uninstall.`,
 				type: NotificationType.ERROR
 			});
+		} finally {
+			fakeTimer && clearTimeout(fakeTimer);
+			updatePackage(pkg.full_name, { install_progress_percentage: 0 });
 		}
 	};
 

@@ -63,8 +63,8 @@
 				>
 			{/if}
 			<p class="mt-4 text-sm">{pkg.desc}</p>
-			<menu class="mt-4 grid h-10 grid-cols-4 gap-4 text-xs">
-				<div class="min-w-1/4">
+			<menu class="mt-4 flex h-10 gap-4 text-xs">
+				<div class="min-w-[150px]">
 					<PackageVersionSelector
 						buttonSize="large"
 						{pkg}
@@ -73,7 +73,7 @@
 					/>
 				</div>
 				{#if (pkg?.installed_versions?.length || 0) > 0}
-					<ToolTip>
+					<ToolTip class="ml-[-80px]">
 						<Button
 							slot="target"
 							class="h-10"
