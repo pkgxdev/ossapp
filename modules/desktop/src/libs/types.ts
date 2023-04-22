@@ -74,3 +74,8 @@ export enum SideMenuOptions {
 }
 
 export type InstalledPackage = Required<Pick<GUIPackage, "full_name" | "installed_versions">>;
+
+export type AutoUpdateStatus = {
+	status: "up-to-date" | "available" | "ready";
+	version?: string;
+};

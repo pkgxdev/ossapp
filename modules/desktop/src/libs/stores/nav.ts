@@ -4,7 +4,6 @@ import { goto } from "$app/navigation";
 const log = window.require("electron-log");
 
 export default function initNavStore() {
-	const sideNavOpen = writable<boolean>(false);
 	const historyStore = writable<string[]>(["/"]);
 	const showWelcome = writable<boolean>(false);
 
@@ -23,7 +22,6 @@ export default function initNavStore() {
 	return {
 		showWelcome,
 		historyStore,
-		sideNavOpen,
 		prevPath: prevPathStore,
 		nextPath: nextPathStore,
 		next: () => {

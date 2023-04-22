@@ -6,7 +6,7 @@
  *  * make cors work with api.tea.xyz/v1
  */
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
-import type { GUIPackage, Course, Category, Session, Packages } from "./types";
+import type { GUIPackage, Course, Category, Session, Packages, AutoUpdateStatus } from "./types";
 import { PackageStates } from "./types";
 import { loremIpsum } from "lorem-ipsum";
 import _ from "lodash";
@@ -382,4 +382,8 @@ export const topbarDoubleClick = async () => {
 
 export const cacheImageURL = async (url: string): Promise<string | undefined> => {
 	return undefined;
+};
+
+export const getAutoUpdateStatus = async (): Promise<AutoUpdateStatus> => {
+	return { status: "up-to-date" };
 };

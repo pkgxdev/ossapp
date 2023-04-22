@@ -12,7 +12,14 @@
  */
 
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
-import { type GUIPackage, type DeviceAuth, type Session, AuthStatus, type Packages } from "./types";
+import {
+	type GUIPackage,
+	type DeviceAuth,
+	type Session,
+	AuthStatus,
+	type Packages,
+	type AutoUpdateStatus
+} from "./types";
 
 import * as mock from "./native-mock";
 import { PackageStates, type InstalledPackage } from "./types";
@@ -191,8 +198,8 @@ export const openTerminal = (cmd: string) => {
 
 export const shellOpenExternal = (link: string) => shell.openExternal(link);
 
-export const listenToChannel = (channel: string, callback: (msg: string, ...args: any) => void) => {
-	ipcRenderer.on(channel, (_: any, message: string, ...args: any[]) => callback(message, ...args));
+export const listenToChannel = (channel: string, callback: (data: any) => void) => {
+	ipcRenderer.on(channel, (_: any, data: any) => callback(data));
 };
 
 export const relaunch = () => ipcRenderer.invoke("relaunch");
@@ -268,5 +275,14 @@ export const cacheImageURL = async (url: string): Promise<string | undefined> =>
 		return cachedSrc;
 	} catch (error) {
 		log.error("Failed to cache image:", error);
+	}
+};
+
+export const getAutoUpdateStatus = async (): Promise<AutoUpdateStatus> => {
+	try {
+		return await ipcRenderer.invoke("get-auto-update-status");
+	} catch (error) {
+		log.error(error);
+		return { status: "up-to-date" };
 	}
 };

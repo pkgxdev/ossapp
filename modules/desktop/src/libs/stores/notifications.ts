@@ -14,7 +14,9 @@ export default function initNotificationStore() {
 		update((notifications) => notifications.filter((n) => n.id != id));
 	};
 
-	listenToChannel("message", (message: string, params: { [key: string]: string }) => {
+	listenToChannel("message", (data: any) => {
+		const { message, params }: { message: string; params: { [key: string]: string } } = data;
+
 		update((value) => {
 			const newNotification: Notification = {
 				id: nanoid(4),
