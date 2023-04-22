@@ -52,13 +52,13 @@
 			active={activeOption === SideMenuOptions.new_packages}
 			on:click={() => goto(`/?tab=${SideMenuOptions.new_packages}`)}
 		/>
-		<hr />
+		<!-- <hr />
 		<MenuButton
 			label={$t("tags.popular").toLowerCase()}
 			icon="bar-chart"
 			active={activeOption === SideMenuOptions.popular}
 			on:click={() => goto(`/?tab=${SideMenuOptions.popular}`)}
-		/>
+		/> -->
 		<hr />
 		<MenuButton
 			label={$t("tags.recently_updated").toLowerCase()}
