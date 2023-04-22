@@ -19,7 +19,7 @@ module.exports = {
 			target: "default",
 			arch: ["x64", "arm64"]
 		},
-		extraResources: [
+		extraFiles: [
 			{
 				from: "./external/",
 				to: "cli",
