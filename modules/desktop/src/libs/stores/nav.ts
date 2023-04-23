@@ -6,7 +6,6 @@ const log = window.require("electron-log");
 
 export default function initNavStore() {
 	const historyStore = writable<string[]>(["/"]);
-	const showWelcome = writable<boolean>(false);
 
 	let history = ["/"];
 
@@ -20,13 +19,7 @@ export default function initNavStore() {
 	let isMovingNext = false;
 	let isMovingBack = false;
 
-	const hideWelcome = () => {
-		showWelcome.set(false);
-		updateSession({ welcome: true });
-	};
 	return {
-		showWelcome,
-		hideWelcome,
 		historyStore,
 		prevPath: prevPathStore,
 		nextPath: nextPathStore,

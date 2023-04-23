@@ -28,21 +28,17 @@ export default function initAuthStore() {
 			deviceIdStore.set(sess.device_id!);
 			deviceId = sess.device_id!;
 			if (sess.user) user.set(sess.user);
-			if (!session.welcome) navStore.showWelcome.set(true);
 		}
 	});
 
 	let timer: NodeJS.Timer | null;
 
 	async function updateSession(data: Session) {
-		const localSession = {
-			device_id: deviceId,
-			key: data.key,
-			user: data.user
-		};
-
-		await electronUpdateSession(localSession);
-		sessionStore.set(localSession);
+		sessionStore.update((val) => ({
+			...val,
+			...data
+		}));
+		await electronUpdateSession(data);
 	}
 
 	async function pollSession() {

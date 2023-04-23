@@ -57,7 +57,7 @@ export interface Session {
 	key?: string;
 	user?: Developer;
 	locale?: string;
-	welcome?: boolean;
+	hide_welcome?: boolean;
 }
 
 export enum SideMenuOptions {
