@@ -10,6 +10,12 @@
 	export let activeOption: SideMenuOptions;
 
 	$: needsUpdateCount = $packageList.filter((p) => p.state === PackageStates.NEEDS_UPDATE).length;
+	$: hasInstalled = $packageList.some((p) => [
+		PackageStates.INSTALLED,
+		PackageStates.NEEDS_UPDATE,
+		PackageStates.UPDATING,
+		PackageStates.INSTALLING,
+	].includes(p.state));
 </script>
 
 <aside class="border-gray border border-t-0 border-b-0 border-l-0 p-2">
@@ -28,13 +34,15 @@
 			on:click={() => goto(`/?tab=${SideMenuOptions.all}`)}
 		/>
 		<hr />
-		<MenuButton
-			label="installed"
-			icon="tea-checkmark"
-			active={activeOption === SideMenuOptions.installed}
-			on:click={() => goto(`/?tab=${SideMenuOptions.installed}`)}
-		/>
-		<hr />
+		{#if hasInstalled}
+			<MenuButton
+				label="installed"
+				icon="tea-checkmark"
+				active={activeOption === SideMenuOptions.installed}
+				on:click={() => goto(`/?tab=${SideMenuOptions.installed}`)}
+			/>
+			<hr />
+		{/if}
 		{#if needsUpdateCount}
 			<MenuButton
 				label={$t("tags.installed_updates_available").toLowerCase()}
