@@ -36,7 +36,7 @@ async function addEmptySessionFile(): Promise<Session> {
 		device_id: await getDeviceId(),
 		locale
 	};
-	await writeSessionData(data);
+	await writeSessionData(data, true);
 	log.info("new session file created");
 	return data;
 }
@@ -132,10 +132,11 @@ export async function readSessionData(): Promise<Session> {
 	return sessionMemory;
 }
 
-export async function writeSessionData(data: Session) {
+export async function writeSessionData(data: Session, force?: boolean) {
 	try {
+		const existingData = force ? sessionMemory : await readSessionData();
 		sessionMemory = {
-			...sessionMemory,
+			...existingData,
 			...data
 		};
 
@@ -143,8 +144,8 @@ export async function writeSessionData(data: Session) {
 
 		log.info("creating:", sessionFolder);
 		await mkdirp(sessionFolder);
-		log.info("writing session data:", data); // rm this
-		await fs.writeFileSync(sessionFilePath, JSON.stringify(data), {
+		log.info("writing session data:", sessionMemory); // rm this
+		await fs.writeFileSync(sessionFilePath, JSON.stringify(sessionMemory), {
 			encoding: "utf-8"
 		});
 	} catch (error) {

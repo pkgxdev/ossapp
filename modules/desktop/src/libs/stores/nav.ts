@@ -1,5 +1,6 @@
 import { writable } from "svelte/store";
 import { goto } from "$app/navigation";
+import { updateSession } from "@native";
 
 const log = window.require("electron-log");
 
@@ -19,8 +20,13 @@ export default function initNavStore() {
 	let isMovingNext = false;
 	let isMovingBack = false;
 
+	const hideWelcome = () => {
+		showWelcome.set(false);
+		updateSession({ welcome: true });
+	};
 	return {
 		showWelcome,
+		hideWelcome,
 		historyStore,
 		prevPath: prevPathStore,
 		nextPath: nextPathStore,

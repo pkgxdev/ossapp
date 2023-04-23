@@ -5,7 +5,7 @@
   import { navStore } from "$libs/stores"
 
   const close = () => {
-    navStore.showWelcome.set(false);
+    navStore.hideWelcome();
   }
 </script>
 

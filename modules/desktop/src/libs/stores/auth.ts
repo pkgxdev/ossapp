@@ -5,6 +5,8 @@ import type { Developer } from "@tea/ui/types";
 import type { Session } from "$libs/types";
 import { getSession as electronGetSession, updateSession as electronUpdateSession } from "@native";
 
+import { navStore } from "$libs/stores";
+
 export let session: Session | null = null;
 export const getSession = async (): Promise<Session | null> => {
 	session = await electronGetSession();
@@ -26,6 +28,7 @@ export default function initAuthStore() {
 			deviceIdStore.set(sess.device_id!);
 			deviceId = sess.device_id!;
 			if (sess.user) user.set(sess.user);
+			if (!session.welcome) navStore.showWelcome.set(true);
 		}
 	});
 
@@ -81,6 +84,7 @@ export default function initAuthStore() {
 		deviceId,
 		deviceIdStore,
 		pollSession,
-		clearSession
+		clearSession,
+		updateSession
 	};
 }
