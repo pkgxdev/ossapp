@@ -2,10 +2,10 @@
   import Button from "@tea/ui/button/button.svelte";
 	import clickOutside from "@tea/ui/lib/clickOutside";
 
-  import { navStore } from "$libs/stores"
+  import { authStore } from "$libs/stores"
 
   const close = () => {
-    navStore.showWelcome.set(false);
+    authStore.updateSession({ hide_welcome: true });
   }
 </script>
 

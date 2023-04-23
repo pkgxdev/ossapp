@@ -4,7 +4,7 @@
 	import { page } from "$app/stores";
 	import { t } from "$libs/translations";
 	import { afterNavigate } from "$app/navigation";
-	import { packagesStore, navStore } from "$libs/stores";
+	import { packagesStore, authStore } from "$libs/stores";
 	import Packages from "$components/packages/packages.svelte";
 	import DiscoverPackages from "$components/discover-packages/discover-packages.svelte";
 	import { PackageStates, SideMenuOptions, type GUIPackage } from "$libs/types";
@@ -17,7 +17,7 @@
 	const log = window.require("electron-log");
 
 	const { packageList } = packagesStore;
-	const { showWelcome } = navStore;
+	const { session } = authStore;
 
 	const url = $page.url;
 
@@ -112,7 +112,7 @@
 </div>
 
 <SideMenu bind:activeOption={sideMenuOption} />
-{#if $showWelcome}
+{#if !$session.hide_welcome}
 	<WelcomeModal />
 {/if}
 
