@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { shellOpenExternal, submitLogs } from "@native";
 	import LoginButton from "./login-button.svelte";
-	import ToolTip from "@tea/ui/tool-tip/tool-tip.svelte";
+	import ButtonIcon from "@tea/ui/button-icon/button-icon.svelte";
 	import SettingsMenu from "$components/settings-menu/settings-menu.svelte";
 
 	const submitBugReport = async () => {
@@ -14,18 +14,11 @@
 </script>
 
 <div class="mr-1 flex h-full items-center justify-end gap-2 p-2">
-	<button
-		class="border-gray group flex h-[28px] w-[28px] items-center justify-center rounded-sm border hover:bg-[#e1e1e1]"
+	<ButtonIcon
+		icon="bug"
+		tooltip="Report Feedback"
 		on:click={() => submitBugReport()}
-		on:dblclick={preventDoubleClick}
-	>
-		<ToolTip class="ml-[-80px]">
-			<div class="icon-bug text-l text-gray flex group-hover:text-black" slot="target" />
-			<div slot="tooltip-content" class="flex flex-col items-center">
-				<div>Report Feedback</div>
-			</div>
-		</ToolTip>
-	</button>
+	/>
 	<SettingsMenu />
 	<LoginButton />
 </div>
