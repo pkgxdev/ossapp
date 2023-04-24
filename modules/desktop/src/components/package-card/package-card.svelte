@@ -3,10 +3,9 @@
 	import ProgressCircle from "@tea/ui/progress-circle/progress-circle.svelte";
 	import { PackageStates, type GUIPackage } from "$libs/types";
 	import { findRecentInstalledVersion } from "$libs/packages/pkg-utils";
+	import BgImage from "./bg-image.svelte";
 	import PackageInstallButton from "$components/package-install-button/package-install-button.svelte";
 	import PackageInstalledBadge from "$components/package-install-button/package-installed-badge.svelte";
-  import { onMount } from "svelte";
-	import { packagesStore } from "$libs/stores";
 
 	export let pkg: GUIPackage;
 	export let link: string;
@@ -14,9 +13,6 @@
 
 	export let layout: "bottom" | "right" | "left" = "bottom";
 
-	$: imgUrl = pkg?.cached_image_url || (!pkg.thumb_image_url.includes("https://tea.xyz")
-		? "/images/default-thumb.jpg"
-		: pkg.thumb_image_url);
 	export let onClickCTA = async () => {
 		console.log("do nothing");
 	};
@@ -32,19 +28,14 @@
 
 	const preventPropagation = (evt: MouseEvent) => evt.stopPropagation();
 
-	onMount(() => {
-		if (pkg && !pkg?.cached_image_url) packagesStore.cachePkgImage(pkg);
-	});
 </script>
 
 <section
-	class="package-card border-gray relative h-auto border bg-center {layout}"
+	class="package-card border-gray relative h-auto border {layout}"
 	class:active={isActive}
-	style="background-image: url({imgUrl})"
 >
-	<aside class="blur-sm {layout}">
-		<figure class="bg-center" style="background-image: url({imgUrl})" />
-	</aside>
+	<BgImage class="absolute w-full h-full top-0 left-0" {layout} {pkg}/>
+
 	<a href={link} on:mousedown={activate} on:mouseup={deactivate} on:mouseleave={deactivate}>
 		<div class="package-card-content absolute  h-full w-full flex-col justify-between">
 			<div class="hint-container">
@@ -129,51 +120,6 @@
 	section.package-card:active {
 		border-color: #8000ff;
 		box-shadow: 0px 0px 0px 2px rgba(128, 0, 255, 0.5);
-	}
-
-	aside {
-		position: absolute;
-		bottom: 0px;
-		width: 100%;
-		height: 50%;
-		overflow: hidden;
-	}
-	aside.bottom {
-		left: 0px;
-	}
-
-	aside.left {
-		left: 0px;
-		height: 100%;
-		width: 40%;
-	}
-
-	aside.right {
-		height: 100%;
-		right: 0px;
-		width: 60%;
-	}
-
-	figure {
-		position: absolute;
-		bottom: 0px;
-		width: 100%;
-		height: 340px;
-		background-size: cover;
-		background-repeat: no-repeat;
-	}
-	aside.bottom {
-		left: 0px;
-	}
-	aside.right figure {
-		height: 100%;
-		width: 150%;
-		right: 0px;
-	}
-	aside.left figure {
-		height: 100%;
-		width: 250%;
-		left: 0px;
 	}
 
 	.content-container {

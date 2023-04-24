@@ -254,13 +254,17 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		writePackageCacheWithDebounce(pkgs);
 	});
 
-	const cachePkgImage = async (pkg: GUIPackage) => {
+	const cachePkgImage = async (pkg: GUIPackage): Promise<string> => {
+		let cacheFileURL = "";
+		updatePackage(pkg.full_name, { cached_image_url: "" });
 		if (pkg.thumb_image_url && !pkg.thumb_image_url.includes("package-thumb-nolabel4.jpg")) {
-			const cacheFileURL = await cacheImageURL(pkg.thumb_image_url);
-			if (cacheFileURL) {
+			const result = await cacheImageURL(pkg.thumb_image_url);
+			if (result) {
+				cacheFileURL = result;
 				updatePackage(pkg.full_name, { cached_image_url: cacheFileURL });
 			}
 		}
+		return cacheFileURL;
 	};
 
 	listenToChannel("install-progress", (data: any) => {
