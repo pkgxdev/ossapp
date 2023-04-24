@@ -4,7 +4,6 @@
     "private": true,
     "scripts": {
         "dev": "pnpm --filter tea exec pnpm electron",
-        "release": "sh ./.github/update-latest-binary.sh",
         "build:desktop": "pnpm --filter tea exec pnpm package",
         "web:desktop": "BUILD_FOR=preview pnpm --filter tea dev"
     },
