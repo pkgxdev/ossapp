@@ -61,7 +61,7 @@
 			class:visible={isLogoutOpen}
 			on:click={logout}
 		>
-			logout
+			log out
 		</div>
 	</div>
 {:else}
@@ -71,7 +71,7 @@
 		on:click={openGithub}
 		on:dblclick={preventDoubleClick}
 	>
-		login
+		log in
 	</button>
 {/if}
 
