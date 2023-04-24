@@ -12,13 +12,19 @@ import { getAutoUpdateStatus, getUpdater } from "./auto-updater";
 
 import { loadPackageCache, writePackageCache } from "./package";
 import { nanoid } from "nanoid";
-let teaProtocolPath = ""; // this should be empty string
+import { MainWindowNotifier } from "./types";
 
+export type HandlerOptions = {
+	// A function to call back to the current main
+	notifyMainWindow: MainWindowNotifier;
+};
+
+let teaProtocolPath = ""; // this should be empty string
 export const setProtocolPath = (path: string) => {
 	teaProtocolPath = path;
 };
 
-export default function initializeHandlers() {
+export default function initializeHandlers({ notifyMainWindow }: HandlerOptions) {
 	ipcMain.handle("get-installed-packages", async () => {
 		try {
 			log.info("getting installed packages");
@@ -52,11 +58,9 @@ export default function initializeHandlers() {
 		}
 	});
 
-	ipcMain.handle("install-package", async (_, data) => {
+	ipcMain.handle("install-package", async (_, { full_name, version }) => {
 		try {
-			log.info("installing package:", data.full_name);
-			const result = await installPackage(data.full_name);
-			return result;
+			return await installPackage(full_name, version, notifyMainWindow);
 		} catch (error) {
 			log.error(error);
 			return error;
@@ -123,7 +127,6 @@ export default function initializeHandlers() {
 	});
 
 	ipcMain.handle("set-badge-count", async (_, { count }) => {
-		console.log("set badge count:", count);
 		if (count) {
 			app.dock.setBadge(count.toString());
 		} else {

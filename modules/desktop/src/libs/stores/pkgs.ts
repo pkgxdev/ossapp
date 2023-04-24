@@ -13,7 +13,8 @@ import {
 	loadPackageCache,
 	writePackageCache,
 	syncPantry,
-	cacheImageURL
+	cacheImageURL,
+	listenToChannel
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
@@ -166,7 +167,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	};
 
 	const installPkg = async (pkg: GUIPackage, version?: string) => {
-		let fakeTimer: NodeJS.Timer | null = null;
 		const originalState = pkg.state;
 		const versionToInstall = version || pkg.version;
 
@@ -177,10 +177,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 					: PackageStates.INSTALLING;
 
 			updatePackage(pkg.full_name, { state });
-
-			fakeTimer = withFakeLoader(pkg, (progress) => {
-				updatePackage(pkg.full_name, { install_progress_percentage: progress });
-			});
 
 			await installPackage(pkg, versionToInstall);
 			trackInstall(pkg.full_name);
@@ -206,7 +202,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				type: NotificationType.ERROR
 			});
 		} finally {
-			fakeTimer && clearTimeout(fakeTimer);
 			updatePackage(pkg.full_name, { install_progress_percentage: 100 });
 		}
 	};
@@ -268,6 +263,14 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		}
 	};
 
+	listenToChannel("install-progress", (data: any) => {
+		const { full_name, progress } = data;
+		if (!full_name) {
+			return;
+		}
+		updatePackage(full_name, { install_progress_percentage: progress });
+	});
+
 	return {
 		packageList,
 		syncProgress,
@@ -290,6 +293,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	};
 }
 
+// This is only used for uninstall now
 export const withFakeLoader = (
 	pkg: GUIPackage,
 	callback: (progress: number) => void

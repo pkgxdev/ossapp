@@ -4,6 +4,10 @@ import * as log from "electron-log";
 import semver from "semver";
 import { cliBinPath, asyncExec } from "./cli";
 import { createInitialSessionFile } from "./auth";
+import semverCompare from "semver/functions/compare";
+
+// Versions before this do not support the --json flag
+const MINIMUM_TEA_VERSION = "0.28.3";
 
 const destinationDirectory = getGuiPath();
 
@@ -14,8 +18,9 @@ const binaryUrl = "https://tea.xyz/$(uname)/$(uname -m)";
 
 export async function initializeTeaCli(): Promise<string> {
 	try {
-		let version = "";
 		let binCheck = "";
+		let needsUpdate = false;
+
 		// Create the destination directory if it doesn't exist
 		if (!fs.existsSync(destinationDirectory)) {
 			fs.mkdirSync(destinationDirectory, { recursive: true });
@@ -23,10 +28,19 @@ export async function initializeTeaCli(): Promise<string> {
 
 		const curlCommand = `curl -L -o "${cliBinPath}" "${binaryUrl}"`;
 
-		if (fs.existsSync(cliBinPath)) {
+		const exists = fs.existsSync(cliBinPath);
+		if (exists) {
 			log.info("binary tea already exists at", cliBinPath);
 			binCheck = await asyncExec(`cd ${destinationDirectory} && ./tea --version`);
-		} else {
+			const teaVersion = binCheck.toString().split(" ")[1];
+
+			if (semverCompare(teaVersion, MINIMUM_TEA_VERSION) < 0) {
+				log.info("binary tea version is too old, updating");
+				needsUpdate = true;
+			}
+		}
+
+		if (!exists || needsUpdate) {
 			try {
 				await asyncExec(curlCommand);
 				log.info("Binary downloaded and saved to", cliBinPath);
@@ -37,7 +51,8 @@ export async function initializeTeaCli(): Promise<string> {
 				log.error("Error setting-up tea binary:", error);
 			}
 		}
-		version = binCheck.toString().split(" ")[1];
+
+		const version = binCheck.toString().split(" ")[1];
 		log.info("binary tea version:", version);
 		return semver.valid(version.trim()) ? version : "";
 	} catch (error) {
