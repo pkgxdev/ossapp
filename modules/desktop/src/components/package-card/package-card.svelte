@@ -13,9 +13,6 @@
 
 	export let layout: "bottom" | "right" | "left" = "bottom";
 
-	$: imgUrl = pkg?.cached_image_url || (!pkg.thumb_image_url.includes("https://tea.xyz")
-		? "/images/default-thumb.jpg"
-		: pkg.thumb_image_url);
 	export let onClickCTA = async () => {
 		console.log("do nothing");
 	};
@@ -34,7 +31,7 @@
 </script>
 
 <section
-	class="package-card border-gray relative h-auto border bg-center {layout}"
+	class="package-card border-gray relative h-auto border {layout}"
 	class:active={isActive}
 >
 	<BgImage class="absolute w-full h-full top-0 left-0" {layout} {pkg}/>
