@@ -6,7 +6,7 @@
 	let clazz = '';
 	export { clazz as class };
 
-  export let layout: "bottom" | "right" | "left" = "bottom";
+  export let layout: "bottom" | "right" | "left" | "none" = "bottom";
 
   export let pkg: GUIPackage;
 
@@ -56,9 +56,11 @@
   style="background-image: url({defaultImgUrl})">
   <div class="transition-all opacity-0" class:opacity-100={loaded} style="background-image: url({loadedImg})">
   <!-- dup image: save processing power instead of computing the blur across all the HTML layers -->
-	<aside class="blur-sm {layout} ransition-all opacity-0" class:opacity-100={loaded}>
-		<figure class="bg-center" style="background-image: url({loadedImg})" />
-	</aside>
+	{#if layout !== "none"}
+		<aside class="blur-sm {layout} ransition-all opacity-0" class:opacity-100={loaded}>
+			<figure class="bg-center" style="background-image: url({loadedImg})" />
+		</aside>
+	{/if}
 </section>
 
 <style>

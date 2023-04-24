@@ -50,7 +50,7 @@
 					<h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">
 						{fixPackageName(pkg.name)}
 					</h3>
-					<p class="line-clamp-2 h-[32px] text-xs font-thin">{pkg.desc ?? ""}</p>
+					<p class="line-clamp-2 h-[32px] text-xs font-thin lowercase">{pkg.desc ?? ""}</p>
 				</article>
 				<div class="relative mt-3.5 flex w-full">
 					<div class="install-button" on:mousedown={preventPropagation}>

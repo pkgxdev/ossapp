@@ -22,16 +22,16 @@
 	style="-webkit-app-region: drag"
 	on:dblclick={topbarDoubleClick}
 >
-	<ul class="text-gray flex h-10 gap-2 pl-20 align-middle leading-10">
+	<ul class="text-gray flex h-10 gap-1 pl-20 align-middle items-center leading-10">
 		<a href="/?tab=all">
 			<div class="home-btn w-12 rounded-md text-center text-xl transition-all">
 				<i class="icon-tea-logo-iconasset-1" />
 			</div>
 		</a>
-		<button on:click={navStore.back} class:active={$prevPath} class="pt-1 text-xs opacity-50"
+		<button on:click={navStore.back} class:active={$prevPath} class="pt-1 px-2 h-[28px] text-xs rounded-sm transition-all opacity-50 hover:bg-gray hover:text-black"
 			><i class="icon-arrow-left" /></button
 		>
-		<button on:click={navStore.next} class:active={$nextPath} class="pt-1 text-xs opacity-50"
+		<button on:click={navStore.next} class:active={$nextPath} class="pt-1 px-2 h-[28px] text-xs rounded-sm transition-all opacity-50 hover:bg-gray hover:text-black"
 			><i class="icon-arrow-right" /></button
 		>
 	</ul>

@@ -15,49 +15,55 @@ import { promisify } from "util";
 import fs from "fs";
 import path from "path";
 
+import * as config from "../config.json";
+
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
 export default function initialize(mainWindow: BrowserWindow) {
-	Pushy.listen();
-	// Register device for push notifications
-	Pushy.register({ appId: "643647948f3b62fb34b29989" })
-		.then(async (push_token) => {
-			const { device_id } = await readSessionData();
-			log.info(`Registering device ${device_id} for push notifications with token: ${push_token}`);
-			if (device_id) await post(`/auth/device/${device_id}/register-push-token`, { push_token });
-		})
-		.catch((err) => {
-			log.error(err);
-			// Display error dialog
-			// Pushy.alert(mainWindow, 'Pushy registration error: ' + err.message);
-		});
+	if (config.PUSHY_APP_ID) {
+		Pushy.listen();
+		// Register device for push notifications
+		Pushy.register({ appId: process.env.PUSHY_APP_ID })
+			.then(async (push_token) => {
+				const { device_id } = await readSessionData();
+				log.info(
+					`Registering device ${device_id} for push notifications with token: ${push_token}`
+				);
+				if (device_id) await post(`/auth/device/${device_id}/register-push-token`, { push_token });
+			})
+			.catch((err) => {
+				log.error(err);
+				// Display error dialog
+				// Pushy.alert(mainWindow, 'Pushy registration error: ' + err.message);
+			});
 
-	// Listen for incoming notifications
-	Pushy.setNotificationListener(async (data: any) => {
-		try {
-			log.info("new notification received", data);
+		// Listen for incoming notifications
+		Pushy.setNotificationListener(async (data: any) => {
+			try {
+				log.info("new notification received", data);
 
-			const isDup = await wasReceivedBefore(data);
-			if (!isDup) {
-				new Notification({
-					title: "tea",
-					body: data?.message as string
-				}).show();
+				const isDup = await wasReceivedBefore(data);
+				if (!isDup) {
+					new Notification({
+						title: "tea",
+						body: data?.message as string
+					}).show();
 
-				const v = app.dock.getBadge();
-				if (!v) {
-					app.dock.setBadge("1");
+					const v = app.dock.getBadge();
+					if (!v) {
+						app.dock.setBadge("1");
+					} else {
+						app.dock.setBadge((parseInt(v) + 1).toString());
+					}
 				} else {
-					app.dock.setBadge((parseInt(v) + 1).toString());
+					log.info("notification was already received before", data);
 				}
-			} else {
-				log.info("notification was already received before", data);
+			} catch (error) {
+				log.error("notification listener", error);
 			}
-		} catch (error) {
-			log.error("notification listener", error);
-		}
-	});
+		});
+	}
 }
 
 export async function subscribeToPackageTopic(pkgFullname: string) {

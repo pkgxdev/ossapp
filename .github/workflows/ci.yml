@@ -1,5 +1,12 @@
 name: "test"
-on: [pull_request]
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      run_optional_build_desktop:
+        description: 'Run the optional build_desktop job (yes/no)'
+        required: true
+        default: 'no'
 
 jobs:
   changes:
@@ -125,6 +132,7 @@ jobs:
             ```
             copy-paste into a browser to view
   build_desktop:
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.run_optional_build_desktop == 'yes')
     needs: [changes, test]
     # if: needs.changes.outputs.desktop == 'true'
     strategy:

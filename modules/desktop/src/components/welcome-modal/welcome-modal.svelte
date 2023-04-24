@@ -22,7 +22,7 @@
         <Button type="plain" color="secondary" class="w-7/12"
           onClick={() => close()}
         >
-          EXPLORE OPEN-SOURCE
+          START EXPLORING
         </Button>
       </div>
     </article>

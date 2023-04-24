@@ -22,9 +22,12 @@ To develop within an electron view:
 ```
 $ xc build
 # ^^ not always required
-
+$ xc setup
 $ xc dev
 ```
+
+# Contributing to tea/gui
+If you have suggestions or ideas, start a [discussion]. If we agree, we’ll move it to an issue. Bug fixes straight to pull request or issue please!
 
 
 # Releasing tea/gui
@@ -35,15 +38,6 @@ Lets follow the [semver] versioning standard, prefixed with `v`:
 ```
 $ git tag v1.0.0
 $ git push <remote> tag v1.0.0
-```
-
-We do not have a runner for building for M1 and M2, to manually deploy a
-release. Make sure you have [aws/cli] configured correctly.
-
-To publish a release:
-
-```
-$ AWS_PROFILE=tea/or/etc pnpm release
 ```
 
 Refer to each package `README.md` for instructions on how to setup and
@@ -63,6 +57,9 @@ The following can be run with [`xc`], eg. `xc build`
 ## Setup
 
 ```sh
+if [ ! -e modules/desktop/electron/config.json ]; then
+  echo '{}' > modules/desktop/electron/config.json
+fi
 pnpm install
 ```
 
@@ -101,3 +98,4 @@ pnpm --filter tea exec pnpm dist
 [`xc`]: https://xcfile.dev
 [semver]: https://semver.org
 [notion]: https://www.notion.so/teaxyz/tea-gui-fdd9f50aa980432fa370b2cf6a03cb50
+[discussion]: https://github.com/orgs/teaxyz/discussions

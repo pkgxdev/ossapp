@@ -13,6 +13,7 @@
 	import { shellOpenExternal } from "@native";
 	import { findAvailableVersions, findRecentInstalledVersion } from "$libs/packages/pkg-utils";
 	import { trimGithubSlug } from "$libs/github";
+	import PackageImage from "../package-card/bg-image.svelte";
 	import PackageVersionSelector from "$components/package-install-button/package-version-selector.svelte";
 
 	export let pkg: GUIPackage;
@@ -52,7 +53,7 @@
 <section class="mt-4 bg-black">
 	<header class="flex">
 		<figure class="grow-1 relative w-1/3">
-			<img class="w-full" src={pkg.thumb_image_url} alt={pkg.full_name} />
+			<PackageImage class="w-full min-h-[300px] overflow-hidden" {pkg} layout="none" />
 			{#if pkg.install_progress_percentage && pkg.install_progress_percentage < 100}
 				<div class="absolute left-0 top-0 z-40 h-full w-full bg-black bg-opacity-50">
 					<div class="absolute left-0 right-0 top-1/2 m-auto -mt-12 h-24 w-24">

@@ -10,6 +10,12 @@ const hash = "cf849610ca66250f0954379ct4t";
 const client = new otaClient.default(hash);
 
 async function main() {
+	const configPath = path.join(__dirname, "../electron/config.json");
+	const config = {
+		PUSHY_APP_ID: process.env.PUSHY_APP_ID || ""
+	};
+	await fs.writeFileSync(configPath, JSON.stringify(config, null, 2), "utf-8");
+
 	console.log("getting latest translation!");
 	if (!process.env.SYNC_I18N) return;
 
