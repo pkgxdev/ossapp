@@ -76,7 +76,7 @@
 		</ul>
 		<header class="z-30 flex items-center justify-between" class:scrolling={packagesScrollY > 150}>
 			<h1 class="text-primary font-mona pl-3 text-2xl font-bold">
-				{$t(`side-menu-title.${sideMenuOption}`).toUpperCase()}
+				{$t(`side-menu-title.${sideMenuOption}`).toLowerCase()}
 			</h1>
 			<!-- 
 			<section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">

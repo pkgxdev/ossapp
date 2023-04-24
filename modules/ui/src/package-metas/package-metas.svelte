@@ -34,11 +34,11 @@
 </script>
 
 <section class="bg-black pt-2">
-	<h1 class="text-primary">{$t("common.metadata")}</h1>
+	<h1 class="text-primary">{$t("common.metadata").toLowerCase()}</h1>
 	<ul class="mb-10 flex flex-col gap-2">
 		{#if pkg?.bottles}
 			<li>
-				<span>Updated {dayjs().to(dayjs(pkg?.bottles[0].last_modified_at))}</span>
+				<span>updated {dayjs().to(dayjs(pkg?.bottles[0].last_modified_at))}</span>
 			</li>
 		{/if}
 		{#if pkg?.license}
@@ -52,7 +52,7 @@
 			</li>
 		{/if}
 	</ul>
-	<h1 class="text-primary">{$t("common.homepage")}</h1>
+	<h1 class="text-primary">{$t("common.homepage").toLowerCase()}</h1>
 	<ul class="mb-10 flex flex-col gap-2">
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<li on:click={() => shellOpenExternal(pkg.homepage)}>
@@ -60,7 +60,7 @@
 		</li>
 	</ul>
 	{#if pkg.documentation_url}
-		<h1 class="text-primary">{$t("common.documentation")}</h1>
+		<h1 class="text-primary">{$t("common.documentation").toLowerCase()}</h1>
 		<ul class="mb-10 flex flex-col gap-2">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<li on:click={() => shellOpenExternal(pkg.documentation_url)}>
@@ -69,7 +69,7 @@
 		</ul>
 	{/if}
 	{#if pkg.github}
-		<h1 class="text-primary">{$t("common.github-repository")}</h1>
+		<h1 class="text-primary">{$t("common.github-repository").toLowerCase()}</h1>
 		<ul class="mb-10 flex flex-col gap-2">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<li on:click={() => shellOpenExternal(`https://github.com/${pkg.github}`)}>
@@ -78,7 +78,7 @@
 		</ul>
 	{/if}
 	{#if pkg.contributors?.length}
-		<h1 class="text-primary">{$t("common.contributors")}</h1>
+		<h1 class="text-primary">{$t("common.contributors").toLowerCase()}</h1>
 		<ul class="mb-10 flex flex-col gap-2">
 			{#each (pkg.contributors || []).filter((c) => !c.login.includes("[bot]")) as contributor}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
