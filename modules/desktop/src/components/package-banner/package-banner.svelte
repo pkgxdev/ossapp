@@ -3,6 +3,7 @@
 	import "@tea/ui/icons/icons.css";
 	import { t } from "$libs/translations";
 	import Button from "@tea/ui/button/button.svelte";
+	import ButtonIcon from "@tea/ui/button-icon/button-icon.svelte";
 	import ToolTip from "@tea/ui/tool-tip/tool-tip.svelte";
 	import semverCompare from "semver/functions/compare";
 	import ProgressCircle from "@tea/ui/progress-circle/progress-circle.svelte";
@@ -39,6 +40,13 @@
 		}
 		pruning = false;
 	};
+
+	let copied = false;
+	const copyPackagePantryLink = async () => {
+		const pantryLink = `https://tea.xyz/+${pkg.full_name}`.toLowerCase();
+		await navigator.clipboard.writeText(pantryLink);
+		copied = true;
+	}
 </script>
 
 <section class="mt-4 bg-black">
@@ -54,7 +62,16 @@
 			{/if}
 		</figure>
 		<article class="w-2/3 p-4 pt-8">
-			<h3 class="text-primary text-3xl">{pkg.full_name}</h3>
+			<div class="flex items-center align-center gap-2">
+				<h3 class="text-primary text-3xl">{pkg.full_name}</h3>
+				<ButtonIcon icon="pencil" tooltip="edit package"
+					on:click={() => shellOpenExternal(`https://github.com/teaxyz/pantry/blob/main/projects/${pkg.full_name}/package.yml`) }
+				/>
+				<ButtonIcon icon="link" tooltip="share package" on:click={copyPackagePantryLink}/>
+				{#if copied}
+					<p class="text-green">copied!</p>
+				{/if}
+			</div>
 			{#if pkg.homepage}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<span
