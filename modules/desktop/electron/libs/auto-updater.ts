@@ -10,6 +10,8 @@ type AutoUpdateStatus = {
 autoUpdater.logger = log;
 
 let window: BrowserWindow;
+let initalized = false;
+
 // keep the last status to resend to the window when it's opened becuase the store is destroyed when the window is closed
 let lastStatus: AutoUpdateStatus = { status: "up-to-date" };
 
@@ -18,6 +20,15 @@ export const getUpdater = () => autoUpdater;
 export function checkUpdater(mainWindow: BrowserWindow): AppUpdater {
 	window = mainWindow;
 	autoUpdater.checkForUpdatesAndNotify();
+
+	if (!initalized) {
+		initalized = true;
+
+		setInterval(() => {
+			autoUpdater.checkForUpdatesAndNotify();
+		}, 1000 * 60 * 30); // check for updates every 30 minutes
+	}
+
 	return autoUpdater;
 }
 

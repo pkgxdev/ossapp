@@ -99,12 +99,7 @@ function createWindow() {
 contextMenu({
 	showLookUpSelection: false,
 	showSearchWithGoogle: false,
-	showCopyImage: false,
-	prepend: (defaultActions, params, browserWindow) => [
-		{
-			label: "Make App 💻"
-		}
-	]
+	showCopyImage: false
 });
 
 function loadVite(port) {

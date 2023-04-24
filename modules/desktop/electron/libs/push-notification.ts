@@ -24,7 +24,7 @@ export default function initialize(mainWindow: BrowserWindow) {
 	if (config.PUSHY_APP_ID) {
 		Pushy.listen();
 		// Register device for push notifications
-		Pushy.register({ appId: process.env.PUSHY_APP_ID })
+		Pushy.register({ appId: config.PUSHY_APP_ID })
 			.then(async (push_token) => {
 				const { device_id } = await readSessionData();
 				log.info(

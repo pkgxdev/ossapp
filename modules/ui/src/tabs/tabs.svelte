@@ -29,7 +29,7 @@
 <section class="relative h-auto {clazz}">
 	<menu class="flex gap-1">
 		{#each tabs as tab}
-			<div class="border border-x-0 border-t-0 border-gray text-white">
+			<div class="border-gray text-white" class:border-b={tab.label === active}>
 				<Button
 					onClick={() => {
 						dirty = true;

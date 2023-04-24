@@ -14,11 +14,7 @@
 </script>
 
 <div class="mr-1 flex h-full items-center justify-end gap-2 p-2">
-	<ButtonIcon
-		icon="bug"
-		tooltip="report feedback"
-		on:click={() => submitBugReport()}
-	/>
+	<ButtonIcon icon="bug" helpText="report feedback" on:click={() => submitBugReport()} />
 	<SettingsMenu />
 	<LoginButton />
 </div>
