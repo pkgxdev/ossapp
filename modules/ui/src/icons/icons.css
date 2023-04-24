@@ -211,3 +211,9 @@
 .icon-trash:before {
 	content: "\35";
 }
+.icon-link:before {
+	content: "\36";
+}
+.icon-pencil:before {
+	content: "\37";
+}
