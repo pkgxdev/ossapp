@@ -194,9 +194,9 @@ export const updateSession = async (session: Partial<Session>) => {
 	}
 };
 
-export const openTerminal = (cmd: string) => {
+export const openPackageEntrypointInTerminal = (pkg: string) => {
 	try {
-		ipcRenderer.invoke("open-terminal", { cmd });
+		ipcRenderer.invoke("open-terminal", { pkg });
 	} catch (error) {
 		log.error(error);
 	}

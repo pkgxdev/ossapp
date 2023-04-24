@@ -10,11 +10,13 @@
 
 	import type { GUIPackage } from "$libs/types";
 	import { packagesStore } from "$libs/stores";
-	import { shellOpenExternal } from "@native";
+	import { openPackageEntrypointInTerminal, shellOpenExternal } from "@native";
 	import { findAvailableVersions, findRecentInstalledVersion } from "$libs/packages/pkg-utils";
 	import { trimGithubSlug } from "$libs/github";
 	import PackageImage from "../package-card/bg-image.svelte";
 	import PackageVersionSelector from "$components/package-install-button/package-version-selector.svelte";
+  import { isPackageInstalled } from "$libs/native-mock";
+
 
 	export let pkg: GUIPackage;
 	let installing = false;
@@ -151,6 +153,22 @@
 						<div class="icon-github text-gray flex text-xl group-hover:text-black" />
 					</button>
 				{/if}
+        {#if pkg.installed_versions?.length}
+        <Button
+          class="h-10"
+          type="plain"
+          color="black"
+          onClick={() => {
+            openPackageEntrypointInTerminal(pkg.full_name);
+          }}>
+          {#if pkg.full_name == "github.com/AUTOMATIC1111/stable-diffusion-webui"}
+          OPEN
+          {:else}
+          OPEN IN TERMINAL
+          {/if}
+          </Button
+        >
+        {/if}
 			</menu>
 		</article>
 	</header>
