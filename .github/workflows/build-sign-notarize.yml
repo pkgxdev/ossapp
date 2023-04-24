@@ -115,6 +115,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          PUSHY_APP_ID: ${{ secrets.PUSHY_APP_ID }}
 
       - name: build artifacts for publishing and notarization
         run: |

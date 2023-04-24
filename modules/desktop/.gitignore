@@ -11,3 +11,4 @@ dist/*
 electron/dist/*
 electron/package.json
 external
+electron/config.json

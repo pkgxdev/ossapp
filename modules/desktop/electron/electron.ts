@@ -7,7 +7,6 @@ import serve from "electron-serve";
 import * as log from "electron-log";
 import path from "path";
 import { nameToSlug } from "./libs/package";
-
 import { checkUpdater } from "./libs/auto-updater";
 
 import initializeHandlers, { setProtocolPath } from "./libs/ipc";

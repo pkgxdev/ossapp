@@ -63,6 +63,9 @@ The following can be run with [`xc`], eg. `xc build`
 ## Setup
 
 ```sh
+if [ ! -e modules/desktop/electron/config.json ]; then
+  echo '{}' > modules/desktop/electron/config.json
+fi
 pnpm install
 ```
 
