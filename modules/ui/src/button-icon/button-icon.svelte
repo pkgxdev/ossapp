@@ -5,7 +5,7 @@
 </script>
 
 <button
-	class="group flex h-[28px] w-[28px] items-center justify-center rounded-sm border border-gray hover:bg-[#e1e1e1]"
+	class="group flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-sm border border-gray hover:bg-[#e1e1e1]"
 	on:dblclick={preventDoubleClick}
 	on:click
 	title={helpText}
