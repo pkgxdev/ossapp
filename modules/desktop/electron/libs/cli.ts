@@ -115,7 +115,7 @@ export async function openPackageEntrypointInTerminal(pkg: string) {
 
   let sh = `${cliBinPath} --sync --env=false +${pkg} `
   if (pkg == 'github.com/AUTOMATIC1111/stable-diffusion-webui') {
-    sh += `~/.tea/${pkg}/v*/bin/xyz.tea.entrypoint.sh`
+    sh += `~/.tea/${pkg}/v*/entrypoint.sh`
   } else {
     sh += "sh"
   }
