@@ -387,3 +387,7 @@ export const cacheImageURL = async (url: string): Promise<string | undefined> =>
 export const getAutoUpdateStatus = async (): Promise<AutoUpdateStatus> => {
 	return { status: "up-to-date" };
 };
+
+export async function openPackageEntrypointInTerminal(pkg: string) {
+  //noop
+}
