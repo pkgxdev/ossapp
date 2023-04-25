@@ -28,10 +28,10 @@
 				<i class="icon-tea-logo-iconasset-1" />
 			</div>
 		</a>
-		<button on:click={navStore.back} class:active={$prevPath} class="pt-1 px-2 h-[28px] text-xs rounded-sm transition-all opacity-50 hover:bg-gray hover:text-black"
+		<button on:click={navStore.back} class:active={$prevPath} class="pt-1 px-2 h-[28px] text-xs rounded-sm transition-all opacity-50 hover:bg-gray hover:text-black" title="go back"
 			><i class="icon-arrow-left" /></button
 		>
-		<button on:click={navStore.next} class:active={$nextPath} class="pt-1 px-2 h-[28px] text-xs rounded-sm transition-all opacity-50 hover:bg-gray hover:text-black"
+		<button on:click={navStore.next} class:active={$nextPath} class="pt-1 px-2 h-[28px] text-xs rounded-sm transition-all opacity-50 hover:bg-gray hover:text-black" title="go forward"
 			><i class="icon-arrow-right" /></button
 		>
 	</ul>

@@ -24,6 +24,7 @@
 		class="border-gray group flex h-[28px] w-[28px] items-center justify-center rounded-sm border hover:bg-[#e1e1e1]"
 		class:circle-badge={$updateStatus.status === "available" || $updateStatus.status === "ready"}
 		on:click={() => (isOpen = !isOpen)}
+    title="settings"
 	>
 		<div class="icon-gear text-l text-gray flex group-hover:text-black" />
 	</button>
