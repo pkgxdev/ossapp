@@ -74,10 +74,14 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			...pkg,
 			readme_md: readmeMd,
 			synced: true,
-			github: pkg.github ? trimGithubSlug(pkg.github) : ""
+			github: pkg.github
+				? trimGithubSlug(pkg.github)
+				: pkg.full_name?.includes("github.com")
+				? trimGithubSlug(pkg.full_name.split("github.com/")[1])
+				: ""
 		};
-		if (pkg.github) {
-			const [owner, repo] = pkg.github.split("/");
+		if (updatedPackage.github) {
+			const [owner, repo] = updatedPackage.github.split("/");
 			const [readme, contributors, repoData] = await Promise.all([
 				getReadme(owner, repo),
 				getContributors(owner, repo),
