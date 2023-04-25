@@ -47,13 +47,13 @@
 		const pantryLink = `https://tea.xyz/+${pkg.full_name}`.toLowerCase();
 		await navigator.clipboard.writeText(pantryLink);
 		copied = true;
-	}
+	};
 </script>
 
 <section class="mt-4 bg-black">
 	<header class="flex">
 		<figure class="grow-1 relative w-1/3">
-			<PackageImage class="w-full min-h-[300px] overflow-hidden" {pkg} layout="none" />
+			<PackageImage class="min-h-[300px] w-full overflow-hidden" {pkg} layout="none" />
 			{#if pkg.install_progress_percentage && pkg.install_progress_percentage < 100}
 				<div class="absolute left-0 top-0 z-40 h-full w-full bg-black bg-opacity-50">
 					<div class="absolute left-0 right-0 top-1/2 m-auto -mt-12 h-24 w-24">
@@ -63,12 +63,17 @@
 			{/if}
 		</figure>
 		<article class="w-2/3 p-4 pt-8">
-			<div class="flex items-center align-center gap-2">
+			<div class="align-center flex items-center gap-2">
 				<h3 class="text-primary text-3xl">{pkg.full_name}</h3>
-				<ButtonIcon icon="pencil" tooltip="edit package"
-					on:click={() => shellOpenExternal(`https://github.com/teaxyz/pantry/blob/main/projects/${pkg.full_name}/package.yml`) }
+				<ButtonIcon
+					icon="pencil"
+					helpText="edit package"
+					on:click={() =>
+						shellOpenExternal(
+							`https://github.com/teaxyz/pantry/blob/main/projects/${pkg.full_name}/package.yml`
+						)}
 				/>
-				<ButtonIcon icon="link" tooltip="share package" on:click={copyPackagePantryLink}/>
+				<ButtonIcon icon="link" helpText="share package" on:click={copyPackagePantryLink} />
 				{#if copied}
 					<p class="text-green">copied!</p>
 				{/if}
@@ -143,7 +148,7 @@
 							}
 						}}
 					>
-						<div class="icon-github text-xl text-gray flex group-hover:text-black" />
+						<div class="icon-github text-gray flex text-xl group-hover:text-black" />
 					</button>
 				{/if}
 			</menu>

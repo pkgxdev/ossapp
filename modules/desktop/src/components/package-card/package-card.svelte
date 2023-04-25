@@ -27,14 +27,10 @@
 	const deactivate = () => (isActive = false);
 
 	const preventPropagation = (evt: MouseEvent) => evt.stopPropagation();
-
 </script>
 
-<section
-	class="package-card border-gray relative h-auto border {layout}"
-	class:active={isActive}
->
-	<BgImage class="absolute w-full h-full top-0 left-0" {layout} {pkg}/>
+<section class="package-card border-gray relative h-auto border {layout}" class:active={isActive}>
+	<BgImage class="absolute top-0 left-0 h-full w-full" {layout} {pkg} />
 
 	<a href={link} on:mousedown={activate} on:mouseup={deactivate} on:mouseleave={deactivate}>
 		<div class="package-card-content absolute  h-full w-full flex-col justify-between">
@@ -44,8 +40,7 @@
 					<div class="hint-icon"><i class="icon-upward-arrow" /></div>
 				</div>
 			</div>
-			<div class="content-container absolute bottom-0 w-full {layout}"
-			>
+			<div class="content-container absolute bottom-0 w-full {layout}">
 				<article class="card-thumb-label relative">
 					<h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">
 						{fixPackageName(pkg.name)}
@@ -151,6 +146,7 @@
 		right: 0px;
 		display: flex;
 		justify-content: flex-end;
+		z-index: 1;
 	}
 
 	.hint {
