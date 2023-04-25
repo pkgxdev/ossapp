@@ -389,5 +389,5 @@ export const getAutoUpdateStatus = async (): Promise<AutoUpdateStatus> => {
 };
 
 export async function openPackageEntrypointInTerminal(pkg: string) {
-  //noop
+	//noop
 }

@@ -76,7 +76,7 @@ pnpm install
 pnpm dev
 ```
 
-## Lint
+## Prettier
 
 ```sh
 pnpm run -r format
