@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs";
 import { getTeaPath } from "./tea-dir";
 import { app } from "electron";
-import * as log from "electron-log";
+import log from "./logger";
 import axios from "axios";
 
 const sessionFilePath = path.join(getTeaPath(), "tea.xyz/gui/tmp.dat");

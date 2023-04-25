@@ -1,6 +1,6 @@
 import fs from "fs";
 import { getGuiPath } from "./tea-dir";
-import * as log from "electron-log";
+import log from "./logger";
 import semver from "semver";
 import { cliBinPath, asyncExec } from "./cli";
 import { createInitialSessionFile } from "./auth";

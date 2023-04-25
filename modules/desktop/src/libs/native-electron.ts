@@ -27,8 +27,7 @@ import { PackageStates, type InstalledPackage } from "./types";
 import { get as apiGet } from "$libs/v1-client";
 import axios from "axios";
 import withRetry from "./utils/retry";
-
-const log = window.require("electron-log");
+import log from "./logger";
 const { ipcRenderer, shell } = window.require("electron");
 
 export async function getDistPackages(): Promise<Package[]> {

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import "$appcss";
 	import { goto } from "$app/navigation";
+	import { initSentry } from "$libs/sentry";
 	import { navigating } from "$app/stores";
 	import { afterNavigate } from "$app/navigation";
 	import TopBar from "$components/top-bar/top-bar.svelte";
@@ -49,6 +50,7 @@
 			return false;
 		});
 		packagesStore.init();
+		initSentry();
 	});
 
 	onDestroy(() => {

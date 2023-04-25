@@ -1,4 +1,4 @@
-const log = window.require("electron-log");
+import log from "$libs/logger";
 
 type DebounceableFunc = (...args: any[]) => void;
 

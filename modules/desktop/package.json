@@ -75,6 +75,7 @@
 	"dependencies": {
 		"@crowdin/ota-client": "^0.7.0",
 		"@electron/asar": "^3.2.3",
+		"@sentry/browser": "^7.49.0",
 		"@sentry/electron": "^4.4.0",
 		"@sentry/svelte": "^7.47.0",
 		"@types/electron": "^1.6.10",

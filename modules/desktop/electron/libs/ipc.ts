@@ -2,7 +2,7 @@ import { ipcMain, app, BrowserWindow } from "electron";
 import { deletePackageFolder, getInstalledPackages, cacheImage } from "./tea-dir";
 import { readSessionData, writeSessionData } from "./auth";
 import type { Packages, Session } from "../../src/libs/types";
-import * as log from "electron-log";
+import log from "./logger";
 import { syncLogsAt } from "./v1-client";
 import { installPackage, openTerminal, syncPantry } from "./cli";
 

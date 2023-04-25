@@ -1,7 +1,7 @@
 import Pushy from "pushy-electron";
 import { readSessionData } from "./auth";
 import { post } from "./v1-client";
-import * as log from "electron-log";
+import log from "./logger";
 import { Notification, BrowserWindow } from "electron";
 import { nameToSlug } from "./package";
 import {

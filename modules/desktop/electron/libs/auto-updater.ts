@@ -1,5 +1,5 @@
 import { type AppUpdater, autoUpdater } from "electron-updater";
-import * as log from "electron-log";
+import log from "./logger";
 import { BrowserWindow } from "electron";
 
 type AutoUpdateStatus = {
