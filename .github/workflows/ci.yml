@@ -45,6 +45,8 @@ jobs:
         with:
           version: 0.26.2
       - uses: actions/checkout@v3
+      - name: env file
+        run: cp modules/desktop/.env.example modules/desktop/.env
       - name: install app dependencies
         run: tea -E xc setup
       # TODO: fix
@@ -52,6 +54,8 @@ jobs:
       #   run: pnpm --filter desktop run coverage
       - name: lint
         run: tea -E pnpm -r lint
+      - name: chec
+        run: tea -E pnpm -r check
   build_svelte:
     needs: changes
     runs-on: ubuntu-latest

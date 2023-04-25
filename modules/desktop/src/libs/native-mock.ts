@@ -6,7 +6,7 @@
  *  * make cors work with api.tea.xyz/v1
  */
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
-import type { GUIPackage, Course, Category, Session, Packages, AutoUpdateStatus } from "./types";
+import type { GUIPackage, Session, Packages, AutoUpdateStatus } from "./types";
 import { PackageStates } from "./types";
 import { loremIpsum } from "lorem-ipsum";
 import _ from "lodash";
@@ -29,7 +29,9 @@ const packages: Package[] = [
 		thumb_image_url: "https://tea.xyz/Images/packages/mesonbuild_com.jpg",
 		installs: 0,
 		categories: ["foundation_essentials"],
-		created: "2022-10-06T15:45:08.000Z"
+		created: "2022-10-06T15:45:08.000Z",
+		manual_sorting: 0,
+		card_layout: "bottom"
 	},
 	{
 		slug: "pixman_org",
@@ -45,7 +47,9 @@ const packages: Package[] = [
 		thumb_image_url: "https://tea.xyz/Images/packages/pixman_org.jpg",
 		installs: 0,
 		categories: ["foundation_essentials"],
-		created: "2022-09-26T19:37:47.000Z"
+		created: "2022-09-26T19:37:47.000Z",
+		manual_sorting: 1,
+		card_layout: "bottom"
 	},
 	{
 		slug: "freedesktop_org_pkg_config",
@@ -61,7 +65,9 @@ const packages: Package[] = [
 		thumb_image_url: "https://tea.xyz/Images/packages/freedesktop_org_pkg_config.jpg",
 		installs: 0,
 		categories: ["foundation_essentials"],
-		created: "2022-10-20T01:32:15.000Z"
+		created: "2022-10-20T01:32:15.000Z",
+		manual_sorting: 2,
+		card_layout: "bottom"
 	},
 	{
 		slug: "gnu_org_gettext",
@@ -77,7 +83,9 @@ const packages: Package[] = [
 		thumb_image_url: "https://tea.xyz/Images/packages/gnu_org_gettext.jpg",
 		installs: 0,
 		categories: ["foundation_essentials"],
-		created: "2022-10-20T01:23:46.000Z"
+		created: "2022-10-20T01:23:46.000Z",
+		manual_sorting: 3,
+		card_layout: "bottom"
 	},
 	{
 		slug: "ipfs_tech",
@@ -93,7 +101,9 @@ const packages: Package[] = [
 		thumb_image_url: "https://tea.xyz/Images/packages/ipfs_tech.jpg",
 		installs: 0,
 		categories: ["foundation_essentials"],
-		created: "2022-10-19T21:36:52.000Z"
+		created: "2022-10-19T21:36:52.000Z",
+		manual_sorting: 4,
+		card_layout: "bottom"
 	},
 	{
 		slug: "nixos_org_patchelf",
@@ -109,7 +119,9 @@ const packages: Package[] = [
 		thumb_image_url: "https://tea.xyz/Images/packages/nixos_org_patchelf.jpg",
 		installs: 0,
 		categories: ["top_packages", "foundation_essentials"],
-		created: "2022-09-27T04:50:44.000Z"
+		created: "2022-09-27T04:50:44.000Z",
+		manual_sorting: 5,
+		card_layout: "bottom"
 	},
 	{
 		slug: "tea_xyz",
@@ -125,7 +137,9 @@ const packages: Package[] = [
 		thumb_image_url: "https://tea.xyz/Images/packages/tea_xyz.jpg",
 		installs: 0,
 		categories: ["top_packages", "foundation_essentials"],
-		created: "2022-10-19T19:13:51.000Z"
+		created: "2022-10-19T19:13:51.000Z",
+		manual_sorting: 6,
+		card_layout: "bottom"
 	},
 	{
 		slug: "charm_sh_gum",
@@ -141,7 +155,9 @@ const packages: Package[] = [
 		thumb_image_url: "https://tea.xyz/Images/packages/charm_sh_gum.jpg",
 		installs: 0,
 		categories: ["top_packages", "foundation_essentials"],
-		created: "2022-10-21T02:15:16.000Z"
+		created: "2022-10-21T02:15:16.000Z",
+		manual_sorting: 7,
+		card_layout: "bottom"
 	},
 	{
 		slug: "pyyaml_org",
@@ -157,7 +173,9 @@ const packages: Package[] = [
 		thumb_image_url: "https://tea.xyz/Images/packages/pyyaml_org.jpg",
 		installs: 0,
 		categories: ["top_packages", "foundation_essentials"],
-		created: "2022-10-03T15:35:14.000Z"
+		created: "2022-10-03T15:35:14.000Z",
+		manual_sorting: 8,
+		card_layout: "bottom"
 	},
 	{
 		slug: "tea_xyz_gx_cc",
@@ -173,7 +191,9 @@ const packages: Package[] = [
 		thumb_image_url: "https://tea.xyz/Images/packages/tea_xyz_gx_cc.jpg",
 		installs: 0,
 		categories: ["top_packages", "foundation_essentials"],
-		created: "2022-10-19T16:47:44.000Z"
+		created: "2022-10-19T16:47:44.000Z",
+		manual_sorting: 9,
+		card_layout: "bottom"
 	}
 ];
 
@@ -236,7 +256,7 @@ export async function getPackageReviews(full_name: string): Promise<Review[]> {
 }
 
 export async function installPackage(pkg: GUIPackage, version?: string) {
-	console.log("installing: ", pkg.full_name);
+	console.log("installing: ", pkg.full_name, version);
 	await delay(10000);
 }
 
@@ -338,12 +358,12 @@ export const updateSession = async (session: Partial<Session>) => {
 
 export const openTerminal = (cmd: string) => console.log(cmd);
 
-export const shellOpenExternal = (link: string) => {
+export const shellOpenExternal = (link?: string) => {
 	window.open(link, "_blank");
 };
 
 export const listenToChannel = (channel: string, callback: (msg: string, ...args: any) => void) => {
-	console.log("listen to channel", callback);
+	console.log("listen to channel", channel, callback);
 };
 
 export const relaunch = () => {
@@ -380,7 +400,7 @@ export const topbarDoubleClick = async () => {
 	console.log("topbar double click");
 };
 
-export const cacheImageURL = async (url: string): Promise<string | undefined> => {
+export const cacheImageURL = async (_url: string): Promise<string | undefined> => {
 	return undefined;
 };
 

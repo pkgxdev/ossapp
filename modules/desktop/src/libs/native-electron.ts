@@ -202,7 +202,12 @@ export const openPackageEntrypointInTerminal = (pkg: string) => {
 	}
 };
 
-export const shellOpenExternal = (link: string) => shell.openExternal(link);
+export const shellOpenExternal = (link?: string) => {
+	if (!link) {
+		return;
+	}
+	shell.openExternal(link);
+};
 
 export const listenToChannel = (channel: string, callback: (data: any) => void) => {
 	ipcRenderer.on(channel, (_: any, data: any) => callback(data));

@@ -9,8 +9,6 @@
 		const bugFormUrl = `https://airtable.com/shravDxWeNwwpPkFV?prefill_log_id=${logId}&hide_log_id=true`;
 		shellOpenExternal(bugFormUrl);
 	};
-
-	const preventDoubleClick = (evt: MouseEvent) => evt.stopPropagation();
 </script>
 
 <div class="mr-1 flex h-full items-center justify-end gap-2 p-2">

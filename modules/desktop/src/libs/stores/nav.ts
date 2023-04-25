@@ -38,7 +38,7 @@ export default function initNavStore() {
 				if (currentIndex === 0) prevPathStore.set("");
 			}
 		},
-		setNewPath: (newNextPath: string, newPrevPath: string) => {
+		setNewPath: (newNextPath: string, _newPrevPath: string) => {
 			const oldCurrentPath = history[currentIndex];
 			const isNavArrows = isMovingBack || isMovingNext;
 			if (!isNavArrows && newNextPath !== oldCurrentPath) {
