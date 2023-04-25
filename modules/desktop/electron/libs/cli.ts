@@ -112,19 +112,18 @@ function newInstallProgressNotifier(full_name: string, notifyMainWindow: MainWin
 }
 
 export async function openPackageEntrypointInTerminal(pkg: string) {
-
-  let sh = `${cliBinPath} --sync --env=false +${pkg} `
-  if (pkg == 'github.com/AUTOMATIC1111/stable-diffusion-webui') {
-    sh += `~/.tea/${pkg}/v*/entrypoint.sh`
-  } else {
-    sh += "sh"
-  }
+	let sh = `${cliBinPath} --sync --env=false +${pkg} `;
+	if (pkg == "github.com/AUTOMATIC1111/stable-diffusion-webui") {
+		sh += `~/.tea/${pkg}/v*/entrypoint.sh`;
+	} else {
+		sh += "sh";
+	}
 
 	const scriptPath = await createCommandScriptFile(sh);
 
 	try {
-		let stdout = '';
-		let stderr = '';
+		let stdout = "";
+		let stderr = "";
 
 		await new Promise((resolve, reject) => {
 			const child = spawn("/usr/bin/osascript", [scriptPath]);
@@ -135,13 +134,13 @@ export async function openPackageEntrypointInTerminal(pkg: string) {
 				stderr += data.toString().trim();
 			});
 
-			child.on("exit", code => {
+			child.on("exit", (code) => {
 				console.log("exit:", code, `\`${stdout}\``);
-        if (code == 0) {
-				  resolve(stdout);
-        } else {
-          reject(new Error("failed to open terminal and run tea sh"))
-        }
+				if (code == 0) {
+					resolve(stdout);
+				} else {
+					reject(new Error("failed to open terminal and run tea sh"));
+				}
 			});
 
 			child.on("error", () => {
@@ -154,21 +153,20 @@ export async function openPackageEntrypointInTerminal(pkg: string) {
 }
 
 const createCommandScriptFile = async (cmd: string): Promise<string> => {
-
-  console.log(cmd)
+	console.log(cmd);
 
 	const guiFolder = getGuiPath();
-  const tmpFilePath = path.join(guiFolder, `${+new Date()}.scpt`);
-  const command = `${cmd.replace(/"/g, '\\"')}`;
-  const script = `
+	const tmpFilePath = path.join(guiFolder, `${+new Date()}.scpt`);
+	const command = `${cmd.replace(/"/g, '\\"')}`;
+	const script = `
     tell application "Terminal"
       activate
       do script "${command}"
     end tell
   `.trim();
 
-  await fs.writeFileSync(tmpFilePath, script, "utf-8");
-  return tmpFilePath;
+	await fs.writeFileSync(tmpFilePath, script, "utf-8");
+	return tmpFilePath;
 };
 
 export async function asyncExec(cmd: string): Promise<string> {
