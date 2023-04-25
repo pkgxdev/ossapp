@@ -135,7 +135,7 @@ export async function openPackageEntrypointInTerminal(pkg: string) {
 			});
 
 			child.on("exit", (code) => {
-				console.log("exit:", code, `\`${stdout}\``);
+				console.info("exit:", code, `\`${stdout}\``);
 				if (code == 0) {
 					resolve(stdout);
 				} else {
@@ -153,8 +153,6 @@ export async function openPackageEntrypointInTerminal(pkg: string) {
 }
 
 const createCommandScriptFile = async (cmd: string): Promise<string> => {
-	console.log(cmd);
-
 	const guiFolder = getGuiPath();
 	const tmpFilePath = path.join(guiFolder, `${+new Date()}.scpt`);
 	const command = `${cmd.replace(/"/g, '\\"')}`;
