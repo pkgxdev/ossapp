@@ -45,7 +45,7 @@
 			on:click={() => (isLogoutOpen = !isLogoutOpen)}
 			on:dblclick={preventDoubleClick}
 		>
-			<div class="text-gray line-clamp-1 group-hover:text-black">@{$user?.login}</div>
+			<div class="text-gray line-clamp-1 mr-1 group-hover:text-black">@{$user?.login}</div>
 			<img
 				id="avatar"
 				class="flex rounded-sm"
