@@ -12,32 +12,31 @@
   </a>
 </p>
 
-This repository contains tea/gui \[[notion]\].
+The Open Store.
 
 
-# Developing tea/gui
+# Developing `tea/gui`
 
-To develop within an electron view:
+To develop within an Electron view:
 
+```sh
+xc setup  # only required once
+xc build  # only required if you modify the backend
+xc dev    # opens the app in dev mode
 ```
-$ xc build
-# ^^ not always required
-$ xc setup
-$ xc dev
-```
 
-# Contributing to tea/gui
+# Contributing to `tea/gui`
 If you have suggestions or ideas, start a [discussion]. If we agree, we’ll move it to an issue. Bug fixes straight to pull request or issue please!
 
 
-# Releasing tea/gui
+# Releasing `tea/gui`
 
 Tag any commit in the main branch, then push directly to the main branch.
 Lets follow the [semver] versioning standard, prefixed with `v`:
 
 ```
 $ git tag v1.0.0
-$ git push <remote> tag v1.0.0
+$ git push origin tag v1.0.0
 ```
 
 Refer to each package `README.md` for instructions on how to setup and
