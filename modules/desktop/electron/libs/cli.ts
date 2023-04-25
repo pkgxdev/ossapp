@@ -135,7 +135,7 @@ export async function openPackageEntrypointInTerminal(pkg: string) {
 			});
 
 			child.on("exit", (code) => {
-				console.info("exit:", code, `\`${stdout}\``);
+				log.info("exit:", code, `\`${stdout}\``);
 				if (code == 0) {
 					resolve(stdout);
 				} else {
