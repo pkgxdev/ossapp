@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { app } from "electron";
 import semver, { SemVer } from "semver";
-import * as log from "electron-log";
+import log from "./logger";
 import type { InstalledPackage } from "../../src/libs/types";
 import semverCompare from "semver/functions/compare";
 import { mkdirp } from "mkdirp";

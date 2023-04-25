@@ -1,8 +1,5 @@
 import { writable } from "svelte/store";
 import { goto } from "$app/navigation";
-import { updateSession } from "@native";
-
-const log = window.require("electron-log");
 
 export default function initNavStore() {
 	const historyStore = writable<string[]>(["/"]);

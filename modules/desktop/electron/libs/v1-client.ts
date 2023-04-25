@@ -1,7 +1,7 @@
 import { app } from "electron";
 import axios from "axios";
 import path from "path";
-import * as log from "electron-log";
+import log from "./logger";
 import bcrypt from "bcryptjs";
 import { createReadStream, statSync } from "fs";
 import { deepReadDir } from "./tea-dir";

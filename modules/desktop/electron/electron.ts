@@ -4,7 +4,7 @@ import { setupTitlebar, attachTitlebarToWindow } from "custom-electron-titlebar/
 import * as Sentry from "@sentry/electron";
 import contextMenu from "electron-context-menu";
 import serve from "electron-serve";
-import * as log from "electron-log";
+import log, { setSentryLogging } from "./libs/logger";
 import path from "path";
 import { nameToSlug } from "./libs/package";
 import { checkUpdater } from "./libs/auto-updater";
@@ -26,11 +26,11 @@ if (app.isPackaged) {
 			maxQueueCount: 30,
 			beforeSend: async () => {
 				const ol = await net.isOnline();
-				log.log("isOnline", ol);
 				return ol ? "send" : "queue";
 			}
 		}
 	});
+	setSentryLogging(Sentry);
 }
 
 init();

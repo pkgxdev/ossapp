@@ -5,7 +5,7 @@ import path from "path";
 import initializeTeaCli from "./initialize";
 
 import { app } from "electron";
-import * as log from "electron-log";
+import log from "./logger";
 import { MainWindowNotifier } from "./types";
 
 const destinationDirectory = getGuiPath();

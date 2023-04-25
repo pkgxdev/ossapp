@@ -1,7 +1,7 @@
 import path from "path";
 import { mkdirp } from "mkdirp";
 import fs from "fs";
-import * as log from "electron-log";
+import log from "./logger";
 import { getTeaPath } from "./tea-dir";
 import { Packages } from "../../src/libs/types";
 

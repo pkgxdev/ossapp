@@ -13,8 +13,7 @@
 	import NotificationBar from "$components/notification-bar/notification-bar.svelte";
 	import WelcomeModal from "$components/welcome-modal/welcome-modal.svelte";
 	import Button from "@tea/ui/button/button.svelte";
-
-	const log = window.require("electron-log");
+	import log from "$libs/logger";
 
 	const { packageList } = packagesStore;
 	const { session } = authStore;

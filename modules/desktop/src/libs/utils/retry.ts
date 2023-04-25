@@ -1,4 +1,4 @@
-const log = window.require("electron-log");
+import log from "$libs/logger";
 
 export type RetryOptions = {
 	// Number of times to retry. default 10

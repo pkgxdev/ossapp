@@ -26,7 +26,7 @@ import { trimGithubSlug } from "$libs/github";
 import { notificationStore } from "$libs/stores";
 import withRetry from "$libs/utils/retry";
 
-const log = window.require("electron-log");
+import log from "$libs/logger";
 
 const packageRefreshInterval = 1000 * 60 * 60; // 1 hour
 
