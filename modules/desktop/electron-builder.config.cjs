@@ -21,11 +21,12 @@ module.exports = {
 		}
 	},
 	afterSign: async (params) => {
-		if (process.platform !== "darwin") {
+		if (process.platform !== "darwin" || process.env.CSC_IDENTITY_AUTO_DISCOVERY === "false") {
+			console.log("not notarizing app");
 			return;
 		}
 
-		console.log("afterSign hook triggered", params);
+		console.log("afterSign hook triggered");
 
 		const appBundleId = "xyz.tea.gui";
 
