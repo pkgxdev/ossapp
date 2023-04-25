@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { page } from "$app/stores";
-	import { beforeUpdate } from "svelte";
 	import { searchStore } from "$libs/stores";
 	import SearchInput from "@tea/ui/search-input/search-input.svelte";
 	import { navStore } from "$libs/stores";
@@ -10,11 +8,6 @@
 	import { topbarDoubleClick } from "$libs/native-electron";
 
 	let { nextPath, prevPath } = navStore;
-
-	let currentPath: string;
-	beforeUpdate(async () => {
-		currentPath = $page.url.pathname;
-	});
 </script>
 
 <header

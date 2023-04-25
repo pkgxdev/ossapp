@@ -18,7 +18,7 @@ import {
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
-import { NotificationType, type Package } from "@tea/ui/types";
+import { NotificationType } from "@tea/ui/types";
 import { trackInstall, trackInstallFailed } from "$libs/analytics";
 import { addInstalledVersion } from "$libs/packages/pkg-utils";
 import withDebounce from "$libs/utils/debounce";

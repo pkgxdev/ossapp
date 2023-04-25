@@ -5,8 +5,6 @@ import type { Developer } from "@tea/ui/types";
 import type { Session } from "$libs/types";
 import { getSession as electronGetSession, updateSession as electronUpdateSession } from "@native";
 
-import { navStore } from "$libs/stores";
-
 export let session: Session | null = null;
 export const getSession = async (): Promise<Session | null> => {
 	session = await electronGetSession();

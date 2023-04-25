@@ -48,7 +48,7 @@
 
 	$: needsUpdateCount = pkgsToUpdate.length;
 
-	afterNavigate(({ from, to }) => {
+	afterNavigate(({ to }) => {
 		if (to?.url?.pathname === "/") {
 			const tab = to.url.searchParams.get("tab");
 			sideMenuOption = !tab ? SideMenuOptions.discover : (tab as SideMenuOptions);

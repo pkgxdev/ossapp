@@ -54,10 +54,15 @@ contribute to them:
 The following can be run with [`xc`], eg. `xc build`
 
 ## Setup
+Setup ensures that required configuration placeholder files are present and installs dependencies.
 
 ```sh
 if [ ! -e modules/desktop/electron/config.json ]; then
   echo '{}' > modules/desktop/electron/config.json
+fi
+
+if [ ! -e modules/desktop/.env ]; then
+  cp modules/desktop/.env.example modules/desktop/.env
 fi
 pnpm install
 ```
@@ -88,6 +93,14 @@ pnpm run -r format
 pnpm install
 pnpm --filter tea exec pnpm predist
 pnpm --filter tea exec pnpm dist
+```
+
+## Check
+Runs the typescript compiler and linter.
+
+```sh
+pnpm run -r check
+pnpm run -r lint
 ```
 
 # Dependencies

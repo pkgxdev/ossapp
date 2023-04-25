@@ -1,5 +1,4 @@
 import type { GUIPackage } from "$libs/types";
-import type { Package } from "@tea/ui/types";
 import { clean } from "semver";
 import semverCompare from "semver/functions/compare";
 

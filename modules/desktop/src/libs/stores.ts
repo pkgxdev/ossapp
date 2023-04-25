@@ -4,7 +4,7 @@ import Fuse from "fuse.js";
 import type { Package, Review, AirtablePost } from "@tea/ui/types";
 import type { GUIPackage } from "$libs/types";
 
-import { getFeaturedPackages, getPackageReviews, getAllPosts } from "@native";
+import { getFeaturedPackages, getPackageReviews } from "@native";
 import initAuthStore from "./stores/auth";
 import initNavStore from "./stores/nav";
 import initPackagesStore from "./stores/pkgs";
@@ -61,7 +61,7 @@ export const packagesReviewStore = initPackagesReviewStore();
 
 function initPosts() {
 	let initialized = false;
-	const { subscribe, set } = writable<AirtablePost[]>([]);
+	const { subscribe } = writable<AirtablePost[]>([]);
 	const posts: AirtablePost[] = [];
 	let postsIndex: Fuse<AirtablePost>;
 
