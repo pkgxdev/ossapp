@@ -76,6 +76,12 @@ pnpm install
 pnpm dev
 ```
 
+## Prettier
+
+```sh
+pnpm run -r format
+```
+
 ## Dist
 
 ```sh

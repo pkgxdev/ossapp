@@ -111,14 +111,19 @@ function newInstallProgressNotifier(full_name: string, notifyMainWindow: MainWin
 	};
 }
 
-export async function openTerminal(cmd: string) {
-	let scriptPath = "";
+export async function openPackageEntrypointInTerminal(pkg: string) {
+	let sh = `${cliBinPath} --sync --env=false +${pkg} `;
+	if (pkg == "github.com/AUTOMATIC1111/stable-diffusion-webui") {
+		sh += `~/.tea/${pkg}/v*/entrypoint.sh`;
+	} else {
+		sh += "sh";
+	}
+
+	const scriptPath = await createCommandScriptFile(sh);
+
 	try {
-		// TODO SECURITY: escape the cmd if possible or create whitelist of acceptable commands
-		scriptPath = await createCommandScriptFile(cmd);
-		if (!scriptPath) throw new Error("unable to create Applse Script");
-		let stdout = ``;
-		let stderr = ``;
+		let stdout = "";
+		let stderr = "";
 
 		await new Promise((resolve, reject) => {
 			const child = spawn("/usr/bin/osascript", [scriptPath]);
@@ -129,50 +134,37 @@ export async function openTerminal(cmd: string) {
 				stderr += data.toString().trim();
 			});
 
-			child.on("exit", () => {
-				console.log("exit:", stdout);
-				resolve(stdout);
+			child.on("exit", (code) => {
+				console.info("exit:", code, `\`${stdout}\``);
+				if (code == 0) {
+					resolve(stdout);
+				} else {
+					reject(new Error("failed to open terminal and run tea sh"));
+				}
 			});
 
 			child.on("error", () => {
 				reject(new Error(stderr));
 			});
 		});
-	} catch (error) {
-		log.error("openTerminal:", error);
 	} finally {
 		if (scriptPath) await fs.unlinkSync(scriptPath);
 	}
 }
 
 const createCommandScriptFile = async (cmd: string): Promise<string> => {
-	try {
-		const guiFolder = getGuiPath();
-		const tmpFilePath = path.join(guiFolder, `${+new Date()}.scpt`);
-		const command = `"${cmd.replace(/"/g, '\\"')}"`;
-		const script = `
-			tell application "iTerm"
-				activate
-				if application "iTerm" is running then
-						try
-								tell the first window to create tab with default profile
-						on error
-								create window with default profile
-						end try
-				end if
-	
-				delay 0.1
-	
-				tell the first window to tell current session to write text ${command}
-			end tell
-		`.trim();
+	const guiFolder = getGuiPath();
+	const tmpFilePath = path.join(guiFolder, `${+new Date()}.scpt`);
+	const command = `${cmd.replace(/"/g, '\\"')}`;
+	const script = `
+    tell application "Terminal"
+      activate
+      do script "${command}"
+    end tell
+  `.trim();
 
-		await fs.writeFileSync(tmpFilePath, script, "utf-8");
-		return tmpFilePath;
-	} catch (error) {
-		log.error(error);
-		return "";
-	}
+	await fs.writeFileSync(tmpFilePath, script, "utf-8");
+	return tmpFilePath;
 };
 
 export async function asyncExec(cmd: string): Promise<string> {

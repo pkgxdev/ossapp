@@ -4,7 +4,7 @@ import { readSessionData, writeSessionData } from "./auth";
 import type { Packages, Session } from "../../src/libs/types";
 import log from "./logger";
 import { syncLogsAt } from "./v1-client";
-import { installPackage, openTerminal, syncPantry } from "./cli";
+import { installPackage, openPackageEntrypointInTerminal, syncPantry } from "./cli";
 
 import initializeTeaCli from "./initialize";
 
@@ -77,12 +77,12 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
 	});
 
 	ipcMain.handle("open-terminal", async (_, data) => {
-		const { cmd } = data as { cmd: string };
+		const { pkg } = data as { pkg: string };
 		try {
 			// TODO: detect if mac or linux
 			// current openTerminal is only design for Mac
-			log.info("open terminal w/ cmd:", cmd);
-			await openTerminal(cmd);
+			log.info("open tea entrypoint in terminal for pkg:", pkg);
+			await openPackageEntrypointInTerminal(pkg);
 		} catch (error) {
 			log.error(error);
 		}
