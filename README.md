@@ -71,6 +71,7 @@ if [ ! -e modules/desktop/.env ]; then
   cp modules/desktop/.env.example modules/desktop/.env
 fi
 pnpm install
+pnpm run -r prepare
 ```
 
 ## Build
