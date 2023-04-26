@@ -36,6 +36,7 @@
 			onFocus={() => {
 				searchStore.searching.set(true);
 			}}
+			readonly={true}
 		/>
 
 		<kbd

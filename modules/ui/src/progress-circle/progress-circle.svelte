@@ -18,6 +18,12 @@
 			return path;
 		}
 	};
+
+	// Format the percentage expressed as 0..100 to a number with 2 decimal places.
+	// we never want to round 99.999% to 100% because makes the experience bad so we can't just use toFixed(2) immediately
+	const formatPercent = (percent: number) => {
+		return (Math.floor(percent * 100) / 100).toFixed(2);
+	};
 </script>
 
 <div>
@@ -27,7 +33,7 @@
 	</svg>
 	<div>
 		<slot>
-			<span>{value}%</span>
+			<span class="font-mono">{formatPercent(value)}%</span>
 		</slot>
 	</div>
 </div>

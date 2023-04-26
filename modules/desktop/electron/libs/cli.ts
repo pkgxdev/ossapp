@@ -100,12 +100,12 @@ function newInstallProgressNotifier(full_name: string, notifyMainWindow: MainWin
 				// how much of the current package is completed
 				const packageProgress = (received / contentSize) * 100;
 				// progress is the total packages completed plus the percentage of the current package
-				const progress = (overallProgress + packageProgress / numberOfPackages).toFixed(2);
+				const progress = overallProgress + packageProgress / numberOfPackages;
 				notifyMainWindow("install-progress", { full_name, progress });
 			}
 		} else if (msg.status === "installed") {
 			currentPackageNumber++;
-			const progress = ((currentPackageNumber / numberOfPackages) * 100).toFixed(2);
+			const progress = (currentPackageNumber / numberOfPackages) * 100;
 			notifyMainWindow("install-progress", { full_name, progress });
 		}
 	};

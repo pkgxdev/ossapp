@@ -12,6 +12,7 @@
 
 	import { installPackage } from "@native";
 	import { onMount } from "svelte";
+  import NoSearchResults from "./no-search-results.svelte";
 
 	const { searching, packagesSearch } = searchStore;
 	// import type { AirtablePost } from '@tea/ui/types';
@@ -75,33 +76,35 @@
 		</header>
 		{#if term}
 			<div class="z-20 bg-black">
-				<header class="text-gray p-4 text-lg">
-					Packages ({$packagesSearch.length})
-				</header>
-				<ul class="flex flex-col gap-2 p-2">
-					{#if $packagesSearch.length > 0}
-						{#each $packagesSearch as pkg}
-							<div class={pkg.state === PackageStates.INSTALLING ? "animate-pulse" : ""}>
-								<PackageResult
-									{pkg}
-									{onClose}
-									onClick={async () => {
-										if (
-											[
-												PackageStates.INSTALLED,
-												PackageStates.INSTALLING,
-												PackageStates.UPDATING
-											].includes(pkg.state)
-										) {
-											return;
-										}
-										packagesStore.installPkg(pkg);
-									}}
-								/>
-							</div>
-						{/each}
-					{/if}
-				</ul>
+				{#if $packagesSearch.length > 0}
+					<header class="text-gray p-4 text-lg">
+						packages ({$packagesSearch.length})
+					</header>
+					<ul class="flex flex-col gap-2 p-2">
+							{#each $packagesSearch as pkg}
+								<div class={pkg.state === PackageStates.INSTALLING ? "animate-pulse" : ""}>
+									<PackageResult
+										{pkg}
+										{onClose}
+										onClick={async () => {
+											if (
+												[
+													PackageStates.INSTALLED,
+													PackageStates.INSTALLING,
+													PackageStates.UPDATING
+												].includes(pkg.state)
+											) {
+												return;
+											}
+											packagesStore.installPkg(pkg);
+										}}
+									/>
+								</div>
+							{/each}
+					</ul>
+				{:else}
+					<NoSearchResults />
+				{/if}
 				<!-- <header class="text-primary p-4 text-lg">
 					Top Article Results ({articles.length})
 				</header>

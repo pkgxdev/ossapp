@@ -142,7 +142,7 @@
 				{/if}
 				{#if pkg.github}
 					<button
-						class="border-gray group flex h-[40px] w-[40px] items-center justify-center rounded-sm border hover:bg-[#e1e1e1]"
+						class="border-gray group flex h-[40px] w-[40px] items-center justify-center rounded-sm border hover:bg-[#e1e1e1] shrink-0"
 						on:click={() => {
 							if (pkg.github) {
 								const slug = trimGithubSlug(pkg.github);

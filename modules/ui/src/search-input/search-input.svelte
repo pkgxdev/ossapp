@@ -15,6 +15,7 @@
 	export let placeholder = "search_";
 
 	export let autofocus = false;
+	export let readonly = false;
 
 	let searchInput: HTMLInputElement;
 
@@ -58,6 +59,7 @@
 		{placeholder}
 		on:keyup={onChange}
 		on:focus={onFocus}
+		{readonly}
 	/>
 </section>
 

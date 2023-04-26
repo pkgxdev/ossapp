@@ -318,7 +318,7 @@ export const withFakeLoader = (
 		const progressLeft = 100 - fakeLoadingProgress;
 		const addProgress = progressLeft * increment;
 		fakeLoadingProgress = fakeLoadingProgress + addProgress;
-		callback(+fakeLoadingProgress.toFixed(2));
+		callback(fakeLoadingProgress);
 	}, ms);
 
 	return fakeTimer;
