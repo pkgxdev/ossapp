@@ -33,7 +33,7 @@
 	<BgImage class="absolute top-0 left-0 h-full w-full" {layout} {pkg} />
 
 	<a href={link} on:mousedown={activate} on:mouseup={deactivate} on:mouseleave={deactivate}>
-		<div class="package-card-content absolute  h-full w-full flex-col justify-between">
+		<div class="package-card-content absolute h-full w-full flex-col justify-between">
 			<div class="hint-container">
 				<div class="hint">
 					<div class="line-clamp-1 text-xs">view more details</div>
@@ -42,28 +42,31 @@
 			</div>
 			<div class="content-container absolute bottom-0 w-full {layout}">
 				<article class="card-thumb-label relative">
-					<h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">
-						{fixPackageName(pkg.name)}
-					</h3>
-					<p class="line-clamp-2 h-[32px] text-xs font-thin lowercase">{pkg.desc ?? ""}</p>
+					{#if layout === "bottom"}
+						<h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">
+							{fixPackageName(pkg.name)}
+						</h3>
+						<p class="line-clamp-2 h-[32px] text-xs font-thin lowercase">{pkg.desc ?? ""}</p>
+					{:else}
+						<h3 class="text-bold font-mona line-clamp-1 mb-4 text-3xl font-bold text-white">
+							{fixPackageName(pkg.name)}
+						</h3>
+						<p class="line-clamp-10 h-[160px] text-xs font-thin lowercase">{pkg.desc ?? ""}</p>
+					{/if}
 				</article>
-				<div class="relative mt-3.5 flex w-full">
-					<div class="install-button" on:mousedown={preventPropagation}>
+				<div class="relative mt-3.5 w-full">
+					<div class="install-button {layout}" on:mousedown={preventPropagation}>
 						{#if pkg.state === PackageStates.INSTALLED}
-							<div>
-								<PackageInstalledBadge version={pkg.version} />
-							</div>
+							<PackageInstalledBadge version={pkg.version} />
 						{:else}
-							<div on:mousedown={preventPropagation}>
-								<PackageInstallButton
-									{pkg}
-									onClick={(evt) => {
-										// prevent default to prevent the link that this button is inside of from being followed
-										evt?.preventDefault();
-										onClickCTA();
-									}}
-								/>
-							</div>
+							<PackageInstallButton
+								{pkg}
+								onClick={(evt) => {
+									// prevent default to prevent the link that this button is inside of from being followed
+									evt?.preventDefault();
+									onClickCTA();
+								}}
+							/>
 						{/if}
 					</div>
 				</div>
@@ -96,9 +99,6 @@
 		background-size: cover;
 		box-sizing: border-box;
 	}
-	section.right {
-		height: 220px;
-	}
 
 	section.active::before {
 		position: absolute;
@@ -125,19 +125,23 @@
 		padding: 28px 14px;
 		justify-content: center;
 	}
+
 	.content-container.bottom {
 		left: 0px;
 	}
 
 	.content-container.left {
 		height: 100%;
-		width: 40%;
+		width: 60%;
 		left: 0px;
+		padding: 28px 28px;
 	}
+
 	.content-container.right {
 		height: 100%;
 		width: 60%;
 		right: 0px;
+		padding: 28px 28px;
 	}
 
 	.hint-container {
@@ -172,8 +176,12 @@
 		color: #e1e1e1;
 	}
 
-	.package-card {
-		background-size: cover;
+	.package-card.right {
+		min-width: 550px;
+	}
+
+	.package-card.left {
+		min-width: 550px;
 	}
 
 	.package-card:hover .hint {
@@ -190,17 +198,21 @@
 	}
 
 	.install-button {
+		width: 160px;
+	}
+
+	.install-button.bottom {
 		min-width: 100%;
 	}
 
 	@media screen and (min-width: 650px) {
-		.install-button {
+		.install-button.bottom {
 			min-width: 60%;
 		}
 	}
 
 	@media screen and (min-width: 1000px) {
-		.install-button {
+		.install-button.bottom {
 			min-width: 50%;
 		}
 	}
