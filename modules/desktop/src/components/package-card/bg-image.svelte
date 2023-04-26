@@ -51,13 +51,12 @@
 	});
 </script>
 
-<section class="bg-center {clazz} {layout}"
-  class:grayscale={!loaded}
-  style="background-image: url({defaultImgUrl})">
-  <div class="transition-all opacity-0" class:opacity-100={loaded} style="background-image: url({loadedImg})">
+<section class="bg-black {clazz} {layout}">
+	<i class="logo icon-tea-logo-iconasset-1 text-gray text-3xl animate-pulse {layout}"/>	
+  <div class="bg-center transition-all opacity-0 duration-500" class:opacity-100={loaded} style="background-image: url({loadedImg})">
   <!-- dup image: save processing power instead of computing the blur across all the HTML layers -->
 	{#if layout !== "none"}
-		<aside class="blur-sm {layout} ransition-all opacity-0" class:opacity-100={loaded}>
+		<aside class="blur-sm {layout} transition-all opacity-0 duration-500" class:opacity-100={loaded}>
 			<figure class="bg-center" style="background-image: url({loadedImg})" />
 		</aside>
 	{/if}
@@ -67,9 +66,27 @@
   section {
 		width: 100%;
 		height: 100%;
-		background-size: cover;
-		box-sizing: border-box;
-		background-repeat: no-repeat;
+	}
+
+	.logo {
+		position: absolute;
+		width: 30px;
+		height: 30px;
+		margin-left: -15px;
+	}
+	.logo.bottom {
+		left: 50%;
+		top: 30%;
+	}
+	.logo.right {
+		left: 22%;
+		top: 50%;
+		margin-top: -15px;
+	}
+	.logo.left {
+		left: 70%;
+		top: 50%;
+		margin-top: -15px;
 	}
 
   div {
