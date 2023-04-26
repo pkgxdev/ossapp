@@ -129,7 +129,9 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		}
 
 		packagesIndex = new Fuse(guiPkgs, {
-			keys: ["name", "full_name", "desc", "categories"]
+			keys: ["name", "full_name", "desc", "categories"],
+			minMatchCharLength: 3,
+			threshold: 0.3
 		});
 		log.info("refreshed packages fuse index");
 
