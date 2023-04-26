@@ -107,9 +107,19 @@ function newInstallProgressNotifier(full_name: string, notifyMainWindow: MainWin
 			currentPackageNumber++;
 			const progress = (currentPackageNumber / numberOfPackages) * 100;
 			notifyMainWindow("install-progress", { full_name, progress });
+			notifyPackageInstalled(msg.pkg, notifyMainWindow);
 		}
 	};
 }
+
+const notifyPackageInstalled = (rawPkg: string, notifyMainWindow: MainWindowNotifier) => {
+	try {
+		const [full_name, version] = rawPkg.split("=");
+		notifyMainWindow("pkg-installed", { full_name, version });
+	} catch (err) {
+		log.error("failed to notify package installed", err);
+	}
+};
 
 export async function openPackageEntrypointInTerminal(pkg: string) {
 	let sh = `${cliBinPath} --sync --env=false +${pkg} `;

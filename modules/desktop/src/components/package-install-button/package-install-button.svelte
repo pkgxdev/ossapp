@@ -30,7 +30,6 @@
 		[PackageStates.NEEDS_UPDATE]: "update-badge",
 		[PackageStates.UPDATING]: "update-badge",
 		[PackageStates.INSTALLED]: "installed-badge",
-		[PackageStates.UNINSTALLED]: ""
 	};
 
 	const hasVersionSelectorDropdown = !!$$slots.selector;

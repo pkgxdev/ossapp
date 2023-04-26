@@ -9,7 +9,6 @@ export enum PackageStates {
 	AVAILABLE = "AVAILABLE",
 	INSTALLED = "INSTALLED",
 	INSTALLING = "INSTALLING",
-	UNINSTALLED = "UNINSTALLED",
 	NEEDS_UPDATE = "NEEDS_UPDATE",
 	UPDATING = "UPDATING"
 }
@@ -24,6 +23,7 @@ export type GUIPackage = Package & {
 	installed_versions?: string[];
 	synced?: boolean;
 	install_progress_percentage?: number;
+	isUninstalling?: boolean;
 	cached_image_url?: string;
 };
 
