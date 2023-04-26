@@ -10,6 +10,7 @@ import initNavStore from "./stores/nav";
 import initPackagesStore from "./stores/pkgs";
 import initNotificationStore from "./stores/notifications";
 import initAppUpdateStore from "./stores/update";
+import { trackSearch } from "./analytics";
 
 export const featuredPackages = writable<Package[]>([]);
 
@@ -116,6 +117,7 @@ function initSearchStore() {
 						packagesStore.search(term, 5)
 						// postsStore.search(term, 10)
 					]);
+					trackSearch(term, resultPkgs.length);
 					packagesSearch.set(resultPkgs);
 					// postsSearch.set(resultPosts);
 				} else {
