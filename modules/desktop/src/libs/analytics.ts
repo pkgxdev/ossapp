@@ -27,7 +27,9 @@ mixpanel.init(pub.PUBLIC_MIXPANEL_TOKEN, { debug: true });
 
 enum AnalyticsAction {
 	install = "INSTALL_ACTION",
-	install_failed = "INSTALL_ACTION_FAILED"
+	install_failed = "INSTALL_ACTION_FAILED",
+	search = "SEARCH_ACTION",
+	search_failed = "SEARCH_ACTION_FAILED"
 }
 
 const trackAction = (action: AnalyticsAction, data?: { [key: string]: any }) => {
@@ -62,4 +64,17 @@ export const trackInstallFailed = (packageFullname: string, error: string) => {
 		pkg: packageFullname,
 		error
 	});
+};
+
+export const trackSearch = (search_term: string, result_count: number) => {
+	if (result_count > 0) {
+		trackAction(AnalyticsAction.search, {
+			search_term,
+			result_count
+		});
+	} else {
+		trackAction(AnalyticsAction.search_failed, {
+			search_term
+		});
+	}
 };
