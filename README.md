@@ -25,6 +25,12 @@ xc build  # only required if you modify the backend
 xc dev    # opens the app in dev mode
 ```
 
+Creating a locally built installer for local usage will not need codesigning and notarization, to skip the 2-steps:
+```
+$ export CSC_IDENTITY_AUTO_DISCOVERY=false
+$ xc dist
+```
+
 # Contributing to `tea/gui`
 If you have suggestions or ideas, start a [discussion]. If we agree, we’ll move it to an issue. Bug fixes straight to pull request or issue please!
 
