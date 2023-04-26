@@ -74,6 +74,10 @@
 		height: 30px;
 		margin-left: -15px;
 	}
+	.logo.none {
+		left: 50%;
+		top: 50%;
+	}
 	.logo.bottom {
 		left: 50%;
 		top: 30%;
