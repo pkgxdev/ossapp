@@ -29,7 +29,7 @@
 		{#if packages.length > 0}
 			{#each packages as pkg}
         <div class="z-1 p-1" class:col-span-2={["left", "right"].includes(pkg.card_layout)}>
-          <Package tab={packageFilter} {pkg} layout={pkg.card_layout}/>
+          <Package tab={packageFilter} {pkg} layout="{pkg.card_layout}"/>
         </div>
 			{/each}
 		{:else}
