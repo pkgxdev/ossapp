@@ -1,69 +1,77 @@
 <script lang="ts">
-  import type { GUIPackage } from "$libs/types";
-  import { onMount } from "svelte";
+	import type { GUIPackage } from "$libs/types";
+	import { onMount } from "svelte";
 	import { packagesStore } from "$libs/stores";
 
-	let clazz = '';
+	let clazz = "";
 	export { clazz as class };
 
-  export let layout: "bottom" | "right" | "left" | "none" = "bottom";
+	export let layout: "bottom" | "right" | "left" | "none" = "bottom";
 
-  export let pkg: GUIPackage;
+	export let pkg: GUIPackage;
 
 	const defaultImgUrl = "/images/default-thumb.jpg";
-  let loadedImg = "";
-  let loaded = false;
+	$: loadedImg = "";
+	let loaded = false;
 
-  const loadImage = async (url:string): Promise<string> => {
-    const image = new Image();
-    image.src = url;
-    return new Promise((resolve, reject) => {
-      image.onload = () => {
-        loadedImg = url;
-        setTimeout(() => {
-          loaded = true;
-        }, 300);
-        resolve(url);
-      };
-      image.onerror = () => {
-        reject(new Error(`file/url does not exist ${url}`));
-      };
-    });
-  };
+	const loadImage = async (url: string): Promise<string> => {
+		const image = new Image();
+		image.src = url;
+		return new Promise((resolve, reject) => {
+			image.onload = () => {
+				loadedImg = url;
+				setTimeout(() => {
+					loaded = true;
+				}, 300);
+				resolve(url);
+			};
+			image.onerror = () => {
+				reject(new Error(`file/url does not exist ${url}`));
+			};
+		});
+	};
 
-  const recachePkg = async () => {
-    const url = await packagesStore.cachePkgImage(pkg)
-    loadImage(url);
-  }
+	const recachePkg = async () => {
+		const url = await packagesStore.cachePkgImage(pkg);
+		loadImage(url);
+	};
 
 	onMount(() => {
-    if (pkg.cached_image_url) {
-      loadImage(pkg.cached_image_url)
-        .catch(() => {
-          if (pkg.thumb_image_url) {
-            loadImage(pkg.thumb_image_url);
-            recachePkg();
-          }
-        });
-    } else if (pkg.thumb_image_url) {
-      recachePkg();
-    }
+		if (pkg.cached_image_url) {
+			loadImage(pkg.cached_image_url).catch(() => {
+				if (pkg.thumb_image_url) {
+					loadImage(pkg.thumb_image_url);
+					recachePkg();
+				}
+			});
+		} else if (pkg.thumb_image_url) {
+			recachePkg();
+		}
 	});
 </script>
 
 <section class="bg-black {clazz} {layout}">
-	<i class="logo icon-tea-logo-iconasset-1 text-gray text-3xl animate-pulse {layout}"/>	
-  <div class="bg-center transition-all opacity-0 duration-500" class:opacity-100={loaded} style="background-image: url({loadedImg})">
-  <!-- dup image: save processing power instead of computing the blur across all the HTML layers -->
-	{#if layout !== "none"}
-		<aside class="blur-sm {layout} transition-all opacity-0 duration-500" class:opacity-100={loaded}>
-			<figure class="bg-center" style="background-image: url({loadedImg})" />
-		</aside>
-	{/if}
+	<i class="logo icon-tea-logo-iconasset-1 text-gray animate-pulse text-3xl {layout}" />
+	<div
+		class="bg-center opacity-0 transition-all duration-500"
+		class:opacity-100={loaded}
+		style="background-image: url({loadedImg})"
+	>
+		<!-- dup image: save processing power instead of computing the blur across all the HTML layers -->
+		{#if layout !== "none"}
+			<!-- TODO: TALK TO NEIL -->
+			<aside
+				class="blur-sm {layout} opacity-0 transition-all duration-500"
+				class:opacity-100={loaded}
+			>
+				<figure class="bg-center" style="background-image: url({loadedImg})" />
+			</aside>
+		{/if}
+	</div>
 </section>
 
 <style>
-  section {
+	section {
 		width: 100%;
 		height: 100%;
 	}
@@ -93,17 +101,17 @@
 		margin-top: -15px;
 	}
 
-  div {
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
+	div {
+		position: absolute;
+		left: 0px;
+		bottom: 0px;
 		width: 100%;
 		height: 100%;
 		background-size: cover;
 		box-sizing: border-box;
 		background-repeat: no-repeat;
-  }
-  aside {
+	}
+	aside {
 		position: absolute;
 		bottom: 0px;
 		width: 100%;
@@ -117,7 +125,7 @@
 	aside.left {
 		left: 0px;
 		height: 100%;
-		width: 40%;
+		width: 60%;
 	}
 
 	aside.right {
@@ -126,7 +134,7 @@
 		width: 60%;
 	}
 
-  figure {
+	figure {
 		position: absolute;
 		bottom: 0px;
 		width: 100%;
@@ -134,17 +142,22 @@
 		background-size: cover;
 		background-repeat: no-repeat;
 	}
-  aside.bottom figure {
-    left: 0px;
-  }
-  aside.right figure {
+
+	aside.bottom figure {
+		left: 0px;
+	}
+
+	aside.right figure {
 		height: 100%;
-		width: 150%;
+		/* the overlay is 60% of the image, so we need to oversize the background image back to 100% */
+		width: 166.6666666%;
 		right: 0px;
 	}
+
 	aside.left figure {
 		height: 100%;
-		width: 250%;
+		/* the overlay is 60% of the image, so we need to oversize the background image back to 100% */
+		width: 166.66666666%;
 		left: 0px;
 	}
 </style>
