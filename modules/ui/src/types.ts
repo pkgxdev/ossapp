@@ -31,7 +31,10 @@ export interface Package {
 	documentation_url?: string;
 	github?: string;
 	contributors?: Contributor[];
-	readme_md?: string;
+	readme?: {
+		data: string;
+		type: "md" | "rst";
+	};
 	manual_sorting: number;
 	card_layout: "bottom" | "right" | "left";
 }
