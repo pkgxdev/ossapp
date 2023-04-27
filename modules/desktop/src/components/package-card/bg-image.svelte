@@ -13,6 +13,7 @@
 	const defaultImgUrl = "/images/default-thumb.jpg";
 	$: loadedImg = "";
 	let loaded = false;
+	let lastProcessedPkg: GUIPackage | null = null;
 
 	const loadImage = async (url: string): Promise<string> => {
 		const image = new Image();
@@ -36,7 +37,7 @@
 		loadImage(url);
 	};
 
-	onMount(() => {
+	const getCache = async () => {
 		if (pkg.cached_image_url) {
 			loadImage(pkg.cached_image_url).catch(() => {
 				if (pkg.thumb_image_url) {
@@ -47,7 +48,16 @@
 		} else if (pkg.thumb_image_url) {
 			recachePkg();
 		}
-	});
+	}
+
+	$: {
+		if (pkg && pkg?.slug !== lastProcessedPkg?.slug) {
+			loaded = false;
+			loadedImg = "";
+			lastProcessedPkg = pkg;
+			getCache();
+		}
+	}
 </script>
 
 <section class="bg-black {clazz} {layout}">
