@@ -1,7 +1,6 @@
 import axios from "axios";
 import type { Contributor, Package } from "@tea/ui/types";
 import yaml from "js-yaml";
-
 export async function getPackageYaml(pkgYamlUrl: string) {
 	const url = pkgYamlUrl.replace("/github.com", "/raw.githubusercontent.com").replace("/blob", "");
 
@@ -12,14 +11,20 @@ export async function getPackageYaml(pkgYamlUrl: string) {
 	return data;
 }
 
-export async function getReadme(owner: string, repo: string): Promise<string> {
-	let readme = "";
+export async function getReadme(
+	owner: string,
+	repo: string
+): Promise<{ data: string; type: "md" | "rst" }> {
+	let type: "md" | "rst" = "md";
+	let data = "";
 	const req = await axios.get(`https://api.github.com/repos/${owner}/${repo}/readme`);
+
 	if (req.data?.download_url) {
+		type = req.data.name.endsWith(".rst") ? "rst" : "md";
 		const reqDl = await axios.get(req.data.download_url);
-		readme = reqDl.data;
+		data = reqDl.data;
 	}
-	return readme;
+	return { data, type };
 }
 
 export async function getContributors(owner: string, repo: string): Promise<Contributor[]> {

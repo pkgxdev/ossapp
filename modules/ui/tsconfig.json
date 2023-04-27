@@ -1,6 +1,7 @@
 {
 	"extends": "./.svelte-kit/tsconfig.json",
 	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
 		"baseUrl": "..",
 		"paths": {
 			"$lib": ["src/lib"],
@@ -21,7 +22,8 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
-		"strict": true
+		"strict": true,
+		"typeRoots": ["./node_modules/@types", "./types"]
 	},
 	"include": [
 		"ambient.d.ts",

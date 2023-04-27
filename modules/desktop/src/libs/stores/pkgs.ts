@@ -107,7 +107,10 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 
 		const updatedPackage: Partial<GUIPackage> = {
 			...pkg,
-			readme_md: readmeMd,
+			readme: {
+				data: readmeMd,
+				type: "md"
+			},
 			synced: true,
 			github: pkg.github
 				? trimGithubSlug(pkg.github)
@@ -123,7 +126,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				getRepoAsPackage(owner, repo)
 			]);
 			if (readme) {
-				updatedPackage.readme_md = readme;
+				updatedPackage.readme = readme;
 			}
 			updatedPackage.contributors = contributors;
 			updatedPackage.license = repoData.license;

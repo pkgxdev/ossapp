@@ -28,10 +28,10 @@
 	// let reviews: Review[];
 	$: bottles = pkg?.bottles || [];
 	$: versions = [...new Set(bottles.map((b) => b.version))];
-	$: readme = pkg?.readme_md || "";
+	$: readme = pkg?.readme || { data: "", type: "md" };
 
 	$: tabs = [
-		readme !== "" && {
+		readme?.data !== "" && {
 			label: $t("common.details"),
 			component: Markdown,
 			props: { pkg, source: readme }
