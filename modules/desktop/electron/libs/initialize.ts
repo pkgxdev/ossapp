@@ -31,12 +31,18 @@ export async function initializeTeaCli(): Promise<string> {
 		const exists = fs.existsSync(cliBinPath);
 		if (exists) {
 			log.info("binary tea already exists at", cliBinPath);
-			binCheck = await asyncExec(`cd ${destinationDirectory} && ./tea --version`);
-			const teaVersion = binCheck.toString().split(" ")[1];
-
-			if (semverCompare(teaVersion, MINIMUM_TEA_VERSION) < 0) {
-				log.info("binary tea version is too old, updating");
+			try {
+				binCheck = await asyncExec(`cd ${destinationDirectory} && ./tea --version`);
+				const teaVersion = binCheck.toString().split(" ")[1];
+				if (semverCompare(teaVersion, MINIMUM_TEA_VERSION) < 0) {
+					log.info("binary tea version is too old, updating");
+					needsUpdate = true;
+				}
+			} catch (error) {
+				// probably binary is not executable or no permission
+				log.error("Error checking tea binary version:", error);
 				needsUpdate = true;
+				await asyncExec(`cd ${destinationDirectory} && rm tea`);
 			}
 		}
 
