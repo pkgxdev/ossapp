@@ -16,7 +16,25 @@ const destinationDirectory = getGuiPath();
 // Get the binary path from the current app directory
 const binaryUrl = "https://tea.xyz/$(uname)/$(uname -m)";
 
+let initializePromise: Promise<string> | null = null;
+
 export async function initializeTeaCli(): Promise<string> {
+	if (initializePromise) {
+		return initializePromise;
+	}
+
+	log.info("Initializing tea cli");
+	initializePromise = initializeTeaCliInternal();
+
+	initializePromise.catch((error) => {
+		log.info("Error initializing tea cli, resetting promise:", error);
+		initializePromise = null;
+	});
+
+	return initializePromise;
+}
+
+async function initializeTeaCliInternal(): Promise<string> {
 	try {
 		let binCheck = "";
 		let needsUpdate = false;
