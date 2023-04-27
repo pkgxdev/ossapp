@@ -69,7 +69,6 @@
 	>
 		<!-- dup image: save processing power instead of computing the blur across all the HTML layers -->
 		{#if layout !== "none"}
-			<!-- TODO: TALK TO NEIL -->
 			<aside
 				class="blur-sm {layout} opacity-0 transition-all duration-500"
 				class:opacity-100={loaded}

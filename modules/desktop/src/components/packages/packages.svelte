@@ -8,6 +8,8 @@
 	import { PackageStates, SideMenuOptions } from "$libs/types";
 	import Preloader from "@tea/ui/Preloader/Preloader.svelte";
 	import Package from "./package.svelte";
+	import NoInstalls from "./no-installs.svelte";
+	import NoUpdates from "./no-updates.svelte";
 	import { packagesStore } from "$libs/stores";
 
 	const { packageList: allPackages } = packagesStore;
@@ -92,9 +94,9 @@
 				{/if}
 			{/each}
 		{:else if packageFilter === SideMenuOptions.installed}
-			<div class="flex w-full h-full text-2xl justify-center items-center">
-				open source is a treasure trove, go plunder something
-			</div>
+			<NoInstalls />
+		{:else if packageFilter === SideMenuOptions.installed_updates_available}
+			<NoUpdates />
 		{:else}
 			{#each Array(9) as _}
 				<section class="card p-1 h-{238}">

@@ -10,12 +10,6 @@
 	export let activeOption: SideMenuOptions;
 
 	$: needsUpdateCount = $packageList.filter((p) => p.state === PackageStates.NEEDS_UPDATE).length;
-	$: hasInstalled = $packageList.some((p) => [
-		PackageStates.INSTALLED,
-		PackageStates.NEEDS_UPDATE,
-		PackageStates.UPDATING,
-		PackageStates.INSTALLING,
-	].includes(p.state));
 </script>
 
 <aside class="border-gray border border-t-0 border-b-0 border-l-0 p-2">
@@ -34,26 +28,24 @@
 			on:click={() => goto(`/?tab=${SideMenuOptions.all}`)}
 		/>
 		<hr />
-		{#if hasInstalled}
-			<MenuButton
-				label="installed"
-				icon="tea-checkmark"
-				active={activeOption === SideMenuOptions.installed}
-				on:click={() => goto(`/?tab=${SideMenuOptions.installed}`)}
-			/>
-			<hr />
-		{/if}
-		{#if needsUpdateCount}
-			<MenuButton
-				label={$t("tags.installed_updates_available").toLowerCase()}
-				icon="update"
-				active={activeOption === SideMenuOptions.installed_updates_available}
-				on:click={() => goto(`/?tab=${SideMenuOptions.installed_updates_available}`)}
-			>
+		<MenuButton
+			label="installed"
+			icon="tea-checkmark"
+			active={activeOption === SideMenuOptions.installed}
+			on:click={() => goto(`/?tab=${SideMenuOptions.installed}`)}
+		/>
+		<hr />
+		<MenuButton
+			label={$t("tags.installed_updates_available").toLowerCase()}
+			icon="update"
+			active={activeOption === SideMenuOptions.installed_updates_available}
+			on:click={() => goto(`/?tab=${SideMenuOptions.installed_updates_available}`)}
+		>
+			{#if needsUpdateCount > 0}
 				<div class="update-count-badge">{needsUpdateCount}</div>
-			</MenuButton>
-			<hr />
-		{/if}
+			{/if}
+		</MenuButton>
+		<hr />
 		<MenuButton
 			label={$t("tags.new_packages").toLowerCase()}
 			icon="birthday-cake"
