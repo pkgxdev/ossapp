@@ -17,8 +17,8 @@
 >
 	<ul class="text-gray flex h-10 gap-1 pl-20 align-middle items-center leading-10">
 		<a href="/?tab=all">
-			<div class="home-btn w-12 text-center text-2xl transition-all">
-				<i class="icon-tea-logo-iconasset-1 transition-all" />
+			<div class="home-btn w-12 text-center text-2xl">
+				<i class="icon-tea-logo-iconasset-1" />
 			</div>
 		</a>
 		<p class="text-gray px-2">beta</p>
@@ -71,8 +71,14 @@
 		background-image: url("/images/gradient-bg.png");
 		color: #222222;
 	}
+
 	.home-btn:hover {
 		color: white;
+	}
+
+	.home-btn:active {
+		color: #222222;
+		border: 2px solid #222222
 	}
 
 	p {
