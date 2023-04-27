@@ -17,10 +17,11 @@
 >
 	<ul class="text-gray flex h-10 gap-1 pl-20 align-middle items-center leading-10">
 		<a href="/?tab=all">
-			<div class="home-btn w-12 rounded-md text-center text-xl transition-all">
-				<i class="icon-tea-logo-iconasset-1" />
+			<div class="home-btn w-12 text-center text-2xl transition-all">
+				<i class="icon-tea-logo-iconasset-1 transition-all" />
 			</div>
 		</a>
+		<p class="text-gray px-2">beta</p>
 		<button on:click={navStore.back} class:active={$prevPath} class="pt-1 px-2 h-[28px] text-xs rounded-sm transition-all opacity-50 hover:bg-gray hover:text-black" title="go back"
 			><i class="icon-arrow-left" /></button
 		>
@@ -61,17 +62,21 @@
 		box-sizing: border-box;
 	}
 	.home-btn {
-		height: 40px;
-		width: 40px;
-		line-height: 40px;
+		height: 46px;
+		width: 46px;
+		line-height: 46px;
 		padding-left: 3px;
-		background-color: rgba(34, 34, 34, 1);
-	}
-	.home-btn:hover {
 		background-size: cover;
 		background-position: center center;
 		background-image: url("/images/gradient-bg.png");
 		color: #222222;
+	}
+	.home-btn:hover {
+		color: white;
+	}
+
+	p {
+		font-size: 10px;
 	}
 	ul button {
 		pointer-events: none;
