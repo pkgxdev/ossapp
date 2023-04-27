@@ -91,6 +91,10 @@
 					</div>
 				{/if}
 			{/each}
+		{:else if packageFilter === SideMenuOptions.installed}
+			<div class="flex w-full h-full text-2xl justify-center items-center">
+				open source is a treasure trove, go plunder something
+			</div>
 		{:else}
 			{#each Array(9) as _}
 				<section class="card p-1 h-{238}">
