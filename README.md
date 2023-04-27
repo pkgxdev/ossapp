@@ -91,7 +91,7 @@ pnpm dev
 ## Prettier
 
 ```sh
-pnpm run -r format
+pnpm run --reporter append-only -r format
 ```
 
 ## Dist

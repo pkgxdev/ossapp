@@ -61,9 +61,7 @@
 	<article class="relative h-auto w-full flex-grow overflow-hidden">
 		<ul class="px-2">
 			{#if sideMenuOption == SideMenuOptions.discover}
-				<DiscoverPackages 
-					bind:scrollY={packagesScrollY}
-				/>
+				<DiscoverPackages bind:scrollY={packagesScrollY} />
 			{:else}
 				<Packages
 					packageFilter={sideMenuOption}

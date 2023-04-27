@@ -15,7 +15,7 @@
 <ul class="flex flex-col bg-black">
 	{#each posts as article}
 		<a href={article.link} target={linkTarget}>
-			<li class="border border-t-0 border-gray p-4 ">
+			<li class="border border-t-0 border-gray p-4">
 				<article class="flex border border-gray transition-all hover:bg-gray">
 					<ImgLoader
 						style="height: 232px; width: 194px"
