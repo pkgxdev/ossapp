@@ -20,7 +20,7 @@ import {
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 import { NotificationType } from "@tea/ui/types";
 import { trackInstall, trackInstallFailed } from "$libs/analytics";
-import { addInstalledVersion } from "$libs/packages/pkg-utils";
+import { addInstalledVersion, isInstalling } from "$libs/packages/pkg-utils";
 import withDebounce from "$libs/utils/debounce";
 import { trimGithubSlug } from "$libs/github";
 import { notificationStore } from "$libs/stores";
@@ -34,8 +34,6 @@ export default function initPackagesStore() {
 	let initialized = false;
 	let isDestroyed = false;
 	let refreshTimeoutId: ReturnType<typeof setTimeout> | null = null;
-
-	const syncProgress = writable<number>(0); // TODO: maybe use this in the UI someday
 
 	const packageMap = writable<Packages>({ version: "0", packages: {} });
 	const packageList = derived(packageMap, ($packages) => Object.values($packages.packages));
@@ -53,13 +51,50 @@ export default function initPackagesStore() {
 		});
 	};
 
-	const updatePackage = (full_name: string, props: Partial<GUIPackage>) => {
+	const updatePackage = (full_name: string, props: Partial<GUIPackage>, newVersion?: string) => {
 		packageMap.update((pkgs) => {
 			const pkg = pkgs.packages[full_name];
-			pkgs.packages[full_name] = { ...pkg, ...props };
-			setBadgeCountFromPkgs(pkgs);
+			if (pkg) {
+				const updatedPkg = { ...pkg, ...props };
+
+				if (newVersion) {
+					updatedPkg.installed_versions = addInstalledVersion(
+						updatedPkg.installed_versions,
+						newVersion
+					);
+				}
+
+				updatedPkg.state = getPackageState(updatedPkg);
+				pkgs.packages[full_name] = updatedPkg;
+
+				setBadgeCountFromPkgs(pkgs);
+			}
 			return pkgs;
 		});
+	};
+
+	// getPackage state centralizes the logic for determining the state of the package based on the other properties
+	const getPackageState = (pkg: GUIPackage): PackageStates => {
+		if (pkg.isUninstalling) {
+			//TODO: maybe there should be an uninstalling state too? Although that needs UI/UX changes
+			return PackageStates.AVAILABLE;
+		}
+
+		const isUpToDate = pkg.version === pkg.installed_versions?.[0];
+
+		if (isInstalling(pkg)) {
+			const hasNoVersions = !pkg.installed_versions?.length;
+			if (hasNoVersions || isUpToDate) {
+				return PackageStates.INSTALLING;
+			}
+			return PackageStates.UPDATING;
+		}
+
+		if (!pkg.installed_versions?.length) {
+			return PackageStates.AVAILABLE;
+		}
+
+		return isUpToDate ? PackageStates.INSTALLED : PackageStates.NEEDS_UPDATE;
 	};
 
 	const syncPackageData = async (guiPkg: Partial<GUIPackage> | undefined) => {
@@ -138,17 +173,15 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		try {
 			const installedPkgs: InstalledPackage[] = await getInstalledPackages();
 
-			log.info("set NEEDS_UPDATE state to pkgs");
-			for (const [i, iPkg] of installedPkgs.entries()) {
-				const pkg = guiPkgs.find((p) => p.full_name === iPkg.full_name);
-				if (pkg) {
-					const isUpdated = pkg.version === iPkg.installed_versions[0];
+			log.info("updating state of packages");
+			for (const pkg of guiPkgs) {
+				const iPkg = installedPkgs.find((p) => p.full_name === pkg.full_name);
+				if (iPkg) {
+					pkg.installed_versions = iPkg.installed_versions;
 					updatePackage(pkg.full_name, {
-						installed_versions: iPkg.installed_versions,
-						state: isUpdated ? PackageStates.INSTALLED : PackageStates.NEEDS_UPDATE
+						installed_versions: iPkg.installed_versions
 					});
 				}
-				syncProgress.set(+((i + 1) / installedPkgs.length).toFixed(2));
 			}
 		} catch (error) {
 			log.error(error);
@@ -173,25 +206,12 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 	};
 
 	const installPkg = async (pkg: GUIPackage, version?: string) => {
-		const originalState = pkg.state;
 		const versionToInstall = version || pkg.version;
 
 		try {
-			const state: PackageStates =
-				pkg.state === PackageStates.NEEDS_UPDATE
-					? PackageStates.UPDATING
-					: PackageStates.INSTALLING;
-
-			updatePackage(pkg.full_name, { state });
-
+			updatePackage(pkg.full_name, { install_progress_percentage: 0.01 });
 			await installPackage(pkg, versionToInstall);
 			trackInstall(pkg.full_name);
-
-			updatePackage(pkg.full_name, {
-				state: PackageStates.INSTALLED,
-				installed_versions: addInstalledVersion(pkg.installed_versions, versionToInstall)
-			});
-
 			notificationStore.add({
 				message: `Package ${pkg.full_name} v${versionToInstall} has been installed.`
 			});
@@ -199,9 +219,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			let message = "Unknown Error";
 			if (error instanceof Error) message = error.message;
 			trackInstallFailed(pkg.full_name, message || "unknown");
-
-			//FIXME: probably need a refresh package state function instead of this
-			updatePackage(pkg.full_name, { state: originalState });
 
 			notificationStore.add({
 				message: `Package ${pkg.full_name} v${versionToInstall} failed to install.`,
@@ -216,14 +233,18 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		let fakeTimer: NodeJS.Timer | null = null;
 		try {
 			fakeTimer = withFakeLoader(pkg, (progress) => {
-				updatePackage(pkg.full_name, { install_progress_percentage: progress });
+				updatePackage(pkg.full_name, {
+					install_progress_percentage: progress,
+					isUninstalling: true
+				});
 			});
+
 			for (const v of pkg.installed_versions || []) {
 				await deletePkg(pkg, v);
 			}
+
 			setTimeout(() => {
 				updatePackage(pkg.full_name, {
-					state: PackageStates.AVAILABLE,
 					installed_versions: []
 				});
 			}, 3000);
@@ -235,7 +256,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			});
 		} finally {
 			fakeTimer && clearTimeout(fakeTimer);
-			updatePackage(pkg.full_name, { install_progress_percentage: 0 });
+			updatePackage(pkg.full_name, { install_progress_percentage: 0, isUninstalling: false });
 		}
 	};
 
@@ -273,17 +294,22 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		return cacheFileURL;
 	};
 
-	listenToChannel("install-progress", (data: any) => {
-		const { full_name, progress } = data;
+	listenToChannel("install-progress", ({ full_name, progress }: any) => {
 		if (!full_name) {
 			return;
 		}
 		updatePackage(full_name, { install_progress_percentage: progress });
 	});
 
+	listenToChannel("pkg-installed", ({ full_name, version }: any) => {
+		if (!full_name) {
+			return;
+		}
+		updatePackage(full_name, {}, version);
+	});
+
 	return {
 		packageList,
-		syncProgress,
 		search: async (term: string, limit = 5): Promise<GUIPackage[]> => {
 			if (!term || !packagesIndex) return [];
 			// TODO: if online, use algolia else use Fuse
@@ -292,7 +318,6 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 			return matchingPackages;
 		},
 		fetchPackageBottles,
-		updatePackage,
 		init,
 		installPkg,
 		uninstallPkg,

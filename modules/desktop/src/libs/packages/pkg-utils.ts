@@ -37,3 +37,11 @@ export const findRecentInstalledVersion = (pkg: GUIPackage) => {
 	// this assumes that the versions are already sorted
 	return pkg.installed_versions?.[0];
 };
+
+export const isInstalling = (pkg: GUIPackage) => {
+	return (
+		pkg.install_progress_percentage &&
+		pkg.install_progress_percentage > 0 &&
+		pkg.install_progress_percentage < 100
+	);
+};
