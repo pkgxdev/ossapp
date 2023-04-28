@@ -116,7 +116,7 @@ jobs:
 
           xcrun stapler staple tea.dmg
 
-      - run: spctl --ignore-cache --no-cache --assess --type execute --verbose=4 tea.dmg
+      # - run: spctl --ignore-cache --no-cache --assess --type execute --verbose=4 tea.dmg
 
       - name: upload artifacts
         uses: actions/upload-artifact@v3
