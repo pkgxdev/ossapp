@@ -57,22 +57,25 @@ jobs:
           tea deno task compile
           # mv tea ../tea.app/Contents/Helpers
 
+      # wtf is this even?
+      - run: rm -rf tea.app/Contents/Resources/app.asar.unpacked
+
       # signing everything separately because otherwise it doesn’t work
       # (--deep is deprecated and never signed things in Resources anyway)
       # also notorization requires tea/cli be signed with +hardened_runtime
       - name: codesign
         run: |
-          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler"
-          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Electron Framework.framework/Versions/A"
-          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Mantle.framework/Versions/A"
-          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/ReactiveObjC.framework/Versions/A"
-          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt"
-          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Squirrel.framework/Versions/A"
-          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper.app"
-          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (GPU).app"
-          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Plugin).app"
-          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Renderer).app"
-          codesign --verbose --sign "$id" "tea.app"
+          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler" --option runtime
+          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Electron Framework.framework/Versions/A" --timestamp
+          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Mantle.framework/Versions/A" --timestamp
+          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/ReactiveObjC.framework/Versions/A" --timestamp
+          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt" --option runtime
+          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Squirrel.framework/Versions/A" --timestamp
+          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper.app" --option runtime
+          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (GPU).app" --option runtime
+          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Plugin).app" --option runtime
+          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Renderer).app" --option runtime
+          codesign --verbose --sign "$id" "tea.app" --option runtime
         env:
           id: ${{ secrets.APPLE_IDENTITY_NO_PREFIX}}
 
