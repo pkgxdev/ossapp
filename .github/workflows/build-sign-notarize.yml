@@ -54,7 +54,8 @@ jobs:
           git clone https://github.com/teaxyz/cli
           cd cli
           git checkout v0
-          tea deno task compile tea.app/Contents/Resources/cli/tea
+          tea deno task compile
+          mv tea tea.app/Contents/Resources/cli
 
       # signing everything separately because otherwise it doesn’t work
       - name: codesign
