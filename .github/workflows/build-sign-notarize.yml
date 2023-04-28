@@ -50,12 +50,12 @@ jobs:
       # only solution we could find was building a fresh copy
       - name: bundle tea/cli
         run: |
-          mkdir tea.app/Contents/Resources/cli
+          mkdir tea.app/Contents/Helpers
           git clone https://github.com/teaxyz/cli
           cd cli
           git checkout v0
           tea deno task compile
-          # mv tea ../tea.app/Contents/MacOS/tea.cli  #FIXME tea won't work with this name
+          # mv tea ../tea.app/Contents/Helpers
 
       # signing everything separately because otherwise it doesn’t work
       # (--deep is deprecated and never signed things in Resources anyway)
@@ -72,7 +72,6 @@ jobs:
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (GPU).app"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Plugin).app"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Renderer).app"
-          # codesign --verbose --sign "$id" "tea.app/Contents/MacOS/tea.cli" --preserve-metadata=entitlements,requirements,flags,runtime --no-strict --force || true
           codesign --verbose --sign "$id" "tea.app"
         env:
           id: ${{ secrets.APPLE_IDENTITY_NO_PREFIX}}
@@ -111,7 +110,7 @@ jobs:
 
           xcrun stapler staple tea.dmg
 
-      - run: spctl --ignore-cache --no-cache --assess --type execute --verbose=4 tea.app
+      - run: spctl --ignore-cache --no-cache --assess --type execute --verbose=4 tea.dmg
 
       - name: upload artifacts
         uses: actions/upload-artifact@v3
