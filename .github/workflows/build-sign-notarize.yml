@@ -34,7 +34,7 @@ jobs:
         run: |
           node scripts/predist.cjs
           pnpm build
-          npx -- electron-builder --arm64 --mac dir
+          npx -- electron-builder --mac dir
         env:
           SYNC_I18N: 1
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
