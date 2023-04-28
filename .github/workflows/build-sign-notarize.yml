@@ -63,6 +63,7 @@ jobs:
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (GPU).app"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Plugin).app"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Renderer).app"
+          codesign --verbose --sign "$id" "tea.app/Contents/Resources/cli/tea" --force --options runtime
           codesign --verbose --sign "$id" "tea.app"
         env:
           id: ${{ secrets.APPLE_IDENTITY_NO_PREFIX}}
@@ -87,7 +88,7 @@ jobs:
 
           xcrun codesign --force --sign "${{ secrets.APPLE_IDENTITY_NO_PREFIX}}" tea.dmg
 
-      - run: codesign --verify --deep --display --verbose=4 tea.app
+      - run: codesign --verify --deep --display --verbose=4 foo/tea.app
       - run: codesign --verify --deep --display --verbose=4 tea.dmg
 
       - name: notarize
