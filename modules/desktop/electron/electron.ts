@@ -156,7 +156,7 @@ app.on("activate", () => {
 		createMainWindow();
 	}
 });
-app.on("window-all-closed", async () => {
+app.on("window-all-closed", () => {
 	// mac ux is just minimize them when closed unless forced quite CMD+Q
 	macWindowClosed = true;
 	if (process.platform !== "darwin") {
