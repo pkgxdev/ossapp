@@ -219,6 +219,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 				message: `Package ${pkg.full_name} v${versionToInstall} has been installed.`
 			});
 		} catch (error) {
+			log.error(error);
 			let message = "Unknown Error";
 			if (error instanceof Error) message = error.message;
 			trackInstallFailed(pkg.full_name, message || "unknown");
