@@ -11,7 +11,7 @@
   class="outline-gray hover:bg-gray box-border flex w-full items-center gap-2 rounded-sm px-1 text-left align-middle text-xs outline-1 transition-all hover:bg-opacity-25 hover:outline"
   class:active
 >
-  <i class="icon-{icon} mt-1" />
+  <i class="icon-{icon} mt-1 mr-1" />
   <div class="text-sm font-thin">
     {label}
   </div>

@@ -48,32 +48,36 @@
             <h3 class="text-bold font-mona line-clamp-1 mb-4 text-3xl font-bold text-white">
               {fixPackageName(pkg.name)}
             </h3>
-            <p class="line-clamp-10 h-[160px] text-xs font-thin lowercase">{pkg.desc ?? ""}</p>
+            <p class="line-clamp-[8] h-[160px] text-[14px] font-thin lowercase leading-[20px]">
+              {pkg.desc ?? ""}
+            </p>
           {/if}
         </article>
-        <div class="relative mt-3.5 w-full">
-          <div class="install-button {layout}" on:mousedown={preventPropagation}>
-            {#if pkg.state === PackageStates.INSTALLED}
-              <PackageInstalledBadge version={pkg.version} />
-            {:else}
-              <PackageInstallButton
-                {pkg}
-                onClick={(evt) => {
-                  // prevent default to prevent the link that this button is inside of from being followed
-                  evt?.preventDefault();
-                  onClickCTA();
-                }}
-              />
-            {/if}
+        <div class="mt-3.5 w-full">
+          <div class="flex w-fit flex-col items-center">
+            <div class="install-button {layout}" on:mousedown={preventPropagation}>
+              {#if pkg.state === PackageStates.INSTALLED}
+                <PackageInstalledBadge version={pkg.version} />
+              {:else}
+                <PackageInstallButton
+                  {pkg}
+                  onClick={(evt) => {
+                    // prevent default to prevent the link that this button is inside of from being followed
+                    evt?.preventDefault();
+                    onClickCTA();
+                  }}
+                />
+              {/if}
+            </div>
+            <div class="mt-1.5 h-[10px] leading-[10px]">
+              {#if pkg.state === "NEEDS_UPDATE"}
+                <span class="text-[10px]">
+                  <span class="opacity-70">you have</span>
+                  v{findRecentInstalledVersion(pkg)}
+                </span>
+              {/if}
+            </div>
           </div>
-        </div>
-        <div class="relative mt-1.5 h-[10px] leading-[10px]">
-          {#if pkg.state === "NEEDS_UPDATE"}
-            <span class="text-[10px]">
-              <span class="opacity-70">you have</span>
-              v{findRecentInstalledVersion(pkg)}
-            </span>
-          {/if}
         </div>
       </div>
     </div>
@@ -195,22 +199,7 @@
   }
 
   .install-button {
-    width: 160px;
-  }
-
-  .install-button.bottom {
-    min-width: 100%;
-  }
-
-  @media screen and (min-width: 650px) {
-    .install-button.bottom {
-      min-width: 60%;
-    }
-  }
-
-  @media screen and (min-width: 1000px) {
-    .install-button.bottom {
-      min-width: 50%;
-    }
+    min-width: 160px;
+    width: fit-content;
   }
 </style>
