@@ -55,6 +55,7 @@ jobs:
           cd cli
           git checkout v0
           tea deno task compile
+          codesign --remove tea
           mv tea ../tea.app/Contents/Resources/cli
 
       # signing everything separately because otherwise it doesn’t work
