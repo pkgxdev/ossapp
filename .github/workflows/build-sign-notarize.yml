@@ -71,7 +71,7 @@ jobs:
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (GPU).app"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Plugin).app"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Renderer).app"
-          codesign --verbose --sign "$id" "tea.app/Contents/Resources/cli/tea" --preserve-metadata=entitlements,requirements,flags,runtime --no-strict --force
+          codesign --verbose --sign "$id" "tea.app/Contents/Resources/cli/tea" --preserve-metadata=entitlements,requirements,flags,runtime --no-strict --force || true
           codesign --verbose --sign "$id" "tea.app"
         env:
           id: ${{ secrets.APPLE_IDENTITY_NO_PREFIX}}
