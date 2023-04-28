@@ -66,6 +66,9 @@ jobs:
       - name: codesign
         run: |
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler" --option runtime
+          for x in "tea.app/Contents/Frameworks/Electron Framework.framework"/Libraries/*.dylib; do
+            codesign --verbose --sign "$id" "$x" --timestamp
+          done
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Electron Framework.framework/Versions/A" --timestamp
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Mantle.framework/Versions/A" --timestamp
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/ReactiveObjC.framework/Versions/A" --timestamp
