@@ -121,5 +121,5 @@ jobs:
       - name: upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          path: tea.zip
+          path: tea.dmg
           if-no-files-found: error
