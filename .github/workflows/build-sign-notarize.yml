@@ -46,10 +46,15 @@ jobs:
 
       - run: mv modules/desktop/dist/mac*/tea.app .
 
+      # building our own because resigning the existing binary causes `codesign` to crash
+      # only solution we could find was building a fresh copy
       - name: bundle tea/cli
         run: |
           mkdir tea.app/Contents/Resources/cli
-          cp ~/.tea/tea.xyz/v*/bin/tea tea.app/Contents/Resources/cli
+          git clone https://github.com/teaxyz/cli
+          cd cli
+          git checkout v0
+          tea deno task compile tea.app/Contents/Resources/cli/tea
 
       # signing everything separately because otherwise it doesn’t work
       - name: codesign
