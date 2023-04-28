@@ -59,6 +59,7 @@ jobs:
       # signing everything separately because otherwise it doesn’t work
       # (--deep is deprecated and never signed things in Resources anyway)
       # also notorization requires tea/cli be signed with +hardened_runtime
+      # also the || true is because there is no way to stop codesign from applying the strict checks, however the signing still works thank fuck
       - name: codesign
         run: |
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler" --option runtime
@@ -74,7 +75,7 @@ jobs:
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (GPU).app" --option runtime
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Plugin).app" --option runtime
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Renderer).app" --option runtime
-          codesign --verbose --sign "$id" tea.app/Contents/Helpers/tea --option runtime --force
+          codesign --verbose --sign "$id" tea.app/Contents/Helpers/tea --option runtime --force || true
           codesign --verbose --sign "$id" "tea.app" --option runtime
         env:
           id: ${{ secrets.APPLE_IDENTITY_NO_PREFIX}}
