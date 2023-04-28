@@ -13,6 +13,7 @@
   import Markdown from "@tea/ui/markdown/markdown.svelte";
   // import PackageSnippets from '@tea/ui/package-snippets/package-snippets.svelte';
   import Preloader from "@tea/ui/Preloader/Preloader.svelte";
+  import useDefaultBrowser from "$libs/utils/use-default-browser";
 
   /** @type {import('./$types').PageData} */
   export let data: { slug: string; content: string; title: string };
@@ -34,7 +35,7 @@
     readme?.data !== "" && {
       label: $t("common.details"),
       component: Markdown,
-      props: { pkg, source: readme }
+      props: { pkg, source: readme, hook: useDefaultBrowser }
     },
     bottles?.length && {
       label: `${$t("common.versions")} (${versions.length || 0})`,

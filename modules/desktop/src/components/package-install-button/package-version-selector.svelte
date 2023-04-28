@@ -2,6 +2,7 @@
   import { PackageStates, type GUIPackage } from "$libs/types";
   import clickOutside from "@tea/ui/lib/clickOutside";
   import PackageStateButton from "./package-install-button.svelte";
+  import semver from "semver";
 
   export let buttonSize: "small" | "large" = "small";
   export let pkg: GUIPackage;
@@ -25,6 +26,9 @@
   const isInstalled = (version: string) => pkg.installed_versions?.includes(version);
 
   $: installedVersions = pkg.installed_versions || [];
+  $: allVersions = Array.from(new Set([pkg.version, ...availableVersions])).sort(
+    (a: string, b: string) => semver.rcompare(a, b)
+  );
 
   const handleClick = (evt: MouseEvent, version: string) => {
     if (isInstalled(version)) {
@@ -44,7 +48,7 @@
   <PackageStateButton {buttonSize} {pkg} onClick={toggleOpen}>
     <div slot="selector" class="pt-2">
       <div class="version-list" class:visible={isOpened}>
-        {#each availableVersions as version, idx}
+        {#each allVersions as version, idx}
           {#if idx !== 0}<hr class="divider" />{/if}
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
@@ -53,7 +57,7 @@
             on:click={(evt) => handleClick(evt, version)}
           >
             <div class:installed-text={installedVersions.includes(version)}>v{version}</div>
-            {#if idx === 0}
+            {#if idx === 0 && pkg.version === version}
               <div class="latest-version">(latest)</div>
             {/if}
             {#if installedVersions.includes(version)}

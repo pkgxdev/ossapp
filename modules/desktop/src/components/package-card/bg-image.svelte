@@ -61,7 +61,10 @@
 </script>
 
 <section class="bg-black {clazz} {layout}">
-  <i class="logo icon-tea-logo-iconasset-1 text-gray animate-pulse text-3xl {layout}" />
+  <i
+    class="logo icon-tea-logo-iconasset-1 text-gray text-3xl {layout}"
+    class:animate-pulse={!pkg.thumb_image_url}
+  />
   <div
     class="bg-center opacity-0 transition-all duration-500"
     class:opacity-100={loaded}
