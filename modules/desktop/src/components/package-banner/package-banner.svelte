@@ -79,12 +79,8 @@
           <p class="text-green">copied!</p>
         {/if}
       </div>
-      {#if pkg.homepage}
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <span
-          class="hover:text-primary cursor-pointer"
-          on:click={() => shellOpenExternal(pkg.homepage)}>{pkg.homepage}</span
-        >
+      {#if pkg.maintainer}
+        <span>{pkg.maintainer}</span>
       {/if}
       <p class="mt-4 text-sm">{pkg.desc}</p>
       <menu class="mt-4 flex h-10 gap-4 text-xs">
