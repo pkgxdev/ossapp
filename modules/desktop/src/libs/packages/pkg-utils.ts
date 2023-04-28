@@ -45,3 +45,7 @@ export const isInstalling = (pkg: GUIPackage) => {
     pkg.install_progress_percentage < 100
   );
 };
+
+export const fixPackageName = (title: string) => {
+  return title.replace("-", "\u2011");
+};

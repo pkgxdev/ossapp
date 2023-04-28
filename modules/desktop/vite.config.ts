@@ -12,8 +12,8 @@ const config: UserConfig = {
       // this dynamic-ish static importing is followed by the svelte build
       // but for vscode editing intellisense tsconfig.json is being used
       "@native": isMock
-        ? path.resolve("src/libs/native-mock.ts")
-        : path.resolve("src/libs/native-electron.ts"),
+        ? path.resolve("./src/libs/native-mock.ts")
+        : path.resolve("./src/libs/native-electron.ts"),
       $components: path.resolve("./src/components"),
       $libs: path.resolve("./src/libs"),
       $appcss: path.resolve("./src/app.css")

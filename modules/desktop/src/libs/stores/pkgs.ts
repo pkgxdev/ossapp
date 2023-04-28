@@ -106,7 +106,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
 		`;
 
     const updatedPackage: Partial<GUIPackage> = {
-      ...pkg,
+      bottles: pkg?.bottles || [],
       readme: {
         data: readmeMd,
         type: "md"

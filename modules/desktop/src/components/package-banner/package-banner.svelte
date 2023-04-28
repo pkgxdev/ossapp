@@ -15,7 +15,7 @@
   import { trimGithubSlug } from "$libs/github";
   import PackageImage from "../package-card/bg-image.svelte";
   import PackageVersionSelector from "$components/package-install-button/package-version-selector.svelte";
-  import { isPackageInstalled } from "$libs/native-mock";
+  import { fixPackageName } from "$libs/packages/pkg-utils";
 
   export let pkg: GUIPackage;
   let installing = false;
@@ -65,7 +65,7 @@
     </figure>
     <article class="w-2/3 p-4 pt-8">
       <div class="align-center flex items-center gap-2">
-        <h3 class="text-primary text-3xl">{pkg.full_name}</h3>
+        <h3 class="text-primary text-3xl">{fixPackageName(pkg.name)}</h3>
         <ButtonIcon
           icon="pencil"
           helpText="edit package"
