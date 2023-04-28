@@ -55,9 +55,11 @@ jobs:
           cd cli
           git checkout v0
           tea deno task compile
-          mv tea tea.app/Contents/Resources/cli
+          mv tea ../tea.app/Contents/Resources/cli
 
       # signing everything separately because otherwise it doesn’t work
+      # (--deep is deprecated and never signed things in Resources anyway)
+      # also notorization requires tea/cli be signed with +hardened_runtime
       - name: codesign
         run: |
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler"
@@ -69,7 +71,7 @@ jobs:
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (GPU).app"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Plugin).app"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Renderer).app"
-          codesign --verbose --sign "$id" "tea.app/Contents/Resources/cli/tea" --force --options runtime --no-strict
+          codesign --verbose --sign "$id" "tea.app/Contents/Resources/cli/tea" --options runtime --no-strict
           codesign --verbose --sign "$id" "tea.app"
         env:
           id: ${{ secrets.APPLE_IDENTITY_NO_PREFIX}}
