@@ -88,7 +88,7 @@
       {/if}
       <p class="mt-4 text-sm">{pkg.desc}</p>
       <menu class="mt-4 flex h-10 gap-4 text-xs">
-        <div class="min-w-[150px]">
+        <div class="min-w-[180px]">
           <PackageVersionSelector
             buttonSize="large"
             {pkg}
