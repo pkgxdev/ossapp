@@ -13,10 +13,10 @@
     "strict": true,
     "types": ["vitest/globals", "@testing-library/jest-dom"],
     "paths": {
-      "$appcss": ["src/app.css"],
-      "$libs/*": ["src/libs/*"],
-      "@native": ["src/libs/native-electron.ts"],
-      "$components/*": ["src/components/*"],
+      "$appcss": ["./src/app.css"],
+      "$libs/*": ["./src/libs/*"],
+      "@native": ["./src/libs/native-electron.ts"],
+      "$components/*": ["./src/components/*"],
       "@tea/ui/*": ["../ui/src/*"]
     }
   },

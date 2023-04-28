@@ -6,6 +6,7 @@
   import BgImage from "./bg-image.svelte";
   import PackageInstallButton from "$components/package-install-button/package-install-button.svelte";
   import PackageInstalledBadge from "$components/package-install-button/package-installed-badge.svelte";
+  import { fixPackageName } from "$libs/packages/pkg-utils";
 
   export let pkg: GUIPackage;
   export let link: string;
@@ -15,10 +16,6 @@
 
   export let onClickCTA = async () => {
     console.log("do nothing");
-  };
-
-  const fixPackageName = (title: string) => {
-    return title.replace("-", "\u2011");
   };
 
   // Using this instead of css :active because there is a button inside of a button
