@@ -51,7 +51,11 @@ jobs:
       - name: bundle tea/cli
         run: |
           mkdir tea.app/Contents/Helpers
-          cp ~/.tea/tea.xyz/v\*/bin/tea tea.app/Contents/Helpers
+          git clone https://github.com/teaxyz/cli
+          cd cli
+          git checkout v0
+          tea deno task compile
+          mv tea ../tea.app/Contents/Helpers
 
       # wtf is this even?
       - run: rm -rf tea.app/Contents/Resources/app.asar.unpacked
