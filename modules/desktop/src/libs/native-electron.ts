@@ -94,6 +94,7 @@ export async function installPackage(pkg: GUIPackage, version?: string) {
 	const specificVersion = version || latestVersion;
 
 	log.info(`installing package: ${pkg.name} version: ${specificVersion}`);
+
 	const res = await ipcRenderer.invoke("install-package", {
 		full_name: pkg.full_name,
 		version: specificVersion

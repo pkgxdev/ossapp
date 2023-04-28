@@ -4,6 +4,7 @@ import { getDeviceAuth } from "@native";
 import type { Developer } from "@tea/ui/types";
 import type { Session } from "$libs/types";
 import { getSession as electronGetSession, updateSession as electronUpdateSession } from "@native";
+import { initSentry } from "../sentry";
 
 export let session: Session | null = null;
 export const getSession = async (): Promise<Session | null> => {
@@ -22,6 +23,7 @@ export default function initAuthStore() {
 	getSession().then((sess) => {
 		if (sess) {
 			session = sess;
+			initSentry(sess);
 			sessionStore.set(sess);
 			deviceIdStore.set(sess.device_id!);
 			deviceId = sess.device_id!;
@@ -36,6 +38,8 @@ export default function initAuthStore() {
 			...val,
 			...data
 		}));
+
+		initSentry(data);
 		await electronUpdateSession(data);
 	}
 

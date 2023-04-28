@@ -15,6 +15,7 @@ import initializePushNotification, {
 } from "./libs/push-notification";
 
 import init from "./libs/initialize";
+import { readSessionData } from "./libs/auth";
 
 log.info("App starting...");
 if (app.isPackaged) {
@@ -29,6 +30,13 @@ if (app.isPackaged) {
 				return ol ? "send" : "queue";
 			}
 		}
+	});
+	Sentry.configureScope(async (scope) => {
+		const session = await readSessionData();
+		scope.setUser({
+			id: session.device_id, // device_id this should exist in our pg db: developer_id is to many device_id
+			username: session?.user?.login || "" // github username or handler
+		});
 	});
 	setSentryLogging(Sentry);
 }
@@ -148,7 +156,7 @@ app.on("activate", () => {
 		createMainWindow();
 	}
 });
-app.on("window-all-closed", async () => {
+app.on("window-all-closed", () => {
 	// mac ux is just minimize them when closed unless forced quite CMD+Q
 	macWindowClosed = true;
 	if (process.platform !== "darwin") {

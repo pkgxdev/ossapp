@@ -18,15 +18,19 @@ let lastStatus: AutoUpdateStatus = { status: "up-to-date" };
 export const getUpdater = () => autoUpdater;
 
 export function checkUpdater(mainWindow: BrowserWindow): AppUpdater {
-	window = mainWindow;
-	autoUpdater.checkForUpdatesAndNotify();
+	try {
+		window = mainWindow;
+		autoUpdater.checkForUpdatesAndNotify();
 
-	if (!initalized) {
-		initalized = true;
+		if (!initalized) {
+			initalized = true;
 
-		setInterval(() => {
-			autoUpdater.checkForUpdatesAndNotify();
-		}, 1000 * 60 * 30); // check for updates every 30 minutes
+			setInterval(() => {
+				autoUpdater.checkForUpdatesAndNotify();
+			}, 1000 * 60 * 30); // check for updates every 30 minutes
+		}
+	} catch (error) {
+		log.error(error);
 	}
 
 	return autoUpdater;
