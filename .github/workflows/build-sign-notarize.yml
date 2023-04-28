@@ -51,11 +51,7 @@ jobs:
       - name: bundle tea/cli
         run: |
           mkdir tea.app/Contents/Helpers
-          git clone https://github.com/teaxyz/cli
-          cd cli
-          git checkout v0
-          tea deno task compile
-          mv tea ../tea.app/Contents/Helpers
+          cp ~/.tea/tea.xyz/v0/bin/tea tea.app/Contents/Helpers
 
       # wtf is this even?
       - run: rm -rf tea.app/Contents/Resources/app.asar.unpacked
@@ -79,7 +75,7 @@ jobs:
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (GPU).app" --option runtime
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Plugin).app" --option runtime
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Renderer).app" --option runtime
-          codesign --verbose --sign "$id" tea.app/Contents/Helpers/tea --option runtime --force || true
+          # codesign --verbose --sign "$id" tea.app/Contents/Helpers/tea --option runtime --force || true
           codesign --verbose --sign "$id" "tea.app" --option runtime
         env:
           id: ${{ secrets.APPLE_IDENTITY_NO_PREFIX}}
