@@ -55,7 +55,7 @@ jobs:
           cd cli
           git checkout v0
           tea deno task compile
-          # mv tea ../tea.app/Contents/Resources/cli
+          # mv tea ../tea.app/Contents/MacOS/tea.cli  #FIXME tea won't work with this name
 
       # signing everything separately because otherwise it doesn’t work
       # (--deep is deprecated and never signed things in Resources anyway)
@@ -66,12 +66,13 @@ jobs:
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Electron Framework.framework/Versions/A"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Mantle.framework/Versions/A"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/ReactiveObjC.framework/Versions/A"
+          codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/Squirrel.framework/Versions/A"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper.app"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (GPU).app"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Plugin).app"
           codesign --verbose --sign "$id" "tea.app/Contents/Frameworks/tea Helper (Renderer).app"
-          # codesign --verbose --sign "$id" "tea.app/Contents/Resources/cli/tea" --preserve-metadata=entitlements,requirements,flags,runtime --no-strict --force || true
+          # codesign --verbose --sign "$id" "tea.app/Contents/MacOS/tea.cli" --preserve-metadata=entitlements,requirements,flags,runtime --no-strict --force || true
           codesign --verbose --sign "$id" "tea.app"
         env:
           id: ${{ secrets.APPLE_IDENTITY_NO_PREFIX}}
