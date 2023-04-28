@@ -93,6 +93,7 @@ jobs:
             submit tea.dmg \
             --apple-id "${{ secrets.APPLE_ID }}" \
             --password "${{ secrets.APPLE_PASSWORD }}" \
+            --team-id 7WV56FL599 \
             --wait
 
           xcrun stapler staple tea.dmg
