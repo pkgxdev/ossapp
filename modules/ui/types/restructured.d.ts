@@ -1,8 +1,8 @@
 declare module "restructured" {
-	interface RestructuredElement {
-		children: RestructuredElement[];
-		stringify(): string;
-	}
+  interface RestructuredElement {
+    children: RestructuredElement[];
+    stringify(): string;
+  }
 
-	export function parse(rst: string): RestructuredElement;
+  export function parse(rst: string): RestructuredElement;
 }

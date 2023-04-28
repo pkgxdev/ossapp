@@ -1,83 +1,83 @@
 {
-	"en": {
-		"lang": {
-			"en": "English"
-		},
-		"store-search-placeholder": "search packages",
-		"package": {
-			"update-all": "UPDATE ALL",
-			"cta-AVAILABLE": "INSTALL",
-			"cta-INSTALLED": "INSTALLED",
-			"cta-INSTALLING": "INSTALLING",
-			"cta-UNINSTALLED": "RE-INSTALL",
-			"cta-UNINSTALL": "UNINSTALL",
-			"cta-NEEDS_UPDATE": "UPDATE",
-			"cta-UPDATING": "UPDATING",
-			"cta-PRUNE": "PRUNE",
-			"cta-PRUNING": "PRUNING"
-		},
-		"footer": {
-			"quick-links-title": "quick links",
-			"about-tea-store": "about the tea store",
-			"report-a-problem": "report a problem",
-			"visit-website": "visit tea.xyz",
-			"terms-services": "terms & services",
-			"privacy-policy": "privacy-policy"
-		},
-		"documentation": {
-			"title": "documentation",
-			"featured-courses-title": "featured courses",
-			"workshops": "workshops"
-		},
-		"view-all": "view all",
-		"sorting": {
-			"label": "Sort by",
-			"popularity": "Most popular",
-			"most-recent": "Most recent"
-		},
-		"common": {
-			"home": "home",
-			"all": "All",
-			"articles": "Articles",
-			"workshops": "Workshops",
-			"details": "details",
-			"versions": "versions",
-			"metadata": "Metadata",
-			"homepage": "Homepage",
-			"documentation": "Documentation",
-			"github-repository": "Github Repository",
-			"contributors": "Contributors",
-			"view-on-github": "VIEW ON GITHUB"
-		},
-		"notification": {
-			"gui-downloading": "A new tea gui({{version}}) is being downloaded. Please don't close the app.",
-			"gui-downloaded": "A new tea gui({{version}}) is now available. Relaunch the app to update."
-		},
-		"side-menu-title": {
-			"discover": "discover",
-			"all": "All Packages",
-			"installed": "Installed Packages",
-			"installed_updates_available": "Available Updates",
-			"recently_updated": "Recently Updated",
-			"new_packages": "New Packages",
-			"popular": "Popular",
-			"featured": "Featured",
-			"essentials": "Essentials",
-			"starstruck": "Starstruck Heavyweights",
-			"made_by_tea": "made by tea"
-		},
-		"tags": {
-			"discover": "discover",
-			"all": "all",
-			"installed": "installed",
-			"installed_updates_available": "Updates available",
-			"recently_updated": "Recently updated",
-			"new_packages": "New packages",
-			"popular": "Popular",
-			"featured": "Featured",
-			"essentials": "Essentials",
-			"starstruck": "Starstruck",
-			"made_by_tea": "Made by tea"
-		}
-	}
+  "en": {
+    "lang": {
+      "en": "English"
+    },
+    "store-search-placeholder": "search packages",
+    "package": {
+      "update-all": "UPDATE ALL",
+      "cta-AVAILABLE": "INSTALL",
+      "cta-INSTALLED": "INSTALLED",
+      "cta-INSTALLING": "INSTALLING",
+      "cta-UNINSTALLED": "RE-INSTALL",
+      "cta-UNINSTALL": "UNINSTALL",
+      "cta-NEEDS_UPDATE": "UPDATE",
+      "cta-UPDATING": "UPDATING",
+      "cta-PRUNE": "PRUNE",
+      "cta-PRUNING": "PRUNING"
+    },
+    "footer": {
+      "quick-links-title": "quick links",
+      "about-tea-store": "about the tea store",
+      "report-a-problem": "report a problem",
+      "visit-website": "visit tea.xyz",
+      "terms-services": "terms & services",
+      "privacy-policy": "privacy-policy"
+    },
+    "documentation": {
+      "title": "documentation",
+      "featured-courses-title": "featured courses",
+      "workshops": "workshops"
+    },
+    "view-all": "view all",
+    "sorting": {
+      "label": "Sort by",
+      "popularity": "Most popular",
+      "most-recent": "Most recent"
+    },
+    "common": {
+      "home": "home",
+      "all": "All",
+      "articles": "Articles",
+      "workshops": "Workshops",
+      "details": "details",
+      "versions": "versions",
+      "metadata": "Metadata",
+      "homepage": "Homepage",
+      "documentation": "Documentation",
+      "github-repository": "Github Repository",
+      "contributors": "Contributors",
+      "view-on-github": "VIEW ON GITHUB"
+    },
+    "notification": {
+      "gui-downloading": "A new tea gui({{version}}) is being downloaded. Please don't close the app.",
+      "gui-downloaded": "A new tea gui({{version}}) is now available. Relaunch the app to update."
+    },
+    "side-menu-title": {
+      "discover": "discover",
+      "all": "All Packages",
+      "installed": "Installed Packages",
+      "installed_updates_available": "Available Updates",
+      "recently_updated": "Recently Updated",
+      "new_packages": "New Packages",
+      "popular": "Popular",
+      "featured": "Featured",
+      "essentials": "Essentials",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "made by tea"
+    },
+    "tags": {
+      "discover": "discover",
+      "all": "all",
+      "installed": "installed",
+      "installed_updates_available": "Updates available",
+      "recently_updated": "Recently updated",
+      "new_packages": "New packages",
+      "popular": "Popular",
+      "featured": "Featured",
+      "essentials": "Essentials",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Made by tea"
+    }
+  }
 }

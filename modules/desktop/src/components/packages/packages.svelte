@@ -1,159 +1,159 @@
 <script lang="ts">
-	import "$appcss";
-	import { watchResize } from "svelte-watch-resize";
-	import InfiniteScroll from "svelte-infinite-scroll";
-	// import { t } from '$libs/translations';
-	import type { GUIPackage } from "$libs/types";
-	import moment from "moment";
-	import { PackageStates, SideMenuOptions } from "$libs/types";
-	import Preloader from "@tea/ui/Preloader/Preloader.svelte";
-	import Package from "./package.svelte";
-	import NoInstalls from "./no-installs.svelte";
-	import NoUpdates from "./no-updates.svelte";
-	import { packagesStore } from "$libs/stores";
+  import "$appcss";
+  import { watchResize } from "svelte-watch-resize";
+  import InfiniteScroll from "svelte-infinite-scroll";
+  // import { t } from '$libs/translations';
+  import type { GUIPackage } from "$libs/types";
+  import moment from "moment";
+  import { PackageStates, SideMenuOptions } from "$libs/types";
+  import Preloader from "@tea/ui/Preloader/Preloader.svelte";
+  import Package from "./package.svelte";
+  import NoInstalls from "./no-installs.svelte";
+  import NoUpdates from "./no-updates.svelte";
+  import { packagesStore } from "$libs/stores";
 
-	const { packageList: allPackages } = packagesStore;
-	export let packageFilter: SideMenuOptions = SideMenuOptions.all;
+  const { packageList: allPackages } = packagesStore;
+  export let packageFilter: SideMenuOptions = SideMenuOptions.all;
 
-	export let sortBy: "popularity" | "most recent" = "most recent";
-	export let sortDirection: "asc" | "desc" = "desc";
+  export let sortBy: "popularity" | "most recent" = "most recent";
+  export let sortDirection: "asc" | "desc" = "desc";
 
-	export let scrollY = 0;
+  export let scrollY = 0;
 
-	let loadMore = 9;
-	let limit = loadMore + 9;
+  let loadMore = 9;
+  let limit = loadMore + 9;
 
-	// TODO: figure out a better type strategy here so that this breaks if SideMenuOptions is updated
-	const pkgFilters: { [key: string]: (pkg: GUIPackage) => boolean } = {
-		[SideMenuOptions.all]: (_pkg: GUIPackage) => true,
-		[SideMenuOptions.installed]: (pkg: GUIPackage) => {
-			return [
-				PackageStates.INSTALLED,
-				PackageStates.INSTALLING,
-				PackageStates.NEEDS_UPDATE,
-				PackageStates.UPDATING
-			].includes(pkg.state);
-		},
-		[SideMenuOptions.installed_updates_available]: (pkg: GUIPackage) => {
-			return [PackageStates.UPDATING, PackageStates.NEEDS_UPDATE].includes(pkg.state);
-		},
-		[SideMenuOptions.recently_updated]: (pkg: GUIPackage) => {
-			return moment(pkg.last_modified).isAfter(moment().subtract(30, "days"));
-		},
-		[SideMenuOptions.new_packages]: (pkg: GUIPackage) => {
-			return moment(pkg.created).isAfter(moment().subtract(30, "days"));
-		},
-		[SideMenuOptions.popular]: (pkg: GUIPackage) =>
-			pkg.categories.includes(SideMenuOptions.popular),
-		[SideMenuOptions.featured]: (pkg: GUIPackage) =>
-			pkg.categories.includes(SideMenuOptions.featured),
-		[SideMenuOptions.essentials]: (pkg: GUIPackage) =>
-			pkg.categories.includes(SideMenuOptions.essentials),
-		[SideMenuOptions.starstruck]: (pkg: GUIPackage) =>
-			pkg.categories.includes(SideMenuOptions.starstruck),
-		[SideMenuOptions.made_by_tea]: (pkg: GUIPackage) => pkg.full_name.includes("tea.xyz")
-	};
+  // TODO: figure out a better type strategy here so that this breaks if SideMenuOptions is updated
+  const pkgFilters: { [key: string]: (pkg: GUIPackage) => boolean } = {
+    [SideMenuOptions.all]: (_pkg: GUIPackage) => true,
+    [SideMenuOptions.installed]: (pkg: GUIPackage) => {
+      return [
+        PackageStates.INSTALLED,
+        PackageStates.INSTALLING,
+        PackageStates.NEEDS_UPDATE,
+        PackageStates.UPDATING
+      ].includes(pkg.state);
+    },
+    [SideMenuOptions.installed_updates_available]: (pkg: GUIPackage) => {
+      return [PackageStates.UPDATING, PackageStates.NEEDS_UPDATE].includes(pkg.state);
+    },
+    [SideMenuOptions.recently_updated]: (pkg: GUIPackage) => {
+      return moment(pkg.last_modified).isAfter(moment().subtract(30, "days"));
+    },
+    [SideMenuOptions.new_packages]: (pkg: GUIPackage) => {
+      return moment(pkg.created).isAfter(moment().subtract(30, "days"));
+    },
+    [SideMenuOptions.popular]: (pkg: GUIPackage) =>
+      pkg.categories.includes(SideMenuOptions.popular),
+    [SideMenuOptions.featured]: (pkg: GUIPackage) =>
+      pkg.categories.includes(SideMenuOptions.featured),
+    [SideMenuOptions.essentials]: (pkg: GUIPackage) =>
+      pkg.categories.includes(SideMenuOptions.essentials),
+    [SideMenuOptions.starstruck]: (pkg: GUIPackage) =>
+      pkg.categories.includes(SideMenuOptions.starstruck),
+    [SideMenuOptions.made_by_tea]: (pkg: GUIPackage) => pkg.full_name.includes("tea.xyz")
+  };
 
-	const onScroll = (e: Event) => {
-		const target = e.target as HTMLInputElement;
-		scrollY = target.scrollTop || 0;
-	};
+  const onScroll = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    scrollY = target.scrollTop || 0;
+  };
 
-	$: packages = $allPackages.filter(pkgFilters[packageFilter] || pkgFilters.all).sort((a, b) => {
-		if (sortBy === "popularity") {
-			const aPop = +a.dl_count + a.installs;
-			const bPop = +b.dl_count + b.installs;
-			return sortDirection === "asc" ? aPop - bPop : bPop - aPop;
-		} else {
-			// most recent
-			const aDate = new Date(a.last_modified);
-			const bDate = new Date(b.last_modified);
-			return sortDirection === "asc" ? +aDate - +bDate : +bDate - +aDate;
-		}
-	});
+  $: packages = $allPackages.filter(pkgFilters[packageFilter] || pkgFilters.all).sort((a, b) => {
+    if (sortBy === "popularity") {
+      const aPop = +a.dl_count + a.installs;
+      const bPop = +b.dl_count + b.installs;
+      return sortDirection === "asc" ? aPop - bPop : bPop - aPop;
+    } else {
+      // most recent
+      const aDate = new Date(a.last_modified);
+      const bDate = new Date(b.last_modified);
+      return sortDirection === "asc" ? +aDate - +bDate : +bDate - +aDate;
+    }
+  });
 
-	const onResize = (node: HTMLElement) => {
-		const assumedCardHeight = 250;
-		const cardRows = Math.floor(packages.length / 3);
-		const minCardRows = Math.floor(node.scrollHeight / assumedCardHeight);
-		if (cardRows < minCardRows) {
-			const addLimit = 3 * (minCardRows - cardRows);
-			limit += addLimit;
-		}
-	};
+  const onResize = (node: HTMLElement) => {
+    const assumedCardHeight = 250;
+    const cardRows = Math.floor(packages.length / 3);
+    const minCardRows = Math.floor(node.scrollHeight / assumedCardHeight);
+    if (cardRows < minCardRows) {
+      const addLimit = 3 * (minCardRows - cardRows);
+      limit += addLimit;
+    }
+  };
 </script>
 
 <div class="relative h-full w-full">
-	<ul class="flex flex-wrap content-start bg-black" use:watchResize={onResize} on:scroll={onScroll}>
-		{#if packages.length > 0}
-			{#each packages as pkg, index}
-				{#if index < limit}
-					<div class="card z-1 p-1" class:animate-puls={pkg.state === PackageStates.INSTALLING}>
-						<Package tab={packageFilter} {pkg} layout="bottom"/>
-					</div>
-				{/if}
-			{/each}
-		{:else if packageFilter === SideMenuOptions.installed}
-			<NoInstalls />
-		{:else if packageFilter === SideMenuOptions.installed_updates_available}
-			<NoUpdates />
-		{:else}
-			{#each Array(9) as _}
-				<section class="card p-1 h-{238}">
-					<div class="border-gray h-full w-full border">
-						<Preloader />
-					</div>
-				</section>
-			{/each}
-		{/if}
-		<InfiniteScroll threshold={100} on:loadMore={() => (limit += loadMore)} />
-	</ul>
+  <ul class="flex flex-wrap content-start bg-black" use:watchResize={onResize} on:scroll={onScroll}>
+    {#if packages.length > 0}
+      {#each packages as pkg, index}
+        {#if index < limit}
+          <div class="card z-1 p-1" class:animate-puls={pkg.state === PackageStates.INSTALLING}>
+            <Package tab={packageFilter} {pkg} layout="bottom" />
+          </div>
+        {/if}
+      {/each}
+    {:else if packageFilter === SideMenuOptions.installed}
+      <NoInstalls />
+    {:else if packageFilter === SideMenuOptions.installed_updates_available}
+      <NoUpdates />
+    {:else}
+      {#each Array(9) as _}
+        <section class="card p-1 h-{238}">
+          <div class="border-gray h-full w-full border">
+            <Preloader />
+          </div>
+        </section>
+      {/each}
+    {/if}
+    <InfiniteScroll threshold={100} on:loadMore={() => (limit += loadMore)} />
+  </ul>
 </div>
 
 <style>
-	ul {
-		margin-top: 0px;
-		padding-top: 80px;
-		height: calc(100vh - 49px);
-		overflow-y: scroll;
-		overflow-x: hidden;
-		padding-right: 4px;
-	}
+  ul {
+    margin-top: 0px;
+    padding-top: 80px;
+    height: calc(100vh - 49px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-right: 4px;
+  }
 
-	/* width */
-	::-webkit-scrollbar {
-		width: 6px;
-	}
+  /* width */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
 
-	/* Track */
-	::-webkit-scrollbar-track {
-		background: #272626;
-	}
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #272626;
+  }
 
-	/* Handle */
-	::-webkit-scrollbar-thumb {
-		background: #949494;
-		border-radius: 4px;
-	}
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #949494;
+    border-radius: 4px;
+  }
 
-	/* Handle on hover */
-	::-webkit-scrollbar-thumb:hover {
-		background: white;
-	}
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: white;
+  }
 
-	.card {
-		width: 100%;
-	}
+  .card {
+    width: 100%;
+  }
 
-	@media screen and (min-width: 650px) {
-		.card {
-			width: 50%;
-		}
-	}
+  @media screen and (min-width: 650px) {
+    .card {
+      width: 50%;
+    }
+  }
 
-	@media screen and (min-width: 1000px) {
-		.card {
-			width: 33.333333%;
-		}
-	}
+  @media screen and (min-width: 1000px) {
+    .card {
+      width: 33.333333%;
+    }
+  }
 </style>

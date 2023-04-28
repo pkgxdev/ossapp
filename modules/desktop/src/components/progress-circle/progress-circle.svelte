@@ -20,6 +20,18 @@
   };
 </script>
 
+<div>
+  <svg viewBox="0 0 100 100">
+    <path d="M50,5A45 45 0 1 1 49.9999 5" />
+    <path d={progressPath()} />
+  </svg>
+  <div>
+    <slot>
+      <span>{value}</span>
+    </slot>
+  </div>
+</div>
+
 <style>
   svg {
     fill: var(--progress-fill, transparent);
@@ -48,14 +60,3 @@
     transform: translate(-50%, -50%);
   }
 </style>
-<div>
-  <svg viewBox="0 0 100 100">
-    <path d="M50,5A45 45 0 1 1 49.9999 5" />
-    <path d="{progressPath()}" />
-  </svg>
-  <div>
-    <slot>
-      <span>{value}</span>
-    </slot>
-  </div>
-</div>

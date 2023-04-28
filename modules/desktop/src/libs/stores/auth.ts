@@ -8,81 +8,81 @@ import { initSentry } from "../sentry";
 
 export let session: Session | null = null;
 export const getSession = async (): Promise<Session | null> => {
-	session = await electronGetSession();
-	return session;
+  session = await electronGetSession();
+  return session;
 };
 
 export default function initAuthStore() {
-	const user = writable<Developer | undefined>();
-	const sessionStore = writable<Session>({});
-	let pollLoop = 0;
+  const user = writable<Developer | undefined>();
+  const sessionStore = writable<Session>({});
+  let pollLoop = 0;
 
-	const deviceIdStore = writable<string>("");
-	let deviceId = "";
+  const deviceIdStore = writable<string>("");
+  let deviceId = "";
 
-	getSession().then((sess) => {
-		if (sess) {
-			session = sess;
-			initSentry(sess);
-			sessionStore.set(sess);
-			deviceIdStore.set(sess.device_id!);
-			deviceId = sess.device_id!;
-			if (sess.user) user.set(sess.user);
-		}
-	});
+  getSession().then((sess) => {
+    if (sess) {
+      session = sess;
+      initSentry(sess);
+      sessionStore.set(sess);
+      deviceIdStore.set(sess.device_id!);
+      deviceId = sess.device_id!;
+      if (sess.user) user.set(sess.user);
+    }
+  });
 
-	let timer: NodeJS.Timer | null;
+  let timer: NodeJS.Timer | null;
 
-	async function updateSession(data: Session) {
-		sessionStore.update((val) => ({
-			...val,
-			...data
-		}));
+  async function updateSession(data: Session) {
+    sessionStore.update((val) => ({
+      ...val,
+      ...data
+    }));
 
-		initSentry(data);
-		await electronUpdateSession(data);
-	}
+    initSentry(data);
+    await electronUpdateSession(data);
+  }
 
-	async function pollSession() {
-		if (!timer) {
-			timer = setInterval(async () => {
-				pollLoop++;
-				try {
-					const data = await getDeviceAuth(deviceId);
-					if (data.status === "SUCCESS") {
-						updateSession({
-							key: data.key,
-							user: data.user
-						});
-						user.set(data.user!);
-						timer && clearInterval(timer);
-						timer = null;
-					}
-				} catch (error) {
-					console.error(error);
-				}
+  async function pollSession() {
+    if (!timer) {
+      timer = setInterval(async () => {
+        pollLoop++;
+        try {
+          const data = await getDeviceAuth(deviceId);
+          if (data.status === "SUCCESS") {
+            updateSession({
+              key: data.key,
+              user: data.user
+            });
+            user.set(data.user!);
+            timer && clearInterval(timer);
+            timer = null;
+          }
+        } catch (error) {
+          console.error(error);
+        }
 
-				if (pollLoop > 20 && timer) {
-					clearInterval(timer);
-					pollLoop = 0;
-					timer = null;
-				}
-			}, 2000);
-		}
-	}
+        if (pollLoop > 20 && timer) {
+          clearInterval(timer);
+          pollLoop = 0;
+          timer = null;
+        }
+      }, 2000);
+    }
+  }
 
-	function clearSession() {
-		updateSession({ key: undefined, user: undefined });
-		user.set(undefined);
-	}
+  function clearSession() {
+    updateSession({ key: undefined, user: undefined });
+    user.set(undefined);
+  }
 
-	return {
-		user,
-		session: sessionStore,
-		deviceId,
-		deviceIdStore,
-		pollSession,
-		clearSession,
-		updateSession
-	};
+  return {
+    user,
+    session: sessionStore,
+    deviceId,
+    deviceIdStore,
+    pollSession,
+    clearSession,
+    updateSession
+  };
 }
