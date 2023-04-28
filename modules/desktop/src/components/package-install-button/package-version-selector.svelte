@@ -1,147 +1,147 @@
 <script lang="ts">
-	import { PackageStates, type GUIPackage } from "$libs/types";
-	import clickOutside from "@tea/ui/lib/clickOutside";
-	import PackageStateButton from "./package-install-button.svelte";
+  import { PackageStates, type GUIPackage } from "$libs/types";
+  import clickOutside from "@tea/ui/lib/clickOutside";
+  import PackageStateButton from "./package-install-button.svelte";
 
-	export let buttonSize: "small" | "large" = "small";
-	export let pkg: GUIPackage;
-	export let availableVersions: string[] = [];
+  export let buttonSize: "small" | "large" = "small";
+  export let pkg: GUIPackage;
+  export let availableVersions: string[] = [];
 
-	export let onClick = async (_version: string) => {
-		console.log("do nothing");
-	};
+  export let onClick = async (_version: string) => {
+    console.log("do nothing");
+  };
 
-	$: isOpened = false;
+  $: isOpened = false;
 
-	const toggleOpen = (evt?: MouseEvent) => {
-		evt?.preventDefault();
+  const toggleOpen = (evt?: MouseEvent) => {
+    evt?.preventDefault();
 
-		if ([PackageStates.INSTALLING, PackageStates.UPDATING].includes(pkg.state)) {
-			return;
-		}
-		isOpened = !isOpened;
-	};
+    if ([PackageStates.INSTALLING, PackageStates.UPDATING].includes(pkg.state)) {
+      return;
+    }
+    isOpened = !isOpened;
+  };
 
-	const isInstalled = (version: string) => pkg.installed_versions?.includes(version);
+  const isInstalled = (version: string) => pkg.installed_versions?.includes(version);
 
-	$: installedVersions = pkg.installed_versions || [];
+  $: installedVersions = pkg.installed_versions || [];
 
-	const handleClick = (evt: MouseEvent, version: string) => {
-		if (isInstalled(version)) {
-			return;
-		}
+  const handleClick = (evt: MouseEvent, version: string) => {
+    if (isInstalled(version)) {
+      return;
+    }
 
-		isOpened = false;
-		if (version) {
-			onClick(version);
-		}
-	};
+    isOpened = false;
+    if (version) {
+      onClick(version);
+    }
+  };
 
-	const handleClickOutside = () => (isOpened = false);
+  const handleClickOutside = () => (isOpened = false);
 </script>
 
 <div class="dropdown z-10" use:clickOutside on:click_outside={handleClickOutside}>
-	<PackageStateButton {buttonSize} {pkg} onClick={toggleOpen}>
-		<div slot="selector" class="pt-2">
-			<div class="version-list" class:visible={isOpened}>
-				{#each availableVersions as version, idx}
-					{#if idx !== 0}<hr class="divider" />{/if}
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<div
-						class="version-item flex items-center justify-start gap-x-1 text-xs"
-						class:installable-version={!installedVersions.includes(version)}
-						on:click={(evt) => handleClick(evt, version)}
-					>
-						<div class:installed-text={installedVersions.includes(version)}>v{version}</div>
-						{#if idx === 0}
-							<div class="latest-version">(latest)</div>
-						{/if}
-						{#if installedVersions.includes(version)}
-							<div class="flex grow justify-end">
-								<i class="installed-text icon-check-circle flex" />
-							</div>
-						{/if}
-					</div>
-				{/each}
-			</div>
-		</div>
-	</PackageStateButton>
+  <PackageStateButton {buttonSize} {pkg} onClick={toggleOpen}>
+    <div slot="selector" class="pt-2">
+      <div class="version-list" class:visible={isOpened}>
+        {#each availableVersions as version, idx}
+          {#if idx !== 0}<hr class="divider" />{/if}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <div
+            class="version-item flex items-center justify-start gap-x-1 text-xs"
+            class:installable-version={!installedVersions.includes(version)}
+            on:click={(evt) => handleClick(evt, version)}
+          >
+            <div class:installed-text={installedVersions.includes(version)}>v{version}</div>
+            {#if idx === 0}
+              <div class="latest-version">(latest)</div>
+            {/if}
+            {#if installedVersions.includes(version)}
+              <div class="flex grow justify-end">
+                <i class="installed-text icon-check-circle flex" />
+              </div>
+            {/if}
+          </div>
+        {/each}
+      </div>
+    </div>
+  </PackageStateButton>
 </div>
 
 <style>
-	.version-list {
-		display: none;
-		position: absolute;
-		width: 100%;
-		color: white;
-		background-color: #1a1a1a;
-		border: 0.5px solid #949494;
-		box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
-		border-radius: 2px;
-		max-height: 160px;
-		overflow-y: auto;
-		overflow-x: hidden;
-	}
+  .version-list {
+    display: none;
+    position: absolute;
+    width: 100%;
+    color: white;
+    background-color: #1a1a1a;
+    border: 0.5px solid #949494;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+    max-height: 160px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
-	.version-item {
-		margin: 4px 6px;
-		padding: 4px 6px;
-		height: auto;
-		width: auto;
-		white-space: nowrap;
-	}
+  .version-item {
+    margin: 4px 6px;
+    padding: 4px 6px;
+    height: auto;
+    width: auto;
+    white-space: nowrap;
+  }
 
-	.installable-version {
-		cursor: pointer;
-	}
+  .installable-version {
+    cursor: pointer;
+  }
 
-	.installable-version:hover {
-		outline: 1px solid #949494;
-		background-color: rgba(148, 148, 148, 0.35);
-	}
+  .installable-version:hover {
+    outline: 1px solid #949494;
+    background-color: rgba(148, 148, 148, 0.35);
+  }
 
-	.dropdown {
-		position: relative;
-		display: inline-block;
-		width: 100%;
-	}
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
 
-	.divider {
-		border: 1px solid #272626;
-		margin-left: 8px;
-		margin-right: 8px;
-	}
+  .divider {
+    border: 1px solid #272626;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
 
-	.installed-text {
-		color: #00ffd0;
-	}
+  .installed-text {
+    color: #00ffd0;
+  }
 
-	.latest-version {
-		color: #af5fff;
-	}
+  .latest-version {
+    color: #af5fff;
+  }
 
-	.visible {
-		display: block;
-	}
+  .visible {
+    display: block;
+  }
 
-	/* width */
-	::-webkit-scrollbar {
-		width: 6px;
-	}
+  /* width */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
 
-	/* Track */
-	::-webkit-scrollbar-track {
-		background: #272626;
-	}
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #272626;
+  }
 
-	/* Handle */
-	::-webkit-scrollbar-thumb {
-		background: #949494;
-		border-radius: 4px;
-	}
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #949494;
+    border-radius: 4px;
+  }
 
-	/* Handle on hover */
-	::-webkit-scrollbar-thumb:hover {
-		background: white;
-	}
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: white;
+  }
 </style>

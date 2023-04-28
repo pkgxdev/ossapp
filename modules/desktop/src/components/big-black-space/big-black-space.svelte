@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '$appcss';
+  import "$appcss";
 </script>
 
 <section class="border-gray h-56 border bg-black" />

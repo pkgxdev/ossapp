@@ -3,18 +3,18 @@
  * outside of the element
  */
 export default function clickOutside(element: HTMLElement) {
-	const handleClick = (e: MouseEvent) => {
-		const event = e as MouseEvent & { target?: Node };
-		if (element && !element.contains(event.target) && !event.defaultPrevented) {
-			element.dispatchEvent(new CustomEvent("click_outside"));
-		}
-	};
+  const handleClick = (e: MouseEvent) => {
+    const event = e as MouseEvent & { target?: Node };
+    if (element && !element.contains(event.target) && !event.defaultPrevented) {
+      element.dispatchEvent(new CustomEvent("click_outside"));
+    }
+  };
 
-	document.addEventListener("click", handleClick, true);
+  document.addEventListener("click", handleClick, true);
 
-	return {
-		destroy() {
-			document.removeEventListener("click", handleClick, true);
-		}
-	};
+  return {
+    destroy() {
+      document.removeEventListener("click", handleClick, true);
+    }
+  };
 }

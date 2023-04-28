@@ -3,26 +3,26 @@
 @tailwind utilities;
 
 @font-face {
-	font-family: "mona-sans";
-	src: url("/fonts/mona-sans-bold.woff2");
+  font-family: "mona-sans";
+  src: url("/fonts/mona-sans-bold.woff2");
 }
 
 @font-face {
-	font-family: "inter";
-	src: url("/fonts/inter-regular.woff2");
+  font-family: "inter";
+  src: url("/fonts/inter-regular.woff2");
 }
 
 html {
-	background-color: #1a1a1a;
-	color: #fff;
-	user-select: none;
-	cursor: default;
+  background-color: #1a1a1a;
+  color: #fff;
+  user-select: none;
+  cursor: default;
 }
 
 @layer base {
-	html {
-		font-family: sono, sans-serif;
-	}
+  html {
+    font-family: sono, sans-serif;
+  }
 }
 
 .text-primary,
@@ -33,9 +33,9 @@ h4,
 h5,
 h6,
 .click-copy {
-	font-family: "mona-sans";
+  font-family: "mona-sans";
 }
 
 .pk-version {
-	font-family: "inter";
+  font-family: "inter";
 }

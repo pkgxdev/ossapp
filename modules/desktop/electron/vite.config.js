@@ -9,41 +9,41 @@ const PROJECT_ROOT = join(PACKAGE_ROOT, "../..");
  * @see https://vitejs.dev/config/
  */
 const config = {
-	root: PACKAGE_ROOT,
-	envDir: PROJECT_ROOT,
-	resolve: {
-		alias: {
-			"/@/": join(PACKAGE_ROOT, "src") + "/"
-		}
-	},
-	build: {
-		ssr: true,
-		sourcemap: "inline",
-		outDir: "dist",
-		assetsDir: ".",
-		minify: process.env.MODE !== "development",
-		lib: {
-			entry: "electron.ts",
-			formats: ["cjs"]
-		},
-		rollupOptions: {
-			output: {
-				entryFileNames: "[name].cjs"
-			}
-		},
-		emptyOutDir: true,
-		reportCompressedSize: false
-	},
-	plugins: [
-		viteStaticCopy({
-			targets: [
-				{
-					src: "./preload.cjs",
-					dest: "."
-				}
-			]
-		})
-	]
+  root: PACKAGE_ROOT,
+  envDir: PROJECT_ROOT,
+  resolve: {
+    alias: {
+      "/@/": join(PACKAGE_ROOT, "src") + "/"
+    }
+  },
+  build: {
+    ssr: true,
+    sourcemap: "inline",
+    outDir: "dist",
+    assetsDir: ".",
+    minify: process.env.MODE !== "development",
+    lib: {
+      entry: "electron.ts",
+      formats: ["cjs"]
+    },
+    rollupOptions: {
+      output: {
+        entryFileNames: "[name].cjs"
+      }
+    },
+    emptyOutDir: true,
+    reportCompressedSize: false
+  },
+  plugins: [
+    viteStaticCopy({
+      targets: [
+        {
+          src: "./preload.cjs",
+          dest: "."
+        }
+      ]
+    })
+  ]
 };
 
 export default config;

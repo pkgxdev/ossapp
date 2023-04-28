@@ -8,39 +8,39 @@ const green = "#00A517";
 const blue = "#013B99";
 
 module.exports = {
-	content: ["./src/**/*.{html,js,svelte,ts}"],
-	theme: {
-		colors: {
-			primary: teal,
-			secondary: purple,
-			accent: purple,
-			green,
-			teal,
-			blue,
-			purple: {
-				700: purple,
-				900: "#B076EC"
-			},
-			black,
-			white,
-			gray
-		},
-		extend: {
-			fontFamily: {
-				inter: ["inter", "sans-serif"],
-				mona: ["mona-sans", "sans-serif"]
-			},
-			typography: {
-				excerpt: {
-					css: {
-						p: {
-							fontFamily: "font-inter",
-							fontSize: "font-2xl"
-						}
-					}
-				}
-			}
-		}
-	},
-	plugins: [require("@tailwindcss/line-clamp")]
+  content: ["./src/**/*.{html,js,svelte,ts}"],
+  theme: {
+    colors: {
+      primary: teal,
+      secondary: purple,
+      accent: purple,
+      green,
+      teal,
+      blue,
+      purple: {
+        700: purple,
+        900: "#B076EC"
+      },
+      black,
+      white,
+      gray
+    },
+    extend: {
+      fontFamily: {
+        inter: ["inter", "sans-serif"],
+        mona: ["mona-sans", "sans-serif"]
+      },
+      typography: {
+        excerpt: {
+          css: {
+            p: {
+              fontFamily: "font-inter",
+              fontSize: "font-2xl"
+            }
+          }
+        }
+      }
+    }
+  },
+  plugins: [require("@tailwindcss/line-clamp")]
 };

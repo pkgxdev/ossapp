@@ -1,97 +1,97 @@
 <script lang="ts">
-	import "$appcss";
-	import { t } from "$libs/translations";
+  import "$appcss";
+  import { t } from "$libs/translations";
 
-	import { page } from "$app/stores";
-	// import PageHeader from '$components/page-header/page-header.svelte';
-	import PackageBanner from "$components/package-banner/package-banner.svelte";
-	// import SuggestedPackages from '$components/suggested-packages/suggested-packages.svelte';
-	import Tabs from "@tea/ui/tabs/tabs.svelte";
-	import type { Tab } from "@tea/ui/types";
-	import Bottles from "@tea/ui/bottles/bottles.svelte";
-	import PackageMetas from "@tea/ui/package-metas/package-metas.svelte";
-	import Markdown from "@tea/ui/markdown/markdown.svelte";
-	// import PackageSnippets from '@tea/ui/package-snippets/package-snippets.svelte';
-	import Preloader from "@tea/ui/Preloader/Preloader.svelte";
+  import { page } from "$app/stores";
+  // import PageHeader from '$components/page-header/page-header.svelte';
+  import PackageBanner from "$components/package-banner/package-banner.svelte";
+  // import SuggestedPackages from '$components/suggested-packages/suggested-packages.svelte';
+  import Tabs from "@tea/ui/tabs/tabs.svelte";
+  import type { Tab } from "@tea/ui/types";
+  import Bottles from "@tea/ui/bottles/bottles.svelte";
+  import PackageMetas from "@tea/ui/package-metas/package-metas.svelte";
+  import Markdown from "@tea/ui/markdown/markdown.svelte";
+  // import PackageSnippets from '@tea/ui/package-snippets/package-snippets.svelte';
+  import Preloader from "@tea/ui/Preloader/Preloader.svelte";
 
-	/** @type {import('./$types').PageData} */
-	export let data: { slug: string; content: string; title: string };
+  /** @type {import('./$types').PageData} */
+  export let data: { slug: string; content: string; title: string };
 
-	import { packagesStore } from "$libs/stores";
-	import { onMount } from "svelte";
-	import NotificationBar from "$components/notification-bar/notification-bar.svelte";
+  import { packagesStore } from "$libs/stores";
+  import { onMount } from "svelte";
+  import NotificationBar from "$components/notification-bar/notification-bar.svelte";
 
-	const { packageList } = packagesStore;
+  const { packageList } = packagesStore;
 
-	$: pkg = $packageList.find((p) => p.slug === data?.slug);
+  $: pkg = $packageList.find((p) => p.slug === data?.slug);
 
-	// let reviews: Review[];
-	$: bottles = pkg?.bottles || [];
-	$: versions = [...new Set(bottles.map((b) => b.version))];
-	$: readme = pkg?.readme || { data: "", type: "md" };
+  // let reviews: Review[];
+  $: bottles = pkg?.bottles || [];
+  $: versions = [...new Set(bottles.map((b) => b.version))];
+  $: readme = pkg?.readme || { data: "", type: "md" };
 
-	$: tabs = [
-		readme?.data !== "" && {
-			label: $t("common.details"),
-			component: Markdown,
-			props: { pkg, source: readme }
-		},
-		bottles?.length && {
-			label: `${$t("common.versions")} (${versions.length || 0})`,
-			component: Bottles,
-			props: {
-				bottles
-			}
-		}
-	].filter((t) => t && t?.label) as unknown as Tab[];
+  $: tabs = [
+    readme?.data !== "" && {
+      label: $t("common.details"),
+      component: Markdown,
+      props: { pkg, source: readme }
+    },
+    bottles?.length && {
+      label: `${$t("common.versions")} (${versions.length || 0})`,
+      component: Bottles,
+      props: {
+        bottles
+      }
+    }
+  ].filter((t) => t && t?.label) as unknown as Tab[];
 
-	const url = $page.url;
+  const url = $page.url;
 
-	const tab = url.searchParams.get("tab");
+  const tab = url.searchParams.get("tab");
 
-	onMount(() => {
-		packagesStore.syncPackageData(pkg);
-	});
+  onMount(() => {
+    packagesStore.syncPackageData(pkg);
+  });
 </script>
 
 <header class="text-gray mx-16 mb-4 border border-x-0 border-t-0 py-5">
-	<a class="hover:text-white hover:opacity-80" href="/">{$t("common.home")}</a>
-	›
-	{#if tab && tab !== "all"}
-		<a class="hover:text-white hover:opacity-80" href="/?tab={tab || 'all'}"
-			>{$t(`tags.${tab}`).toLowerCase() || "all"}</a
-		>
-		›
-	{/if}
-	<span class="text-white">{pkg?.full_name}</span>
+  <a class="hover:text-white hover:opacity-80" href="/">{$t("common.home")}</a>
+  ›
+  {#if tab && tab !== "all"}
+    <a class="hover:text-white hover:opacity-80" href="/?tab={tab || 'all'}"
+      >{$t(`tags.${tab}`).toLowerCase() || "all"}</a
+    >
+    ›
+  {/if}
+  <span class="text-white">{pkg?.full_name}</span>
 </header>
 <div class="mx-16 mb-4">
-	<NotificationBar />
+  <NotificationBar />
 </div>
 {#if pkg}
-	<div class="px-16">
-		<section>
-			<PackageBanner {pkg} />
-		</section>
+  <div class="px-16">
+    <section>
+      <PackageBanner {pkg} />
+    </section>
 
-		<section class="mt-8 flex gap-8">
-			<div class="w-2/3">
-				<Tabs {tabs} defaultTab={$t("common.details")} />
-			</div>
-			<div class="w-1/3">
-				{#if pkg}
-					<PackageMetas {pkg} />
-				{/if}
-			</div>
-		</section>
-		<!-- <PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png">SNIPPETS</PageHeader> -->
-		<!-- <section class="mt-8">
+    <section class="mt-8 flex gap-8">
+      <div class="w-2/3">
+        <Tabs {tabs} defaultTab={$t("common.details")} />
+      </div>
+      <div class="w-1/3">
+        {#if pkg}
+          <PackageMetas {pkg} />
+        {/if}
+      </div>
+    </section>
+    <!-- <PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png">SNIPPETS</PageHeader> -->
+    <!-- <section class="mt-8">
 			<PackageSnippets />
 		</section> -->
-		<!-- <section class="mt-8">
+    <!-- <section class="mt-8">
 			<PackageReviews reviews={reviews || []} />
 		</section> -->
-		<!-- {#if pkg}
+    <!-- {#if pkg}
 			<PageHeader class="mt-8" coverUrl="/images/headers/header_bg_1.png"
 				>YOU MAY ALSO LIKE...</PageHeader
 			>
@@ -99,7 +99,7 @@
 				<SuggestedPackages {pkg} />
 			</section>
 		{/if} -->
-	</div>
+  </div>
 {:else}
-	<Preloader />
+  <Preloader />
 {/if}

@@ -3,8 +3,8 @@ import log from "./logger";
 import { BrowserWindow } from "electron";
 
 type AutoUpdateStatus = {
-	status: "up-to-date" | "available" | "ready";
-	version?: string;
+  status: "up-to-date" | "available" | "ready";
+  version?: string;
 };
 
 autoUpdater.logger = log;
@@ -18,59 +18,59 @@ let lastStatus: AutoUpdateStatus = { status: "up-to-date" };
 export const getUpdater = () => autoUpdater;
 
 export function checkUpdater(mainWindow: BrowserWindow): AppUpdater {
-	try {
-		window = mainWindow;
-		autoUpdater.checkForUpdatesAndNotify();
+  try {
+    window = mainWindow;
+    autoUpdater.checkForUpdatesAndNotify();
 
-		if (!initalized) {
-			initalized = true;
+    if (!initalized) {
+      initalized = true;
 
-			setInterval(() => {
-				autoUpdater.checkForUpdatesAndNotify();
-			}, 1000 * 60 * 30); // check for updates every 30 minutes
-		}
-	} catch (error) {
-		log.error(error);
-	}
+      setInterval(() => {
+        autoUpdater.checkForUpdatesAndNotify();
+      }, 1000 * 60 * 30); // check for updates every 30 minutes
+    }
+  } catch (error) {
+    log.error(error);
+  }
 
-	return autoUpdater;
+  return autoUpdater;
 }
 
 // The auto update runs in the background so the window might not be open when the status changes
 // When the update store gets created as part of the window it will request the latest status.
 export function getAutoUpdateStatus() {
-	return lastStatus;
+  return lastStatus;
 }
 
 function sendStatusToWindow(status: AutoUpdateStatus) {
-	lastStatus = status;
-	window?.webContents.send("app-update-status", status);
+  lastStatus = status;
+  window?.webContents.send("app-update-status", status);
 }
 
 autoUpdater.on("checking-for-update", () => {
-	log.info("checking for tea gui update");
+  log.info("checking for tea gui update");
 });
 
 autoUpdater.on("update-available", (info) => {
-	sendStatusToWindow({ status: "available" });
+  sendStatusToWindow({ status: "available" });
 });
 
 autoUpdater.on("update-not-available", () => {
-	log.info("no update for tea gui");
-	sendStatusToWindow({ status: "up-to-date" });
+  log.info("no update for tea gui");
+  sendStatusToWindow({ status: "up-to-date" });
 });
 
 autoUpdater.on("error", (err) => {
-	log.error("auto update:", err);
+  log.error("auto update:", err);
 });
 
 autoUpdater.on("download-progress", (progressObj) => {
-	let log_message = "Download speed: " + progressObj.bytesPerSecond;
-	log_message = log_message + " - Downloaded " + progressObj.percent + "%";
-	log_message = log_message + " (" + progressObj.transferred + "/" + progressObj.total + ")";
-	log.info("tea gui:", log_message);
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+  log_message = log_message + " (" + progressObj.transferred + "/" + progressObj.total + ")";
+  log.info("tea gui:", log_message);
 });
 
 autoUpdater.on("update-downloaded", (info) => {
-	sendStatusToWindow({ status: "ready", version: info.version });
+  sendStatusToWindow({ status: "ready", version: info.version });
 });
