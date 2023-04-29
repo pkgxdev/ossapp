@@ -3,7 +3,7 @@ import { mkdirp } from "mkdirp";
 import fs from "fs";
 import log from "./logger";
 import { getTeaPath } from "./tea-dir";
-import { Packages } from "../../src/libs/types";
+import { GUIPackage, Packages } from "../../src/libs/types";
 
 const pkgsFilePath = path.join(getTeaPath(), "tea.xyz/gui/pkgs.json");
 const pkgsFolder = path.join(getTeaPath(), "tea.xyz/gui");
@@ -28,7 +28,16 @@ export async function loadPackageCache(): Promise<Packages> {
   try {
     log.info(`loading package cache from ${pkgsFilePath}`);
     const pkgData = fs.readFileSync(pkgsFilePath);
-    return JSON.parse(pkgData.toString()) as Packages;
+    const pkgs = JSON.parse(pkgData.toString()) as Packages;
+
+    if (pkgs?.packages) {
+      pkgs.packages = pkgs.packages.map((pkg: GUIPackage) => {
+        const { install_progress_percentage, isUninstalling, synced, ...rest } = pkg;
+        return rest;
+      });
+    }
+
+    return pkgs;
   } catch (err) {
     if (err.code !== "ENOENT") {
       log.error(err);
