@@ -1,15 +1,15 @@
 import fs from "fs";
-import { getGuiPath } from "./tea-dir";
+import { getGuiPath, getTeaPath } from "./tea-dir";
 import log from "./logger";
 import semver from "semver";
 import { cliBinPath, asyncExec } from "./cli";
 import { createInitialSessionFile } from "./auth";
-import semverCompare from "semver/functions/compare";
+import * as https from 'https'
+import { spawn } from 'child_process'
+import path from "path";
 
 // Versions before this do not support the --json flag
 const MINIMUM_TEA_VERSION = "0.28.3";
-
-const destinationDirectory = getGuiPath();
 
 // TODO: move device_id generation here
 
@@ -35,55 +35,74 @@ export async function initializeTeaCli(): Promise<string> {
 }
 
 async function initializeTeaCliInternal(): Promise<string> {
-  try {
-    let binCheck = "";
-    let needsUpdate = false;
+  const teaCliPrefix = path.join(getTeaPath(), "tea.xyz/v*")
 
-    // Create the destination directory if it doesn't exist
-    if (!fs.existsSync(destinationDirectory)) {
-      fs.mkdirSync(destinationDirectory, { recursive: true });
-    }
-
-    // replace this with max's pr
-    const curlCommand = `curl --insecure -L -o "${cliBinPath}" "${binaryUrl}"`;
-
-    const exists = fs.existsSync(cliBinPath);
-    if (exists) {
-      log.info("binary tea already exists at", cliBinPath);
-      try {
-        binCheck = await asyncExec(`cd ${destinationDirectory} && ./tea --version`);
-        const teaVersion = binCheck.toString().split(" ")[1];
-        if (semverCompare(teaVersion, MINIMUM_TEA_VERSION) < 0) {
-          log.info("binary tea version is too old, updating");
-          needsUpdate = true;
-        }
-      } catch (error) {
-        // probably binary is not executable or no permission
-        log.error("Error checking tea binary version:", error);
-        needsUpdate = true;
-        await asyncExec(`cd ${destinationDirectory} && rm tea`);
-      }
-    }
-
-    if (!exists || needsUpdate) {
-      try {
-        await asyncExec(curlCommand);
-        log.info("Binary downloaded and saved to", cliBinPath);
-        await asyncExec("chmod u+x " + cliBinPath);
-        log.info("Binary is now ready for use at", cliBinPath);
-        binCheck = await asyncExec(`cd ${destinationDirectory} && ./tea --version`);
-      } catch (error) {
-        log.error("Error setting-up tea binary:", error);
-      }
-    }
-
-    const version = binCheck.toString().split(" ")[1];
-    log.info("binary tea version:", version);
-    return semver.valid(version.trim()) ? version : "";
-  } catch (error) {
-    log.error(error);
-    return "";
+  if (!fs.existsSync(path.join(teaCliPrefix, "bin/tea"))) {
+    return installTeaCli()
+  } else {
+    const dir = fs.readlinkSync(teaCliPrefix)
+    const v = semver.parse(dir)?.toString()
+    if (!v) throw new Error(`couldn't parse to semver: ${dir}`)
+    return v
   }
+}
+
+//NOTE copy pasta from https://github.com/teaxyz/setup/blob/main/action.js
+//FIXME ideally we'd not copy pasta this
+//NOTE using `tar` is not ideal ∵ Windows and even though tar is POSIX it's still not guaranteed to be available
+async function installTeaCli() {
+  const PREFIX = `${process.env.HOME}/.tea`
+
+  const midfix = (() => {
+    switch (process.arch) {
+    case 'arm64':
+      return `${process.platform}/aarch64`
+    case 'x64':
+      return `${process.platform}/x86-64`
+    default:
+      throw new Error(`unsupported platform: ${process.platform}/${process.arch}`)
+    }
+  })()
+
+  /// versions.txt is guaranteed semver-sorted
+  const v: string | undefined = await new Promise((resolve, reject) => {
+    https.get(`https://dist.tea.xyz/tea.xyz/${midfix}/versions.txt`, rsp => {
+      if (rsp.statusCode != 200) return reject(rsp.statusCode)
+      rsp.setEncoding('utf8')
+      const chunks: string[] = []
+      rsp.on("data", x => chunks.push(x))
+      rsp.on("end", () => {
+        resolve(chunks.join("").trim().split("\n").at(-1))
+      })
+    }).on('error', reject)
+  })
+
+  if (!v) throw new Error(`invalid versions.txt for tea/cli`)
+
+  fs.mkdirSync(PREFIX, { recursive: true })
+
+  const exitcode = await new Promise((resolve, reject) => {
+    https.get(`https://dist.tea.xyz/tea.xyz/${midfix}/v${v}.tar.gz`, rsp => {
+      if (rsp.statusCode != 200) return reject(rsp.statusCode)
+      const tar = spawn('tar', ['xzf', '-'], { stdio: ['pipe', 'inherit', 'inherit'], cwd: PREFIX })
+      rsp.pipe(tar.stdin)
+      tar.on("close", resolve)
+    }).on('error', reject)
+  })
+
+  if (exitcode != 0) {
+    throw new Error(`tar: ${exitcode}`)
+  }
+
+  const oldwd = process.cwd()
+  process.chdir(`${PREFIX}/tea.xyz`)
+  if (fs.existsSync(`v*`)) fs.unlinkSync(`v*`)
+  fs.symlinkSync(`v${v}`, `v*`, 'dir')
+  if (fs.existsSync(`v0`)) fs.unlinkSync(`v0`)
+  fs.symlinkSync(`v${v}`, `v0`, 'dir') //FIXME
+  process.chdir(oldwd)
+
+  return v
 }
 
 export default async function initialize(): Promise<string> {

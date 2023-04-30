@@ -1,5 +1,5 @@
 import { spawn, exec } from "child_process";
-import { getGuiPath } from "./tea-dir";
+import { getGuiPath, getTeaPath } from "./tea-dir";
 import fs from "fs";
 import path from "path";
 import initializeTeaCli from "./initialize";
@@ -8,9 +8,7 @@ import { app } from "electron";
 import log from "./logger";
 import { MainWindowNotifier } from "./types";
 
-const destinationDirectory = getGuiPath();
-
-export const cliBinPath = path.join(destinationDirectory, "tea");
+export const cliBinPath = path.join(getTeaPath(), "tea.xyz/v*/bin/tea");
 
 export async function installPackage(
   full_name: string,
@@ -34,7 +32,7 @@ export async function installPackage(
     const opts = { env: { HOME: app.getPath("home"), NO_COLOR: "1" } };
 
     const child = spawn(
-      `${destinationDirectory}/tea`,
+      cliBinPath,
       ["--env=false", "--sync", "--json", `+${qualifedPackage}`],
       opts
     );
@@ -196,5 +194,5 @@ export async function syncPantry() {
 
   if (!teaVersion) throw new Error("no tea");
   log.info("Syncing pantry");
-  await asyncExec(`cd '${destinationDirectory}' && ./tea -S`);
+  await asyncExec(`DEBUG=1 "${cliBinPath}" --sync --env=false`);
 }
