@@ -13,7 +13,7 @@
 </script>
 
 <aside class="border-gray border border-t-0 border-b-0 border-l-0 p-2">
-  <ul class="flex flex-col gap-1 pt-4 pl-1">
+  <ul class="flex flex-col gap-1 px-1 pt-4">
     <MenuButton
       label={$t("tags.discover").toLowerCase()}
       icon="map"

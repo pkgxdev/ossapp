@@ -84,7 +84,7 @@
       {/if}
       <p class="mt-4 text-sm">{pkg.desc}</p>
       <menu class="mt-4 flex h-10 gap-4 text-xs">
-        <div class="min-w-[180px]">
+        <div class="w-fit min-w-[160px]">
           <PackageVersionSelector
             buttonSize="large"
             {pkg}
@@ -93,47 +93,51 @@
           />
         </div>
         {#if (pkg?.installed_versions?.length || 0) > 0}
-          <ToolTip class="ml-[-80px]">
-            <Button
-              slot="target"
-              class="h-10"
-              type="plain"
-              color="blue"
-              onClick={async () => {
-                packagesStore.uninstallPkg(pkg);
-              }}
-              loading={pruning}
-            >
-              <div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
-                <div class="icon-trash" />
-                <div>{$t("package.cta-UNINSTALL")}</div>
+          <div class="min-w-[120px]">
+            <ToolTip>
+              <Button
+                slot="target"
+                class="h-10"
+                type="plain"
+                color="blue"
+                onClick={async () => {
+                  packagesStore.uninstallPkg(pkg);
+                }}
+                loading={pruning}
+              >
+                <div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
+                  <div class="icon-trash" />
+                  <div>{$t("package.cta-UNINSTALL")}</div>
+                </div>
+              </Button>
+              <div slot="tooltip-content" class="flex flex-col items-center">
+                <div>Removes all the versions of the package</div>
               </div>
-            </Button>
-            <div slot="tooltip-content" class="flex flex-col items-center">
-              <div>Removes all the versions of the package</div>
-            </div>
-          </ToolTip>
+            </ToolTip>
+          </div>
         {/if}
         {#if (pkg?.installed_versions?.length || 0) > 1}
-          <ToolTip>
-            <Button
-              slot="target"
-              class="h-10"
-              type="plain"
-              color="blue"
-              onClick={prune}
-              loading={pruning}
-            >
-              <div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
-                <div class="icon-scissors" />
-                <div>{$t("package.cta-PRUNE")}</div>
+          <div class="min-w-[120px]">
+            <ToolTip>
+              <Button
+                slot="target"
+                class="h-10"
+                type="plain"
+                color="blue"
+                onClick={prune}
+                loading={pruning}
+              >
+                <div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
+                  <div class="icon-scissors" />
+                  <div>{$t("package.cta-PRUNE")}</div>
+                </div>
+              </Button>
+              <div slot="tooltip-content" class="flex flex-col items-center">
+                <div>Removes {pkg.installed_versions?.length ?? 0 - 1} old versions</div>
+                <div>Keeps latest (v{findRecentInstalledVersion(pkg)})</div>
               </div>
-            </Button>
-            <div slot="tooltip-content" class="flex flex-col items-center">
-              <div>Removes {pkg.installed_versions?.length ?? 0 - 1} old versions</div>
-              <div>Keeps latest (v{findRecentInstalledVersion(pkg)})</div>
-            </div>
-          </ToolTip>
+            </ToolTip>
+          </div>
         {/if}
         {#if pkg.github}
           <button
@@ -149,20 +153,22 @@
           </button>
         {/if}
         {#if pkg.installed_versions?.length}
-          <Button
-            class="h-10"
-            type="plain"
-            color="black"
-            onClick={() => {
-              openPackageEntrypointInTerminal(pkg.full_name);
-            }}
-          >
-            {#if pkg.full_name == "github.com/AUTOMATIC1111/stable-diffusion-webui"}
-              OPEN
-            {:else}
-              OPEN IN TERMINAL
-            {/if}
-          </Button>
+          <div class="min-w-[160px]">
+            <Button
+              class="h-10"
+              type="plain"
+              color="black"
+              onClick={() => {
+                openPackageEntrypointInTerminal(pkg.full_name);
+              }}
+            >
+              {#if pkg.full_name == "github.com/AUTOMATIC1111/stable-diffusion-webui"}
+                OPEN
+              {:else}
+                OPEN IN TERMINAL
+              {/if}
+            </Button>
+          </div>
         {/if}
       </menu>
     </article>
