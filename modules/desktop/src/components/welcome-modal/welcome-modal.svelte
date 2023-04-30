@@ -16,11 +16,13 @@
         <img class="object-contain" src="/images/welcome-bg.png" alt="welcome" />
       </figure>
       <div class="relative mt-20 flex-grow px-12">
-        <h1 class="text-primary mb-4 text-4xl">Welcome to the tea app!</h1>
+        <h1 class="text-primary mb-4 text-4xl">tea, the open store</h1>
         <p class="font-inter mb-4">
-          This app is your gateway into the world of open-source software. Easily explore and manage
-          packages with a click of a button. This app will notify you of any available software
-          updates to ensure you’re safe and secure. Under the hood is the powerful tea cli.
+          tea is your gateway to the vibrant world of open-source software;
+          a treasure-trove of apps, frameworks, libraries, tools, utilities and games.
+          previously only accessible to the tech-savvy, tea unleashes the power of open source for everyone.
+          install packages, get updates and stay secure—all in the click of a button.
+          under the hood is the invisible yet powerful tea/cli.
         </p>
 
         <Button type="plain" color="secondary" class="w-7/12" onClick={() => close()}>

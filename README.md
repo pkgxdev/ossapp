@@ -25,8 +25,10 @@ xc build  # only required if you modify the backend
 xc dev    # opens the app in dev mode
 ```
 
-Creating a locally built installer for local usage will not need codesigning and notarization, to skip the 2-steps:
-```
+Creating a locally built installer for local usage will not need code-signing
+and notarization. To skip the 2-steps:
+
+```sh
 $ export CSC_IDENTITY_AUTO_DISCOVERY=false
 $ xc dist
 ```
@@ -40,7 +42,7 @@ If you have suggestions or ideas, start a [discussion]. If we agree, we’ll mov
 Tag any commit in the main branch, then push directly to the main branch.
 Lets follow the [semver] versioning standard, prefixed with `v`:
 
-```
+```sh
 $ git tag v1.0.0
 $ git push origin tag v1.0.0
 ```
@@ -60,6 +62,7 @@ contribute to them:
 The following can be run with [`xc`], eg. `xc build`
 
 ## Setup
+
 Setup ensures that required configuration placeholder files are present and installs dependencies.
 
 ```sh
@@ -70,6 +73,7 @@ fi
 if [ ! -e modules/desktop/.env ]; then
   cp modules/desktop/.env.example modules/desktop/.env
 fi
+
 pnpm install
 pnpm run -r prepare
 ```
