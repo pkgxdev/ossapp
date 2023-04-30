@@ -14,6 +14,7 @@
   import WelcomeModal from "$components/welcome-modal/welcome-modal.svelte";
   import Button from "@tea/ui/button/button.svelte";
   import log from "$libs/logger";
+  import { formatPercent } from "@tea/ui/lib/percent";
 
   const { packageList } = packagesStore;
   const { session } = authStore;
@@ -29,7 +30,9 @@
 
   let packagesScrollY = 0;
   $: currentUpdatingPkg = $packageList.find((p) => p.state === PackageStates.UPDATING);
-  $: updatingMessage = `updating ${currentUpdatingPkg?.full_name} (${currentUpdatingPkg?.install_progress_percentage}%)`;
+  $: updatingMessage = `updating ${currentUpdatingPkg?.full_name} (${formatPercent(
+    currentUpdatingPkg?.install_progress_percentage
+  )}%)`;
 
   $: pkgsToUpdate = $packageList.filter((p: GUIPackage) => p.state === PackageStates.NEEDS_UPDATE);
   async function updateAll() {
@@ -89,7 +92,7 @@
         <!-- 22px right margin to account for the scrollbar on the package cards -->
         <div class="mr-[22px] flex items-center justify-end text-sm">
           {#if currentUpdatingPkg}
-            <p class="text-gray px-2">{updatingMessage}</p>
+            <p class="text-gray px-2 font-mono">{updatingMessage}</p>
           {/if}
           <div>
             <Button
