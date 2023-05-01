@@ -27,7 +27,7 @@ export function checkUpdater(mainWindow: BrowserWindow): AppUpdater {
 
       setInterval(() => {
         autoUpdater.checkForUpdatesAndNotify();
-      }, 1000 * 60 * 30); // check for updates every 30 minutes
+      }, 1000 * 60); // check for updates every 30 minutes
     }
   } catch (error) {
     log.error(error);
