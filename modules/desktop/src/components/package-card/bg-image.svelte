@@ -66,7 +66,7 @@
     class:animate-pulse={!pkg.thumb_image_url}
   />
   <div
-    class="bg-center opacity-0 transition-all duration-500"
+    class="opacity-0 transition-all duration-500 {layout}"
     class:opacity-100={loaded}
     style="background-image: url({loadedImg})"
   >
@@ -76,7 +76,7 @@
         class="blur-sm {layout} opacity-0 transition-all duration-500"
         class:opacity-100={loaded}
       >
-        <figure class="bg-center" style="background-image: url({loadedImg})" />
+        <figure class={layout} style="background-image: url({loadedImg})" />
       </aside>
     {/if}
   </div>
@@ -122,6 +122,19 @@
     background-size: cover;
     box-sizing: border-box;
     background-repeat: no-repeat;
+    background-position: 50% 50%;
+  }
+
+  div.left {
+    background-position: 200px 50%;
+  }
+  div.right {
+    background-repeat: repeat;
+    background-position: -250px 50%;
+  }
+  div.bottom {
+    background-repeat: repeat;
+    background-position: 50% -70px;
   }
   aside {
     position: absolute;
@@ -153,6 +166,21 @@
     height: 338px;
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: 50% 50%;
+  }
+
+  figure.left {
+    background-repeat: repeat;
+    background-position: 200px 50%;
+  }
+
+  figure.right {
+    background-repeat: repeat;
+    background-position: -250px 50%;
+  }
+  figure.bottom {
+    background-repeat: repeat;
+    background-position: 50% -70px;
   }
 
   aside.bottom figure {
