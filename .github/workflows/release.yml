@@ -114,6 +114,11 @@ jobs:
         ARM_URL:  s3://preview.gui.tea.xyz/release/${{ steps.app_files.outputs.dmg_arm64 }}
         X86_URL:  s3://preview.gui.tea.xyz/release/${{ steps.app_files.outputs.dmg_x86 }}
 
+    - run: |
+        aws cloudfront create-invalidation \
+          --distribution-id ${{ secrets.AWS_GUI_DISTRIBUTION_ID }} \
+          --paths 'release/*'
+
     - uses: actions/setup-node@v3
       with:
         node-version: 18
