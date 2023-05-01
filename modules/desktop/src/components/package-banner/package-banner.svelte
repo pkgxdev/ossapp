@@ -65,7 +65,7 @@
     </figure>
     <article class="w-2/3 p-4 pt-8">
       <div class="align-center flex items-center gap-2">
-        <h3 class="text-primary text-3xl">{fixPackageName(pkg.name)}</h3>
+        <h3 class="text-primary font-mona text-3xl">{fixPackageName(pkg.name)}</h3>
         <ButtonIcon
           icon="pencil"
           helpText="edit package"
@@ -76,7 +76,7 @@
         />
         <ButtonIcon icon="link" helpText="share package" on:click={copyPackagePantryLink} />
         {#if copied}
-          <p class="text-green">copied!</p>
+          <p class="text-primary">copied!</p>
         {/if}
       </div>
       {#if pkg.maintainer}
