@@ -16,7 +16,7 @@
   on:dblclick={topbarDoubleClick}
 >
   <ul class="text-gray flex h-10 items-center gap-1 pl-20 align-middle leading-10">
-    <a href="/?tab=all">
+    <a href="/?tab=discover">
       <div class="home-btn w-12 text-center text-2xl">
         <i class="icon-tea-logo-iconasset-1" />
       </div>
