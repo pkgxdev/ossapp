@@ -13,11 +13,9 @@
     [NotificationType.ERROR]: "error-notification",
     [NotificationType.ACTION_BANNER]: "action-banner-notification"
   };
-
-  const notificationClass = styles[notification.type];
 </script>
 
-<div class="flex w-full items-center justify-between px-4 py-2 {notificationClass}">
+<div class="flex w-full items-center justify-between px-4 py-2 {styles[notification.type]}">
   <div>{notification.message}</div>
   <div class="flex items-center gap-4">
     {#if notification.callback}
