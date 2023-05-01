@@ -44,6 +44,7 @@ export function getAutoUpdateStatus() {
 
 function sendStatusToWindow(status: AutoUpdateStatus) {
   lastStatus = status;
+  console.log("sending status to window destroyed=", window.isDestroyed);
   window?.webContents.send("app-update-status", status);
 }
 
