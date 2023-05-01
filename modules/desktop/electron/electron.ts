@@ -127,7 +127,7 @@ function createMainWindow() {
     mainWindow = createWindow();
   }
 
-  checkUpdater(mainWindow);
+  checkUpdater(notifyMainWindow);
 
   mainWindow.once("close", () => {
     mainWindow = null;
@@ -197,7 +197,7 @@ app.on("open-url", (event, url) => {
 });
 
 function notifyMainWindow(channel: string, data: unknown) {
-  if (mainWindow) {
+  if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.webContents.send(channel, data);
   }
 }

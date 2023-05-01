@@ -1,6 +1,7 @@
 import { type AppUpdater, autoUpdater } from "electron-updater";
 import log from "./logger";
 import { BrowserWindow } from "electron";
+import { MainWindowNotifier } from "./types";
 
 type AutoUpdateStatus = {
   status: "up-to-date" | "available" | "ready";
@@ -9,7 +10,7 @@ type AutoUpdateStatus = {
 
 autoUpdater.logger = log;
 
-let window: BrowserWindow;
+let mainWindowNotifier: MainWindowNotifier | null = null;
 let initalized = false;
 
 // keep the last status to resend to the window when it's opened becuase the store is destroyed when the window is closed
@@ -17,9 +18,9 @@ let lastStatus: AutoUpdateStatus = { status: "up-to-date" };
 
 export const getUpdater = () => autoUpdater;
 
-export function checkUpdater(mainWindow: BrowserWindow): AppUpdater {
+export function checkUpdater(notifier: MainWindowNotifier): AppUpdater {
   try {
-    window = mainWindow;
+    mainWindowNotifier = notifier;
     autoUpdater.checkForUpdatesAndNotify();
 
     if (!initalized) {
@@ -44,7 +45,9 @@ export function getAutoUpdateStatus() {
 
 function sendStatusToWindow(status: AutoUpdateStatus) {
   lastStatus = status;
-  window?.webContents.send("app-update-status", status);
+  if (mainWindowNotifier) {
+    mainWindowNotifier("app-update-status", status);
+  }
 }
 
 autoUpdater.on("checking-for-update", () => {
@@ -52,6 +55,7 @@ autoUpdater.on("checking-for-update", () => {
 });
 
 autoUpdater.on("update-available", (info) => {
+  log.info("update-available", info);
   sendStatusToWindow({ status: "available" });
 });
 
@@ -72,5 +76,6 @@ autoUpdater.on("download-progress", (progressObj) => {
 });
 
 autoUpdater.on("update-downloaded", (info) => {
+  log.info("update-downloaded");
   sendStatusToWindow({ status: "ready", version: info.version });
 });
