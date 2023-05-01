@@ -44,7 +44,8 @@ async function initializeTeaCliInternal(): Promise<string> {
       fs.mkdirSync(destinationDirectory, { recursive: true });
     }
 
-    const curlCommand = `curl -L -o "${cliBinPath}" "${binaryUrl}"`;
+    // replace this with max's pr
+    const curlCommand = `curl --insecure -L -o "${cliBinPath}" "${binaryUrl}"`;
 
     const exists = fs.existsSync(cliBinPath);
     if (exists) {
