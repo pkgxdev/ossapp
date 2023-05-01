@@ -8,23 +8,18 @@ import * as https from "https";
 import { spawn } from "child_process";
 import path from "path";
 
-// Versions before this do not support the --json flag
-const MINIMUM_TEA_VERSION = "0.28.3";
-
-// TODO: move device_id generation here
-
-// Get the binary path from the current app directory
-const binaryUrl = "https://tea.xyz/$(uname)/$(uname -m)";
-
 let initializePromise: Promise<string> | null = null;
 
 export async function initializeTeaCli(): Promise<string> {
-  if (initializePromise) {
+  // contract: cannot be called off the main web worker thread
+  const teaCliPrefix = path.join(getTeaPath(), "tea.xyz/v*");
+
+  if (initializePromise && fs.existsSync(path.join(teaCliPrefix, "bin/tea"))) {
     return initializePromise;
   }
 
   log.info("Initializing tea cli");
-  initializePromise = initializeTeaCliInternal();
+  initializePromise = initializeTeaCliInternal(teaCliPrefix);
 
   initializePromise.catch((error) => {
     log.info("Error initializing tea cli, resetting promise:", error);
@@ -34,9 +29,7 @@ export async function initializeTeaCli(): Promise<string> {
   return initializePromise;
 }
 
-async function initializeTeaCliInternal(): Promise<string> {
-  const teaCliPrefix = path.join(getTeaPath(), "tea.xyz/v*");
-
+async function initializeTeaCliInternal(teaCliPrefix: string): Promise<string> {
   if (!fs.existsSync(path.join(teaCliPrefix, "bin/tea"))) {
     return installTeaCli();
   } else {
