@@ -26,6 +26,7 @@ importers:
       '@sveltejs/adapter-node': ^1.0.0-next.101
       '@sveltejs/adapter-static': ^1.0.0-next.48
       '@sveltejs/kit': ^1.15.9
+      '@tea/libtea': workspace:*
       '@tea/ui': workspace:*
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/svelte': ^3.2.2
@@ -74,7 +75,6 @@ importers:
       prettier-plugin-tailwindcss: ^0.2.8
       pushy-electron: ^1.0.11
       renderer: link:@types/electron/renderer
-      semver: ^7.3.8
       svelte: ^3.55.1
       svelte-check: ^2.8.0
       svelte-infinite-scroll: ^2.0.1
@@ -122,7 +122,6 @@ importers:
       mousetrap: 1.6.5
       pushy-electron: 1.0.11
       renderer: link:@types/electron/renderer
-      semver: 7.5.0
       svelte-infinite-scroll: 2.0.1
       svelte-markdown: 0.2.3_svelte@3.58.0
       svelte-watch-resize: 1.0.3
@@ -138,6 +137,7 @@ importers:
       '@sveltejs/adapter-node': 1.2.4_@sveltejs+kit@1.15.9
       '@sveltejs/adapter-static': 1.0.6_@sveltejs+kit@1.15.9
       '@sveltejs/kit': 1.15.9_svelte@3.58.0+vite@4.3.3
+      '@tea/libtea': link:../libtea
       '@tea/ui': link:../ui
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/svelte': 3.2.2_svelte@3.58.0
@@ -170,6 +170,12 @@ importers:
       typescript: 4.9.5
       vite: 4.3.3
       vitest: 0.28.5_jsdom@21.1.2
+
+  modules/libtea:
+    specifiers:
+      typescript: ^4.7.4
+    devDependencies:
+      typescript: 4.9.5
 
   modules/ui:
     specifiers:

@@ -2,7 +2,7 @@
   import { PackageStates, type GUIPackage } from "$libs/types";
   import clickOutside from "@tea/ui/lib/clickOutside";
   import PackageStateButton from "./package-install-button.svelte";
-  import semver from "semver";
+  import { semverCompare } from "$libs/packages/pkg-utils";
 
   export let buttonSize: "small" | "large" = "small";
   export let pkg: GUIPackage;
@@ -27,7 +27,7 @@
 
   $: installedVersions = pkg.installed_versions || [];
   $: allVersions = Array.from(new Set([pkg.version, ...availableVersions])).sort(
-    (a: string, b: string) => semver.rcompare(a, b)
+    (a: string, b: string) => semverCompare(b, a)
   );
 
   const handleClick = (evt: MouseEvent, version: string) => {

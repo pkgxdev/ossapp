@@ -1,5 +1,7 @@
 <script lang="ts">
-  export let version = "1.0.0";
+  import type { GUIPackage } from "$libs/types";
+
+  export let pkg: GUIPackage | null = null;
 </script>
 
 <div class="container relative h-full">
@@ -7,7 +9,7 @@
     <i class="icon-check-circle-o flex text-sm text-[#00ffd0]" />
     <div class="text-xs">INSTALLED</div>
     <div class="rounded-sm bg-white px-1 text-[10px] leading-[12px] text-black">
-      v{version}
+      v{pkg?.installed_versions?.[0]}
     </div>
   </div>
 </div>

@@ -57,7 +57,7 @@
           <div class="flex w-fit flex-col items-center">
             <div class="install-button {layout}" on:mousedown={preventPropagation}>
               {#if pkg.state === PackageStates.INSTALLED}
-                <PackageInstalledBadge version={pkg.version} />
+                <PackageInstalledBadge {pkg} />
               {:else}
                 <PackageInstallButton
                   {pkg}

@@ -27,6 +27,7 @@ import { notificationStore } from "$libs/stores";
 import withRetry from "$libs/utils/retry";
 
 import log from "$libs/logger";
+import { isPackageUpToDate } from "../packages/pkg-utils";
 
 const packageRefreshInterval = 1000 * 60 * 60; // 1 hour
 
@@ -80,7 +81,7 @@ export default function initPackagesStore() {
       return PackageStates.AVAILABLE;
     }
 
-    const isUpToDate = pkg.version === pkg.installed_versions?.[0];
+    const isUpToDate = isPackageUpToDate(pkg);
 
     if (isInstalling(pkg)) {
       const hasNoVersions = !pkg.installed_versions?.length;

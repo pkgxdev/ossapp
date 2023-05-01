@@ -5,7 +5,6 @@
   import Button from "@tea/ui/button/button.svelte";
   import ButtonIcon from "@tea/ui/button-icon/button-icon.svelte";
   import ToolTip from "@tea/ui/tool-tip/tool-tip.svelte";
-  import semverCompare from "semver/functions/compare";
   import ProgressCircle from "@tea/ui/progress-circle/progress-circle.svelte";
 
   import type { GUIPackage } from "$libs/types";
@@ -16,6 +15,7 @@
   import PackageImage from "../package-card/bg-image.svelte";
   import PackageVersionSelector from "$components/package-install-button/package-version-selector.svelte";
   import { fixPackageName } from "$libs/packages/pkg-utils";
+  import { semverCompare } from "$libs/packages/pkg-utils";
 
   export let pkg: GUIPackage;
   let installing = false;

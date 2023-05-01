@@ -24,6 +24,13 @@
     return state === PackageStates.INSTALLING || state === PackageStates.UPDATING;
   };
 
+  const getVersion = (pkg: GUIPackage) => {
+    if (pkg.state === PackageStates.INSTALLED) {
+      return pkg.installed_versions?.[0] ?? pkg.version;
+    }
+    return pkg.version;
+  };
+
   const badgeClass: Record<PackageStates, string> = {
     [PackageStates.AVAILABLE]: "install-badge",
     [PackageStates.INSTALLING]: "install-badge",
@@ -53,7 +60,7 @@
       >
         <div class="flex items-center gap-x-2">
           <div>{ctaLabel}</div>
-          <div class="version-label {badgeClass[pkg.state]}">{pkg.version}</div>
+          <div class="version-label {badgeClass[pkg.state]}">v{getVersion(pkg)}</div>
         </div>
         {#if hasVersionSelectorDropdown}
           <i class="icon-downward-arrow flex" />

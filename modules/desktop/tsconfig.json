@@ -17,7 +17,8 @@
       "$libs/*": ["./src/libs/*"],
       "@native": ["./src/libs/native-electron.ts"],
       "$components/*": ["./src/components/*"],
-      "@tea/ui/*": ["../ui/src/*"]
+      "@tea/ui/*": ["../ui/src/*"],
+      "@tea/libtea/*": ["../libtea/src/*"]
     },
     "typeRoots": ["./node_modules/@types", "./types"]
   },
