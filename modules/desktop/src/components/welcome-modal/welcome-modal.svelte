@@ -18,11 +18,11 @@
       <div class="relative mt-20 flex-grow px-12">
         <h1 class="text-primary mb-4 text-4xl">tea, the open store</h1>
         <p class="font-inter mb-4">
-          tea is your gateway to the vibrant world of open-source software;
-          a treasure-trove of apps, frameworks, libraries, tools, utilities and games.
-          previously only accessible to the tech-savvy, tea unleashes the power of open source for everyone.
-          install packages, get updates and stay secure—all in the click of a button.
-          under the hood is the invisible yet powerful tea/cli.
+          tea is your gateway to the vibrant world of open-source software; a treasure-trove of
+          apps, frameworks, libraries, tools, utilities and games. previously only accessible to the
+          tech-savvy, tea unleashes the power of open source for everyone. install packages, get
+          updates and stay secure—all in the click of a button. under the hood is the invisible yet
+          powerful tea/cli.
         </p>
 
         <Button type="plain" color="secondary" class="w-7/12" onClick={() => close()}>
