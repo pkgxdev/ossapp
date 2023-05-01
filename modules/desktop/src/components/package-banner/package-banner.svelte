@@ -76,7 +76,7 @@
         />
         <ButtonIcon icon="link" helpText="share package" on:click={copyPackagePantryLink} />
         {#if copied}
-          <p class="text-primary">copied!</p>
+          <p class="text-teal">copied!</p>
         {/if}
       </div>
       {#if pkg.maintainer}
