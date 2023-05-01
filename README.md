@@ -7,17 +7,38 @@
   <a href="https://discord.gg/JKzuqrW9">
     <img src="https://img.shields.io/discord/906608167901876256?label=discord&color=29f746" alt="Discord" />
   </a>
-  <a href="#">
-    <img src="https://img.shields.io/github/v/release/teaxyz/cli?label=tea/cli&color=ff00ff" alt="Version" />
+  <a href="https://docs.tea.xyz">
+    <img src="https://img.shields.io/badge/-docs-2675f5?logoColor=fff&color=ff00ff&logo=gitbook" alt="Documentation & Manual" />
   </a>
 </p>
 
-The Open Store.
+
+tea/gui is the graphical app complement to [`tea/cli`].
+
+Under the hood tea/gui installs and manages your packages with [`tea/cli`]
+while exposing additional functionality, features and informational touches
+that complement and expand upon what a package manager can do.
+
+To install the gui, visit: https://tea.xyz/gui/ and download the latest
+version. The gui auto-updates itself.
+
+&nbsp;
 
 
-# Developing `tea/gui`
+# Contributing to `tea/gui`
 
-To develop within an Electron view:
+tea/gui is a Svelte Electon app. The electron “backend” can be found in
+`modules/desktop`, the Svelte “frontend” in `modules/ui`. In addition the
+following technologies are used:
+
+- [svelte](https://svelte.dev/)
+- [tailwind](https://tailwindcss.com/)
+- [fontastic](https://fontastic.me) (an icon font)
+
+If you have suggestions or ideas, start a [discussion]. If we agree, we’ll
+move it to an issue. Bug fixes straight to pull request or issue please!
+
+# Hacking on `tea/gui`
 
 ```sh
 xc setup  # only required once
@@ -25,41 +46,14 @@ xc build  # only required if you modify the backend
 xc dev    # opens the app in dev mode
 ```
 
-Creating a locally built installer for local usage will not need code-signing
-and notarization. To skip the 2-steps:
-
-```sh
-$ export CSC_IDENTITY_AUTO_DISCOVERY=false
-$ xc dist
-```
-
-# Contributing to `tea/gui`
-If you have suggestions or ideas, start a [discussion]. If we agree, we’ll move it to an issue. Bug fixes straight to pull request or issue please!
-
-
-# Releasing `tea/gui`
-
-Tag any commit in the main branch, then push directly to the main branch.
-Lets follow the [semver] versioning standard, prefixed with `v`:
-
-```sh
-$ git tag v1.0.0
-$ git push origin tag v1.0.0
-```
-
-Refer to each package `README.md` for instructions on how to setup and
-contribute to them:
-
-* [tea/desktop](./modules/desktop/README.md)
-* [tea/ui](./modules/ui/README.md)
+> Make sure to run `xc prettier` before submitting pull-requests.
 
 &nbsp;
 
 
-
 # Tasks
 
-The following can be run with [`xc`], eg. `xc build`
+The following can be run with [`xc`], eg. `xc build`.
 
 ## Setup
 
@@ -114,7 +108,12 @@ pnpm run -r check
 pnpm run -r lint
 ```
 
+&nbsp;
+
+
 # Dependencies
+
+[`tea/cli`] will automagically make these available to your environment.
 
 | Project                           |  Version  |
 |-----------------------------------|-----------|
@@ -123,8 +122,6 @@ pnpm run -r lint
 | xcfile.dev                        | >=0.0.110 |
 | python.org                        | >=3.10    |
 
-[aws/cli]: https://aws.amazon.com/cli/
+[`tea/cli`]: https://github.com/teaxyz/cli
 [`xc`]: https://xcfile.dev
-[semver]: https://semver.org
-[notion]: https://www.notion.so/teaxyz/tea-gui-fdd9f50aa980432fa370b2cf6a03cb50
 [discussion]: https://github.com/orgs/teaxyz/discussions
