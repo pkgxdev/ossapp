@@ -4,8 +4,9 @@ const path = require("path");
 const otaClient = require("@crowdin/ota-client");
 const _ = require("lodash");
 
+const appBundleId = "xyz.tea.gui";
 module.exports = {
-  appId: "xyz.tea.gui",
+  appId: appBundleId,
   productName: "tea",
   asar: false,
   directories: { output: "dist" },
@@ -27,8 +28,6 @@ module.exports = {
     }
 
     console.log("afterSign hook triggered");
-
-    const appBundleId = "xyz.tea.gui";
 
     let appPath = path.join(params.appOutDir, `${params.packager.appInfo.productFilename}.app`);
     if (!fs.existsSync(appPath)) {
