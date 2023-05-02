@@ -5,11 +5,11 @@ module.exports = {
   },
   parser: "@typescript-eslint/parser",
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
-  plugins: ["svelte3", "@typescript-eslint"],
+  plugins: ["svelte3", "@typescript-eslint", "import"],
   ignorePatterns: ["*.cjs"],
   overrides: [
     {
-      files: ["*.svelte"],
+      files: ["*.svelte", "*.ts"],
       processor: "svelte3/svelte3"
     }
   ],
