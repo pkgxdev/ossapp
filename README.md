@@ -17,7 +17,7 @@ tea/gui is the graphical app complement to [`tea/cli`].
 
 Under the hood tea/gui installs and manages your packages with [`tea/cli`]
 while exposing additional functionality, features and informational touches
-that complement and expand upon what a package manager can do.
+that complement and expand upon the nature of package management.
 
 To install the gui, visit: https://tea.xyz/gui/ and download the latest
 version. The gui auto-updates itself.
@@ -27,16 +27,20 @@ version. The gui auto-updates itself.
 
 # Contributing to `tea/gui`
 
+If you have suggestions or ideas, start a [discussion]. If we agree, we’ll
+move it to an issue. Bug fixes straight to pull request or issue please!
+
+## Anatomy
+
 tea/gui is a Svelte Electon app. The electron “backend” can be found in
-`modules/desktop`, the Svelte “frontend” in `modules/ui`. In addition the
-following technologies are used:
+`modules/desktop`, the Svelte “frontend” in `modules/ui`. The following
+technologies are used:
 
 - [svelte](https://svelte.dev/)
 - [tailwind](https://tailwindcss.com/)
-- [fontastic](https://fontastic.me) (an icon font)
+- [fontastic](https://fontastic.me)
+- [electron](http://electronjs.org)
 
-If you have suggestions or ideas, start a [discussion]. If we agree, we’ll
-move it to an issue. Bug fixes straight to pull request or issue please!
 
 # Hacking on `tea/gui`
 
@@ -120,7 +124,7 @@ pnpm run -r lint
 | nodejs.org                        | =18.15.0  |
 | pnpm.io                           | =7.18.2   |
 | xcfile.dev                        | >=0.0.110 |
-| python.org                        | >=3.10    |
+| python.org                        | ^3.10     |
 
 [`tea/cli`]: https://github.com/teaxyz/cli
 [`xc`]: https://xcfile.dev
