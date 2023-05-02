@@ -95,15 +95,6 @@
     position: relative;
   }
 
-  aside {
-    top: 52px;
-    right: 5px;
-    width: 210px;
-    overflow: clip;
-    height: auto;
-    opacity: 1;
-  }
-
   .content {
     height: auto;
     overflow-y: hidden;

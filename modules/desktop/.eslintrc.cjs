@@ -9,7 +9,7 @@ module.exports = {
   ignorePatterns: ["*.cjs"],
   overrides: [
     {
-      files: ["*.svelte", "*.ts"],
+      files: ["*.svelte"],
       processor: "svelte3/svelte3"
     }
   ],

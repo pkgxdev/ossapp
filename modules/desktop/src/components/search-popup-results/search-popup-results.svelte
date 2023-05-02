@@ -1,17 +1,11 @@
 <script lang="ts">
   import { packagesStore, searchStore } from "$libs/stores";
-  import type { GUIPackage } from "$libs/types";
   import SearchInput from "@tea/ui/search-input/search-input.svelte";
   import { t } from "$libs/translations";
-  import Preloader from "@tea/ui/Preloader/Preloader.svelte";
-  import Package from "$components/packages/package.svelte";
   import { PackageStates } from "$libs/types";
   import PackageResult from "./package-search-result.svelte";
-  import Mousetrap from "mousetrap";
   // import Posts from '@tea/ui/posts/posts.svelte';
 
-  import { installPackage } from "@native";
-  import { onMount } from "svelte";
   import NoSearchResults from "./no-search-results.svelte";
 
   const { searching, packagesSearch } = searchStore;
