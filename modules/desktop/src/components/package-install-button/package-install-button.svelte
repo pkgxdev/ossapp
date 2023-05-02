@@ -46,7 +46,7 @@
 >
   <div class="version-button h-full">
     <div class="flex h-full flex-col justify-center p-2">
-      <div class="flex items-center justify-between gap-x-2">
+      <div class="flex items-center gap-x-2 {hasVersionSelectorDropdown ? "justify-between" : "justify-center"}">
         <div class="flex items-center gap-x-2">
           <div>{ctaLabel}</div>
           <div class="version-label {badgeClass[pkg.state]}">{pkg.version}</div>
