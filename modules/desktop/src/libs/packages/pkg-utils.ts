@@ -3,15 +3,16 @@ import { clean } from "semver";
 import semverCompare from "semver/functions/compare";
 
 // Find a list of available versions for a package based on the bottles
-export const findAvailableVersions = (pkg: GUIPackage) => {
+export const findAvailableVersions = (pkg: Pick<GUIPackage, "bottles" | "version">) => {
   // default to just showing the latest if bottles haven't loaded yet
   if (!pkg.bottles) {
     return [pkg.version];
   }
 
   const versionSet = new Set<string>();
+  const arch = process.arch === "arm64" ? "aarch64" : "x86-64";
   for (const b of pkg.bottles) {
-    versionSet.add(b.version);
+    if (b.arch === arch) versionSet.add(b.version);
   }
 
   return Array.from(versionSet).sort((a, b) => semverCompare(cleanVersion(b), cleanVersion(a)));
