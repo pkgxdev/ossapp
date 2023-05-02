@@ -9,15 +9,15 @@
   };
 </script>
 
-<section class="fixed top-0 left-0 z-50 flex items-center justify-center">
+<section class="fixed left-0 top-0 z-50 flex items-center justify-center">
   <aside class="relative" use:clickOutside on:click_outside={() => close()}>
-    <article class="margin-auto border-gray flex rounded-md border p-2">
+    <article class="margin-auto flex rounded-md border border-gray p-2">
       <figure>
         <img class="object-contain" src="/images/welcome-bg.png" alt="welcome" />
       </figure>
       <div class="relative mt-20 flex-grow px-12">
-        <h1 class="text-primary mb-4 text-4xl">tea, the open store</h1>
-        <p class="font-inter mb-4">
+        <h1 class="mb-4 text-4xl text-primary">tea, the open store</h1>
+        <p class="mb-4 font-inter">
           tea is your gateway to the vibrant world of open-source software; a treasure-trove of
           apps, frameworks, libraries, tools, utilities and games. previously only accessible to the
           tech-savvy, tea unleashes the power of open source for everyone. install packages, get
@@ -32,7 +32,7 @@
     </article>
 
     <button
-      class="icon-tea-x-btn text-gray absolute top-5 right-5"
+      class="icon-tea-x-btn absolute right-5 top-5 text-gray"
       on:click={() => {
         close();
       }}

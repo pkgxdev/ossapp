@@ -25,7 +25,7 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<figure class="border-gray flex flex-row gap-2 border p-2">
+<figure class="flex flex-row gap-2 border border-gray p-2">
   <ImgLoader
     on:click={() => gotoPackagePage()}
     class="pkg-image h-16 w-16 object-cover"
@@ -36,7 +36,7 @@
   />
   <header class="flex-grow" on:click={() => gotoPackagePage()}>
     <h1>{pkg.full_name}</h1>
-    <p class="line-clamp-2 text-xs">{pkg.desc}</p>
+    <p class="text-xs line-clamp-2">{pkg.desc}</p>
   </header>
   <aside>
     <div>

@@ -12,7 +12,7 @@
 
 <section class="border border-gray bg-black">
   <header class="flex justify-between p-4 text-primary">
-    <h1 class="uppercase ">{title}</h1>
+    <h1 class="uppercase">{title}</h1>
     <a href={ctaUrl} class="text-sm">{ctaLabel}</a>
   </header>
   <figure class="h-40">

@@ -21,16 +21,16 @@
   on:dblclick={preventDoubleClick}
 >
   <button
-    class="border-gray group flex h-[28px] w-[28px] items-center justify-center rounded-sm border hover:bg-[#e1e1e1]"
+    class="group flex h-[28px] w-[28px] items-center justify-center rounded-sm border border-gray hover:bg-[#e1e1e1]"
     class:circle-badge={$updateStatus.status === "available" || $updateStatus.status === "ready"}
     on:click={() => (isOpen = !isOpen)}
     title="settings"
   >
-    <div class="icon-gear text-l text-gray flex group-hover:text-black" />
+    <div class="icon-gear text-l flex text-gray group-hover:text-black" />
   </button>
 
   <nav
-    class="menu border-gray absolute w-full border bg-black p-2 text-xs transition-all"
+    class="menu absolute w-full border border-gray bg-black p-2 text-xs transition-all"
     class:invisible={!isOpen}
     class:visible={isOpen}
   >
@@ -42,7 +42,7 @@
 		</button>
 		<hr /> -->
     <button
-      class="hover:bg-gray outline-gray h-7 w-full p-1 text-left outline-1 hover:bg-opacity-25 hover:outline"
+      class="h-7 w-full p-1 text-left outline-1 outline-gray hover:bg-gray hover:bg-opacity-25 hover:outline"
       on:click={() => shellOpenExternal("https://docs.tea.xyz")}
     >
       docs

@@ -26,26 +26,26 @@
   const preventPropagation = (evt: MouseEvent) => evt.stopPropagation();
 </script>
 
-<section class="package-card border-gray relative h-auto border {layout}" class:active={isActive}>
-  <BgImage class="absolute top-0 left-0 h-full w-full" {layout} {pkg} />
+<section class="package-card relative h-auto border border-gray {layout}" class:active={isActive}>
+  <BgImage class="absolute left-0 top-0 h-full w-full" {layout} {pkg} />
 
   <a href={link} on:mousedown={activate} on:mouseup={deactivate} on:mouseleave={deactivate}>
     <div class="package-card-content absolute h-full w-full flex-col justify-between">
       <div class="hint-container">
         <div class="hint">
-          <div class="line-clamp-1 text-xs">view more details</div>
+          <div class="text-xs line-clamp-1">view more details</div>
           <div class="hint-icon"><i class="icon-upward-arrow" /></div>
         </div>
       </div>
       <div class="content-container absolute bottom-0 w-full {layout}">
         <article class="card-thumb-label relative">
           {#if layout === "bottom"}
-            <h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">
+            <h3 class="text-bold font-mona text-2xl font-bold text-white line-clamp-1">
               {fixPackageName(pkg.name)}
             </h3>
-            <p class="line-clamp-2 h-[32px] text-xs font-thin lowercase">{pkg.desc ?? ""}</p>
+            <p class="h-[32px] text-xs font-thin lowercase line-clamp-2">{pkg.desc ?? ""}</p>
           {:else}
-            <h3 class="text-bold font-mona line-clamp-1 mb-4 text-3xl font-bold text-white">
+            <h3 class="text-bold mb-4 font-mona text-3xl font-bold text-white line-clamp-1">
               {fixPackageName(pkg.name)}
             </h3>
             <p class="line-clamp-[8] h-[160px] text-[14px] font-thin lowercase leading-[20px]">

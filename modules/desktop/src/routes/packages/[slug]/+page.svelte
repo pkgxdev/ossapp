@@ -55,7 +55,7 @@
   });
 </script>
 
-<header class="text-gray mx-16 mb-4 border border-x-0 border-t-0 py-5">
+<header class="mx-16 mb-4 border border-x-0 border-t-0 py-5 text-gray">
   <a class="hover:text-white hover:opacity-80" href="/">{$t("common.home")}</a>
   ›
   <a class="hover:text-white hover:opacity-80" href="/?tab={tab || 'discover'}"

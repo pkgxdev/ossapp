@@ -75,7 +75,7 @@
       {/if}
     </ul>
     <header class="z-30 flex items-center justify-between" class:scrolling={packagesScrollY > 150}>
-      <h1 class="text-primary font-mona pl-3 text-2xl font-bold">
+      <h1 class="pl-3 font-mona text-2xl font-bold text-primary">
         {$t(`side-menu-title.${sideMenuOption}`).toLowerCase()}
       </h1>
       <!-- 
@@ -92,7 +92,7 @@
         <!-- 22px right margin to account for the scrollbar on the package cards -->
         <div class="mr-[22px] flex items-center justify-end text-sm">
           {#if currentUpdatingPkg}
-            <p class="text-gray px-2 font-mono">{updatingMessage}</p>
+            <p class="px-2 font-mono text-gray">{updatingMessage}</p>
           {/if}
           <div>
             <Button

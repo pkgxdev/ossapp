@@ -15,5 +15,5 @@
       <span class="px-12 text-sm">VISIT PANTRY</span>
     </Button>
   </div>
-  <div class="text-gray mt-2 text-xs">Redirects to github</div>
+  <div class="mt-2 text-xs text-gray">Redirects to github</div>
 </div>
