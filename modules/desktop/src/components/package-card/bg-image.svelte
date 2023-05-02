@@ -62,7 +62,7 @@
 
 <section class="bg-black {clazz} {layout}">
   <i
-    class="logo icon-tea-logo-iconasset-1 text-gray text-3xl {layout}"
+    class="logo icon-tea-logo-iconasset-1 text-3xl text-gray {layout}"
     class:animate-pulse={!pkg.thumb_image_url}
   />
   <div

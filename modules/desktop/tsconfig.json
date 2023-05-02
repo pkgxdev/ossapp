@@ -18,9 +18,10 @@
       "@native": ["./src/libs/native-electron.ts"],
       "$components/*": ["./src/components/*"],
       "@tea/ui/*": ["../ui/src/*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./types"]
   },
-  "include": ["../ui/types/*.d.ts"]
+  "include": ["../ui/types/*.d.ts", ".svelte-kit/ambient.d.ts", "./src/**/*", "./types/**/*"]
   // Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
   //
   // If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes

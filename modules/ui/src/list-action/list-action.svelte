@@ -18,7 +18,7 @@
 
 <section class="bg-black">
   <header class="w-full border border-gray p-2 text-primary">{title}</header>
-  <ul class="border border-b-0 border-r-0 border-l-0 border-gray">
+  <ul class="border border-b-0 border-l-0 border-r-0 border-gray">
     {#each items as item}
       <li class="flex content-center border border-t-0 border-gray">
         <figure class="m-2 w-10 bg-gray">

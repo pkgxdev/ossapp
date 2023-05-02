@@ -73,7 +73,7 @@
       {/each}
     </ul>
   </header>
-  <figure class="absolute bottom-0 top-12 left-0 right-0 overflow-hidden">
+  <figure class="absolute bottom-0 left-0 right-0 top-12 overflow-hidden">
     {#if items.length}
       <section class="absolute top-0 flex h-full" style={styleFeaturedPackages}>
         {#each items as item}

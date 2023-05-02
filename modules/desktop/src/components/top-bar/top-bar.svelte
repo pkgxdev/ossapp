@@ -11,33 +11,33 @@
 </script>
 
 <header
-  class="border-gray relative z-20 flex h-12 w-full items-center justify-between border border-x-0 border-t-0 pr-2"
+  class="relative z-20 flex h-12 w-full items-center justify-between border border-x-0 border-t-0 border-gray pr-2"
   style="-webkit-app-region: drag"
   on:dblclick={topbarDoubleClick}
 >
-  <ul class="text-gray flex h-10 items-center gap-1 pl-20 align-middle leading-10">
+  <ul class="flex h-10 items-center gap-1 pl-20 align-middle leading-10 text-gray">
     <a href="/?tab=discover">
       <div class="home-btn w-12 text-center text-2xl">
         <i class="icon-tea-logo-iconasset-1" />
       </div>
     </a>
-    <p class="text-gray px-2">beta</p>
+    <p class="px-2 text-gray">beta</p>
     <button
       on:click={navStore.back}
       class:active={$prevPath}
-      class="hover:bg-gray h-[28px] rounded-sm px-2 pt-1 text-xs opacity-50 transition-all hover:text-black"
+      class="h-[28px] rounded-sm px-2 pt-1 text-xs opacity-50 transition-all hover:bg-gray hover:text-black"
       title="go back"><i class="icon-arrow-left" /></button
     >
     <button
       on:click={navStore.next}
       class:active={$nextPath}
-      class="hover:bg-gray h-[28px] rounded-sm px-2 pt-1 text-xs opacity-50 transition-all hover:text-black"
+      class="h-[28px] rounded-sm px-2 pt-1 text-xs opacity-50 transition-all hover:bg-gray hover:text-black"
       title="go forward"><i class="icon-arrow-right" /></button
     >
   </ul>
   <div class="relative w-1/3 px-2">
     <SearchInput
-      class="border-gray h-9 w-full rounded-sm border"
+      class="h-9 w-full rounded-sm border border-gray"
       size="small"
       placeholder={$t("store-search-placeholder")}
       onFocus={() => {
@@ -47,7 +47,7 @@
     />
 
     <kbd
-      class="bg-gray pointer-events-none absolute top-0 right-3 mt-1 flex items-center rounded-sm px-2 text-white opacity-50"
+      class="pointer-events-none absolute right-3 top-0 mt-1 flex items-center rounded-sm bg-gray px-2 text-white opacity-50"
       style="letter-spacing: 0.5pt"
     >
       <span class="text-lg">⌘</span>

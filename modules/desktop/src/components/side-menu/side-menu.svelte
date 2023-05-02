@@ -12,7 +12,7 @@
   $: needsUpdateCount = $packageList.filter((p) => p.state === PackageStates.NEEDS_UPDATE).length;
 </script>
 
-<aside class="border-gray border border-t-0 border-b-0 border-l-0 p-2">
+<aside class="border border-b-0 border-l-0 border-t-0 border-gray p-2">
   <ul class="flex flex-col gap-1 px-1 pt-4">
     <MenuButton
       label={$t("tags.discover").toLowerCase()}
