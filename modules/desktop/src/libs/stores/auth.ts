@@ -1,10 +1,11 @@
 import { writable } from "svelte/store";
 
-import { getDeviceAuth } from "@native";
+import { listenToChannel } from "@native";
 import type { Developer } from "@tea/ui/types";
 import type { Session } from "$libs/types";
 import { getSession as electronGetSession, updateSession as electronUpdateSession } from "@native";
 import { initSentry } from "../sentry";
+import log from "$libs/logger";
 
 export let session: Session | null = null;
 export const getSession = async (): Promise<Session | null> => {
@@ -15,7 +16,6 @@ export const getSession = async (): Promise<Session | null> => {
 export default function initAuthStore() {
   const user = writable<Developer | undefined>();
   const sessionStore = writable<Session>({});
-  let pollLoop = 0;
 
   const deviceIdStore = writable<string>("");
   let deviceId = "";
@@ -31,7 +31,16 @@ export default function initAuthStore() {
     }
   });
 
-  let timer: NodeJS.Timer | null;
+  listenToChannel("session-update", (data: Session) => {
+    log.info("session update renderer", data);
+    sessionStore.update((val) => ({
+      ...val,
+      ...data
+    }));
+    if (data.user) {
+      user.set(data.user);
+    }
+  });
 
   async function updateSession(data: Session) {
     sessionStore.update((val) => ({
@@ -41,34 +50,6 @@ export default function initAuthStore() {
 
     initSentry(data);
     await electronUpdateSession(data);
-  }
-
-  async function pollSession() {
-    if (!timer) {
-      timer = setInterval(async () => {
-        pollLoop++;
-        try {
-          const data = await getDeviceAuth(deviceId);
-          if (data.status === "SUCCESS") {
-            updateSession({
-              key: data.key,
-              user: data.user
-            });
-            user.set(data.user!);
-            timer && clearInterval(timer);
-            timer = null;
-          }
-        } catch (error) {
-          console.error(error);
-        }
-
-        if (pollLoop > 20 && timer) {
-          clearInterval(timer);
-          pollLoop = 0;
-          timer = null;
-        }
-      }, 2000);
-    }
   }
 
   function clearSession() {
@@ -81,7 +62,6 @@ export default function initAuthStore() {
     session: sessionStore,
     deviceId,
     deviceIdStore,
-    pollSession,
     clearSession,
     updateSession
   };

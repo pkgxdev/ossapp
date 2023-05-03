@@ -5,6 +5,9 @@ import { getTeaPath } from "./tea-dir";
 import { app } from "electron";
 import log from "./logger";
 import axios from "axios";
+import get from "./v1-client";
+import { DeviceAuth } from "../../src/libs/types";
+import { notifyMainWindow } from "../electron";
 
 const sessionFilePath = path.join(getTeaPath(), "tea.xyz/gui/tmp.dat");
 const sessionFolder = path.join(getTeaPath(), "tea.xyz/gui");
@@ -150,5 +153,46 @@ export async function writeSessionData(data: Session, force?: boolean) {
     });
   } catch (error) {
     log.error(error);
+  }
+}
+
+let pollInterval: NodeJS.Timer | null;
+let pollLoop = 0;
+export async function pollAuth() {
+  if (!pollInterval) {
+    log.info("polling auth starts...");
+    const session = await readSessionData();
+    pollInterval = setInterval(async () => {
+      pollLoop++;
+      log.info("poll auth retry:", pollLoop);
+      let clear = false;
+      let success = false;
+      try {
+        const data = await get<DeviceAuth>(`/auth/device/${session.device_id}`);
+        if (data?.status === "SUCCESS") {
+          await writeSessionData({
+            key: data.key,
+            user: data.user
+          });
+          clear = true;
+          success = true;
+        } else if (pollLoop > 20 && pollInterval) {
+          clear = true;
+        }
+      } catch (error) {
+        log.error(error);
+        clear = true;
+      } finally {
+        if (clear) {
+          pollInterval && clearInterval(pollInterval);
+          pollInterval = null;
+          log.info("polling auth ends.");
+        }
+        if (success) {
+          log.info("updating renderer session");
+          notifyMainWindow("session-update", sessionMemory);
+        }
+      }
+    }, 2000);
   }
 }

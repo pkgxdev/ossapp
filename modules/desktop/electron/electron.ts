@@ -196,7 +196,7 @@ app.on("open-url", (event, url) => {
   }
 });
 
-function notifyMainWindow(channel: string, data: unknown) {
+export function notifyMainWindow(channel: string, data: unknown) {
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.webContents.send(channel, data);
   }

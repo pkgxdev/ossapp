@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { authStore, navStore } from "$libs/stores";
+  import { authStore } from "$libs/stores";
   import { getSession } from "@native";
   import { baseUrl } from "$libs/v1-client";
-  import { shellOpenExternal } from "@native";
+  import { shellOpenExternal, pollDeviceSession } from "@native";
   import mouseLeaveDelay from "@tea/ui/lib/mouse-leave-delay";
   const { user } = authStore;
 
@@ -18,7 +18,7 @@
 
         if (session && session.device_id) {
           shellOpenExternal(`${baseUrl}/auth/user?device_id=${session.device_id}`);
-          authStore.pollSession();
+          pollDeviceSession();
         } else {
           throw new Error("possible no internet connection");
         }
