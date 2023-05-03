@@ -296,3 +296,11 @@ export const getAutoUpdateStatus = async (): Promise<AutoUpdateStatus> => {
     return { status: "up-to-date" };
   }
 };
+
+export const pollDeviceSession = async () => {
+  try {
+    await ipcRenderer.invoke("poll-session");
+  } catch (error) {
+    log.error(error);
+  }
+};

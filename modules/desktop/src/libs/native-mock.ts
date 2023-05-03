@@ -411,3 +411,7 @@ export const getAutoUpdateStatus = async (): Promise<AutoUpdateStatus> => {
 export async function openPackageEntrypointInTerminal(pkg: string) {
   //noop
 }
+
+export const pollDeviceSession = async () => {
+  console.log("do nothing");
+};
