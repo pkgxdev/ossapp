@@ -12,14 +12,7 @@
  */
 
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
-import {
-  type GUIPackage,
-  type DeviceAuth,
-  type Session,
-  AuthStatus,
-  type Packages,
-  type AutoUpdateStatus
-} from "./types";
+import type { GUIPackage, Session, Packages, AutoUpdateStatus } from "./types";
 
 import * as mock from "./native-mock";
 import { PackageStates, type InstalledPackage } from "./types";
@@ -128,21 +121,6 @@ export async function getAllPosts(tag?: string): Promise<AirtablePost[]> {
     log.error(error);
     return [];
   }
-}
-
-export async function getDeviceAuth(deviceId: string): Promise<DeviceAuth> {
-  let auth: DeviceAuth = {
-    status: AuthStatus.UNKNOWN,
-    key: ""
-  };
-  try {
-    const data = await apiGet<DeviceAuth>(`/auth/device/${deviceId}`);
-    if (data) auth = data;
-  } catch (error) {
-    log.error(error);
-    auth = await getDeviceAuth(deviceId);
-  }
-  return auth;
 }
 
 export async function getPackageBottles(packageName: string): Promise<Bottle[]> {
