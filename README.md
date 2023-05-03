@@ -12,7 +12,6 @@
   </a>
 </p>
 
-
 tea/gui is the graphical app complement to [`tea/cli`].
 
 Under the hood tea/gui installs and manages your packages with [`tea/cli`]
@@ -21,6 +20,8 @@ that complement and expand upon the nature of package management.
 
 To install the gui, visit: https://tea.xyz/gui/ and download the latest
 version. The gui auto-updates itself.
+
+![screenshot](https://user-images.githubusercontent.com/58962/235918362-48efad34-8f7b-4420-81db-abfa0d7cafe7.jpg)
 
 &nbsp;
 
