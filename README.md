@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://twitter.com/teaxyz">
-    <img src="https://img.shields.io/twitter/follow/teaxyz?style=flat&label=%40teaxyz&logo=twitter&color=2675f5&logoColor=fff" alt="Twitter" />
+    <img src="https://img.shields.io/badge/-teaxyz-2675f5?logo=twitter&logoColor=fff" alt="Twitter" />
   </a>
   <a href="https://discord.gg/JKzuqrW9">
     <img src="https://img.shields.io/discord/906608167901876256?label=discord&color=29f746" alt="Discord" />
