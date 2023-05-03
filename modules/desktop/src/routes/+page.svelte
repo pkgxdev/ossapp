@@ -96,7 +96,7 @@
           {/if}
           <div>
             <Button
-              class="h-8 w-48 text-xs"
+              class="h-8 w-48 p-2 text-xs"
               loading={updating}
               type="plain"
               color="secondary"
