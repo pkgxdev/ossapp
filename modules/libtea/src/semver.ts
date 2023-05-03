@@ -109,7 +109,7 @@ export default class SemVer {
 
 /// the same as the constructor but swallows the error returning undefined instead
 /// also slightly more tolerant parsing
-export function parse(input: string, tolerant: boolean = true) {
+export function parse(input: string, tolerant = true) {
   try {
     return new SemVer(input, { tolerant });
   } catch {
@@ -117,7 +117,7 @@ export function parse(input: string, tolerant: boolean = true) {
   }
 }
 
-export function isValidSemVer(input: string, tolerant: boolean = false) {
+export function isValidSemVer(input: string, tolerant = false) {
   return parse(input, tolerant) != undefined;
 }
 
@@ -141,7 +141,7 @@ export class Range {
         if (match) {
           const v1 = new SemVer(match[1], { tolerant: true });
           const v2 = match[3]
-            ? new SemVer(match[4], { tolerant: true })!
+            ? new SemVer(match[4], { tolerant: true })
             : new SemVer([Infinity, Infinity, Infinity]);
           return [v1, v2];
         } else if ((match = input.match(/^([~=<^])(.+)$/))) {
@@ -351,7 +351,7 @@ function chomp(v: SemVer) {
  * @param {any} payload
  * @returns {payload is any[]}
  */
-export function isArray(payload: any): payload is any[] {
+export function isArray(payload: unknown): payload is unknown[] {
   return getType(payload) === "Array";
 }
 
@@ -361,7 +361,7 @@ export function isArray(payload: any): payload is any[] {
  * @param {*} payload
  * @returns {payload is string}
  */
-export function isString(payload: any): payload is string {
+export function isString(payload: unknown): payload is string {
   return getType(payload) === "String";
 }
 
@@ -371,6 +371,6 @@ export function isString(payload: any): payload is string {
  * @param {*} payload
  * @returns {string}
  */
-export function getType(payload: any): string {
+export function getType(payload: unknown): string {
   return Object.prototype.toString.call(payload).slice(8, -1);
 }
