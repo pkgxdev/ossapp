@@ -4,20 +4,18 @@
   import { page } from "$app/stores";
   import { t } from "$libs/translations";
   import { afterNavigate } from "$app/navigation";
-  import { packagesStore, authStore } from "$libs/stores";
+  import { packagesStore } from "$libs/stores";
   import Packages from "$components/packages/packages.svelte";
   import DiscoverPackages from "$components/discover-packages/discover-packages.svelte";
   import { PackageStates, SideMenuOptions, type GUIPackage } from "$libs/types";
   // import SortingButtons from "$components/search-packages/sorting-buttons.svelte";
   import SideMenu from "$components/side-menu/side-menu.svelte";
   import NotificationBar from "$components/notification-bar/notification-bar.svelte";
-  import WelcomeModal from "$components/welcome-modal/welcome-modal.svelte";
   import Button from "@tea/ui/button/button.svelte";
   import log from "$libs/logger";
   import { formatPercent } from "@tea/ui/lib/percent";
 
   const { packageList } = packagesStore;
-  const { session } = authStore;
 
   const url = $page.url;
 
@@ -112,9 +110,6 @@
 </div>
 
 <SideMenu bind:activeOption={sideMenuOption} />
-{#if !$session.hide_welcome}
-  <WelcomeModal />
-{/if}
 
 <style>
   #content {
