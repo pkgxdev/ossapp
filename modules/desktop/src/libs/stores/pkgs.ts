@@ -48,15 +48,15 @@ export default function initPackagesStore() {
 
   let packagesIndex: Fuse<GUIPackage>;
 
-  const bottlesQueue = new Queue([]);
+  // TODO: derive this concurrency relative to user's internet and computer performance?
+  const concurrency = 3;
+  const bottlesQueue = new Queue(concurrency, []);
   bottlesQueue.setProcessor(async (pkgName: string) => {
     // TODO: this api should take an architecture argument or else an architecture filter should be applied downstreawm
-    log.info("from queue:", pkgName);
     const bottles = await getPackageBottles(pkgName);
-    log.info("bottles of ", pkgName, bottles?.length);
-    // if (bottles?.length) {
-    //   updatePackage(pkgName, { bottles });
-    // }
+    if (bottles?.length) {
+      updatePackage(pkgName, { bottles });
+    }
   });
 
   const updateAllPackages = (guiPkgs: GUIPackage[]) => {
@@ -383,12 +383,15 @@ const setBadgeCountFromPkgs = (pkgs: Packages) => {
 
 type Processor = (input: string) => void;
 
+// TODO: move this to a generic design pattern then to another module
 class Queue {
   private items: string[] = [];
   private processor: Processor | null = null;
-  private processing = false;
+  private processingCount = 0;
+  private concurrency: number;
 
-  constructor(initialItems: string[] = []) {
+  constructor(concurrency = 3, initialItems: string[] = []) {
+    this.concurrency = concurrency;
     this.items = initialItems;
   }
 
@@ -397,20 +400,27 @@ class Queue {
   }
 
   private async processQueue(): Promise<void> {
-    if (this.processing || this.items.length === 0 || !this.processor) {
+    if (this.processingCount >= this.concurrency || this.items.length === 0 || !this.processor) {
       return;
     }
 
-    this.processing = true;
+    const item = this.dequeue();
+    if (item !== undefined) {
+      this.processingCount++;
+      Promise.resolve(this.processor(item))
+        .then(() => {
+          this.processingCount--;
+          this.processQueue();
+        })
+        .catch((error) => {
+          console.error(`Error processing item: ${error}`);
+          this.processingCount--;
+          this.processQueue();
+        });
 
-    while (this.items.length > 0) {
-      const item = this.dequeue();
-      if (item !== undefined) {
-        await this.processor(item);
-      }
+      // Start processing the next item(s) if concurrency allows
+      this.processQueue();
     }
-
-    this.processing = false;
   }
 
   enqueue(item: string): void {
