@@ -149,10 +149,14 @@ if (process.defaultApp) {
   app.setAsDefaultProtocolClient("tea");
 }
 
-app.once("ready", createMainWindow);
+let ready = false;
+app.once("ready", () => {
+  ready = true;
+  createMainWindow();
+});
 
 app.on("activate", () => {
-  if (!mainWindow) {
+  if (ready && !mainWindow) {
     createMainWindow();
   }
 });
