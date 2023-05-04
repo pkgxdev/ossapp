@@ -37,9 +37,27 @@ export default function initPackagesStore() {
   let refreshTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
   const packageMap = writable<Packages>({ version: "0", packages: {} });
-  const packageList = derived(packageMap, ($packages) => Object.values($packages.packages));
+  const packageList = derived(packageMap, ($packages) =>
+    Object.values($packages.packages).sort((a, b) => {
+      // implement default sort by last_modified > descending
+      const aDate = new Date(a.last_modified);
+      const bDate = new Date(b.last_modified);
+      return +bDate - +aDate;
+    })
+  );
 
   let packagesIndex: Fuse<GUIPackage>;
+
+  // TODO: derive this concurrency relative to user's internet and computer performance?
+  const concurrency = 3;
+  const bottlesQueue = new Queue(concurrency, []);
+  bottlesQueue.setProcessor(async (pkgName: string) => {
+    // TODO: this api should take an architecture argument or else an architecture filter should be applied downstreawm
+    const bottles = await getPackageBottles(pkgName);
+    if (bottles?.length) {
+      updatePackage(pkgName, { bottles });
+    }
+  });
 
   const updateAllPackages = (guiPkgs: GUIPackage[]) => {
     packageMap.update((pkgs) => {
@@ -266,11 +284,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
   };
 
   const fetchPackageBottles = async (pkgName: string) => {
-    // TODO: this api should take an architecture argument or else an architecture filter should be applied downstreawm
-    const bottles = await getPackageBottles(pkgName);
-    if (bottles?.length) {
-      updatePackage(pkgName, { bottles });
-    }
+    bottlesQueue.enqueue(pkgName);
   };
 
   const deletePkg = async (pkg: GUIPackage, version: string) => {
@@ -366,3 +380,55 @@ const setBadgeCountFromPkgs = (pkgs: Packages) => {
     log.error(error);
   }
 };
+
+type Processor = (input: string) => void;
+
+// TODO: move this to a generic design pattern then to another module
+class Queue {
+  private items: string[] = [];
+  private processor: Processor | null = null;
+  private processingCount = 0;
+  private concurrency: number;
+
+  constructor(concurrency = 3, initialItems: string[] = []) {
+    this.concurrency = concurrency;
+    this.items = initialItems;
+  }
+
+  setProcessor(processor: Processor): void {
+    this.processor = processor;
+  }
+
+  private async processQueue(): Promise<void> {
+    if (this.processingCount >= this.concurrency || this.items.length === 0 || !this.processor) {
+      return;
+    }
+
+    const item = this.dequeue();
+    if (item !== undefined) {
+      this.processingCount++;
+      Promise.resolve(this.processor(item))
+        .then(() => {
+          this.processingCount--;
+          this.processQueue();
+        })
+        .catch((error) => {
+          console.error(`Error processing item: ${error}`);
+          this.processingCount--;
+          this.processQueue();
+        });
+
+      // Start processing the next item(s) if concurrency allows
+      this.processQueue();
+    }
+  }
+
+  enqueue(item: string): void {
+    this.items.push(item);
+    this.processQueue();
+  }
+
+  dequeue(): string | undefined {
+    return this.items.shift();
+  }
+}

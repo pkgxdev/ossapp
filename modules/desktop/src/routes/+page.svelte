@@ -21,9 +21,6 @@
 
   let sideMenuOption = (url.searchParams.get("tab") as SideMenuOptions) || SideMenuOptions.discover;
 
-  let sortBy: "popularity" | "most recent" = "most recent";
-  let sortDirection: "asc" | "desc" = "desc";
-
   let updating = false;
 
   let packagesScrollY = 0;
@@ -64,12 +61,7 @@
       {#if sideMenuOption == SideMenuOptions.discover}
         <DiscoverPackages bind:scrollY={packagesScrollY} />
       {:else}
-        <Packages
-          packageFilter={sideMenuOption}
-          {sortBy}
-          {sortDirection}
-          bind:scrollY={packagesScrollY}
-        />
+        <Packages packageFilter={sideMenuOption} bind:scrollY={packagesScrollY} />
       {/if}
     </ul>
     <header class="z-30 flex items-center justify-between" class:scrolling={packagesScrollY > 150}>
