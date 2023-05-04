@@ -33,7 +33,7 @@ h4,
 h5,
 h6,
 .click-copy {
-  font-family: "mona-sans";
+  font-family: mona-sans, sans-serif;
 }
 
 .pk-version {
