@@ -1,6 +1,5 @@
 import { type AppUpdater, autoUpdater } from "electron-updater";
 import log from "./logger";
-import { BrowserWindow } from "electron";
 import { MainWindowNotifier } from "./types";
 
 type AutoUpdateStatus = {
@@ -12,6 +11,7 @@ autoUpdater.logger = log;
 
 let mainWindowNotifier: MainWindowNotifier | null = null;
 let initalized = false;
+let isUpdating = false;
 
 // keep the last status to resend to the window when it's opened becuase the store is destroyed when the window is closed
 let lastStatus: AutoUpdateStatus = { status: "up-to-date" };
@@ -21,13 +21,13 @@ export const getUpdater = () => autoUpdater;
 export function checkUpdater(notifier: MainWindowNotifier): AppUpdater {
   try {
     mainWindowNotifier = notifier;
-    autoUpdater.checkForUpdatesAndNotify();
+    checkForUpdates();
 
     if (!initalized) {
       initalized = true;
 
       setInterval(() => {
-        autoUpdater.checkForUpdatesAndNotify();
+        checkForUpdates();
       }, 1000 * 60 * 30); // check for updates every 30 minutes
     }
   } catch (error) {
@@ -36,6 +36,30 @@ export function checkUpdater(notifier: MainWindowNotifier): AppUpdater {
 
   return autoUpdater;
 }
+
+const checkForUpdates = async () => {
+  if (isUpdating) {
+    log.info("Update is already in progress");
+    return;
+  }
+
+  isUpdating = true;
+
+  try {
+    const result = await autoUpdater.checkForUpdatesAndNotify();
+    if (!result?.downloadPromise) {
+      isUpdating = false;
+    } else {
+      const files = await result.downloadPromise;
+      log.info("Successfully downloaded update files:", files);
+      // DO NOT RESET isUpdating here because the user still needs to click to install it
+      // and we don't want to accidentally start another update and overwrite the file
+    }
+  } catch (err) {
+    log.error("Error checking for updates:", err);
+    isUpdating = false;
+  }
+};
 
 // The auto update runs in the background so the window might not be open when the status changes
 // When the update store gets created as part of the window it will request the latest status.
