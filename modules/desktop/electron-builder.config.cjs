@@ -19,7 +19,8 @@ module.exports = {
     target: {
       target: "default",
       arch: ["x64", "arm64"]
-    }
+    },
+    minimumSystemVersion: "11"
   },
   afterSign: async (params) => {
     if (process.platform !== "darwin" || process.env.CSC_IDENTITY_AUTO_DISCOVERY === "false") {
