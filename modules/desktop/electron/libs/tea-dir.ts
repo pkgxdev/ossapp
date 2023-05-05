@@ -2,12 +2,11 @@
 import fs from "fs";
 import path from "path";
 import { app } from "electron";
-import semver, { SemVer } from "semver";
 import log from "./logger";
 import type { InstalledPackage } from "../../src/libs/types";
-import semverCompare from "semver/functions/compare";
 import { mkdirp } from "mkdirp";
 import fetch from "node-fetch";
+import { SemVer, isValidSemVer } from "@tea/libtea";
 
 type Dir = {
   name: string;
@@ -34,26 +33,26 @@ export async function getInstalledPackages(): Promise<InstalledPackage[]> {
   log.info("recursively reading:", pkgsPath);
   const folders = await deepReadDir({
     dir: pkgsPath,
-    continueDeeper: (name: string) => !semver.valid(name) && name !== ".tea",
-    filter: (name: string) => !!semver.valid(name) && name !== ".tea"
+    continueDeeper: (name: string) => !isValidSemVer(name) && name !== ".tea",
+    filter: (name: string) => !!isValidSemVer(name) && name !== ".tea"
   });
 
   const bottles = folders
     .map((p: string) => p.split(".tea/")[1])
     .map(parseVersionFromPath)
     .filter((v): v is ParsedVersion => !!v)
-    .sort((a, b) => semverCompare(b.semVer, a.semVer));
+    .sort((a, b) => b.semVer.compare(a.semVer));
 
   log.info("installed bottles:", bottles.length);
 
   return bottles.reduce<InstalledPackage[]>((pkgs, bottle) => {
     const pkg = pkgs.find((v) => v.full_name === bottle.full_name);
     if (pkg) {
-      pkg.installed_versions.push(bottle.semVer.version);
+      pkg.installed_versions.push(bottle.semVer.toString());
     } else {
       pkgs.push({
         full_name: bottle.full_name,
-        installed_versions: [bottle.semVer.version]
+        installed_versions: [bottle.semVer.toString()]
       });
     }
     return pkgs;
@@ -65,7 +64,7 @@ const parseVersionFromPath = (versionPath: string): ParsedVersion | null => {
     const path = versionPath.trim().split("/");
     const version = path.pop();
     return {
-      semVer: new SemVer(semver.clean(version || "") || ""),
+      semVer: new SemVer(version ?? ""),
       full_name: path.join("/")
     };
   } catch (e) {
@@ -119,9 +118,9 @@ export const deepReadDir = async ({
       if (f.isDirectory() && deeper) {
         const nextFiles = await deepReadDir({ dir: nextPath, continueDeeper, filter });
         arrayOfFiles.push(...nextFiles);
-      } else if (filter && filter(f.name)) {
+      } else if (!f.isSymbolicLink() && filter && filter(f.name)) {
         arrayOfFiles.push(nextPath);
-      } else if (!filter) {
+      } else if (!f.isSymbolicLink() && !filter) {
         arrayOfFiles.push(nextPath);
       }
     }

@@ -15,9 +15,6 @@
   const { packageList: allPackages } = packagesStore;
   export let packageFilter: SideMenuOptions = SideMenuOptions.all;
 
-  export let sortBy: "popularity" | "most recent" = "most recent";
-  export let sortDirection: "asc" | "desc" = "desc";
-
   export let scrollY = 0;
 
   let loadMore = 9;
@@ -43,14 +40,6 @@
     [SideMenuOptions.new_packages]: (pkg: GUIPackage) => {
       return moment(pkg.created).isAfter(moment().subtract(30, "days"));
     },
-    [SideMenuOptions.popular]: (pkg: GUIPackage) =>
-      pkg.categories.includes(SideMenuOptions.popular),
-    [SideMenuOptions.featured]: (pkg: GUIPackage) =>
-      pkg.categories.includes(SideMenuOptions.featured),
-    [SideMenuOptions.essentials]: (pkg: GUIPackage) =>
-      pkg.categories.includes(SideMenuOptions.essentials),
-    [SideMenuOptions.starstruck]: (pkg: GUIPackage) =>
-      pkg.categories.includes(SideMenuOptions.starstruck),
     [SideMenuOptions.made_by_tea]: (pkg: GUIPackage) => pkg.full_name.includes("tea.xyz")
   };
 
@@ -59,18 +48,7 @@
     scrollY = target.scrollTop || 0;
   };
 
-  $: packages = $allPackages.filter(pkgFilters[packageFilter] || pkgFilters.all).sort((a, b) => {
-    if (sortBy === "popularity") {
-      const aPop = +a.dl_count + a.installs;
-      const bPop = +b.dl_count + b.installs;
-      return sortDirection === "asc" ? aPop - bPop : bPop - aPop;
-    } else {
-      // most recent
-      const aDate = new Date(a.last_modified);
-      const bDate = new Date(b.last_modified);
-      return sortDirection === "asc" ? +aDate - +bDate : +bDate - +aDate;
-    }
-  });
+  $: packages = $allPackages.filter(pkgFilters[packageFilter] || pkgFilters.all);
 
   const onResize = (node: HTMLElement) => {
     const assumedCardHeight = 250;
@@ -100,7 +78,7 @@
     {:else}
       {#each Array(9) as _}
         <section class="card p-1 h-{238}">
-          <div class="border-gray h-full w-full border">
+          <div class="h-full w-full border border-gray">
             <Preloader />
           </div>
         </section>

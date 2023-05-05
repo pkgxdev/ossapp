@@ -2,6 +2,7 @@
 // sorry no time to make a pr to the module there
 // added a render_directive fn
 import restructured from "restructured";
+import _ from "lodash";
 
 type Element = {
   type: string;
@@ -188,8 +189,8 @@ const render_block_element = (
 
 const render_directive = (element: Element, level = 0, indent = 2): string => {
   const indentString = " ".repeat(level * indent);
-  const src = element.children[0].value;
-  const alt = element.children[1].value;
+  const src = _.get(element, "children[0].children[0].value", "");
+  const alt = _.get(element, "children[1].children[1].value", "");
   return element.directive === "image"
     ? `
   ${indentString}<img src="${src}" alt="${alt}" />\n

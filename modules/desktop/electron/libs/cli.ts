@@ -121,10 +121,15 @@ const notifyPackageInstalled = (rawPkg: string, notifyMainWindow: MainWindowNoti
 
 export async function openPackageEntrypointInTerminal(pkg: string) {
   let sh = `${cliBinPath} --sync --env=false +${pkg} `;
-  if (pkg == "github.com/AUTOMATIC1111/stable-diffusion-webui") {
-    sh += `~/.tea/${pkg}/v*/entrypoint.sh`;
-  } else {
-    sh += "sh";
+  switch (pkg) {
+    case "github.com/AUTOMATIC1111/stable-diffusion-webui":
+      sh += `~/.tea/${pkg}/v*/entrypoint.sh`;
+      break;
+    case "cointop.sh":
+      sh += "cointop";
+      break;
+    default:
+      sh += "sh";
   }
 
   const scriptPath = await createCommandScriptFile(sh);

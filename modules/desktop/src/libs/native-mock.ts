@@ -326,11 +326,6 @@ export async function getAllPosts(type: string): Promise<AirtablePost[]> {
   return posts;
 }
 
-export async function getDeviceAuth(deviceId: string): Promise<any> {
-  const data = await v1Client.get<any>(`/auth/device/${deviceId}`);
-  return data;
-}
-
 export async function getPackageBottles(name: string): Promise<Bottle[]> {
   return [
     { name, platform: "darwin", arch: "aarch64", version: "3.39.4", bytes: 123456 },
@@ -411,3 +406,7 @@ export const getAutoUpdateStatus = async (): Promise<AutoUpdateStatus> => {
 export async function openPackageEntrypointInTerminal(pkg: string) {
   //noop
 }
+
+export const pollDeviceSession = async () => {
+  console.log("do nothing");
+};

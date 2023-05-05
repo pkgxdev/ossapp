@@ -35,7 +35,7 @@
     {:else}
       {#each Array(9) as _}
         <section class="card p-1 h-{238}">
-          <div class="border-gray h-full w-full border">
+          <div class="h-full w-full border border-gray">
             <Preloader />
           </div>
         </section>

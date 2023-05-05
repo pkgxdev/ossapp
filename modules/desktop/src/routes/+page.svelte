@@ -4,27 +4,22 @@
   import { page } from "$app/stores";
   import { t } from "$libs/translations";
   import { afterNavigate } from "$app/navigation";
-  import { packagesStore, authStore } from "$libs/stores";
+  import { packagesStore } from "$libs/stores";
   import Packages from "$components/packages/packages.svelte";
   import DiscoverPackages from "$components/discover-packages/discover-packages.svelte";
   import { PackageStates, SideMenuOptions, type GUIPackage } from "$libs/types";
   // import SortingButtons from "$components/search-packages/sorting-buttons.svelte";
   import SideMenu from "$components/side-menu/side-menu.svelte";
   import NotificationBar from "$components/notification-bar/notification-bar.svelte";
-  import WelcomeModal from "$components/welcome-modal/welcome-modal.svelte";
   import Button from "@tea/ui/button/button.svelte";
   import log from "$libs/logger";
   import { formatPercent } from "@tea/ui/lib/percent";
 
   const { packageList } = packagesStore;
-  const { session } = authStore;
 
   const url = $page.url;
 
   let sideMenuOption = (url.searchParams.get("tab") as SideMenuOptions) || SideMenuOptions.discover;
-
-  let sortBy: "popularity" | "most recent" = "most recent";
-  let sortDirection: "asc" | "desc" = "desc";
 
   let updating = false;
 
@@ -66,16 +61,11 @@
       {#if sideMenuOption == SideMenuOptions.discover}
         <DiscoverPackages bind:scrollY={packagesScrollY} />
       {:else}
-        <Packages
-          packageFilter={sideMenuOption}
-          {sortBy}
-          {sortDirection}
-          bind:scrollY={packagesScrollY}
-        />
+        <Packages packageFilter={sideMenuOption} bind:scrollY={packagesScrollY} />
       {/if}
     </ul>
     <header class="z-30 flex items-center justify-between" class:scrolling={packagesScrollY > 150}>
-      <h1 class="text-primary font-mona pl-3 text-2xl font-bold">
+      <h1 class="pl-3 font-mona text-2xl font-bold text-primary">
         {$t(`side-menu-title.${sideMenuOption}`).toLowerCase()}
       </h1>
       <!-- 
@@ -92,11 +82,11 @@
         <!-- 22px right margin to account for the scrollbar on the package cards -->
         <div class="mr-[22px] flex items-center justify-end text-sm">
           {#if currentUpdatingPkg}
-            <p class="text-gray px-2 font-mono">{updatingMessage}</p>
+            <p class="px-2 font-mono text-gray">{updatingMessage}</p>
           {/if}
           <div>
             <Button
-              class="h-8 w-48 text-xs"
+              class="h-8 w-48 p-2 text-xs"
               loading={updating}
               type="plain"
               color="secondary"
@@ -112,9 +102,6 @@
 </div>
 
 <SideMenu bind:activeOption={sideMenuOption} />
-{#if !$session.hide_welcome}
-  <WelcomeModal />
-{/if}
 
 <style>
   #content {

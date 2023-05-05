@@ -58,7 +58,7 @@
   });
 </script>
 
-<div id="main-layout" class="font-inter border-gray rounded-xl border transition-all">
+<div id="main-layout" class="rounded-xl border border-gray font-inter transition-all">
   <TopBar />
   <div class="scroll-manager relative z-10">
     <section class="relative" bind:this={view}>
@@ -93,15 +93,6 @@
 
   div {
     position: relative;
-  }
-
-  aside {
-    top: 52px;
-    right: 5px;
-    width: 210px;
-    overflow: clip;
-    height: auto;
-    opacity: 1;
   }
 
   .content {

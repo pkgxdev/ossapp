@@ -9,6 +9,7 @@ const config: UserConfig = {
   resolve: {
     alias: {
       "@tea/ui/*": path.resolve("../ui/src/*"),
+      "@tea/libtea/*": path.resolve("../libtea/src/*"),
       // this dynamic-ish static importing is followed by the svelte build
       // but for vscode editing intellisense tsconfig.json is being used
       "@native": isMock

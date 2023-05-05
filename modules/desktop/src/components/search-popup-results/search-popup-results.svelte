@@ -1,17 +1,11 @@
 <script lang="ts">
   import { packagesStore, searchStore } from "$libs/stores";
-  import type { GUIPackage } from "$libs/types";
   import SearchInput from "@tea/ui/search-input/search-input.svelte";
   import { t } from "$libs/translations";
-  import Preloader from "@tea/ui/Preloader/Preloader.svelte";
-  import Package from "$components/packages/package.svelte";
   import { PackageStates } from "$libs/types";
   import PackageResult from "./package-search-result.svelte";
-  import Mousetrap from "mousetrap";
   // import Posts from '@tea/ui/posts/posts.svelte';
 
-  import { installPackage } from "@native";
-  import { onMount } from "svelte";
   import NoSearchResults from "./no-search-results.svelte";
 
   const { searching, packagesSearch } = searchStore;
@@ -52,7 +46,7 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div id="bg-close" class="z-40" on:click={onClose} />
   <section class="z-50">
-    <header class="border-gray flex border border-x-0 border-t-0 bg-black">
+    <header class="flex border border-x-0 border-t-0 border-gray bg-black">
       <div class="relative w-full">
         <SearchInput
           class="h-9  w-full rounded-sm"
@@ -64,9 +58,9 @@
             searchStore.search(search);
           }}
         />
-        <div class="absolute top-1 right-4 flex items-center gap-1 pt-[1px] opacity-50">
+        <div class="absolute right-4 top-1 flex items-center gap-1 pt-[1px] opacity-50">
           <span class="mr-1 text-xs">clear</span>
-          <kbd class=" bg-gray flex items-center rounded-sm px-2 pt-[1px] text-white">
+          <kbd class=" flex items-center rounded-sm bg-gray px-2 pt-[1px] text-white">
             <!-- using apple system ui font as our default renders the symbols wonky -->
             <span class="" style="font-family: system-ui, -apple-system, sans-serif">⌘⇧⌫</span>
           </kbd>
@@ -77,7 +71,7 @@
     {#if term}
       <div class="z-20 bg-black">
         {#if $packagesSearch.length > 0}
-          <header class="text-gray p-4 text-lg">
+          <header class="p-4 text-lg text-gray">
             packages ({$packagesSearch.length})
           </header>
           <ul class="flex flex-col gap-2 p-2">
@@ -128,7 +122,7 @@
       </div>
     {:else}
       <div class="flex h-full w-full flex-col justify-center bg-black">
-        <p class="text-gray text-center">start typing to search</p>
+        <p class="text-center text-gray">start typing to search</p>
       </div>
     {/if}
   </section>

@@ -7,9 +7,9 @@
   };
 </script>
 
-<header class="border-gray text-primary border bg-black p-4">GETTING STARTED WITH TEA</header>
+<header class="border border-gray bg-black p-4 text-primary">GETTING STARTED WITH TEA</header>
 <section class="grid grid-cols-3 bg-black">
-  <div class="border-gray border p-4">
+  <div class="border border-gray p-4">
     <ArticleCard
       content={{
         title: "installing tea",
@@ -20,7 +20,7 @@
       }}
     />
   </div>
-  <div class="border-gray border p-4">
+  <div class="border border-gray p-4">
     <ArticleCard
       content={{
         title: "authenticating",
@@ -32,7 +32,7 @@
       onClick={doStuff}
     />
   </div>
-  <div class="border-gray border p-4">
+  <div class="border border-gray p-4">
     <ArticleCard
       content={{
         title: "give us a star",

@@ -1,6 +1,6 @@
 {
   "name": "tea",
-  "version": "0.0.49",
+  "version": "0.1.2",
   "private": true,
   "description": "tea gui app",
   "author": "tea.xyz",
@@ -37,8 +37,9 @@
     "@sveltejs/adapter-auto": "^1.0.0",
     "@sveltejs/adapter-node": "^1.0.0-next.101",
     "@sveltejs/adapter-static": "^1.0.0-next.48",
-    "@sveltejs/kit": "^1.0.0-next.562",
+    "@sveltejs/kit": "^1.15.9",
     "@tea/ui": "workspace:*",
+    "@tea/libtea": "workspace:*",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/svelte": "^3.2.2",
     "@types/bcryptjs": "^2.4.2",
@@ -58,9 +59,9 @@
     "eslint-plugin-svelte3": "^4.0.0",
     "jsdom": "^21.0.0",
     "postcss": "^8.4.19",
-    "prettier": "^2.7.1",
-    "prettier-plugin-svelte": "^2.7.0",
-    "prettier-plugin-tailwindcss": "^0.2.0",
+    "prettier": "^2.8.8",
+    "prettier-plugin-svelte": "^2.10.0",
+    "prettier-plugin-tailwindcss": "^0.2.8",
     "svelte": "^3.55.1",
     "svelte-check": "^2.8.0",
     "svelte-preprocess": "^5.0.1",
@@ -103,7 +104,6 @@
     "mousetrap": "^1.6.5",
     "pushy-electron": "^1.0.11",
     "renderer": "link:@types/electron/renderer",
-    "semver": "^7.3.8",
     "svelte-infinite-scroll": "^2.0.1",
     "svelte-markdown": "^0.2.3",
     "svelte-watch-resize": "^1.0.3",
@@ -114,7 +114,8 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "@tea/ui"
+      "@tea/ui",
+      "@tea/libtea"
     ]
   },
   "homepage": "https://tea.xyz",

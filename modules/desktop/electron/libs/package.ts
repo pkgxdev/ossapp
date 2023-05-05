@@ -31,12 +31,12 @@ export async function loadPackageCache(): Promise<Packages> {
     const pkgs = JSON.parse(pkgData.toString()) as Packages;
 
     if (pkgs?.packages) {
-      pkgs.packages = pkgs.packages.map((pkg: GUIPackage) => {
-        const { install_progress_percentage, isUninstalling, synced, ...rest } = pkg;
-        return rest;
-      });
+      // Remove any temporary properties that may have been added to the package (like installation progress)
+      for (const [key, value] of Object.entries(pkgs.packages)) {
+        const { install_progress_percentage, isUninstalling, synced, ...rest } = value;
+        pkgs.packages[key] = rest;
+      }
     }
-
     return pkgs;
   } catch (err) {
     if (err.code !== "ENOENT") {

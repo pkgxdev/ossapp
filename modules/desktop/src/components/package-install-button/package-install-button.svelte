@@ -24,6 +24,13 @@
     return state === PackageStates.INSTALLING || state === PackageStates.UPDATING;
   };
 
+  const getVersion = (pkg: GUIPackage) => {
+    if (pkg.state === PackageStates.INSTALLED) {
+      return pkg.installed_versions?.[0] ?? pkg.version;
+    }
+    return pkg.version;
+  };
+
   const badgeClass: Record<PackageStates, string> = {
     [PackageStates.AVAILABLE]: "install-badge",
     [PackageStates.INSTALLING]: "install-badge",
@@ -46,20 +53,19 @@
 >
   <div class="version-button h-full">
     <div class="flex h-full flex-col justify-center p-2">
-      {#if hasVersionSelectorDropdown}
-        <div class="flex items-center justify-between gap-x-2">
-          <div class="flex items-center gap-x-2">
-            <div>{ctaLabel}</div>
-            <div class="version-label {badgeClass[pkg.state]}">{pkg.version}</div>
-          </div>
-          <i class="icon-downward-arrow flex" />
-        </div>
-      {:else}
-        <div class="flex items-center justify-center gap-x-2">
+      <div
+        class="flex items-center gap-x-2 {hasVersionSelectorDropdown
+          ? 'justify-between'
+          : 'justify-center'}"
+      >
+        <div class="flex items-center gap-x-2">
           <div>{ctaLabel}</div>
-          <div class="version-label {badgeClass[pkg.state]}">{pkg.version}</div>
+          <div class="version-label {badgeClass[pkg.state]}">v{getVersion(pkg)}</div>
         </div>
-      {/if}
+        {#if hasVersionSelectorDropdown}
+          <i class="icon-downward-arrow flex" />
+        {/if}
+      </div>
     </div>
     <!-- This slot holds the drop down menu and it inside of the button so that the 
 		hover effect remain on the button while the user is hovering the dropdown items-->

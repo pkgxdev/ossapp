@@ -1,12 +1,22 @@
 import fs from "fs";
 import { getGuiPath, getTeaPath } from "./tea-dir";
 import log from "./logger";
-import semver from "semver";
-import { cliBinPath, asyncExec } from "./cli";
+// import { cliBinPath, asyncExec } from "./cli";
 import { createInitialSessionFile } from "./auth";
 import * as https from "https";
 import { spawn } from "child_process";
 import path from "path";
+import { parse as semverParse } from "@tea/libtea";
+
+
+const MINIMUM_TEA_VERSION = "0.31.2";
+
+const destinationDirectory = getGuiPath();
+
+// TODO: move device_id generation here
+
+// Get the binary path from the current app directory
+const binaryUrl = "https://tea.xyz/$(uname)/$(uname -m)";
 
 let initializePromise: Promise<string> | null = null;
 
@@ -34,7 +44,7 @@ async function initializeTeaCliInternal(teaCliPrefix: string): Promise<string> {
     return installTeaCli();
   } else {
     const dir = fs.readlinkSync(teaCliPrefix);
-    const v = semver.parse(dir)?.toString();
+    const v = semverParse(dir)?.toString();
     if (!v) throw new Error(`couldn't parse to semver: ${dir}`);
     return v;
   }

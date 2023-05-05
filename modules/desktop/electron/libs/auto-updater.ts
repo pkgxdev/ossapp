@@ -1,6 +1,6 @@
 import { type AppUpdater, autoUpdater } from "electron-updater";
 import log from "./logger";
-import { BrowserWindow } from "electron";
+import { MainWindowNotifier } from "./types";
 
 type AutoUpdateStatus = {
   status: "up-to-date" | "available" | "ready";
@@ -9,24 +9,25 @@ type AutoUpdateStatus = {
 
 autoUpdater.logger = log;
 
-let window: BrowserWindow;
+let mainWindowNotifier: MainWindowNotifier | null = null;
 let initalized = false;
+let isUpdating = false;
 
 // keep the last status to resend to the window when it's opened becuase the store is destroyed when the window is closed
 let lastStatus: AutoUpdateStatus = { status: "up-to-date" };
 
 export const getUpdater = () => autoUpdater;
 
-export function checkUpdater(mainWindow: BrowserWindow): AppUpdater {
+export function checkUpdater(notifier: MainWindowNotifier): AppUpdater {
   try {
-    window = mainWindow;
-    autoUpdater.checkForUpdatesAndNotify();
+    mainWindowNotifier = notifier;
+    checkForUpdates();
 
     if (!initalized) {
       initalized = true;
 
       setInterval(() => {
-        autoUpdater.checkForUpdatesAndNotify();
+        checkForUpdates();
       }, 1000 * 60 * 30); // check for updates every 30 minutes
     }
   } catch (error) {
@@ -36,6 +37,30 @@ export function checkUpdater(mainWindow: BrowserWindow): AppUpdater {
   return autoUpdater;
 }
 
+const checkForUpdates = async () => {
+  if (isUpdating) {
+    log.info("Update is already in progress");
+    return;
+  }
+
+  isUpdating = true;
+
+  try {
+    const result = await autoUpdater.checkForUpdatesAndNotify();
+    if (!result?.downloadPromise) {
+      isUpdating = false;
+    } else {
+      const files = await result.downloadPromise;
+      log.info("Successfully downloaded update files:", files);
+      // DO NOT RESET isUpdating here because the user still needs to click to install it
+      // and we don't want to accidentally start another update and overwrite the file
+    }
+  } catch (err) {
+    log.error("Error checking for updates:", err);
+    isUpdating = false;
+  }
+};
+
 // The auto update runs in the background so the window might not be open when the status changes
 // When the update store gets created as part of the window it will request the latest status.
 export function getAutoUpdateStatus() {
@@ -44,7 +69,9 @@ export function getAutoUpdateStatus() {
 
 function sendStatusToWindow(status: AutoUpdateStatus) {
   lastStatus = status;
-  window?.webContents.send("app-update-status", status);
+  if (mainWindowNotifier) {
+    mainWindowNotifier("app-update-status", status);
+  }
 }
 
 autoUpdater.on("checking-for-update", () => {
@@ -52,6 +79,7 @@ autoUpdater.on("checking-for-update", () => {
 });
 
 autoUpdater.on("update-available", (info) => {
+  log.info("update-available", info);
   sendStatusToWindow({ status: "available" });
 });
 
@@ -72,5 +100,6 @@ autoUpdater.on("download-progress", (progressObj) => {
 });
 
 autoUpdater.on("update-downloaded", (info) => {
+  log.info("update-downloaded");
   sendStatusToWindow({ status: "ready", version: info.version });
 });

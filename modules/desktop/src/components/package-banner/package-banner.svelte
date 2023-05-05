@@ -5,7 +5,6 @@
   import Button from "@tea/ui/button/button.svelte";
   import ButtonIcon from "@tea/ui/button-icon/button-icon.svelte";
   import ToolTip from "@tea/ui/tool-tip/tool-tip.svelte";
-  import semverCompare from "semver/functions/compare";
   import ProgressCircle from "@tea/ui/progress-circle/progress-circle.svelte";
 
   import type { GUIPackage } from "$libs/types";
@@ -16,6 +15,7 @@
   import PackageImage from "../package-card/bg-image.svelte";
   import PackageVersionSelector from "$components/package-install-button/package-version-selector.svelte";
   import { fixPackageName } from "$libs/packages/pkg-utils";
+  import { semverCompare } from "$libs/packages/pkg-utils";
 
   export let pkg: GUIPackage;
   let installing = false;
@@ -65,7 +65,7 @@
     </figure>
     <article class="w-2/3 p-4 pt-8">
       <div class="align-center flex items-center gap-2">
-        <h3 class="text-primary text-3xl">{fixPackageName(pkg.name)}</h3>
+        <h3 class="text-3xl text-primary">{fixPackageName(pkg.name)}</h3>
         <ButtonIcon
           icon="pencil"
           helpText="edit package"
@@ -76,7 +76,7 @@
         />
         <ButtonIcon icon="link" helpText="share package" on:click={copyPackagePantryLink} />
         {#if copied}
-          <p class="text-green">copied!</p>
+          <p class="text-teal">copied!</p>
         {/if}
       </div>
       {#if pkg.maintainer}
@@ -141,7 +141,7 @@
         {/if}
         {#if pkg.github}
           <button
-            class="border-gray group flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-sm border hover:bg-[#e1e1e1]"
+            class="group flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-sm border border-gray hover:bg-[#e1e1e1]"
             on:click={() => {
               if (pkg.github) {
                 const slug = trimGithubSlug(pkg.github);
@@ -149,7 +149,7 @@
               }
             }}
           >
-            <div class="icon-github text-gray flex text-xl group-hover:text-black" />
+            <div class="icon-github flex text-xl text-gray group-hover:text-black" />
           </button>
         {/if}
         {#if pkg.installed_versions?.length}

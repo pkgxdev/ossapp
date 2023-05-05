@@ -8,21 +8,21 @@
 
 {#if $updateStatus.status === "up-to-date"}
   <div
-    class="hover:bg-gray outline-gray flex h-7 w-full items-center justify-between p-1 text-left outline-1 hover:bg-opacity-25 hover:outline"
+    class="flex h-7 w-full items-center justify-between p-1 text-left outline-1 outline-gray hover:bg-gray hover:bg-opacity-25 hover:outline"
   >
     <div>up to date</div>
     <i class="installed-text icon-check-circle-o flex text-[#00ffd0]" />
   </div>
 {:else if $updateStatus.status === "available"}
   <div
-    class="hover:bg-gray outline-gray flex h-7 w-full items-center justify-between p-1 text-left outline-1 hover:bg-opacity-25 hover:outline"
+    class="flex h-7 w-full items-center justify-between p-1 text-left outline-1 outline-gray hover:bg-gray hover:bg-opacity-25 hover:outline"
   >
     <div>fetching update</div>
     <Spinner />
   </div>
 {:else if $updateStatus.status === "ready"}
   <button
-    class="hover:bg-gray outline-gray flex h-7 w-full items-center justify-between p-1 text-left outline-1 hover:bg-opacity-25 hover:outline"
+    class="flex h-7 w-full items-center justify-between p-1 text-left outline-1 outline-gray hover:bg-gray hover:bg-opacity-25 hover:outline"
     on:click={relaunch}
   >
     <div class="flex items-center">

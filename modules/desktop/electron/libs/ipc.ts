@@ -1,6 +1,6 @@
 import { ipcMain, app, BrowserWindow } from "electron";
 import { deletePackageFolder, getInstalledPackages, cacheImage } from "./tea-dir";
-import { readSessionData, writeSessionData } from "./auth";
+import { readSessionData, writeSessionData, pollAuth } from "./auth";
 import type { Packages, Session } from "../../src/libs/types";
 import log from "./logger";
 import { syncLogsAt } from "./v1-client";
@@ -201,6 +201,15 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
     try {
       log.info("getting auto update status");
       return getAutoUpdateStatus();
+    } catch (error) {
+      log.error(error);
+    }
+  });
+
+  ipcMain.handle("poll-session", async () => {
+    try {
+      log.info("start polling");
+      return pollAuth();
     } catch (error) {
       log.error(error);
     }

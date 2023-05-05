@@ -127,7 +127,7 @@ function createMainWindow() {
     mainWindow = createWindow();
   }
 
-  checkUpdater(mainWindow);
+  checkUpdater(notifyMainWindow);
 
   mainWindow.once("close", () => {
     mainWindow = null;
@@ -149,10 +149,14 @@ if (process.defaultApp) {
   app.setAsDefaultProtocolClient("tea");
 }
 
-app.once("ready", createMainWindow);
+let ready = false;
+app.once("ready", () => {
+  ready = true;
+  createMainWindow();
+});
 
 app.on("activate", () => {
-  if (!mainWindow) {
+  if (ready && !mainWindow) {
     createMainWindow();
   }
 });
@@ -196,8 +200,8 @@ app.on("open-url", (event, url) => {
   }
 });
 
-function notifyMainWindow(channel: string, data: unknown) {
-  if (mainWindow) {
+export function notifyMainWindow(channel: string, data: unknown) {
+  if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.webContents.send(channel, data);
   }
 }
