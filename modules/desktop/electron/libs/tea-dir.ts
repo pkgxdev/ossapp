@@ -30,6 +30,12 @@ export const getGuiPath = () => {
 
 export async function getInstalledPackages(): Promise<InstalledPackage[]> {
   const pkgsPath = getTeaPath();
+
+  if (!fs.existsSync(pkgsPath)) {
+    log.info(`packages path ${pkgsPath} does not exist, no installed packages`);
+    return [];
+  }
+
   log.info("recursively reading:", pkgsPath);
   const folders = await deepReadDir({
     dir: pkgsPath,
