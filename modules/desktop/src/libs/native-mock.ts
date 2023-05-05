@@ -326,19 +326,6 @@ export async function getAllPosts(type: string): Promise<AirtablePost[]> {
   return posts;
 }
 
-export async function getPackageBottles(name: string): Promise<Bottle[]> {
-  return [
-    { name, platform: "darwin", arch: "aarch64", version: "3.39.4", bytes: 123456 },
-    { name, platform: "darwin", arch: "aarch64", version: "3.40.0", bytes: 123456 },
-    { name, platform: "darwin", arch: "x86-64", version: "3.39.4", bytes: 123456 },
-    { name, platform: "darwin", arch: "x86-64", version: "3.40.0", bytes: 123456 },
-    { name, platform: "linux", arch: "aarch64", version: "3.39.4", bytes: 123456 },
-    { name, platform: "linux", arch: "aarch64", version: "3.40.0", bytes: 123456 },
-    { name, platform: "linux", arch: "x86-64", version: "3.39.4", bytes: 123456 },
-    { name, platform: "linux", arch: "x86-64", version: "3.40.0", bytes: 123456 }
-  ];
-}
-
 export async function getPackage(packageName: string): Promise<Partial<Package>> {
   return packages.find((pkg) => pkg.full_name === packageName) || packages[0];
 }
