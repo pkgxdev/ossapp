@@ -8,16 +8,14 @@ import { spawn } from "child_process";
 import path from "path";
 import { parse as semverParse } from "@tea/libtea";
 
-
 const MINIMUM_TEA_VERSION = "0.31.2";
 
 const destinationDirectory = getGuiPath();
 
-// TODO: move device_id generation here
-
 // Get the binary path from the current app directory
 const binaryUrl = "https://tea.xyz/$(uname)/$(uname -m)";
 
+// add state to this wether completed or pending, and can be invalidated
 let initializePromise: Promise<string> | null = null;
 
 export async function initializeTeaCli(): Promise<string> {
