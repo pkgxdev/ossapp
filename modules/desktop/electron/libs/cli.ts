@@ -2,7 +2,7 @@ import { spawn, exec } from "child_process";
 import { getGuiPath, getTeaPath } from "./tea-dir";
 import fs from "fs";
 import path from "path";
-import initializeTeaCli from "./initialize";
+import { initializeTeaCli } from "./initialize";
 
 import { app } from "electron";
 import log from "./logger";
@@ -198,6 +198,6 @@ export async function syncPantry() {
   const teaVersion = await initializeTeaCli();
 
   if (!teaVersion) throw new Error("no tea");
-  log.info("Syncing pantry");
+  log.info("Syncing pantry", teaVersion);
   await asyncExec(`DEBUG=1 "${cliBinPath}" --sync --env=false`);
 }

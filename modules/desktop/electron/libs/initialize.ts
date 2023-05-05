@@ -8,36 +8,57 @@ import { spawn } from "child_process";
 import path from "path";
 import { parse as semverParse } from "@tea/libtea";
 
-const MINIMUM_TEA_VERSION = "0.31.2";
+type InitState = "NOT_INITIALIZED" | "PENDING" | "INITIALIZED";
 
-const destinationDirectory = getGuiPath();
+class InitWatcher<T> {
+  private initState: InitState;
+  private initFunction: () => Promise<T>;
+  private initialValue: T | undefined;
+  private initializationPromise: Promise<T> | undefined;
 
-// Get the binary path from the current app directory
-const binaryUrl = "https://tea.xyz/$(uname)/$(uname -m)";
-
-// add state to this wether completed or pending, and can be invalidated
-let initializePromise: Promise<string> | null = null;
-
-export async function initializeTeaCli(): Promise<string> {
-  // contract: cannot be called off the main web worker thread
-  const teaCliPrefix = path.join(getTeaPath(), "tea.xyz/v*");
-
-  if (initializePromise && fs.existsSync(path.join(teaCliPrefix, "bin/tea"))) {
-    return initializePromise;
+  constructor(initFunction: () => Promise<T>) {
+    this.initState = "NOT_INITIALIZED";
+    this.initFunction = initFunction;
+    this.initialValue = undefined;
+    this.initializationPromise = undefined;
   }
 
-  log.info("Initializing tea cli");
-  initializePromise = initializeTeaCliInternal(teaCliPrefix);
+  async initialize(): Promise<T> {
+    if (this.initState === "NOT_INITIALIZED") {
+      this.initState = "PENDING";
+      this.initializationPromise = this.initFunction()
+        .then((value) => {
+          this.initialValue = value;
+          this.initState = "INITIALIZED";
+          return value;
+        })
+        .catch((error) => {
+          this.initState = "NOT_INITIALIZED";
+          this.initializationPromise = undefined;
+          throw error;
+        });
+    }
 
-  initializePromise.catch((error) => {
-    log.info("Error initializing tea cli, resetting promise:", error);
-    initializePromise = null;
-  });
+    return this.initializationPromise as Promise<T>;
+  }
 
-  return initializePromise;
+  reset(): void {
+    this.initState = "NOT_INITIALIZED";
+    this.initializationPromise = undefined;
+  }
+
+  async observe(): Promise<T> {
+    return await this.initialize();
+  }
+
+  getState(): InitState {
+    return this.initState;
+  }
 }
 
-async function initializeTeaCliInternal(teaCliPrefix: string): Promise<string> {
+const teaCliPrefix = path.join(getTeaPath(), "tea.xyz/v*");
+
+export const cliInitializationState = new InitWatcher<string>(async () => {
   if (!fs.existsSync(path.join(teaCliPrefix, "bin/tea"))) {
     return installTeaCli();
   } else {
@@ -46,6 +67,18 @@ async function initializeTeaCliInternal(teaCliPrefix: string): Promise<string> {
     if (!v) throw new Error(`couldn't parse to semver: ${dir}`);
     return v;
   }
+});
+
+cliInitializationState.initialize();
+
+export async function initializeTeaCli(): Promise<string> {
+  if (
+    cliInitializationState.getState() === "INITIALIZED" &&
+    !fs.existsSync(path.join(teaCliPrefix, "bin/tea"))
+  ) {
+    cliInitializationState.reset();
+  }
+  return cliInitializationState.observe();
 }
 
 //NOTE copy pasta from https://github.com/teaxyz/setup/blob/main/action.js

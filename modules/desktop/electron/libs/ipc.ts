@@ -6,7 +6,7 @@ import log from "./logger";
 import { syncLogsAt } from "./v1-client";
 import { installPackage, openPackageEntrypointInTerminal, syncPantry } from "./cli";
 
-import initializeTeaCli from "./initialize";
+import { initializeTeaCli, cliInitializationState } from "./initialize";
 
 import { getAutoUpdateStatus, getUpdater } from "./auto-updater";
 
@@ -142,7 +142,10 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
         await deletePackageFolder(fullName, version);
       } catch (e) {
         log.error(e);
-        return e;
+      } finally {
+        if (fullName === "tea.xyz") {
+          cliInitializationState.reset();
+        }
       }
     }
   );
