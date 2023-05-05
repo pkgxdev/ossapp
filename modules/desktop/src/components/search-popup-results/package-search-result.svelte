@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { GUIPackage } from "$libs/types";
   import { packagesStore } from "$libs/stores";
-  import { onMount } from "svelte";
 
   import ImgLoader from "@tea/ui/img-loader/img-loader.svelte";
   import { goto } from "$app/navigation";
@@ -13,10 +12,6 @@
   const { packageList } = packagesStore;
 
   $: updatedPkg = $packageList.find((p) => p.full_name === pkg.full_name);
-
-  onMount(() => {
-    packagesStore.fetchPackageBottles(pkg.full_name);
-  });
 
   const gotoPackagePage = () => {
     goto(`/packages/${pkg.slug}?tab=all`);

@@ -123,19 +123,6 @@ export async function getAllPosts(tag?: string): Promise<AirtablePost[]> {
   }
 }
 
-export async function getPackageBottles(packageName: string): Promise<Bottle[]> {
-  try {
-    return withRetry(async () => {
-      const pkg = await apiGet<Package>(`packages/${packageName.replaceAll("/", ":")}`);
-      log.info(`got ${pkg?.bottles?.length || 0} bottles for ${packageName}`);
-      return (pkg && pkg.bottles) || [];
-    });
-  } catch (error) {
-    log.error("getPackageBottles:", error);
-    return [];
-  }
-}
-
 export async function getPackage(packageName: string): Promise<Partial<Package>> {
   try {
     return await withRetry(async () => {
