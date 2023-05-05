@@ -26,7 +26,7 @@ class InitWatcher<T> {
   async initialize(): Promise<T> {
     if (this.initState === "NOT_INITIALIZED") {
       this.initState = "PENDING";
-      this.initializationPromise = this.initFunction()
+      this.initializationPromise = this.retryFunction(this.initFunction, 3)
         .then((value) => {
           this.initialValue = value;
           this.initState = "INITIALIZED";
@@ -40,6 +40,23 @@ class InitWatcher<T> {
     }
 
     return this.initializationPromise as Promise<T>;
+  }
+
+  async retryFunction(
+    func: () => Promise<T>,
+    retries: number,
+    currentAttempt: number = 1
+  ): Promise<T> {
+    try {
+      const result = await func();
+      return result;
+    } catch (error) {
+      if (currentAttempt < retries) {
+        return this.retryFunction(func, retries, currentAttempt + 1);
+      } else {
+        throw error;
+      }
+    }
   }
 
   reset(): void {
