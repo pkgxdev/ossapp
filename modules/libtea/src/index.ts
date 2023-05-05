@@ -1,1 +1,1 @@
-export { default as SemVer, isValidSemVer } from "./semver";
+export { default as SemVer, isValidSemVer, parse } from "./semver";
