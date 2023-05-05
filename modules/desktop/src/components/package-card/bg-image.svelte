@@ -16,6 +16,12 @@
   let lastProcessedPkg: GUIPackage | null = null;
 
   const loadImage = async (url: string): Promise<string> => {
+    if (url.includes("cached_images")) {
+      loadedImg = url;
+      loaded = true;
+      return url;
+    }
+
     const image = new Image();
     image.src = url;
     return new Promise((resolve, reject) => {
@@ -23,7 +29,7 @@
         loadedImg = url;
         setTimeout(() => {
           loaded = true;
-        }, 300);
+        }, 100);
         resolve(url);
       };
       image.onerror = () => {
