@@ -42,11 +42,7 @@ class InitWatcher<T> {
     return this.initializationPromise as Promise<T>;
   }
 
-  async retryFunction(
-    func: () => Promise<T>,
-    retries: number,
-    currentAttempt: number = 1
-  ): Promise<T> {
+  async retryFunction(func: () => Promise<T>, retries: number, currentAttempt = 1): Promise<T> {
     try {
       const result = await func();
       return result;
