@@ -8,6 +8,7 @@ import { app } from "electron";
 import log from "./logger";
 import { MainWindowNotifier } from "./types";
 
+// Be careful with globbing when passing this to a shell which might expand it.  Either escape it or quote it.
 export const cliBinPath = path.join(getTeaPath(), "tea.xyz/v*/bin/tea");
 
 export async function installPackage(
@@ -120,7 +121,7 @@ const notifyPackageInstalled = (rawPkg: string, notifyMainWindow: MainWindowNoti
 };
 
 export async function openPackageEntrypointInTerminal(pkg: string) {
-  let sh = `${cliBinPath} --sync --env=false +${pkg} `;
+  let sh = `"${cliBinPath}" --sync --env=false +${pkg} `;
   switch (pkg) {
     case "github.com/AUTOMATIC1111/stable-diffusion-webui":
       sh += `~/.tea/${pkg}/v*/entrypoint.sh`;

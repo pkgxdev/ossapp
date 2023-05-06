@@ -1,7 +1,5 @@
 import fs from "fs";
-import { getGuiPath, getTeaPath } from "./tea-dir";
-import log from "./logger";
-// import { cliBinPath, asyncExec } from "./cli";
+import { getTeaPath } from "./tea-dir";
 import { createInitialSessionFile } from "./auth";
 import * as https from "https";
 import { spawn } from "child_process";
@@ -13,13 +11,11 @@ type InitState = "NOT_INITIALIZED" | "PENDING" | "INITIALIZED";
 class InitWatcher<T> {
   private initState: InitState;
   private initFunction: () => Promise<T>;
-  private initialValue: T | undefined;
   private initializationPromise: Promise<T> | undefined;
 
   constructor(initFunction: () => Promise<T>) {
     this.initState = "NOT_INITIALIZED";
     this.initFunction = initFunction;
-    this.initialValue = undefined;
     this.initializationPromise = undefined;
   }
 
@@ -28,7 +24,6 @@ class InitWatcher<T> {
       this.initState = "PENDING";
       this.initializationPromise = this.retryFunction(this.initFunction, 3)
         .then((value) => {
-          this.initialValue = value;
           this.initState = "INITIALIZED";
           return value;
         })
@@ -69,6 +64,7 @@ class InitWatcher<T> {
   }
 }
 
+// Be careful with globbing when passing this to a shell which might expand it.  Either escape it or quote it.
 const teaCliPrefix = path.join(getTeaPath(), "tea.xyz/v*");
 
 export const cliInitializationState = new InitWatcher<string>(async () => {
