@@ -19,28 +19,54 @@
 
   export let pkg: GUIPackage;
   let installing = false;
-  let pruning = false;
+  let uninstalling = false;
 
   const install = async (version: string) => {
-    installing = true;
-    await packagesStore.installPkg(pkg, version);
-    installing = false;
+    if (installing) {
+      return;
+    }
+    try {
+      installing = true;
+      await packagesStore.installPkg(pkg, version);
+    } finally {
+      installing = false;
+    }
+  };
+
+  const uninstall = async () => {
+    if (uninstalling) {
+      return;
+    }
+
+    try {
+      uninstalling = true;
+      await packagesStore.uninstallPkg(pkg);
+    } finally {
+      uninstalling = false;
+    }
   };
 
   const prune = async () => {
-    pruning = true;
-    const versions = (pkg?.installed_versions || []).sort((a, b) => semverCompare(b, a));
-    for (const [i, v] of versions.entries()) {
-      if (i) {
-        // skip the latest version = 0
-        try {
-          await packagesStore.deletePkg(pkg, v);
-        } catch (e) {
-          console.error(e);
+    if (uninstalling) {
+      return;
+    }
+
+    try {
+      uninstalling = true;
+      const versions = (pkg?.installed_versions || []).sort((a, b) => semverCompare(b, a));
+      for (const [i, v] of versions.entries()) {
+        if (i) {
+          // skip the latest version = 0
+          try {
+            await packagesStore.deletePkg(pkg, v);
+          } catch (e) {
+            console.error(e);
+          }
         }
       }
+    } finally {
+      uninstalling = false;
     }
-    pruning = false;
   };
 
   let copied = false;
@@ -100,10 +126,8 @@
                 class="h-10"
                 type="plain"
                 color="blue"
-                onClick={async () => {
-                  packagesStore.uninstallPkg(pkg);
-                }}
-                loading={pruning}
+                onClick={uninstall}
+                loading={uninstalling}
               >
                 <div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
                   <div class="icon-trash" />
@@ -125,7 +149,7 @@
                 type="plain"
                 color="blue"
                 onClick={prune}
-                loading={pruning}
+                loading={uninstalling}
               >
                 <div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
                   <div class="icon-scissors" />

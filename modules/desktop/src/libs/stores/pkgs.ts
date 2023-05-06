@@ -27,6 +27,7 @@ import withRetry from "$libs/utils/retry";
 
 import log from "$libs/logger";
 import { isPackageUpToDate } from "../packages/pkg-utils";
+import withDelay from "$libs/utils/delay";
 
 const packageRefreshInterval = 1000 * 60 * 60; // 1 hour
 
@@ -254,11 +255,11 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
         await deletePkg(pkg, v);
       }
 
-      setTimeout(() => {
+      await withDelay(() => {
         updatePackage(pkg.full_name, {
           installed_versions: []
         });
-      }, 3000);
+      }, 1000);
     } catch (error) {
       log.error(error);
       notificationStore.add({
