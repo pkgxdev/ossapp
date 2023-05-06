@@ -18,11 +18,10 @@ Under the hood tea/gui installs and manages your packages with [`tea/cli`]
 while exposing additional functionality, features and informational touches
 that complement and expand upon the nature of package management.
 
-To install the gui, visit: https://tea.xyz/gui/ and download the latest
+To install the gui, visit: <https://tea.xyz/gui/> and download the latest
 version. The gui auto-updates itself.
 
 &nbsp;
-
 
 # Contributing to `tea/gui`
 
@@ -40,7 +39,6 @@ technologies are used:
 - [fontastic](https://fontastic.me)
 - [electron](http://electronjs.org)
 
-
 # Hacking on `tea/gui`
 
 ```sh
@@ -52,7 +50,6 @@ xc dev    # opens the app in dev mode
 > Make sure to run `xc prettier` before submitting pull-requests.
 
 &nbsp;
-
 
 # Tasks
 
@@ -104,6 +101,7 @@ pnpm --filter tea exec pnpm dist
 ```
 
 ## Check
+
 Runs the typescript compiler and linter.
 
 ```sh
@@ -111,8 +109,36 @@ pnpm run -r check
 pnpm run -r lint
 ```
 
-&nbsp;
+## Bump
 
+Inputs: PRIORITY
+
+```sh
+if ! git diff-index --quiet HEAD --; then
+  echo "error: dirty working tree" >&2
+  exit 1
+fi
+
+if [ "$(git rev-parse --abbrev-ref HEAD)" != "main" ]; then
+  echo "error: requires main branch" >&2
+  exit 1
+fi
+
+V=$(git describe --tags --abbrev=0 --match "v[0-9]*.[0-9]*.[0-9]*")
+V=$(tea semverator bump $V $PRIORITY)
+
+if ! grep -F "\"version\": \"$V\",$" modules/desktop/package.json; then
+  sed -i.bak -e "s/\"version\": .*,$/\"version\": \"$V\",/" modules/desktop/package.json
+  rm modules/desktop/package.json.bak
+  git add modules/desktop/package.json
+  git commit -m "bump $V" --gpg-sign
+fi
+
+git push origin main
+tea gh release create "v$V"
+```
+
+&nbsp;
 
 # Dependencies
 
