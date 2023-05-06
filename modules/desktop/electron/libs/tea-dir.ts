@@ -7,6 +7,7 @@ import type { InstalledPackage } from "../../src/libs/types";
 import { mkdirp } from "mkdirp";
 import fetch from "node-fetch";
 import { SemVer, isValidSemVer } from "@tea/libtea";
+import { execSync } from "child_process";
 
 type Dir = {
   name: string;
@@ -18,7 +19,16 @@ type ParsedVersion = { full_name: string; semVer: SemVer };
 
 export const getTeaPath = () => {
   const homePath = app.getPath("home");
-  const teaPath = path.join(homePath, "./.tea");
+  let teaPath;
+
+  try {
+    teaPath = execSync("tea --prefix", { encoding: "utf8" }).trim();
+    log.info(teaPath);
+  } catch (error) {
+    log.info("Could not run tea --prefix. Using default path.", info);
+    teaPath = path.join(homePath, "./.tea");
+  }
+
   return teaPath;
 };
 
