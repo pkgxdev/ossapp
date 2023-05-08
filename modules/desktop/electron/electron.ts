@@ -183,7 +183,7 @@ app.on("open-url", (event, url) => {
   if (isPackage) {
     // /packages/github.com/pypa/twine -> /packages/github_com_pypa_twine
     const packageSlug = nameToSlug(rawPath.replace(packagesPrefix, ""));
-    rawPath = [packagesPrefix, packageSlug].join("");
+    rawPath = [packagesPrefix, packageSlug, "?deeplink=true"].join("");
   }
 
   setProtocolPath(rawPath);
