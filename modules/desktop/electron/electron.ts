@@ -22,6 +22,7 @@ if (app.isPackaged) {
   Sentry.init({
     dsn: "https://5ff29bb5b3b64cd4bd4f4960ef1db2e3@o4504750197899264.ingest.sentry.io/4504750206746624",
     debug: true,
+    release: app.getVersion(),
     transportOptions: {
       maxQueueAgeDays: 30,
       maxQueueCount: 30,

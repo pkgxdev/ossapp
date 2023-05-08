@@ -1,5 +1,7 @@
 import { join } from "path";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
+import { version } from "../package.json";
 
 const PACKAGE_ROOT = __dirname;
 const PROJECT_ROOT = join(PACKAGE_ROOT, "../..");
@@ -18,7 +20,7 @@ const config = {
   },
   build: {
     ssr: true,
-    sourcemap: "inline",
+    sourcemap: true,
     outDir: "dist",
     assetsDir: ".",
     minify: process.env.MODE !== "development",
@@ -42,7 +44,17 @@ const config = {
           dest: "."
         }
       ]
-    })
+    }),
+    process.env.SENTRY_AUTH_TOKEN &&
+      sentryVitePlugin({
+        org: "tea-inc",
+        project: "electron",
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        sourcemaps: {
+          assets: "./dist/**"
+        },
+        release: version
+      })
   ]
 };
 

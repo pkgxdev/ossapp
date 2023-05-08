@@ -1,11 +1,28 @@
 import { sveltekit } from "@sveltejs/kit/vite";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import type { UserConfig } from "vite";
 import path from "path";
+import { version } from "./package.json";
 
 const isMock = process.env.BUILD_FOR === "preview";
 
 const config: UserConfig = {
-  plugins: [sveltekit()],
+  build: {
+    sourcemap: true
+  },
+  plugins: [
+    sveltekit(),
+    process.env.SENTRY_AUTH_TOKEN &&
+      sentryVitePlugin({
+        org: "tea-inc",
+        project: "electron",
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        sourcemaps: {
+          assets: "./build/**"
+        },
+        release: version
+      })
+  ],
   resolve: {
     alias: {
       "@tea/ui/*": path.resolve("../ui/src/*"),
