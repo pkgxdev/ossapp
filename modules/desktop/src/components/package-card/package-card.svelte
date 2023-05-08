@@ -27,10 +27,10 @@
 </script>
 
 <section class="package-card relative h-auto border border-gray {layout}" class:active={isActive}>
-  <BgImage class="absolute left-0 top-0 h-full w-full" {layout} {pkg} />
+  <BgImage class="absolute left-0 top-0 z-10 h-full w-full" {layout} {pkg} />
 
   <a href={link} on:mousedown={activate} on:mouseup={deactivate} on:mouseleave={deactivate}>
-    <div class="package-card-content absolute h-full w-full flex-col justify-between">
+    <div class="package-card-content absolute bottom-0 z-20 h-full w-full flex-col justify-between">
       <div class="hint-container">
         <div class="hint">
           <div class="text-xs line-clamp-1">view more details</div>
