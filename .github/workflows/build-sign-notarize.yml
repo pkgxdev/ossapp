@@ -68,7 +68,7 @@ jobs:
           else
               echo $google_service_account > sa.json
               export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/sa.json"
-              tea pnpm install
+              tea npm install @google-cloud/firestore
               tea node .github/get-dev-version.js $hash $version
           fi
         env:
