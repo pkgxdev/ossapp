@@ -23,7 +23,7 @@ const config = {
     sourcemap: true,
     outDir: "dist",
     assetsDir: ".",
-    minify: process.env.MODE !== "development",
+    minify: false,
     lib: {
       entry: "electron.ts",
       formats: ["cjs"]
