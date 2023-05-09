@@ -109,10 +109,11 @@ autoUpdater.on("update-downloaded", (info) => {
   sendStatusToWindow({ status: "ready", version: info.version });
 });
 
+export const isDev = () => fs.existsSync(path.join(getTeaPath(), "tea.xyz/gui/dev"));
+
 async function setPublishURL() {
   try {
-    const isDev = fs.existsSync(path.join(getTeaPath(), "tea.xyz/gui/dev"));
-    const feedUrl = `https://gui.tea.xyz/${isDev ? "dev" : "release"}`;
+    const feedUrl = `https://gui.tea.xyz/${isDev() ? "dev" : "release"}`;
     log.info(`feedUrl$: ${feedUrl}`);
     autoUpdater.setFeedURL(feedUrl);
   } catch (error) {

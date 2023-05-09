@@ -5,9 +5,15 @@
   import { t } from "$libs/translations";
 
   import TopBarMenu from "./top-bar-menu.svelte";
-  import { topbarDoubleClick } from "$libs/native-electron";
+  import { isDev, topbarDoubleClick } from "$libs/native-electron";
+  import { onMount } from "svelte";
 
   let { nextPath, prevPath } = navStore;
+
+  let dev = false;
+  onMount(async () => {
+    dev = await isDev();
+  });
 </script>
 
 <header
@@ -21,7 +27,7 @@
         <i class="icon-tea-logo-iconasset-1" />
       </div>
     </a>
-    <p class="px-2 text-gray">beta</p>
+    <p class="px-2 text-gray">{dev ? "dev" : "beta"}</p>
     <button
       on:click={navStore.back}
       class:active={$prevPath}

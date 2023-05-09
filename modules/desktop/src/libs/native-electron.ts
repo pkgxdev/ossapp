@@ -269,3 +269,12 @@ export const pollDeviceSession = async () => {
     log.error(error);
   }
 };
+
+export const isDev = async () => {
+  try {
+    return await ipcRenderer.invoke("is-dev");
+  } catch (error) {
+    log.error(error);
+    return false;
+  }
+};
