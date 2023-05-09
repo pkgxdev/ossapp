@@ -147,4 +147,4 @@ jobs:
     - run: |
         aws cloudfront create-invalidation \
           --distribution-id ${{ secrets.AWS_CF_GUI_RELEASE_ID }} \
-          --paths '/dev/latest-mac.yml'
+          --paths '/*'
