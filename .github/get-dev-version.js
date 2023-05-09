@@ -20,11 +20,11 @@ async function getBumpVersion(pkg_version, hash) {
               const latestDoc = latestDocSnapshot.docs[0];
               const latestBumpVersion = latestDoc.data().bump_version;
               const parts = latestBumpVersion.split('.');
-              parts[3] = String(Number(parts[3]) + 1); // Bump the version
+              parts[2] = String(Number(parts[2]) + 1); // Bump the version
               bump_version = parts.join('.');
           } else {
               // Collection is empty, start with default bump_version
-              bump_version = [pkg_version, '.0'].join('');
+              bump_version = pkg_version;
           }
 
           // Save the new pairing
