@@ -21,6 +21,7 @@
   import { packagesStore } from "$libs/stores";
   import { onMount } from "svelte";
   import NotificationBar from "$components/notification-bar/notification-bar.svelte";
+  import { trackViewPackagePage } from "$libs/analytics";
 
   const { packageList } = packagesStore;
 
@@ -49,10 +50,18 @@
   const url = $page.url;
 
   const tab = url.searchParams.get("tab");
-
+  const deeplink = url.searchParams.get("deeplink");
   onMount(() => {
     packagesStore.syncPackageData(pkg);
   });
+
+  let lastPackage = "";
+  $: {
+    if (lastPackage !== pkg?.full_name && pkg) {
+      lastPackage = pkg.full_name;
+      trackViewPackagePage(lastPackage, !!deeplink);
+    }
+  }
 </script>
 
 <header class="mx-16 mb-4 border border-x-0 border-t-0 py-5 text-gray">

@@ -32,6 +32,7 @@
   const syncPath = async () => {
     // used by the tea:// protocol to suggest a path to open
     const path = await getProtocolPath();
+
     if (path) goto(path);
   };
 

@@ -29,7 +29,8 @@ enum AnalyticsAction {
   install = "INSTALL_ACTION",
   install_failed = "INSTALL_ACTION_FAILED",
   search = "SEARCH_ACTION",
-  search_failed = "SEARCH_ACTION_FAILED"
+  search_failed = "SEARCH_ACTION_FAILED",
+  view_package_page = "VIEW_PACKAGE_PAGE_ACTION"
 }
 
 const trackAction = (action: AnalyticsAction, data?: { [key: string]: any }) => {
@@ -77,4 +78,11 @@ export const trackSearch = (search_term: string, result_count: number) => {
       search_term
     });
   }
+};
+
+export const trackViewPackagePage = (packageFullname: string, deeplink: boolean) => {
+  trackAction(AnalyticsAction.view_package_page, {
+    pkg: packageFullname,
+    deeplink
+  });
 };
