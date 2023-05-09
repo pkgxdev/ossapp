@@ -1,10 +1,13 @@
 import * as Sentry from "@sentry/browser";
 import type { Session } from "./types";
 import { isPackaged } from "electron-is-packaged";
+import { isDev } from "@native";
 
-export function initSentry(session?: Session) {
+export async function initSentry(session?: Session) {
   if (isPackaged) {
+    const dev = await isDev();
     Sentry.init({
+      environment: dev ? "development" : "production",
       dsn: "https://5ff29bb5b3b64cd4bd4f4960ef1db2e3@o4504750197899264.ingest.sentry.io/4504750206746624"
     });
     if (session) {

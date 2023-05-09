@@ -17,9 +17,14 @@ import initializePushNotification, {
 import init from "./libs/initialize";
 import { readSessionData } from "./libs/auth";
 
+import { isDev } from "./libs/auto-updater";
+
 log.info("App starting...");
 if (app.isPackaged) {
+  const dev = isDev();
+
   Sentry.init({
+    environment: dev ? "development" : "production",
     dsn: "https://5ff29bb5b3b64cd4bd4f4960ef1db2e3@o4504750197899264.ingest.sentry.io/4504750206746624",
     debug: true,
     release: app.getVersion(),
