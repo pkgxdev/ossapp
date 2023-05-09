@@ -100,7 +100,7 @@
               `https://github.com/teaxyz/pantry/blob/main/projects/${pkg.full_name}/package.yml`
             )}
         />
-        <ButtonIcon icon="link" helpText="share package" on:click={copyPackagePantryLink} />
+        <ButtonIcon icon="share-1" helpText="share package" on:click={copyPackagePantryLink} />
         {#if copied}
           <p class="text-teal">copied!</p>
         {/if}
