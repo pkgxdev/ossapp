@@ -74,7 +74,7 @@ jobs:
         env:
           prefix: ${{ inputs.s3-prefix }}
           google_service_account: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
-          hash: ${{ github.ref }}
+          hash: ${{ github.sha }}
 
       - name: build dev
         if: inputs.s3-prefix != 'release'
