@@ -144,3 +144,7 @@ jobs:
         EXT: dmg
         VERSION: ${{ needs.build_desktop.outputs.build-version }}-dev
         DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/dev/${{ steps.app_files.outputs.dmg_x86 }}
+    - run: |
+        aws cloudfront create-invalidation \
+          --distribution-id ${{ secrets.AWS_CF_GUI_RELEASE_ID }} \
+          --paths '/dev/latest-mac.yml'
