@@ -91,6 +91,7 @@ jobs:
           CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
           CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
           CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+          PUBLISH_URL: "https://gui.tea.xyz/dev"
 
       # slower build but dmg output is much nicer looking
       - name: build release
