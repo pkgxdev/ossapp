@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "@crowdin/ota-client": "^0.7.0",
+        "@google-cloud/firestore": "^6.5.0",
         "lodash": "^4.17.21",
         "yaml": "^2.2.1"
     }

@@ -119,12 +119,9 @@ jobs:
         arm64: ${{ steps.app_files.outputs.dmg_arm64 }}
         x86: ${{ steps.app_files.outputs.dmg_x86 }}
       run: |
-        aws s3 cp \
-          "dist/$arm64" \
-          "s3://preview.gui.tea.xyz/main/$arm64"
-        aws s3 cp \
-          "dist/$x86" \
-          "s3://preview.gui.tea.xyz/main/$x86"
+        cd dist && \
+        aws s3 sync . \
+          "s3://preview.gui.tea.xyz/dev/"
 
     - uses: actions/setup-node@v3
       with:
@@ -136,7 +133,7 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         PLATFORM: darwin-aarch64
         EXT: dmg
-        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/main/${{ steps.app_files.outputs.dmg_arm64 }}
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/dev/${{ steps.app_files.outputs.dmg_arm64 }}
 
     - name: Slack Notification X86
       run: ./.github/notify-slack.js
@@ -144,4 +141,4 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         PLATFORM: darwin-x86+64
         EXT: dmg
-        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/main/${{ steps.app_files.outputs.dmg_x86 }}
+        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/dev/${{ steps.app_files.outputs.dmg_x86 }}

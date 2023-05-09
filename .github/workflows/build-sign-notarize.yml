@@ -33,24 +33,6 @@ jobs:
           version: 0.26.2
       - uses: actions/checkout@v3
 
-      - name: get gui version
-        id: gui-version
-        run: |
-          tea +stedolan.github.io/jq
-          export version=$(echo $(cat modules/desktop/package.json) | jq --raw-output .version)
-          export postfix=
-          release="release"
-          if [ $prefix == $release ];
-          then
-              echo "no postfix"
-          else
-              echo "dev"
-              export postfix=-dev
-          fi
-          echo "version=$version$postfix" >> $GITHUB_OUTPUT
-        env:
-          prefix: ${{ inputs.s3-prefix }}
-
       - name: cache node_modules build
         # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
         # but its ok to ignore, its still the fastest builder
@@ -73,204 +55,224 @@ jobs:
             ./modules/desktop/.svelte-kit
             ./modules/desktop/build
 
-      - name: build dev
-        if: inputs.s3-prefix != 'release'
-        run: tea -SE xc dist
-        env:
-          SYNC_I18N: 1
-          PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
-          DEBUG_BUILD: ${{ inputs.debug }}
-          PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
-          USE_HARD_LINKS: false
-          CSC_FOR_PULL_REQUEST: true
-          CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-          CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-          CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-
-      # slower build but dmg output is much nicer looking
-      - name: build release
-        if: inputs.s3-prefix == 'release'
-        run: tea -SE xc dist
-        env:
-          SYNC_I18N: 1
-          PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
-          DEBUG_BUILD: ${{ inputs.debug }}
-          PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
-          USE_HARD_LINKS: false
-          CSC_FOR_PULL_REQUEST: true
-          CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-          CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-          CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-          PUSHY_APP_ID: ${{ secrets.PUSHY_APP_ID }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-
-      - name: build artifacts for publishing and notarization
+      - name: get gui version
+        id: gui-version
         run: |
-          mkdir -p target
-          cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
-          tar -czvf artifacts.tgz -C ./target/ .
-
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: s3 artifact upload
-        id: s3-artifact-uploader
+          tea +stedolan.github.io/jq
+          export version=$(echo $(cat modules/desktop/package.json) | jq --raw-output .version)
+          export postfix=
+          release="release"
+          if [ $prefix == $release ];
+          then
+              echo "no postfix"
+          else
+              echo $google_service_account > sa.json
+              export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/sa.json"
+              tea node .github/get-dev-version.js $hash $version
+          fi
         env:
           prefix: ${{ inputs.s3-prefix }}
-        run: |
-          S3_KEY=s3://preview.gui.tea.xyz/$prefix/artifacts.tgz
-          aws s3 cp artifacts.tgz $S3_KEY
-          echo key=$S3_KEY >> $GITHUB_OUTPUT
+          google_service_account: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+          hash: ${{ github.ref }}
+      - run: echo "test ${{ steps.gui-version.outputs.version }}"
+  #     - name: build dev
+  #       if: inputs.s3-prefix != 'release'
+  #       run: tea -SE xc dist
+  #       env:
+  #         SYNC_I18N: 1
+  #         PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
+  #         DEBUG_BUILD: ${{ inputs.debug }}
+  #         PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
+  #         USE_HARD_LINKS: false
+  #         CSC_FOR_PULL_REQUEST: true
+  #         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+  #         CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+  #         CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
 
-      - name: sync translation
-        if: inputs.sync-translation == '1'
-        run: |
-          cd modules/desktop && tea -SE node scripts/update-crowdin-source.cjs
-        env:
-          CROWDIN_API_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
+  #     # slower build but dmg output is much nicer looking
+  #     - name: build release
+  #       if: inputs.s3-prefix == 'release'
+  #       run: tea -SE xc dist
+  #       env:
+  #         SYNC_I18N: 1
+  #         PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
+  #         DEBUG_BUILD: ${{ inputs.debug }}
+  #         PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
+  #         USE_HARD_LINKS: false
+  #         CSC_FOR_PULL_REQUEST: true
+  #         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+  #         CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+  #         CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+  #         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         APPLE_ID: ${{ secrets.APPLE_ID }}
+  #         APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+  #         PUSHY_APP_ID: ${{ secrets.PUSHY_APP_ID }}
+  #         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
-  notarize-mac-installers:
-    if: inputs.s3-prefix != 'release'
-    # TODO: run only for mac, create separate Job for linux
-    needs: [build]
-    runs-on: macos-11
-    outputs:
-      s3-installers-key: ${{ steps.s3-installers-upload.outputs.s3-key }}
-    strategy:
-      matrix:
-        platform:
-          # no need for x86-64
-          - darwin+aarch64
-    steps:
-    - uses: teaxyz/setup@v0
-      with:
-        version: 0.26.2
-    - uses: actions/checkout@v3
-    - run: rm -rf ./*.{dmg,zip} || true
+  #     - name: build artifacts for publishing and notarization
+  #       run: |
+  #         mkdir -p target
+  #         cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
+  #         tar -czvf artifacts.tgz -C ./target/ .
 
-    - name: cache node_modules build
-      uses: actions/cache@v3
-      with:
-        key: darwin+x86-64-pnpm
-        path: |
-          ./pnpm
-          ./.pnpm-store
-          ./node_modules
-          ./modules/desktop/node_modules
-          ./modules/ui/node_modules
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+  #     - uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: us-east-1
 
-    - name: s3 artifact download
-      env:
-        S3_KEY: ${{ needs.build.outputs.s3-artifacts-key }}
-      run: aws s3 cp $S3_KEY artifacts.tgz
+  #     - name: s3 artifact upload
+  #       id: s3-artifact-uploader
+  #       env:
+  #         prefix: ${{ inputs.s3-prefix }}
+  #       run: |
+  #         S3_KEY=s3://preview.gui.tea.xyz/$prefix/artifacts.tgz
+  #         aws s3 cp artifacts.tgz $S3_KEY
+  #         echo key=$S3_KEY >> $GITHUB_OUTPUT
 
-    # prepare folders
-    - run: mkdir dist
-    - run: tar xzf artifacts.tgz -C dist
+  #     - name: sync translation
+  #       if: inputs.sync-translation == '1'
+  #       run: |
+  #         cd modules/desktop && tea -SE node scripts/update-crowdin-source.cjs
+  #       env:
+  #         CROWDIN_API_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
 
-    - name: get .zip of arm64 and x86+64
-      id: app_files
-      working-directory: ./dist
-      run: |
-        ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
-        X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
-        ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
-        X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
-        echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
-        echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
-        echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
-        echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
+  # notarize-mac-installers:
+  #   if: inputs.s3-prefix != 'release'
+  #   # TODO: run only for mac, create separate Job for linux
+  #   needs: [build]
+  #   runs-on: macos-11
+  #   outputs:
+  #     s3-installers-key: ${{ steps.s3-installers-upload.outputs.s3-key }}
+  #   strategy:
+  #     matrix:
+  #       platform:
+  #         # no need for x86-64
+  #         - darwin+aarch64
+  #   steps:
+  #   - uses: teaxyz/setup@v0
+  #     with:
+  #       version: 0.26.2
+  #   - uses: actions/checkout@v3
+  #   - run: rm -rf ./*.{dmg,zip} || true
 
-    # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    # sometimes this might fail because exact the same zip has been uploaded already
-    - name: notarize .app arm64
-      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/$ZIP_FILE || true
-      env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
+  #   - name: cache node_modules build
+  #     uses: actions/cache@v3
+  #     with:
+  #       key: darwin+x86-64-pnpm
+  #       path: |
+  #         ./pnpm
+  #         ./.pnpm-store
+  #         ./node_modules
+  #         ./modules/desktop/node_modules
+  #         ./modules/ui/node_modules
+  #   - uses: aws-actions/configure-aws-credentials@v1
+  #     with:
+  #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #       aws-region: us-east-1
 
-    - name: notarize .app x86+64
-      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/$ZIP_FILE || true
-      env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
+  #   - name: s3 artifact download
+  #     env:
+  #       S3_KEY: ${{ needs.build.outputs.s3-artifacts-key }}
+  #     run: aws s3 cp $S3_KEY artifacts.tgz
 
-    # prepare for DMG creation
-    - name: prepare installer folders
-      run: |
-        mkdir x86_installer && mkdir arm64_installer
-        tar xzf dist/$ZIP_FILE_X86 -C x86_installer/
-        tar xzf dist/$ZIP_FILE_ARM64 -C arm64_installer/
-      env:
-        ZIP_FILE_X86: ${{ steps.app_files.outputs.zip_x86 }}
-        ZIP_FILE_ARM64: ${{ steps.app_files.outputs.zip_arm64 }}
+  #   # prepare folders
+  #   - run: mkdir dist
+  #   - run: tar xzf artifacts.tgz -C dist
 
-    - name: create x86 dmg
-      run: |
-        tea +github.com/create-dmg/create-dmg create-dmg \
-        --volname "Tea Installer" \
-        --window-pos 200 120 \
-        --window-size 800 400 \
-        --icon-size 100 \
-        --icon "tea.app" 200 190 \
-        --volicon "./modules/desktop/electron/icon.icns" \
-        --hide-extension "tea.app" \
-        --app-drop-link 600 185 \
-        --sandbox-safe \
-        "$filename" \
-        "$installer_folder"
-      env:
-        filename: ${{ steps.app_files.outputs.dmg_x86 }}
-        installer_folder: x86_installer/
+  #   - name: get .zip of arm64 and x86+64
+  #     id: app_files
+  #     working-directory: ./dist
+  #     run: |
+  #       ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
+  #       X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
+  #       ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
+  #       X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
+  #       echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
+  #       echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
+  #       echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
+  #       echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
 
-    - name: create arm64 dmg
-      run: |
-        tea +github.com/create-dmg/create-dmg create-dmg \
-        --volname "Tea Installer" \
-        --window-pos 200 120 \
-        --window-size 800 400 \
-        --icon-size 100 \
-        --icon "tea.app" 200 190 \
-        --volicon "./modules/desktop/electron/icon.icns" \
-        --hide-extension "tea.app" \
-        --app-drop-link 600 185 \
-        --sandbox-safe \
-        "$filename" \
-        "$installer_folder"
-      env:
-        filename: ${{ steps.app_files.outputs.dmg_arm64 }}
-        installer_folder: arm64_installer/
+  #   # Notarize. Can take up to 10 minutes (and fail) asynchronously
+  #   # sometimes this might fail because exact the same zip has been uploaded already
+  #   - name: notarize .app arm64
+  #     run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/$ZIP_FILE || true
+  #     env:
+  #       APPLE_ID: ${{ secrets.APPLE_ID }}
+  #       APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+  #       ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
 
-    # finalize dist artifacts
-    - name: replace old DMG files in dist folder
-      run: |
-        mv $x86dmg dist
-        mv $arm64dmg dist
-        tea -E pnpm install
-        tea -E node .github/create-correct-release-yaml.js ./dist
-        tar -czvf dist.tgz -C dist/ .
-      env:
-        x86dmg: ${{ steps.app_files.outputs.dmg_x86 }}
-        arm64dmg: ${{ steps.app_files.outputs.dmg_arm64 }}
+  #   - name: notarize .app x86+64
+  #     run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/$ZIP_FILE || true
+  #     env:
+  #       APPLE_ID: ${{ secrets.APPLE_ID }}
+  #       APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+  #       ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
 
-    - name: s3 installers upload
-      id: s3-installers-upload
-      env:
-        prefix: ${{ inputs.s3-prefix }}
-      run: |
-        export S3_INSTALLERS_KEY=s3://preview.gui.tea.xyz/$prefix/dist.tgz
-        aws s3 cp dist.tgz $S3_INSTALLERS_KEY
-        echo s3-key=$S3_INSTALLERS_KEY >> $GITHUB_OUTPUT
+  #   # prepare for DMG creation
+  #   - name: prepare installer folders
+  #     run: |
+  #       mkdir x86_installer && mkdir arm64_installer
+  #       tar xzf dist/$ZIP_FILE_X86 -C x86_installer/
+  #       tar xzf dist/$ZIP_FILE_ARM64 -C arm64_installer/
+  #     env:
+  #       ZIP_FILE_X86: ${{ steps.app_files.outputs.zip_x86 }}
+  #       ZIP_FILE_ARM64: ${{ steps.app_files.outputs.zip_arm64 }}
+
+  #   - name: create x86 dmg
+  #     run: |
+  #       tea +github.com/create-dmg/create-dmg create-dmg \
+  #       --volname "Tea Installer" \
+  #       --window-pos 200 120 \
+  #       --window-size 800 400 \
+  #       --icon-size 100 \
+  #       --icon "tea.app" 200 190 \
+  #       --volicon "./modules/desktop/electron/icon.icns" \
+  #       --hide-extension "tea.app" \
+  #       --app-drop-link 600 185 \
+  #       --sandbox-safe \
+  #       "$filename" \
+  #       "$installer_folder"
+  #     env:
+  #       filename: ${{ steps.app_files.outputs.dmg_x86 }}
+  #       installer_folder: x86_installer/
+
+  #   - name: create arm64 dmg
+  #     run: |
+  #       tea +github.com/create-dmg/create-dmg create-dmg \
+  #       --volname "Tea Installer" \
+  #       --window-pos 200 120 \
+  #       --window-size 800 400 \
+  #       --icon-size 100 \
+  #       --icon "tea.app" 200 190 \
+  #       --volicon "./modules/desktop/electron/icon.icns" \
+  #       --hide-extension "tea.app" \
+  #       --app-drop-link 600 185 \
+  #       --sandbox-safe \
+  #       "$filename" \
+  #       "$installer_folder"
+  #     env:
+  #       filename: ${{ steps.app_files.outputs.dmg_arm64 }}
+  #       installer_folder: arm64_installer/
+
+  #   # finalize dist artifacts
+  #   - name: replace old DMG files in dist folder
+  #     run: |
+  #       mv $x86dmg dist
+  #       mv $arm64dmg dist
+  #       tea -E pnpm install
+  #       tea -E node .github/create-correct-release-yaml.js ./dist
+  #       tar -czvf dist.tgz -C dist/ .
+  #     env:
+  #       x86dmg: ${{ steps.app_files.outputs.dmg_x86 }}
+  #       arm64dmg: ${{ steps.app_files.outputs.dmg_arm64 }}
+
+  #   - name: s3 installers upload
+  #     id: s3-installers-upload
+  #     env:
+  #       prefix: ${{ inputs.s3-prefix }}
+  #     run: |
+  #       export S3_INSTALLERS_KEY=s3://preview.gui.tea.xyz/$prefix/dist.tgz
+  #       aws s3 cp dist.tgz $S3_INSTALLERS_KEY
+  #       echo s3-key=$S3_INSTALLERS_KEY >> $GITHUB_OUTPUT
