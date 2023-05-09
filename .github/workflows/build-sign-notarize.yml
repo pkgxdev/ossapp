@@ -22,11 +22,15 @@ on:
       s3-custom-notarized-installers-key:
         description: 'The S3 build key includes the installer files: [zip, dmg, etc, yml] from notarization strategy done outside of electron'
         value: ${{ jobs.notarize-mac-installers.outputs.s3-installers-key }}
+      build-version:
+        description: 'The version of the build generated for dev'
+        value: ${{ jobs.build.outputs.build-version }}
 jobs:
   build:
     runs-on: macos-latest
     outputs:
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
+      build-version: ${{ steps.gui-version.outputs.version }}
     steps:
       - uses: teaxyz/setup@v0
         with:

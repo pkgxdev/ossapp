@@ -133,6 +133,7 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         PLATFORM: darwin-aarch64
         EXT: dmg
+        VERSION: ${{ needs.build_desktop.outputs.build-version }}-dev
         DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/dev/${{ steps.app_files.outputs.dmg_arm64 }}
 
     - name: Slack Notification X86
@@ -141,4 +142,5 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         PLATFORM: darwin-x86+64
         EXT: dmg
+        VERSION: ${{ needs.build_desktop.outputs.build-version }}-dev
         DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/dev/${{ steps.app_files.outputs.dmg_x86 }}
