@@ -334,6 +334,8 @@ export const getSession = async (): Promise<Session | null> => {
   return null;
 };
 
+export const isDev = async () => true;
+
 export const updateSession = async (session: Partial<Session>) => {
   console.log(session);
 };

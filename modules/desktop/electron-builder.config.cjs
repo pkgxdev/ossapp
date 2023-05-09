@@ -56,6 +56,6 @@ module.exports = {
   // this determines the configuration of the auto-update feature
   publish: {
     provider: "generic",
-    url: "https://gui.tea.xyz/release"
+    url: process.env.PUBLISH_URL || "https://gui.tea.xyz/release"
   }
 };

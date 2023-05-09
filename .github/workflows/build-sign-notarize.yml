@@ -22,34 +22,20 @@ on:
       s3-custom-notarized-installers-key:
         description: 'The S3 build key includes the installer files: [zip, dmg, etc, yml] from notarization strategy done outside of electron'
         value: ${{ jobs.notarize-mac-installers.outputs.s3-installers-key }}
+      build-version:
+        description: 'The version of the build generated for dev'
+        value: ${{ jobs.build.outputs.build-version }}
 jobs:
   build:
     runs-on: macos-latest
     outputs:
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
+      build-version: ${{ steps.gui-version.outputs.version }}
     steps:
       - uses: teaxyz/setup@v0
         with:
           version: 0.26.2
       - uses: actions/checkout@v3
-
-      - name: get gui version
-        id: gui-version
-        run: |
-          tea +stedolan.github.io/jq
-          export version=$(echo $(cat modules/desktop/package.json) | jq --raw-output .version)
-          export postfix=
-          release="release"
-          if [ $prefix == $release ];
-          then
-              echo "no postfix"
-          else
-              echo "dev"
-              export postfix=-dev
-          fi
-          echo "version=$version$postfix" >> $GITHUB_OUTPUT
-        env:
-          prefix: ${{ inputs.s3-prefix }}
 
       - name: cache node_modules build
         # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
@@ -73,9 +59,32 @@ jobs:
             ./modules/desktop/.svelte-kit
             ./modules/desktop/build
 
+      - name: get gui version
+        id: gui-version
+        run: |
+          tea +stedolan.github.io/jq
+          export version=$(echo $(cat modules/desktop/package.json) | jq --raw-output .version)
+          export postfix=
+          release="release"
+          if [ $prefix == $release ];
+          then
+              echo "no postfix"
+          else
+              echo $google_service_account > sa.json
+              export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/sa.json"
+              tea -E pnpm install
+              tea node .github/get-dev-version.js $hash $version
+          fi
+        env:
+          prefix: ${{ inputs.s3-prefix }}
+          google_service_account: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+          hash: ${{ github.sha }}
+
       - name: build dev
         if: inputs.s3-prefix != 'release'
-        run: tea -SE xc dist
+        run: |
+          jq ".version=\"$PUBLIC_VERSION\"" modules/desktop/package.json > temp.json && mv temp.json modules/desktop/package.json
+          tea -SE xc dist
         env:
           SYNC_I18N: 1
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
@@ -86,6 +95,7 @@ jobs:
           CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
           CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
           CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+          PUBLISH_URL: "https://gui.tea.xyz/dev"
 
       # slower build but dmg output is much nicer looking
       - name: build release

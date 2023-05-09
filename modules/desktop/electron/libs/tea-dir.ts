@@ -25,7 +25,7 @@ export const getTeaPath = () => {
     teaPath = execSync("tea --prefix", { encoding: "utf8" }).trim();
     log.info(teaPath);
   } catch (error) {
-    log.info("Could not run tea --prefix. Using default path.", info);
+    log.info("Could not run tea --prefix. Using default path.");
     teaPath = path.join(homePath, "./.tea");
   }
 

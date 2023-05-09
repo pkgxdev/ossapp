@@ -8,7 +8,7 @@ import { installPackage, openPackageEntrypointInTerminal, syncPantry } from "./c
 
 import { initializeTeaCli, cliInitializationState } from "./initialize";
 
-import { getAutoUpdateStatus, getUpdater } from "./auto-updater";
+import { getAutoUpdateStatus, getUpdater, isDev } from "./auto-updater";
 
 import { loadPackageCache, writePackageCache } from "./package";
 import { nanoid } from "nanoid";
@@ -215,6 +215,15 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
       return pollAuth();
     } catch (error) {
       log.error(error);
+    }
+  });
+
+  ipcMain.handle("is-dev", async () => {
+    try {
+      return isDev();
+    } catch (error) {
+      log.error(error);
+      return false;
     }
   });
 }

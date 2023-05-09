@@ -1,6 +1,9 @@
 import { type AppUpdater, autoUpdater } from "electron-updater";
 import log from "./logger";
 import { MainWindowNotifier } from "./types";
+import { getTeaPath } from "./tea-dir";
+import path from "path";
+import fs from "fs";
 
 type AutoUpdateStatus = {
   status: "up-to-date" | "available" | "ready";
@@ -30,6 +33,8 @@ export function checkUpdater(notifier: MainWindowNotifier): AppUpdater {
         checkForUpdates();
       }, 1000 * 60 * 30); // check for updates every 30 minutes
     }
+
+    setPublishURL();
   } catch (error) {
     log.error(error);
   }
@@ -103,3 +108,15 @@ autoUpdater.on("update-downloaded", (info) => {
   log.info("update-downloaded");
   sendStatusToWindow({ status: "ready", version: info.version });
 });
+
+export const isDev = () => fs.existsSync(path.join(getTeaPath(), "tea.xyz/gui/dev"));
+
+async function setPublishURL() {
+  try {
+    const feedUrl = `https://gui.tea.xyz/${isDev() ? "dev" : "release"}`;
+    log.info(`feedUrl$: ${feedUrl}`);
+    autoUpdater.setFeedURL(feedUrl);
+  } catch (error) {
+    log.error(error);
+  }
+}
