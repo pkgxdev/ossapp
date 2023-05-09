@@ -30,7 +30,10 @@
   <BgImage class="absolute left-0 top-0 h-full w-full" {layout} {pkg} />
 
   <a href={link} on:mousedown={activate} on:mouseup={deactivate} on:mouseleave={deactivate}>
-    <div class="package-card-content absolute h-full w-full flex-col justify-between">
+    <div
+      data-testid={`package-card-${pkg.slug}`}
+      class="package-card-content absolute h-full w-full flex-col justify-between"
+    >
       <div class="hint-container">
         <div class="hint">
           <div class="text-xs line-clamp-1">view more details</div>

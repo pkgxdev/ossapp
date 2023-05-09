@@ -49,7 +49,7 @@ jobs:
     steps:
       - uses: teaxyz/setup@v0
         with:
-          version: 0.26.2
+          version: 0.31.2
       - uses: actions/checkout@v3
       - name: env file
         run: cp modules/desktop/.env.example modules/desktop/.env
@@ -62,15 +62,36 @@ jobs:
       #   run: pnpm --filter desktop run coverage
       - name: lint
         run: tea -E pnpm -r lint
-      - name: chec
+      - name: check
         run: tea -E pnpm -r check
+
+  e2e_test:
+    needs: changes
+    runs-on: macos-latest
+    env:
+      # see: https://github.com/electron-userland/electron-builder/issues/3179
+      USE_HARD_LINKS: false
+    steps:
+      - uses: teaxyz/setup@v0
+        with:
+          version: 0.31.2
+      - uses: actions/checkout@v3
+      - name: env file
+        run: cp modules/desktop/.env.example modules/desktop/.env
+      - name: install app dependencies
+        run: tea -E xc setup
+      - name: test build electron main process
+        run: tea -E xc build
+      - name: e2e test
+        run: tea -E xc e2e
+
   build_svelte:
     needs: changes
     runs-on: ubuntu-latest
     steps:
       - uses: teaxyz/setup@v0
         with:
-          version: 0.26.2
+          version: 0.31.2
       - uses: actions/checkout@v3
       - name: cache node_modules build
         # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
