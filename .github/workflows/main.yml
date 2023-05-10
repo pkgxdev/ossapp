@@ -3,7 +3,7 @@ name: "deploy"
 on:
   push:
     branches:
-      - prevent-dev-build-for-non-unique-version
+      - main
 
 jobs:
   changes:

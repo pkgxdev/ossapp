@@ -135,8 +135,17 @@ if ! grep -F "\"version\": \"$V\",$" modules/desktop/package.json; then
 fi
 
 git push origin main
+```
+
+## Release
+
+```sh
+V="$(node -p "require('./modules/desktop/package.json').version")"
 tea gh release create "v$V"
 ```
+
+
+
 
 &nbsp;
 
