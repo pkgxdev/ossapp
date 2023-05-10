@@ -124,7 +124,7 @@ if [ "$(git rev-parse --abbrev-ref HEAD)" != "main" ]; then
   exit 1
 fi
 
-V=$(git describe --tags --abbrev=0 --match "v[0-9]*.[0-9]*.[0-9]*")
+V=$(node -p "require('./modules/desktop/package.json').version")
 V=$(tea semverator bump $V $PRIORITY)
 
 if ! grep -F "\"version\": \"$V\",$" modules/desktop/package.json; then
