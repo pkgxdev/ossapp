@@ -34,7 +34,7 @@ jobs:
       shell: bash
   no_preview:
     needs: changes
-    if: needs.changes.outputs.desktop == 'false'
+    if: needs.changes.outputs.desktop == 'false' && needs.changes.outputs.is-fork == 'false'
     runs-on: ubuntu-latest
     steps:
       - name: comment preview site
@@ -162,6 +162,7 @@ jobs:
     secrets: inherit
   upload:
     needs: [build_desktop, changes]
+    if : needs.changes.outputs.is-fork == 'false'
     runs-on: ubuntu-latest
     strategy:
       matrix:
