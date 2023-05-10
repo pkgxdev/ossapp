@@ -53,7 +53,6 @@ jobs:
           else
             echo "updated=false" >> $GITHUB_OUTPUT
           fi
-
   build:
     needs: verify
     if: needs.verify.outputs.is-updated == 'true'
