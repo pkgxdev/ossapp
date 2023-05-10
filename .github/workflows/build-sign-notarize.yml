@@ -24,14 +24,14 @@ on:
         value: ${{ jobs.notarize-mac-installers.outputs.s3-installers-key }}
 jobs:
   verify:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     outputs:
       is-updated: ${{ steps.check_version.outputs.updated }}
     steps:
       - uses: teaxyz/setup@v0
-        with:
-          version: 0.26.2
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
       - name: Check if version in package.json was updated
         id: check_version
         run: |
