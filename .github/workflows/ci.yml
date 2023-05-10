@@ -55,6 +55,8 @@ jobs:
         run: cp modules/desktop/.env.example modules/desktop/.env
       - name: install app dependencies
         run: tea -E xc setup
+      - name: test build electron main process
+        run: tea pnpm --filter tea exec pnpm build:main
       # TODO: fix
       # - name: unit test
       #   run: pnpm --filter desktop run coverage
