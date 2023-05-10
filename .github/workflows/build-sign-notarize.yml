@@ -90,9 +90,7 @@ jobs:
 
       - name: build dev
         if: inputs.s3-prefix != 'release'
-        run: |
-          jq ".version=\"$PUBLIC_VERSION\"" modules/desktop/package.json > temp.json && mv temp.json modules/desktop/package.json
-          tea -SE xc dist
+        run: tea -SE xc dist
         env:
           SYNC_I18N: 1
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
