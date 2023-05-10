@@ -7,14 +7,14 @@ import type { GUIPackage } from "$libs/types";
 import { getFeaturedPackages, getPackageReviews } from "@native";
 import initAuthStore from "./stores/auth";
 import initNavStore from "./stores/nav";
-import initPackagesStore from "./stores/pkgs";
+import pkgStore from "./stores/pkgs";
 import initNotificationStore from "./stores/notifications";
 import initAppUpdateStore from "./stores/update";
 import { trackSearch } from "./analytics";
 
 export const featuredPackages = writable<Package[]>([]);
 
-export const packagesStore = initPackagesStore();
+export const packagesStore = pkgStore;
 
 export const initializeFeaturedPackages = async () => {
   console.log("intialize featured packages");
