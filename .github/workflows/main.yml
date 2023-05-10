@@ -42,6 +42,7 @@ jobs:
     secrets: inherit
   upload:
     needs: [build_desktop]
+    if: needs.build_desktop.outputs.s3-custom-notarized-installers-key != ''
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -127,13 +128,19 @@ jobs:
       with:
         node-version: 18
 
+    - name: get version
+      id: get-version
+      run: |
+        echo "version=$(node -p "require('./modules/desktop/package.json').version")" >> $GITHUB_OUTPUT
+
+
     - name: Slack Notification ARM64
       run: ./.github/notify-slack.js
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         PLATFORM: darwin-aarch64
         EXT: dmg
-        VERSION: ${{ needs.build_desktop.outputs.build-version }}-dev
+        VERSION: ${{ steps.get-version.outputs.version }}-dev
         DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/dev/${{ steps.app_files.outputs.dmg_arm64 }}
 
     - name: Slack Notification X86
@@ -142,7 +149,7 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         PLATFORM: darwin-x86+64
         EXT: dmg
-        VERSION: ${{ needs.build_desktop.outputs.build-version }}-dev
+        VERSION: ${{ steps.get-version.outputs.version }}-dev
         DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/dev/${{ steps.app_files.outputs.dmg_x86 }}
     - run: |
         aws cloudfront create-invalidation \
