@@ -53,6 +53,12 @@ jobs:
           else
             echo "updated=false" >> $GITHUB_OUTPUT
           fi
+      - name: Check if PR is from fork
+        id: check-fork
+        run: |
+          echo "::set-output name=isFork::$(if [ \"${{ github.event.pull_request.head.repo.full_name }}\" != \"${{ github.repository }}\" ]; then echo true; else echo false; fi)"
+        shell: bash
+
   build:
     needs: verify
     if: needs.verify.outputs.is-updated == 'true'

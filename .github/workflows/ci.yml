@@ -14,6 +14,7 @@ jobs:
     outputs:
       desktop: ${{steps.desktop.outputs.src}}
       preview_folder: ${{steps.preview.outputs.folder}}
+      is-fork: ${{steps.check-fork.outputs.is-fork}}
     steps:
     - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
@@ -26,9 +27,14 @@ jobs:
     - name: get s3 preview folder
       id: preview
       run: echo "folder=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
+    - name: Check if PR is from fork
+      id: check-fork
+      run: |
+        echo "is-fork=$(if [ \"${{ github.event.pull_request.head.repo.full_name }}\" != \"${{ github.repository }}\" ]; then echo true; else echo false; fi)" >> $GITHUB_OUTPUT
+      shell: bash
   no_preview:
     needs: changes
-    if: needs.changes.outputs.desktop == 'false'
+    if: needs.changes.outputs.desktop == 'false' && needs.changes.outputs.is-fork == 'false'
     runs-on: ubuntu-latest
     steps:
       - name: comment preview site
@@ -49,6 +55,8 @@ jobs:
         run: cp modules/desktop/.env.example modules/desktop/.env
       - name: install app dependencies
         run: tea -E xc setup
+      - name: test build electron main process
+        run: tea pnpm --filter tea exec pnpm build:main
       # TODO: fix
       # - name: unit test
       #   run: pnpm --filter desktop run coverage
@@ -108,11 +116,13 @@ jobs:
           BUILD_FOR:  preview
 
       - uses: aws-actions/configure-aws-credentials@v1
+        if: needs.changes.outputs.is-fork == 'false'
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: sync web files into preview folder
+        if: needs.changes.outputs.is-fork == 'false'
         env:
           prefix: ${{ needs.changes.outputs.preview_folder }}
         run: |
@@ -120,11 +130,13 @@ jobs:
             "s3://preview.gui.tea.xyz/$prefix"
 
       - name: setup preview
+        if: needs.changes.outputs.is-fork == 'false'
         id: preview_setup
         run: |
           tea +stedolan.github.io/jq .github/create-invalidate-preview.sh ${{ needs.changes.outputs.preview_folder }}
 
       - name: comment preview site
+        if: needs.changes.outputs.is-fork == 'false'
         uses: mshick/add-pr-comment@v2
         with:
           message-id: preview-comment-${{needs.changes.outputs.preview_folder}}
@@ -152,6 +164,7 @@ jobs:
     secrets: inherit
   upload:
     needs: [build_desktop, changes]
+    if : needs.changes.outputs.is-fork == 'false'
     runs-on: ubuntu-latest
     strategy:
       matrix:
