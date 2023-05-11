@@ -110,10 +110,13 @@ autoUpdater.on("update-downloaded", (info) => {
 });
 
 export const isDev = () => fs.existsSync(path.join(getTeaPath(), "tea.xyz/gui/dev"));
+export const isForceUpdate = () =>
+  fs.existsSync(path.join(getTeaPath(), "tea.xyz/gui/force-auto-update"));
 
 async function setPublishURL() {
   try {
-    const feedUrl = `https://gui.tea.xyz/${isDev() ? "dev" : "release"}`;
+    const folder = isForceUpdate() ? "auto-update-test" : isDev() ? "dev" : "release";
+    const feedUrl = `https://gui.tea.xyz/${folder}`;
     log.info(`feedUrl$: ${feedUrl}`);
     autoUpdater.setFeedURL(feedUrl);
   } catch (error) {
