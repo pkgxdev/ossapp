@@ -6,7 +6,6 @@
   import { afterNavigate } from "$app/navigation";
   import { packagesStore } from "$libs/stores";
   import Packages from "$components/packages/packages.svelte";
-  import DiscoverPackages from "$components/discover-packages/discover-packages.svelte";
   import { PackageStates, SideMenuOptions, type GUIPackage } from "$libs/types";
   // import SortingButtons from "$components/search-packages/sorting-buttons.svelte";
   import SideMenu from "$components/side-menu/side-menu.svelte";
@@ -59,7 +58,14 @@
   <article class="relative h-auto w-full flex-grow overflow-hidden">
     <ul class="px-2">
       {#if sideMenuOption == SideMenuOptions.discover}
-        <DiscoverPackages bind:scrollY={packagesScrollY} />
+        <article class="p-20">
+          <h1 class="text-3xl">Congratulations! Auto-update works! v999.999.999</h1>
+          <p>todos after this</p>
+          <ul>
+            <li>remove <code>`rm ~/.tea/tea.xyz/gui/force-auto-update`</code></li>
+            <li>reinstall whichever GUI version you are testing</li>
+          </ul>
+        </article>
       {:else}
         <Packages packageFilter={sideMenuOption} bind:scrollY={packagesScrollY} />
       {/if}
