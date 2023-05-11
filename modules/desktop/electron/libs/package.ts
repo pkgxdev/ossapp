@@ -3,7 +3,7 @@ import { mkdirp } from "mkdirp";
 import fs from "fs";
 import log from "./logger";
 import { getTeaPath } from "./tea-dir";
-import { GUIPackage, Packages } from "../../src/libs/types";
+import { Packages } from "../../src/libs/types";
 
 const pkgsFilePath = path.join(getTeaPath(), "tea.xyz/gui/pkgs.json");
 const pkgsFolder = path.join(getTeaPath(), "tea.xyz/gui");
@@ -52,3 +52,8 @@ export const nameToSlug = (name: string) => {
   const slug = nameOnly.replace(/[^\w\s]/gi, "_").toLocaleLowerCase();
   return slug;
 };
+
+export function isInstalled(fullName: string) {
+  const folderPath = path.join(getTeaPath(), fullName);
+  return fs.existsSync(folderPath);
+}
