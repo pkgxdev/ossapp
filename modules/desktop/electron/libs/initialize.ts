@@ -4,7 +4,7 @@ import { createInitialSessionFile } from "./auth";
 import * as https from "https";
 import { spawn } from "child_process";
 import path from "path";
-import { parse as semverParse } from "@tea/libtea";
+import { parse as semverParse } from "@teaxyz/lib/src/utils/semver";
 
 type InitState = "NOT_INITIALIZED" | "PENDING" | "INITIALIZED";
 

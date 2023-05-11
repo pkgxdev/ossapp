@@ -74,6 +74,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@teaxyz/lib": "git+https://github.com:teaxyz/lib.git#main",
     "@crowdin/ota-client": "^0.7.0",
     "@electron/asar": "^3.2.3",
     "@sentry/browser": "^7.49.0",

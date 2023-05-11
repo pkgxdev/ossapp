@@ -31,6 +31,7 @@ importers:
       '@sveltejs/kit': ^1.15.9
       '@tea/libtea': workspace:*
       '@tea/ui': workspace:*
+      '@teaxyz/lib': git+https://github.com:teaxyz/lib.git#main
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/svelte': ^3.2.2
       '@types/bcryptjs': ^2.4.2
@@ -101,6 +102,7 @@ importers:
       '@sentry/electron': 4.5.0
       '@sentry/svelte': 7.51.2_svelte@3.59.1
       '@sentry/vite-plugin': 0.7.2
+      '@teaxyz/lib': github.com/teaxyz/lib/b6d0bb584508a88d8a4f1bd883d72cfd7f3e3c13
       '@types/electron': 1.6.10
       '@types/mousetrap': 1.6.11
       '@vitest/coverage-c8': 0.27.3_jsdom@21.1.2
@@ -11461,3 +11463,9 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
+
+  github.com/teaxyz/lib/b6d0bb584508a88d8a4f1bd883d72cfd7f3e3c13:
+    resolution: {tarball: https://codeload.github.com/teaxyz/lib/tar.gz/b6d0bb584508a88d8a4f1bd883d72cfd7f3e3c13}
+    name: lib.git#main
+    version: 0.0.0
+    dev: false

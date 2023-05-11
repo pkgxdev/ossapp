@@ -29,6 +29,7 @@ const config = {
       formats: ["cjs"]
     },
     rollupOptions: {
+      external: ["@teaxyz/lib/src/**/*"],
       output: {
         entryFileNames: "[name].cjs"
       }
