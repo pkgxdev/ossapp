@@ -4,6 +4,14 @@
   import { appUpdateStore } from "$libs/stores";
 
   const { updateStatus } = appUpdateStore;
+
+  let updateClickCount = 0;
+  const onRelaunch = async () => {
+    if (updateClickCount < 1) {
+      await relaunch();
+    }
+    updateClickCount++;
+  };
 </script>
 
 {#if $updateStatus.status === "up-to-date"}
@@ -23,7 +31,7 @@
 {:else if $updateStatus.status === "ready"}
   <button
     class="flex h-7 w-full items-center justify-between p-1 text-left outline-1 outline-gray hover:bg-gray hover:bg-opacity-25 hover:outline"
-    on:click={relaunch}
+    on:click={onRelaunch}
   >
     <div class="flex items-center">
       <div class="circle-badge mr-2">1</div>
@@ -33,6 +41,10 @@
       v{$updateStatus.version}
     </div>
   </button>
+{/if}
+
+{#if $updateStatus.status === "ready" && updateClickCount >= 3}
+  <p class="p-1 text-xs text-primary">Force quit and relaunch the app, please.</p>
 {/if}
 
 <style>
