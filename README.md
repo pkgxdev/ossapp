@@ -109,6 +109,14 @@ pnpm run -r check
 pnpm run -r lint
 ```
 
+## e2e
+
+Runs the webdriver.io end to end tests. Assumes that `xc build` has already been executed.
+
+```sh
+pnpm run --reporter append-only -r e2e
+```
+
 ## Bump
 
 Inputs: PRIORITY

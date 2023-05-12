@@ -91,7 +91,9 @@
     </figure>
     <article class="w-2/3 p-4 pt-8">
       <div class="align-center flex items-center gap-2">
-        <h3 class="text-3xl text-primary">{fixPackageName(pkg.name)}</h3>
+        <h3 data-testid="package-banner-header" class="text-3xl text-primary">
+          {fixPackageName(pkg.name)}
+        </h3>
         <ButtonIcon
           icon="pencil"
           helpText="edit package"
