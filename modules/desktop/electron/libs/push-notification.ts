@@ -2,7 +2,7 @@ import Pushy from "pushy-electron";
 import { readSessionData } from "./auth";
 import { post } from "./v1-client";
 import log from "./logger";
-import { Notification, BrowserWindow } from "electron";
+import { Notification, BrowserWindow, shell } from "electron";
 import { isInstalled, nameToSlug } from "./package";
 import {
   getInstalledPackages,
@@ -46,10 +46,16 @@ export default function initialize(mainWindow: BrowserWindow) {
         const installed = isInstalled(pkg);
         const isDup = await wasReceivedBefore(data);
         if (!isDup && installed) {
-          new Notification({
+          const notification = new Notification({
             title: "tea",
-            body: data?.message as string
-          }).show();
+            body: data?.message as string,
+            actions: [{ type: "button", text: "Open" }]
+          });
+          notification.on("click", () => {
+            shell.openExternal(data?.url);
+          });
+          notification.show();
+          log.info("notification shown", data);
 
           const v = app.dock.getBadge();
           if (!v) {
