@@ -53,6 +53,7 @@
     <i class="icon-search-icon" />
   </div>
   <input
+    data-testid={$$props["data-testid"] || "search-input"}
     bind:this={searchInput}
     type="search"
     class="flex-grow pb-2 text-sm"

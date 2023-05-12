@@ -22,7 +22,7 @@
   on:dblclick={topbarDoubleClick}
 >
   <ul class="flex h-10 items-center gap-1 pl-20 align-middle leading-10 text-gray">
-    <a href="/?tab=discover">
+    <a href="/?tab=discover" data-testid="home-button">
       <div class="home-btn w-12 text-center text-2xl">
         <i class="icon-tea-logo-iconasset-1" />
       </div>
@@ -43,6 +43,7 @@
   </ul>
   <div class="relative w-1/3 px-2">
     <SearchInput
+      data-testid="topbar-search-input"
       class="h-9 w-full rounded-sm border border-gray"
       size="small"
       placeholder={$t("store-search-placeholder")}

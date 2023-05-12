@@ -45,6 +45,7 @@
 </script>
 
 <Button
+  data-testid="install-button-{pkg.slug}"
   class="w-full border p-0 text-xs text-white {buttonSize === 'small' ? 'h-8' : 'h-10'}"
   type="plain"
   color={getColor(pkg.state)}

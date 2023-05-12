@@ -15,6 +15,7 @@
 
 <div class="button-container">
   <button
+    data-testid={$$props["data-testid"] || "button"}
     type="button"
     class="w-full text-gray {clazz} {type} {color}"
     class:active

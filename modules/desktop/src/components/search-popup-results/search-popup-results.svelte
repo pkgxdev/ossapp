@@ -45,10 +45,11 @@
 {#if $searching === true}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div id="bg-close" class="z-40" on:click={onClose} />
-  <section class="z-50">
+  <section class="z-50" data-testid="search-popup">
     <header class="flex border border-x-0 border-t-0 border-gray bg-black">
       <div class="relative w-full">
         <SearchInput
+          data-testid="search-input-popup"
           class="h-9  w-full rounded-sm"
           size="small"
           autofocus={true}

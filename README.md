@@ -79,6 +79,17 @@ pnpm install
 pnpm build:desktop
 ```
 
+## Build:lite
+
+Builds a `.app` that is not codesigned or notarized. Ideal for local testing.
+
+```
+export CSC_IDENTITY_AUTO_DISCOVER=false
+export MAC_BUILD_TARGET=dir
+pnpm install
+pnpm build:desktop
+```
+
 ## Dev
 
 ```sh

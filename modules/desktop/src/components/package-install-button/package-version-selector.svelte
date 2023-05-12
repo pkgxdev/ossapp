@@ -53,6 +53,7 @@
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
             class="version-item flex items-center justify-start gap-x-1 text-xs"
+            data-testid="install-{idx === 0 && pkg.version === version ? 'latest' : version}"
             class:installable-version={!installedVersions.includes(version)}
             on:click={(evt) => handleClick(evt, version)}
           >
