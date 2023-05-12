@@ -82,6 +82,9 @@ jobs:
         run: tea -E xc setup
       - name: test build electron main process
         run: tea -E xc build
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+          MAC_BUILD_TARGET: "dir"
       - name: e2e test
         run: tea -E xc e2e
 
