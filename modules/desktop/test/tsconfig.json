@@ -1,16 +1,8 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "allowImportingTsExtensions": true,
-    "allowJs": true,
-    "checkJs": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "forceConsistentCasingInFileNames": true,
     "lib": ["dom"],
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
     "strict": true,
     "types": [
       "vitest/globals",
@@ -18,15 +10,6 @@
       "node",
       "mocha",
       "@wdio/globals/types"
-    ],
-    "paths": {
-      "$appcss": ["./src/app.css"],
-      "$libs/*": ["./src/libs/*"],
-      "@native": ["./src/libs/native-electron.ts"],
-      "$components/*": ["./src/components/*"],
-      "@tea/ui/*": ["../ui/src/*"],
-      "@tea/libtea/*": ["../libtea/src/*"]
-    },
-    "typeRoots": ["./node_modules/@types", "./types"]
+    ]
   }
 }
