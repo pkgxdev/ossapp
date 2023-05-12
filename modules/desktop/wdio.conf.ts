@@ -16,7 +16,7 @@ export const config: Options.Testrunner = {
       transpileOnly: true
     }
   },
-  specs: ["./test/specs/**/*.ts"],
+  specs: ["./test/specs/**/*.e2e.ts"],
   exclude: [
     // 'path/to/excluded/files'
   ],
