@@ -108,6 +108,10 @@ jobs:
           CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
           PUBLISH_URL: "https://gui.tea.xyz/dev"
 
+      - name: run e2e test on dev build
+        if: inputs.s3-prefix != 'release'
+        run: tea -SE xc e2e
+
       # slower build but dmg output is much nicer looking
       - name: build release
         if: inputs.s3-prefix == 'release'
