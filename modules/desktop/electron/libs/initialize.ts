@@ -1,6 +1,6 @@
 import fs from "fs";
 import { getTeaPath } from "./tea-dir";
-import { createInitialSessionFile } from "./auth";
+import { authFileState } from "./auth";
 import * as https from "https";
 import { spawn } from "child_process";
 import path from "path";
@@ -8,7 +8,7 @@ import { parse as semverParse } from "@tea/libtea";
 
 type InitState = "NOT_INITIALIZED" | "PENDING" | "INITIALIZED";
 
-class InitWatcher<T> {
+export class InitWatcher<T> {
   private initState: InitState;
   private initFunction: () => Promise<T>;
   private initializationPromise: Promise<T> | undefined;
@@ -156,6 +156,6 @@ async function installTeaCli() {
 }
 
 export default async function initialize(): Promise<string> {
-  const [version] = await Promise.all([initializeTeaCli(), createInitialSessionFile()]);
+  const [version] = await Promise.all([initializeTeaCli(), authFileState.observe()]);
   return version;
 }

@@ -3,7 +3,7 @@ import { readSessionData } from "./auth";
 import { post } from "./v1-client";
 import log from "./logger";
 import { Notification, BrowserWindow } from "electron";
-import { nameToSlug } from "./package";
+import { isInstalled, nameToSlug } from "./package";
 import {
   getInstalledPackages,
   getPackagesInstalledList,
@@ -42,9 +42,10 @@ export default function initialize(mainWindow: BrowserWindow) {
     Pushy.setNotificationListener(async (data: any) => {
       try {
         log.info("new notification received", data);
-
+        const pkg = data?.url.replace("tea://packages/", "");
+        const installed = isInstalled(pkg);
         const isDup = await wasReceivedBefore(data);
-        if (!isDup) {
+        if (!isDup && installed) {
           new Notification({
             title: "tea",
             body: data?.message as string
@@ -56,6 +57,8 @@ export default function initialize(mainWindow: BrowserWindow) {
           } else {
             app.dock.setBadge((parseInt(v) + 1).toString());
           }
+        } else if (!installed) {
+          unsubscribeToPackageTopic(pkg);
         } else {
           log.info("notification was already received before", data);
         }

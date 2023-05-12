@@ -17,7 +17,7 @@ module.exports = {
   mac: {
     icon: "./electron/icon.icns",
     target: {
-      target: "default",
+      target: process.env.MAC_BUILD_TARGET || "default",
       arch: ["x64", "arm64"]
     },
     minimumSystemVersion: "11"

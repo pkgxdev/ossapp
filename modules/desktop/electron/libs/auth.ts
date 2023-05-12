@@ -8,6 +8,7 @@ import axios from "axios";
 import get from "./v1-client";
 import { DeviceAuth } from "../../src/libs/types";
 import { notifyMainWindow } from "../electron";
+import { InitWatcher } from "./initialize";
 
 const sessionFilePath = path.join(getTeaPath(), "tea.xyz/gui/tmp.dat");
 const sessionFolder = path.join(getTeaPath(), "tea.xyz/gui");
@@ -20,17 +21,6 @@ export interface Session {
 }
 
 let sessionMemory: Session = { device_id: "", locale: "en" };
-const initialized: Promise<Session> = new Promise((resolve, reject) => {
-  try {
-    log.info("initializing GUI session folder");
-    createInitialSessionFile().then((newSession) => {
-      resolve(newSession);
-    });
-  } catch (error) {
-    log.error(error);
-    reject(error);
-  }
-});
 
 async function addEmptySessionFile(): Promise<Session> {
   const locale = app.getLocale();
@@ -44,12 +34,8 @@ async function addEmptySessionFile(): Promise<Session> {
   return data;
 }
 
-export async function createInitialSessionFile(): Promise<Session> {
-  // TODO: this looks nasty, refactor this
-  // the app is too dependent that this function succeeds
-  let session = {
-    ...sessionMemory
-  };
+async function createInitialSessionFile(): Promise<Session> {
+  let session: Session = {};
   const locale = app.getLocale();
 
   try {
@@ -70,18 +56,16 @@ export async function createInitialSessionFile(): Promise<Session> {
   }
 
   if (!session?.device_id) {
-    try {
-      const newSession = await addEmptySessionFile();
-      if (newSession) {
-        session = newSession;
-        session.locale = locale;
-      }
-    } catch (error) {
-      log.error(error);
+    const newSession = await addEmptySessionFile();
+    if (newSession) {
+      session = newSession;
+      session.locale = locale;
     }
   }
 
   sessionMemory = session;
+
+  if (!session.device_id) throw new Error("device_id is empty!");
 
   return session;
 }
@@ -106,7 +90,12 @@ async function getDeviceId() {
 
 export async function readSessionData(): Promise<Session> {
   log.info("read session data.");
-  const data = await initialized;
+
+  if (authFileState.getState() === "INITIALIZED" && !fs.existsSync(sessionFilePath)) {
+    authFileState.reset();
+  }
+  const data = await authFileState.initialize();
+
   log.info(
     "initialized session device_id:",
     data?.device_id,
@@ -129,7 +118,8 @@ export async function readSessionData(): Promise<Session> {
     sessionMemory = session;
     log.info("re-read session data done");
   } catch (error) {
-    sessionMemory = await createInitialSessionFile();
+    authFileState.reset();
+    sessionMemory = await authFileState.initialize();
     log.error(error);
   }
   return sessionMemory;
@@ -196,3 +186,6 @@ export async function pollAuth() {
     }, 2000);
   }
 }
+
+export const authFileState = new InitWatcher<Session>(createInitialSessionFile);
+authFileState.initialize();
