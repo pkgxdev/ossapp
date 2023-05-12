@@ -4,12 +4,6 @@
     "allowImportingTsExtensions": true,
     "lib": ["dom"],
     "strict": true,
-    "types": [
-      "vitest/globals",
-      "@testing-library/jest-dom",
-      "node",
-      "mocha",
-      "@wdio/globals/types"
-    ]
+    "types": ["vitest/globals", "@testing-library/jest-dom", "node", "mocha", "@wdio/globals/types"]
   }
 }
