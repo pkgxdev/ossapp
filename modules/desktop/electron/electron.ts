@@ -38,14 +38,11 @@ if (app.isPackaged) {
     }
   });
   Sentry.configureScope(async (scope) => {
-    const [session, cliVersion] = await Promise.all([
-      readSessionData(),
-      initializeTeaCli(),
-    ]);
+    const [session, cliVersion] = await Promise.all([readSessionData(), initializeTeaCli()]);
     scope.setUser({
       id: session.device_id, // device_id this should exist in our pg db: developer_id is to many device_id
       username: session?.user?.login || "", // github username or handler
-      tea: cliVersion,
+      tea: cliVersion
     });
   });
   setSentryLogging(Sentry);

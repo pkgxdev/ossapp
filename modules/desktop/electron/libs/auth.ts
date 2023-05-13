@@ -18,6 +18,7 @@ export interface Session {
   key?: string;
   user?: any;
   locale?: string;
+  teaVersion?: string;
 }
 
 let sessionMemory: Session = { device_id: "", locale: "en" };
