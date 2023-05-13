@@ -54,8 +54,10 @@ export async function installPackage(
     });
 
     child.on("exit", (code) => {
-      console.log("stdout:", stdout);
+      log.info("cli exited with code:", code);
+      log.info("cli stdout:", stdout);
       if (code !== 0) {
+        log.info("cli stderr:", stderr);
         reject(new Error("tea exited with non-zero code: " + code));
       } else {
         resolve(null);
