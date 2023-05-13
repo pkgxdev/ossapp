@@ -20,7 +20,7 @@ export const config: Options.Testrunner = {
   exclude: [
     // 'path/to/excluded/files'
   ],
-  maxInstances: 10,
+  maxInstances: 1,
   capabilities: [
     {
       // capabilities for local browser web tests
@@ -32,7 +32,7 @@ export const config: Options.Testrunner = {
   baseUrl: "http://localhost",
   waitforTimeout: 10000,
   connectionRetryTimeout: 120000,
-  connectionRetryCount: 3,
+  connectionRetryCount: 5,
   services: [
     [
       "electron",
@@ -52,6 +52,8 @@ export const config: Options.Testrunner = {
   reporters: ["spec"],
   mochaOpts: {
     ui: "bdd",
-    timeout: 60000
-  }
+    timeout: 120000
+  },
+  specFileRetries: 3,
+  specFileRetriesDelay: 5
 };

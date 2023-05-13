@@ -69,7 +69,7 @@ jobs:
     steps:
       - uses: teaxyz/setup@v0
         with:
-          version: 0.26.2
+          version: 0.31.2
       - uses: actions/checkout@v3
 
       - name: cache node_modules build
@@ -175,7 +175,7 @@ jobs:
     steps:
     - uses: teaxyz/setup@v0
       with:
-        version: 0.26.2
+        version: 0.31.2
     - uses: actions/checkout@v3
     - run: rm -rf ./*.{dmg,zip} || true
 
