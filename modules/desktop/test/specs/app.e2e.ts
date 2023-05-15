@@ -42,22 +42,12 @@ describe("basic smoke test", () => {
     ).toExist();
     await expect(await screen.findByRole("button", { name: "OPEN IN TERMINAL" })).toExist();
 
-    const closeNotificationBtn = $(".close-notification");
-    await expect(closeNotificationBtn).toExist();
-    await closeNotificationBtn.click();
-    await expect(closeNotificationBtn).not.toExist();
+    await utils.closeNotification();
   });
 
   it("search and install create-dmg", async () => {
-    const { screen } = utils!;
-
-    const fakeInput = await screen.findByTestId("topbar-search-input");
-    await fakeInput.click();
-
-    await (await screen.findByTestId("search-popup")).waitForExist();
-
-    const searchInput = await screen.findByTestId("search-input-popup");
-    await searchInput.setValue("create-dmg");
+    const { screen, searchTerm } = utils!;
+    await searchTerm("create-dmg");
 
     const packageFullname = "github.com/create-dmg/create-dmg";
     const createDmgSlug = packageFullname.replace(/[^\w\s]/gi, "_").toLocaleLowerCase();
@@ -78,9 +68,53 @@ describe("basic smoke test", () => {
       )
     ).toExist();
 
-    const closeNotificationBtn = $(".close-notification");
-    await expect(closeNotificationBtn).toExist();
-    await closeNotificationBtn.click();
-    await expect(closeNotificationBtn).not.toExist();
+    await utils.closeNotification();
+  });
+
+  it("should be able to install specific version", async () => {
+    const { screen, searchTerm } = utils!;
+    await searchTerm("pnpm.io");
+    const pnpmCard = await utils.findSearchPackageCardBySlug("pnpm_io");
+    await expect(pnpmCard).toExist();
+    pnpmCard.click();
+
+    await utils.uninstallPackageIfNeeded();
+
+    await utils.installSpecificVersion("8.0.0");
+
+    await expect(
+      await screen.findByText(
+        /^Package pnpm.io .* has been installed./,
+        {},
+        { timeout: 60000, interval: 1000 }
+      )
+    ).toExist();
+
+    await utils.closeNotification();
+  });
+
+  it("should be able to update a package", async () => {
+    // this requires ^ to succeed first
+    const { screen } = utils!;
+    const menuBtn = await screen.findByTestId("menu-button-updates-available");
+    menuBtn.click();
+
+    const header = await screen.findByText("available updates");
+    await expect(header).toExist();
+
+    const updateBtn = await screen.findByTestId("install-button-pnpm_io");
+    await expect(updateBtn).toExist();
+
+    updateBtn.click();
+
+    await expect(
+      await screen.findByText(
+        /^Package pnpm.io .* has been installed./,
+        {},
+        { timeout: 60000, interval: 1000 }
+      )
+    ).toExist();
+
+    await utils.closeNotification();
   });
 });
