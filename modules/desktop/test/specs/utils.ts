@@ -51,12 +51,16 @@ export function setupUtils(browser: WebdriverIO.Browser) {
   };
 
   const installLatestVersion = async () => {
+    await installSpecificVersion("latest");
+  };
+
+  const installSpecificVersion = async (version: string) => {
     const installButton = await findButton(/^INSTALL |^UPDATE/);
     installButton.click();
 
-    const latestButton = await screen.findByTestId("install-latest");
-    await latestButton.waitForExist();
-    latestButton.click();
+    const versionButton = await screen.findByTestId(`install-${version}`);
+    await versionButton.waitForExist();
+    versionButton.click();
   };
 
   const goHome = async () => {
@@ -67,15 +71,35 @@ export function setupUtils(browser: WebdriverIO.Browser) {
     await homeMenu.waitForExist();
   };
 
+  const searchTerm = async (term: string) => {
+    const fakeInput = await screen.findByTestId("topbar-search-input");
+    await fakeInput.click();
+
+    await (await screen.findByTestId("search-popup")).waitForExist();
+
+    const searchInput = await screen.findByTestId("search-input-popup");
+    await searchInput.setValue(term);
+  };
+
+  const closeNotification = async () => {
+    const closeNotificationBtn = $(".close-notification");
+    await expect(closeNotificationBtn).toExist();
+    await closeNotificationBtn.click();
+    await expect(closeNotificationBtn).not.toExist();
+  };
+
   return {
     screen,
+    searchTerm,
     goHome,
     findButton,
     findPackageCardBySlug,
     findSearchPackageCardBySlug,
     packageDetailsLoaded,
     uninstallPackageIfNeeded,
-    installLatestVersion
+    installLatestVersion,
+    installSpecificVersion,
+    closeNotification
   };
 }
 

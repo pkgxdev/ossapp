@@ -7,6 +7,7 @@
 </script>
 
 <button
+  data-testid="menu-button-{label.replaceAll(' ', '-').toLowerCase()}"
   on:click
   class="box-border flex w-full items-center gap-2 rounded-sm px-1 text-left align-middle text-xs outline-1 outline-gray transition-all hover:bg-gray hover:bg-opacity-25 hover:outline"
   class:active
