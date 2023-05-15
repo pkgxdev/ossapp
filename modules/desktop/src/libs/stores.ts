@@ -11,6 +11,7 @@ import pkgStore from "./stores/pkgs";
 import initNotificationStore from "./stores/notifications";
 import initAppUpdateStore from "./stores/update";
 import { trackSearch } from "./analytics";
+import initScrollStore from "./stores/scroll";
 
 export const featuredPackages = writable<Package[]>([]);
 
@@ -140,3 +141,5 @@ export const navStore = initNavStore();
 export const notificationStore = initNotificationStore();
 
 export const appUpdateStore = initAppUpdateStore();
+
+export const scrollStore = initScrollStore();
