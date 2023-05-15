@@ -29,7 +29,7 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --compiler-warnings \"css-unused-selector:ignore\" --watch",
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
-    "e2e": "wdio run ./wdio.conf.ts"
+    "e2e": "NODE_ENV=test wdio run ./wdio.conf.ts"
   },
   "devDependencies": {
     "@electron/notarize": "^1.2.3",

@@ -159,7 +159,7 @@
                 </div>
               </Button>
               <div slot="tooltip-content" class="flex flex-col items-center">
-                <div>Removes {pkg.installed_versions?.length ?? 0 - 1} old versions</div>
+                <div>Removes {(pkg.installed_versions?.length || 0) - 1} old versions</div>
                 <div>Keeps latest (v{findRecentInstalledVersion(pkg)})</div>
               </div>
             </ToolTip>

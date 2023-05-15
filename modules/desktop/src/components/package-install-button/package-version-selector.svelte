@@ -30,6 +30,7 @@
     (a: string, b: string) => semverCompare(b, a)
   );
 
+  let activeVersion = "";
   const handleClick = (evt: MouseEvent, version: string) => {
     if (isInstalled(version)) {
       return;
@@ -37,6 +38,7 @@
 
     isOpened = false;
     if (version) {
+      activeVersion = version;
       onClick(version);
     }
   };
@@ -45,7 +47,7 @@
 </script>
 
 <div class="dropdown z-10" use:clickOutside on:click_outside={handleClickOutside}>
-  <PackageStateButton {buttonSize} {pkg} onClick={toggleOpen}>
+  <PackageStateButton {buttonSize} {pkg} onClick={toggleOpen} {activeVersion}>
     <div slot="selector" class="pt-2">
       <div class="version-list" class:visible={isOpened}>
         {#each allVersions as version, idx}
