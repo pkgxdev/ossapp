@@ -40,7 +40,8 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
   ipcMain.handle("get-session", async () => {
     try {
       log.info("getting session");
-      const session = await readSessionData();
+      const [session, cliVersion] = await Promise.all([readSessionData(), initializeTeaCli()]);
+      session.teaVersion = cliVersion;
       log.debug(session ? "found session data" : "no session data found");
       return session;
     } catch (error) {

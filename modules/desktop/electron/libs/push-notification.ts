@@ -21,7 +21,7 @@ const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
 export default function initialize(mainWindow: BrowserWindow) {
-  if (config.PUSHY_APP_ID) {
+  if (config.PUSHY_APP_ID && process.env.NODE_ENV !== "test") {
     Pushy.listen();
     // Register device for push notifications
     Pushy.register({ appId: config.PUSHY_APP_ID })
