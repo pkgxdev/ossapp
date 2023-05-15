@@ -27,7 +27,7 @@ export const config: Options.Testrunner = {
       browserName: "chrome" // or "firefox", "microsoftedge", "safari"
     }
   ],
-  logLevel: "debug",
+  logLevel: "info",
   bail: 0,
   baseUrl: "http://localhost",
   waitforTimeout: 10000,
@@ -54,6 +54,6 @@ export const config: Options.Testrunner = {
     ui: "bdd",
     timeout: 120000
   },
-  specFileRetries: 3,
+  specFileRetries: 2,
   specFileRetriesDelay: 5
 };
