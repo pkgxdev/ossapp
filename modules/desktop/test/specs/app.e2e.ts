@@ -1,5 +1,5 @@
 import { browser } from "wdio-electron-service";
-import { setupUtils, sleep } from "./utils.ts";
+import { setupUtils } from "./utils.ts";
 
 type utilType = ReturnType<typeof setupUtils>;
 
@@ -30,19 +30,10 @@ describe("basic smoke test", () => {
     // Be nice to devs running this over and over
     await utils.uninstallPackageIfNeeded();
 
-    await utils.installLatestVersion();
+    await utils.installLatestVersion("tea_xyz_brewkit");
 
-    //use findByText to wait for the install to complete
-    await expect(
-      await screen.findByText(
-        /^Package tea.xyz\/brewkit .* has been installed./,
-        {},
-        { timeout: 60000, interval: 1000 }
-      )
-    ).toExist();
+    await utils.verifyAndCloseNotification(/^Package tea.xyz\/brewkit .* has been installed./);
     await expect(await screen.findByRole("button", { name: "OPEN IN TERMINAL" })).toExist();
-
-    await utils.closeNotification();
   });
 
   it("search and install create-dmg", async () => {
@@ -58,17 +49,11 @@ describe("basic smoke test", () => {
     await utils.packageDetailsLoaded();
     await utils.uninstallPackageIfNeeded();
 
-    await utils.installLatestVersion();
+    await utils.installLatestVersion("github_com_create_dmg_create_dmg");
 
-    await expect(
-      await screen.findByText(
-        /^Package github.com\/create-dmg\/create-dmg .* has been installed./,
-        {},
-        { timeout: 60000, interval: 1000 }
-      )
-    ).toExist();
-
-    await utils.closeNotification();
+    await utils.verifyAndCloseNotification(
+      /^Package github.com\/create-dmg\/create-dmg .* has been installed./
+    );
   });
 
   it("should be able to install specific version", async () => {
@@ -79,42 +64,23 @@ describe("basic smoke test", () => {
     pnpmCard.click();
 
     await utils.uninstallPackageIfNeeded();
+    await utils.installSpecificVersion("pnpm_io", "8.0.0");
 
-    await utils.installSpecificVersion("8.0.0");
+    await utils.verifyAndCloseNotification(/^Package pnpm.io .* has been installed./);
 
-    await expect(
-      await screen.findByText(
-        /^Package pnpm.io .* has been installed./,
-        {},
-        { timeout: 60000, interval: 1000 }
-      )
-    ).toExist();
+    // Now test the update
+    await utils.goHome();
 
-    await utils.closeNotification();
-  });
-
-  it("should be able to update a package", async () => {
-    // this requires ^ to succeed first
-    const { screen } = utils!;
     const menuBtn = await screen.findByTestId("menu-button-updates-available");
     menuBtn.click();
 
     const header = await screen.findByText("available updates");
     await expect(header).toExist();
 
-    const updateBtn = await screen.findByTestId("install-button-pnpm_io");
+    const updateBtn = await utils.findByTestId("install-button-pnpm_io");
     await expect(updateBtn).toExist();
-
     updateBtn.click();
 
-    await expect(
-      await screen.findByText(
-        /^Package pnpm.io .* has been installed./,
-        {},
-        { timeout: 60000, interval: 1000 }
-      )
-    ).toExist();
-
-    await utils.closeNotification();
+    await utils.verifyAndCloseNotification(/^Package pnpm.io .* has been installed./);
   });
 });
