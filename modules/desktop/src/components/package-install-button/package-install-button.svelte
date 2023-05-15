@@ -2,7 +2,6 @@
   import { PackageStates, type GUIPackage } from "$libs/types";
   import Button from "@tea/ui/button/button.svelte";
   import { t } from "$libs/translations";
-  import { stringify } from "postcss";
 
   export let buttonSize: "small" | "large" = "small";
 
