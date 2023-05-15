@@ -15,7 +15,8 @@ export async function initSentry(session?: Session) {
       Sentry.configureScope(async (scope) => {
         scope.setUser({
           id: session.device_id, // device_id this should exist in our pg db: developer_id is to many device_id
-          username: session?.user?.login || "" // github username or handler
+          username: session?.user?.login || "", // github username or handler
+          tea: session?.teaVersion || "unknown"
         });
       });
     }
