@@ -2,10 +2,13 @@
   import { PackageStates, type GUIPackage } from "$libs/types";
   import Button from "@tea/ui/button/button.svelte";
   import { t } from "$libs/translations";
+  import { stringify } from "postcss";
 
   export let buttonSize: "small" | "large" = "small";
 
   export let pkg: GUIPackage;
+  export let activeVersion = ""; // determine which version is being installed
+
   export let onClick = (evt?: MouseEvent) => {
     console.log("do nothing");
   };
@@ -25,6 +28,7 @@
   };
 
   const getVersion = (pkg: GUIPackage) => {
+    if (pkg.state === PackageStates.INSTALLING && activeVersion) return activeVersion;
     if (pkg.state === PackageStates.INSTALLED) {
       return pkg.installed_versions?.[0] ?? pkg.version;
     }
