@@ -93,7 +93,9 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
     try {
       log.info("relaunching app");
       const autoUpdater = getUpdater();
-      await autoUpdater.quitAndInstall();
+      setImmediate(() => {
+        autoUpdater.quitAndInstall();
+      });
     } catch (error) {
       log.error(error);
     }
