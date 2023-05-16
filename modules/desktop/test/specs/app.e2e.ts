@@ -58,15 +58,15 @@ describe("basic smoke test", () => {
 
   it("should be able to install specific version", async () => {
     const { screen, searchTerm } = utils!;
-    await searchTerm("pnpm.io");
-    const pnpmCard = await utils.findSearchPackageCardBySlug("pnpm_io");
-    await expect(pnpmCard).toExist();
-    pnpmCard.click();
+    await searchTerm("grep");
+    const grepCard = await utils.findSearchPackageCardBySlug("gnu_org_grep");
+    await expect(grepCard).toExist();
+    grepCard.click();
 
     await utils.uninstallPackageIfNeeded();
-    await utils.installSpecificVersion("pnpm_io", "8.0.0");
+    await utils.installSpecificVersion("gnu_org_grep", "3.8.0");
 
-    await utils.verifyAndCloseNotification(/^Package pnpm.io .* has been installed./);
+    await utils.verifyAndCloseNotification(/^Package gnu.org\/grep .* has been installed./);
 
     // Now test the update
     await utils.goHome();
@@ -77,10 +77,10 @@ describe("basic smoke test", () => {
     const header = await screen.findByText("available updates");
     await expect(header).toExist();
 
-    const updateBtn = await utils.findByTestId("install-button-pnpm_io");
+    const updateBtn = await utils.findByTestId("install-button-gnu_org_grep");
     await expect(updateBtn).toExist();
     updateBtn.click();
 
-    await utils.verifyAndCloseNotification(/^Package pnpm.io .* has been installed./);
+    await utils.verifyAndCloseNotification(/^Package gnu.org\/grep .* has been installed./);
   });
 });
