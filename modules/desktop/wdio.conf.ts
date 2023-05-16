@@ -27,7 +27,7 @@ export const config: Options.Testrunner = {
       browserName: "chrome" // or "firefox", "microsoftedge", "safari"
     }
   ],
-  logLevel: "info",
+  logLevel: "error",
   bail: 0,
   baseUrl: "http://localhost",
   waitforTimeout: 10000,
