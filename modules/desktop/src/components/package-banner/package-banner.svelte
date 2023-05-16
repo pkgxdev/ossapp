@@ -125,6 +125,7 @@
             <ToolTip>
               <Button
                 slot="target"
+                data-testid="uninstall-button"
                 class="h-10"
                 type="plain"
                 color="blue"

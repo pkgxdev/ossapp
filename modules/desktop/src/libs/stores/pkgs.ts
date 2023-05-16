@@ -249,11 +249,9 @@ const uninstallPkg = async (pkg: GUIPackage) => {
       await deletePkg(pkg, v);
     }
 
-    await withDelay(() => {
-      updatePackage(pkg.full_name, {
-        installed_versions: []
-      });
-    }, 1000);
+    updatePackage(pkg.full_name, {
+      installed_versions: []
+    });
   } catch (error) {
     log.error(error);
     notificationStore.add({

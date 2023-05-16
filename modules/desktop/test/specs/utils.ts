@@ -1,4 +1,5 @@
 import * as testingLibraryWdio from "@testing-library/webdriverio";
+import { waitForNotExist } from "./waitutils.ts";
 
 // work around for importing CommonJS module
 const { setupBrowser } = testingLibraryWdio;
@@ -9,6 +10,14 @@ export function setupUtils(browser: WebdriverIO.Browser) {
 
   const findButton = async (name: RegExp | string) => {
     return (await screen.findByRole("button", { name })) as unknown as HTMLElement;
+  };
+
+  const findByTestId = async (testId: string) => {
+    return (await screen.findByTestId(
+      testId,
+      {},
+      { interval: 1000, timeout: 10000 }
+    )) as unknown as HTMLElement;
   };
 
   //
@@ -40,31 +49,34 @@ export function setupUtils(browser: WebdriverIO.Browser) {
   };
 
   const uninstallPackageIfNeeded = async () => {
-    const uninstallButton = (await screen.queryByRole("button", {
-      name: "UNINSTALL"
-    })) as unknown as HTMLElement;
+    const uninstallButton = (await screen.queryByTestId(
+      "uninstall-button"
+    )) as unknown as HTMLElement;
+    console.log(`will uninstall package = ${!!uninstallButton}`);
     if (uninstallButton) {
       uninstallButton.click();
-      // wait for the install button to show back up
-      await screen.findByRole("button", { name: /^INSTALL / }, { timeout: 60000, interval: 1000 });
+      // wait for the uninstall button to disappear
+      await waitForNotExist(() => screen.queryByTestId("uninstall-button"), { timeout: 20000 });
     }
   };
 
-  const installLatestVersion = async () => {
-    await installSpecificVersion("latest");
+  const installLatestVersion = async (slug: string) => {
+    await installSpecificVersion(slug, "latest");
   };
 
-  const installSpecificVersion = async (version: string) => {
-    const installButton = await findButton(/^INSTALL |^UPDATE/);
+  const installSpecificVersion = async (slug: string, version: string) => {
+    console.log(`Installing package: ${slug}@${version}`);
+
+    const installButton = await findByTestId(`install-button-${slug}`);
+    expect(installButton).toExist();
     installButton.click();
 
-    const versionButton = await screen.findByTestId(`install-${version}`);
-    await versionButton.waitForExist();
+    const versionButton = await findByTestId(`install-${version}`);
+    expect(versionButton).toExist();
     versionButton.click();
   };
 
   const goHome = async () => {
-    // await browser.url("/");
     const homeButton = await screen.findByTestId("home-button");
     await homeButton.click();
     const homeMenu = $("#side-menu");
@@ -82,10 +94,17 @@ export function setupUtils(browser: WebdriverIO.Browser) {
   };
 
   const closeNotification = async () => {
-    const closeNotificationBtn = $(".close-notification");
+    console.log("Closing notification");
+    const closeNotificationBtn = await findByTestId("close-notification");
     await expect(closeNotificationBtn).toExist();
-    await closeNotificationBtn.click();
-    await expect(closeNotificationBtn).not.toExist();
+    closeNotificationBtn.click();
+    await waitForNotExist(() => screen.queryByTestId("close-notification"));
+  };
+
+  // verify a notification matching the regex is shown and then close it
+  const verifyAndCloseNotification = async (regex: RegExp) => {
+    await expect(await screen.findByText(regex, {}, { timeout: 30000, interval: 1000 })).toExist();
+    await closeNotification();
   };
 
   return {
@@ -93,14 +112,14 @@ export function setupUtils(browser: WebdriverIO.Browser) {
     searchTerm,
     goHome,
     findButton,
+    findByTestId,
     findPackageCardBySlug,
     findSearchPackageCardBySlug,
     packageDetailsLoaded,
     uninstallPackageIfNeeded,
     installLatestVersion,
     installSpecificVersion,
-    closeNotification
+    closeNotification,
+    verifyAndCloseNotification
   };
 }
-
-export const sleep = (delayMs: number) => new Promise((resolve) => setTimeout(resolve, delayMs));

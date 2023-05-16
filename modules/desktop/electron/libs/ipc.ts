@@ -194,6 +194,7 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
 
   ipcMain.handle("cache-image", async (_event, url) => {
     try {
+      if (process.env.NODE_ENV === "test") return url;
       log.info("caching:", url);
       const cachedImagePath = await cacheImage(url);
       return cachedImagePath;
