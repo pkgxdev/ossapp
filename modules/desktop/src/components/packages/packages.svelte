@@ -10,7 +10,8 @@
   import Package from "./package.svelte";
   import NoInstalls from "./no-installs.svelte";
   import NoUpdates from "./no-updates.svelte";
-  import { packagesStore } from "$libs/stores";
+  import { packagesStore, scrollStore } from "$libs/stores";
+  import { afterUpdate, beforeUpdate } from "svelte";
 
   const { packageList: allPackages } = packagesStore;
   export let packageFilter: SideMenuOptions = SideMenuOptions.all;
@@ -19,6 +20,11 @@
 
   let loadMore = 9;
   let limit = loadMore + 9;
+
+  const updateLimit = (value: number) => {
+    limit += value;
+    scrollStore.setLimit(packageFilter, limit);
+  };
 
   // TODO: figure out a better type strategy here so that this breaks if SideMenuOptions is updated
   const pkgFilters: { [key: string]: (pkg: GUIPackage) => boolean } = {
@@ -46,6 +52,7 @@
   const onScroll = (e: Event) => {
     const target = e.target as HTMLInputElement;
     scrollY = target.scrollTop || 0;
+    scrollStore.setScrollPosition(packageFilter, scrollY);
   };
 
   $: packages = $allPackages.filter(pkgFilters[packageFilter] || pkgFilters.all);
@@ -56,13 +63,37 @@
     const minCardRows = Math.floor(node.scrollHeight / assumedCardHeight);
     if (cardRows < minCardRows) {
       const addLimit = 3 * (minCardRows - cardRows);
-      limit += addLimit;
+      updateLimit(addLimit);
     }
   };
+
+  let scrollElement: any = null;
+  let prevFilter: SideMenuOptions | null;
+
+  // Restore the limit before the update...
+  beforeUpdate(() => {
+    if (prevFilter !== packageFilter) {
+      limit = scrollStore.getLimit(packageFilter);
+    }
+  });
+
+  // ...and scroll position after the update
+  afterUpdate(() => {
+    if (prevFilter !== packageFilter && scrollElement) {
+      prevFilter = packageFilter;
+      const scrollPosition = scrollStore.getScrollPosition(packageFilter);
+      scrollElement.scrollTop = scrollPosition;
+    }
+  });
 </script>
 
 <div class="relative h-full w-full">
-  <ul class="flex flex-wrap content-start bg-black" use:watchResize={onResize} on:scroll={onScroll}>
+  <ul
+    bind:this={scrollElement}
+    class="flex flex-wrap content-start bg-black"
+    use:watchResize={onResize}
+    on:scroll={onScroll}
+  >
     {#if packages.length > 0}
       {#each packages as pkg, index}
         {#if index < limit}
@@ -84,7 +115,7 @@
         </section>
       {/each}
     {/if}
-    <InfiniteScroll threshold={100} on:loadMore={() => (limit += loadMore)} />
+    <InfiniteScroll threshold={100} on:loadMore={() => updateLimit(loadMore)} />
   </ul>
 </div>
 
