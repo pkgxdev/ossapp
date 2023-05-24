@@ -202,6 +202,13 @@ export async function getDistPackages(): Promise<Package[]> {
   return packages;
 }
 
+export async function getInstalledVersionsForPackage(full_name: string): Promise<Package> {
+  return (packages.find((pkg) => pkg.full_name === full_name) ?? {
+    full_name,
+    installed_versions: []
+  }) as Package;
+}
+
 export async function getPackages(): Promise<GUIPackage[]> {
   return packages.map((pkg) => {
     return {
@@ -397,5 +404,13 @@ export async function openPackageEntrypointInTerminal(pkg: string) {
 }
 
 export const pollDeviceSession = async () => {
+  console.log("do nothing");
+};
+
+export const monitorTeaDir = async () => {
+  console.log("do nothing");
+};
+
+export const stopMonitoringTeaDir = async () => {
   console.log("do nothing");
 };

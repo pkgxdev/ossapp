@@ -48,6 +48,15 @@ export async function getInstalledPackages(): Promise<InstalledPackage[]> {
   return pkgs;
 }
 
+export async function getInstalledVersionsForPackage(fullName: string): Promise<InstalledPackage> {
+  log.info("getting installed versions for package: ", fullName);
+  const result = await ipcRenderer.invoke("get-installed-package-versions", fullName);
+  if (result instanceof Error) {
+    throw result;
+  }
+  return result as InstalledPackage;
+}
+
 export async function getPackages(): Promise<GUIPackage[]> {
   const [packages, installedPackages] = await Promise.all([
     getDistPackages(),
@@ -276,5 +285,19 @@ export const isDev = async () => {
   } catch (error) {
     log.error(error);
     return false;
+  }
+};
+
+export const monitorTeaDir = async () => {
+  const result = await ipcRenderer.invoke("monitor-tea-dir");
+  if (result instanceof Error) {
+    throw result;
+  }
+};
+
+export const stopMonitoringTeaDir = async () => {
+  const result = await ipcRenderer.invoke("stop-monitor-tea-dir");
+  if (result instanceof Error) {
+    throw result;
   }
 };

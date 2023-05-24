@@ -1,4 +1,3 @@
-// import { readDir, BaseDirectory } from '@tauri-apps/api/fs';
 import fs from "fs";
 import path from "path";
 import { app } from "electron";
@@ -8,12 +7,8 @@ import { mkdirp } from "mkdirp";
 import fetch from "node-fetch";
 import { SemVer, isValidSemVer } from "@tea/libtea";
 import { execSync } from "child_process";
-
-type Dir = {
-  name: string;
-  path: string;
-  children?: Dir[];
-};
+import chokidar from "chokidar";
+import { MainWindowNotifier } from "./types";
 
 type ParsedVersion = { full_name: string; semVer: SemVer };
 
@@ -38,9 +33,18 @@ export const getGuiPath = () => {
   return path.join(getTeaPath(), "tea.xyz/gui");
 };
 
-export async function getInstalledPackages(): Promise<InstalledPackage[]> {
-  const pkgsPath = getTeaPath();
+export async function getInstalledVersionsForPackage(fullName: string): Promise<InstalledPackage> {
+  const pkgsPath = path.join(getTeaPath(), fullName);
+  const result = await findInstalledVersions(pkgsPath);
+  const pkg = result.find((v) => v.full_name === fullName);
+  return pkg ?? { full_name: fullName, installed_versions: [] };
+}
 
+export async function getInstalledPackages(): Promise<InstalledPackage[]> {
+  return findInstalledVersions(getTeaPath());
+}
+
+async function findInstalledVersions(pkgsPath: string): Promise<InstalledPackage[]> {
   if (!fs.existsSync(pkgsPath)) {
     log.info(`packages path ${pkgsPath} does not exist, no installed packages`);
     return [];
@@ -87,33 +91,6 @@ const parseVersionFromPath = (versionPath: string): ParsedVersion | null => {
     log.error("error parsing version from path: ", versionPath);
     return null;
   }
-};
-
-const semverTest =
-  /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/g;
-
-export const getPkgBottles = (packageDir: Dir): string[] => {
-  log.info("getting installed bottle for ", packageDir);
-  const bottles: string[] = [];
-
-  const pkg = packageDir.path.split(".tea/")[1];
-  const version = pkg.split("/v")[1];
-
-  const isVersion = semverTest.test(version) || !isNaN(+version) || version === "*";
-
-  if (version && isVersion) {
-    bottles.push(pkg);
-  } else if (packageDir?.children?.length) {
-    const childBottles = packageDir.children
-      .map(getPkgBottles)
-      .reduce((arr, bottles) => [...arr, ...bottles], []);
-    bottles.push(...childBottles);
-  }
-
-  const foundBottles = bottles.filter((b) => b !== undefined).sort(); // ie: ["gohugo.io/v*", "gohugo.io/v0", "gohugo.io/v0.108", "gohugo.io/v0.108.0"]
-
-  log.info(`Found ${foundBottles.length} bottles from `, packageDir);
-  return foundBottles;
 };
 
 export const deepReadDir = async ({
@@ -181,7 +158,7 @@ export async function deletePackageFolder(fullName, version) {
   try {
     const foldPath = path.join(getTeaPath(), fullName, `v${version}`);
     log.info("rm:", foldPath);
-    await fs.rmdirSync(foldPath, { recursive: true });
+    await fs.rmSync(foldPath, { recursive: true });
   } catch (error) {
     log.error(error);
   }
@@ -216,4 +193,52 @@ export async function cacheImage(url: string): Promise<string> {
   }
 
   return `file://${imagePath}`;
+}
+
+let watcher: chokidar.FSWatcher | null = null;
+
+export async function startMonitoringTeaDir(mainWindowNotifier: MainWindowNotifier) {
+  if (watcher) {
+    log.info("Watcher already started");
+    return;
+  }
+
+  const dir = path.join(getTeaPath(), "**/v*");
+  log.info(`Start monitoring tea dir: ${dir}}`);
+
+  watcher = chokidar.watch(dir, {
+    ignoreInitial: true,
+    persistent: true,
+    followSymlinks: false,
+    depth: 5,
+    ignored: ["**/var/pantry/projects/**", "**/local/tmp/**", "**/share/**"]
+  });
+
+  watcher
+    .on("addDir", (pth) => {
+      const dir = path.dirname(pth);
+      const version = path.basename(pth);
+      if (isValidSemVer(version) && !fs.lstatSync(pth).isSymbolicLink()) {
+        const full_name = dir.split(".tea/")[1];
+        log.info(`Monitor - Added Package: ${full_name} v${version}`);
+        mainWindowNotifier("pkg-modified", { full_name, version, type: "add" });
+      }
+    })
+    .on("unlinkDir", (pth) => {
+      // FIXME: unlinkDir does not always fire, this is a bug in chokidar
+      const dir = path.dirname(pth);
+      const version = path.basename(pth);
+      if (isValidSemVer(version)) {
+        const full_name = dir.split(".tea/")[1];
+        log.info(`Monitor - Removed Package: ${full_name} v${version}`);
+        mainWindowNotifier("pkg-modified", { full_name, version, type: "remove" });
+      }
+    })
+    .on("error", (error) => log.error(`Watcher error: ${error}`));
+}
+
+export async function stopMonitoringTeaDir() {
+  log.info("Stop monitoring tea dir");
+  await watcher?.close();
+  watcher = null;
 }

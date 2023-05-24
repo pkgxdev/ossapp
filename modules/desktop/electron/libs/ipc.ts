@@ -1,5 +1,12 @@
 import { ipcMain, app, BrowserWindow } from "electron";
-import { deletePackageFolder, getInstalledPackages, cacheImage } from "./tea-dir";
+import {
+  deletePackageFolder,
+  getInstalledPackages,
+  getInstalledVersionsForPackage,
+  cacheImage,
+  startMonitoringTeaDir,
+  stopMonitoringTeaDir
+} from "./tea-dir";
 import { readSessionData, writeSessionData, pollAuth } from "./auth";
 import type { Packages, Session } from "../../src/libs/types";
 import log from "./logger";
@@ -34,6 +41,16 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
     } catch (error) {
       log.error(error);
       return [];
+    }
+  });
+
+  ipcMain.handle("get-installed-package-versions", async (_, fullName: string) => {
+    try {
+      log.info(`getting installed versions for package: ${fullName}`);
+      return await getInstalledVersionsForPackage(fullName);
+    } catch (error) {
+      log.error(error);
+      return error;
     }
   });
 
@@ -228,6 +245,24 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
     } catch (error) {
       log.error(error);
       return false;
+    }
+  });
+
+  ipcMain.handle("monitor-tea-dir", async () => {
+    try {
+      await startMonitoringTeaDir(notifyMainWindow);
+    } catch (err) {
+      log.error("Failed to monitor tea dir", err);
+      return err;
+    }
+  });
+
+  ipcMain.handle("stop-monitor-tea-dir", async () => {
+    try {
+      await stopMonitoringTeaDir();
+    } catch (err) {
+      log.error("Failed to stop monitoring tea dir", err);
+      return err;
     }
   });
 }
