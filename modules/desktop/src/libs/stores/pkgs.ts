@@ -217,6 +217,9 @@ const installPkg = async (pkg: GUIPackage, version?: string) => {
     updatePackage(pkg.full_name, { install_progress_percentage: 0.01 });
     await installPackage(pkg, versionToInstall);
     trackInstall(pkg.full_name);
+
+    await refreshPackages(); // helps e2e tests might not be the most efficient but helps
+
     notificationStore.add({
       message: `Package ${pkg.full_name} v${versionToInstall} has been installed.`
     });
