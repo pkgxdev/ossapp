@@ -51,6 +51,16 @@ jobs:
         with:
           version: 0.31.2
       - uses: actions/checkout@v3
+      - name: cache node_modules build
+        uses: actions/cache@v3
+        with:
+          key: test-ubuntu
+          path: |
+            ./pnpm
+            ./.pnpm-store
+            ./node_modules
+            ./modules/desktop/node_modules
+            ./modules/ui/node_modules
       - name: env file
         run: cp modules/desktop/.env.example modules/desktop/.env
       - name: install app dependencies
@@ -76,6 +86,16 @@ jobs:
         with:
           version: 0.31.2
       - uses: actions/checkout@v3
+      - name: cache node_modules build
+        uses: actions/cache@v3
+        with:
+          key: e2e-macos
+          path: |
+            ./pnpm
+            ./.pnpm-store
+            ./node_modules
+            ./modules/desktop/node_modules
+            ./modules/ui/node_modules
       - name: env file
         run: cp modules/desktop/.env.example modules/desktop/.env
       - name: install app dependencies
@@ -97,10 +117,6 @@ jobs:
           version: 0.31.2
       - uses: actions/checkout@v3
       - name: cache node_modules build
-        # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
-        # but its ok to ignore, its still the fastest builder
-        # NOTE: enabling cache in the self hosted runner slows down the pipeline by 4m because post-cache builder error ^
-        if: startsWith(inputs.platform, 'linux') || matrix.platform.name == 'darwin+x86-64'
         uses: actions/cache@v3
         with:
           key: ubuntu-latest-pnpm
