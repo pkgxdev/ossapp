@@ -2,6 +2,7 @@
   import "$appcss";
   import { t } from "$libs/translations";
 
+  import Spinner from "@tea/ui/spinner/spinner.svelte";
   import { page } from "$app/stores";
   // import PageHeader from '$components/page-header/page-header.svelte';
   import PackageBanner from "$components/package-banner/package-banner.svelte";
@@ -84,6 +85,11 @@
 
     <section class="mt-8 flex gap-8">
       <div class="w-2/3">
+        {#if tabs.length === 0}
+          <div class="flex w-full justify-center py-20">
+            <Spinner />
+          </div>
+        {/if}
         <Tabs {tabs} defaultTab={$t("common.details")} />
       </div>
       <div class="w-1/3">
