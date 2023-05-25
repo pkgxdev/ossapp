@@ -68,7 +68,7 @@
   <a class="hover:text-white hover:opacity-80" href="/">{$t("common.home")}</a>
   ›
   <a class="hover:text-white hover:opacity-80" href="/?tab={tab || 'discover'}"
-    >{$t(`tags.${tab}`).toLowerCase() || "discover"}</a
+    >{tab ? $t(`tags.${tab}`).toLowerCase() : "discover"}</a
   >
   ›
   <span class="text-white">{pkg?.full_name}</span>
