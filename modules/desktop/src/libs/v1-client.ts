@@ -2,6 +2,7 @@ import axios from "axios";
 import type { Session } from "$libs/types";
 import bcrypt from "bcryptjs";
 import { getSession } from "$libs/stores/auth";
+import { isDev } from "@native";
 
 export const baseUrl = "https://api.tea.xyz/v1";
 
@@ -11,7 +12,7 @@ export async function get<T>(
 ): Promise<T | null> {
   console.log(`GET /v1/${urlPath}`);
 
-  const [session] = await Promise.all([getSession()]);
+  const [session, dev] = await Promise.all([getSession(), isDev()]);
 
   const headers =
     session?.device_id && session?.user
@@ -20,7 +21,7 @@ export async function get<T>(
 
   const req = await axios.request({
     method: "GET",
-    baseURL: "https://api.tea.xyz",
+    baseURL: `https://${dev ? "api.dev" : "api"}.tea.xyz`,
     url: ["v1", ...urlPath.split("/")].filter((p) => p).join("/"),
     headers,
     params,

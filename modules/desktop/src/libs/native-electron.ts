@@ -25,11 +25,14 @@ const { ipcRenderer, shell } = window.require("electron");
 
 export async function getDistPackages(): Promise<Package[]> {
   try {
-    return withRetry(async () => {
-      const req = await axios.get<Package[]>("https://api.tea.xyz/v1/packages");
-      log.info("packages received:", req.data.length);
-      return req.data;
+    const packages = await withRetry(async () => {
+      const data = await apiGet<Package[]>("packages");
+      return data;
     });
+
+    if (!packages) throw new Error("packages not found");
+
+    return packages;
   } catch (error) {
     log.error("getDistPackagesList:", error);
     return [];
