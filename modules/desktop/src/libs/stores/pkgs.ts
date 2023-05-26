@@ -12,7 +12,10 @@ import {
   writePackageCache,
   syncPantry,
   cacheImageURL,
-  listenToChannel
+  listenToChannel,
+  getInstalledVersionsForPackage,
+  monitorTeaDir,
+  stopMonitoringTeaDir
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
@@ -26,7 +29,6 @@ import withRetry from "$libs/utils/retry";
 
 import log from "$libs/logger";
 import { isPackageUpToDate } from "../packages/pkg-utils";
-import withDelay from "$libs/utils/delay";
 
 import { indexPackages, searchPackages } from "$libs/search-index";
 
@@ -150,6 +152,7 @@ const init = async function () {
     packageMap.set(cachedPkgs);
 
     await refreshPackages();
+    await monitorTeaDir();
     initialized = true;
   }
   log.info("packages store: initialized!");
@@ -201,12 +204,20 @@ const refreshPackages = async () => {
   refreshTimeoutId = setTimeout(() => refreshPackages(), packageRefreshInterval); // refresh every hour
 };
 
+const refreshSinglePackage = async (fullName: string) => {
+  log.info(`refreshing single package: ${fullName}`);
+  const result = await getInstalledVersionsForPackage(fullName);
+  log.info(`package: ${fullName} has installed versions:`, result.installed_versions);
+  updatePackage(fullName, { installed_versions: result.installed_versions });
+};
+
 // Destructor for the package store
-const destroy = () => {
+const destroy = async () => {
   isDestroyed = true;
   if (refreshTimeoutId) {
     clearTimeout(refreshTimeoutId);
   }
+  await stopMonitoringTeaDir();
   log.info("packages store: destroyed");
 };
 
@@ -218,7 +229,7 @@ const installPkg = async (pkg: GUIPackage, version?: string) => {
     await installPackage(pkg, versionToInstall);
     trackInstall(pkg.full_name);
 
-    await refreshPackages(); // helps e2e tests might not be the most efficient but helps
+    await refreshSinglePackage(pkg.full_name);
 
     notificationStore.add({
       message: `Package ${pkg.full_name} v${versionToInstall} has been installed.`
@@ -252,9 +263,7 @@ const uninstallPkg = async (pkg: GUIPackage) => {
       await deletePkg(pkg, v);
     }
 
-    updatePackage(pkg.full_name, {
-      installed_versions: []
-    });
+    await refreshSinglePackage(pkg.full_name);
   } catch (error) {
     log.error(error);
     notificationStore.add({
@@ -300,11 +309,19 @@ listenToChannel("install-progress", ({ full_name, progress }: any) => {
   updatePackage(full_name, { install_progress_percentage: progress });
 });
 
+// TODO: perhaps this can be combined with pkg-modified?
 listenToChannel("pkg-installed", ({ full_name, version }: any) => {
   if (!full_name) {
     return;
   }
   updatePackage(full_name, {}, version);
+});
+
+listenToChannel("pkg-modified", ({ full_name }: any) => {
+  if (!full_name) {
+    return;
+  }
+  refreshSinglePackage(full_name);
 });
 
 // This is only used for uninstall now

@@ -144,3 +144,16 @@ jobs:
         aws cloudfront create-invalidation \
           --distribution-id ${{ secrets.AWS_CF_GUI_RELEASE_ID }} \
           --paths '/*'
+    - name: Upload ARM64 DMG files to release
+      uses: actions/github-release@v1
+      with:
+        args: upload-release-asset --owner ${{ github.repository_owner }} --repo ${{ github.repository }} --tag ${{ github.ref }} --name ${{ steps.app_files.outputs.dmg_arm64 }} --file dist/${{ steps.app_files.outputs.dmg_arm64 }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload X86 DMG files to release
+      uses: actions/github-release@v1
+      with:
+        args: upload-release-asset --owner ${{ github.repository_owner }} --repo ${{ github.repository }} --tag ${{ github.ref }} --name ${{ steps.app_files.outputs.dmg_x86 }} --file dist/${{ steps.app_files.outputs.dmg_x86 }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
