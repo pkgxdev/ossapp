@@ -213,6 +213,7 @@ importers:
       '@sveltejs/kit': ^1.0.0
       '@sveltejs/package': ^1.0.1
       '@tailwindcss/line-clamp': ^0.4.2
+      '@types/he': ^1.2.0
       '@types/prismjs': ^1.26.0
       '@typescript-eslint/eslint-plugin': ^5.27.0
       '@typescript-eslint/parser': ^5.27.0
@@ -221,6 +222,7 @@ importers:
       eslint-config-prettier: ^8.3.0
       eslint-plugin-storybook: ^0.6.7
       eslint-plugin-svelte3: ^4.0.0
+      he: ^1.2.0
       postcss: ^8.4.19
       prettier: ^2.8.8
       prettier-plugin-svelte: ^2.10.0
@@ -240,7 +242,9 @@ importers:
     dependencies:
       '@magidoc/plugin-svelte-prismjs': 3.6.4_prismjs@1.29.0
       '@tailwindcss/line-clamp': 0.4.4_tailwindcss@3.3.2
+      '@types/he': 1.2.0
       '@types/prismjs': 1.26.0
+      he: 1.2.0
       prismjs: 1.29.0
       restructured: 0.0.11
       svelte-markdown: 0.2.3_svelte@3.59.1
@@ -3850,6 +3854,10 @@ packages:
     dependencies:
       '@types/node': 20.1.1
     dev: true
+
+  /@types/he/1.2.0:
+    resolution: {integrity: sha512-uH2smqTN4uGReAiKedIVzoLUAXIYLBTbSofhx3hbNqj74Ua6KqFsLYszduTrLCMEAEAozF73DbGi/SC1bzQq4g==}
+    dev: false
 
   /@types/http-cache-semantics/4.0.1:
     resolution: {integrity: sha512-SZs7ekbP8CN0txVG2xVRH6EgKmEm31BOxA07vkFaETzZz1xh+cbt8BcI0slpymvwhx5dlFnQG2rTlPVQn+iRPQ==}
@@ -7858,7 +7866,6 @@ packages:
   /he/1.2.0:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
-    dev: true
 
   /help-me/3.0.0:
     resolution: {integrity: sha512-hx73jClhyk910sidBB7ERlnhMlFsJJIBqSVMFDwPN8o2v9nmp5KgLq1Xz1Bf1fCMMZ6mPrX159iG0VLy/fPMtQ==}
