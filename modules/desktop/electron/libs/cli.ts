@@ -44,13 +44,24 @@ export async function installPackage(
 
     child.stderr.on("data", (data) => {
       try {
-        const msg = JSON.parse(data.toString().trim());
-        progressNotifier(msg);
-      } catch (err) {
-        //swallow it
-      }
+        data
+          .toString()
+          .split("\n")
+          .map((s: string) => s.trim())
+          .filter((s: string) => s.length > 0)
+          .forEach((line) => {
+            try {
+              const msg = JSON.parse(line.trim());
+              progressNotifier(msg);
+            } catch (err) {
+              log.error("handling cli notification line", line, err);
+            }
+          });
 
-      stderr += data.toString().trim();
+        stderr += data.toString();
+      } catch (err) {
+        log.error("error processing cli data", data.toString(), err);
+      }
     });
 
     child.on("exit", (code) => {
@@ -83,7 +94,7 @@ function newInstallProgressNotifier(full_name: string, notifyMainWindow: MainWin
   let currentPackageNumber = 0;
 
   return function (msg: any) {
-    if (msg.status !== "downloading") {
+    if (msg.status !== "downloading" && msg.status !== "installing") {
       log.info("cli:", msg);
     }
 
