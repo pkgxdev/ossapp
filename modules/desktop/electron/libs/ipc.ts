@@ -20,6 +20,7 @@ import { getAutoUpdateStatus, getUpdater, isDev } from "./auto-updater";
 import { loadPackageCache, writePackageCache } from "./package";
 import { nanoid } from "nanoid";
 import { MainWindowNotifier } from "./types";
+import { unsubscribeToPackageTopic } from "./push-notification";
 
 export type HandlerOptions = {
   // A function to call back to the current main
@@ -160,6 +161,10 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
       try {
         log.info("deleting package:", fullName);
         await deletePackageFolder(fullName, version);
+        const versions = await getInstalledVersionsForPackage(fullName);
+        if (versions.installed_versions.length === 0) {
+          await unsubscribeToPackageTopic(fullName);
+        }
       } catch (e) {
         log.error(e);
       } finally {
