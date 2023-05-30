@@ -22,6 +22,26 @@ module.exports = {
     },
     minimumSystemVersion: "11"
   },
+  dmg: {
+    background: "./installer-bg.png",
+    window: {
+      width: 588,
+      height: 380
+    },
+    iconSize: 100,
+    contents: [
+      {
+        x: 148,
+        y: 190
+      },
+      {
+        x: 448,
+        y: 190,
+        type: "link",
+        path: "/Applications"
+      }
+    ]
+  },
   afterSign: async (params) => {
     if (process.platform !== "darwin" || process.env.CSC_IDENTITY_AUTO_DISCOVERY === "false") {
       console.log("not notarizing app");
