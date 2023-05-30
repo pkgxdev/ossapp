@@ -161,8 +161,8 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
       try {
         log.info("deleting package:", fullName);
         await deletePackageFolder(fullName, version);
-        const versions = await getInstalledVersionsForPackage(fullName);
-        if (versions.installed_versions.length === 0) {
+        const { installed_versions } = await getInstalledVersionsForPackage(fullName);
+        if (installed_versions.length === 0) {
           await unsubscribeToPackageTopic(fullName);
         }
       } catch (e) {
