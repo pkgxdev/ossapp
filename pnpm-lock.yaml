@@ -29,9 +29,8 @@ importers:
       '@sveltejs/adapter-node': ^1.0.0-next.101
       '@sveltejs/adapter-static': ^1.0.0-next.48
       '@sveltejs/kit': ^1.15.9
-      '@tea/libtea': workspace:*
       '@tea/ui': workspace:*
-      '@teaxyz/lib': ^0.1.9
+      '@teaxyz/lib': ^0.2.2
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/svelte': ^3.2.2
       '@testing-library/webdriverio': ^3.2.1
@@ -111,7 +110,7 @@ importers:
       '@sentry/electron': 4.5.0
       '@sentry/svelte': 7.51.2_svelte@3.59.1
       '@sentry/vite-plugin': 0.7.2
-      '@teaxyz/lib': 0.1.9
+      '@teaxyz/lib': 0.2.2
       '@types/electron': 1.6.10
       '@types/mousetrap': 1.6.11
       '@vitest/coverage-c8': 0.27.3_jsdom@21.1.2
@@ -153,7 +152,6 @@ importers:
       '@sveltejs/adapter-node': 1.2.4_@sveltejs+kit@1.16.2
       '@sveltejs/adapter-static': 1.0.6_@sveltejs+kit@1.16.2
       '@sveltejs/kit': 1.16.2_svelte@3.59.1+vite@4.3.5
-      '@tea/libtea': link:../libtea
       '@tea/ui': link:../ui
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/svelte': 3.2.2_svelte@3.59.1
@@ -194,12 +192,6 @@ importers:
       vite: 4.3.5
       vitest: 0.28.5_jsdom@21.1.2
       wdio-electron-service: 4.0.2_qkoyiluaudwk5orvhjdvg63jhu
-
-  modules/libtea:
-    specifiers:
-      typescript: ^4.7.4
-    devDependencies:
-      typescript: 4.9.5
 
   modules/ui:
     specifiers:
@@ -3645,8 +3637,8 @@ packages:
       tailwindcss: 3.3.2
     dev: false
 
-  /@teaxyz/lib/0.1.9:
-    resolution: {integrity: sha512-LukZXiLo22bq5P81O4rvUPLpqvTt+aNwn73tUN3Fd2QLtPfsh70qBy/uHM1B5y0+IDfWjn/mvCXra6ZARA+VRA==}
+  /@teaxyz/lib/0.2.2:
+    resolution: {integrity: sha512-xChLHuuwbUXZcHMmqMsGIB6RbXqEb1hXgRYJk4Zg3KfozhRllXuiZ6VkUZYPib66ygMjPlndclG7tj2cDlsLkg==}
     dependencies:
       '@deno/shim-crypto': 0.3.1
       '@deno/shim-deno': 0.16.1

@@ -39,7 +39,6 @@
     "@sveltejs/adapter-node": "^1.0.0-next.101",
     "@sveltejs/adapter-static": "^1.0.0-next.48",
     "@sveltejs/kit": "^1.15.9",
-    "@tea/libtea": "workspace:*",
     "@tea/ui": "workspace:*",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/svelte": "^3.2.2",
@@ -89,7 +88,7 @@
     "@sentry/electron": "^4.4.0",
     "@sentry/svelte": "^7.47.0",
     "@sentry/vite-plugin": "^0.7.2",
-    "@teaxyz/lib": "^0.1.9",
+    "@teaxyz/lib": "^0.2.2",
     "@types/electron": "^1.6.10",
     "@types/mousetrap": "^1.6.11",
     "@vitest/coverage-c8": "^0.27.1",
@@ -126,8 +125,7 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "@tea/ui",
-      "@tea/libtea"
+      "@tea/ui"
     ]
   },
   "homepage": "https://tea.xyz",

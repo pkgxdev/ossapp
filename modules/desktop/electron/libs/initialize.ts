@@ -4,7 +4,7 @@ import { authFileState } from "./auth";
 import * as https from "https";
 import { spawn } from "child_process";
 import path from "path";
-import { parse as semverParse } from "@tea/libtea";
+import { semver } from "@teaxyz/lib";
 
 type InitState = "NOT_INITIALIZED" | "PENDING" | "INITIALIZED";
 
@@ -72,7 +72,7 @@ export const cliInitializationState = new InitWatcher<string>(async () => {
     return installTeaCli();
   } else {
     const dir = fs.readlinkSync(teaCliPrefix);
-    const v = semverParse(dir)?.toString();
+    const v = semver.parse(dir)?.toString();
     if (!v) throw new Error(`couldn't parse to semver: ${dir}`);
     return v;
   }
