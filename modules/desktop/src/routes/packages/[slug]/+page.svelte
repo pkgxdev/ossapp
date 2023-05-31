@@ -36,7 +36,7 @@
     readme?.data !== "" && {
       label: $t("common.details"),
       component: Markdown,
-      props: { pkg, source: readme, hook: useDefaultBrowser }
+      props: { source: readme, hook: useDefaultBrowser }
     },
     bottles?.length && {
       label: `${$t("common.versions")} (${versions.length || 0})`,
