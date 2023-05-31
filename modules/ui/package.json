@@ -58,6 +58,7 @@
     "@types/he": "^1.2.0",
     "@types/prismjs": "^1.26.0",
     "he": "^1.2.0",
+    "marked": "^5.0.4",
     "prismjs": "^1.29.0",
     "restructured": "0.0.11",
     "svelte-markdown": "^0.2.3",

@@ -4,6 +4,7 @@
   import rst2html from "./rst2html";
   import "./styles.css";
   import { onMount } from "svelte";
+  import { tokenizeMarkdown } from "./md";
 
   export let source: { data: string; type: "md" | "rst" };
 
@@ -46,7 +47,7 @@
 <section use:hook class="markdown-body py-4">
   {#if source.type === "md"}
     <div bind:this={markDownRoot}>
-      <SvelteMarkdown source={source.data} {renderers} />
+      <SvelteMarkdown source={tokenizeMarkdown(source.data)} {renderers} />
     </div>
   {:else if source.type === "rst"}
     {@html html}

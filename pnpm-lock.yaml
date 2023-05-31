@@ -225,6 +225,7 @@ importers:
       eslint-plugin-storybook: ^0.6.7
       eslint-plugin-svelte3: ^4.0.0
       he: ^1.2.0
+      marked: ^5.0.4
       postcss: ^8.4.19
       prettier: ^2.8.8
       prettier-plugin-svelte: ^2.10.0
@@ -247,6 +248,7 @@ importers:
       '@types/he': 1.2.0
       '@types/prismjs': 1.26.0
       he: 1.2.0
+      marked: 5.0.4
       prismjs: 1.29.0
       restructured: 0.0.11
       svelte-markdown: 0.2.3_svelte@3.59.1
@@ -9222,6 +9224,12 @@ packages:
   /marked/4.3.0:
     resolution: {integrity: sha512-PRsaiG84bK+AMvxziE/lCFss8juXjNaWzVbN5tXAm4XjeaS9NAHhop+PjQxz2A9h8Q4M/xGmzP8vqNwy6JeK0A==}
     engines: {node: '>= 12'}
+    hasBin: true
+    dev: false
+
+  /marked/5.0.4:
+    resolution: {integrity: sha512-r0W8/DK56fAkV0qfUCO9cEt/VlFWUzoJOqEigvijmsVkTuPOHckh7ZutNJepRO1AxHhK96/9txonHg4bWd/aLA==}
+    engines: {node: '>= 18'}
     hasBin: true
     dev: false
 
