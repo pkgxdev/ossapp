@@ -23,20 +23,20 @@ module.exports = {
     minimumSystemVersion: "11"
   },
   dmg: {
-    background: "./installer-bg.png",
+    background: "./electron/bg.png",
     window: {
-      width: 588,
-      height: 380
+      width: 684,
+      height: 465
     },
-    iconSize: 100,
+    iconSize: 128,
     contents: [
       {
-        x: 148,
-        y: 190
+        x: 158,
+        y: 219
       },
       {
-        x: 448,
-        y: 190,
+        x: 528,
+        y: 219,
         type: "link",
         path: "/Applications"
       }
