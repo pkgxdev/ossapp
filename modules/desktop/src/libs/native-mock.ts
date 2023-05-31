@@ -414,3 +414,5 @@ export const monitorTeaDir = async () => {
 export const stopMonitoringTeaDir = async () => {
   console.log("do nothing");
 };
+
+export const getHeaders = async (path: string) => ({});

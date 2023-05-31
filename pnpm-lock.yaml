@@ -31,6 +31,7 @@ importers:
       '@sveltejs/kit': ^1.15.9
       '@tea/libtea': workspace:*
       '@tea/ui': workspace:*
+      '@teaxyz/lib': ^0.1.9
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/svelte': ^3.2.2
       '@testing-library/webdriverio': ^3.2.1
@@ -110,6 +111,7 @@ importers:
       '@sentry/electron': 4.5.0
       '@sentry/svelte': 7.51.2_svelte@3.59.1
       '@sentry/vite-plugin': 0.7.2
+      '@teaxyz/lib': 0.1.9
       '@types/electron': 1.6.10
       '@types/mousetrap': 1.6.11
       '@vitest/coverage-c8': 0.27.3_jsdom@21.1.2
@@ -1573,6 +1575,21 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
+
+  /@deno/shim-crypto/0.3.1:
+    resolution: {integrity: sha512-ed4pNnfur6UbASEgF34gVxR9p7Mc3qF+Ygbmjiil8ws5IhNFhPDFy5vE5hQAUA9JmVsSxXPcVLM5Rf8LOZqQ5Q==}
+    dev: false
+
+  /@deno/shim-deno-test/0.4.0:
+    resolution: {integrity: sha512-oYWcD7CpERZy/TXMTM9Tgh1HD/POHlbY9WpzmAk+5H8DohcxG415Qws8yLGlim3EaKBT2v3lJv01x4G0BosnaQ==}
+    dev: false
+
+  /@deno/shim-deno/0.16.1:
+    resolution: {integrity: sha512-s9v0kzF5bm/o9TgdwvsraHx6QNllYrXXmKzgOG2lh4LFXnVMr2gpjK/c/ve6EflQn1MqImcWmVD8HAv5ahuuZQ==}
+    dependencies:
+      '@deno/shim-deno-test': 0.4.0
+      which: 2.0.2
+    dev: false
 
   /@develar/schema-utils/2.6.5:
     resolution: {integrity: sha512-0cp4PsWQ/9avqTVMCtZ+GirikIA36ikvjtHweU4/j8yLtgObI0+JUPhYFScgwlteveGB1rt3Cm8UhN04XayDig==}
@@ -3626,6 +3643,17 @@ packages:
       tailwindcss: 3.3.2
     dev: false
 
+  /@teaxyz/lib/0.1.9:
+    resolution: {integrity: sha512-LukZXiLo22bq5P81O4rvUPLpqvTt+aNwn73tUN3Fd2QLtPfsh70qBy/uHM1B5y0+IDfWjn/mvCXra6ZARA+VRA==}
+    dependencies:
+      '@deno/shim-crypto': 0.3.1
+      '@deno/shim-deno': 0.16.1
+      is-what: 4.1.11
+      koffi: 2.3.20
+      outdent: 0.8.0
+      undici: 5.22.0
+    dev: false
+
   /@testing-library/dom/8.20.0:
     resolution: {integrity: sha512-d9ULIT+a4EXLX3UU8FBjauG9NnsZHkHztXoIcTsOKoOw030fyjheN9svkTULjJxtYag9DZz5Jz5qkWZDPxTFwA==}
     engines: {node: '>=12'}
@@ -5186,7 +5214,6 @@ packages:
     engines: {node: '>=10.16.0'}
     dependencies:
       streamsearch: 1.1.0
-    dev: true
 
   /bytes/3.0.0:
     resolution: {integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==}
@@ -8389,6 +8416,11 @@ packages:
       get-intrinsic: 1.2.0
     dev: true
 
+  /is-what/4.1.11:
+    resolution: {integrity: sha512-gr9+qDrJvdwT4+N2TAACsZQIB4Ow9j2eefqlh3m9JUV41M1LoKhcE+/j+IVni/r6U8Jnc1PwhjdjVJr+Xmtb0A==}
+    engines: {node: '>=12.13'}
+    dev: false
+
   /is-wsl/2.2.0:
     resolution: {integrity: sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==}
     engines: {node: '>=8'}
@@ -8818,6 +8850,11 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
     dev: true
+
+  /koffi/2.3.20:
+    resolution: {integrity: sha512-y1W9JikdswM/CLmumtibnCknGJ6bmCNpWWD9G6WzP6Zj3lEY7d0J7jO82uMVoD1udz/2ZYUw2twhsGUGqeZH1g==}
+    requiresBuild: true
+    dev: false
 
   /ky/0.33.3:
     resolution: {integrity: sha512-CasD9OCEQSFIam2U8efFK81Yeg8vNMTBUqtMOHlrcWQHqUX3HeCl9Dr31u4toV7emlH8Mymk5+9p0lL6mKb/Xw==}
@@ -9806,6 +9843,10 @@ packages:
     resolution: {integrity: sha512-D2FR03Vir7FIu45XBY20mTb+/ZSWB00sjU9jdQXt83gDrI4Ztz5Fs7/yy74g2N5SVQY4xY1qDr4rNddwYRVX0g==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /outdent/0.8.0:
+    resolution: {integrity: sha512-KiOAIsdpUTcAXuykya5fnVVT+/5uS0Q1mrkRHcF89tpieSmY33O/tmc54CqwA+bfhbtEfZUNLHaPUiB9X3jt1A==}
+    dev: false
 
   /p-cancelable/2.1.1:
     resolution: {integrity: sha512-BZOr3nRQHOntUjTrH8+Lh54smKHoHyur8We1V8DSMVrl5A2malOOwuJRnKRDjSnkoeBh4at6BwEnb5I7Jl31wg==}
@@ -11447,7 +11488,6 @@ packages:
   /streamsearch/1.1.0:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
     engines: {node: '>=10.0.0'}
-    dev: true
 
   /string-width/4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
@@ -12269,7 +12309,6 @@ packages:
     engines: {node: '>=14.0'}
     dependencies:
       busboy: 1.6.0
-    dev: true
 
   /unfetch/4.2.0:
     resolution: {integrity: sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==}

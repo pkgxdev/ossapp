@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import { createReadStream, statSync } from "fs";
 import { deepReadDir } from "./tea-dir";
 import fetch from "node-fetch";
+import { hooks } from "@teaxyz/lib";
 
 import { readSessionData, type Session } from "./auth";
 
@@ -65,20 +66,28 @@ export async function post<T>(urlPath: string, data: { [key: string]: any }) {
   }
 }
 
-async function getHeaders(path: string, session: Session) {
+export async function getHeaders(path: string, session: Session) {
   const unixMs = new Date().getTime();
   const unixHexSecs = Math.round(unixMs / 1000).toString(16); // hex
   const deviceId = session.device_id?.split("-")[0];
   const preHash = [unixHexSecs, session.key, deviceId, path].join("");
 
   const Authorization = bcrypt.hashSync(preHash, 10);
+  const { UserAgent } = hooks.useConfig();
 
-  return {
-    Authorization,
-    ["tea-ts"]: unixMs.toString(),
-    ["tea-uid"]: session.user?.developer_id,
-    ["tea-gui_id"]: session.device_id
-  };
+  log.info("tea/lib UserAgent", UserAgent);
+  return session?.device_id && session?.user
+    ? {
+        Authorization,
+        ["tea-ts"]: unixMs.toString(),
+        ["tea-uid"]: session.user?.developer_id,
+        ["tea-gui_id"]: session.device_id,
+        "User-Agent": UserAgent
+      }
+    : {
+        ...publicHeader,
+        "User-Agent": UserAgent
+      };
 }
 
 export async function syncLogsAt(prefix: string) {
