@@ -21,6 +21,7 @@ import { loadPackageCache, writePackageCache } from "./package";
 import { nanoid } from "nanoid";
 import { MainWindowNotifier } from "./types";
 import { unsubscribeToPackageTopic } from "./push-notification";
+import { getHeaders } from "./v1-client";
 
 export type HandlerOptions = {
   // A function to call back to the current main
@@ -268,6 +269,16 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
     } catch (err) {
       log.error("Failed to stop monitoring tea dir", err);
       return err;
+    }
+  });
+
+  ipcMain.handle("get-api-headers", async (_event, path: string) => {
+    try {
+      const session = await readSessionData();
+      return await getHeaders(path, session);
+    } catch (error) {
+      log.error(error);
+      return {};
     }
   });
 }

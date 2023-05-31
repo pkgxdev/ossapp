@@ -1,6 +1,6 @@
 {
   "name": "tea",
-  "version": "0.2.21",
+  "version": "0.2.22",
   "private": true,
   "description": "tea gui app",
   "author": "tea.xyz",
@@ -89,6 +89,7 @@
     "@sentry/electron": "^4.4.0",
     "@sentry/svelte": "^7.47.0",
     "@sentry/vite-plugin": "^0.7.2",
+    "@teaxyz/lib": "^0.1.9",
     "@types/electron": "^1.6.10",
     "@types/mousetrap": "^1.6.11",
     "@vitest/coverage-c8": "^0.27.1",

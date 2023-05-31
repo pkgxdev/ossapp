@@ -301,3 +301,8 @@ export const stopMonitoringTeaDir = async () => {
     throw result;
   }
 };
+
+export const getHeaders = async (path: string) => {
+  const headers = await ipcRenderer.invoke("get-api-headers", path);
+  return (headers || {}) as { [key: string]: string };
+};
