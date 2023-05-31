@@ -22,6 +22,26 @@ module.exports = {
     },
     minimumSystemVersion: "11"
   },
+  dmg: {
+    background: "./electron/bg.png",
+    window: {
+      width: 684,
+      height: 465
+    },
+    iconSize: 128,
+    contents: [
+      {
+        x: 158,
+        y: 219
+      },
+      {
+        x: 528,
+        y: 219,
+        type: "link",
+        path: "/Applications"
+      }
+    ]
+  },
   afterSign: async (params) => {
     if (process.platform !== "darwin" || process.env.CSC_IDENTITY_AUTO_DISCOVERY === "false") {
       console.log("not notarizing app");
