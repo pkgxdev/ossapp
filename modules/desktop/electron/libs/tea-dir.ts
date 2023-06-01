@@ -5,7 +5,7 @@ import log from "./logger";
 import type { InstalledPackage } from "../../src/libs/types";
 import { mkdirp } from "mkdirp";
 import fetch from "node-fetch";
-import { SemVer, isValidSemVer } from "@tea/libtea";
+import { SemVer, semver } from "@teaxyz/lib";
 import { execSync } from "child_process";
 import chokidar from "chokidar";
 import { MainWindowNotifier } from "./types";
@@ -53,8 +53,8 @@ async function findInstalledVersions(pkgsPath: string): Promise<InstalledPackage
   log.info("recursively reading:", pkgsPath);
   const folders = await deepReadDir({
     dir: pkgsPath,
-    continueDeeper: (name: string) => !isValidSemVer(name) && name !== ".tea",
-    filter: (name: string) => !!isValidSemVer(name) && name !== ".tea"
+    continueDeeper: (name: string) => !semver.isValid(name) && name !== ".tea",
+    filter: (name: string) => semver.isValid(name) && name !== ".tea"
   });
 
   const bottles = folders
@@ -218,7 +218,7 @@ export async function startMonitoringTeaDir(mainWindowNotifier: MainWindowNotifi
     .on("addDir", (pth) => {
       const dir = path.dirname(pth);
       const version = path.basename(pth);
-      if (isValidSemVer(version) && !fs.lstatSync(pth).isSymbolicLink()) {
+      if (semver.isValid(version) && !fs.lstatSync(pth).isSymbolicLink()) {
         const full_name = dir.split(".tea/")[1];
         log.info(`Monitor - Added Package: ${full_name} v${version}`);
         mainWindowNotifier("pkg-modified", { full_name, version, type: "add" });
@@ -228,7 +228,7 @@ export async function startMonitoringTeaDir(mainWindowNotifier: MainWindowNotifi
       // FIXME: unlinkDir does not always fire, this is a bug in chokidar
       const dir = path.dirname(pth);
       const version = path.basename(pth);
-      if (isValidSemVer(version)) {
+      if (semver.isValid(version)) {
         const full_name = dir.split(".tea/")[1];
         log.info(`Monitor - Removed Package: ${full_name} v${version}`);
         mainWindowNotifier("pkg-modified", { full_name, version, type: "remove" });

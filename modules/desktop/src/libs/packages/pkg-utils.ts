@@ -1,6 +1,6 @@
 import log from "$libs/logger";
 import type { GUIPackage } from "$libs/types";
-import { SemVer } from "@tea/libtea";
+import SemVer from "@teaxyz/lib/semver";
 
 // Find a list of available versions for a package based on the bottles
 export const findAvailableVersions = (pkg: Pick<GUIPackage, "bottles" | "version">) => {
