@@ -13,6 +13,7 @@ export async function get<T>(
   console.log(`GET /v1/${urlPath}`);
 
   const headers = await getHeaders(`GET/${urlPath}`);
+  delete headers["User-Agent"]; // this is in the browser, not allowed to modify UserAgent
 
   const req = await axios.request({
     method: "GET",
