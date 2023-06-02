@@ -13,7 +13,7 @@
 </script>
 
 <section
-  class="cursor-pointer"
+  class="cursor-pointer bg-black"
   class:expanded
   use:mouseLeaveDelay={3000}
   on:mouseenter={() => (expanded = true)}
@@ -26,7 +26,7 @@
     <i class="icon-downward-arrow mt-1" />
   </header>
   <hr class="mb-2" />
-  <div class="dropdown pr-2 transition-all">
+  <div class="dropdown bg-black pr-2 transition-all">
     {#each options as option}
       <button
         class="m-[1px] flex h-6 w-full items-center justify-between gap-x-1 px-2 text-xs outline-1 outline-gray hover:bg-gray hover:bg-opacity-25 hover:outline"
