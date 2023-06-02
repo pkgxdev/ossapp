@@ -49,6 +49,14 @@ xc dev    # opens the app in dev mode
 
 > Make sure to run `xc prettier` before submitting pull-requests.
 
+# Internationalization / Translations
+We need help translating our user interface into different languages. tea/gui is using [`typesafe-i18n`] and the translation related source code are all in `./modules/desktop/src/i18n/[lang]/index.ts`.
+
+To contribute just run `xc dev` and make the appropriate changes in the related source code. [`typesafe-i18n`] will auto-generate some of the files to maintain consistencies.
+
+To add a new language just create a folder `./modules/desktop/src/i18n/[lang]` with an `index.ts` file inside.
+
+
 &nbsp;
 
 # Tasks
@@ -182,3 +190,4 @@ tea gh release create "v$V"
 [`tea/cli`]: https://github.com/teaxyz/cli
 [`xc`]: https://xcfile.dev
 [discussion]: https://github.com/orgs/teaxyz/discussions
+[`typesafe-i18n`]: https://github.com/ivanhofer/typesafe-i18n
