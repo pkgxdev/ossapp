@@ -4,19 +4,16 @@ importers:
 
   .:
     specifiers:
-      '@crowdin/ota-client': ^0.7.0
       '@google-cloud/firestore': ^6.5.0
       lodash: ^4.17.21
       yaml: ^2.2.1
     dependencies:
-      '@crowdin/ota-client': 0.7.0
       '@google-cloud/firestore': 6.5.0
       lodash: 4.17.21
       yaml: 2.2.2
 
   modules/desktop:
     specifiers:
-      '@crowdin/ota-client': ^0.7.0
       '@electron/asar': ^3.2.3
       '@electron/notarize': ^1.2.3
       '@playwright/experimental-ct-svelte': ^1.29.2
@@ -104,7 +101,6 @@ importers:
       wdio-electron-service: ^4.0.2
       yaml: ^2.2.1
     dependencies:
-      '@crowdin/ota-client': 0.7.0
       '@electron/asar': 3.2.4
       '@sentry/browser': 7.51.2
       '@sentry/electron': 4.5.0
@@ -1553,15 +1549,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@crowdin/ota-client/0.7.0:
-    resolution: {integrity: sha512-RNFnR2ter5dsFJlyQysT8jswDn/TBF/ALosiDRpaj2tcOlAk/amQOoqEMJrCdR46xWqMUNwz/hJ4YIlcN51kPQ==}
-    engines: {node: '>=12.9.0'}
-    dependencies:
-      axios: 0.25.0
-    transitivePeerDependencies:
-      - debug
-    dev: false
 
   /@cspotcode/source-map-support/0.8.1:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -4904,14 +4891,6 @@ packages:
     resolution: {integrity: sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==}
     engines: {node: '>= 0.4'}
     dev: true
-
-  /axios/0.25.0:
-    resolution: {integrity: sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==}
-    dependencies:
-      follow-redirects: 1.15.2
-    transitivePeerDependencies:
-      - debug
-    dev: false
 
   /axios/1.4.0:
     resolution: {integrity: sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA==}

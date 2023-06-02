@@ -1,8 +1,7 @@
 {
-  "en": {
-    "lang": {
-      "en": "English"
-    },
+  "id": "en",
+  "label": "English",
+  "translations": {
     "store-search-placeholder": "search packages",
     "package": {
       "update-all": "UPDATE ALL",

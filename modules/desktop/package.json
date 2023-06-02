@@ -82,7 +82,6 @@
   },
   "type": "module",
   "dependencies": {
-    "@crowdin/ota-client": "^0.7.0",
     "@electron/asar": "^3.2.3",
     "@sentry/browser": "^7.49.0",
     "@sentry/electron": "^4.4.0",
