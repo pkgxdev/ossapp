@@ -14,6 +14,8 @@ describe("basic smoke test", () => {
   it("install brewkit from the made by tea tab", async () => {
     const { screen } = utils!;
 
+    const slug = "tea_xyz_brewkit";
+
     // app launches to discover screen by default - make sure Stable Diffusion is there
     await expect(await screen.findByText("Stable Diffusion web UI")).toExist();
 
@@ -22,7 +24,7 @@ describe("basic smoke test", () => {
     btn.click();
 
     // find the brewkit package
-    const pkgCard = await utils.findPackageCardBySlug("tea_xyz_brewkit");
+    const pkgCard = await utils.findPackageCardBySlug(slug);
     pkgCard.click();
 
     await utils.packageDetailsLoaded();
@@ -30,14 +32,14 @@ describe("basic smoke test", () => {
     // Be nice to devs running this over and over
     await utils.uninstallPackageIfNeeded();
 
-    await utils.installLatestVersion("tea_xyz_brewkit");
+    await utils.installLatestVersion(slug);
 
-    await utils.verifyAndCloseNotification(/^Package tea.xyz\/brewkit .* has been installed./);
+    await utils.verifyInstalledBadge(slug);
     await expect(await screen.findByRole("button", { name: "OPEN IN TERMINAL" })).toExist();
   });
 
   it("search and install create-dmg", async () => {
-    const { screen, searchTerm } = utils!;
+    const { searchTerm } = utils!;
     await searchTerm("create-dmg");
 
     const packageFullname = "github.com/create-dmg/create-dmg";
@@ -49,24 +51,24 @@ describe("basic smoke test", () => {
     await utils.packageDetailsLoaded();
     await utils.uninstallPackageIfNeeded();
 
-    await utils.installLatestVersion("github_com_create_dmg_create_dmg");
-
-    await utils.verifyAndCloseNotification(
-      /^Package github.com\/create-dmg\/create-dmg .* has been installed./
-    );
+    await utils.installLatestVersion(createDmgSlug);
+    await utils.verifyInstalledBadge(createDmgSlug);
   });
 
   it("should be able to install specific version", async () => {
     const { screen, searchTerm } = utils!;
+    const slug = "gnu_org_grep";
+
     await searchTerm("grep");
-    const grepCard = await utils.findSearchPackageCardBySlug("gnu_org_grep");
+    const grepCard = await utils.findSearchPackageCardBySlug(slug);
     await expect(grepCard).toExist();
     grepCard.click();
 
     await utils.uninstallPackageIfNeeded();
-    await utils.installSpecificVersion("gnu_org_grep", "3.8.0");
+    await utils.installSpecificVersion(slug, "3.8.0");
 
-    await utils.verifyAndCloseNotification(/^Package gnu.org\/grep .* has been installed./);
+    // since we're installing an old version verify the badge says UPDATE
+    await utils.verifyInstalledBadge(slug, "UPDATE");
 
     // Now test the update
     await utils.goHome();
@@ -81,6 +83,7 @@ describe("basic smoke test", () => {
     await expect(updateBtn).toExist();
     updateBtn.click();
 
-    await utils.verifyAndCloseNotification(/^Package gnu.org\/grep .* has been installed./);
+    // FIXME: This should test for the button saying "UPDATED", but that feature is not done yet so uncomment this when it is
+    //await utils.verifyInstalledBadge(slug, "UPDATED");
   });
 });

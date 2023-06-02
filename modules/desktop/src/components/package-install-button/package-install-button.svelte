@@ -62,7 +62,7 @@
           ? 'justify-between'
           : 'justify-center'}"
       >
-        <div class="flex items-center gap-x-2">
+        <div class="flex items-center gap-x-2" data-testid={`install-badge-${pkg?.slug}`}>
           <div>{ctaLabel}</div>
           <div class="version-label {badgeClass[pkg.state]}">v{getVersion(pkg)}</div>
         </div>

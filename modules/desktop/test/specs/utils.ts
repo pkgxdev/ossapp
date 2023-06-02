@@ -1,5 +1,5 @@
 import * as testingLibraryWdio from "@testing-library/webdriverio";
-import { waitForNotExist } from "./waitutils.ts";
+import { sleep, waitForNotExist } from "./waitutils.ts";
 
 // work around for importing CommonJS module
 const { setupBrowser } = testingLibraryWdio;
@@ -13,11 +13,7 @@ export function setupUtils(browser: WebdriverIO.Browser) {
   };
 
   const findByTestId = async (testId: string) => {
-    return (await screen.findByTestId(
-      testId,
-      {},
-      { interval: 1000, timeout: 10000 }
-    )) as unknown as HTMLElement;
+    return await screen.findByTestId(testId, {}, { interval: 1000, timeout: 10000 });
   };
 
   //
@@ -93,18 +89,25 @@ export function setupUtils(browser: WebdriverIO.Browser) {
     await searchInput.setValue(term);
   };
 
-  const closeNotification = async () => {
-    console.log("Closing notification");
-    const closeNotificationBtn = await findByTestId("close-notification");
-    await expect(closeNotificationBtn).toExist();
-    closeNotificationBtn.click();
-    await waitForNotExist(() => screen.queryByTestId("close-notification"));
-  };
+  const verifyInstalledBadge = async (
+    slug: string,
+    state: "INSTALLED" | "UPDATE" = "INSTALLED"
+  ) => {
+    // wait 30 seconds for the badge to show up
+    for (let i = 0; i < 30; i++) {
+      const badge = await findByTestId(`install-badge-${slug}`);
+      expect(badge).toExist();
 
-  // verify a notification matching the regex is shown and then close it
-  const verifyAndCloseNotification = async (regex: RegExp) => {
-    await expect(await screen.findByText(regex, {}, { timeout: 30000, interval: 1000 })).toExist();
-    await closeNotification();
+      const badgeText = (await badge.getText()).replace(/\n/g, " ");
+      console.log(`verifying installed badge for ${slug}: ${badgeText}`);
+
+      if (badgeText.includes(state)) {
+        return;
+      }
+      await sleep(1000);
+    }
+
+    throw new Error(`Failed to find installed badge for ${slug}`);
   };
 
   return {
@@ -119,7 +122,6 @@ export function setupUtils(browser: WebdriverIO.Browser) {
     uninstallPackageIfNeeded,
     installLatestVersion,
     installSpecificVersion,
-    closeNotification,
-    verifyAndCloseNotification
+    verifyInstalledBadge
   };
 }

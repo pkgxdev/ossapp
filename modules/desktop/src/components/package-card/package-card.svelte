@@ -7,6 +7,7 @@
   import PackageInstallButton from "$components/package-install-button/package-install-button.svelte";
   import PackageInstalledBadge from "$components/package-install-button/package-installed-badge.svelte";
   import { fixPackageName } from "$libs/packages/pkg-utils";
+  import InstallResultOverlay from "$components/install-result-overlay/install-result-overlay.svelte";
 
   export let pkg: GUIPackage;
   export let link: string;
@@ -26,74 +27,77 @@
   const preventPropagation = (evt: MouseEvent) => evt.stopPropagation();
 </script>
 
-<section class="package-card relative h-auto border border-gray {layout}" class:active={isActive}>
-  <BgImage class="absolute left-0 top-0 h-full w-full" {layout} {pkg} />
+<div class="relative">
+  <section class="package-card relative h-auto border border-gray {layout}" class:active={isActive}>
+    <BgImage class="absolute left-0 top-0 h-full w-full" {layout} {pkg} />
 
-  <a href={link} on:mousedown={activate} on:mouseup={deactivate} on:mouseleave={deactivate}>
-    <div
-      data-testid={`package-card-${pkg.slug}`}
-      class="package-card-content absolute h-full w-full flex-col justify-between"
-    >
-      <div class="hint-container">
-        <div class="hint">
-          <div class="text-xs line-clamp-1">view more details</div>
-          <div class="hint-icon"><i class="icon-upward-arrow" /></div>
+    <a href={link} on:mousedown={activate} on:mouseup={deactivate} on:mouseleave={deactivate}>
+      <div
+        data-testid={`package-card-${pkg.slug}`}
+        class="package-card-content absolute h-full w-full flex-col justify-between"
+      >
+        <div class="hint-container">
+          <div class="hint">
+            <div class="text-xs line-clamp-1">view more details</div>
+            <div class="hint-icon"><i class="icon-upward-arrow" /></div>
+          </div>
         </div>
-      </div>
-      <div class="content-container absolute bottom-0 w-full {layout}">
-        <article class="card-thumb-label relative">
-          {#if layout === "bottom"}
-            <h3 class="text-bold font-mona text-2xl font-bold text-white line-clamp-1">
-              {fixPackageName(pkg.name)}
-            </h3>
-            <p class="h-[32px] text-xs font-thin lowercase line-clamp-2">{pkg.desc ?? ""}</p>
-          {:else}
-            <h3 class="text-bold mb-4 font-mona text-3xl font-bold text-white line-clamp-1">
-              {fixPackageName(pkg.name)}
-            </h3>
-            <p class="line-clamp-[8] h-[160px] text-[14px] font-thin lowercase leading-[20px]">
-              {pkg.desc ?? ""}
-            </p>
-          {/if}
-        </article>
-        <div class="mt-3.5 w-full">
-          <div class="flex w-fit flex-col items-center">
-            <div class="install-button {layout}" on:mousedown={preventPropagation}>
-              {#if pkg.state === PackageStates.INSTALLED}
-                <PackageInstalledBadge {pkg} />
-              {:else}
-                <PackageInstallButton
-                  {pkg}
-                  onClick={(evt) => {
-                    // prevent default to prevent the link that this button is inside of from being followed
-                    evt?.preventDefault();
-                    onClickCTA();
-                  }}
-                />
-              {/if}
-            </div>
-            <div class="mt-1.5 h-[10px] leading-[10px]">
-              {#if pkg.state === "NEEDS_UPDATE"}
-                <span class="text-[10px]">
-                  <span class="opacity-70">you have</span>
-                  v{findRecentInstalledVersion(pkg)}
-                </span>
-              {/if}
+        <div class="content-container absolute bottom-0 w-full {layout}">
+          <article class="card-thumb-label relative">
+            {#if layout === "bottom"}
+              <h3 class="text-bold font-mona text-2xl font-bold text-white line-clamp-1">
+                {fixPackageName(pkg.name)}
+              </h3>
+              <p class="h-[32px] text-xs font-thin lowercase line-clamp-2">{pkg.desc ?? ""}</p>
+            {:else}
+              <h3 class="text-bold mb-4 font-mona text-3xl font-bold text-white line-clamp-1">
+                {fixPackageName(pkg.name)}
+              </h3>
+              <p class="line-clamp-[8] h-[160px] text-[14px] font-thin lowercase leading-[20px]">
+                {pkg.desc ?? ""}
+              </p>
+            {/if}
+          </article>
+          <div class="mt-3.5 w-full">
+            <div class="flex w-fit flex-col items-center">
+              <div class="install-button {layout}" on:mousedown={preventPropagation}>
+                {#if pkg.state === PackageStates.INSTALLED}
+                  <PackageInstalledBadge {pkg} />
+                {:else}
+                  <PackageInstallButton
+                    {pkg}
+                    onClick={(evt) => {
+                      // prevent default to prevent the link that this button is inside of from being followed
+                      evt?.preventDefault();
+                      onClickCTA();
+                    }}
+                  />
+                {/if}
+              </div>
+              <div class="mt-1.5 h-[10px] leading-[10px]">
+                {#if pkg.state === "NEEDS_UPDATE"}
+                  <span class="text-[10px]">
+                    <span class="opacity-70">you have</span>
+                    v{findRecentInstalledVersion(pkg)}
+                  </span>
+                {/if}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </a>
+    </a>
 
-  {#if progessLoading > 0 && progessLoading < 100}
-    <div class="absolute left-0 top-0 z-40 h-full w-full bg-black bg-opacity-50">
-      <div class="absolute left-0 right-0 top-1/2 m-auto -mt-12 h-24 w-24">
-        <ProgressCircle value={progessLoading} />
+    {#if progessLoading > 0 && progessLoading < 100}
+      <div class="absolute left-0 top-0 z-40 h-full w-full bg-black bg-opacity-50">
+        <div class="absolute left-0 right-0 top-1/2 m-auto -mt-12 h-24 w-24">
+          <ProgressCircle value={progessLoading} />
+        </div>
       </div>
-    </div>
-  {/if}
-</section>
+    {/if}
+  </section>
+  <InstallResultOverlay {pkg} />
+</div>
 
 <style>
   section {

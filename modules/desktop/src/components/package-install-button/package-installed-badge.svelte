@@ -4,7 +4,7 @@
   export let pkg: GUIPackage | null = null;
 </script>
 
-<div class="container relative h-full">
+<div class="container relative h-full" data-testid={`install-badge-${pkg?.slug}`}>
   <div class="content flex items-center justify-center gap-2 p-2">
     <i class="icon-check-circle-o flex text-sm text-[#00ffd0]" />
     <div class="text-xs">INSTALLED</div>
