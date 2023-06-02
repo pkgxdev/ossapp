@@ -96,6 +96,7 @@ importers:
       tailwindcss: ^3.2.4
       ts-node: ^10.9.1
       tslib: ^2.3.1
+      typesafe-i18n: ^5.24.3
       typescript: ^4.7.4
       upath: ^2.0.1
       vite: ^4.1.1
@@ -141,6 +142,7 @@ importers:
       svelte-markdown: 0.2.3_svelte@3.59.1
       svelte-watch-resize: 1.0.3
       sveltekit-i18n: 2.2.2_svelte@3.59.1
+      typesafe-i18n: 5.24.3_typescript@4.9.5
       upath: 2.0.1
       vite-plugin-static-copy: 0.13.1_vite@4.3.5
       yaml: 2.2.2
@@ -12271,11 +12273,19 @@ packages:
   /typedarray/0.0.6:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
 
+  /typesafe-i18n/5.24.3_typescript@4.9.5:
+    resolution: {integrity: sha512-VqjGbIydOqtQjO81mGo++TjuqeC8YoxxgYrO1/ikXIS/l/Q6mAcz4yrt5AvqjdFHMt3gRm7oGbVI/yLyV+VTOg==}
+    hasBin: true
+    peerDependencies:
+      typescript: '>=3.5.1'
+    dependencies:
+      typescript: 4.9.5
+    dev: false
+
   /typescript/4.9.5:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   /ua-parser-js/1.0.35:
     resolution: {integrity: sha512-fKnGuqmTBnIE+/KXSzCn4db8RTigUzw1AN0DmdU6hJovUTbYJKyqj+8Mt1c4VfRDnOVJnENmfYkIPZ946UrSAA==}

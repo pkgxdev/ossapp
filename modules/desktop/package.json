@@ -8,9 +8,10 @@
   "scripts": {
     "prepare": "svelte-kit sync",
     "dev": "cross-env NODE_ENV=dev npm run dev:all",
-    "dev:all": "concurrently -n=svelte,electron -c='#ff3e00',blue  \"pnpm dev:main\" \"pnpm dev:svelte\" \"pnpm dev:electron\"",
+    "dev:all": "concurrently -n=svelte,electron -c='#ff3e00',blue  \"pnpm dev:main\" \"pnpm dev:svelte\" \"pnpm dev:electron\" \"pnpm dev:i18n\"",
     "dev:svelte": "vite dev",
     "dev:electron": "electron electron/dist/electron.cjs",
+    "dev:i18n": "typesafe-i18n",
     "dev:main": "cd ./electron && vite build --config ./vite.config.js --watch",
     "build:main": "cp package.json electron && cd ./electron && vite  --config ./vite.config.js build --base . && rm package.json",
     "pack": "electron-builder --dir --config electron-builder.config.cjs",
@@ -29,7 +30,8 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --compiler-warnings \"css-unused-selector:ignore\" --watch",
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
-    "e2e": "NODE_ENV=test wdio run ./wdio.conf.ts"
+    "e2e": "NODE_ENV=test wdio run ./wdio.conf.ts",
+    "typesafe-i18n": "typesafe-i18n"
   },
   "devDependencies": {
     "@electron/notarize": "^1.2.3",
@@ -119,6 +121,7 @@
     "svelte-markdown": "^0.2.3",
     "svelte-watch-resize": "^1.0.3",
     "sveltekit-i18n": "^2.2.2",
+    "typesafe-i18n": "^5.24.3",
     "upath": "^2.0.1",
     "vite-plugin-static-copy": "^0.13.1",
     "yaml": "^2.2.1"
