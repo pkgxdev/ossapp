@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { shellOpenExternal, submitLogs } from "@native";
+  import { shellOpenExternal } from "@native";
   import mouseLeaveDelay from "@tea/ui/lib/mouse-leave-delay";
   import UpdateButton from "./update-button.svelte";
   import { appUpdateStore } from "$libs/stores";
+  import SelectLang from "$components/select-lang/select-lang.svelte";
   const { updateStatus } = appUpdateStore;
 
   const hidePopup = () => {
@@ -34,13 +35,6 @@
     class:invisible={!isOpen}
     class:visible={isOpen}
   >
-    <!-- TODO: what is this supposed to do? -->
-    <!-- <button
-			class="hover:bg-gray outline-gray focus:bg-secondary h-8 w-full p-1 text-left outline-1 transition-all hover:bg-opacity-25 hover:outline"
-		>
-			language
-		</button>
-		<hr /> -->
     <button
       class="h-7 w-full p-1 text-left outline-1 outline-gray hover:bg-gray hover:bg-opacity-25 hover:outline"
       on:click={() => shellOpenExternal("https://docs.tea.xyz")}
@@ -49,6 +43,12 @@
     </button>
     <hr />
     <UpdateButton />
+    <hr />
+    <button
+      class="h-8 w-full text-left outline-1 outline-gray transition-all hover:bg-gray hover:bg-opacity-25 hover:outline focus:bg-secondary"
+    >
+      <SelectLang />
+    </button>
   </nav>
 </div>
 

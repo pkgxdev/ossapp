@@ -50,6 +50,14 @@ xc dev    # opens the app in dev mode
 > Make sure to run `xc prettier` before submitting pull-requests.
 
 &nbsp;
+# Internationalization / Translations
+We need help translating our user interface into different languages. The translation related source code are all in `./modules/desktop/src/libs/translations/*`.
+
+To add a new language:
+
+1. Create a json file in `./modules/desktop/src/libs/translations/languages/[lang].json`. Copy the contents of `en.json` then translate.
+2. Import the new language in `./modules/desktop/src/libs/translations/index.ts`. More instructions are in that file.
+
 
 # Tasks
 

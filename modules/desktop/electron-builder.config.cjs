@@ -1,7 +1,6 @@
 const { notarize } = require("@electron/notarize");
 const fs = require("fs");
 const path = require("path");
-const otaClient = require("@crowdin/ota-client");
 const _ = require("lodash");
 
 const appBundleId = "xyz.tea.gui";
