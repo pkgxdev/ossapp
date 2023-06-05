@@ -8,6 +8,7 @@ import log from "./logger";
 import { MainWindowNotifier } from "./types";
 import { Installation, Package, porcelain } from "@teaxyz/lib";
 import type { Resolution } from "@teaxyz/lib/script/src/plumbing/resolve";
+import { app } from "electron";
 
 export async function installPackage(
   full_name: string,
@@ -140,14 +141,43 @@ export async function syncPantry() {
 const envConfigPaths = [".bashrc", ".zshrc", ".zprofile", ".config/fish/config.fish", ".login"];
 
 export async function isMagicEnabled(): Promise<boolean> {
-  // 0. loop through envConfigPaths
-  // 1. check if TEA_MAGIC is set to prompt or 1
+  let isEnabled = false;
   log.info("checking if magic is enabled....");
-  return false;
+  // TODO: figure out which terminal env is actually being used by the user?
+  for (const file of envConfigPaths) {
+    try {
+      const configPath = path.join(app.getPath("home"), file);
+      log.info("checking if magic is enabled in", configPath);
+      if (fs.existsSync(configPath)) {
+        const config = await fs.readFileSync(configPath, "utf-8");
+        if (config.includes("export TEA_MAGIC=prompt") || config.includes("export TEA_MAGIC=1")) {
+          isEnabled = true;
+          break;
+        }
+      }
+      log.info("not enabled!");
+    } catch (error) {
+      log.error(error);
+    }
+  }
+  return isEnabled;
 }
 
 export async function enableMagic() {
-  // 0. detect if tea-cli is installed
-  // 1. spam all envConfigPaths with `export TEA_MAGIC=prompt`
   log.info("enabling magic....");
+  // TODO: figure out which terminal env is actually being used by the user? to avoid spam env settings
+  for (const file of envConfigPaths) {
+    try {
+      const configPath = path.join(app.getPath("home"), file);
+      if (fs.existsSync(configPath)) {
+        const config = await fs.readFileSync(configPath, "utf-8");
+        if (!config.includes("TEA_MAGIC=prompt")) {
+          await fs.appendFileSync(configPath, "\nexport TEA_MAGIC=prompt\n");
+        }
+      }
+    } catch (error) {
+      log.error(error);
+    }
+  }
+  log.info("magic enabled");
 }

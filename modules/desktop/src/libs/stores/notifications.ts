@@ -50,6 +50,7 @@ export default function initNotificationStore() {
   };
 
   const init = () => {
+    // should this be here?
     isMagicEnabled().then((enabled) => {
       log.info("is magic enabled", enabled);
       if (!enabled) {
