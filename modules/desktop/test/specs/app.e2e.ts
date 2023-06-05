@@ -11,7 +11,9 @@ describe("basic smoke test", () => {
     await utils.goHome();
   });
   it("checks if tea/xyz magic is enabled", async () => {
-    await utils.verifyAndCloseNotification(/^tea\/cli magic is not enabled. Click here to enable it./);
+    await utils.verifyAndCloseNotification(
+      /^tea\/cli magic is not enabled. Click here to enable it./
+    );
   });
 
   it("install brewkit from the made by tea tab", async () => {
