@@ -136,3 +136,16 @@ export async function syncPantry() {
   await hooks.useSync();
   log.info("syncing pantry completed");
 }
+
+const envConfigPaths = [".bashrc", ".zshrc", ".zprofile", ".config/fish/config.fish", ".login"];
+
+export async function isMagicEnabled(): Promise<boolean> {
+  // 0. loop through envConfigPaths
+  // 1. check if TEA_MAGIC is set to prompt or 1
+  return false;
+}
+
+export async function enableMagic() {
+  // 0. detect if tea-cli is installed
+  // 1. spam all envConfigPaths with `export TEA_MAGIC=prompt`
+}
