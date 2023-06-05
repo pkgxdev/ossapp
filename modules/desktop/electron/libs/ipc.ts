@@ -13,8 +13,6 @@ import log from "./logger";
 import { syncLogsAt } from "./v1-client";
 import { installPackage, openPackageEntrypointInTerminal, syncPantry } from "./cli";
 
-import { initializeTeaCli, cliInitializationState } from "./initialize";
-
 import { getAutoUpdateStatus, getUpdater, isDev } from "./auto-updater";
 
 import { loadPackageCache, writePackageCache } from "./package";
@@ -59,8 +57,7 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
   ipcMain.handle("get-session", async () => {
     try {
       log.info("getting session");
-      const [session, cliVersion] = await Promise.all([readSessionData(), initializeTeaCli()]);
-      session.teaVersion = cliVersion;
+      const session = await readSessionData();
       log.debug(session ? "found session data" : "no session data found");
       return session;
     } catch (error) {
@@ -168,10 +165,6 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
         }
       } catch (e) {
         log.error(e);
-      } finally {
-        if (fullName === "tea.xyz") {
-          cliInitializationState.reset();
-        }
       }
     }
   );
@@ -190,21 +183,6 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
     } catch (error) {
       log.error(error);
       return { version: "1", packages: {} };
-    }
-  });
-
-  ipcMain.handle("get-tea-version", async () => {
-    try {
-      log.info("installing tea cli");
-      const version = await initializeTeaCli();
-      if (!version) {
-        throw new Error("failed to install tea cli");
-      }
-
-      return { version, message: "" };
-    } catch (error) {
-      log.error(error);
-      return { version: "", message: error.message };
     }
   });
 
