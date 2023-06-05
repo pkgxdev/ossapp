@@ -1,139 +1,76 @@
-import { spawn, exec } from "child_process";
-import { getGuiPath, getTeaPath } from "./tea-dir";
+import { spawn } from "child_process";
+import { getGuiPath } from "./tea-dir";
 import fs from "fs";
 import path from "path";
-import { initializeTeaCli } from "./initialize";
+import { hooks } from "@teaxyz/lib";
 
-import { app } from "electron";
 import log from "./logger";
 import { MainWindowNotifier } from "./types";
-
-// Be careful with globbing when passing this to a shell which might expand it.  Either escape it or quote it.
-export const cliBinPath = path.join(getTeaPath(), "tea.xyz/v*/bin/tea");
+import { Installation, Package, porcelain } from "@teaxyz/lib";
+import type { Resolution } from "@teaxyz/lib/script/src/plumbing/resolve";
 
 export async function installPackage(
   full_name: string,
   version: string,
   notifyMainWindow: MainWindowNotifier
 ) {
-  const teaVersion = await initializeTeaCli();
-  const progressNotifier = newInstallProgressNotifier(full_name, notifyMainWindow);
-
-  if (!teaVersion) throw new Error("no tea");
+  const notifier = newInstallProgressNotifier(full_name, notifyMainWindow);
 
   const qualifedPackage = `${full_name}@${version}`;
-
   log.info(`installing package ${qualifedPackage}`);
-
-  let stdout = "";
-  let stderr = "";
-
-  await new Promise((resolve, reject) => {
-    // tea requires HOME to be set.
-    const opts = { env: { HOME: app.getPath("home"), NO_COLOR: "1" } };
-
-    const child = spawn(
-      cliBinPath,
-      ["--env=false", "--sync", "--json", `+${qualifedPackage}`],
-      opts
-    );
-
-    child.stdout.on("data", (data) => {
-      stdout += data.toString().trim();
-    });
-
-    child.stderr.on("data", (data) => {
-      try {
-        data
-          .toString()
-          .split("\n")
-          .map((s: string) => s.trim())
-          .filter((s: string) => s.length > 0)
-          .forEach((line) => {
-            try {
-              const msg = JSON.parse(line.trim());
-              progressNotifier(msg);
-            } catch (err) {
-              log.error("handling cli notification line", line, err);
-            }
-          });
-
-        stderr += data.toString();
-      } catch (err) {
-        log.error("error processing cli data", data.toString(), err);
-      }
-    });
-
-    child.on("exit", (code) => {
-      log.info("cli exited with code:", code);
-      log.info("cli stdout:", stdout);
-      if (code !== 0) {
-        log.info("cli stderr:", stderr);
-        reject(new Error("tea exited with non-zero code: " + code));
-      } else {
-        resolve(null);
-      }
-    });
-
-    child.on("error", () => {
-      reject(new Error(stderr));
-    });
-  });
+  const result = await porcelain.install(qualifedPackage, notifier);
+  console.log(`successfully installed ${qualifedPackage}`, result);
 }
 
-// This is hacky and kind of complex because of the output we get from the CLI.  When the CLI
-// gives better output this definitely should get looked at.
 function newInstallProgressNotifier(full_name: string, notifyMainWindow: MainWindowNotifier) {
-  // the install progress is super spammy, only send every 10th update
-  let counter = 0;
-
   // the totall number of packages to install - this is set by the "resolved" message
   let numberOfPackages = 1;
 
   // the current package number - this is incremented by the "installed" or "downloaded" message
   let currentPackageNumber = 0;
 
-  return function (msg: any) {
-    if (msg.status !== "downloading" && msg.status !== "installing") {
-      log.info("cli:", msg);
-    }
-
-    if (msg.status === "resolved") {
-      numberOfPackages = msg.pkgs?.length ?? 1;
-      log.info(`installing ${numberOfPackages} packages`);
-    } else if (msg.status === "downloading") {
-      counter++;
-      if (counter % 10 !== 0) return;
-
-      const { received = 0, "content-size": contentSize = 0 } = msg;
-      if (contentSize > 0) {
-        // how many total pacakges are completed
-        const overallProgress = (currentPackageNumber / numberOfPackages) * 100;
-        // how much of the current package is completed
-        const packageProgress = (received / contentSize) * 100;
-        // progress is the total packages completed plus the percentage of the current package
-        const progress = overallProgress + packageProgress / numberOfPackages;
-        notifyMainWindow("install-progress", { full_name, progress });
+  return {
+    resolved: ({ pending }: Resolution) => {
+      numberOfPackages = pending.length ?? 1;
+      log.info(`resolved ${numberOfPackages} packages to install`);
+    },
+    installing: ({ pkg, progress }: { pkg: Package; progress: number | undefined }) => {
+      log.info(`installing ${pkg.project}@${pkg.version} - ${progress}`);
+      if (progress && progress > 0) {
+        // how many total packages are completed
+        const completedProgress = (currentPackageNumber / numberOfPackages) * 100;
+        // overallProgress is the total packages completed plus the percentage of the current package
+        const overallProgress = completedProgress + (progress / numberOfPackages) * 100;
+        notifyMainWindow("install-progress", { full_name, progress: overallProgress });
       }
-    } else if (msg.status === "installed") {
+    },
+    installed: (installation: Installation) => {
+      log.info("installed", installation);
+      const { project, version } = installation.pkg;
+
       currentPackageNumber++;
       const progress = (currentPackageNumber / numberOfPackages) * 100;
       notifyMainWindow("install-progress", { full_name, progress });
-      notifyPackageInstalled(msg.pkg, notifyMainWindow);
+      notifyMainWindow("pkg-installed", { full_name: project, version: version.toString() });
     }
   };
 }
 
-const notifyPackageInstalled = (rawPkg: string, notifyMainWindow: MainWindowNotifier) => {
-  try {
-    const [full_name, version] = rawPkg.split("=");
-    notifyMainWindow("pkg-installed", { full_name, version });
-  } catch (err) {
-    log.error("failed to notify package installed", err);
+// the tea cli package is needed to open any other package in the terminal, so make sure it's installed and return the path
+async function installTeaCli() {
+  const installations = await porcelain.install("tea.xyz");
+  const teaPkg = installations.find((i) => i.pkg.project === "tea.xyz");
+  if (!teaPkg) {
+    throw new Error("could not find or install tea cli!");
   }
-};
+
+  return teaPkg.path.join("bin/tea");
+}
 
 export async function openPackageEntrypointInTerminal(pkg: string) {
+  const cliBinPath = await installTeaCli();
+  log.info(`opening package ${pkg} with tea cli at ${cliBinPath}`);
+
   let sh = `"${cliBinPath}" --sync --env=false +${pkg} `;
   switch (pkg) {
     case "github.com/AUTOMATIC1111/stable-diffusion-webui":
@@ -194,24 +131,8 @@ const createCommandScriptFile = async (cmd: string): Promise<string> => {
   return tmpFilePath;
 };
 
-export async function asyncExec(cmd: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    exec(cmd, (err, stdout) => {
-      if (err) {
-        console.log("err:", err);
-        reject(err);
-        return;
-      }
-      console.log("stdout:", stdout);
-      resolve(stdout);
-    });
-  });
-}
-
 export async function syncPantry() {
-  const teaVersion = await initializeTeaCli();
-
-  if (!teaVersion) throw new Error("no tea");
-  log.info("Syncing pantry", teaVersion);
-  await asyncExec(`DEBUG=1 "${cliBinPath}" --sync --env=false`);
+  log.info("syncing pantry");
+  await hooks.useSync();
+  log.info("syncing pantry completed");
 }

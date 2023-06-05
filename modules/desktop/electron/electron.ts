@@ -14,7 +14,7 @@ import initializePushNotification, {
   syncPackageTopicSubscriptions
 } from "./libs/push-notification";
 
-import init, { initializeTeaCli } from "./libs/initialize";
+import init from "./libs/initialize";
 import { readSessionData } from "./libs/auth";
 
 import { isDev } from "./libs/auto-updater";
@@ -38,11 +38,10 @@ if (app.isPackaged) {
     }
   });
   Sentry.configureScope(async (scope) => {
-    const [session, cliVersion] = await Promise.all([readSessionData(), initializeTeaCli()]);
+    const session = await readSessionData();
     scope.setUser({
       id: session.device_id, // device_id this should exist in our pg db: developer_id is to many device_id
-      username: session?.user?.login || "", // github username or handler
-      tea: cliVersion
+      username: session?.user?.login || "" // github username or handler
     });
   });
   setSentryLogging(Sentry);
