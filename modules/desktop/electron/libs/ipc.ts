@@ -11,7 +11,13 @@ import { readSessionData, writeSessionData, pollAuth } from "./auth";
 import type { Packages, Session } from "../../src/libs/types";
 import log from "./logger";
 import { syncLogsAt } from "./v1-client";
-import { installPackage, openPackageEntrypointInTerminal, syncPantry } from "./cli";
+import {
+  enableMagic,
+  installPackage,
+  isMagicEnabled,
+  openPackageEntrypointInTerminal,
+  syncPantry
+} from "./cli";
 
 import { getAutoUpdateStatus, getUpdater, isDev } from "./auto-updater";
 
@@ -257,6 +263,18 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
     } catch (error) {
       log.error(error);
       return {};
+    }
+  });
+
+  ipcMain.handle("is-magic-enabled", async () => {
+    return isMagicEnabled();
+  });
+
+  ipcMain.handle("enable-magic", () => {
+    try {
+      enableMagic();
+    } catch (error) {
+      log.error(error);
     }
   });
 }

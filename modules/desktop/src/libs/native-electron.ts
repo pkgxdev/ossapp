@@ -306,3 +306,11 @@ export const getHeaders = async (path: string) => {
   const headers = await ipcRenderer.invoke("get-api-headers", path);
   return (headers || {}) as { [key: string]: string };
 };
+
+export const enableMagic = async () => {
+  await ipcRenderer.invoke("enable-magic");
+};
+
+export const isMagicEnabled = async (): Promise<boolean> => {
+  return await ipcRenderer.invoke("is-magic-enabled");
+};

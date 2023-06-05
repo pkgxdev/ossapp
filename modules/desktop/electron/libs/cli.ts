@@ -142,10 +142,12 @@ const envConfigPaths = [".bashrc", ".zshrc", ".zprofile", ".config/fish/config.f
 export async function isMagicEnabled(): Promise<boolean> {
   // 0. loop through envConfigPaths
   // 1. check if TEA_MAGIC is set to prompt or 1
+  log.info("checking if magic is enabled....");
   return false;
 }
 
 export async function enableMagic() {
   // 0. detect if tea-cli is installed
   // 1. spam all envConfigPaths with `export TEA_MAGIC=prompt`
+  log.info("enabling magic....");
 }

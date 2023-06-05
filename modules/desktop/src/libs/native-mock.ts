@@ -416,3 +416,11 @@ export const stopMonitoringTeaDir = async () => {
 };
 
 export const getHeaders = async (path: string) => ({});
+
+export const enableMagic = async () => {
+  console.log("enabled!");
+};
+
+export const isMagicEnabled = async () => {
+  return false;
+};
