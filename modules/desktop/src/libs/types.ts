@@ -13,12 +13,13 @@ export enum PackageStates {
   UPDATING = "UPDATING"
 }
 
-// PackageDisplayState is for showing temporary UI elements when a package is installed or updated. It is not persisted.
+// PackageDisplayState is a TEMPORARY state for showing temporary UI elements when a package is
+// installed or updated. It is not persisted.
 export interface PackageDisplayState {
-  // INSTALLED_SUCCESSFULLY -> The pacakge was installed successfully show some confetti!
-  // UPDATED_SUCCESSFULLY -> The package was updated successfully change the badge temporarily
-  // INSTALLATION_ERROR -> The package failed to install show an error overlay temporarily
-  kind: "INSTALLED_SUCCESSFULLY" | "UPDATED_SUCCESSFULLY" | "INSTALLATION_ERROR";
+  // INSTALLED -> The package was installed successfully. Let's show some confetti!
+  // UPDATED -> The package was updated successfully so change the badge temporarily
+  // ERROR -> The package failed to install so show an error overlay temporarily
+  state: "INSTALLED" | "UPDATED" | "ERROR";
   errorMessage?: string;
   version: string;
 }

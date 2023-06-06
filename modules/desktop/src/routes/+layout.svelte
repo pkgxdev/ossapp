@@ -27,6 +27,9 @@
       const fromPath = from?.url.href.replace(from.url.origin, "");
       setNewPath(nextPath, fromPath || "/");
     }
+
+    // the updated state should be reset any time the user navigates
+    packagesStore.resetAllPackagesUpdatedState();
   });
 
   const syncPath = async () => {

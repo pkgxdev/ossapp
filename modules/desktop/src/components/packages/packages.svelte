@@ -12,6 +12,7 @@
   import NoUpdates from "./no-updates.svelte";
   import { packagesStore, scrollStore } from "$libs/stores";
   import { afterUpdate, beforeUpdate } from "svelte";
+  import { packageWasUpdated } from "$libs/packages/pkg-utils";
 
   const { packageList: allPackages } = packagesStore;
   export let packageFilter: SideMenuOptions = SideMenuOptions.all;
@@ -38,7 +39,10 @@
       ].includes(pkg.state);
     },
     [SideMenuOptions.installed_updates_available]: (pkg: GUIPackage) => {
-      return [PackageStates.UPDATING, PackageStates.NEEDS_UPDATE].includes(pkg.state);
+      return (
+        [PackageStates.UPDATING, PackageStates.NEEDS_UPDATE].includes(pkg.state) ||
+        packageWasUpdated(pkg)
+      );
     },
     [SideMenuOptions.recently_updated]: (pkg: GUIPackage) => {
       return moment(pkg.last_modified).isAfter(moment().subtract(30, "days"));
