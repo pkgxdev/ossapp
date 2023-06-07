@@ -13,6 +13,16 @@ export enum PackageStates {
   UPDATING = "UPDATING"
 }
 
+// PackageDisplayState is for showing temporary UI elements when a package is installed or updated. It is not persisted.
+export interface PackageDisplayState {
+  // INSTALLED_SUCCESSFULLY -> The pacakge was installed successfully show some confetti!
+  // UPDATED_SUCCESSFULLY -> The package was updated successfully change the badge temporarily
+  // INSTALLATION_ERROR -> The package failed to install show an error overlay temporarily
+  kind: "INSTALLED_SUCCESSFULLY" | "UPDATED_SUCCESSFULLY" | "INSTALLATION_ERROR";
+  errorMessage?: string;
+  version: string;
+}
+
 export type Packages = {
   version: string;
   packages: { [full_name: string]: GUIPackage };
@@ -25,6 +35,8 @@ export type GUIPackage = Package & {
   install_progress_percentage?: number;
   isUninstalling?: boolean;
   cached_image_url?: string;
+
+  displayState?: PackageDisplayState | null;
 };
 
 export type Course = {
