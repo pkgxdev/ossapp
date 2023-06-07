@@ -220,3 +220,18 @@
 .icon-share-1:before {
   content: "\38";
 }
+.icon-chevron-right:before {
+  content: "\39";
+}
+.icon-right-open-mini:before {
+  content: "\21";
+}
+.icon-facebook:before {
+  content: "\22";
+}
+.icon-linkedin:before {
+  content: "\23";
+}
+.icon-exlamation-outline:before {
+  content: "\24";
+}

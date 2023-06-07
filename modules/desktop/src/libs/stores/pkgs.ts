@@ -226,23 +226,23 @@ const installPkg = async (pkg: GUIPackage, version?: string) => {
 
   try {
     updatePackage(pkg.full_name, { install_progress_percentage: 0.01 });
+
     await installPackage(pkg, versionToInstall);
     trackInstall(pkg.full_name);
 
     await refreshSinglePackage(pkg.full_name);
-
-    notificationStore.add({
-      message: `Package ${pkg.full_name} v${versionToInstall} has been installed.`
-    });
+    if (pkg.state === PackageStates.AVAILABLE) {
+      updatePackage(pkg.full_name, {
+        displayState: { kind: "INSTALLED_SUCCESSFULLY", version: versionToInstall }
+      });
+    }
   } catch (error) {
     log.error(error);
     let message = "Unknown Error";
     if (error instanceof Error) message = error.message;
     trackInstallFailed(pkg.full_name, message || "unknown");
-
-    notificationStore.add({
-      message: `Package ${pkg.full_name} v${versionToInstall} failed to install.`,
-      type: NotificationType.ERROR
+    updatePackage(pkg.full_name, {
+      displayState: { kind: "INSTALLATION_ERROR", errorMessage: message, version: versionToInstall }
     });
   } finally {
     updatePackage(pkg.full_name, { install_progress_percentage: 100 });
@@ -358,6 +358,12 @@ const setBadgeCountFromPkgs = (pkgs: Packages) => {
   }
 };
 
+const resetPackageDisplayState = (pkg: GUIPackage) => {
+  updatePackage(pkg.full_name, {
+    displayState: null
+  });
+};
+
 export default {
   packageList,
   search: searchPackages,
@@ -367,5 +373,6 @@ export default {
   syncPackageData,
   deletePkg,
   destroy,
-  cachePkgImage
+  cachePkgImage,
+  resetPackageDisplayState
 };

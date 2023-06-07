@@ -16,6 +16,7 @@
   import PackageVersionSelector from "$components/package-install-button/package-version-selector.svelte";
   import { fixPackageName } from "$libs/packages/pkg-utils";
   import { semverCompare } from "$libs/packages/pkg-utils";
+  import InstallResultOverlay from "$components/install-result-overlay/install-result-overlay.svelte";
 
   export let pkg: GUIPackage;
   let installing = false;
@@ -88,6 +89,7 @@
           </div>
         </div>
       {/if}
+      <InstallResultOverlay {pkg} />
     </figure>
     <article class="w-2/3 p-4 pt-8">
       <div class="align-center flex items-center gap-2">
