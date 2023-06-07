@@ -23,34 +23,18 @@ export async function installPackage(
 }
 
 function newInstallProgressNotifier(full_name: string, notifyMainWindow: MainWindowNotifier) {
-  // the totall number of packages to install - this is set by the "resolved" message
-  let numberOfPackages = 1;
-
-  // the current package number - this is incremented by the "installed" or "downloaded" message
-  let currentPackageNumber = 0;
-
   return {
     resolved: ({ pending }: Resolution) => {
-      numberOfPackages = pending.length ?? 1;
-      log.info(`resolved ${numberOfPackages} packages to install`);
+      log.info(`resolved ${pending.length} packages to install`);
     },
-    installing: ({ pkg, progress }: { pkg: Package; progress: number | undefined }) => {
-      log.info(`installing ${pkg.project}@${pkg.version} - ${progress}`);
-      if (progress && progress > 0) {
-        // how many total packages are completed
-        const completedProgress = (currentPackageNumber / numberOfPackages) * 100;
-        // overallProgress is the total packages completed plus the percentage of the current package
-        const overallProgress = completedProgress + (progress / numberOfPackages) * 100;
-        notifyMainWindow("install-progress", { full_name, progress: overallProgress });
+    progress: (progress: number) => {
+      if (progress > 0 && progress <= 1) {
+        notifyMainWindow("install-progress", { full_name, progress: progress * 100 });
       }
     },
     installed: (installation: Installation) => {
       log.info("installed", installation);
       const { project, version } = installation.pkg;
-
-      currentPackageNumber++;
-      const progress = (currentPackageNumber / numberOfPackages) * 100;
-      notifyMainWindow("install-progress", { full_name, progress });
       notifyMainWindow("pkg-installed", { full_name: project, version: version.toString() });
     }
   };
