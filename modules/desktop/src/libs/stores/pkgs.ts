@@ -21,7 +21,7 @@ import {
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 import { NotificationType } from "@tea/ui/types";
 import { trackInstall, trackInstallFailed } from "$libs/analytics";
-import { addInstalledVersion, isInstalling } from "$libs/packages/pkg-utils";
+import { addInstalledVersion, isInstalling, packageWasUpdated } from "$libs/packages/pkg-utils";
 import withDebounce from "$libs/utils/debounce";
 import { trimGithubSlug } from "$libs/github";
 import { notificationStore } from "$libs/stores";
@@ -230,19 +230,18 @@ const installPkg = async (pkg: GUIPackage, version?: string) => {
     await installPackage(pkg, versionToInstall);
     trackInstall(pkg.full_name);
 
+    // If the package was AVAILABLE previously then it was just installed, otherwise it was updated
+    const state = pkg.state === PackageStates.AVAILABLE ? "INSTALLED" : "UPDATED";
+    updatePackage(pkg.full_name, { displayState: { state, version: versionToInstall } });
+
     await refreshSinglePackage(pkg.full_name);
-    if (pkg.state === PackageStates.AVAILABLE) {
-      updatePackage(pkg.full_name, {
-        displayState: { kind: "INSTALLED_SUCCESSFULLY", version: versionToInstall }
-      });
-    }
   } catch (error) {
     log.error(error);
     let message = "Unknown Error";
     if (error instanceof Error) message = error.message;
     trackInstallFailed(pkg.full_name, message || "unknown");
     updatePackage(pkg.full_name, {
-      displayState: { kind: "INSTALLATION_ERROR", errorMessage: message, version: versionToInstall }
+      displayState: { state: "ERROR", errorMessage: message, version: versionToInstall }
     });
   } finally {
     updatePackage(pkg.full_name, { install_progress_percentage: 100 });
@@ -364,6 +363,19 @@ const resetPackageDisplayState = (pkg: GUIPackage) => {
   });
 };
 
+const resetAllPackagesUpdatedState = () => {
+  packageMap.update((pkgs) => {
+    Object.values(pkgs.packages).forEach((pkg) => {
+      // only reset the display state if the package was updated,
+      // installed and error display states should not be reset here
+      if (packageWasUpdated(pkg)) {
+        pkg.displayState = null;
+      }
+    });
+    return pkgs;
+  });
+};
+
 export default {
   packageList,
   search: searchPackages,
@@ -374,5 +386,6 @@ export default {
   deletePkg,
   destroy,
   cachePkgImage,
-  resetPackageDisplayState
+  resetPackageDisplayState,
+  resetAllPackagesUpdatedState
 };

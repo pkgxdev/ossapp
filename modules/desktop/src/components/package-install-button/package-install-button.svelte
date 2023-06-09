@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PackageStates, type GUIPackage } from "$libs/types";
   import Button from "@tea/ui/button/button.svelte";
-  import { t } from "$libs/translations";
+  import { getPackageBadgeText } from "$libs/packages/pkg-utils";
 
   export let buttonSize: "small" | "large" = "small";
 
@@ -44,7 +44,7 @@
 
   const hasVersionSelectorDropdown = !!$$slots.selector;
 
-  $: ctaLabel = $t(`package.cta-${pkg.state}`);
+  $: ctaLabel = getPackageBadgeText(pkg);
 </script>
 
 <Button
