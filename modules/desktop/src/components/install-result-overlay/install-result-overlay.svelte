@@ -4,6 +4,7 @@
   import { afterUpdate } from "svelte";
   import { packagesStore } from "$libs/stores";
   import Button from "@tea/ui/button/button.svelte";
+  import { packageHadError, packageWasInstalled } from "$libs/packages/pkg-utils";
 
   let root: HTMLElement | undefined;
 
@@ -28,7 +29,7 @@
       const myConfetti = confetti.create(canvas, { resize: true });
       await myConfetti({ particleCount: 500, spread: 360, startVelocity: 20, gravity: 0.5 });
 
-      root.removeChild(canvas);
+      root?.removeChild(canvas);
       isAnimating = false;
     }
   };
@@ -39,14 +40,14 @@
   };
 
   afterUpdate(() => {
-    if (pkg.displayState?.kind === "INSTALLED_SUCCESSFULLY") {
+    if (packageWasInstalled(pkg)) {
       playConfetti();
     }
   });
 </script>
 
 <div bind:this={root} class="z-60 pointer-events-none absolute left-0 top-0 h-full w-full">
-  {#if pkg.displayState?.kind === "INSTALLATION_ERROR"}
+  {#if packageHadError(pkg)}
     <div
       class="pointer-events-auto flex h-full w-full flex-col items-center justify-center bg-black/90"
     >

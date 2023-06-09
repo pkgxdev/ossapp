@@ -12,6 +12,7 @@
       "cta-UNINSTALL": "UNINSTALL",
       "cta-NEEDS_UPDATE": "UPDATE",
       "cta-UPDATING": "UPDATING",
+      "cta-UPDATED": "UPDATED",
       "cta-PRUNE": "PRUNE",
       "cta-PRUNING": "PRUNING"
     },

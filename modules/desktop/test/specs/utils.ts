@@ -91,7 +91,7 @@ export function setupUtils(browser: WebdriverIO.Browser) {
 
   const verifyInstalledBadge = async (
     slug: string,
-    state: "INSTALLED" | "UPDATE" = "INSTALLED"
+    state: "INSTALLED" | "UPDATE" | "UPDATED" = "INSTALLED"
   ) => {
     // wait 30 seconds for the badge to show up
     for (let i = 0; i < 30; i++) {

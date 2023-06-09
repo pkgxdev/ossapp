@@ -83,7 +83,6 @@ describe("basic smoke test", () => {
     await expect(updateBtn).toExist();
     updateBtn.click();
 
-    // FIXME: This should test for the button saying "UPDATED", but that feature is not done yet so uncomment this when it is
-    //await utils.verifyInstalledBadge(slug, "UPDATED");
+    await utils.verifyInstalledBadge(slug, "UPDATED");
   });
 });

@@ -41,7 +41,6 @@
       }
     }
     updating = false;
-    sideMenuOption = SideMenuOptions.all;
   }
 
   $: needsUpdateCount = pkgsToUpdate.length;
