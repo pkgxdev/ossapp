@@ -1,0 +1,82 @@
+{
+  "id": "de",
+  "label": "Deutsch",
+  "translations": {
+    "store-search-placeholder": "Pakete suchen",
+    "package": {
+      "update-all": "ALLE AKTUALISIEREN",
+      "cta-AVAILABLE": "INSTALLIEREN",
+      "cta-INSTALLED": "INSTALLIERT",
+      "cta-INSTALLING": "INSTALLATIEREN LÄUFT",
+      "cta-UNINSTALLED": "WIEDER INSTALLIEREN",
+      "cta-UNINSTALL": "DEINSTALLIEREN",
+      "cta-NEEDS_UPDATE": "AKTUALISIEREN",
+      "cta-UPDATING": "AKTUALISIEREN LÄUFT",
+      "cta-PRUNE": "REDUZIEREN",
+      "cta-PRUNING": "REDUZIEREN LÄUFT"
+    },
+    "footer": {
+      "quick-links-title": "Schnellzugriff",
+      "about-tea-store": "über den tea Store",
+      "report-a-problem": "Ein Problem melden",
+      "visit-website": "Besuche tea.xyz",
+      "terms-services": "AGB",
+      "privacy-policy": "Datenschutzerklärung"
+    },
+    "documentation": {
+      "title": "Dokumentation",
+      "featured-courses-title": "Ausgewählte Kurse",
+      "workshops": "Workshops"
+    },
+    "view-all": "Alle anzeigen",
+    "sorting": {
+      "label": "Sortieren nach",
+      "popularity": "Beliebteste",
+      "most-recent": "Aktuellste"
+    },
+    "common": {
+      "home": "Startseite",
+      "all": "Alle",
+      "articles": "Artikel",
+      "workshops": "Workshops",
+      "details": "Details",
+      "versions": "Versionen",
+      "metadata": "Metadaten",
+      "homepage": "Startseite",
+      "documentation": "Dokumentation",
+      "github-repository": "Github Repository",
+      "contributors": "Mitwirkende",
+      "view-on-github": "AUF GITHUB ANSEHEN"
+    },
+    "notification": {
+      "gui-downloading": "Eine neue tea gui({{version}}) wird heruntergeladen. Bitte schließen Sie die App nicht.",
+      "gui-downloaded": "Eine neue tea gui({{version}}) ist jetzt verfügbar. Starten Sie die App neu, um zu aktualisieren."
+    },
+    "side-menu-title": {
+      "discover": "entdecken",
+      "all": "Alle Pakete",
+      "installed": "Installierte Pakete",
+      "installed_updates_available": "Verfügbare Updates",
+      "recently_updated": "Kürzlich aktualisiert",
+      "new_packages": "Neue Pakete",
+      "popular": "Beliebt",
+      "featured": "Empfohlen",
+      "essentials": "Grundlagen",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "Hergestellt von tea"
+    },
+    "tags": {
+      "discover": "entdecken",
+      "all": "alle Pakete",
+      "installed": "installiert",
+      "installed_updates_available": "Updates verfügbar",
+      "recently_updated": "Kürzlich aktualisiert",
+      "new_packages": "Neue Pakete",
+      "popular": "Beliebt",
+      "featured": "Empfohlen",
+      "essentials": "Grundlagen",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Hergestellt von tea"
+    }
+  }
+}
