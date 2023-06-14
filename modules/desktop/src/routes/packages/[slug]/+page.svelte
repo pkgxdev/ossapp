@@ -30,7 +30,7 @@
   // let reviews: Review[];
   $: bottles = pkg?.bottles || [];
   $: versions = [...new Set(bottles.map((b) => b.version))];
-  $: readme = pkg?.readme || { data: "", type: "md" };
+  $: readme = pkg?.readme || { data: "", type: "html" };
 
   $: tabs = [
     readme?.data !== "" && {

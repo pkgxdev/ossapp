@@ -33,7 +33,7 @@ export interface Package {
   contributors?: Contributor[];
   readme?: {
     data: string;
-    type: "md" | "rst";
+    type: "md" | "rst" | "html";
   };
   manual_sorting: number;
   card_layout: "bottom" | "right" | "left";

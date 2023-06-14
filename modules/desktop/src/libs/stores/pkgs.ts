@@ -129,7 +129,7 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
   if (updatedPackage.github) {
     const [owner, repo] = updatedPackage.github.split("/");
     const [readme, contributors, repoData] = await Promise.all([
-      getReadme(owner, repo),
+      getReadme({ owner, repo, full_name: guiPkg.full_name! }),
       getContributors(owner, repo),
       getRepoAsPackage(owner, repo)
     ]);

@@ -6,7 +6,7 @@
   import { onMount } from "svelte";
   import { tokenizeMarkdown } from "./md";
 
-  export let source: { data: string; type: "md" | "rst" };
+  export let source: { data: string; type: "md" | "rst" | "html" };
 
   let markDownRoot: HTMLElement;
 
@@ -23,7 +23,7 @@
     link: Link
   };
 
-  $: html = source.type === "rst" ? rst2html(source.data) : "";
+  $: html = source.type === "rst" ? rst2html(source.data) : source.data;
 
   onMount(() => {
     // Need to override the height/width STYLE with the old-school height/width ATTRIBUTE to make it work with the markdown
@@ -49,7 +49,7 @@
     <div bind:this={markDownRoot}>
       <SvelteMarkdown source={tokenizeMarkdown(source.data)} {renderers} />
     </div>
-  {:else if source.type === "rst"}
+  {:else if ["html", "rst"].includes(source.type) }
     {@html html}
   {/if}
 </section>
