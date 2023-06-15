@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-
+      - test-staple
 jobs:
   changes:
     runs-on: ubuntu-latest

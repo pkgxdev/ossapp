@@ -131,7 +131,7 @@ jobs:
       - name: build artifacts for publishing and notarization
         run: |
           mkdir -p target
-          cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
+          cp ./modules/desktop/dist/* ./target/
           tar -czvf artifacts.tgz -C ./target/ .
 
       - uses: aws-actions/configure-aws-credentials@v1
@@ -211,7 +211,6 @@ jobs:
 
     - name: notarize .app arm64
       run: xcrun notarytool submit dist/$ZIP_FILE --keychain-profile "xyz.tea.gui" --username "$APPLE_ID" --password "$APPLE_PASSWORD" --wait || true
-      # run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/$ZIP_FILE || true
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
@@ -219,12 +218,20 @@ jobs:
 
     - name: notarize .app x86+64
       run: xcrun notarytool submit dist/$ZIP_FILE --keychain-profile "xyz.tea.gui" --username "$APPLE_ID" --password "$APPLE_PASSWORD" --wait || true
-      # run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/$ZIP_FILE || true
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
         ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
 
+    - name: Staple Notarization Ticket .app arm64
+      uses: devbotsxyz/xcode-staple@v1
+      with:
+        product-path: dist/mac-arm64/tea.app
+
+    - name: Staple Notarization Ticket .app x86+64
+      uses: devbotsxyz/xcode-staple@v1
+      with:
+        product-path: dist/mac/tea.app
     # prepare for DMG creation
     - name: prepare installer folders
       run: |
