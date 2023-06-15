@@ -61,7 +61,8 @@ jobs:
 
   build:
     needs: verify
-    if: needs.verify.outputs.is-updated == 'true'
+    # temporary test staple
+    # if: needs.verify.outputs.is-updated == 'true'
     runs-on: macos-latest
     outputs:
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
