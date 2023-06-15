@@ -12,6 +12,8 @@
 
   $: isAnimating = false;
 
+  const colors = ["#00FFD0", "#2675F5", "#8000FF"];
+
   const playConfetti = async () => {
     if (isAnimating) {
       return;
@@ -27,7 +29,13 @@
       root.appendChild(canvas);
 
       const myConfetti = confetti.create(canvas, { resize: true });
-      await myConfetti({ particleCount: 500, spread: 360, startVelocity: 20, gravity: 0.5 });
+      await myConfetti({
+        particleCount: 500,
+        spread: 360,
+        startVelocity: 20,
+        gravity: 0.5,
+        colors
+      });
 
       root?.removeChild(canvas);
       isAnimating = false;
