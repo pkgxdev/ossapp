@@ -27,7 +27,7 @@ importers:
       '@sveltejs/adapter-static': ^1.0.0-next.48
       '@sveltejs/kit': ^1.15.9
       '@tea/ui': workspace:*
-      '@teaxyz/lib': 0.4.1
+      '@teaxyz/lib': 0.6.0
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/svelte': ^3.2.2
       '@testing-library/webdriverio': ^3.2.1
@@ -108,7 +108,7 @@ importers:
       '@sentry/electron': 4.5.0
       '@sentry/svelte': 7.51.2_svelte@3.59.1
       '@sentry/vite-plugin': 0.7.2
-      '@teaxyz/lib': 0.4.1
+      '@teaxyz/lib': 0.6.0
       '@types/electron': 1.6.10
       '@types/mousetrap': 1.6.11
       '@vitest/coverage-c8': 0.27.3_jsdom@21.1.2
@@ -3628,8 +3628,8 @@ packages:
       tailwindcss: 3.3.2
     dev: false
 
-  /@teaxyz/lib/0.4.1:
-    resolution: {integrity: sha512-DVXOFyhbS1fM5acBU4jdR6WybK6Rt15NaO7qqpkRx7TuNz5mX3AHFszHgoNAhnnyyxvXc8cYSeL7OxYzT04hxQ==}
+  /@teaxyz/lib/0.6.0:
+    resolution: {integrity: sha512-O9lYU/J1h+sbJApGcBUq4RlYymhfwB85k57hyaBhHq87DgXcR1xjhrKk0pfvn52sZT9jUoXH9UhPd1enWadXRQ==}
     dependencies:
       '@deno/shim-crypto': 0.3.1
       '@deno/shim-deno': 0.16.1
