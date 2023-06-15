@@ -184,12 +184,12 @@ export async function cacheImage(url: string): Promise<string> {
   if (!fs.existsSync(imagePath)) {
     try {
       await downloadImage(url, imagePath);
-      console.log("Image downloaded and cached:", imagePath);
+      log.info("Image downloaded and cached:", imagePath);
     } catch (error) {
-      console.error("Failed to download image:", error);
+      log.error("Failed to download image:", error);
     }
   } else {
-    console.log("Image already cached:", imagePath);
+    log.info("Image already cached:", imagePath);
   }
 
   return `file://${imagePath}`;

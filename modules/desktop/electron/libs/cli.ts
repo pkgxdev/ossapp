@@ -6,7 +6,7 @@ import { hooks } from "@teaxyz/lib";
 
 import log from "./logger";
 import { MainWindowNotifier } from "./types";
-import { Installation, Package, porcelain } from "@teaxyz/lib";
+import { Installation, porcelain } from "@teaxyz/lib";
 import type { Resolution } from "@teaxyz/lib/script/src/plumbing/resolve";
 
 export async function installPackage(
@@ -19,7 +19,7 @@ export async function installPackage(
   const qualifedPackage = `${full_name}@${version}`;
   log.info(`installing package ${qualifedPackage}`);
   const result = await porcelain.install(qualifedPackage, notifier);
-  console.log(`successfully installed ${qualifedPackage}`, result);
+  log.info(`successfully installed ${qualifedPackage}`, result);
 }
 
 function newInstallProgressNotifier(full_name: string, notifyMainWindow: MainWindowNotifier) {

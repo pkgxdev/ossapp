@@ -21,7 +21,6 @@
     .sort((a, b) => {
       return a.manual_sorting - b.manual_sorting;
     });
-  console.log("test", packages);
 </script>
 
 <div class="relative h-full w-full">

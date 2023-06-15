@@ -3,6 +3,7 @@ import type { Session } from "$libs/types";
 import bcrypt from "bcryptjs";
 import { getSession } from "$libs/stores/auth";
 import { getHeaders } from "@native";
+import log from "./logger";
 
 export const baseUrl = "https://api.tea.xyz/v1";
 
@@ -10,7 +11,7 @@ export async function get<T>(
   urlPath: string,
   params?: { [key: string]: string }
 ): Promise<T | null> {
-  console.log(`GET /v1/${urlPath}`);
+  log.info(`GET /v1/${urlPath}`);
 
   const headers = await getHeaders(`GET/${urlPath}`);
   delete headers["User-Agent"]; // this is in the browser, not allowed to modify UserAgent
