@@ -6,25 +6,20 @@ import type { InstalledPackage } from "../../src/libs/types";
 import { mkdirp } from "mkdirp";
 import fetch from "node-fetch";
 import { SemVer, semver } from "@teaxyz/lib";
-import { execSync } from "child_process";
 import chokidar from "chokidar";
 import { MainWindowNotifier } from "./types";
+import { hooks } from "@teaxyz/lib";
 
 type ParsedVersion = { full_name: string; semVer: SemVer };
 
-export const getTeaPath = () => {
-  const homePath = app.getPath("home");
-  let teaPath;
-
+export const getTeaPath = (): string => {
   try {
-    teaPath = execSync("tea --prefix", { encoding: "utf8" }).trim();
-    log.info(teaPath);
+    return hooks.useConfig().prefix.toString();
   } catch (error) {
+    const homePath = app.getPath("home");
     log.info("Could not run tea --prefix. Using default path.");
-    teaPath = path.join(homePath, "./.tea");
+    return path.join(homePath, "./.tea");
   }
-
-  return teaPath;
 };
 
 const guiFolder = path.join(getTeaPath(), "tea.xyz/gui");
