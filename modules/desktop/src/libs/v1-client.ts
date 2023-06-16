@@ -1,24 +1,29 @@
 import axios from "axios";
-import type { Session } from "$libs/types";
-import bcrypt from "bcryptjs";
-import { getSession } from "$libs/stores/auth";
 import { getHeaders } from "@native";
 import log from "./logger";
 
-export const baseUrl = "https://api.tea.xyz/v1";
+import { isDev } from "@native";
+
+let dev = false;
+export const getBaseURL = async (): Promise<string> => {
+  if (dev) return "https://app.dev.tea.xyz";
+  const notProd = await isDev();
+  dev = notProd;
+  return notProd ? "https://app.dev.tea.xyz" : "https://app.tea.xyz";
+};
 
 export async function get<T>(
   urlPath: string,
   params?: { [key: string]: string }
 ): Promise<T | null> {
   log.info(`GET /v1/${urlPath}`);
-
+  const baseURL = await getBaseURL();
   const headers = await getHeaders(`GET/${urlPath}`);
   delete headers["User-Agent"]; // this is in the browser, not allowed to modify UserAgent
 
   const req = await axios.request({
     method: "GET",
-    baseURL: "https://api.tea.xyz",
+    baseURL,
     url: ["v1", ...urlPath.split("/")].filter((p) => p).join("/"),
     headers,
     params,
