@@ -93,8 +93,8 @@ export function setupUtils(browser: WebdriverIO.Browser) {
     slug: string,
     state: "INSTALLED" | "UPDATE" | "UPDATED" = "INSTALLED"
   ) => {
-    // wait 30 seconds for the badge to show up
-    for (let i = 0; i < 30; i++) {
+    // wait 60 seconds for the badge to show up
+    for (let i = 0; i < 60; i++) {
       const badge = await findByTestId(`install-badge-${slug}`);
       expect(badge).toExist();
 

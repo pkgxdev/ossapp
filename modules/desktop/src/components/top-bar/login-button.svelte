@@ -1,7 +1,7 @@
 <script lang="ts">
   import { authStore } from "$libs/stores";
   import { getSession } from "@native";
-  import { baseUrl } from "$libs/v1-client";
+  import { getBaseURL } from "$libs/v1-client";
   import { shellOpenExternal, pollDeviceSession } from "@native";
   import mouseLeaveDelay from "@tea/ui/lib/mouse-leave-delay";
   const { user } = authStore;
@@ -17,6 +17,7 @@
         const session = await getSession();
 
         if (session && session.device_id) {
+          const baseUrl = await getBaseURL();
           shellOpenExternal(`${baseUrl}/auth/user?device_id=${session.device_id}`);
           pollDeviceSession();
         } else {

@@ -9,6 +9,7 @@ import get from "./v1-client";
 import { DeviceAuth } from "../../src/libs/types";
 import { notifyMainWindow } from "../electron";
 import { InitWatcher } from "./initialize";
+import { baseURL } from "./v1-client";
 
 const sessionFilePath = path.join(getTeaPath(), "tea.xyz/gui/tmp.dat");
 const sessionFolder = path.join(getTeaPath(), "tea.xyz/gui");
@@ -75,7 +76,7 @@ let deviceIdRetryCount = 0;
 async function getDeviceId() {
   let deviceId = "";
   try {
-    const req = await axios.get<{ deviceId: string }>("https://api.tea.xyz/v1/auth/registerDevice");
+    const req = await axios.get<{ deviceId: string }>(`${baseURL}/v1/auth/registerDevice`);
     deviceId = req.data.deviceId;
   } catch (error) {
     log.error(error);

@@ -53,6 +53,7 @@ export async function getRepoAsPackage(owner: string, repo: string): Promise<Par
 }
 
 export const trimGithubSlug = (slug: string): string => {
-  const [owner, repo] = slug.split("/");
+  const gh = slug.replace("https://github.com/", "");
+  const [owner, repo] = gh.split("/");
   return [owner, repo].join("/");
 };

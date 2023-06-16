@@ -7,7 +7,7 @@
  *      thus saving us so much time
  *
  * primary concerns here are any method that does the following:
- *  - connect to remote api(api.tea.xyz) and returns a data
+ *  - connect to remote api(app.tea.xyz) and returns a data
  *  - connect to a local platform api and returns a data
  */
 
@@ -18,7 +18,6 @@ import * as mock from "./native-mock";
 import { PackageStates, type InstalledPackage } from "./types";
 
 import { get as apiGet } from "$libs/v1-client";
-import axios from "axios";
 import withRetry from "./utils/retry";
 import log from "./logger";
 const { ipcRenderer, shell } = window.require("electron");
@@ -26,9 +25,9 @@ const { ipcRenderer, shell } = window.require("electron");
 export async function getDistPackages(): Promise<Package[]> {
   try {
     return withRetry(async () => {
-      const req = await axios.get<Package[]>("https://gui.tea.xyz/packages.json");
-      log.info("packages received:", req.data.length);
-      return req.data;
+      const packages = await apiGet<Package[]>("packages");
+      log.info("packages received:", packages?.length);
+      return packages || [];
     });
   } catch (error) {
     log.error("getDistPackagesList:", error);
@@ -136,6 +135,7 @@ export async function getPackage(packageName: string): Promise<Partial<Package>>
   try {
     return await withRetry(async () => {
       const data = await apiGet<Partial<Package>>(`packages/${packageName.replaceAll("/", ":")}`);
+      log.info("package received:", data);
       if (data) {
         return data;
       } else {

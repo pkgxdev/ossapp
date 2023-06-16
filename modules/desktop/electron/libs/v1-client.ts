@@ -7,10 +7,11 @@ import { createReadStream, statSync } from "fs";
 import { deepReadDir } from "./tea-dir";
 import fetch from "node-fetch";
 import { hooks } from "@teaxyz/lib";
+import { isDev } from "./auto-updater";
 
 import { readSessionData, type Session } from "./auth";
 
-const base = "https://api.tea.xyz";
+export const baseURL = isDev() ? "https://app.dev.tea.xyz" : "https://app.tea.xyz";
 const publicHeader = { Authorization: "public" };
 export async function get<T>(urlPath: string) {
   try {
@@ -22,7 +23,7 @@ export async function get<T>(urlPath: string) {
         ? await getHeaders(`GET/${urlPath}`, session)
         : publicHeader;
 
-    const url = new URL(path.join("v1", urlPath), base).toString();
+    const url = new URL(path.join("v1", urlPath), baseURL).toString();
     // TODO: add headers
     const req = await axios.request<T>({
       method: "GET",
@@ -49,7 +50,7 @@ export async function post<T>(urlPath: string, data: { [key: string]: any }) {
         ? await getHeaders(`GET/${urlPath}`, session)
         : publicHeader;
 
-    const url = new URL(path.join("v1", urlPath), base).toString();
+    const url = new URL(path.join("v1", urlPath), baseURL).toString();
     const req = await axios.request<T>({
       method: "POST",
       url,

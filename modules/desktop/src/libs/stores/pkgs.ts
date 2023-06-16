@@ -120,14 +120,14 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
       type: "md"
     },
     synced: true,
-    github: pkg.github
-      ? trimGithubSlug(pkg.github)
+    github_url: pkg.github_url
+      ? trimGithubSlug(pkg.github_url)
       : pkg.full_name?.includes("github.com")
       ? trimGithubSlug(pkg.full_name.split("github.com/")[1])
       : ""
   };
-  if (updatedPackage.github) {
-    const [owner, repo] = updatedPackage.github.split("/");
+  if (updatedPackage.github_url) {
+    const [owner, repo] = updatedPackage.github_url.split("/");
     const [readme, contributors, repoData] = await Promise.all([
       getReadme(owner, repo),
       getContributors(owner, repo),
