@@ -190,6 +190,10 @@ export async function cacheImage(url: string): Promise<string> {
   return `file://${imagePath}`;
 }
 
+export async function doesFileExist(filePath: string): Promise<boolean> {
+  return !!(await fs.promises.stat(filePath).catch(() => false));
+}
+
 let watcher: chokidar.FSWatcher | null = null;
 
 export async function startMonitoringTeaDir(mainWindowNotifier: MainWindowNotifier) {

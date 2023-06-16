@@ -306,3 +306,7 @@ export const getHeaders = async (path: string) => {
   const headers = await ipcRenderer.invoke("get-api-headers", path);
   return (headers || {}) as { [key: string]: string };
 };
+
+export const checkFileExists = async (path: string) => {
+  return await ipcRenderer.invoke("check-file-exists", path);
+}

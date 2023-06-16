@@ -2,6 +2,7 @@
   import type { GUIPackage } from "$libs/types";
   import { onMount } from "svelte";
   import { packagesStore } from "$libs/stores";
+  import { checkFileExists } from "$libs/native-electron";
 
   let clazz = "";
   export { clazz as class };
@@ -16,7 +17,18 @@
   let lastProcessedPkg: GUIPackage | null = null;
 
   const loadImage = async (url: string): Promise<string> => {
-    if (url.includes("cached_images")) {
+    console.log("**** LOADING IMAGE", url);
+    if (url.startsWith("file://") && url.includes("cached_images")) {
+      // We are purposely not awaiting this promise because it affects performance,
+      // try to load the image optimistically and if it fails, this will cause a reload
+      console.log("**** LOADIN FROM CACHE");
+      checkFileExists(url).then((exists) => {
+        if (!exists) {
+          console.log("******* file doesn't exist, recaching");
+          recachePkg();
+        }
+      });
+
       loadedImg = url;
       loaded = true;
       return url;
@@ -39,15 +51,18 @@
   };
 
   const recachePkg = async () => {
+    console.log("**** RECACHE");
     const url = await packagesStore.cachePkgImage(pkg);
     loadImage(url);
   };
 
   const getCache = async () => {
+    console.log("**** GETTING CACHE", pkg);
     if (pkg.cached_image_url) {
       loadImage(pkg.cached_image_url).catch(() => {
         if (pkg.thumb_image_url) {
-          loadImage(pkg.thumb_image_url);
+          // I think we don't need this because recache will work
+          //loadImage(pkg.thumb_image_url);
           recachePkg();
         }
       });
@@ -57,6 +72,7 @@
   };
 
   $: {
+    console.log("***** BG IMAGE")
     if (pkg && pkg?.slug !== lastProcessedPkg?.slug) {
       loaded = false;
       loadedImg = "";

@@ -5,7 +5,8 @@ import {
   getInstalledVersionsForPackage,
   cacheImage,
   startMonitoringTeaDir,
-  stopMonitoringTeaDir
+  stopMonitoringTeaDir,
+  doesFileExist
 } from "./tea-dir";
 import { readSessionData, writeSessionData, pollAuth } from "./auth";
 import type { Packages, Session } from "../../src/libs/types";
@@ -257,6 +258,15 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
     } catch (error) {
       log.error(error);
       return {};
+    }
+  });
+
+  ipcMain.handle("check-file-exists", async (_event, path: string) => {
+    try {
+      return await doesFileExist(path);
+    } catch (error) {
+      log.error(error);
+      return false;
     }
   });
 }
