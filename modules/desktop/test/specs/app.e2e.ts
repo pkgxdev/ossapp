@@ -9,6 +9,7 @@ describe("basic smoke test", () => {
   beforeEach(async () => {
     utils = setupUtils(browser);
     await utils.goHome();
+    await (await utils.screen.findByText("Stable Diffusion web UI")).waitForExist();
   });
 
   it("install brewkit from the made by tea tab", async () => {
