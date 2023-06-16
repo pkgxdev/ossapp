@@ -26,10 +26,12 @@
       checkFileExists(fileName).then((exists) => {
         if (!exists) {
           console.log("******* file doesn't exist, recaching");
+          loadedImg = defaultImgUrl;
           recachePkg();
         }
       });
 
+      console.log("**** SET LOADED IMAGE FROM CACHE", url);
       loadedImg = url;
       loaded = true;
       return url;
