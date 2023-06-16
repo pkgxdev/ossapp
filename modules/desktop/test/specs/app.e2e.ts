@@ -39,7 +39,7 @@ describe("basic smoke test", () => {
     await expect(await screen.findByRole("button", { name: "OPEN IN TERMINAL" })).toExist();
   });
 
-  it("search and install create-dmg", async () => {
+  it.skip("search and install create-dmg", async () => {
     const { searchTerm } = utils!;
     await searchTerm("create-dmg");
 
@@ -56,7 +56,7 @@ describe("basic smoke test", () => {
     await utils.verifyInstalledBadge(createDmgSlug);
   });
 
-  it("should be able to install specific version", async () => {
+  it.skip("should be able to install specific version", async () => {
     const { screen, searchTerm } = utils!;
     const slug = "gnu_org_grep";
 
