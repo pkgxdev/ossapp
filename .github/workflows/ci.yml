@@ -49,7 +49,7 @@ jobs:
     steps:
       - uses: teaxyz/setup@v0
         with:
-          version: 0.31.2
+          version: 0.35.7
       - uses: actions/checkout@v3
       - name: cache node_modules build
         uses: actions/cache@v3
@@ -84,7 +84,7 @@ jobs:
     steps:
       - uses: teaxyz/setup@v0
         with:
-          version: 0.31.2
+          version: 0.35.7
       - uses: actions/checkout@v3
       - name: cache node_modules build
         uses: actions/cache@v3
@@ -118,7 +118,7 @@ jobs:
     steps:
       - uses: teaxyz/setup@v0
         with:
-          version: 0.31.2
+          version: 0.35.7
       - uses: actions/checkout@v3
       - name: cache node_modules build
         uses: actions/cache@v3
