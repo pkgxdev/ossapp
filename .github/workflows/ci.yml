@@ -45,16 +45,26 @@ jobs:
             no preview or changes related to UI
   test:
     needs: changes
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: teaxyz/setup@v0
         with:
-          version: 0.31.2
+          version: 0.35.7
       - uses: actions/checkout@v3
+      # - name: cache node_modules build
+      #   uses: actions/cache@v3
+      #   with:
+      #     key: test-ubuntu
+      #     path: |
+      #       ./pnpm
+      #       ./.pnpm-store
+      #       ./node_modules
+      #       ./modules/desktop/node_modules
+      #       ./modules/ui/node_modules
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
-          key: test-ubuntu
+          key: test-mac
           path: |
             ./pnpm
             ./.pnpm-store
@@ -84,7 +94,7 @@ jobs:
     steps:
       - uses: teaxyz/setup@v0
         with:
-          version: 0.31.2
+          version: 0.35.7
       - uses: actions/checkout@v3
       - name: cache node_modules build
         uses: actions/cache@v3
@@ -105,21 +115,26 @@ jobs:
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
           MAC_BUILD_TARGET: "dir"
+      - name: setup dev
+        run: |
+          mkdir -p /Users/runner/.tea/tea.xyz/gui
+          touch /Users/runner/.tea/tea.xyz/gui/dev
       - name: e2e test
         run: tea -E xc e2e
 
   build_svelte:
     needs: changes
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: teaxyz/setup@v0
         with:
-          version: 0.31.2
+          version: 0.35.7
       - uses: actions/checkout@v3
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
-          key: ubuntu-latest-pnpm
+          # key: ubuntu-latest-pnpm
+          key: mac-latest-pnpm
           path: |
             ./pnpm
             ./.pnpm-store
@@ -129,7 +144,8 @@ jobs:
       - name: cache electron build
         uses: actions/cache@v3
         with:
-          key: ubuntu-latest-electron
+          key: mac-latest-electron
+          # key: ubuntu-latest-electron
           path: |
             ./modules/desktop/.svelte-kit
             ./modules/desktop/build

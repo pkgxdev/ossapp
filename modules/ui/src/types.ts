@@ -29,7 +29,8 @@ export interface Package {
   license?: string;
   size_bytes?: number;
   documentation_url?: string;
-  github?: string;
+  github?: string; // TODO: remove this eventually
+  github_url?: string;
   contributors?: Contributor[];
   readme?: {
     data: string;

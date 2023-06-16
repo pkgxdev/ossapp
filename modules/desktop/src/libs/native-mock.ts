@@ -3,16 +3,13 @@
  * may contain fake/mock data
  *
  * TODO:
- *  * make cors work with api.tea.xyz/v1
+ *  * make cors work with app.tea.xyz/v1
  */
 import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
 import type { GUIPackage, Session, Packages, AutoUpdateStatus } from "./types";
 import { PackageStates } from "./types";
 import { loremIpsum } from "lorem-ipsum";
 import _ from "lodash";
-
-// import { getSession } from '$libs/stores/auth';
-import * as v1Client from "$libs/v1-client";
 
 const packages: Package[] = [
   {

@@ -182,10 +182,10 @@ tea gh release create "v$V"
 
 | Project                           |  Version  |
 |-----------------------------------|-----------|
-| nodejs.org                        | =18.15.0  |
-| pnpm.io                           | =7.18.2   |
-| xcfile.dev                        | >=0.0.110 |
-| python.org                        | ^3.10     |
+| nodejs.org                        | =18.16.0  |
+| pnpm.io                           | =7.33.1   |
+| xcfile.dev                        | >=0.4.1 |
+| python.org                        | ^3.11     |
 
 [`tea/cli`]: https://github.com/teaxyz/cli
 [`xc`]: https://xcfile.dev
