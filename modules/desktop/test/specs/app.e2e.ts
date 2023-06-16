@@ -39,7 +39,7 @@ describe("basic smoke test", () => {
     await expect(await screen.findByRole("button", { name: "OPEN IN TERMINAL" })).toExist();
   });
 
-  it.skip("search and install create-dmg", async () => {
+  it("search and install create-dmg", async () => {
     const { searchTerm } = utils!;
     await searchTerm("create-dmg");
 
