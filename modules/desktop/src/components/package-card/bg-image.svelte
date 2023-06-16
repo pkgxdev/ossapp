@@ -17,12 +17,13 @@
   let lastProcessedPkg: GUIPackage | null = null;
 
   const loadImage = async (url: string): Promise<string> => {
-    console.log("**** LOADING IMAGE", url);
+    //console.log("**** LOADING IMAGE", url);
     if (url.startsWith("file://") && url.includes("cached_images")) {
       // We are purposely not awaiting this promise because it affects performance,
       // try to load the image optimistically and if it fails, this will cause a reload
-      console.log("**** LOADIN FROM CACHE");
-      checkFileExists(url).then((exists) => {
+      //console.log("**** LOADIN FROM CACHE");
+      const fileName = url.replace("file://", "");
+      checkFileExists(fileName).then((exists) => {
         if (!exists) {
           console.log("******* file doesn't exist, recaching");
           recachePkg();
@@ -57,7 +58,7 @@
   };
 
   const getCache = async () => {
-    console.log("**** GETTING CACHE", pkg);
+    //console.log("**** GETTING CACHE", pkg);
     if (pkg.cached_image_url) {
       loadImage(pkg.cached_image_url).catch(() => {
         if (pkg.thumb_image_url) {
@@ -72,8 +73,8 @@
   };
 
   $: {
-    console.log("***** BG IMAGE")
     if (pkg && pkg?.slug !== lastProcessedPkg?.slug) {
+      console.log("***** BG IMAGE")
       loaded = false;
       loadedImg = "";
       lastProcessedPkg = pkg;
