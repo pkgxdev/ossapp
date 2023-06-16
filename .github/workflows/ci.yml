@@ -105,6 +105,8 @@ jobs:
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
           MAC_BUILD_TARGET: "dir"
+      - name: setup dev
+        run: touch /Users/runner/.tea/tea.xyz/gui/dev
       - name: e2e test
         run: tea -E xc e2e
 
