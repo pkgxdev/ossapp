@@ -18,7 +18,7 @@
 
         if (session && session.device_id) {
           const baseUrl = await getBaseURL();
-          shellOpenExternal(`${baseUrl}/auth/user?device_id=${session.device_id}`);
+          shellOpenExternal(`${baseUrl}/v1/auth/user?device_id=${session.device_id}`);
           pollDeviceSession();
         } else {
           throw new Error("possible no internet connection");
