@@ -29,7 +29,6 @@ export interface Package {
   license?: string;
   size_bytes?: number;
   documentation_url?: string;
-  github?: string; // TODO: remove this eventually
   github_url?: string;
   contributors?: Contributor[];
   readme?: {
@@ -69,7 +68,7 @@ export type Bottle = {
   arch: string;
   version: string;
   bytes: number;
-  last_modified_at?: Date | string;
+  updated_at?: Date | string;
 };
 
 export type Tab = {
