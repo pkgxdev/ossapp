@@ -168,13 +168,13 @@
             </ToolTip>
           </div>
         {/if}
-        {#if pkg.github}
+        {#if pkg.github_url}
           <button
             class="group flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-sm border border-gray hover:bg-[#e1e1e1]"
             on:click={() => {
-              if (pkg.github) {
-                const slug = trimGithubSlug(pkg.github);
-                shellOpenExternal(`https://github.com/${slug}`);
+              if (pkg.github_url) {
+                const slug = trimGithubSlug(pkg.github_url);
+                shellOpenExternal(pkg.github_url);
               }
             }}
           >

@@ -36,9 +36,9 @@
 <section class="bg-black pt-2">
   <h1 class="text-primary">{$t("common.metadata").toLowerCase()}</h1>
   <ul class="mb-10 flex flex-col gap-2">
-    {#if pkg?.bottles}
+    {#if pkg?.bottles?.length}
       <li>
-        <span>updated {dayjs().to(dayjs(pkg?.bottles[0].last_modified_at))}</span>
+        <span>updated {dayjs().to(dayjs(pkg?.bottles[0].updated_at))}</span>
       </li>
     {/if}
     {#if pkg?.license}
@@ -46,19 +46,21 @@
         <span>{pkg.license}</span>
       </li>
     {/if}
-    {#if pkg?.bottles}
+    {#if pkg?.bottles?.length}
       <li>
         <span>{computeFileSize(pkg?.bottles[0].bytes)}</span>
       </li>
     {/if}
   </ul>
-  <h1 class="text-primary">{$t("common.homepage").toLowerCase()}</h1>
-  <ul class="mb-10 flex flex-col gap-2">
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <li on:click={() => shellOpenExternal(pkg.homepage)}>
-      <span class="cursor-pointer hover:text-primary">{pkg.homepage}</span>
-    </li>
-  </ul>
+  {#if pkg.homepage}
+    <h1 class="text-primary">{$t("common.homepage").toLowerCase()}</h1>
+    <ul class="mb-10 flex flex-col gap-2">
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <li on:click={() => shellOpenExternal(pkg.homepage)}>
+        <span class="cursor-pointer hover:text-primary">{pkg.homepage}</span>
+      </li>
+    </ul>
+  {/if}
   {#if pkg.documentation_url}
     <h1 class="text-primary">{$t("common.documentation").toLowerCase()}</h1>
     <ul class="mb-10 flex flex-col gap-2">
@@ -68,12 +70,12 @@
       </li>
     </ul>
   {/if}
-  {#if pkg.github}
+  {#if pkg.github_url}
     <h1 class="text-primary">{$t("common.github-repository").toLowerCase()}</h1>
     <ul class="mb-10 flex flex-col gap-2">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <li on:click={() => shellOpenExternal(`https://github.com/${pkg.github}`)}>
-        <span class="cursor-pointer hover:text-primary">{pkg.github}</span>
+      <li on:click={() => shellOpenExternal(`https://github.com/${pkg.github_url}`)}>
+        <span class="cursor-pointer hover:text-primary">{pkg.github_url}</span>
       </li>
     </ul>
   {/if}
