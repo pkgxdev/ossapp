@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { GUIPackage } from "$libs/types";
-  import { onMount } from "svelte";
   import { packagesStore } from "$libs/stores";
 
   let clazz = "";
@@ -15,8 +14,8 @@
   let loaded = false;
   let lastProcessedPkg: GUIPackage | null = null;
 
-  const loadImage = async (url: string): Promise<string> => {
-    if (url.includes("cached_images")) {
+  const loadImage = async (url: string, force = false): Promise<string> => {
+    if (url.includes("cached_images") || force) {
       loadedImg = url;
       loaded = true;
       return url;
@@ -38,21 +37,12 @@
     });
   };
 
-  const recachePkg = async () => {
-    const url = await packagesStore.cachePkgImage(pkg);
-    loadImage(url);
-  };
-
   const getCache = async () => {
-    if (pkg.cached_image_url) {
-      loadImage(pkg.cached_image_url).catch(() => {
-        if (pkg.thumb_image_url) {
-          loadImage(pkg.thumb_image_url);
-          recachePkg();
-        }
+    if (pkg.image_512_url) {
+      loadImage(pkg.image_512_url, true).finally(async () => {
+        const nextImage = await packagesStore.cachePkgImage(pkg);
+        loadImage(nextImage, true);
       });
-    } else if (pkg.thumb_image_url) {
-      recachePkg();
     }
   };
 
@@ -69,7 +59,7 @@
 <section class="overflow-hidden bg-black {clazz} {layout}">
   <i
     class="logo icon-tea-logo-iconasset-1 text-3xl text-gray {layout}"
-    class:animate-pulse={!pkg.thumb_image_url}
+    class:animate-pulse={!pkg.image_added_at}
   />
   <div
     class="opacity-0 transition-all duration-500 {layout}"
