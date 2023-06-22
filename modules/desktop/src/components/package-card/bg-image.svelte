@@ -14,7 +14,7 @@
   let loaded = false;
   let lastProcessedPkg: GUIPackage | null = null;
 
-  const loadImage = async (url: string, force: boolean = false): Promise<string> => {
+  const loadImage = async (url: string, force = false): Promise<string> => {
     if (url.includes("cached_images") || force) {
       loadedImg = url;
       loaded = true;
