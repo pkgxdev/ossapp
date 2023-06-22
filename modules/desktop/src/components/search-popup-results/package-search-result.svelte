@@ -24,9 +24,7 @@
   <ImgLoader
     on:click={() => gotoPackagePage()}
     class="pkg-image h-16 w-16 object-cover"
-    src={!pkg.thumb_image_url.includes("https://tea.xyz")
-      ? "/images/default-thumb.jpg"
-      : pkg.thumb_image_url}
+    src={pkg.image_128_url || "/images/default-thumb.jpg"}
     alt={pkg.name}
   />
   <header data-testid="card-result-{pkg.slug}" class="flex-grow" on:click={() => gotoPackagePage()}>
