@@ -15,8 +15,6 @@ export interface Package {
   homepage: string;
   last_modified: Date | string;
   created: Date | string;
-  thumb_image_url: string;
-  thumb_image_name: string;
   desc: string;
   dl_count: number;
   installs: number;
@@ -37,6 +35,7 @@ export interface Package {
   };
   manual_sorting: number;
   card_layout: "bottom" | "right" | "left";
+  image_added_at: Date | null;
 }
 
 export type AirtablePost = {

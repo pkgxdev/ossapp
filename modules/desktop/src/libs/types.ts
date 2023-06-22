@@ -36,7 +36,8 @@ export type GUIPackage = Package & {
   install_progress_percentage?: number;
   isUninstalling?: boolean;
   cached_image_url?: string;
-
+  image_512_url?: string;
+  image_128_url?: string;
   displayState?: PackageDisplayState | null;
 };
 

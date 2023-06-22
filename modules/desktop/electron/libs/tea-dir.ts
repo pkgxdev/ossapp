@@ -171,10 +171,12 @@ async function downloadImage(url: string, imagePath: string): Promise<void> {
 
 export async function cacheImage(url: string): Promise<string> {
   const imageFolder = path.join(getGuiPath(), "cached_images");
-  const imageName = path.basename(url);
-  const imagePath = path.join(imageFolder, imageName);
-
-  await mkdirp(imageFolder);
+  const pkgFilePath = url.split("gui.tea.xyz")[1];
+  const imagePath = path.join(imageFolder, pkgFilePath);
+  const fileName = path.basename(imagePath);
+  const folderPath = imagePath.replace(fileName, "");
+  log.info("creating folder:", folderPath);
+  await mkdirp(folderPath);
 
   if (!fs.existsSync(imagePath)) {
     try {
