@@ -40,7 +40,7 @@ export async function loadPackageCache(): Promise<Packages> {
         // possible user deletes cache files
         delete pkgs.packages[key].cached_image_url;
         if (rest.image_added_at) {
-          const prefix = `https://gui.tea.xyz/${dev ? "dev" : "prod"}/${rest.full_name}/`;
+          const prefix = `https://gui.tea.xyz/${dev ? "dev" : "prod"}/${rest.full_name}`;
           pkgs.packages[key].image_128_url = `${prefix}/128x128.webp`;
           pkgs.packages[key].image_512_url = `${prefix}/512x512.webp`;
         }
