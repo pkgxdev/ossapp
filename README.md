@@ -31,8 +31,12 @@ move it to an issue. Bug fixes straight to pull request or issue please!
 ## Anatomy
 
 tea/gui is a Svelte Electon app. The electron “backend” can be found in
-`modules/desktop`, the Svelte “frontend” in `modules/ui`. The following
-technologies are used:
+`modules/desktop/electron`, the Svelte “frontend” is in both `modules/ui` and `modules/desktop/src`.
+
+Generic UI components designed for use with Storybook are located in `modules/ui` and more complex
+components with integrated business logic are in `modules/desktop/src`.
+
+The following technologies are used:
 
 - [svelte](https://svelte.dev/)
 - [tailwind](https://tailwindcss.com/)
