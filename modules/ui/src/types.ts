@@ -15,7 +15,6 @@ export interface Package {
   homepage: string;
   last_modified: Date | string;
   created: Date | string;
-  desc: string;
   dl_count: number;
   installs: number;
   reviews?: Review[];
@@ -36,6 +35,9 @@ export interface Package {
   manual_sorting: number;
   card_layout: "bottom" | "right" | "left";
   image_added_at: Date | null;
+  keywords: string[];
+  description: string;
+  short_description: string;
 }
 
 export type AirtablePost = {

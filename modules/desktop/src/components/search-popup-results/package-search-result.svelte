@@ -29,7 +29,7 @@
   />
   <header data-testid="card-result-{pkg.slug}" class="flex-grow" on:click={() => gotoPackagePage()}>
     <h1>{pkg.full_name}</h1>
-    <p class="text-xs line-clamp-2">{pkg.desc}</p>
+    <p class="text-xs line-clamp-2">{pkg.short_description}</p>
   </header>
   <aside>
     <div>
