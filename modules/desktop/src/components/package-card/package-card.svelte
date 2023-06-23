@@ -70,7 +70,7 @@
                 {/if}
               </div>
               <p class="line-clamp-[8] h-[160px] text-[14px] font-thin lowercase leading-[20px]">
-                {pkg.desc ?? ""}
+                {pkg.short_description ?? ""}
               </p>
             {/if}
           </article>
