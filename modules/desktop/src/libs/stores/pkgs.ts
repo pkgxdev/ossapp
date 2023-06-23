@@ -15,7 +15,8 @@ import {
   listenToChannel,
   getInstalledVersionsForPackage,
   monitorTeaDir,
-  stopMonitoringTeaDir
+  stopMonitoringTeaDir,
+  isDev
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
@@ -37,6 +38,8 @@ const packageRefreshInterval = 1000 * 60 * 60; // 1 hour
 let initialized = false;
 let isDestroyed = false;
 let refreshTimeoutId: ReturnType<typeof setTimeout> | null = null;
+
+const dev = isDev();
 
 const packageMap = writable<Packages>({ version: "0", packages: {} });
 const packageList = derived(packageMap, ($packages) =>
@@ -162,12 +165,22 @@ const refreshPackages = async () => {
   if (isDestroyed) return;
 
   log.info("packages store: refreshing...");
-
+  const isDev = await dev;
   const pkgs = await getDistPackages();
-  const guiPkgs: GUIPackage[] = pkgs.map((p) => ({
-    ...p,
-    state: PackageStates.AVAILABLE
-  }));
+
+  const guiPkgs: GUIPackage[] = pkgs.map((p) => {
+    const prefix = `https://gui.tea.xyz/${isDev ? "dev" : "prod"}/${p.full_name}`;
+    return {
+      ...p,
+      state: PackageStates.AVAILABLE,
+      ...(p.image_added_at
+        ? {
+            image_512_url: `${prefix}/512x512.webp`,
+            image_128_url: `${prefix}/128x128.webp`
+          }
+        : {})
+    };
+  });
 
   if (!initialized) {
     // set packages data so that i can render something in the UI already
@@ -291,14 +304,23 @@ packageMap.subscribe(async (pkgs) => {
 const cachePkgImage = async (pkg: GUIPackage): Promise<string> => {
   let cacheFileURL = "";
   updatePackage(pkg.full_name, { cached_image_url: "" });
-  if (pkg.thumb_image_url && !pkg.thumb_image_url.includes("package-thumb-nolabel4.jpg")) {
-    const result = await cacheImageURL(pkg.thumb_image_url);
+  if (pkg.image_added_at && pkg.image_512_url) {
+    const result = await cacheImageURL(pkg.image_512_url);
     if (result) {
       cacheFileURL = result;
       updatePackage(pkg.full_name, { cached_image_url: cacheFileURL });
     }
   }
   return cacheFileURL;
+};
+
+export const getPackageImageURL = async (
+  pkg: GUIPackage,
+  size: 512 | 1024 | 128
+): Promise<string> => {
+  if (!pkg.image_added_at) return "";
+  const isDev = await dev;
+  return `https://gui.tea.xyz/${isDev ? "dev" : "prod"}/${pkg.full_name}/${size}x${size}.webp`;
 };
 
 listenToChannel("install-progress", ({ full_name, progress }: any) => {
@@ -387,5 +409,6 @@ export default {
   destroy,
   cachePkgImage,
   resetPackageDisplayState,
-  resetAllPackagesUpdatedState
+  resetAllPackagesUpdatedState,
+  getPackageImageURL
 };

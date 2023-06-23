@@ -163,18 +163,24 @@ async function downloadImage(url: string, imagePath: string): Promise<void> {
   const response = await fetch(url);
   await new Promise<void>((resolve, reject) => {
     const fileStream = fs.createWriteStream(imagePath);
-    response.body.pipe(fileStream);
-    fileStream.on("finish", () => resolve());
-    fileStream.on("error", (error) => reject(error));
+    if (response.status == 200) {
+      response.body.pipe(fileStream);
+      fileStream.on("finish", () => resolve());
+      fileStream.on("error", (error) => reject(error));
+    } else {
+      reject(new Error(`Failed to download image: ${url}`));
+    }
   });
 }
 
 export async function cacheImage(url: string): Promise<string> {
   const imageFolder = path.join(getGuiPath(), "cached_images");
-  const imageName = path.basename(url);
-  const imagePath = path.join(imageFolder, imageName);
-
-  await mkdirp(imageFolder);
+  const pkgFilePath = url.split("gui.tea.xyz")[1];
+  const imagePath = path.join(imageFolder, pkgFilePath);
+  const fileName = path.basename(imagePath);
+  const folderPath = imagePath.replace(fileName, "");
+  log.info("creating folder:", folderPath);
+  await mkdirp(folderPath);
 
   if (!fs.existsSync(imagePath)) {
     try {
