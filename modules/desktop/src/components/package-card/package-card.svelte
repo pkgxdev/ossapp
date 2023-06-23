@@ -57,7 +57,9 @@
                   <i class="icon-check-circle-o mb-1 ml-2 flex text-2xl text-[#00ffd0]" />
                 {/if}
               </div>
-              <p class="h-[32px] text-xs font-thin lowercase line-clamp-2">{pkg.desc ?? ""}</p>
+              <p class="h-[32px] text-xs font-thin lowercase line-clamp-2">
+                {pkg.short_description ?? ""}
+              </p>
             {:else}
               <div class="mb-4 flex items-center">
                 <h3 class="text-bold font-mona text-3xl font-bold text-white line-clamp-1">
