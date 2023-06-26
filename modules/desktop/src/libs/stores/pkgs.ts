@@ -243,8 +243,8 @@ const installPkg = async (pkg: GUIPackage, version?: string) => {
     await installPackage(pkg, versionToInstall);
     trackInstall(pkg.full_name);
 
-    // If the package was AVAILABLE previously then it was just installed, otherwise it was updated
-    const state = pkg.state === PackageStates.AVAILABLE ? "INSTALLED" : "UPDATED";
+    // If the package was NEEDS_UPDATE previously then it was updated, otherwise it was just installed
+    const state = pkg.state === PackageStates.NEEDS_UPDATE ? "UPDATED" : "INSTALLED";
     updatePackage(pkg.full_name, { displayState: { state, version: versionToInstall } });
 
     await refreshSinglePackage(pkg.full_name);
@@ -275,6 +275,7 @@ const uninstallPkg = async (pkg: GUIPackage) => {
       await deletePkg(pkg, v);
     }
 
+    resetPackageDisplayState(pkg);
     await refreshSinglePackage(pkg.full_name);
   } catch (error) {
     log.error(error);
