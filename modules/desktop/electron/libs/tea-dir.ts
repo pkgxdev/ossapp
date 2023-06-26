@@ -153,9 +153,13 @@ export async function deletePackageFolder(fullName, version) {
   try {
     const foldPath = path.join(getTeaPath(), fullName, `v${version}`);
     log.info("rm:", foldPath);
-    await fs.rmSync(foldPath, { recursive: true });
+    fs.rmSync(foldPath, { recursive: true });
   } catch (error) {
-    log.error(error);
+    if (error.code === "ENOENT") {
+      log.info(`Attempted to delete non-existent folder: ${fullName} v${version}`);
+    } else {
+      log.error(error);
+    }
   }
 }
 
@@ -182,7 +186,17 @@ export async function cacheImage(url: string): Promise<string> {
   log.info("creating folder:", folderPath);
   await mkdirp(folderPath);
 
-  if (!fs.existsSync(imagePath)) {
+  let expired = false;
+  const exists = await fs.existsSync(imagePath);
+  if (exists) {
+    const stats = await fs.statSync(imagePath);
+    const now = new Date();
+    const diff = now.getTime() - stats.birthtime.getTime();
+    const hours = Math.floor(diff / 1000 / 60 / 60);
+    expired = hours > 24;
+  }
+
+  if (!exists || expired) {
     try {
       await downloadImage(url, imagePath);
       log.info("Image downloaded and cached:", imagePath);

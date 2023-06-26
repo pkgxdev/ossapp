@@ -39,9 +39,10 @@
 
   const getCache = async () => {
     if (pkg.image_512_url) {
-      loadImage(pkg.image_512_url, true).finally(async () => {
+      const ts = +new Date();
+      loadImage(pkg.image_512_url + `?ts=${ts}`, true).finally(async () => {
         const nextImage = await packagesStore.cachePkgImage(pkg);
-        loadImage(nextImage, true);
+        loadImage(nextImage + `?ts=${ts}`, true);
       });
     }
   };
