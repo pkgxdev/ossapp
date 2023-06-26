@@ -153,9 +153,13 @@ export async function deletePackageFolder(fullName, version) {
   try {
     const foldPath = path.join(getTeaPath(), fullName, `v${version}`);
     log.info("rm:", foldPath);
-    await fs.rmSync(foldPath, { recursive: true });
+    fs.rmSync(foldPath, { recursive: true });
   } catch (error) {
-    log.error(error);
+    if (error.code === "ENOENT") {
+      log.info(`Attempted to delete non-existent folder: ${fullName} v${version}`);
+    } else {
+      log.error(error);
+    }
   }
 }
 
