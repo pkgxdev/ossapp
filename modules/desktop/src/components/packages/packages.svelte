@@ -13,6 +13,7 @@
   import { packagesStore, scrollStore } from "$libs/stores";
   import { afterUpdate, beforeUpdate } from "svelte";
   import { packageWasUpdated } from "$libs/packages/pkg-utils";
+  import SideMenu from "$components/side-menu/side-menu.svelte";
 
   const { packageList: allPackages } = packagesStore;
   export let packageFilter: SideMenuOptions = SideMenuOptions.all;
@@ -50,7 +51,8 @@
     [SideMenuOptions.new_packages]: (pkg: GUIPackage) => {
       return moment(pkg.created).isAfter(moment().subtract(30, "days"));
     },
-    [SideMenuOptions.made_by_tea]: (pkg: GUIPackage) => pkg.full_name.includes("tea.xyz")
+    [SideMenuOptions.made_by_tea]: (pkg: GUIPackage) => pkg.full_name.includes("tea.xyz"),
+    [SideMenuOptions.local]: (pkg: GUIPackage) => !!pkg.is_local
   };
 
   const onScroll = (e: Event) => {

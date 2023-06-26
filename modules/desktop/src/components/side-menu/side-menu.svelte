@@ -10,6 +10,7 @@
   export let activeOption: SideMenuOptions;
 
   $: needsUpdateCount = $packageList.filter((p) => p.state === PackageStates.NEEDS_UPDATE).length;
+  $: hasLocalPackages = $packageList.some((p) => p.is_local);
 </script>
 
 <aside id="side-menu" class="border border-b-0 border-l-0 border-t-0 border-gray p-2">
@@ -73,6 +74,14 @@
       active={activeOption === SideMenuOptions.made_by_tea}
       on:click={() => goto(`/?tab=${SideMenuOptions.made_by_tea}`)}
     />
+    {#if hasLocalPackages}
+      <MenuButton
+        label={$t("tags.local_packages").toLowerCase()}
+        icon="pencil"
+        active={activeOption === SideMenuOptions.local}
+        on:click={() => goto(`/?tab=${SideMenuOptions.local}`)}
+      />
+    {/if}
   </ul>
 </aside>
 

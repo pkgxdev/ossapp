@@ -9,14 +9,15 @@
 
   import type { GUIPackage } from "$libs/types";
   import { packagesStore } from "$libs/stores";
-  import { openPackageEntrypointInTerminal, shellOpenExternal } from "@native";
+  import { shellOpenExternal } from "@native";
   import { findAvailableVersions, findRecentInstalledVersion } from "$libs/packages/pkg-utils";
   import { trimGithubSlug } from "$libs/github";
   import PackageImage from "../package-card/bg-image.svelte";
   import PackageVersionSelector from "$components/package-install-button/package-version-selector.svelte";
-  import { fixPackageName } from "$libs/packages/pkg-utils";
+  import { getPackageName } from "$libs/packages/pkg-utils";
   import { semverCompare } from "$libs/packages/pkg-utils";
   import InstallResultOverlay from "$components/install-result-overlay/install-result-overlay.svelte";
+  import OpenPackageButton from "$components/buttons/open-package-button.svelte";
 
   export let pkg: GUIPackage;
   let installing = false;
@@ -94,7 +95,7 @@
     <article class="w-2/3 p-4 pt-8">
       <div class="align-center flex items-center gap-2">
         <h3 data-testid="package-banner-header" class="text-3xl text-primary">
-          {fixPackageName(pkg.name)}
+          {getPackageName(pkg)}
         </h3>
         <ButtonIcon
           icon="pencil"
@@ -183,20 +184,7 @@
         {/if}
         {#if pkg.installed_versions?.length}
           <div class="min-w-[160px]">
-            <Button
-              class="h-10"
-              type="plain"
-              color="black"
-              onClick={() => {
-                openPackageEntrypointInTerminal(pkg.full_name);
-              }}
-            >
-              {#if pkg.full_name == "github.com/AUTOMATIC1111/stable-diffusion-webui"}
-                OPEN
-              {:else}
-                OPEN IN TERMINAL
-              {/if}
-            </Button>
+            <OpenPackageButton {pkg} buttonSize="large" />
           </div>
         {/if}
       </menu>

@@ -423,3 +423,11 @@ export const stopMonitoringTeaDir = async () => {
 };
 
 export const getHeaders = async (path: string) => ({});
+
+export const getPantryDetails = async (fullName: string) => {
+  return {
+    display_name: "display-name",
+    entrypoint: "entrypoint.sh",
+    provides: ["bin/1", "bin/2"]
+  };
+};

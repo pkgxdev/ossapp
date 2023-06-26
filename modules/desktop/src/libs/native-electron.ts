@@ -167,7 +167,7 @@ export const updateSession = async (session: Partial<Session>) => {
   }
 };
 
-export const openPackageEntrypointInTerminal = (pkg: string) => {
+export const openPackageEntrypointInTerminal = (pkg: GUIPackage) => {
   try {
     ipcRenderer.invoke("open-terminal", { pkg });
   } catch (error) {
@@ -305,4 +305,12 @@ export const stopMonitoringTeaDir = async () => {
 export const getHeaders = async (path: string) => {
   const headers = await ipcRenderer.invoke("get-api-headers", path);
   return (headers || {}) as { [key: string]: string };
+};
+
+export const getPantryDetails = async (fullName: string) => {
+  const result = await ipcRenderer.invoke("get-pantry-details", fullName);
+  if (result instanceof Error) {
+    throw result;
+  }
+  return result;
 };

@@ -48,8 +48,11 @@ async function findInstalledVersions(pkgsPath: string): Promise<InstalledPackage
   log.info("recursively reading:", pkgsPath);
   const folders = await deepReadDir({
     dir: pkgsPath,
-    continueDeeper: (name: string) => !semver.isValid(name) && name !== ".tea",
-    filter: (name: string) => semver.isValid(name) && name !== ".tea"
+    continueDeeper: (name: string, path: string) => {
+      return !semver.isValid(name) && !name.startsWith(".") && !path.includes("tea.xyz/var");
+    },
+    filter: (name: string) => semver.isValid(name) && name !== ".tea",
+    maxDepth: 5
   });
 
   const bottles = folders
@@ -88,23 +91,35 @@ const parseVersionFromPath = (versionPath: string): ParsedVersion | null => {
   }
 };
 
-export const deepReadDir = async ({
-  dir,
-  continueDeeper,
-  filter
-}: {
-  dir: string;
-  continueDeeper?: (name: string) => boolean;
-  filter?: (name: string) => boolean;
-}) => {
+export const deepReadDir = async (
+  {
+    dir,
+    continueDeeper,
+    filter,
+    maxDepth
+  }: {
+    dir: string;
+    continueDeeper?: (name: string, path: string) => boolean;
+    filter?: (name: string) => boolean;
+    maxDepth: number;
+  },
+  depth = 1
+) => {
+  if (depth > maxDepth) {
+    return [];
+  }
+
   const arrayOfFiles: string[] = [];
   try {
     const files = fs.readdirSync(dir, { withFileTypes: true });
     for (const f of files) {
       const nextPath = path.join(dir, f.name);
-      const deeper = continueDeeper ? continueDeeper(f.name) : true;
+      const deeper = f.isDirectory() && continueDeeper ? continueDeeper(f.name, nextPath) : true;
       if (f.isDirectory() && deeper) {
-        const nextFiles = await deepReadDir({ dir: nextPath, continueDeeper, filter });
+        const nextFiles = await deepReadDir(
+          { dir: nextPath, continueDeeper, filter, maxDepth },
+          depth + 1
+        );
         arrayOfFiles.push(...nextFiles);
       } else if (!f.isSymbolicLink() && filter && filter(f.name)) {
         arrayOfFiles.push(nextPath);
@@ -226,7 +241,7 @@ export async function startMonitoringTeaDir(mainWindowNotifier: MainWindowNotifi
     persistent: true,
     followSymlinks: false,
     depth: 5,
-    ignored: ["**/var/pantry/projects/**", "**/local/tmp/**", "**/share/**"]
+    ignored: ["**/var/pantry/projects/**", "**/local/tmp/**", "**/.local/tmp/**", "**/share/**"]
   });
 
   watcher

@@ -14,7 +14,11 @@
       "cta-UPDATING": "AKTUALISIEREN LÄUFT",
       "cta-UPDATED": "AKTUALISIERT",
       "cta-PRUNE": "REDUZIEREN",
-      "cta-PRUNING": "REDUZIEREN LÄUFT"
+      "cta-PRUNING": "REDUZIEREN LÄUFT",
+      "open": "Öffnen",
+      "open-in-terminal": "Im Terminal öffnen",
+      "local-package": "Lokales Paket",
+      "not-in-pantry": "Nicht in der Speisekammer"
     },
     "footer": {
       "quick-links-title": "Schnellzugriff",
@@ -64,7 +68,8 @@
       "featured": "Empfohlen",
       "essentials": "Grundlagen",
       "starstruck": "Starstruck Heavyweights",
-      "made_by_tea": "Hergestellt von tea"
+      "made_by_tea": "Hergestellt von tea",
+      "local_packages": "Lokale Pakete"
     },
     "tags": {
       "discover": "entdecken",
@@ -77,7 +82,8 @@
       "featured": "Empfohlen",
       "essentials": "Grundlagen",
       "starstruck": "Starstruck",
-      "made_by_tea": "Hergestellt von tea"
+      "made_by_tea": "Hergestellt von tea",
+      "local_packages": "Lokale Pakete"
     }
   }
 }

@@ -34,6 +34,12 @@ export async function loadPackageCache(): Promise<Packages> {
     if (pkgs?.packages) {
       // Remove any temporary properties that may have been added to the package (like installation progress)
       for (const [key, value] of Object.entries(pkgs.packages)) {
+        // Don't load local packages from the cache
+        if (value.is_local) {
+          delete pkgs.packages[key];
+          continue;
+        }
+
         const { install_progress_percentage, isUninstalling, synced, displayState, ...rest } =
           value;
         pkgs.packages[key] = rest as GUIPackage;

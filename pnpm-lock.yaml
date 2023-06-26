@@ -29,7 +29,7 @@ importers:
       '@sveltejs/adapter-static': ^1.0.0-next.48
       '@sveltejs/kit': ^1.15.9
       '@tea/ui': workspace:*
-      '@teaxyz/lib': 0.6.0
+      '@teaxyz/lib': 0.6.2
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/svelte': ^3.2.2
       '@testing-library/webdriverio': ^3.2.1
@@ -116,7 +116,7 @@ importers:
       '@sentry/electron': 4.5.0
       '@sentry/svelte': 7.51.2_svelte@3.59.1
       '@sentry/vite-plugin': 0.7.2
-      '@teaxyz/lib': 0.6.0
+      '@teaxyz/lib': 0.6.2
       '@types/electron': 1.6.10
       '@types/mousetrap': 1.6.11
       '@vitest/coverage-c8': 0.27.3_jsdom@21.1.2
@@ -3640,15 +3640,15 @@ packages:
       tailwindcss: 3.3.2
     dev: false
 
-  /@teaxyz/lib/0.6.0:
-    resolution: {integrity: sha512-O9lYU/J1h+sbJApGcBUq4RlYymhfwB85k57hyaBhHq87DgXcR1xjhrKk0pfvn52sZT9jUoXH9UhPd1enWadXRQ==}
+  /@teaxyz/lib/0.6.2:
+    resolution: {integrity: sha512-5oeBydpbDBx1f13uHnxlilWPDog8hGC9xSIxyINvgKeEsCa6dAh6tzzuecRMRdZ7rdRFUIF8aruwpbcd+Him9A==}
     dependencies:
       '@deno/shim-crypto': 0.3.1
       '@deno/shim-deno': 0.16.1
-      is-what: 4.1.11
-      koffi: 2.3.20
+      is-what: 4.1.15
+      koffi: 2.4.2
       outdent: 0.8.0
-      undici: 5.22.0
+      undici: 5.22.1
     dev: false
 
   /@testing-library/dom/8.20.0:
@@ -8413,11 +8413,6 @@ packages:
       get-intrinsic: 1.2.0
     dev: true
 
-  /is-what/4.1.11:
-    resolution: {integrity: sha512-gr9+qDrJvdwT4+N2TAACsZQIB4Ow9j2eefqlh3m9JUV41M1LoKhcE+/j+IVni/r6U8Jnc1PwhjdjVJr+Xmtb0A==}
-    engines: {node: '>=12.13'}
-    dev: false
-
   /is-what/4.1.15:
     resolution: {integrity: sha512-uKua1wfy3Yt+YqsD6mTUEa2zSi3G1oPlqTflgaPJ7z63vUGN5pxFpnQfeSLMFnJDEsdvOtkp1rUWkYjB4YfhgA==}
     engines: {node: '>=12.13'}
@@ -8852,11 +8847,6 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
     dev: true
-
-  /koffi/2.3.20:
-    resolution: {integrity: sha512-y1W9JikdswM/CLmumtibnCknGJ6bmCNpWWD9G6WzP6Zj3lEY7d0J7jO82uMVoD1udz/2ZYUw2twhsGUGqeZH1g==}
-    requiresBuild: true
-    dev: false
 
   /koffi/2.4.2:
     resolution: {integrity: sha512-XDAev7zupyLwj9ze/4728T7NSHbnYXEptFrQuiEJS3ou8RJYp86HkXjqD9oNYoc4wWWAjeJtPJsRQfRVA/iqvg==}
@@ -12315,13 +12305,6 @@ packages:
 
   /underscore/1.13.6:
     resolution: {integrity: sha512-+A5Sja4HP1M08MaXya7p5LvjuM7K6q/2EaC0+iovj/wOcMsTzMvDFbasi/oSapiwOlt252IqsKqPjCl7huKS0A==}
-    dev: false
-
-  /undici/5.22.0:
-    resolution: {integrity: sha512-fR9RXCc+6Dxav4P9VV/sp5w3eFiSdOjJYsbtWfd4s5L5C4ogyuVpdKIVHeW0vV1MloM65/f7W45nR9ZxwVdyiA==}
-    engines: {node: '>=14.0'}
-    dependencies:
-      busboy: 1.6.0
     dev: false
 
   /undici/5.22.1:
