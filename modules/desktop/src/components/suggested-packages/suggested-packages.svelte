@@ -14,7 +14,7 @@
 
   onMount(async () => {
     if (!packages.length) {
-      const matches = await packagesStore.search(pkg.desc, 4);
+      const matches = await packagesStore.search(pkg.short_description, 4);
       packages = matches.filter((mp) => mp.full_name !== pkg.full_name).slice(0, 3);
     }
   });

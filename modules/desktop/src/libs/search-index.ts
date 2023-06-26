@@ -6,8 +6,30 @@ let packagesIndex: Fuse<GUIPackage>;
 
 export function indexPackages(packages: GUIPackage[]) {
   try {
+    console.log("gui packages", packages);
     packagesIndex = new Fuse(packages, {
-      keys: ["name", "full_name", "desc", "categories"],
+      keys: [
+        {
+          name: "name",
+          weight: 0.5
+        },
+        {
+          name: "full_name",
+          weight: 0.5
+        },
+        {
+          name: "description",
+          weight: 0.3
+        },
+        {
+          name: "categories",
+          weight: 0.2
+        },
+        {
+          name: "keywords",
+          weight: 0.5
+        }
+      ],
       minMatchCharLength: 3,
       threshold: 0.3
     });

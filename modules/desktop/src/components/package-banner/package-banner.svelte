@@ -112,7 +112,7 @@
       {#if pkg.maintainer}
         <span>{pkg.maintainer}</span>
       {/if}
-      <p class="mt-4 text-sm">{pkg.desc}</p>
+      <p class="mt-4 text-sm">{pkg.description}</p>
       <menu class="mt-4 flex h-10 gap-4 text-xs">
         <div class="w-fit min-w-[160px]">
           <PackageVersionSelector
