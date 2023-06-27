@@ -288,6 +288,7 @@ jobs:
         --background "./modules/desktop/electron/bg.png" \
         --hide-extension "tea.app" \
         --app-drop-link 528 219 \
+        --sandbox-safe \
         "$filename" \
         "$installer_folder"
       env:
@@ -305,6 +306,7 @@ jobs:
         --background "./modules/desktop/electron/bg.png" \
         --hide-extension "tea.app" \
         --app-drop-link 528 219 \
+        --sandbox-safe \
         "$filename" \
         "$installer_folder"
       env:
