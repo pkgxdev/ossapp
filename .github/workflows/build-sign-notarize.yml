@@ -230,8 +230,10 @@ jobs:
         security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
         security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
         security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-        /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$ARM64_ZIP -v
-        /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$X86_ZIP -v
+
+        # skip: codesigning might need to move this inside the electron-builder codesigning step
+        # /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$ARM64_ZIP -v
+        # /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$X86_ZIP -v
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
     # sometimes this might fail because exact the same zip has been uploaded already
 
@@ -259,15 +261,16 @@ jobs:
         unzip dist/$ARM64_ZIP -d dist/mac-arm64
         unzip dist/$X86_ZIP -d dist/mac
 
-        echo "Doing staple"
-        xcrun stapler staple "dist/mac/tea.app"
-        xcrun stapler staple "dist/mac-arm64/tea.app"
+        # TODO: might need to move this to the electron-builder codesigning step from dmg is created
+        # echo "Doing staple"
+        # xcrun stapler staple "dist/mac/tea.app"
+        # xcrun stapler staple "dist/mac-arm64/tea.app"
 
-        echo "Rezip files"
-        rm dist/$ARM64_ZIP
-        rm dist/$X86_ZIP
-        tea zip -r dist/$ARM64_ZIP dist/mac-arm64/tea.app
-        tea zip -r dist/$X86_ZIP dist/mac/tea.app
+        # echo "Rezip files"
+        # rm dist/$ARM64_ZIP
+        # rm dist/$X86_ZIP
+        # tea zip -r dist/$ARM64_ZIP dist/mac-arm64/tea.app
+        # tea zip -r dist/$X86_ZIP dist/mac/tea.app
 
     # prepare for DMG creation
     - name: prepare installer folders
