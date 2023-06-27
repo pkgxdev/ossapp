@@ -23,138 +23,138 @@ on:
         description: 'The S3 build key includes the installer files: [zip, dmg, etc, yml] from notarization strategy done outside of electron'
         value: ${{ jobs.notarize-mac-installers.outputs.s3-installers-key }}
 jobs:
-  verify:
-    runs-on: ubuntu-latest
-    outputs:
-      is-updated: ${{ steps.check_version.outputs.updated }}
-    steps:
-      - uses: teaxyz/setup@v0
-        with:
-          version: 0.35.7
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 5
-      - name: Check if version in package.json was updated
-        id: check_version
-        run: |
-          # Get the current version from package.json
-          CURRENT_VERSION=$(jq -r .version modules/desktop/package.json)
+  # verify:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     is-updated: ${{ steps.check_version.outputs.updated }}
+  #   steps:
+  #     - uses: teaxyz/setup@v0
+  #       with:
+  #         version: 0.35.7
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 5
+  #     - name: Check if version in package.json was updated
+  #       id: check_version
+  #       run: |
+  #         # Get the current version from package.json
+  #         CURRENT_VERSION=$(jq -r .version modules/desktop/package.json)
 
-          # Get the list of changed files between HEAD and the previous commit
-          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+  #         # Get the list of changed files between HEAD and the previous commit
+  #         CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
 
-          # If package.json is in the list of changed files, check the old version
-          if echo "$CHANGED_FILES" | grep -q "desktop/package.json"; then
-            OLD_VERSION=$(git show "HEAD^:modules/desktop/package.json" | jq -r .version 2>/dev/null)
-          else
-            OLD_VERSION=$CURRENT_VERSION
-          fi
+  #         # If package.json is in the list of changed files, check the old version
+  #         if echo "$CHANGED_FILES" | grep -q "desktop/package.json"; then
+  #           OLD_VERSION=$(git show "HEAD^:modules/desktop/package.json" | jq -r .version 2>/dev/null)
+  #         else
+  #           OLD_VERSION=$CURRENT_VERSION
+  #         fi
 
-          if [[ "$OLD_VERSION" != "$CURRENT_VERSION" ]] && [[ "$CURRENT_VERSION" > "$OLD_VERSION" ]]; then
-            echo "updated=true" >> $GITHUB_OUTPUT
-          else
-            echo "updated=false" >> $GITHUB_OUTPUT
-          fi
-      - name: Check if PR is from fork
-        id: check-fork
-        run: |
-          echo "::set-output name=isFork::$(if [ \"${{ github.event.pull_request.head.repo.full_name }}\" != \"${{ github.repository }}\" ]; then echo true; else echo false; fi)"
-        shell: bash
+  #         if [[ "$OLD_VERSION" != "$CURRENT_VERSION" ]] && [[ "$CURRENT_VERSION" > "$OLD_VERSION" ]]; then
+  #           echo "updated=true" >> $GITHUB_OUTPUT
+  #         else
+  #           echo "updated=false" >> $GITHUB_OUTPUT
+  #         fi
+  #     - name: Check if PR is from fork
+  #       id: check-fork
+  #       run: |
+  #         echo "::set-output name=isFork::$(if [ \"${{ github.event.pull_request.head.repo.full_name }}\" != \"${{ github.repository }}\" ]; then echo true; else echo false; fi)"
+  #       shell: bash
 
-  build:
-    needs: verify
-    if: needs.verify.outputs.is-updated == 'true'
-    runs-on: macos-latest
-    outputs:
-      s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
-      build-version: ${{ steps.gui-version.outputs.version }}
-    steps:
-      - uses: teaxyz/setup@v0
-        with:
-          version: 0.35.7
-      - uses: actions/checkout@v3
+  # build:
+  #   needs: verify
+  #   if: needs.verify.outputs.is-updated == 'true'
+  #   runs-on: macos-latest
+  #   outputs:
+  #     s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
+  #     build-version: ${{ steps.gui-version.outputs.version }}
+  #   steps:
+  #     - uses: teaxyz/setup@v0
+  #       with:
+  #         version: 0.35.7
+  #     - uses: actions/checkout@v3
 
-      - name: cache node_modules build
-        # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
-        # but its ok to ignore, its still the fastest builder
-        # NOTE: enabling cache in the self hosted runner slows down the pipeline by 4m because post-cache builder error ^
-        if: startsWith(inputs.platform, 'linux') || matrix.platform.name == 'darwin+x86-64'
-        uses: actions/cache@v3
-        with:
-          key: ${{ runner.os }}-pnpm
-          path: |
-            ./pnpm
-            ./.pnpm-store
-            ./node_modules
-            ./modules/desktop/node_modules
-            ./modules/ui/node_modules
-      - name: cache electron build
-        uses: actions/cache@v3
-        with:
-          key: ${{ runner.os }}-electron
-          path: |
-            ./modules/desktop/.svelte-kit
-            ./modules/desktop/build
+  #     - name: cache node_modules build
+  #       # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
+  #       # but its ok to ignore, its still the fastest builder
+  #       # NOTE: enabling cache in the self hosted runner slows down the pipeline by 4m because post-cache builder error ^
+  #       if: startsWith(inputs.platform, 'linux') || matrix.platform.name == 'darwin+x86-64'
+  #       uses: actions/cache@v3
+  #       with:
+  #         key: ${{ runner.os }}-pnpm
+  #         path: |
+  #           ./pnpm
+  #           ./.pnpm-store
+  #           ./node_modules
+  #           ./modules/desktop/node_modules
+  #           ./modules/ui/node_modules
+  #     - name: cache electron build
+  #       uses: actions/cache@v3
+  #       with:
+  #         key: ${{ runner.os }}-electron
+  #         path: |
+  #           ./modules/desktop/.svelte-kit
+  #           ./modules/desktop/build
 
-      - name: build dev
-        if: inputs.s3-prefix != 'release'
-        run: tea -SE xc dist
-        env:
-          SYNC_I18N: 1
-          PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
-          DEBUG_BUILD: ${{ inputs.debug }}
-          USE_HARD_LINKS: false
-          CSC_FOR_PULL_REQUEST: true
-          CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-          CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-          CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-          PUBLISH_URL: "https://gui.tea.xyz/dev"
+  #     - name: build dev
+  #       if: inputs.s3-prefix != 'release'
+  #       run: tea -SE xc dist
+  #       env:
+  #         SYNC_I18N: 1
+  #         PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
+  #         DEBUG_BUILD: ${{ inputs.debug }}
+  #         USE_HARD_LINKS: false
+  #         CSC_FOR_PULL_REQUEST: true
+  #         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+  #         CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+  #         CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+  #         PUBLISH_URL: "https://gui.tea.xyz/dev"
 
-      # slower build but dmg output is much nicer looking
-      - name: build release
-        if: inputs.s3-prefix == 'release'
-        run: tea -SE xc dist
-        env:
-          SYNC_I18N: 1
-          PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
-          DEBUG_BUILD: ${{ inputs.debug }}
-          PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
-          USE_HARD_LINKS: false
-          CSC_FOR_PULL_REQUEST: true
-          CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-          CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-          CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-          PUSHY_APP_ID: ${{ secrets.PUSHY_APP_ID }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  #     # slower build but dmg output is much nicer looking
+  #     - name: build release
+  #       if: inputs.s3-prefix == 'release'
+  #       run: tea -SE xc dist
+  #       env:
+  #         SYNC_I18N: 1
+  #         PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
+  #         DEBUG_BUILD: ${{ inputs.debug }}
+  #         PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
+  #         USE_HARD_LINKS: false
+  #         CSC_FOR_PULL_REQUEST: true
+  #         CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+  #         CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+  #         CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+  #         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         APPLE_ID: ${{ secrets.APPLE_ID }}
+  #         APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+  #         PUSHY_APP_ID: ${{ secrets.PUSHY_APP_ID }}
+  #         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
-      - name: build artifacts for publishing and notarization
-        run: |
-          mkdir -p target
-          cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
-          tar -czvf artifacts.tgz -C ./target/ .
+  #     - name: build artifacts for publishing and notarization
+  #       run: |
+  #         mkdir -p target
+  #         cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
+  #         tar -czvf artifacts.tgz -C ./target/ .
 
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+  #     - uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: us-east-1
 
-      - name: s3 artifact upload
-        id: s3-artifact-uploader
-        env:
-          prefix: ${{ inputs.s3-prefix }}
-        run: |
-          S3_KEY=s3://preview.gui.tea.xyz/$prefix/artifacts.tgz
-          aws s3 cp artifacts.tgz $S3_KEY
-          echo key=$S3_KEY >> $GITHUB_OUTPUT
+  #     - name: s3 artifact upload
+  #       id: s3-artifact-uploader
+  #       env:
+  #         prefix: ${{ inputs.s3-prefix }}
+  #       run: |
+  #         S3_KEY=s3://preview.gui.tea.xyz/$prefix/artifacts.tgz
+  #         aws s3 cp artifacts.tgz $S3_KEY
+  #         echo key=$S3_KEY >> $GITHUB_OUTPUT
 
   notarize-mac-installers:
-    if: inputs.s3-prefix != 'release' && needs.verify.outputs.is-updated == 'true'
+    # if: inputs.s3-prefix != 'release' && needs.verify.outputs.is-updated == 'true'
     # TODO: run only for mac, create separate Job for linux
-    needs: [build, verify]
+    # needs: [build, verify]
     runs-on: macos-11
     outputs:
       s3-installers-key: ${{ steps.s3-installers-upload.outputs.s3-key }}
@@ -188,7 +188,7 @@ jobs:
 
     - name: s3 artifact download
       env:
-        S3_KEY: ${{ needs.build.outputs.s3-artifacts-key }}
+        S3_KEY: s3://preview.gui.tea.xyz/main/artifacts.tgz
       run: aws s3 cp $S3_KEY artifacts.tgz
 
     # prepare folders
@@ -230,8 +230,9 @@ jobs:
         security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
         security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
         security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-        /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$ARM64_ZIP -v
-        /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$X86_ZIP -v
+        # skip: codesigning
+        # /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$ARM64_ZIP -v
+        # /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$X86_ZIP -v
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
     # sometimes this might fail because exact the same zip has been uploaded already
 
