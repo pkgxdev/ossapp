@@ -239,7 +239,7 @@ jobs:
       # Extract the secrets we defined earlier as environment variables
       env:
         PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.APPLE_ID }}
-        PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+        PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.APPLE_PASSWORD }}
         MACOS_CI_KEYCHAIN_PWD: ${{ secrets.MACOS_CI_KEYCHAIN_PWD }}
         ARM64_ZIP: ${{ steps.app_files.outputs.zip_arm64 }}
