@@ -254,12 +254,14 @@ jobs:
         xcrun notarytool submit dist/$ARM64_ZIP --keychain-profile "notarytool-profile" --wait
         xcrun notarytool submit dist/$X86_ZIP --keychain-profile "notarytool-profile" --wait
 
-        # Finally, we need to "attach the staple" to our executable, which will allow our app to be
-        # validated by macOS even when an internet connection is not available.
-        echo "Attach staple"
+        unzip dist/$ARM64_ZIP -d dist/mac-arm64
+        unzip dist/$X86_ZIP -d dist/mac
+
         xcrun stapler staple "dist/mac/tea.app"
         xcrun stapler staple "dist/mac-arm64/tea.app"
 
+        zip -r -f dist/$ARM64_ZIP dist/mac-arm64/tea.app
+        zip -r -f dist/$X86_ZIP dist/mac/tea.app
 
     # - name: notarize .app arm64
     #   # run: xcrun notarytool submit dist/$ZIP_FILE --keychain-profile "xyz.tea.gui" --apple-id "$APPLE_ID" --password "$APPLE_PASSWORD" --wait
