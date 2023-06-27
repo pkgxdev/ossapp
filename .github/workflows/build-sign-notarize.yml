@@ -256,19 +256,19 @@ jobs:
         xcrun notarytool submit dist/$ARM64_ZIP --keychain-profile "notarytool-profile" --wait
         xcrun notarytool submit dist/$X86_ZIP --keychain-profile "notarytool-profile" --wait
 
-        echo "Unzipping files"
+        # echo "Unzipping files"
         unzip dist/$ARM64_ZIP -d dist/mac-arm64
         unzip dist/$X86_ZIP -d dist/mac
 
-        echo "Doing staple"
-        xcrun stapler staple "dist/mac/tea.app"
-        xcrun stapler staple "dist/mac-arm64/tea.app"
+        # echo "Doing staple"
+        # xcrun stapler staple "dist/mac/tea.app"
+        # xcrun stapler staple "dist/mac-arm64/tea.app"
 
-        echo "Rezip files"
-        rm dist/$ARM64_ZIP
-        rm dist/$X86_ZIP
-        tea zip -r dist/$ARM64_ZIP dist/mac-arm64/tea.app
-        tea zip -r dist/$X86_ZIP dist/mac/tea.app
+        # echo "Rezip files"
+        # rm dist/$ARM64_ZIP
+        # rm dist/$X86_ZIP
+        # tea zip -r dist/$ARM64_ZIP dist/mac-arm64/tea.app
+        # tea zip -r dist/$X86_ZIP dist/mac/tea.app
 
     # prepare for DMG creation
     - name: prepare installer folders
