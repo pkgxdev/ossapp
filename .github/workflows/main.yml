@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-
+      - notarytool
 jobs:
   changes:
     runs-on: ubuntu-latest

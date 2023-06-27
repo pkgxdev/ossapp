@@ -62,8 +62,8 @@ jobs:
         shell: bash
 
   build:
-    needs: verify
-    if: needs.verify.outputs.is-updated == 'true'
+    # needs: verify
+    # if: needs.verify.outputs.is-updated == 'true'
     runs-on: macos-latest
     outputs:
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
@@ -152,9 +152,9 @@ jobs:
           echo key=$S3_KEY >> $GITHUB_OUTPUT
 
   notarize-mac-installers:
-    if: inputs.s3-prefix != 'release' && needs.verify.outputs.is-updated == 'true'
+    # if: inputs.s3-prefix != 'release' && needs.verify.outputs.is-updated == 'true'
     # TODO: run only for mac, create separate Job for linux
-    needs: [build, verify]
+    needs: [build]
     runs-on: macos-11
     outputs:
       s3-installers-key: ${{ steps.s3-installers-upload.outputs.s3-key }}
@@ -208,24 +208,72 @@ jobs:
         echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
         echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
 
+    - name: Codesign app bundle
+      # Extract the secrets we defined earlier as environment variables
+      env: 
+        MACOS_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+        MACOS_CERTIFICATE_PWD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+        MACOS_CERTIFICATE_NAME: ${{ secrets.APPLE_IDENTITY }}
+        MACOS_CI_KEYCHAIN_PWD: ${{ secrets.MACOS_CI_KEYCHAIN_PWD }}
+      run: |
+        # Turn our base64-encoded certificate back to a regular .p12 file
+        
+        echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+
+        # We need to create a new keychain, otherwise using the certificate will prompt
+        # with a UI dialog asking for the certificate password, which we can't
+        # use in a headless CI environment
+        
+        security create-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain 
+        security default-keychain -s build.keychain
+        security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+        security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
+        security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+        /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/mac/tea.app -v
+        /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/mac-arm64/tea.app -v
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
     # sometimes this might fail because exact the same zip has been uploaded already
-
-    - name: notarize .app arm64
-      # run: xcrun notarytool submit dist/$ZIP_FILE --keychain-profile "xyz.tea.gui" --apple-id "$APPLE_ID" --password "$APPLE_PASSWORD" --wait
-      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/$ZIP_FILE || true
+    - name: "Notarize app bundle"
+      # Extract the secrets we defined earlier as environment variables
       env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
+        PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.APPLE_ID }}
+        PROD_MACOS_NOTARIZATION_TEAM_ID: 7WV56FL599
+        PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.APPLE_PASSWORD }}
+        ARM64_ZIP: ${{ steps.app_files.outputs.zip_arm64 }}
+        X86_ZIP: ${{ steps.app_files.outputs.zip_x86 }}
+      run: |
+        # Store the notarization credentials so that we can prevent a UI password dialog
+        # from blocking the CI
 
-    - name: notarize .app x86+64
-      # run: xcrun notarytool submit dist/$ZIP_FILE --keychain-profile "xyz.tea.gui" --apple-id "$APPLE_ID" --password "$APPLE_PASSWORD" --wait
-      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/$ZIP_FILE || true
-      env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
+        echo "Create keychain profile"
+        xcrun notarytool store-credentials "notarytool-profile" --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" --password "$PROD_MACOS_NOTARIZATION_PWD"
+
+        echo "Notarize app"
+        xcrun notarytool submit dist/$ARM64_ZIP --keychain-profile "notarytool-profile" --wait
+        xcrun notarytool submit dist/$X86_ZIP --keychain-profile "notarytool-profile" --wait
+
+        # Finally, we need to "attach the staple" to our executable, which will allow our app to be
+        # validated by macOS even when an internet connection is not available.
+        echo "Attach staple"
+        xcrun stapler staple "dist/mac/tea.app"
+        xcrun stapler staple "dist/mac-arm64/tea.app"
+
+
+    # - name: notarize .app arm64
+    #   # run: xcrun notarytool submit dist/$ZIP_FILE --keychain-profile "xyz.tea.gui" --apple-id "$APPLE_ID" --password "$APPLE_PASSWORD" --wait
+    #   run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/$ZIP_FILE || true
+    #   env:
+    #     APPLE_ID: ${{ secrets.APPLE_ID }}
+    #     APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+    #     ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
+
+    # - name: notarize .app x86+64
+    #   run: xcrun notarytool submit dist/$ZIP_FILE --keychain-profile "xyz.tea.gui" --apple-id "$APPLE_ID" --password "$APPLE_PASSWORD" --wait
+    #   # run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/$ZIP_FILE || true
+    #   env:
+    #     APPLE_ID: ${{ secrets.APPLE_ID }}
+    #     APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+    #     ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
 
     # prepare for DMG creation
     - name: prepare installer folders
