@@ -215,6 +215,8 @@ jobs:
         MACOS_CERTIFICATE_PWD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
         MACOS_CERTIFICATE_NAME: ${{ secrets.APPLE_IDENTITY }}
         MACOS_CI_KEYCHAIN_PWD: ${{ secrets.MACOS_CI_KEYCHAIN_PWD }}
+        ARM64_ZIP: ${{ steps.app_files.outputs.zip_arm64 }}
+        X86_ZIP: ${{ steps.app_files.outputs.zip_x86 }}
       run: |
         # Turn our base64-encoded certificate back to a regular .p12 file
         
@@ -229,8 +231,8 @@ jobs:
         security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
         security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
         security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-        /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/mac/tea.app -v
-        /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/mac-arm64/tea.app -v
+        /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$ARM64_ZIP -v
+        /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$X86_ZIP -v
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
     # sometimes this might fail because exact the same zip has been uploaded already
     - name: "Notarize app bundle"
