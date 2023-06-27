@@ -208,64 +208,107 @@ jobs:
         echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
         echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
 
+    - name: Codesign app bundle
+      env: 
+        MACOS_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+        MACOS_CERTIFICATE_PWD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+        MACOS_CERTIFICATE_NAME: ${{ secrets.APPLE_IDENTITY }}
+        MACOS_CI_KEYCHAIN_PWD: ${{ secrets.MACOS_CI_KEYCHAIN_PWD }}
+        ARM64_ZIP: ${{ steps.app_files.outputs.zip_arm64 }}
+        X86_ZIP: ${{ steps.app_files.outputs.zip_x86 }}
+      run: |
+        # Turn our base64-encoded certificate back to a regular .p12 file
+        
+        echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+
+        # We need to create a new keychain, otherwise using the certificate will prompt
+        # with a UI dialog asking for the certificate password, which we can't
+        # use in a headless CI environment
+        
+        security create-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain 
+        security default-keychain -s build.keychain
+        security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+        security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
+        security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+        /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$ARM64_ZIP -v
+        /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$X86_ZIP -v
     # Notarize. Can take up to 10 minutes (and fail) asynchronously
     # sometimes this might fail because exact the same zip has been uploaded already
 
-    - name: notarize .app arm64
-      # run: xcrun notarytool submit dist/$ZIP_FILE --keychain-profile "xyz.tea.gui" --apple-id "$APPLE_ID" --password "$APPLE_PASSWORD" --wait
-      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/$ZIP_FILE || true
+    - name: "Notarize and Staple app bundle"
+      # Extract the secrets we defined earlier as environment variables
       env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        ZIP_FILE: ${{ steps.app_files.outputs.zip_arm64 }}
+        PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.APPLE_ID }}
+        PROD_MACOS_NOTARIZATION_TEAM_ID: 7WV56FL599
+        PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.APPLE_PASSWORD }}
+        MACOS_CI_KEYCHAIN_PWD: ${{ secrets.MACOS_CI_KEYCHAIN_PWD }}
+        ARM64_ZIP: ${{ steps.app_files.outputs.zip_arm64 }}
+        X86_ZIP: ${{ steps.app_files.outputs.zip_x86 }}
+      run: |
+        # Store the notarization credentials so that we can prevent a UI password dialog
+        # from blocking the CI
 
-    - name: notarize .app x86+64
-      # run: xcrun notarytool submit dist/$ZIP_FILE --keychain-profile "xyz.tea.gui" --apple-id "$APPLE_ID" --password "$APPLE_PASSWORD" --wait
-      run: xcrun altool --notarize-app --username "$APPLE_ID" --password "$APPLE_PASSWORD" --primary-bundle-id "xyz.tea.gui" --file dist/$ZIP_FILE || true
-      env:
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        ZIP_FILE: ${{ steps.app_files.outputs.zip_x86 }}
+        echo "Create keychain profile"
+        xcrun notarytool store-credentials "notarytool-profile" --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" --password "$PROD_MACOS_NOTARIZATION_PWD"
+        security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+        echo "Notarize app"
+        xcrun notarytool submit dist/$ARM64_ZIP --keychain-profile "notarytool-profile" --wait
+        xcrun notarytool submit dist/$X86_ZIP --keychain-profile "notarytool-profile" --wait
+
+        echo "Unzipping files"
+        unzip dist/$ARM64_ZIP -d dist/mac-arm64
+        unzip dist/$X86_ZIP -d dist/mac
+
+        echo "Doing staple"
+        xcrun stapler staple "dist/mac/tea.app"
+        xcrun stapler staple "dist/mac-arm64/tea.app"
+
+        echo "Rezip files"
+        rm dist/$ARM64_ZIP
+        rm dist/$X86_ZIP
+        tea zip -r dist/$ARM64_ZIP dist/mac-arm64/tea.app
+        tea zip -r dist/$X86_ZIP dist/mac/tea.app
 
     # prepare for DMG creation
     - name: prepare installer folders
       run: |
         mkdir x86_installer && mkdir arm64_installer
-        tar xzf dist/$ZIP_FILE_X86 -C x86_installer/
-        tar xzf dist/$ZIP_FILE_ARM64 -C arm64_installer/
-      env:
-        ZIP_FILE_X86: ${{ steps.app_files.outputs.zip_x86 }}
-        ZIP_FILE_ARM64: ${{ steps.app_files.outputs.zip_arm64 }}
+        mv dist/mac-arm64/* arm64_installer
+        mv dist/mac/* x86_installer
 
+    # building this locally workds and the installer looks nice
+    # BUT, when --sandbox-safe is added to the create-dmg command, the installer UI is basic
+    # TODO: figure out issue with --sandbox-safe or try a different create-dmg package
     - name: create x86 dmg
       run: |
         tea +github.com/create-dmg/create-dmg create-dmg \
         --volname "Tea Installer" \
         --window-pos 200 120 \
-        --window-size 800 400 \
-        --icon-size 100 \
-        --icon "tea.app" 200 190 \
+        --window-size 684 465 \
+        --icon-size 128 \
+        --icon "tea.app" 158 219 \
         --volicon "./modules/desktop/electron/icon.icns" \
+        --background "./modules/desktop/electron/bg.png" \
         --hide-extension "tea.app" \
-        --app-drop-link 600 185 \
+        --app-drop-link 528 219 \
         --sandbox-safe \
         "$filename" \
         "$installer_folder"
       env:
         filename: ${{ steps.app_files.outputs.dmg_x86 }}
         installer_folder: x86_installer/
-
     - name: create arm64 dmg
       run: |
         tea +github.com/create-dmg/create-dmg create-dmg \
         --volname "Tea Installer" \
         --window-pos 200 120 \
-        --window-size 800 400 \
-        --icon-size 100 \
-        --icon "tea.app" 200 190 \
+        --window-size 684 465 \
+        --icon-size 128 \
+        --icon "tea.app" 158 219 \
         --volicon "./modules/desktop/electron/icon.icns" \
+        --background "./modules/desktop/electron/bg.png" \
         --hide-extension "tea.app" \
-        --app-drop-link 600 185 \
+        --app-drop-link 528 219 \
         --sandbox-safe \
         "$filename" \
         "$installer_folder"
