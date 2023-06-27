@@ -264,8 +264,10 @@ jobs:
         xcrun stapler staple "dist/mac-arm64/tea.app"
 
         echo "Rezip files"
-        tea zip -r -f dist/$ARM64_ZIP dist/mac-arm64/tea.app
-        tea zip -r -f dist/$X86_ZIP dist/mac/tea.app
+        rm dist/$ARM64_ZIP
+        rm dist/$X86_ZIP
+        tea zip -r dist/$ARM64_ZIP dist/mac-arm64/tea.app
+        tea zip -r dist/$X86_ZIP dist/mac/tea.app
 
 
     # - name: notarize .app arm64
