@@ -241,6 +241,7 @@ jobs:
         PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.APPLE_ID }}
         PROD_MACOS_NOTARIZATION_TEAM_ID: 7WV56FL599
         PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.APPLE_PASSWORD }}
+        MACOS_CI_KEYCHAIN_PWD: ${{ secrets.MACOS_CI_KEYCHAIN_PWD }}
         ARM64_ZIP: ${{ steps.app_files.outputs.zip_arm64 }}
         X86_ZIP: ${{ steps.app_files.outputs.zip_x86 }}
       run: |
@@ -249,7 +250,7 @@ jobs:
 
         echo "Create keychain profile"
         xcrun notarytool store-credentials "notarytool-profile" --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" --password "$PROD_MACOS_NOTARIZATION_PWD"
-
+        security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
         echo "Notarize app"
         xcrun notarytool submit dist/$ARM64_ZIP --keychain-profile "notarytool-profile" --wait
         xcrun notarytool submit dist/$X86_ZIP --keychain-profile "notarytool-profile" --wait
