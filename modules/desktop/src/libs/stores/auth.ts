@@ -1,7 +1,7 @@
 import { writable } from "svelte/store";
 
 import { listenToChannel } from "@native";
-import type { Developer } from "@tea/ui/types";
+import type { Developer } from "$libs/ui-types";
 import type { Session } from "$libs/types";
 import { getSession as electronGetSession, updateSession as electronUpdateSession } from "@native";
 import { initSentry } from "../sentry";

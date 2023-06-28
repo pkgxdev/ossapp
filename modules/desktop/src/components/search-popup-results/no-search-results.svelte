@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from "@tea/ui/button/button.svelte";
+  import Button from "$components/button/button.svelte";
   import { shellOpenExternal } from "@native";
 </script>
 

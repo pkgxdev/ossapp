@@ -2,7 +2,7 @@
   import type { GUIPackage } from "$libs/types";
   import { packagesStore } from "$libs/stores";
 
-  import ImgLoader from "@tea/ui/img-loader/img-loader.svelte";
+  import ImgLoader from "$components/img-loader/img-loader.svelte";
   import { goto } from "$app/navigation";
   import PackageInstallButton from "$components/package-install-button/package-install-button.svelte";
   export let pkg: GUIPackage; // Fuse package search result probably not updated

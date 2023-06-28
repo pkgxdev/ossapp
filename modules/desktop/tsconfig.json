@@ -17,7 +17,6 @@
       "$libs/*": ["./src/libs/*"],
       "@native": ["./src/libs/native-electron.ts"],
       "$components/*": ["./src/components/*"],
-      "@tea/ui/*": ["../ui/src/*"],
       // FIXME:  Ideally we don't have to do this, but something is wrong with module resolution
       "@teaxyz/lib/semver": ["./../../node_modules/@teaxyz/lib/esm/src/utils/semver.d.ts"]
     },

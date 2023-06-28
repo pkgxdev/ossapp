@@ -1,6 +1,6 @@
 <script lang="ts">
   import "../../app.css";
-  import ProgressCircle from "@tea/ui/progress-circle/progress-circle.svelte";
+  import ProgressCircle from "$components/progress-circle/progress-circle.svelte";
   import { PackageStates, type GUIPackage } from "$libs/types";
   import { findRecentInstalledVersion, packageWasUpdated } from "$libs/packages/pkg-utils";
   import BgImage from "./bg-image.svelte";

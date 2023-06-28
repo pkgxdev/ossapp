@@ -11,7 +11,7 @@
  *  - connect to a local platform api and returns a data
  */
 
-import type { Package, Review, AirtablePost, Bottle } from "@tea/ui/types";
+import type { Package, Review, AirtablePost, Bottle } from "$libs/ui-types";
 import type { GUIPackage, Session, Packages, AutoUpdateStatus } from "./types";
 
 import * as mock from "./native-mock";

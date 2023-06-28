@@ -3,7 +3,7 @@
   import { getSession } from "@native";
   import { getBaseURL } from "$libs/v1-client";
   import { shellOpenExternal, pollDeviceSession } from "@native";
-  import mouseLeaveDelay from "@tea/ui/lib/mouse-leave-delay";
+  import mouseLeaveDelay from "$components/lib/mouse-leave-delay";
   const { user } = authStore;
 
   $: authenticating = false;

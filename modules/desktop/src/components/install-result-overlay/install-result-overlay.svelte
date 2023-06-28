@@ -3,7 +3,7 @@
   import confetti from "canvas-confetti";
   import { afterUpdate } from "svelte";
   import { packagesStore } from "$libs/stores";
-  import Button from "@tea/ui/button/button.svelte";
+  import Button from "$components/button/button.svelte";
   import { packageHadError, packageWasInstalled } from "$libs/packages/pkg-utils";
 
   let root: HTMLElement | undefined;

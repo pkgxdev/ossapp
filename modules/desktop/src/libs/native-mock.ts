@@ -5,7 +5,7 @@
  * TODO:
  *  * make cors work with app.tea.xyz/v1
  */
-import type { Package, Review, AirtablePost } from "@tea/ui/types";
+import type { Package, Review, AirtablePost } from "$libs/ui-types";
 import type { GUIPackage, Session, Packages, AutoUpdateStatus } from "./types";
 import { PackageStates } from "./types";
 import { loremIpsum } from "lorem-ipsum";

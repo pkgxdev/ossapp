@@ -1,5 +1,5 @@
 <script>
-  import Button from "@tea/ui/button/button.svelte";
+  import Button from "$components/button/button.svelte";
   import { goto } from "$app/navigation";
   import { SideMenuOptions } from "$libs/types";
 </script>

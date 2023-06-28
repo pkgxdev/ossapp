@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Contributor, Package } from "@tea/ui/types";
+import type { Contributor, Package } from "$libs/ui-types";
 import yaml from "js-yaml";
 export async function getPackageYaml(pkgYamlUrl: string) {
   const url = pkgYamlUrl.replace("/github.com", "/raw.githubusercontent.com").replace("/blob", "");

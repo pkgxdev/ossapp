@@ -1,7 +1,7 @@
 import { writable } from "svelte/store";
 import Fuse from "fuse.js";
 
-import type { Package, Review, AirtablePost } from "@tea/ui/types";
+import type { Package, Review, AirtablePost } from "$libs/ui-types";
 import type { GUIPackage } from "$libs/types";
 
 import { getFeaturedPackages, getPackageReviews } from "@native";

@@ -6,7 +6,7 @@
   import type { GUIPackage } from "$libs/types";
   import moment from "moment";
   import { PackageStates, SideMenuOptions } from "$libs/types";
-  import Preloader from "@tea/ui/Preloader/Preloader.svelte";
+  import Preloader from "$components/preloader/preloader.svelte";
   import Package from "./package.svelte";
   import NoInstalls from "./no-installs.svelte";
   import NoUpdates from "./no-updates.svelte";

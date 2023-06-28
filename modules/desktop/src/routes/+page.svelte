@@ -11,9 +11,9 @@
   // import SortingButtons from "$components/search-packages/sorting-buttons.svelte";
   import SideMenu from "$components/side-menu/side-menu.svelte";
   import NotificationBar from "$components/notification-bar/notification-bar.svelte";
-  import Button from "@tea/ui/button/button.svelte";
+  import Button from "$components/button/button.svelte";
   import log from "$libs/logger";
-  import { formatPercent } from "@tea/ui/lib/percent";
+  import { formatPercent } from "$components/lib/percent";
 
   const { packageList } = packagesStore;
 

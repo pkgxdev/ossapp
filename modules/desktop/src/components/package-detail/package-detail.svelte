@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Package } from "@tea/ui/types";
+  import type { Package } from "$libs/ui-types";
   export let pkg: Package;
 </script>
 

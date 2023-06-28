@@ -1,11 +1,11 @@
 <script lang="ts">
   import "$appcss";
-  import "@tea/ui/icons/icons.css";
+  import "../../icons/icons.css";
   import { t } from "$libs/translations";
-  import Button from "@tea/ui/button/button.svelte";
-  import ButtonIcon from "@tea/ui/button-icon/button-icon.svelte";
-  import ToolTip from "@tea/ui/tool-tip/tool-tip.svelte";
-  import ProgressCircle from "@tea/ui/progress-circle/progress-circle.svelte";
+  import Button from "$components/button/button.svelte";
+  import ButtonIcon from "$components/button-icon/button-icon.svelte";
+  import ToolTip from "$components/tool-tip/tool-tip.svelte";
+  import ProgressCircle from "$components/progress-circle/progress-circle.svelte";
 
   import type { GUIPackage } from "$libs/types";
   import { packagesStore } from "$libs/stores";

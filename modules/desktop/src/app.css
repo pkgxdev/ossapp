@@ -1,6 +1,18 @@
+@import url(./icons/icons.css);
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "mona-sans";
+  src: url("/fonts/mona-sans-bold.woff2");
+}
+
+@font-face {
+  font-family: "inter";
+  src: url("/fonts/inter-regular.woff2");
+}
 
 @font-face {
   font-family: "mona-sans";

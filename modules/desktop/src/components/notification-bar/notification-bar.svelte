@@ -2,7 +2,7 @@
   import "$appcss";
   import { t } from "$libs/translations";
   import { notificationStore } from "$libs/stores";
-  import Notification from "@tea/ui/notification/notification.svelte";
+  import Notification from "./notification.svelte";
 </script>
 
 <div class="flex w-full flex-col gap-1">

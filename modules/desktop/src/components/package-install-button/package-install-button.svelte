@@ -1,6 +1,6 @@
 <script lang="ts">
   import { PackageStates, type GUIPackage } from "$libs/types";
-  import Button from "@tea/ui/button/button.svelte";
+  import Button from "$components/button/button.svelte";
   import { getPackageBadgeText } from "$libs/packages/pkg-utils";
 
   export let buttonSize: "small" | "large" = "small";

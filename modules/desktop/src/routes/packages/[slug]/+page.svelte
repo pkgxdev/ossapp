@@ -1,15 +1,15 @@
 <script lang="ts">
   import "$appcss";
   import { t } from "$libs/translations";
-  import SkeletonLoader from "@tea/ui/skeleton-loader/skeleton-loader.svelte";
+  import SkeletonLoader from "$components/skeleton-loader/skeleton-loader.svelte";
   import { page } from "$app/stores";
   import PackageBanner from "$components/package-banner/package-banner.svelte";
-  import Tabs from "@tea/ui/tabs/tabs.svelte";
-  import type { Tab } from "@tea/ui/types";
-  import Bottles from "@tea/ui/bottles/bottles.svelte";
-  import PackageMetas from "@tea/ui/package-metas/package-metas.svelte";
-  import Markdown from "@tea/ui/markdown/markdown.svelte";
-  import Preloader from "@tea/ui/Preloader/Preloader.svelte";
+  import Tabs from "$components/tabs/tabs.svelte";
+  import type { Tab } from "$libs/ui-types";
+  import Bottles from "$components/bottles/bottles.svelte";
+  import PackageMetas from "$components/package-metas/package-metas.svelte";
+  import Markdown from "$components/markdown/markdown.svelte";
+  import Preloader from "$components/preloader/preloader.svelte";
   import useDefaultBrowser from "$libs/utils/use-default-browser";
 
   /** @type {import('./$types').PageData} */

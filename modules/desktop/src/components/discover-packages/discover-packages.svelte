@@ -2,7 +2,7 @@
   import "$appcss";
   // import { t } from '$libs/translations';
   import { SideMenuOptions } from "$libs/types";
-  import Preloader from "@tea/ui/Preloader/Preloader.svelte";
+  import Preloader from "$components/preloader/preloader.svelte";
   import Package from "$components/packages/package.svelte";
   import { packagesStore } from "$libs/stores";
 

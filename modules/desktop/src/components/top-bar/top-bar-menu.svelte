@@ -1,7 +1,7 @@
 <script lang="ts">
   import { shellOpenExternal, submitLogs } from "@native";
   import LoginButton from "./login-button.svelte";
-  import ButtonIcon from "@tea/ui/button-icon/button-icon.svelte";
+  import ButtonIcon from "$components/button-icon/button-icon.svelte";
   import SettingsMenu from "$components/settings-menu/settings-menu.svelte";
 
   const submitBugReport = async () => {

@@ -16,9 +16,7 @@ const config = {
       assets: "build",
       fallback: "app.html"
     }),
-    alias: {
-      "@tea/ui/*": "../ui/src/*"
-    }
+    alias: {}
     // ssr: false,
     // hydrate the <div id="svelte"> element in src/app.html
     // target: '#svelte'

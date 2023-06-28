@@ -20,7 +20,7 @@ import {
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
-import { NotificationType } from "@tea/ui/types";
+import { NotificationType } from "$libs/ui-types";
 import { trackInstall, trackInstallFailed } from "$libs/analytics";
 import { addInstalledVersion, isInstalling, packageWasUpdated } from "$libs/packages/pkg-utils";
 import withDebounce from "$libs/utils/debounce";

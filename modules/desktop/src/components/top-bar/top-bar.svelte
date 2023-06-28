@@ -1,6 +1,6 @@
 <script lang="ts">
   import { searchStore } from "$libs/stores";
-  import SearchInput from "@tea/ui/search-input/search-input.svelte";
+  import SearchInput from "$components/search-input/search-input.svelte";
   import { navStore } from "$libs/stores";
   import { t } from "$libs/translations";
 

@@ -39,7 +39,6 @@
     "@sveltejs/adapter-node": "^1.0.0-next.101",
     "@sveltejs/adapter-static": "^1.0.0-next.48",
     "@sveltejs/kit": "^1.15.9",
-    "@tea/ui": "workspace:*",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/svelte": "^3.2.2",
     "@testing-library/webdriverio": "^3.2.1",
@@ -61,25 +60,27 @@
     "electron": "22.1.0",
     "electron-builder": "^23.6.0",
     "electron-reloader": "^1.2.3",
+    "jsdom": "^21.0.0",
+    "svelte": "^3.55.1",
+    "svelte2tsx": "^0.5.20",
+    "tailwindcss": "^3.2.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4",
+    "vite": "^4.1.1",
+    "vitest": "^0.28.3",
+    "wdio-electron-service": "^4.0.2",
+    "@sveltejs/package": "^1.0.1",
     "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-storybook": "^0.6.7",
     "eslint-plugin-svelte3": "^4.0.0",
-    "jsdom": "^21.0.0",
     "postcss": "^8.4.19",
     "prettier": "^2.8.8",
     "prettier-plugin-svelte": "^2.10.0",
     "prettier-plugin-tailwindcss": "^0.2.8",
-    "svelte": "^3.55.1",
-    "svelte-check": "^2.8.0",
-    "svelte-preprocess": "^5.0.1",
-    "svelte2tsx": "^0.5.20",
-    "tailwindcss": "^3.2.4",
-    "ts-node": "^10.9.1",
-    "tslib": "^2.3.1",
-    "typescript": "^4.7.4",
-    "vite": "^4.1.1",
-    "vitest": "^0.28.3",
-    "wdio-electron-service": "^4.0.2"
+    "svelte-check": "^2.7.1",
+    "svelte-preprocess": "^4.10.7",
+    "tslib": "^2.3.1"
   },
   "type": "module",
   "dependencies": {
@@ -128,12 +129,18 @@
     "undici": "^5.22.1",
     "upath": "^2.0.1",
     "vite-plugin-static-copy": "^0.13.1",
-    "yaml": "^2.2.1"
+    "yaml": "^2.2.1",
+    "@magidoc/plugin-svelte-prismjs": "^3.0.6",
+    "@tailwindcss/line-clamp": "^0.4.2",
+    "@types/he": "^1.2.0",
+    "@types/prismjs": "^1.26.0",
+    "he": "^1.2.0",
+    "marked": "^5.0.4",
+    "prismjs": "^1.29.0",
+    "restructured": "0.0.11"
   },
   "pnpm": {
-    "onlyBuiltDependencies": [
-      "@tea/ui"
-    ]
+    "onlyBuiltDependencies": []
   },
   "homepage": "https://tea.xyz",
   "repository": "https://github.com/teaxyz/gui.git"

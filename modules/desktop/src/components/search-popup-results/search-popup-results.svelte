@@ -1,15 +1,14 @@
 <script lang="ts">
   import { packagesStore, searchStore } from "$libs/stores";
-  import SearchInput from "@tea/ui/search-input/search-input.svelte";
+  import SearchInput from "$components/search-input/search-input.svelte";
   import { t } from "$libs/translations";
   import { PackageStates } from "$libs/types";
   import PackageResult from "./package-search-result.svelte";
-  // import Posts from '@tea/ui/posts/posts.svelte';
 
   import NoSearchResults from "./no-search-results.svelte";
 
   const { searching, packagesSearch } = searchStore;
-  // import type { AirtablePost } from '@tea/ui/types';
+  // import type { AirtablePost } from '$libs/ui-types';
   let term: string;
   // let articles: AirtablePost[] = []; // news, blogs, etc
   // let workshops: AirtablePost[] = []; // workshops, course
@@ -103,13 +102,7 @@
         <!-- <header class="text-primary p-4 text-lg">
 					Top Article Results ({articles.length})
 				</header>
-				{#if articles.length}
-					<Posts posts={articles} linkTarget="_blank" />
-				{:else if loading}
-					<section class="border-gray h-64 border bg-black p-4">
-						<Preloader />
-					</section>
-				{/if}
+
 				<header class="text-primary p-4 text-lg">
 					Top Workshop Results ({workshops.length})
 				</header>

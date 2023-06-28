@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { formatPercent } from "../lib/percent";
+
   export let value = 0;
   export let max = 100;
   $: progressPath = () => {
@@ -27,7 +29,7 @@
   </svg>
   <div>
     <slot>
-      <span>{value}</span>
+      <span class="font-mono">{formatPercent(value)}%</span>
     </slot>
   </div>
 </div>
@@ -45,7 +47,7 @@
     stroke-width: var(--progress-trackwidth, 9px);
   }
   path:last-child {
-    stroke: var(--progress-color, lightgreen);
+    stroke: var(--progress-color, #00ffd0);
     stroke-width: var(--progress-width, 10px);
   }
   div {

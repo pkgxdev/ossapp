@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Spinner from "@tea/ui/spinner/spinner.svelte";
+  import Spinner from "$components/spinner/spinner.svelte";
   import { relaunch } from "@native";
   import { appUpdateStore } from "$libs/stores";
 

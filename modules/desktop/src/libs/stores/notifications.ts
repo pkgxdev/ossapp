@@ -1,8 +1,8 @@
 import { writable } from "svelte/store";
 import { nanoid } from "nanoid";
 
-import { NotificationType } from "@tea/ui/types";
-import type { Notification } from "@tea/ui/types";
+import { NotificationType } from "$libs/ui-types";
+import type { Notification } from "$libs/ui-types";
 
 import { listenToChannel, relaunch } from "@native";
 

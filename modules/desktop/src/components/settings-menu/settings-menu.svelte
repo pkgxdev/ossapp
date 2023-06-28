@@ -1,6 +1,6 @@
 <script lang="ts">
   import { shellOpenExternal } from "@native";
-  import mouseLeaveDelay from "@tea/ui/lib/mouse-leave-delay";
+  import mouseLeaveDelay from "$components/lib/mouse-leave-delay";
   import UpdateButton from "./update-button.svelte";
   import { appUpdateStore } from "$libs/stores";
   import SelectLang from "$components/select-lang/select-lang.svelte";
