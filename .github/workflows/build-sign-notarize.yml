@@ -290,8 +290,8 @@ jobs:
           --window-size 684 465 \
           --icon-size 128 \
           --icon "tea.app" 158 219 \
-          --volicon "./modules/desktop/electron/icon.icns" \
-          --background "./modules/desktop/electron/bg.png" \
+          --volicon "./electron/icon.icns" \
+          --background "./electron/bg.png" \
           --hide-extension "tea.app" \
           --app-drop-link 528 219 \
           --sandbox-safe \
@@ -308,8 +308,8 @@ jobs:
           --window-size 684 465 \
           --icon-size 128 \
           --icon "tea.app" 158 219 \
-          --volicon "./modules/desktop/electron/icon.icns" \
-          --background "./modules/desktop/electron/bg.png" \
+          --volicon "./electron/icon.icns" \
+          --background "./electron/bg.png" \
           --hide-extension "tea.app" \
           --app-drop-link 528 219 \
           --sandbox-safe \

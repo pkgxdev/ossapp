@@ -70,12 +70,12 @@ The following can be run with [`xc`], eg. `xc build`.
 Setup ensures that required configuration placeholder files are present and installs dependencies.
 
 ```sh
-if [ ! -e modules/desktop/electron/config.json ]; then
-  echo '{}' > modules/desktop/electron/config.json
+if [ ! -e electron/config.json ]; then
+  echo '{}' > electron/config.json
 fi
 
 if [ ! -e modules/desktop/.env ]; then
-  cp modules/desktop/.env.example modules/desktop/.env
+  cp .env.example .env
 fi
 
 npm install

@@ -128,7 +128,7 @@ jobs:
           echo "version=$version$postfix" >> $GITHUB_OUTPUT
 
       - name: build
-        run: xc build:lite
+        run: tea -E xc build:lite
         env:
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           BUILD_FOR: preview
