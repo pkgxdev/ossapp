@@ -46,7 +46,8 @@ jobs:
           key: test-mac
           path: ./node_modules
       - name: env file
-        run: cp .env.example .env
+        run: |
+          cp .env.example svelte/.env
       - name: install app dependencies
         run: tea -E xc setup
       - name: test build electron main process
@@ -76,7 +77,7 @@ jobs:
           key: e2e-macos
           path: ./node_modules
       - name: env file
-        run: cp .env.example .env
+        run: cp .env.example svelte/.env
       - name: install app dependencies
         run: tea -E xc setup
       - name: test build electron main process
