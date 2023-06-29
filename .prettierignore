@@ -1,6 +1,5 @@
 .DS_Store
 node_modules
-svelte/build
 svelte/.svelte-kit
 /package
 .env
