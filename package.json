@@ -33,7 +33,7 @@
     "svelte:build": "cd svelte && vite build"
   },
   "devDependencies": {
-    "@electron/notarize": "^1.2.3",
+    "@electron/notarize": "^2.0.0",
     "@playwright/experimental-ct-svelte": "^1.29.2",
     "@playwright/test": "1.25.0",
     "@sveltejs/adapter-auto": "^1.0.0",

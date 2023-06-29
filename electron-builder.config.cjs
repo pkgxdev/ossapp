@@ -42,7 +42,8 @@ module.exports = {
     ]
   },
   afterSign: async (params) => {
-    if (process.platform !== "darwin" || process.env.CSC_IDENTITY_AUTO_DISCOVERY === "false") {
+    const notarize = process.env.NOTARIZE === "true" || process.env.CSC_IDENTITY_AUTO_DISCOVERY === "true";
+    if (process.platform !== "darwin" || !notarize) {
       console.log("not notarizing app");
       return;
     }
@@ -61,10 +62,12 @@ module.exports = {
 
     try {
       await notarize({
+        tool: "noatrytool",
         appBundleId,
         appPath,
         appleId: process.env.APPLE_ID,
-        appleIdPassword: process.env.APPLE_APP_SPECIFIC_PASSWORD
+        appleIdPassword: process.env.APPLE_APP_SPECIFIC_PASSWORD,
+        teamId: process.env.APPLE_TEAM_ID,
       });
     } catch (error) {
       console.error(error);

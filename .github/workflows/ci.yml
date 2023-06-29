@@ -83,6 +83,7 @@ jobs:
       - name: test build electron main process
         run: tea -E xc build
         env:
+          NOTARIZE: "false"
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
           MAC_BUILD_TARGET: "dir"
       - name: setup dev
