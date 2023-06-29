@@ -86,7 +86,7 @@ npm run prepare
 
 ```sh
 npm install
-npm run build
+npm run package
 ```
 
 ## Build:lite
