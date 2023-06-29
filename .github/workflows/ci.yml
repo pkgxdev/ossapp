@@ -50,35 +50,24 @@ jobs:
       - uses: teaxyz/setup@v0
         with:
           version: 0.35.7
-      - uses: actions/checkout@v3
-      # - name: cache node_modules build
-      #   uses: actions/cache@v3
-      #   with:
-      #     key: test-ubuntu
-      #     path: |
-      #       ./pnpm
-      #       ./.pnpm-store
-      #       ./node_modules
-      #       ./modules/desktop/node_modules
-      #       ./modules/ui/node_modules
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
           key: test-mac
           path: ./node_modules
       - name: env file
-        run: cp modules/desktop/.env.example modules/desktop/.env
+        run: cp svelte/.env.example svelte/.env
       - name: install app dependencies
         run: tea -E xc setup
       - name: test build electron main process
-        run: tea pnpm --filter tea exec pnpm build:main
+        run: npm run build:main
       # TODO: fix
       # - name: unit test
       #   run: pnpm --filter desktop run coverage
       - name: lint
-        run: tea -E pnpm -r lint
+        run: npm run lint
       - name: check
-        run: tea -E pnpm -r check
+        run: npm run check
 
   e2e_test:
     needs: changes
