@@ -30,7 +30,8 @@
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
     "e2e": "NODE_ENV=test wdio run ./wdio.conf.ts",
-    "svelte:build": "cd svelte && vite build"
+    "svelte:build": "cd svelte && vite build",
+    "update-icons": "node scripts/update-icons.js"
   },
   "devDependencies": {
     "@electron/notarize": "^2.0.0",
