@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { app } from "electron";
 import log from "./logger";
-import type { InstalledPackage } from "../../src/libs/types";
+import type { InstalledPackage } from "../../svelte/src/libs/types";
 import { mkdirp } from "mkdirp";
 import fetch from "node-fetch";
 import { SemVer, semver } from "@teaxyz/lib";

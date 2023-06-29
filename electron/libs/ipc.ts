@@ -8,7 +8,7 @@ import {
   stopMonitoringTeaDir
 } from "./tea-dir";
 import { readSessionData, writeSessionData, pollAuth } from "./auth";
-import type { Packages, Session } from "../../src/libs/types";
+import type { Packages, Session } from "../../svelte/src/libs/types";
 import log from "./logger";
 import { syncLogsAt } from "./v1-client";
 import { installPackage, openPackageEntrypointInTerminal, syncPantry } from "./cli";

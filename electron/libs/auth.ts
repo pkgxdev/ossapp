@@ -6,7 +6,7 @@ import { app } from "electron";
 import log from "./logger";
 import axios from "axios";
 import get from "./v1-client";
-import { DeviceAuth } from "../../src/libs/types";
+import { DeviceAuth } from "../../svelte/src/libs/types";
 import { notifyMainWindow } from "../electron";
 import { InitWatcher } from "./initialize";
 import { baseURL } from "./v1-client";

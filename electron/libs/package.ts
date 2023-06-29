@@ -3,7 +3,7 @@ import { mkdirp } from "mkdirp";
 import fs from "fs";
 import log from "./logger";
 import { getTeaPath } from "./tea-dir";
-import { GUIPackage, Packages } from "../../src/libs/types";
+import { GUIPackage, Packages } from "../../svelte/src/libs/types";
 import { isDev } from "./auto-updater";
 
 const pkgsFilePath = path.join(getTeaPath(), "tea.xyz/gui/pkgs.json");
