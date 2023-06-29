@@ -31,10 +31,7 @@ move it to an issue. Bug fixes straight to pull request or issue please!
 ## Anatomy
 
 tea/gui is a Svelte Electon app. The electron “backend” can be found in
-`modules/desktop/electron`, the Svelte “frontend” is in both `modules/ui` and `modules/desktop/src`.
-
-Generic UI components designed for use with Storybook are located in `modules/ui` and more complex
-components with integrated business logic are in `modules/desktop/src`.
+`electron/`, the Svelte “frontend” is in `svelte/`.
 
 The following technologies are used:
 
@@ -54,14 +51,15 @@ xc dev    # opens the app in dev mode
 > Make sure to run `xc prettier` before submitting pull-requests.
 
 &nbsp;
+
 # Internationalization / Translations
+
 We need help translating our user interface into different languages. The translation related source code are all in `./modules/desktop/src/libs/translations/*`.
 
 To add a new language:
 
 1. Create a json file in `./modules/desktop/src/libs/translations/languages/[lang].json`. Copy the contents of `en.json` then translate.
 2. Import the new language in `./modules/desktop/src/libs/translations/index.ts`. More instructions are in that file.
-
 
 # Tasks
 
@@ -80,15 +78,15 @@ if [ ! -e modules/desktop/.env ]; then
   cp modules/desktop/.env.example modules/desktop/.env
 fi
 
-pnpm install
-pnpm run -r prepare
+npm install
+npm run prepare
 ```
 
 ## Build
 
 ```sh
-pnpm install
-pnpm build:desktop
+npm install
+npm run build
 ```
 
 ## Build:lite
@@ -98,29 +96,29 @@ Builds a `.app` that is not codesigned or notarized. Ideal for local testing.
 ```
 export CSC_IDENTITY_AUTO_DISCOVER=false
 export MAC_BUILD_TARGET=dir
-pnpm install
-pnpm build:desktop
+npm install
+npm run package
 ```
 
 ## Dev
 
 ```sh
-pnpm install
-pnpm dev
+npm install
+npm run dev
 ```
 
 ## Prettier
 
 ```sh
-pnpm run --reporter append-only -r format
+npm run format
 ```
 
 ## Dist
 
 ```sh
-pnpm install
-pnpm --filter tea exec pnpm predist
-pnpm --filter tea exec pnpm dist
+npm install
+npm run predist
+npm run dist
 ```
 
 ## Check
@@ -128,8 +126,8 @@ pnpm --filter tea exec pnpm dist
 Runs the typescript compiler and linter.
 
 ```sh
-pnpm run -r check
-pnpm run -r lint
+npm run check
+npm run lint
 ```
 
 ## e2e
@@ -137,7 +135,7 @@ pnpm run -r lint
 Runs the webdriver.io end to end tests. Assumes that `xc build` has already been executed.
 
 ```sh
-pnpm run --reporter append-only -r e2e
+npm run e2e
 ```
 
 ## Bump
@@ -155,13 +153,13 @@ if [ "$(git rev-parse --abbrev-ref HEAD)" != "main" ]; then
   exit 1
 fi
 
-V=$(node -p "require('./modules/desktop/package.json').version")
+V=$(node -p "require('./package.json').version")
 V=$(tea semverator bump $V $PRIORITY)
 
-if ! grep -F "\"version\": \"$V\",$" modules/desktop/package.json; then
-  sed -i.bak -e "s/\"version\": .*,$/\"version\": \"$V\",/" modules/desktop/package.json
-  rm modules/desktop/package.json.bak
-  git add modules/desktop/package.json
+if ! grep -F "\"version\": \"$V\",$" package.json; then
+  sed -i.bak -e "s/\"version\": .*,$/\"version\": \"$V\",/" package.json
+  rm package.json.bak
+  git add package.json
   git commit -m "bump $V" --gpg-sign
 fi
 
@@ -171,12 +169,9 @@ git push origin main
 ## Release
 
 ```sh
-V="$(node -p "require('./modules/desktop/package.json').version")"
+V="$(node -p "require('./package.json').version")"
 tea gh release create "v$V"
 ```
-
-
-
 
 &nbsp;
 
@@ -184,12 +179,12 @@ tea gh release create "v$V"
 
 [`tea/cli`] will automagically make these available to your environment.
 
-| Project                           |  Version  |
-|-----------------------------------|-----------|
-| nodejs.org                        | =18.16.0  |
-| pnpm.io                           | =7.33.1   |
-| xcfile.dev                        | >=0.4.1 |
-| python.org                        | ^3.11     |
+| Project    | Version  |
+| ---------- | -------- |
+| nodejs.org | =18.16.0 |
+| npmjs.com  | >=9.7.2  |
+| xcfile.dev | >=0.4.1  |
+| python.org | ^3.11    |
 
 [`tea/cli`]: https://github.com/teaxyz/cli
 [`xc`]: https://xcfile.dev

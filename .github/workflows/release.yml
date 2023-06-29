@@ -1,7 +1,7 @@
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
 
 jobs:
   build_desktop:
@@ -27,128 +27,126 @@ jobs:
           - darwin+aarch64
           # - linux+aarch64
     steps:
-    - uses: actions/checkout@v3
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
-    - name: s3 artifact download
-      env:
-        S3_INSTALLER_KEY: ${{ needs.build_desktop.outputs.s3-electron-dist-key }}
-      run: aws s3 cp $S3_INSTALLER_KEY dist.tgz
+      - uses: actions/checkout@v3
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: s3 artifact download
+        env:
+          S3_INSTALLER_KEY: ${{ needs.build_desktop.outputs.s3-electron-dist-key }}
+        run: aws s3 cp $S3_INSTALLER_KEY dist.tgz
 
-    - run: |
-        mkdir dist
-        tar xzf dist.tgz -C dist
+      - run: |
+          mkdir dist
+          tar xzf dist.tgz -C dist
 
-    - name: get .zip of arm64 and x86+64
-      id: app_files
-      working-directory: ./dist
-      run: |
-        ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
-        X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
-        ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
-        X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
-        echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
-        echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
-        echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
-        echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
+      - name: get .zip of arm64 and x86+64
+        id: app_files
+        working-directory: ./dist
+        run: |
+          ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
+          X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
+          ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
+          X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
+          echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
+          echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
+          echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
+          echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
 
-    - name: build platform output
-      id: build_platform
-      env:
-        platform: ${{ matrix.platform }}
-      run: |
-        BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
-        EXTENSION=dmg
-        case $platform in
-          "linux+x86-64")
-            BUILD_PLATFORM="amd64"
-            EXTENSION="deb"
-            ;;
-          "linux+aarch64")
-            BUILD_PLATFORM="aarch64"
-            EXTENSION="deb"
-            ;;
-          "darwin+aarch64")
-            BUILD_PLATFORM="aarch64"
-            EXTENSION="dmg"
-            ;;
-          "darwin+x86-64")
-            BUILD_PLATFORM="x64"
-            EXTENSION="dmg"
-            ;;
-          *)
-            echo "Unknown platform $platform"
-            exit 1
-            ;;
-        esac
-        echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
-        echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
+      - name: build platform output
+        id: build_platform
+        env:
+          platform: ${{ matrix.platform }}
+        run: |
+          BUILD_PLATFORM=$(echo $platform | sed -e "s/darwin+//g" | sed -e "s/linux+//g")
+          EXTENSION=dmg
+          case $platform in
+            "linux+x86-64")
+              BUILD_PLATFORM="amd64"
+              EXTENSION="deb"
+              ;;
+            "linux+aarch64")
+              BUILD_PLATFORM="aarch64"
+              EXTENSION="deb"
+              ;;
+            "darwin+aarch64")
+              BUILD_PLATFORM="aarch64"
+              EXTENSION="dmg"
+              ;;
+            "darwin+x86-64")
+              BUILD_PLATFORM="x64"
+              EXTENSION="dmg"
+              ;;
+            *)
+              echo "Unknown platform $platform"
+              exit 1
+              ;;
+          esac
+          echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
+          echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
 
+      # update and replace latest release bin in s3
+      - name: Set tag
+        id: tag
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
-    # update and replace latest release bin in s3
-    - name: Set tag
-      id: tag
-      run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      # TODO:
+      # - configure correct blockmap and checksum hash on latest-mac.yml
+      - name: cp latest as previous release
+        run: |
+          aws s3 cp \
+            s3://dist.tea.xyz/tea.xyz/gui/tea-latest-arm64.dmg \
+            s3://dist.tea.xyz/tea.xyz/gui/tea-previous-arm64.dmg
+          aws s3 cp \
+            s3://dist.tea.xyz/tea.xyz/gui/tea-latest.dmg \
+            s3://dist.tea.xyz/tea.xyz/gui/tea-previous.dmg
+      - name: publish release
+        run: |
+          cd dist && \
+          aws s3 sync . \
+            "s3://preview.gui.tea.xyz/release/"
+          aws s3 cp $ARM_URL s3://dist.tea.xyz/tea.xyz/gui/tea-latest-arm64.dmg
+          aws s3 cp $X86_URL s3://dist.tea.xyz/tea.xyz/gui/tea-previous-arm64.dmg
+        env:
+          ARM_URL: s3://preview.gui.tea.xyz/release/${{ steps.app_files.outputs.dmg_arm64 }}
+          X86_URL: s3://preview.gui.tea.xyz/release/${{ steps.app_files.outputs.dmg_x86 }}
 
-    # TODO: 
-    # - configure correct blockmap and checksum hash on latest-mac.yml
-    - name: cp latest as previous release
-      run: |
-        aws s3 cp \
-          s3://dist.tea.xyz/tea.xyz/gui/tea-latest-arm64.dmg \
-          s3://dist.tea.xyz/tea.xyz/gui/tea-previous-arm64.dmg
-        aws s3 cp \
-          s3://dist.tea.xyz/tea.xyz/gui/tea-latest.dmg \
-          s3://dist.tea.xyz/tea.xyz/gui/tea-previous.dmg
-    - name: publish release
-      run: |
-        cd dist && \
-        aws s3 sync . \
-          "s3://preview.gui.tea.xyz/release/"
-        aws s3 cp $ARM_URL s3://dist.tea.xyz/tea.xyz/gui/tea-latest-arm64.dmg
-        aws s3 cp $X86_URL s3://dist.tea.xyz/tea.xyz/gui/tea-previous-arm64.dmg
-      env:
-        ARM_URL:  s3://preview.gui.tea.xyz/release/${{ steps.app_files.outputs.dmg_arm64 }}
-        X86_URL:  s3://preview.gui.tea.xyz/release/${{ steps.app_files.outputs.dmg_x86 }}
+      - run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.AWS_GUI_DISTRIBUTION_ID }} \
+            --paths "/release/*"
 
-    - run: |
-        aws cloudfront create-invalidation \
-          --distribution-id ${{ secrets.AWS_GUI_DISTRIBUTION_ID }} \
-          --paths "/release/*"
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Slack Notification ARM64 Build
+        run: ./.github/notify-slack.js
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          PLATFORM: darwin+aarch64
+          VERSION: ${{steps.tag.outputs.tag}}
+          EXT: "${{ steps.build_platform.outputs.extension }}"
+          DOWNLOAD_URL: http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/${{ steps.app_files.outputs.dmg_arm64 }}
 
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 18
-    - name: Slack Notification ARM64 Build
-      run: ./.github/notify-slack.js
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        PLATFORM: darwin+aarch64
-        VERSION: ${{steps.tag.outputs.tag}}
-        EXT: "${{ steps.build_platform.outputs.extension }}"
-        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/${{ steps.app_files.outputs.dmg_arm64 }}
+      - name: Slack Notification X86 Build
+        run: ./.github/notify-slack.js
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          PLATFORM: darwin+x86-64
+          VERSION: ${{steps.tag.outputs.tag}}
+          EXT: ${{ steps.build_platform.outputs.extension }}
+          DOWNLOAD_URL: http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/${{ steps.app_files.outputs.dmg_x86 }}
 
-    - name: Slack Notification X86 Build
-      run: ./.github/notify-slack.js
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        PLATFORM: darwin+x86-64
-        VERSION: ${{steps.tag.outputs.tag}}
-        EXT: ${{ steps.build_platform.outputs.extension }}
-        DOWNLOAD_URL:  http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/${{ steps.app_files.outputs.dmg_x86 }}
-
-    - run: |
-        aws cloudfront create-invalidation \
-          --distribution-id ${{ secrets.AWS_CF_GUI_RELEASE_ID }} \
-          --paths '/*'
-    - name: upload builds
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: |
-          dist/${{ steps.app_files.outputs.dmg_arm64 }}
-          dist/${{ steps.app_files.outputs.dmg_x86 }}
-        
+      - run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.AWS_CF_GUI_RELEASE_ID }} \
+            --paths '/*'
+      - name: upload builds
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            dist/${{ steps.app_files.outputs.dmg_arm64 }}
+            dist/${{ steps.app_files.outputs.dmg_x86 }}

@@ -1,0 +1,16 @@
+.DS_Store
+node_modules
+svelte/build
+svelte/.svelte-kit
+/package
+.env
+.env.*
+!.env.example
+
+# Ignore files for PNPM, NPM and YARN
+package-lock.json
+dist
+coverage/*
+**/*.plist
+svelte/build/*
+electron/dist/*
