@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "paths": {},
+    "importsNotUsedAsValues": "error",
+    "isolatedModules": true,
+    "preserveValueImports": true,
+    "lib": ["esnext", "DOM", "DOM.Iterable"],
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "esnext"
+  },
+  "include": ["./tests/**/*.js", "./tests/**/*.ts", "./tests/**/*.svelte"],
+  "exclude": ["./node_modules/**"]
+}
