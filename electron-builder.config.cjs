@@ -42,8 +42,8 @@ module.exports = {
     ]
   },
   afterSign: async (params) => {
-    const notarize = process.env.NOTARIZE === "true" || process.env.CSC_IDENTITY_AUTO_DISCOVERY === "true";
-    if (process.platform !== "darwin" || !notarize) {
+    const shouldNotarize = process.env.NOTARIZE === "true" || process.env.CSC_IDENTITY_AUTO_DISCOVERY === "true";
+    if (process.platform !== "darwin" || !shouldNotarize) {
       console.log("not notarizing app");
       return;
     }
