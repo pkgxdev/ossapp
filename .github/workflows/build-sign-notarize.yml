@@ -147,7 +147,8 @@ jobs:
   notarize-mac-installers:
     # if: inputs.s3-prefix != 'release' && needs.verify.outputs.is-updated == 'true'
     # TODO: run only for mac, create separate Job for linux
-    needs: [build, verify]
+    # needs: [build, verify]
+    needs: [build]
     runs-on: macos-11
     outputs:
       s3-installers-key: ${{ steps.s3-installers-upload.outputs.s3-key }}
