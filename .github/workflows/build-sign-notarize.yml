@@ -23,47 +23,47 @@ on:
         description: "The S3 build key includes the installer files: [zip, dmg, etc, yml] from notarization strategy done outside of electron"
         value: ${{ jobs.notarize-mac-installers.outputs.s3-installers-key }}
 jobs:
-  verify:
-    runs-on: ubuntu-latest
-    outputs:
-      is-updated: ${{ steps.check_version.outputs.updated }}
-    steps:
-      - uses: teaxyz/setup@v0
-        with:
-          version: 0.35.7
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 5
-      - name: Check if version in package.json was updated
-        id: check_version
-        run: |
-          # Get the current version from package.json
-          CURRENT_VERSION=$(jq -r .version modules/desktop/package.json)
+  # verify:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     is-updated: ${{ steps.check_version.outputs.updated }}
+  #   steps:
+  #     - uses: teaxyz/setup@v0
+  #       with:
+  #         version: 0.35.7
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 5
+  #     - name: Check if version in package.json was updated
+  #       id: check_version
+  #       run: |
+  #         # Get the current version from package.json
+  #         CURRENT_VERSION=$(jq -r .version package.json)
 
-          # Get the list of changed files between HEAD and the previous commit
-          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+  #         # Get the list of changed files between HEAD and the previous commit
+  #         CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
 
-          # If package.json is in the list of changed files, check the old version
-          if echo "$CHANGED_FILES" | grep -q "desktop/package.json"; then
-            OLD_VERSION=$(git show "HEAD^:modules/desktop/package.json" | jq -r .version 2>/dev/null)
-          else
-            OLD_VERSION=$CURRENT_VERSION
-          fi
+  #         # If package.json is in the list of changed files, check the old version
+  #         if echo "$CHANGED_FILES" | grep -q "desktop/package.json"; then
+  #           OLD_VERSION=$(git show "HEAD^:package.json" | jq -r .version 2>/dev/null)
+  #         else
+  #           OLD_VERSION=$CURRENT_VERSION
+  #         fi
 
-          if [[ "$OLD_VERSION" != "$CURRENT_VERSION" ]] && [[ "$CURRENT_VERSION" > "$OLD_VERSION" ]]; then
-            echo "updated=true" >> $GITHUB_OUTPUT
-          else
-            echo "updated=false" >> $GITHUB_OUTPUT
-          fi
-      - name: Check if PR is from fork
-        id: check-fork
-        run: |
-          echo "::set-output name=isFork::$(if [ \"${{ github.event.pull_request.head.repo.full_name }}\" != \"${{ github.repository }}\" ]; then echo true; else echo false; fi)"
-        shell: bash
+  #         if [[ "$OLD_VERSION" != "$CURRENT_VERSION" ]] && [[ "$CURRENT_VERSION" > "$OLD_VERSION" ]]; then
+  #           echo "updated=true" >> $GITHUB_OUTPUT
+  #         else
+  #           echo "updated=false" >> $GITHUB_OUTPUT
+  #         fi
+  #     - name: Check if PR is from fork
+  #       id: check-fork
+  #       run: |
+  #         echo "::set-output name=isFork::$(if [ \"${{ github.event.pull_request.head.repo.full_name }}\" != \"${{ github.repository }}\" ]; then echo true; else echo false; fi)"
+  #       shell: bash
 
   build:
-    needs: verify
-    if: needs.verify.outputs.is-updated == 'true'
+    # needs: verify
+    # if: needs.verify.outputs.is-updated == 'true'
     runs-on: macos-latest
     outputs:
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
@@ -81,26 +81,20 @@ jobs:
         if: startsWith(inputs.platform, 'linux') || matrix.platform.name == 'darwin+x86-64'
         uses: actions/cache@v3
         with:
-          key: ${{ runner.os }}-pnpm
-          path: |
-            ./pnpm
-            ./.pnpm-store
-            ./node_modules
-            ./modules/desktop/node_modules
-            ./modules/ui/node_modules
+          key: ${{ runner.os }}-npm
+          path: ./node_modules
       - name: cache electron build
         uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-electron
           path: |
-            ./modules/desktop/.svelte-kit
-            ./modules/desktop/build
+            ./svelte/.svelte-kit
+            ./svelte/build
 
       - name: build dev
         if: inputs.s3-prefix != 'release'
         run: tea -SE xc dist
         env:
-          SYNC_I18N: 1
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
           DEBUG_BUILD: ${{ inputs.debug }}
           USE_HARD_LINKS: false
@@ -115,7 +109,6 @@ jobs:
         if: inputs.s3-prefix == 'release'
         run: tea -SE xc dist
         env:
-          SYNC_I18N: 1
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
           DEBUG_BUILD: ${{ inputs.debug }}
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
@@ -133,7 +126,7 @@ jobs:
       - name: build artifacts for publishing and notarization
         run: |
           mkdir -p target
-          cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
+          cp ./dist/*.{zip,dmg,yml,blockmap} ./target/
           tar -czvf artifacts.tgz -C ./target/ .
 
       - uses: aws-actions/configure-aws-credentials@v1
@@ -152,7 +145,7 @@ jobs:
           echo key=$S3_KEY >> $GITHUB_OUTPUT
 
   notarize-mac-installers:
-    if: inputs.s3-prefix != 'release' && needs.verify.outputs.is-updated == 'true'
+    # if: inputs.s3-prefix != 'release' && needs.verify.outputs.is-updated == 'true'
     # TODO: run only for mac, create separate Job for linux
     needs: [build, verify]
     runs-on: macos-11
@@ -174,12 +167,7 @@ jobs:
         uses: actions/cache@v3
         with:
           key: darwin+x86-64-pnpm
-          path: |
-            ./pnpm
-            ./.pnpm-store
-            ./node_modules
-            ./modules/desktop/node_modules
-            ./modules/ui/node_modules
+          path: ./node_modules
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}

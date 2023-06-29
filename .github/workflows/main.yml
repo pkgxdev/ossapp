@@ -4,30 +4,9 @@ on:
   push:
     branches:
       - main
-
+      - flatten
 jobs:
-  changes:
-    runs-on: ubuntu-latest
-    outputs:
-      desktop: ${{steps.desktop.outputs.src}}
-      preview_folder: ${{steps.preview.outputs.folder}}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: dorny/paths-filter@v2
-        id: desktop
-        with:
-          filters: |
-            src:
-              - 'modules/desktop/**'
-              - 'modules/ui/**'
-              - '.github/**'
-      - name: get s3 preview folder
-        id: preview
-        run: echo "folder=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
-
   build_desktop:
-    needs: changes
-    # if: needs.changes.outputs.desktop == 'true'
     strategy:
       matrix:
         platform:
