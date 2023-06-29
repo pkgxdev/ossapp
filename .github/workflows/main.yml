@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - flatten
 jobs:
   build_desktop:
     strategy:
@@ -110,7 +109,7 @@ jobs:
       - name: get version
         id: get-version
         run: |
-          echo "version=$(node -p "require('./modules/desktop/package.json').version")" >> $GITHUB_OUTPUT
+          echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Slack Notification ARM64
         run: ./.github/notify-slack.js
