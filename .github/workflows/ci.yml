@@ -32,17 +32,6 @@ jobs:
         run: |
           echo "is-fork=$(if [ \"${{ github.event.pull_request.head.repo.full_name }}\" != \"${{ github.repository }}\" ]; then echo true; else echo false; fi)" >> $GITHUB_OUTPUT
         shell: bash
-  no_preview:
-    needs: changes
-    if: needs.changes.outputs.desktop == 'false' && needs.changes.outputs.is-fork == 'false'
-    runs-on: ubuntu-latest
-    steps:
-      - name: comment preview site
-        uses: mshick/add-pr-comment@v2
-        with:
-          message-id: preview-comment-${{needs.changes.outputs.preview_folder}}
-          message: |
-            no preview or changes related to UI
   test:
     needs: changes
     runs-on: macos-latest
@@ -50,13 +39,14 @@ jobs:
       - uses: teaxyz/setup@v0
         with:
           version: 0.35.7
+      - uses: actions/checkout@v3
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
           key: test-mac
           path: ./node_modules
       - name: env file
-        run: cp svelte/.env.example svelte/.env
+        run: cp .env.example .env
       - name: install app dependencies
         run: tea -E xc setup
       - name: test build electron main process
@@ -86,7 +76,7 @@ jobs:
           key: e2e-macos
           path: ./node_modules
       - name: env file
-        run: cp modules/desktop/.env.example modules/desktop/.env
+        run: cp .env.example .env
       - name: install app dependencies
         run: tea -E xc setup
       - name: test build electron main process
@@ -138,7 +128,7 @@ jobs:
           echo "version=$version$postfix" >> $GITHUB_OUTPUT
 
       - name: build
-        run: npm run build
+        run: xc build:lite
         env:
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           BUILD_FOR: preview
