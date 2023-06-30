@@ -17,11 +17,11 @@ on:
         type: string
     outputs:
       s3-electron-dist-key:
-        description: 'The S3 build key includes the installer files: [zip, dmg, etc, yml] from electron'
+        description: "The S3 build key includes the installer files: [zip, dmg, etc, yml] from electron"
         value: ${{ jobs.build.outputs.s3-artifacts-key }}
       s3-custom-notarized-installers-key:
-        description: 'The S3 build key includes the installer files: [zip, dmg, etc, yml] from notarization strategy done outside of electron'
-        value: ${{ jobs.notarize-mac-installers.outputs.s3-installers-key }}
+        description: "The S3 build key includes the installer files: [zip, dmg, etc, yml] from notarization strategy done outside of electron"
+        value: ${{ jobs.build.outputs.s3-artifacts-key }}
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -38,14 +38,14 @@ jobs:
         id: check_version
         run: |
           # Get the current version from package.json
-          CURRENT_VERSION=$(jq -r .version modules/desktop/package.json)
+          CURRENT_VERSION=$(jq -r .version package.json)
 
           # Get the list of changed files between HEAD and the previous commit
           CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
 
           # If package.json is in the list of changed files, check the old version
-          if echo "$CHANGED_FILES" | grep -q "desktop/package.json"; then
-            OLD_VERSION=$(git show "HEAD^:modules/desktop/package.json" | jq -r .version 2>/dev/null)
+          if echo "$CHANGED_FILES" | grep -q "package.json"; then
+            OLD_VERSION=$(git show "HEAD^:package.json" | jq -r .version 2>/dev/null)
           else
             OLD_VERSION=$CURRENT_VERSION
           fi
@@ -62,7 +62,7 @@ jobs:
         shell: bash
 
   build:
-    needs: verify
+    # needs: verify
     if: needs.verify.outputs.is-updated == 'true'
     runs-on: macos-latest
     outputs:
@@ -81,41 +81,20 @@ jobs:
         if: startsWith(inputs.platform, 'linux') || matrix.platform.name == 'darwin+x86-64'
         uses: actions/cache@v3
         with:
-          key: ${{ runner.os }}-pnpm
-          path: |
-            ./pnpm
-            ./.pnpm-store
-            ./node_modules
-            ./modules/desktop/node_modules
-            ./modules/ui/node_modules
+          key: ${{ runner.os }}-npm
+          path: ./node_modules
       - name: cache electron build
         uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-electron
           path: |
-            ./modules/desktop/.svelte-kit
-            ./modules/desktop/build
+            ./svelte/.svelte-kit
+            ./svelte/build
 
-      - name: build dev
-        if: inputs.s3-prefix != 'release'
+      - name: build
         run: tea -SE xc dist
         env:
-          SYNC_I18N: 1
-          PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
-          DEBUG_BUILD: ${{ inputs.debug }}
-          USE_HARD_LINKS: false
-          CSC_FOR_PULL_REQUEST: true
-          CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-          CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-          CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
-          PUBLISH_URL: "https://gui.tea.xyz/dev"
-
-      # slower build but dmg output is much nicer looking
-      - name: build release
-        if: inputs.s3-prefix == 'release'
-        run: tea -SE xc dist
-        env:
-          SYNC_I18N: 1
+          NOTARIZE: true
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
           DEBUG_BUILD: ${{ inputs.debug }}
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
@@ -129,11 +108,12 @@ jobs:
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           PUSHY_APP_ID: ${{ secrets.PUSHY_APP_ID }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
 
       - name: build artifacts for publishing and notarization
         run: |
           mkdir -p target
-          cp ./modules/desktop/dist/*.{zip,dmg,yml,blockmap} ./target/
+          cp ./dist/*.{zip,dmg,yml,blockmap} ./target/
           tar -czvf artifacts.tgz -C ./target/ .
 
       - uses: aws-actions/configure-aws-credentials@v1
@@ -150,192 +130,3 @@ jobs:
           S3_KEY=s3://preview.gui.tea.xyz/$prefix/artifacts.tgz
           aws s3 cp artifacts.tgz $S3_KEY
           echo key=$S3_KEY >> $GITHUB_OUTPUT
-
-  notarize-mac-installers:
-    if: inputs.s3-prefix != 'release' && needs.verify.outputs.is-updated == 'true'
-    # TODO: run only for mac, create separate Job for linux
-    needs: [build, verify]
-    runs-on: macos-11
-    outputs:
-      s3-installers-key: ${{ steps.s3-installers-upload.outputs.s3-key }}
-    strategy:
-      matrix:
-        platform:
-          # no need for x86-64
-          - darwin+aarch64
-    steps:
-    - uses: teaxyz/setup@v0
-      with:
-        version: 0.35.7
-    - uses: actions/checkout@v3
-    - run: rm -rf ./*.{dmg,zip} || true
-
-    - name: cache node_modules build
-      uses: actions/cache@v3
-      with:
-        key: darwin+x86-64-pnpm
-        path: |
-          ./pnpm
-          ./.pnpm-store
-          ./node_modules
-          ./modules/desktop/node_modules
-          ./modules/ui/node_modules
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
-
-    - name: s3 artifact download
-      env:
-        S3_KEY: ${{ needs.build.outputs.s3-artifacts-key }}
-      run: aws s3 cp $S3_KEY artifacts.tgz
-
-    # prepare folders
-    - run: mkdir dist
-    - run: tar xzf artifacts.tgz -C dist
-
-    - name: get .zip of arm64 and x86+64
-      id: app_files
-      working-directory: ./dist
-      run: |
-        ARM64_ZIP=$(ls | grep -Ev blockmap | grep arm64-mac.zip)
-        X86_ZIP=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep mac.zip)
-        ARM64_DMG=$(ls | grep -Ev blockmap | grep arm64.dmg)
-        X86_DMG=$(ls | grep -Ev blockmap | grep -Ev arm64 | grep dmg)
-        echo zip_arm64=$ARM64_ZIP >> $GITHUB_OUTPUT
-        echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
-        echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
-        echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
-
-    - name: Codesign app bundle
-      env: 
-        MACOS_CERTIFICATE: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-        MACOS_CERTIFICATE_PWD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-        MACOS_CERTIFICATE_NAME: ${{ secrets.APPLE_IDENTITY }}
-        MACOS_CI_KEYCHAIN_PWD: ${{ secrets.MACOS_CI_KEYCHAIN_PWD }}
-        ARM64_ZIP: ${{ steps.app_files.outputs.zip_arm64 }}
-        X86_ZIP: ${{ steps.app_files.outputs.zip_x86 }}
-      run: |
-        # Turn our base64-encoded certificate back to a regular .p12 file
-        
-        echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
-
-        # We need to create a new keychain, otherwise using the certificate will prompt
-        # with a UI dialog asking for the certificate password, which we can't
-        # use in a headless CI environment
-        
-        security create-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain 
-        security default-keychain -s build.keychain
-        security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-        security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
-        security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-
-        # skip: codesigning might need to move this inside the electron-builder codesigning step
-        # /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$ARM64_ZIP -v
-        # /usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --options runtime dist/$X86_ZIP -v
-    # Notarize. Can take up to 10 minutes (and fail) asynchronously
-    # sometimes this might fail because exact the same zip has been uploaded already
-
-    - name: "Notarize and Staple app bundle"
-      # Extract the secrets we defined earlier as environment variables
-      env:
-        PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.APPLE_ID }}
-        PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-        PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.APPLE_PASSWORD }}
-        MACOS_CI_KEYCHAIN_PWD: ${{ secrets.MACOS_CI_KEYCHAIN_PWD }}
-        ARM64_ZIP: ${{ steps.app_files.outputs.zip_arm64 }}
-        X86_ZIP: ${{ steps.app_files.outputs.zip_x86 }}
-      run: |
-        # Store the notarization credentials so that we can prevent a UI password dialog
-        # from blocking the CI
-
-        echo "Create keychain profile"
-        xcrun notarytool store-credentials "notarytool-profile" --apple-id "$PROD_MACOS_NOTARIZATION_APPLE_ID" --team-id "$PROD_MACOS_NOTARIZATION_TEAM_ID" --password "$PROD_MACOS_NOTARIZATION_PWD"
-        security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
-        echo "Notarize app"
-        xcrun notarytool submit dist/$ARM64_ZIP --keychain-profile "notarytool-profile" --wait
-        xcrun notarytool submit dist/$X86_ZIP --keychain-profile "notarytool-profile" --wait
-
-        echo "Unzipping files"
-        unzip dist/$ARM64_ZIP -d dist/mac-arm64
-        unzip dist/$X86_ZIP -d dist/mac
-
-        # TODO: might need to move this to the electron-builder codesigning step from dmg is created
-        # echo "Doing staple"
-        # xcrun stapler staple "dist/mac/tea.app"
-        # xcrun stapler staple "dist/mac-arm64/tea.app"
-
-        # echo "Rezip files"
-        # rm dist/$ARM64_ZIP
-        # rm dist/$X86_ZIP
-        # tea zip -r dist/$ARM64_ZIP dist/mac-arm64/tea.app
-        # tea zip -r dist/$X86_ZIP dist/mac/tea.app
-
-    # prepare for DMG creation
-    - name: prepare installer folders
-      run: |
-        mkdir x86_installer && mkdir arm64_installer
-        mv dist/mac-arm64/* arm64_installer
-        mv dist/mac/* x86_installer
-
-    # building this locally workds and the installer looks nice
-    # BUT, when --sandbox-safe is added to the create-dmg command, the installer UI is basic
-    # TODO: figure out issue with --sandbox-safe or try a different create-dmg package
-    - name: create x86 dmg
-      run: |
-        tea +github.com/create-dmg/create-dmg create-dmg \
-        --volname "Tea Installer" \
-        --window-pos 200 120 \
-        --window-size 684 465 \
-        --icon-size 128 \
-        --icon "tea.app" 158 219 \
-        --volicon "./modules/desktop/electron/icon.icns" \
-        --background "./modules/desktop/electron/bg.png" \
-        --hide-extension "tea.app" \
-        --app-drop-link 528 219 \
-        --sandbox-safe \
-        "$filename" \
-        "$installer_folder"
-      env:
-        filename: ${{ steps.app_files.outputs.dmg_x86 }}
-        installer_folder: x86_installer/
-    - name: create arm64 dmg
-      run: |
-        tea +github.com/create-dmg/create-dmg create-dmg \
-        --volname "Tea Installer" \
-        --window-pos 200 120 \
-        --window-size 684 465 \
-        --icon-size 128 \
-        --icon "tea.app" 158 219 \
-        --volicon "./modules/desktop/electron/icon.icns" \
-        --background "./modules/desktop/electron/bg.png" \
-        --hide-extension "tea.app" \
-        --app-drop-link 528 219 \
-        --sandbox-safe \
-        "$filename" \
-        "$installer_folder"
-      env:
-        filename: ${{ steps.app_files.outputs.dmg_arm64 }}
-        installer_folder: arm64_installer/
-
-    # finalize dist artifacts
-    - name: replace old DMG files in dist folder
-      run: |
-        mv $x86dmg dist
-        mv $arm64dmg dist
-        tea -E pnpm install
-        tea -E node .github/create-correct-release-yaml.js ./dist
-        tar -czvf dist.tgz -C dist/ .
-      env:
-        x86dmg: ${{ steps.app_files.outputs.dmg_x86 }}
-        arm64dmg: ${{ steps.app_files.outputs.dmg_arm64 }}
-
-    - name: s3 installers upload
-      id: s3-installers-upload
-      env:
-        prefix: ${{ inputs.s3-prefix }}
-      run: |
-        export S3_INSTALLERS_KEY=s3://preview.gui.tea.xyz/$prefix/dist.tgz
-        aws s3 cp dist.tgz $S3_INSTALLERS_KEY
-        echo s3-key=$S3_INSTALLERS_KEY >> $GITHUB_OUTPUT

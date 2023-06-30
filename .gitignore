@@ -4,3 +4,7 @@ yarn-error.log
 .pnpm-store
 target
 copy.json
+electron/dist
+electrin/config.json
+dist
+.env

@@ -1,5 +1,5 @@
-name: 'build-gui-linux'
-description: 'Tea GUI builder for linux'
+name: "build-gui-linux"
+description: "Tea GUI builder for linux"
 # TODO: cache
 # inputs:
 #   who-to-greet:  # id of input
@@ -10,8 +10,8 @@ description: 'Tea GUI builder for linux'
 #   time: # id of output
 #     description: 'The time we greeted you'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"
   env:
     CARGO_TARGET_DIR: /github/workspace/target
   args:
