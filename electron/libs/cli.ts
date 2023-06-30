@@ -1,5 +1,5 @@
 import { spawn } from "child_process";
-import { getGuiPath } from "./tea-dir";
+import { getGuiPath, getTeaPath } from "./tea-dir";
 import fs from "fs";
 import path from "path";
 import { hooks } from "@teaxyz/lib";
@@ -8,6 +8,8 @@ import log from "./logger";
 import { MainWindowNotifier } from "./types";
 import { Installation, porcelain } from "@teaxyz/lib";
 import type { Resolution } from "@teaxyz/lib/script/src/plumbing/resolve";
+import { GUIPackage } from "../../svelte/src/libs/types";
+import { getPantryDetails } from "./pantry";
 
 export async function installPackage(
   full_name: string,
@@ -57,24 +59,21 @@ async function installTeaCli() {
   return teaPkg.path.join("bin/tea");
 }
 
-export async function openPackageEntrypointInTerminal(pkg: string) {
+export async function openPackageEntrypointInTerminal(pkg: GUIPackage) {
   const cliBinPath = await installTeaCli();
-  log.info(`opening package ${pkg} with tea cli at ${cliBinPath}`);
+  // look up the entrypoint for the package again in case it changed. This makes
+  // hacking on the entrypoint more ergonomic
+  const { entrypoint } = await getPantryDetails(pkg.full_name);
 
-  let sh = `"${cliBinPath}" --sync --env=false +${pkg} `;
-  switch (pkg) {
-    case "github.com/AUTOMATIC1111/stable-diffusion-webui":
-      sh += `~/.tea/${pkg}/v*/entrypoint.sh`;
-      break;
-    case "cointop.sh":
-      sh += "cointop";
-      break;
-    default:
-      sh += "sh";
+  let sh = "sh";
+  if (entrypoint) {
+    sh = path.join(getTeaPath(), `${pkg.full_name}/v*`, entrypoint);
   }
 
-  const scriptPath = await createCommandScriptFile(sh);
+  const cmd = `"${cliBinPath}" --env=false +${pkg.full_name} "${sh}"`;
+  log.info(`opening package ${pkg.full_name} in terminal with command: ${cmd}`);
 
+  const scriptPath = await createCommandScriptFile(cmd);
   try {
     let stdout = "";
     let stderr = "";

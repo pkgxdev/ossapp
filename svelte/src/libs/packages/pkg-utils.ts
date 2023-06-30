@@ -1,5 +1,5 @@
 import log from "$libs/logger";
-import type { GUIPackage } from "$libs/types";
+import { PackageStates, type GUIPackage } from "$libs/types";
 import SemVer from "@teaxyz/lib/semver";
 import { t } from "$libs/translations";
 
@@ -55,7 +55,9 @@ export const isInstalling = (pkg: GUIPackage) => {
   );
 };
 
-export const fixPackageName = (title: string) => {
+// Get the proper display name for a package and replace dashes with non-breaking dashes
+export const getPackageName = (pkg: GUIPackage) => {
+  const title = pkg.display_name || pkg.name;
   return title.replace("-", "\u2011");
 };
 
@@ -85,4 +87,38 @@ export const getPackageBadgeText = (pkg: GUIPackage) => {
   // UPDATED is a "pseudo-state" that overrides other states
   const state = packageWasUpdated(pkg) ? "UPDATED" : pkg.state;
   return t.get(`package.cta-${state}`);
+};
+
+export const newLocalPackage = (
+  full_name: string,
+  installed_versions: string[],
+  dev: boolean
+): GUIPackage => {
+  const prefix = `https://gui.tea.xyz/${dev ? "dev" : "prod"}/localplaceholder`;
+
+  return {
+    full_name: full_name,
+    name: full_name.split("/").pop() || "",
+    slug: full_name.replace(/[^\w\s]/gi, "_").toLocaleLowerCase(),
+    state: PackageStates.INSTALLED,
+    version: installed_versions[0],
+    installed_versions: installed_versions,
+    maintainer: "",
+    homepage: "",
+    created: new Date(),
+    last_modified: new Date(),
+    dl_count: 0,
+    installs: 0,
+    bottles: [],
+    categories: [],
+    manual_sorting: 0,
+    card_layout: "bottom",
+    keywords: [],
+    description: "",
+    short_description: "",
+    is_local: true,
+    image_512_url: `${prefix}/512x512.webp`,
+    image_128_url: `${prefix}/128x128.webp`,
+    image_added_at: new Date()
+  } as GUIPackage;
 };

@@ -170,6 +170,12 @@ export type GUIPackage = Package & {
   image_512_url?: string;
   image_128_url?: string;
   displayState?: PackageDisplayState | null;
+  // pantry properties
+  display_name?: string;
+  entrypoint?: string;
+  provides?: string[];
+  // a flag to indicate if the package is local and not from the pantry
+  is_local?: boolean;
 };
 
 export type Course = {
@@ -216,7 +222,8 @@ export enum SideMenuOptions {
   featured = "featured",
   essentials = "essentials",
   starstruck = "starstruck",
-  made_by_tea = "made_by_tea"
+  made_by_tea = "made_by_tea",
+  local = "local_packages"
 }
 
 export type InstalledPackage = Required<Pick<GUIPackage, "full_name" | "installed_versions">>;

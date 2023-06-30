@@ -406,7 +406,7 @@ export const getAutoUpdateStatus = async (): Promise<AutoUpdateStatus> => {
   return { status: "up-to-date" };
 };
 
-export async function openPackageEntrypointInTerminal(_pkg: string) {
+export async function openPackageEntrypointInTerminal(_pkg: GUIPackage) {
   //noop
 }
 
@@ -423,3 +423,11 @@ export const stopMonitoringTeaDir = async () => {
 };
 
 export const getHeaders = async (_path: string) => ({});
+
+export const getPantryDetails = async (fullName: string) => {
+  return {
+    display_name: "display-name",
+    entrypoint: "entrypoint.sh",
+    provides: ["bin/1", "bin/2"]
+  };
+};

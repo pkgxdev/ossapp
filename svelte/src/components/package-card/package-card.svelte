@@ -6,7 +6,7 @@
   import BgImage from "./bg-image.svelte";
   import PackageInstallButton from "$components/package-install-button/package-install-button.svelte";
   import PackageInstalledBadge from "$components/package-install-button/package-installed-badge.svelte";
-  import { fixPackageName } from "$libs/packages/pkg-utils";
+  import { getPackageName } from "$libs/packages/pkg-utils";
   import InstallResultOverlay from "$components/install-result-overlay/install-result-overlay.svelte";
 
   export let pkg: GUIPackage;
@@ -51,7 +51,7 @@
             {#if layout === "bottom"}
               <div class="flex items-center">
                 <h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">
-                  {fixPackageName(pkg.name)}
+                  {getPackageName(pkg)}
                 </h3>
                 {#if pkg.state === PackageStates.INSTALLED}
                   <i class="icon-check-circle-o mb-1 ml-2 flex text-2xl text-[#00ffd0]" />
@@ -63,7 +63,7 @@
             {:else}
               <div class="mb-4 flex items-center">
                 <h3 class="text-bold font-mona line-clamp-1 text-3xl font-bold text-white">
-                  {fixPackageName(pkg.name)}
+                  {getPackageName(pkg)}
                 </h3>
                 {#if pkg.state === PackageStates.INSTALLED}
                   <i class="icon-check-circle-o mb-1 ml-2 flex text-3xl text-[#00ffd0]" />
