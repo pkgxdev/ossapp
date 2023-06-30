@@ -62,7 +62,7 @@ jobs:
         shell: bash
 
   build:
-    # needs: verify
+    needs: verify
     if: needs.verify.outputs.is-updated == 'true'
     runs-on: macos-latest
     outputs:
