@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { derived, writable } from "svelte/store";
 import type { GUIPackage, InstalledPackage, Packages } from "$libs/types";
 import { PackageStates, NotificationType } from "$libs/types";
@@ -16,12 +17,18 @@ import {
   getInstalledVersionsForPackage,
   monitorTeaDir,
   stopMonitoringTeaDir,
-  isDev
+  isDev,
+  getPantryDetails
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
 import { trackInstall, trackInstallFailed } from "$libs/analytics";
-import { addInstalledVersion, isInstalling, packageWasUpdated } from "$libs/packages/pkg-utils";
+import {
+  addInstalledVersion,
+  isInstalling,
+  newLocalPackage,
+  packageWasUpdated
+} from "$libs/packages/pkg-utils";
 import withDebounce from "$libs/utils/debounce";
 import { trimGithubSlug } from "$libs/github";
 import { notificationStore } from "$libs/stores";
@@ -57,6 +64,13 @@ const updateAllPackages = (guiPkgs: GUIPackage[]) => {
       pkgs.packages[pkg.full_name] = { ...oldPkg, ...pkg };
     });
     setBadgeCountFromPkgs(pkgs);
+    return pkgs;
+  });
+};
+
+const addPackage = (pkg: GUIPackage) => {
+  packageMap.update((pkgs) => {
+    pkgs.packages[pkg.full_name] = pkg;
     return pkgs;
   });
 };
@@ -190,17 +204,24 @@ const refreshPackages = async () => {
   // initialize Fuse index for fuzzy search
   indexPackages(guiPkgs);
 
+  // update installed package states and add any local packages to the list
+  const pkgMap = _.keyBy(guiPkgs, "full_name");
   try {
     const installedPkgs: InstalledPackage[] = await getInstalledPackages();
 
     log.info("updating state of packages");
-    for (const pkg of guiPkgs) {
-      const iPkg = installedPkgs.find((p) => p.full_name === pkg.full_name);
-      if (iPkg) {
+    for (const iPkg of installedPkgs) {
+      const pkg = pkgMap[iPkg.full_name];
+      if (pkg) {
         pkg.installed_versions = iPkg.installed_versions;
         updatePackage(pkg.full_name, {
           installed_versions: iPkg.installed_versions
         });
+      } else {
+        log.info(`Adding local package ${iPkg.full_name}`);
+        const localPkg = newLocalPackage(iPkg.full_name, iPkg.installed_versions, isDev);
+        pkgMap[localPkg.full_name] = localPkg;
+        addPackage(localPkg);
       }
     }
   } catch (error) {
@@ -211,6 +232,16 @@ const refreshPackages = async () => {
     await withRetry(syncPantry);
   } catch (err) {
     log.error(err);
+  }
+
+  // get pantry data for each package
+  for (const pkg of Object.values(pkgMap)) {
+    try {
+      const { display_name, provides, entrypoint } = await getPantryDetails(pkg.full_name);
+      updatePackage(pkg.full_name, { display_name, provides, entrypoint });
+    } catch (error) {
+      log.error(`failed to get pantry details for package: ${pkg.full_name}`, error);
+    }
   }
 
   refreshTimeoutId = setTimeout(() => refreshPackages(), packageRefreshInterval); // refresh every hour

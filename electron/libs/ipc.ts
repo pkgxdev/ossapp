@@ -8,7 +8,7 @@ import {
   stopMonitoringTeaDir
 } from "./tea-dir";
 import { readSessionData, writeSessionData, pollAuth } from "./auth";
-import type { Packages, Session } from "../../svelte/src/libs/types";
+import type { Packages, Session, GUIPackage } from "../../svelte/src/libs/types";
 import log from "./logger";
 import { syncLogsAt } from "./v1-client";
 import { installPackage, openPackageEntrypointInTerminal, syncPantry } from "./cli";
@@ -20,6 +20,7 @@ import { nanoid } from "nanoid";
 import { MainWindowNotifier } from "./types";
 import { unsubscribeToPackageTopic } from "./push-notification";
 import { getHeaders } from "./v1-client";
+import { getPantryDetails } from "./pantry";
 
 export type HandlerOptions = {
   // A function to call back to the current main
@@ -94,11 +95,11 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
   });
 
   ipcMain.handle("open-terminal", async (_, data) => {
-    const { pkg } = data as { pkg: string };
+    const { pkg } = data as { pkg: GUIPackage };
     try {
       // TODO: detect if mac or linux
       // current openTerminal is only design for Mac
-      log.info("open tea entrypoint in terminal for pkg:", pkg);
+      log.info("open tea entrypoint in terminal for pkg:", pkg.full_name);
       await openPackageEntrypointInTerminal(pkg);
     } catch (error) {
       log.error(error);
@@ -257,6 +258,14 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
     } catch (error) {
       log.error(error);
       return {};
+    }
+  });
+
+  ipcMain.handle("get-pantry-details", async (_event, full_name: string) => {
+    try {
+      return await getPantryDetails(full_name);
+    } catch (error) {
+      return error;
     }
   });
 }

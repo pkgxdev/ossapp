@@ -14,7 +14,11 @@
       "cta-UPDATING": "UPDATING",
       "cta-UPDATED": "UPDATED",
       "cta-PRUNE": "PRUNE",
-      "cta-PRUNING": "PRUNING"
+      "cta-PRUNING": "PRUNING",
+      "open": "OPEN",
+      "open-in-terminal": "OPEN IN TERMINAL",
+      "local-package": "local package",
+      "not-in-pantry": "not yet added to pantry"
     },
     "footer": {
       "quick-links-title": "quick links",
@@ -63,7 +67,8 @@
       "featured": "Featured",
       "essentials": "Essentials",
       "starstruck": "Starstruck Heavyweights",
-      "made_by_tea": "made by tea"
+      "made_by_tea": "made by tea",
+      "local_packages": "Local Packages"
     },
     "tags": {
       "discover": "discover",
@@ -76,7 +81,8 @@
       "featured": "Featured",
       "essentials": "Essentials",
       "starstruck": "Starstruck",
-      "made_by_tea": "Made by tea"
+      "made_by_tea": "Made by tea",
+      "local_packages": "Local Packages"
     }
   }
 }
