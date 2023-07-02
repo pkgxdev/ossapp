@@ -30,7 +30,7 @@
     />
     <hr />
     <MenuButton
-      label="installed"
+      label={$t("side-menu-title.installed").toLowerCase()}
       icon="tea-checkmark"
       active={activeOption === SideMenuOptions.installed}
       on:click={() => goto(`/?tab=${SideMenuOptions.installed}`)}
