@@ -1,0 +1,88 @@
+{
+  "id": "ru",
+  "label": "Русский",
+  "translations": {
+    "store-search-placeholder": "искать пакеты",
+    "package": {
+      "update-all": "ОБНОВИТЬ ВСЕ",
+      "cta-AVAILABLE": "УСТАНОВИТЬ",
+      "cta-INSTALLED": "УСТАНОВЛЕН",
+      "cta-INSTALLING": "УСТАНАВЛИВАЕТСЯ",
+      "cta-UNINSTALLED": "ПЕРЕУСТАНОВИТЬ",
+      "cta-UNINSTALL": "УДАЛИТЬ",
+      "cta-NEEDS_UPDATE": "ОБНОВИТЬ",
+      "cta-UPDATING": "ОБНОВЛЯЕТСЯ",
+      "cta-UPDATED": "ОБНОВЛЁН",
+      "cta-PRUNE": "ОЧИСТИТЬ",
+      "cta-PRUNING": "ОЧИЩАЕТСЯ",
+      "open": "ОТКРЫТЬ",
+      "open-in-terminal": "ОТКРЫТЬ В ТЕРМИНАЛЕ",
+      "local-package": "локальный пакет",
+      "not-in-pantry": "ещё не добавлен в pantry"
+    },
+    "footer": {
+      "quick-links-title": "ссылки",
+      "about-tea-store": "о магазине tea",
+      "report-a-problem": "сообщить о проблеме",
+      "visit-website": "посетить tea.xyz",
+      "terms-services": "условия & услуги",
+      "privacy-policy": "политика конфиденциальности"
+    },
+    "documentation": {
+      "title": "документация",
+      "workshops": "мастерские"
+    },
+    "view-all": "посмотреть все",
+    "sorting": {
+      "label": "Сортировать по",
+      "popularity": "Самым популярным",
+      "most-recent": "Недавним"
+    },
+    "common": {
+      "home": "дом",
+      "all": "Все",
+      "articles": "Статьи",
+      "workshops": "Мастерские",
+      "details": "подробности",
+      "versions": "версии",
+      "metadata": "Метаданные",
+      "homepage": "Домашняя страница",
+      "documentation": "Документация",
+      "github-repository": "Репозиторий на Github",
+      "contributors": "Участники",
+      "view-on-github": "ПОСМОТРЕТЬ НА GITHUB"
+    },
+    "notification": {
+      "gui-downloading": "Новый tea gui({{version}}) загружается. Пожалуйста, не закрывайте приложение.",
+      "gui-downloaded": "Новый tea gui({{version}}) доступен. Перезапустите приложение для обновления."
+    },
+    "side-menu-title": {
+      "discover": "исследовать",
+      "all": "Все Пакеты",
+      "installed": "Установленные Пакеты",
+      "installed_updates_available": "Доступные Обновления",
+      "recently_updated": "Недавно Обновлённые",
+      "new_packages": "Новые Пакеты",
+      "popular": "Популярные",
+      "featured": "Избранные",
+      "essentials": "Базовые",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "сделано tea",
+      "local_packages": "Локальные Пакеты"
+    },
+    "tags": {
+      "discover": "исследовать",
+      "all": "все пакеты",
+      "installed": "установленные",
+      "installed_updates_available": "Доступные обновления",
+      "recently_updated": "Недавно обновлённые",
+      "new_packages": "Новые пакеты",
+      "popular": "Популярные",
+      "featured": "Избранные",
+      "essentials": "Базовые",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Сделано tea",
+      "local_packages": "Локальные Пакеты"
+    }
+  }
+}
