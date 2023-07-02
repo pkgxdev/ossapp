@@ -3,6 +3,7 @@ import i18n from "sveltekit-i18n";
 // import new languages json here
 import en from "./languages/en.json";
 import de from "./languages/de.json";
+import ru from "./languages/ru.json";
 
 type Language = { [lang: string]: string };
 type Translation = typeof en.translations & {
@@ -10,7 +11,7 @@ type Translation = typeof en.translations & {
 };
 
 // add new language json object here
-const languages = [en, de];
+const languages = [en, de, ru];
 
 const langs: { [lang: string]: string } = {};
 languages.forEach((lang) => {
