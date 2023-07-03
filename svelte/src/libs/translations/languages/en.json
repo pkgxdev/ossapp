@@ -47,14 +47,18 @@
       "all": "All",
       "articles": "Articles",
       "workshops": "Workshops",
-      "details": "details",
-      "versions": "versions",
       "metadata": "Metadata",
       "homepage": "Homepage",
       "documentation": "Documentation",
       "github-repository": "Github Repository",
       "contributors": "Contributors",
       "view-on-github": "VIEW ON GITHUB"
+    },
+    "tabs": {
+      "details": "details",
+      "versions": "versions",
+      "cli": "cli",
+      "gui": "gui"
     },
     "notification": {
       "update-header": "update tea/gui to {version}?",

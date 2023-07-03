@@ -54,12 +54,17 @@ xc dev    # opens the app in dev mode
 
 # Internationalization / Translations
 
-We need help translating our user interface into different languages. The translation related source code are all in `./svelte/src/libs/translations/*`.
+We’d love your help in translating the gui into different languages.
+The translation related source code are all in `./svelte/src/libs/translations/*`.
 
 To add a new language:
 
-1. Create a json file in `./svelte/src/libs/translations/languages/[lang].json`. Copy the contents of `en.json` then translate.
-2. Import the new language in `./svelte/src/libs/translations/index.ts`. More instructions are in that file.
+1. Create a json file in `./svelte/src/libs/translations/languages/[lang].json`.
+   Copy the contents of `en.json` then translate.
+2. Import the new language in `./svelte/src/libs/translations/index.ts`.
+   More instructions are in that file.
+
+&nbsp;
 
 # Tasks
 
@@ -94,7 +99,7 @@ npm run package
 
 Builds only a `.app` that is not codesigned or notarized. Ideal for local testing.
 
-```
+```sh
 export CSC_IDENTITY_AUTO_DISCOVER=false
 export MAC_BUILD_TARGET=dir
 export NOTARIZE=false
@@ -105,7 +110,6 @@ npm run package
 ## Dev
 
 ```sh
-npm install
 npm run dev
 ```
 

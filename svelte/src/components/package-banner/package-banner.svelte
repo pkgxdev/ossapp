@@ -186,7 +186,7 @@
         {/if}
         {#if pkg.installed_versions?.length}
           <div class="min-w-[160px]">
-            <OpenPackageButton {pkg} buttonSize="large" />
+            <OpenPackageButton on:openterminal {pkg} buttonSize="large" />
           </div>
         {/if}
       </menu>

@@ -47,14 +47,18 @@
       "all": "Все",
       "articles": "Статьи",
       "workshops": "Мастерские",
-      "details": "подробности",
-      "versions": "версии",
       "metadata": "Метаданные",
       "homepage": "Домашняя страница",
       "documentation": "Документация",
       "github-repository": "Репозиторий на Github",
       "contributors": "Участники",
       "view-on-github": "ПОСМОТРЕТЬ НА GITHUB"
+    },
+    "tabs": {
+      "details": "подробности",
+      "versions": "версии",
+      "cli": "cli",
+      "gui": "gui"
     },
     "notification": {
       "update-header": "обновить чай/графический интерфейс до версии {version}?",
