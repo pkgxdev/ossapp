@@ -53,8 +53,8 @@
       "view-on-github": "VIEW ON GITHUB"
     },
     "notification": {
-      "gui-downloading": "A new tea gui({{version}}) is being downloaded. Please don't close the app.",
-      "gui-downloaded": "A new tea gui({{version}}) is now available. Relaunch the app to update."
+      "gui-restarting": "The gui needs to restart to update to the latest version.",
+      "gui-restart": "restart"
     },
     "side-menu-title": {
       "discover": "discover",

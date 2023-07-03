@@ -53,8 +53,8 @@
       "view-on-github": "ПОСМОТРЕТЬ НА GITHUB"
     },
     "notification": {
-      "gui-downloading": "Новый tea gui({{version}}) загружается. Пожалуйста, не закрывайте приложение.",
-      "gui-downloaded": "Новый tea gui({{version}}) доступен. Перезапустите приложение для обновления."
+      "gui-restarting": "Графический интерфейс необходимо перезапустить, чтобы обновить до последней версии.",
+      "gui-restart": "перезапуск"
     },
     "side-menu-title": {
       "discover": "исследовать",

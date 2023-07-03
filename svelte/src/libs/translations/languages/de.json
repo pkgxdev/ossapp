@@ -53,8 +53,8 @@
       "view-on-github": "AUF GITHUB ANSEHEN"
     },
     "notification": {
-      "gui-downloading": "Eine neue tea gui({{version}}) wird heruntergeladen. Bitte schließen Sie die App nicht.",
-      "gui-downloaded": "Eine neue tea gui({{version}}) ist jetzt verfügbar. Starten Sie die App neu, um zu aktualisieren."
+      "gui-restarting": "Die GUI muss neu gestartet werden, um auf die neueste Version zu aktualisieren",
+      "gui-restart": "Neustart"
     },
     "side-menu-title": {
       "discover": "entdecken",

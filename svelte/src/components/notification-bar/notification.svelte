@@ -6,7 +6,7 @@
 
   export let notification: Notification;
 
-  export let onClose: () => void;
+  export let onClose: null | (() => void) = null;
 
   const styles = {
     [NotificationType.MESSAGE]: "message-notification",
@@ -28,11 +28,13 @@
         }}>{notification.callback_label}</button
       >
     {/if}
-    <button
-      data-testid="close-notification"
-      class="close-notification icon-tea-x-btn mt-1 text-xs"
-      on:click={onClose}
-    />
+    {#if onClose}
+      <button
+        data-testid="close-notification"
+        class="close-notification icon-tea-x-btn mt-1 text-xs"
+        on:click={onClose}
+      />
+    {/if}
   </div>
 </div>
 

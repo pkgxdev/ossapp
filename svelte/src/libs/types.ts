@@ -128,7 +128,7 @@ export enum NotificationType {
 }
 export interface Notification {
   id: string;
-  i18n_key: string;
+  i18n_key?: string;
   message: string;
   type: NotificationType;
   callback_label?: string;
