@@ -57,7 +57,7 @@
       "gui-downloaded": "Новый tea gui({{version}}) доступен. Перезапустите приложение для обновления."
     },
     "side-menu-title": {
-      "discover": "исследовать",
+      "discover": "обзор",
       "all": "Все Пакеты",
       "installed": "Установленные Пакеты",
       "installed_updates_available": "Доступные Обновления",
@@ -71,7 +71,7 @@
       "local_packages": "Локальные Пакеты"
     },
     "tags": {
-      "discover": "исследовать",
+      "discover": "обзор",
       "all": "все пакеты",
       "installed": "установленные",
       "installed_updates_available": "Доступные обновления",
