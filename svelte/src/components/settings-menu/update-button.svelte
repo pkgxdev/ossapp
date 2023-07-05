@@ -1,16 +1,13 @@
 <script lang="ts">
   import Spinner from "$components/spinner/spinner.svelte";
-  import { relaunch } from "@native";
-  import { appUpdateStore } from "$libs/stores";
+  import { appUpdateStore, notificationStore } from "$libs/stores";
+
+  const { restartAlert } = notificationStore;
 
   const { updateStatus } = appUpdateStore;
 
-  let updateClickCount = 0;
   const onRelaunch = async () => {
-    if (updateClickCount < 1) {
-      await relaunch();
-    }
-    updateClickCount++;
+    restartAlert.set(true);
   };
 </script>
 
@@ -41,10 +38,6 @@
       v{$updateStatus.version}
     </div>
   </button>
-{/if}
-
-{#if $updateStatus.status === "ready" && updateClickCount >= 3}
-  <p class="text-primary p-1 text-xs">Force quit and relaunch the app, please.</p>
 {/if}
 
 <style>

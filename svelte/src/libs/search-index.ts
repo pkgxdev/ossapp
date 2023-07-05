@@ -6,7 +6,6 @@ let packagesIndex: Fuse<GUIPackage>;
 
 export function indexPackages(packages: GUIPackage[]) {
   try {
-    console.log("gui packages", packages);
     packagesIndex = new Fuse(packages, {
       keys: [
         {

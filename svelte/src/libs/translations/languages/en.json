@@ -3,6 +3,10 @@
   "label": "English",
   "translations": {
     "store-search-placeholder": "search packages",
+    "action": {
+      "update": "update",
+      "cancel": "cancel"
+    },
     "package": {
       "update-all": "UPDATE ALL",
       "cta-AVAILABLE": "INSTALL",
@@ -53,8 +57,9 @@
       "view-on-github": "VIEW ON GITHUB"
     },
     "notification": {
-      "gui-downloading": "A new tea gui({{version}}) is being downloaded. Please don't close the app.",
-      "gui-downloaded": "A new tea gui({{version}}) is now available. Relaunch the app to update."
+      "update-header": "update tea/gui to {version}?",
+      "gui-restarting": "Proceeding will cause the application to restart upon completion. Please ensure that you do not have any operations in progress. Do you want to proceed?",
+      "gui-restart": "restart"
     },
     "side-menu-title": {
       "discover": "discover",

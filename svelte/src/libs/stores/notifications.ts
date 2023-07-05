@@ -10,6 +10,8 @@ export default function initNotificationStore() {
   const notifications: Notification[] = [];
   const { update, subscribe } = writable<Notification[]>([]);
 
+  const restartAlert = writable(false);
+
   const remove = (id: string) => {
     update((notifications) => notifications.filter((n) => n.id != id));
   };
@@ -52,6 +54,7 @@ export default function initNotificationStore() {
       };
 
       update((values) => [notification, ...values]);
-    }
+    },
+    restartAlert
   };
 }

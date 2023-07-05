@@ -5,7 +5,7 @@
   import { navigating } from "$app/stores";
   import { afterNavigate } from "$app/navigation";
   import TopBar from "$components/top-bar/top-bar.svelte";
-  import { navStore, packagesStore, searchStore } from "$libs/stores";
+  import { navStore, packagesStore, searchStore, notificationStore } from "$libs/stores";
   import { listenToChannel } from "@native";
   import Mousetrap from "mousetrap";
 
@@ -13,6 +13,8 @@
   import { getProtocolPath } from "@native";
 
   import { onDestroy, onMount } from "svelte";
+  import RestartAlert from "$components/restart-alert/restart-alert.svelte";
+  const { restartAlert } = notificationStore;
 
   let view: HTMLElement;
 
@@ -73,6 +75,10 @@
     </section>
   </div>
 </div>
+
+{#if $restartAlert}
+  <RestartAlert />
+{/if}
 
 <style>
   #main-layout {
