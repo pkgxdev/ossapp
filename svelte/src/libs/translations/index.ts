@@ -33,6 +33,7 @@ languages.forEach((l) => {
 const config = {
   initLocale: "en",
   fallbackLocale: "en",
+  fallbackValue: "",
   translations
 };
 

@@ -17,7 +17,7 @@
   <button
     data-testid={$$props["data-testid"] || "button"}
     type="button"
-    class="text-gray w-full {clazz} {type} {color}"
+    class="text-gray box-border w-full {clazz} {type} {color}"
     class:active
     class:animate-pulse={loading}
     on:click={(evt) => onClick && onClick(evt)}

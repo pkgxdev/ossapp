@@ -1,34 +1,59 @@
 <script lang="ts">
-  import NotificationBar from "$components/notification-bar/notification.svelte";
-  import { type Notification, NotificationType } from "$libs/types";
+  import "$appcss";
+  import Button from "$components/button/button.svelte";
   import { t } from "$libs/translations";
-  import { onMount } from "svelte";
   import { relaunch } from "@native";
-  let countdownTimer = 15;
+  import ModalContainer from "$components/modal-container/modal-container.svelte";
+  import { notificationStore, appUpdateStore } from "$libs/stores";
+  let countdownTimer = 10;
+  const { restartAlert } = notificationStore;
+  const { updateStatus } = appUpdateStore;
 
-  const notification: Notification = {
-    id: "restart-alert",
-    type: NotificationType.ACTION_BANNER,
-    message: "",
-    callback_label: "",
-    callback: () => {
-      relaunch();
+  const onCancel = () => {
+    $restartAlert = false;
+  };
+
+  let countdown: NodeJS.Timer | null = null;
+  const onStartUpdate = () => {
+    if (!countdown) {
+      countdown = setInterval(() => {
+        countdownTimer--;
+        if (countdownTimer === 0) {
+          clearInterval(countdown!);
+          relaunch();
+        }
+      }, 1000);
     }
   };
 
-  $: notification.message = $t("notification.gui-restarting");
-  $: notification.callback_label = `${$t(
-    "notification.gui-restart"
-  )} (${countdownTimer})`.toUpperCase();
-
-  onMount(() => {
-    setInterval(() => {
-      countdownTimer--;
-      if (countdownTimer === 0 && notification.callback) {
-        notification.callback();
-      }
-    }, 1000);
-  });
+  $: version = $updateStatus.version || "0.0.0";
 </script>
 
-<NotificationBar {notification} />
+<ModalContainer
+  on:close={() => {
+    console.log("close here");
+  }}
+>
+  {#if !countdown}
+    <div class="border-gray rounded-lg border-2 border-r-0 border-t-0 bg-black p-8 text-center">
+      <h1 class="text-lg">
+        <!-- TODO: figure out why unable to parse variable type correctly -->
+        {$t("notification.update-header").replace("{version}", `v${version}`)}
+      </h1>
+      <p class="text-sm">{$t("notification.gui-restarting")}</p>
+      <nav class="mt-8 flex items-center justify-center gap-4 px-8">
+        <Button onClick={onStartUpdate} type="plain">{$t("action.update").toUpperCase()}</Button>
+        <Button onClick={onCancel} type="outline" color="black"
+          >{$t("action.cancel").toUpperCase()}</Button
+        >
+      </nav>
+    </div>
+  {:else}
+    <div
+      class="border-gray w-1/2 rounded-lg border-2 border-r-0 border-t-0 bg-black p-8 text-center"
+    >
+      <h1 class="text-lg capitalize">{$t("package.cta-UPDATING").toLowerCase()}...</h1>
+      <h3 class="text-3xl text-white">{countdownTimer}</h3>
+    </div>
+  {/if}
+</ModalContainer>

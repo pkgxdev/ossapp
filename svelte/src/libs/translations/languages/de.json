@@ -3,6 +3,10 @@
   "label": "Deutsch",
   "translations": {
     "store-search-placeholder": "Pakete suchen",
+    "action": {
+      "update": "aktualisieren",
+      "cancel": "stornieren"
+    },
     "package": {
       "update-all": "ALLE AKTUALISIEREN",
       "cta-AVAILABLE": "INSTALLIEREN",
@@ -53,7 +57,8 @@
       "view-on-github": "AUF GITHUB ANSEHEN"
     },
     "notification": {
-      "gui-restarting": "Die GUI muss neu gestartet werden, um auf die neueste Version zu aktualisieren",
+      "update-header": "Tea/GUI auf {version} aktualisieren?",
+      "gui-restarting": "Wenn Sie fortfahren, wird die Anwendung nach Abschluss neu gestartet. Bitte stellen Sie sicher, dass keine laufenden Vorgänge ausgeführt werden. Möchten Sie fortfahren?",
       "gui-restart": "Neustart"
     },
     "side-menu-title": {

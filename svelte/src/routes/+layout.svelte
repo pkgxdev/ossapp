@@ -66,9 +66,6 @@
 
 <div id="main-layout" class="border-gray font-inter rounded-xl border transition-all">
   <TopBar />
-  {#if $restartAlert}
-    <RestartAlert />
-  {/if}
   <div class="scroll-manager relative z-10">
     <section class="relative" bind:this={view}>
       <div class="content">
@@ -78,6 +75,10 @@
     </section>
   </div>
 </div>
+
+{#if $restartAlert}
+  <RestartAlert />
+{/if}
 
 <style>
   #main-layout {
