@@ -49,7 +49,9 @@
   };
 
   $: {
-    if (pkg && pkg?.slug !== lastProcessedPkg?.slug) {
+    // #706 issue: invalid image is being loaded on pkg list this is just a test fix 
+    const invalidImage = loadedImg && !loadedImg.includes(pkg.full_name);
+    if (pkg && pkg?.slug !== lastProcessedPkg?.slug || invalidImage) {
       loaded = false;
       loadedImg = "";
       lastProcessedPkg = pkg;
