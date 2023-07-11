@@ -50,7 +50,8 @@
 
   $: {
     // #706 issue: invalid image is being loaded on pkg list this is just a test fix
-    const invalidImage = loadedImg && !loadedImg.includes(pkg.full_name);
+    const invalidImage =
+      loadedImg && !(loadedImg.includes(pkg.full_name) || loadedImg.includes("localplaceholder"));
     if ((pkg && pkg?.slug !== lastProcessedPkg?.slug) || invalidImage) {
       loaded = false;
       loadedImg = "";
