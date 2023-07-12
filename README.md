@@ -79,6 +79,7 @@ if [ ! -e modules/desktop/.env ]; then
 fi
 
 npm install
+npx electron-rebuild
 npm run prepare
 ```
 
