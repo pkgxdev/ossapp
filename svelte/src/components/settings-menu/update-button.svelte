@@ -1,14 +1,9 @@
 <script lang="ts">
   import Spinner from "$components/spinner/spinner.svelte";
-  import { appUpdateStore, notificationStore } from "$libs/stores";
-
-  const { restartAlert } = notificationStore;
+  import { relaunch } from "@native";
+  import { appUpdateStore } from "$libs/stores";
 
   const { updateStatus } = appUpdateStore;
-
-  const onRelaunch = async () => {
-    restartAlert.set(true);
-  };
 </script>
 
 {#if $updateStatus.status === "up-to-date"}
@@ -28,7 +23,7 @@
 {:else if $updateStatus.status === "ready"}
   <button
     class="outline-gray hover:bg-gray flex h-7 w-full items-center justify-between p-1 text-left outline-1 hover:bg-opacity-25 hover:outline"
-    on:click={onRelaunch}
+    on:click={relaunch}
   >
     <div class="flex items-center">
       <div class="circle-badge mr-2">1</div>
