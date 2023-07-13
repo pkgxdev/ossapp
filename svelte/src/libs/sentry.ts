@@ -1,10 +1,16 @@
 import * as Sentry from "@sentry/browser";
 import type { Session } from "./types";
 import { isDev } from "@native";
+import log from "./logger";
+
+const isPackaged = () => {
+  return !import.meta.env; // vite is running when this is defined
+};
 
 export async function initSentry(session?: Session) {
   const dev = await isDev();
-  if (!dev) {
+  log.info("initSentry dev:", dev, "vite:", !isPackaged());
+  if (!dev && isPackaged()) {
     Sentry.init({
       environment: "production",
       dsn: "https://5ff29bb5b3b64cd4bd4f4960ef1db2e3@o4504750197899264.ingest.sentry.io/4504750206746624"
