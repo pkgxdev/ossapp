@@ -9,7 +9,7 @@
 <button
   data-testid="menu-button-{label.replaceAll(' ', '-').toLowerCase()}"
   on:click
-  class="outline-gray hover:bg-gray box-border flex w-full items-center gap-2 rounded-sm px-1 text-left align-middle text-xs outline-1 transition-all hover:bg-opacity-25 hover:outline"
+  class="outline-gray hover:bg-gray box-border flex w-full items-center gap-1 rounded-sm px-2 text-left align-middle text-xs outline-1 transition-all hover:bg-opacity-25 hover:outline"
   class:active
 >
   <i class="icon-{icon} mr-1 mt-1" />

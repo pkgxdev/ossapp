@@ -8,6 +8,7 @@
   export let layout: "bottom" | "right" | "left" | "none" = "bottom";
 
   export let pkg: GUIPackage;
+  export let plainImg = false;
 
   const defaultImgUrl = "/images/default-thumb.jpg";
   $: loadedImg = "";
@@ -61,27 +62,31 @@
   }
 </script>
 
-<section class="overflow-hidden bg-black {clazz} {layout}">
-  <i
-    class="logo icon-tea-logo-iconasset-1 text-gray text-3xl {layout}"
-    class:animate-pulse={!pkg.image_added_at}
-  />
-  <div
-    class="opacity-0 transition-all duration-500 {layout}"
-    class:opacity-100={loaded}
-    style="background-image: url({loadedImg})"
-  >
-    <!-- dup image: save processing power instead of computing the blur across all the HTML layers -->
-    {#if layout !== "none"}
-      <aside
-        class="blur-sm {layout} opacity-0 transition-all duration-500"
-        class:opacity-100={loaded}
-      >
-        <figure class={layout} style="background-image: url({loadedImg})" />
-      </aside>
-    {/if}
-  </div>
-</section>
+{#if plainImg}
+  <img alt={pkg.name} src={loadedImg} />
+{:else}
+  <section class="overflow-hidden bg-black {clazz} {layout}">
+    <i
+      class="logo icon-tea-logo-iconasset-1 text-gray text-3xl {layout}"
+      class:animate-pulse={!pkg.image_added_at}
+    />
+    <div
+      class="opacity-0 transition-all duration-500 {layout}"
+      class:opacity-100={loaded}
+      style="background-image: url({loadedImg})"
+    >
+      <!-- dup image: save processing power instead of computing the blur across all the HTML layers -->
+      {#if layout !== "none"}
+        <aside
+          class="blur-sm {layout} opacity-0 transition-all duration-500"
+          class:opacity-100={loaded}
+        >
+          <figure class={layout} style="background-image: url({loadedImg})" />
+        </aside>
+      {/if}
+    </div>
+  </section>
+{/if}
 
 <style>
   section {
