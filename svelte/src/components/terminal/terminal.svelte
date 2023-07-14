@@ -15,6 +15,7 @@
   let pid = 0;
   let index = 0;
 
+  let terminalDiv: HTMLDivElement;
   let unsubscribe: (() => void) | null = null;
 
   onMount(() => {
@@ -39,6 +40,13 @@
         terminal.write(ptyouts.output[index]);
       }
     });
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      fitAddon.fit();
+    });
+    resizeObserver.observe(terminalDiv);
+
+    return () => resizeObserver.unobserve(terminalDiv);
   });
 
   onDestroy(() => {
@@ -48,6 +56,9 @@
   });
 </script>
 
-<div id="terminal" style="height: 80vh" />
-
-<!-- FIXME fix the above styling thank you -->
+<!-- This div has a very specific size of 571 pixels, the terminal component has breakpoints for showing a line 
+    and the spacing can get weird so this is as close to the breakpoint as possible with no left over space 
+    if some future traveler wants a different size, make sure to take these breakpoints into account -->
+<div class="border-gray mt-4 h-[571px] rounded-[5px] border p-1">
+  <div bind:this={terminalDiv} id="terminal" class="h-full w-full" />
+</div>

@@ -4,12 +4,14 @@
 </script>
 
 {#if pty && pty.guiURL}
-  <iframe
-    id="terminal"
-    title="{pty.project} web UI"
-    src={pty.guiURL}
-    style="height: 100vh; width: 100%"
-  />
+  <div class="border-gray mt-4 rounded-[5px] border p-1">
+    <iframe
+      id="terminal"
+      title="{pty.project} web UI"
+      src={pty.guiURL}
+      style="height: 100vh; width: 100%"
+    />
+  </div>
 {/if}
 
 <!--
