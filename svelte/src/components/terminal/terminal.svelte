@@ -39,6 +39,7 @@
       for (; index < ptyouts.output?.length; index++) {
         terminal.write(ptyouts.output[index]);
       }
+      fitAddon.fit();
     });
 
     const resizeObserver = new ResizeObserver((entries) => {
