@@ -10,6 +10,7 @@ import { Installation, porcelain } from "@teaxyz/lib";
 import type { Resolution } from "@teaxyz/lib/script/src/plumbing/resolve";
 import { GUIPackage } from "../../svelte/src/libs/types";
 import { getPantryDetails } from "./pantry";
+import { app } from "electron";
 
 export async function installPackage(
   full_name: string,
@@ -124,4 +125,75 @@ export async function syncPantry() {
   log.info("syncing pantry");
   await hooks.useSync();
   log.info("syncing pantry completed");
+}
+
+// add more config files here to support more shells
+const envConfigPaths = [".bashrc", ".zshrc", ".zprofile", ".config/fish/config.fish", ".login"];
+
+export async function isMagicEnabled(): Promise<boolean> {
+  let isEnabled = false;
+  log.info("checking if magic is enabled....");
+  // TODO: figure out which terminal env is actually being used by the user?
+  for (const file of envConfigPaths) {
+    try {
+      const configPath = path.join(app.getPath("home"), file);
+      log.info("checking if magic is enabled in", configPath);
+      if (fs.existsSync(configPath)) {
+        const config = await fs.readFileSync(configPath, "utf-8");
+        if (config.includes("export TEA_MAGIC=prompt") || config.includes("export TEA_MAGIC=1")) {
+          isEnabled = true;
+          break;
+        }
+      }
+      log.info("not enabled!");
+    } catch (error) {
+      log.error(error);
+    }
+  }
+  return isEnabled;
+}
+
+export async function enableMagic() {
+  log.info("enabling magic....");
+  // TODO: figure out which terminal env is actually being used by the user? to avoid spam env settings
+  for (const file of envConfigPaths) {
+    try {
+      const configPath = path.join(app.getPath("home"), file);
+      if (fs.existsSync(configPath)) {
+        let config = await fs.readFileSync(configPath, "utf-8");
+        const hasMagic0 = config.includes("export TEA_MAGIC=0");
+        if (hasMagic0) {
+          config = config.replace(/TEA_MAGIC=0/g, "TEA_MAGIC=prompt");
+          await fs.writeFileSync(configPath, config);
+        } else {
+          await fs.appendFileSync(configPath, "\nexport TEA_MAGIC=prompt\n");
+        }
+      }
+    } catch (error) {
+      log.error(error);
+    }
+  }
+  log.info("magic enabled");
+}
+
+export async function disableMagic() {
+  log.info("enabling magic....");
+  // TODO: figure out which terminal env is actually being used by the user? to avoid spam env settings
+  for (const file of envConfigPaths) {
+    try {
+      const configPath = path.join(app.getPath("home"), file);
+      if (fs.existsSync(configPath)) {
+        const config = await fs.readFileSync(configPath, "utf-8");
+        if (config.includes("TEA_MAGIC=prompt") || config.includes("TEA_MAGIC=1")) {
+          const updatedConfig = config
+            .replace(/TEA_MAGIC=prompt/g, "TEA_MAGIC=0")
+            .replace(/TEA_MAGIC=1/g, "TEA_MAGIC=0");
+          await fs.writeFileSync(configPath, updatedConfig);
+        }
+      }
+    } catch (error) {
+      log.error(error);
+    }
+  }
+  log.info("magic disabled");
 }

@@ -11,7 +11,14 @@ import { readSessionData, writeSessionData, pollAuth } from "./auth";
 import type { Packages, Session, GUIPackage } from "../../svelte/src/libs/types";
 import log from "./logger";
 import { syncLogsAt } from "./v1-client";
-import { installPackage, openPackageEntrypointInTerminal, syncPantry } from "./cli";
+import {
+  disableMagic,
+  enableMagic,
+  installPackage,
+  isMagicEnabled,
+  openPackageEntrypointInTerminal,
+  syncPantry
+} from "./cli";
 
 import { getAutoUpdateStatus, getUpdater, isDev } from "./auto-updater";
 
@@ -266,6 +273,26 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
       return await getPantryDetails(full_name);
     } catch (error) {
       return error;
+    }
+  });
+
+  ipcMain.handle("is-magic-enabled", async () => {
+    return isMagicEnabled();
+  });
+
+  ipcMain.handle("enable-magic", () => {
+    try {
+      enableMagic();
+    } catch (error) {
+      log.error(error);
+    }
+  });
+
+  ipcMain.handle("disable-magic", () => {
+    try {
+      disableMagic();
+    } catch (error) {
+      log.error(error);
     }
   });
 }

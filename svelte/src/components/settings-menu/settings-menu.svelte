@@ -4,6 +4,7 @@
   import UpdateButton from "./update-button.svelte";
   import { appUpdateStore } from "$libs/stores";
   import SelectLang from "$components/select-lang/select-lang.svelte";
+  import MagicCheck from "$components/magic-check/magic-check.svelte";
   const { updateStatus } = appUpdateStore;
 
   const hidePopup = () => {
@@ -41,6 +42,8 @@
     >
       docs
     </button>
+    <hr />
+    <MagicCheck />
     <hr />
     <UpdateButton />
     <hr />

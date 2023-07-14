@@ -3,10 +3,14 @@
 /* tea-icons */
 @font-face {
   font-family: "tea-icons";
-  src: url("fonts/tea-icons.eot");
-  src: url("fonts/tea-icons.eot?#iefix") format("embedded-opentype"),
-    url("fonts/tea-icons.woff") format("woff"), url("fonts/tea-icons.ttf") format("truetype"),
-    url("fonts/tea-icons.svg#tea-icons") format("svg");
+  src: url("https://file.myfontastic.com/Fd33ifaooDVpESwnDXETgR/fonts/1686141792.eot");
+  src: url("https://file.myfontastic.com/Fd33ifaooDVpESwnDXETgR/fonts/1686141792.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://file.myfontastic.com/Fd33ifaooDVpESwnDXETgR/fonts/1686141792.woff") format("woff"),
+    url("https://file.myfontastic.com/Fd33ifaooDVpESwnDXETgR/fonts/1686141792.ttf")
+      format("truetype"),
+    url("https://file.myfontastic.com/Fd33ifaooDVpESwnDXETgR/fonts/1686141792.svg#1686141792")
+      format("svg");
   font-weight: normal;
   font-style: normal;
 }

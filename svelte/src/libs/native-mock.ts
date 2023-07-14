@@ -431,3 +431,15 @@ export const getPantryDetails = async (fullName: string) => {
     provides: ["bin/1", "bin/2"]
   };
 };
+
+export const enableMagic = async () => {
+  console.log("enabled!");
+};
+
+export const disableMagic = async () => {
+  console.log("disabled!");
+};
+
+export const isMagicEnabled = async () => {
+  return false;
+};

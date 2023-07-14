@@ -314,3 +314,15 @@ export const getPantryDetails = async (fullName: string) => {
   }
   return result;
 };
+
+export const enableMagic = async () => {
+  await ipcRenderer.invoke("enable-magic");
+};
+
+export const disableMagic = async () => {
+  await ipcRenderer.invoke("disable-magic");
+};
+
+export const isMagicEnabled = async (): Promise<boolean> => {
+  return await ipcRenderer.invoke("is-magic-enabled");
+};
