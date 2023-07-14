@@ -1,11 +1,12 @@
 <script lang="ts">
   import type { Bottle } from "$libs/types";
   export let bottles: Bottle[];
+  import { semverCompare } from "$libs/packages/pkg-utils";
 
   let versions: string[] = [];
   let available: Set<string>;
 
-  $: versions = [...new Set(bottles.map((b) => b.version))];
+  $: versions = [...new Set(bottles.map((b) => b.version))].sort((a, b) => semverCompare(b, a));
   $: available = new Set(bottles.map((b) => `${b.platform}-${b.arch}`));
 </script>
 

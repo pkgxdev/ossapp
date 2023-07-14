@@ -24,6 +24,7 @@
   let updating = false;
 
   let packagesScrollY = 0;
+  let packageCount = 0;
   $: currentUpdatingPkg = $packageList.find((p) => p.state === PackageStates.UPDATING);
   $: updatingMessage = `updating ${currentUpdatingPkg?.full_name} (${formatPercent(
     currentUpdatingPkg?.install_progress_percentage
@@ -60,13 +61,15 @@
       {#if sideMenuOption == SideMenuOptions.discover}
         <DiscoverPackages bind:scrollY={packagesScrollY} />
       {:else}
-        <Packages packageFilter={sideMenuOption} bind:scrollY={packagesScrollY} />
+        <Packages packageFilter={sideMenuOption} bind:scrollY={packagesScrollY} bind:packageCount />
       {/if}
     </ul>
     <header class="z-30 flex items-center justify-between" class:scrolling={packagesScrollY > 150}>
-      <h1 class="font-mona text-primary pl-3 text-2xl font-bold">
-        {$t(`side-menu-title.${sideMenuOption}`).toLowerCase()}
-      </h1>
+      {#if packageCount > 0}
+        <h1 class="font-mona text-primary pl-3 text-2xl font-bold">
+          {$t(`side-menu-title.${sideMenuOption}`).toLowerCase()}
+        </h1>
+      {/if}
       <!-- 
 			<section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">
 				
@@ -85,7 +88,7 @@
           {/if}
           <div>
             <Button
-              class="h-8 w-48 p-2 text-xs"
+              class="h-8 min-w-[125px] p-2 text-xs"
               loading={updating}
               type="plain"
               color="secondary"

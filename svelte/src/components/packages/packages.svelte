@@ -13,12 +13,12 @@
   import { packagesStore, scrollStore } from "$libs/stores";
   import { afterUpdate, beforeUpdate } from "svelte";
   import { packageWasUpdated } from "$libs/packages/pkg-utils";
-  import SideMenu from "$components/side-menu/side-menu.svelte";
 
   const { packageList: allPackages } = packagesStore;
   export let packageFilter: SideMenuOptions = SideMenuOptions.all;
 
   export let scrollY = 0;
+  export let packageCount = 0;
 
   let loadMore = 9;
   let limit = loadMore + 9;
@@ -62,6 +62,9 @@
   };
 
   $: packages = $allPackages.filter(pkgFilters[packageFilter] || pkgFilters.all);
+  $: {
+    packageCount = packages.length;
+  }
 
   const onResize = (node: HTMLElement) => {
     const assumedCardHeight = 250;

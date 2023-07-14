@@ -80,7 +80,12 @@
 <section class="mt-4 bg-black">
   <header class="flex">
     <figure class="grow-1 relative w-1/3">
-      <PackageImage class="min-h-[300px] w-full overflow-hidden" {pkg} layout="none" />
+      <PackageImage
+        class="min-h-[300px] w-full overflow-hidden"
+        {pkg}
+        layout="none"
+        plainImg={true}
+      />
       {#if pkg.install_progress_percentage && pkg.install_progress_percentage < 100}
         <div class="absolute left-0 top-0 z-40 h-full w-full bg-black bg-opacity-50">
           <div class="absolute left-0 right-0 top-1/2 m-auto -mt-12 h-24 w-24">
