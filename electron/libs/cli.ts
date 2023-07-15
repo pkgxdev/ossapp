@@ -163,10 +163,10 @@ export async function enableMagic() {
         let config = await fs.readFileSync(configPath, "utf-8");
         const hasMagic0 = config.includes("export TEA_MAGIC=0");
         if (hasMagic0) {
-          config = config.replace(/TEA_MAGIC=0/g, "TEA_MAGIC=prompt");
+          config = config.replace(/TEA_MAGIC=0/g, "TEA_MAGIC=1");
           await fs.writeFileSync(configPath, config);
         } else {
-          await fs.appendFileSync(configPath, "\nexport TEA_MAGIC=prompt\n");
+          await fs.appendFileSync(configPath, "\nexport TEA_MAGIC=1\n");
         }
       }
     } catch (error) {
@@ -184,10 +184,8 @@ export async function disableMagic() {
       const configPath = path.join(app.getPath("home"), file);
       if (fs.existsSync(configPath)) {
         const config = await fs.readFileSync(configPath, "utf-8");
-        if (config.includes("TEA_MAGIC=prompt") || config.includes("TEA_MAGIC=1")) {
-          const updatedConfig = config
-            .replace(/TEA_MAGIC=prompt/g, "TEA_MAGIC=0")
-            .replace(/TEA_MAGIC=1/g, "TEA_MAGIC=0");
+        if (config.includes("TEA_MAGIC=1")) {
+          const updatedConfig = config.replace(/TEA_MAGIC=1/g, "TEA_MAGIC=0");
           await fs.writeFileSync(configPath, updatedConfig);
         }
       }
