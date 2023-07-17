@@ -11,12 +11,18 @@
   export let tabs: Tab[] = [];
 
   const getActiveTabId = (tabId: TabId, tabs: Tab[]) => {
-    if (!tabId || !tabs.filter(t => !t.hidden).map((t) => t.id).includes(tabId)) {
+    if (
+      !tabId ||
+      !tabs
+        .filter((t) => !t.hidden)
+        .map((t) => t.id)
+        .includes(tabId)
+    ) {
       // If the tabId is not provided, invalid or the tab is hidden, use the first tab
       return tabs[0]?.id;
     }
     return tabId;
-  }
+  };
 
   $: activeTabId = getActiveTabId($activeTab, tabs);
 </script>
