@@ -1,50 +1,49 @@
 <script lang="ts">
-  import type { Tab } from "$libs/types";
-  import { afterUpdate } from "svelte";
-
-  let clazz = "";
-
-  export { clazz as class };
-
+  import type { Tab, TabId } from "$libs/types";
+  import { tabStore } from "$libs/stores";
   import Button from "../button/button.svelte";
 
+  const { activeTab, setActiveTab } = tabStore;
+
+  let clazz = "";
+  export { clazz as class };
   export let tabs: Tab[] = [];
-  export let defaultTab: string;
 
-  let active: string;
-
-  let dirty = false;
-
-  afterUpdate(() => {
-    if (tabs.length && !active) {
-      if (!defaultTab) {
-        active = tabs[0].label;
-      } else if (!dirty) {
-        active = defaultTab;
-      }
+  const getActiveTabId = (tabId: TabId, tabs: Tab[]) => {
+    if (
+      !tabId ||
+      !tabs
+        .filter((t) => !t.hidden)
+        .map((t) => t.id)
+        .includes(tabId)
+    ) {
+      // If the tabId is not provided, invalid or the tab is hidden, use the first tab
+      return tabs[0]?.id;
     }
-  });
+    return tabId;
+  };
+
+  $: activeTabId = getActiveTabId($activeTab, tabs);
 </script>
 
 <section class="relative h-auto {clazz}">
   <menu class="flex gap-1">
     {#each tabs as tab}
-      <div class="border-gray text-white" class:border-b={tab.label === active}>
-        <Button
-          onClick={() => {
-            dirty = true;
-            active = tab.label;
-          }}
-        >
-          <span class:text-white={tab.label === active}>{tab.label}</span>
+      <div
+        class="border-gray text-white"
+        class:border-b={tab.id === activeTabId}
+        class:hidden={!!tab.hidden}
+      >
+        <Button onClick={() => setActiveTab(tab.id)}>
+          <span class:text-white={tab.id === activeTabId}>{tab.label}</span>
         </Button>
       </div>
     {/each}
   </menu>
 
   {#each tabs as tab}
-    {#if tab.label === active}
+    <div class:hidden={tab.id !== activeTabId}>
       <svelte:component this={tab.component} {...tab.props} />
-    {/if}
+    </div>
   {/each}
 </section>

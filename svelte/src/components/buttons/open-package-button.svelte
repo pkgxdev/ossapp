@@ -1,10 +1,13 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   import type { GUIPackage } from "$libs/types";
   import { openPackageEntrypointInTerminal } from "@native";
   import Button from "$components/button/button.svelte";
   import { t } from "$libs/translations";
   export let pkg: GUIPackage;
   export let buttonSize: "small" | "large" = "small";
+
+  const dispatch = createEventDispatcher();
 </script>
 
 <Button
@@ -14,6 +17,7 @@
   onClick={(evt) => {
     evt?.preventDefault();
     openPackageEntrypointInTerminal(pkg);
+    dispatch("openterminal");
   }}
 >
   {#if !!pkg.entrypoint}

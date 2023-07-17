@@ -6,7 +6,7 @@
   import { afterNavigate } from "$app/navigation";
   import TopBar from "$components/top-bar/top-bar.svelte";
   import { navStore, packagesStore, searchStore } from "$libs/stores";
-  import { listenToChannel } from "@native";
+  import { requestSubprocessesSnapshot, listenToChannel } from "@native";
   import Mousetrap from "mousetrap";
 
   import SearchPopupResults from "$components/search-popup-results/search-popup-results.svelte";
@@ -54,6 +54,7 @@
       return false;
     });
     packagesStore.init();
+    await requestSubprocessesSnapshot();
     initSentry();
   });
 

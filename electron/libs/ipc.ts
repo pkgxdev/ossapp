@@ -11,7 +11,8 @@ import { readSessionData, writeSessionData, pollAuth } from "./auth";
 import type { Packages, Session, GUIPackage } from "../../svelte/src/libs/types";
 import log from "./logger";
 import { syncLogsAt } from "./v1-client";
-import { installPackage, openPackageEntrypointInTerminal, syncPantry } from "./cli";
+import { installPackage, syncPantry } from "./cli";
+import { openPackageEntrypointInTerminal, sendSubprocessesSnapshot } from "./entrypoints";
 
 import { getAutoUpdateStatus, getUpdater, isDev } from "./auto-updater";
 
@@ -94,13 +95,22 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
     }
   });
 
+  ipcMain.handle("request-subprocesses-snapshot", async () => {
+    try {
+      log.info("subprocesses snapshot was requested");
+      sendSubprocessesSnapshot(notifyMainWindow);
+    } catch (error) {
+      log.error(error);
+    }
+  });
+
   ipcMain.handle("open-terminal", async (_, data) => {
     const { pkg } = data as { pkg: GUIPackage };
     try {
       // TODO: detect if mac or linux
       // current openTerminal is only design for Mac
       log.info("open tea entrypoint in terminal for pkg:", pkg.full_name);
-      await openPackageEntrypointInTerminal(pkg);
+      await openPackageEntrypointInTerminal(pkg, notifyMainWindow);
     } catch (error) {
       log.error(error);
     }

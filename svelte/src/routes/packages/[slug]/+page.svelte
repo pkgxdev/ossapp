@@ -11,36 +11,57 @@
   import Markdown from "$components/markdown/markdown.svelte";
   import Preloader from "$components/preloader/preloader.svelte";
   import useDefaultBrowser from "$libs/utils/use-default-browser";
+  import Terminal from "$components/terminal/terminal.svelte";
+  import WebUI from "$components/web-ui/web-ui.svelte";
+  import { tabStore } from "$libs/stores";
 
   /** @type {import('./$types').PageData} */
   export let data: { slug: string; content: string; title: string };
 
-  import { packagesStore } from "$libs/stores";
+  import { packagesStore, ptys } from "$libs/stores";
   import { onMount } from "svelte";
   import NotificationBar from "$components/notification-bar/notification-bar.svelte";
   import { trackViewPackagePage } from "$libs/analytics";
+  import type { TeaSubprocess } from "$libs/stores/ptys";
 
   const { packageList } = packagesStore;
+  const { setActiveTab } = tabStore;
 
   $: pkg = $packageList.find((p) => p.slug === data?.slug);
-
-  // let reviews: Review[];
   $: bottles = pkg?.bottles || [];
   $: versions = [...new Set(bottles.map((b) => b.version))];
   $: readme = pkg?.readme || { data: "", type: "md" };
 
+  $: pty = undefined as TeaSubprocess | undefined;
+
   $: tabs = [
     readme?.data !== "" && {
-      label: $t("common.details"),
+      id: "details",
+      label: $t("tabs.details"),
       component: Markdown,
       props: { source: readme, hook: useDefaultBrowser }
     },
     bottles?.length && {
-      label: `${$t("common.versions")} (${versions.length || 0})`,
+      id: "versions",
+      label: `${$t("tabs.versions")} (${versions.length || 0})`,
       component: Bottles,
       props: {
         bottles
       }
+    },
+    {
+      id: "cli",
+      label: $t("tabs.cli"),
+      component: Terminal,
+      props: { project: pkg?.full_name },
+      hidden: !pty
+    },
+    {
+      id: "gui",
+      label: $t("tabs.gui"),
+      component: WebUI,
+      props: { pty },
+      hidden: !pty?.guiURL
     }
   ].filter((t) => t && t?.label) as unknown as Tab[];
 
@@ -50,13 +71,32 @@
   const deeplink = url.searchParams.get("deeplink");
   onMount(() => {
     packagesStore.syncPackageData(pkg);
+    if (pty && pty.guiURL) {
+      setActiveTab("gui");
+    } else if (pty && pty.output.length) {
+      setActiveTab("cli");
+    } else {
+      setActiveTab(tabs[0]?.id);
+    }
   });
 
   let lastPackage = "";
+  let unsubscribePty: (() => void) | null = null;
+
   $: {
     if (lastPackage !== pkg?.full_name && pkg) {
-      lastPackage = pkg.full_name;
+      lastPackage = pkg?.full_name;
       trackViewPackagePage(lastPackage, !!deeplink);
+
+      unsubscribePty?.();
+      unsubscribePty = ptys.subscribeToSubprocess(pkg?.full_name, (newPty) => {
+        // if the gui url has just appeared, switch to the gui tab
+        if (!pty?.guiURL && newPty?.guiURL) {
+          setActiveTab("gui");
+        }
+        // we need to copy this because we're looking for the delta of guiURL
+        pty = { ...newPty };
+      });
     }
   }
 </script>
@@ -76,7 +116,7 @@
 {#if pkg}
   <div class="px-16">
     <section>
-      <PackageBanner {pkg} />
+      <PackageBanner {pkg} on:openterminal={() => setActiveTab("cli")} />
     </section>
 
     <section class="mt-8 flex gap-8">
@@ -86,7 +126,7 @@
             <SkeletonLoader />
           </div>
         {/if}
-        <Tabs {tabs} defaultTab={$t("common.details")} />
+        <Tabs {tabs} />
       </div>
       <div class="w-1/3">
         {#if pkg}

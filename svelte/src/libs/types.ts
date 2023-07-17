@@ -72,8 +72,12 @@ export type Bottle = {
   updated_at?: Date | string;
 };
 
+export type TabId = "details" | "versions" | "cli" | "gui";
+
 export type Tab = {
+  id: TabId;
   label: string;
+  hidden?: boolean;
   props?: {
     [key: string]:
       | string

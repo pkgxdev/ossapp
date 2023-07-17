@@ -406,6 +406,10 @@ export const getAutoUpdateStatus = async (): Promise<AutoUpdateStatus> => {
   return { status: "up-to-date" };
 };
 
+export async function requestSubprocessesSnapshot() {
+  //noop
+}
+
 export async function openPackageEntrypointInTerminal(_pkg: GUIPackage) {
   //noop
 }

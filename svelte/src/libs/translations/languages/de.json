@@ -47,14 +47,18 @@
       "all": "Alle",
       "articles": "Artikel",
       "workshops": "Workshops",
-      "details": "Details",
-      "versions": "Versionen",
       "metadata": "Metadaten",
       "homepage": "Startseite",
       "documentation": "Dokumentation",
       "github-repository": "Github Repository",
       "contributors": "Mitwirkende",
       "view-on-github": "AUF GITHUB ANSEHEN"
+    },
+    "tabs": {
+      "details": "Details",
+      "versions": "Versionen",
+      "cli": "cli",
+      "gui": "gui"
     },
     "notification": {
       "update-header": "Tea/GUI auf {version} aktualisieren?",

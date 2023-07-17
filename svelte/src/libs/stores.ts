@@ -12,9 +12,11 @@ import initNotificationStore from "./stores/notifications";
 import initAppUpdateStore from "./stores/update";
 import { trackSearch } from "./analytics";
 import initScrollStore from "./stores/scroll";
+import ptysStore from "./stores/ptys";
+import initTabStore from "./stores/tabs";
 
 export const featuredPackages = writable<Package[]>([]);
-
+export const ptys = ptysStore;
 export const packagesStore = pkgStore;
 
 export const initializeFeaturedPackages = async () => {
@@ -143,3 +145,5 @@ export const notificationStore = initNotificationStore();
 export const appUpdateStore = initAppUpdateStore();
 
 export const scrollStore = initScrollStore();
+
+export const tabStore = initTabStore();

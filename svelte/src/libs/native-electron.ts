@@ -167,9 +167,25 @@ export const updateSession = async (session: Partial<Session>) => {
   }
 };
 
-export const openPackageEntrypointInTerminal = (pkg: GUIPackage) => {
+export const sendStdInToPty = async (opts: { data: string; project: string }) => {
   try {
-    ipcRenderer.invoke("open-terminal", { pkg });
+    await ipcRenderer.send("pty.in", opts);
+  } catch (error) {
+    log.error(error);
+  }
+};
+
+export const requestSubprocessesSnapshot = async () => {
+  try {
+    await ipcRenderer.invoke("request-subprocesses-snapshot");
+  } catch (error) {
+    log.error(error);
+  }
+};
+
+export const openPackageEntrypointInTerminal = async (pkg: GUIPackage) => {
+  try {
+    await ipcRenderer.invoke("open-terminal", { pkg });
   } catch (error) {
     log.error(error);
   }
