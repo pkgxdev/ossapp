@@ -5,7 +5,7 @@ import { MainWindowNotifier } from "./types";
 import * as tea from "@teaxyz/lib";
 import { GUIPackage } from "../../svelte/src/libs/types";
 import { getPantryDetails } from "./pantry";
-import { ipcMain } from "electron";
+import { BrowserView, BrowserWindow, ipcMain } from "electron";
 
 // the tea cli package is needed to open any other package in the terminal, so make sure it's installed and return the path
 async function installTeaCli() {
@@ -100,6 +100,8 @@ export async function openPackageEntrypointInTerminal(
       const json = JSON.parse(out);
       const url = json["xyz.tea"]?.["gui"];
       if (url) {
+        //LAUNCH_NEW_GUI_WINDOW(url);
+
         ptys[project].guiURL = url;
         notifyMainWindow("pty.out", { project, type: "enable-gui", guiURL: url });
       }
@@ -137,3 +139,32 @@ export async function openPackageEntrypointInTerminal(
 
   ptys[project] = { pty: ptyproc, output: [] };
 }
+
+// function LAUNCH_NEW_GUI_WINDOW(url: string) {
+
+//   const opts = {
+//     width: 800,
+//     height: 600,
+//     x: undefined as number | undefined,
+//     y: undefined as number | undefined,
+//   }
+
+//   if (BrowserWindow.getFocusedWindow()) {
+//     const current_win = BrowserWindow.getFocusedWindow();
+//     if (current_win) {
+//       const [x, y] = current_win.getPosition();
+//       opts.x = x + 20;
+//       opts.y = y + 20;
+//     } 
+//   };
+
+//   console.log("********* LAUNCH_NEW_GUI_WINDOW", url, opts);
+
+//   const win = new BrowserWindow(opts)
+
+//   const view = new BrowserView()
+//   win.setBrowserView(view)
+//   view.setBounds({ x: 0, y: 0, width: 800, height: 600 })
+//   view.webContents.loadURL(url)
+//   view.setAutoResize({ width: true, height: true });
+// }
