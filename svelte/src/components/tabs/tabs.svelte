@@ -2,7 +2,6 @@
   import type { Tab, TabId } from "$libs/types";
   import { tabStore } from "$libs/stores";
   import Button from "../button/button.svelte";
-  import { t } from "$libs/translations";
 
   const { activeTab, setActiveTab } = tabStore;
 
