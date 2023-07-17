@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { showBrowswerView } from "$libs/native-electron";
   import type { TeaSubprocess } from "$libs/stores/ptys";
   import { onMount } from "svelte";
 
@@ -6,10 +7,17 @@
 
   let containerDiv: HTMLDivElement;
 
+  let webview: any
+
   $:{
-    if (pty && containerDiv) {
+    if (pty?.guiURL && containerDiv) {
       const rect = containerDiv.getBoundingClientRect();
       console.log("*********** RECT IS", rect);
+
+      if (!webview) {
+        showBrowswerView(pty.guiURL, rect.x, rect.y);
+        webview = true;
+      }
     }
   };
 </script>

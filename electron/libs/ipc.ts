@@ -12,7 +12,7 @@ import type { Packages, Session, GUIPackage } from "../../svelte/src/libs/types"
 import log from "./logger";
 import { syncLogsAt } from "./v1-client";
 import { installPackage, syncPantry } from "./cli";
-import { openPackageEntrypointInTerminal, sendSubprocessesSnapshot } from "./entrypoints";
+import { LAUNCH_NEW_GUI_WINDOW2, openPackageEntrypointInTerminal, sendSubprocessesSnapshot } from "./entrypoints";
 
 import { getAutoUpdateStatus, getUpdater, isDev } from "./auto-updater";
 
@@ -276,6 +276,15 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
       return await getPantryDetails(full_name);
     } catch (error) {
       return error;
+    }
+  });
+
+  ipcMain.handle("show-browser-view", async (_event, { url, x, y }) => {
+    try {
+      log.info("show-browser-view", url, "x", x, "y", y);
+      await LAUNCH_NEW_GUI_WINDOW2(url, x, y);
+    } catch (error) {
+      log.error(error);
     }
   });
 }

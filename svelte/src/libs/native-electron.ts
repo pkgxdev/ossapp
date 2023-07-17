@@ -330,3 +330,11 @@ export const getPantryDetails = async (fullName: string) => {
   }
   return result;
 };
+
+export const showBrowswerView = async (url: string, x: number, y: number) => { 
+  const result = await ipcRenderer.invoke("show-browser-view", { url, x, y });
+  if (result instanceof Error) {
+    throw result;
+  }
+  return result;
+}

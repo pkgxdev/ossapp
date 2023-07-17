@@ -168,3 +168,22 @@ export async function openPackageEntrypointInTerminal(
 //   view.webContents.loadURL(url)
 //   view.setAutoResize({ width: true, height: true });
 // }
+
+export async function LAUNCH_NEW_GUI_WINDOW2(url: string, x: number, y: number) {
+  const win = BrowserWindow.getFocusedWindow();
+  if (!win) {
+    console.log("********* LAUNCH_NEW_GUI_WINDOW no focused window");
+    return;
+  }
+
+  const x_rounded = Math.round(x);
+  const y_rounded = Math.round(y);
+
+  console.log("********* LAUNCH_NEW_GUI_WINDOW2", url, x_rounded, "rounded y", y_rounded);
+
+  const view = new BrowserView()
+  win.setBrowserView(view)
+  view.setBounds({ x: x_rounded, y: y_rounded, width: 800, height: 600 })
+  view.webContents.loadURL(url)
+  view.setAutoResize({ width: true, height: true });
+}
