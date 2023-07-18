@@ -55,8 +55,7 @@
       "view-on-github": "ПОСМОТРЕТЬ НА GITHUB"
     },
     "tabs": {
-      "details": "подробности",
-      "versions": "версии",
+      "details": "pkg",
       "cli": "cli",
       "gui": "gui"
     },

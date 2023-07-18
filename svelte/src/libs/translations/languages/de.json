@@ -55,8 +55,7 @@
       "view-on-github": "AUF GITHUB ANSEHEN"
     },
     "tabs": {
-      "details": "Details",
-      "versions": "Versionen",
+      "details": "pkg",
       "cli": "cli",
       "gui": "gui"
     },

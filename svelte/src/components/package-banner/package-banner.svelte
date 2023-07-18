@@ -95,7 +95,7 @@
       {/if}
       <InstallResultOverlay {pkg} />
     </figure>
-    <article class="w-2/3 p-4 pt-8">
+    <article class="w-2/3 p-6">
       <div class="align-center flex items-center gap-2">
         <h3 data-testid="package-banner-header" class="text-primary text-3xl">
           {getPackageName(pkg)}
@@ -117,7 +117,7 @@
         <span>{pkg.maintainer}</span>
       {/if}
       <p class="mt-4 text-sm">{pkg.description}</p>
-      <menu class="mt-4 flex h-10 gap-4 text-xs">
+      <menu class="mt-4 flex h-fit flex-wrap gap-4 text-xs">
         <div class="w-fit min-w-[160px]">
           <PackageVersionSelector
             buttonSize="large"
