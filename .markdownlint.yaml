@@ -1,0 +1,5 @@
+# Should be able to start an MD file with a screenshot rather than an H1
+MD041: false
+
+# Sometimes you need inline HTML
+MD033: false
