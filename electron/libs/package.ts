@@ -67,7 +67,13 @@ export const nameToSlug = (name: string) => {
   return slug;
 };
 
-export function isInstalled(fullName: string) {
-  const folderPath = path.join(getTeaPath(), fullName);
-  return fs.existsSync(folderPath);
+export async function isInstalled(project: string, version?: string) {
+  if (!version) {
+    const folderPath = path.join(getTeaPath(), project);
+    return fs.existsSync(folderPath);
+  } else {
+    const cache = await loadPackageCache();
+    const pkg = cache.packages[project];
+    return pkg && pkg.installed_versions?.includes(version);
+  }
 }

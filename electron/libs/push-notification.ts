@@ -42,13 +42,26 @@ export default function initialize(mainWindow: BrowserWindow) {
       });
 
     // Listen for incoming notifications
-    Pushy.setNotificationListener(async (data: any) => {
+
+    type AppNotificiation = {
+      title: string;
+      message: string;
+      body: string;
+      url: string;
+      version: string;
+    };
+    Pushy.setNotificationListener(async (data: AppNotificiation) => {
       try {
         log.info("new notification received", data);
         const pkg = data?.url.replace("tea://packages/", "");
-        const installed = isInstalled(pkg);
-        const isDup = await wasReceivedBefore(data);
-        if (!isDup && installed) {
+
+        const [installed, isVersionInstalled, isDuplicateNotification] = await Promise.all([
+          isInstalled(pkg),
+          isInstalled(pkg, data?.version),
+          wasReceivedBefore(data)
+        ]);
+
+        if (!isDuplicateNotification && installed && !isVersionInstalled) {
           const notification = new Notification({
             title: "tea",
             body: data?.message as string,
