@@ -5,12 +5,17 @@
   import MenuButton from "./menu-button.svelte";
   import { t } from "$libs/translations";
   import { goto } from "$app/navigation";
+  import { setBadgeCount } from "@native";
   const { packageList } = packagesStore;
 
   export let activeOption: SideMenuOptions;
 
   $: needsUpdateCount = $packageList.filter((p) => p.state === PackageStates.NEEDS_UPDATE).length;
   $: hasLocalPackages = $packageList.some((p) => p.is_local);
+
+  $: {
+    setBadgeCount(needsUpdateCount);
+  }
 </script>
 
 <aside id="side-menu" class="border-gray border border-b-0 border-l-0 border-t-0 p-2">
