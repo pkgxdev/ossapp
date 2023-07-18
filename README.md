@@ -2,13 +2,19 @@
 
 <p align="center">
   <a href="https://twitter.com/teaxyz">
-    <img src="https://img.shields.io/badge/-teaxyz-2675f5?logo=twitter&logoColor=fff" alt="Twitter" />
+    <img
+      src="https://img.shields.io/badge/-teaxyz-2675f5?logo=twitter&logoColor=fff"
+      alt="Twitter" />
   </a>
   <a href="https://discord.gg/JKzuqrW9">
-    <img src="https://img.shields.io/discord/906608167901876256?label=discord&color=29f746" alt="Discord" />
+    <img
+      src="https://img.shields.io/discord/906608167901876256?label=discord&color=29f746"
+      alt="Discord" />
   </a>
   <a href="https://docs.tea.xyz">
-    <img src="https://img.shields.io/badge/-docs-2675f5?logoColor=fff&color=ff00ff&logo=gitbook" alt="Documentation & Manual" />
+    <img
+      src="https://img.shields.io/badge/-docs-2675f5?logoColor=fff&color=ff00ff&logo=gitbook"
+      alt="Documentation & Manual" />
   </a>
 </p>
 
@@ -72,7 +78,8 @@ The following can be run with [`xc`], eg. `xc build`.
 
 ## Setup
 
-Setup ensures that required configuration placeholder files are present and installs dependencies.
+Setup ensures that required configuration placeholder files are present and
+installs dependencies.
 
 ```sh
 if [ ! -e electron/config.json ]; then
@@ -138,7 +145,8 @@ npm run lint
 
 ## e2e
 
-Runs the webdriver.io end to end tests. Assumes that `xc build` has already been executed.
+Runs the webdriver.io end to end tests. Assumes that `xc build` has already been
+executed.
 
 ```sh
 npm run e2e
