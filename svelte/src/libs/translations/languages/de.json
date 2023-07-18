@@ -61,7 +61,7 @@
       "gui": "gui"
     },
     "notification": {
-      "update-header": "Tea/GUI auf {version} aktualisieren?",
+      "update-header": "Tea/GUI auf {{version}} aktualisieren?",
       "gui-restarting": "Wenn Sie fortfahren, wird die Anwendung nach Abschluss neu gestartet. Bitte stellen Sie sicher, dass keine laufenden Vorgänge ausgeführt werden. Möchten Sie fortfahren?",
       "gui-restart": "Neustart"
     },

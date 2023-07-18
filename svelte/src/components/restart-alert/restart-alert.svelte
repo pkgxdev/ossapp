@@ -1,7 +1,7 @@
 <script lang="ts">
   import "$appcss";
   import Button from "$components/button/button.svelte";
-  import { t } from "$libs/translations";
+  import { t, l, locale } from "$libs/translations";
   import { relaunch } from "@native";
   import ModalContainer from "$components/modal-container/modal-container.svelte";
   import { notificationStore, appUpdateStore } from "$libs/stores";
@@ -38,7 +38,7 @@
     <div class="border-gray rounded-lg border-2 border-r-0 border-t-0 bg-black p-8 text-center">
       <h1 class="text-lg">
         <!-- TODO: figure out why unable to parse variable type correctly -->
-        {$t("notification.update-header").replace("{version}", `v${version}`)}
+        {@html $t("notification.update-header", { version: "0.0.0" })}
       </h1>
       <p class="text-sm">{$t("notification.gui-restarting")}</p>
       <nav class="mt-8 flex items-center justify-center gap-4 px-8">

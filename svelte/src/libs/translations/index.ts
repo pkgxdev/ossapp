@@ -1,13 +1,18 @@
-import i18n from "sveltekit-i18n";
+import i18n from "@sveltekit-i18n/base";
+import parser from "@sveltekit-i18n/parser-default";
+import type { Config } from "@sveltekit-i18n/parser-default";
 
 // import new languages json here
 import en from "./languages/en.json";
 import de from "./languages/de.json";
 import ru from "./languages/ru.json";
 
+import * as customModifiers from "./modifiers";
+
 type Language = { [lang: string]: string };
 type Translation = typeof en.translations & {
   lang: Language;
+  [key: string]: any;
 };
 
 // add new language json object here
@@ -29,12 +34,18 @@ languages.forEach((l) => {
   };
 });
 
-/** @type {import('sveltekit-i18n').Config} */
-const config = {
+const config: Config<{
+  // add params here for i18n strings ie: "say something {{say}}"
+  // say?: string
+  version?: string;
+}> = {
   initLocale: "en",
   fallbackLocale: "en",
   fallbackValue: "",
-  translations
+  translations,
+  parser: parser({
+    customModifiers
+  })
 };
 
 export const { t, l, locales, locale } = new i18n(config);
