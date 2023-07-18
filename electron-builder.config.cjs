@@ -63,7 +63,7 @@ module.exports = {
 
     try {
       await notarize({
-        tool: "noatrytool",
+        tool: "notarytool",
         appBundleId,
         appPath,
         appleId: process.env.APPLE_ID,
