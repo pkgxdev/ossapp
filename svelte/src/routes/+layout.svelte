@@ -67,9 +67,7 @@
   <TopBar />
   <div class="scroll-manager relative z-10">
     <section class="relative" bind:this={view}>
-      <div class="content">
-        <slot />
-      </div>
+      <slot />
       <SearchPopupResults />
     </section>
   </div>
@@ -84,7 +82,6 @@
   .scroll-manager {
     height: 100%;
     overflow: hidden;
-    padding-right: 8px;
   }
   section {
     height: calc(100vh - 50px); /* win.height - header*/
@@ -98,34 +95,5 @@
 
   div {
     position: relative;
-  }
-
-  .content {
-    height: auto;
-    overflow-y: hidden;
-    padding-left: 4px;
-    padding-right: 4px;
-    overflow-x: hidden;
-  }
-
-  /* width */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #272626;
-  }
-
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #949494;
-    border-radius: 4px;
-  }
-
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: white;
   }
 </style>

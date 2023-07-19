@@ -70,9 +70,6 @@
   });
 </script>
 
-<!-- FIXME: find a better way to make this div resize.  Main container is height:auto so h-full doesn't work well -->
-<div class="h-[80vh] w-full">
-  <div class="border-gray h-full w-full rounded-[5px] border bg-[#000000] p-1">
-    <div bind:this={terminalDiv} id="terminal" class="h-full w-full" />
-  </div>
+<div class="h-full w-full bg-[#000000] pl-4">
+  <div bind:this={terminalDiv} id="terminal" class="h-full w-full" />
 </div>

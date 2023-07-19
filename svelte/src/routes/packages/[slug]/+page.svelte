@@ -62,9 +62,9 @@
   }
 </script>
 
-<div class="h-full w-full">
+<div class="root">
   <header
-    class="text-gray mb-4 flex h-[52px] items-center justify-between border border-x-0 border-t-0 px-16"
+    class="text-gray flex h-[52px] items-center justify-between border border-x-0 border-t-0 px-16"
   >
     <div>
       <a class="hover:text-white hover:opacity-80" href="/">{$t("common.home")}</a>
@@ -86,30 +86,61 @@
         label="tabs.cli"
         isActive={activeTab === "cli"}
         onClick={() => (activeTab = "cli")}
-        hidden={!pty}
+        isDisabled={!pty}
       />
       <Tab
         label="tabs.gui"
         isActive={activeTab === "gui"}
         onClick={() => (activeTab = "gui")}
-        hidden={!pty?.guiURL}
+        isDisabled={!pty?.guiURL}
       />
     </div>
   </header>
-  <div class="mx-16 mb-4">
+  <div class="mx-16">
     <NotificationBar />
   </div>
   {#if pkg}
-    <div class="flex px-16" class:hidden={activeTab !== "details"}>
-      <PackagePage on:openterminal={() => (activeTab = "cli")} {pkg} />
+    <div class="h-full overflow-hidden pr-2" class:hidden={activeTab !== "details"}>
+      <div class="mt-1 flex h-full overflow-y-auto px-16 pl-4 pt-4">
+        <PackagePage on:openterminal={() => (activeTab = "cli")} {pkg} />
+      </div>
     </div>
-    <div class="flex h-full px-16" class:hidden={activeTab !== "cli"}>
+    <div class="flex h-full" class:hidden={activeTab !== "cli"}>
       <Terminal project={pkg?.full_name} />
     </div>
-    <div class="flex h-full px-16" class:hidden={activeTab !== "gui"}>
+    <div class="flex h-full" class:hidden={activeTab !== "gui"}>
       <WebUI {pty} />
     </div>
   {:else}
     <Preloader />
   {/if}
 </div>
+
+<style>
+  .root {
+    /* magic number of pixels to fit the content without scrolling */
+    height: calc(100vh - 102px);
+    width: 100%;
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #272626;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #949494;
+    border-radius: 4px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: white;
+  }
+</style>
