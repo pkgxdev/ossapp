@@ -4,17 +4,10 @@
 </script>
 
 {#if pty && pty.guiURL}
-  <div class="border-gray mt-4 rounded-[5px] border p-1">
-    <iframe
-      id="terminal"
-      title="{pty.project} web UI"
-      src={pty.guiURL}
-      style="height: 100vh; width: 100%"
-    />
+  <!-- FIXME: find a better way to make this div resize.  Main container is height:auto so h-full doesn't work well -->
+  <div class="h-[80vh] w-full">
+    <div class="border-gray mb-4 h-full w-full rounded-[5px] border p-1">
+      <iframe id="terminal" title="{pty.project} web UI" src={pty.guiURL} class="h-full w-full" />
+    </div>
   </div>
 {/if}
-
-<!--
-  ^^I cannot tell you why this styling is even needed
-  FIXME: you fix this thanks
--->

@@ -42,12 +42,25 @@
       fitAddon.fit();
     });
 
+    // Detect when the containing div is resized and resize the terminal
     const resizeObserver = new ResizeObserver((entries) => {
       fitAddon.fit();
     });
     resizeObserver.observe(terminalDiv);
 
-    return () => resizeObserver.unobserve(terminalDiv);
+    // Detect when the terminal div becomes visible on the screen and resize the terminal
+    var visibilityObserver = new IntersectionObserver((entries, observer) => {
+      // resize the terminal, but only after a delay allowing it to fully render or else the fitAddon will get the wrong size
+      setTimeout(() => {
+        fitAddon.fit();
+      }, 10);
+    });
+    visibilityObserver.observe(terminalDiv);
+
+    return () => {
+      resizeObserver.unobserve(terminalDiv);
+      visibilityObserver.unobserve(terminalDiv);
+    };
   });
 
   onDestroy(() => {
@@ -57,9 +70,9 @@
   });
 </script>
 
-<!-- This div has a very specific size of 571 pixels, the terminal component has breakpoints for showing a line 
-    and the spacing can get weird so this is as close to the breakpoint as possible with no left over space 
-    if some future traveler wants a different size, make sure to take these breakpoints into account -->
-<div class="border-gray mt-4 h-[571px] rounded-[5px] border p-1">
-  <div bind:this={terminalDiv} id="terminal" class="h-full w-full" />
+<!-- FIXME: find a better way to make this div resize.  Main container is height:auto so h-full doesn't work well -->
+<div class="h-[80vh] w-full">
+  <div class="border-gray h-full w-full rounded-[5px] border bg-[#000000] p-1">
+    <div bind:this={terminalDiv} id="terminal" class="h-full w-full" />
+  </div>
 </div>

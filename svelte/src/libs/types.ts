@@ -72,27 +72,6 @@ export type Bottle = {
   updated_at?: Date | string;
 };
 
-export type TabId = "details" | "versions" | "cli" | "gui";
-
-export type Tab = {
-  id: TabId;
-  label: string;
-  hidden?: boolean;
-  props?: {
-    [key: string]:
-      | string
-      | Date
-      | number
-      | Record<string, unknown>
-      | Array<string>
-      | Array<number>
-      | Array<Date>
-      | Array<Record<string, unknown>>
-      | Package;
-  };
-  component: ComponentType;
-};
-
 export type Snippet = {
   snippet_id: string;
   created_at: Date | string;
