@@ -17,6 +17,8 @@
     goto(`/packages/${pkg.slug}?tab=all`);
     onClose();
   };
+
+  console.log(pkg);
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -28,7 +30,7 @@
     alt={pkg.name}
   />
   <header data-testid="card-result-{pkg.slug}" class="flex-grow" on:click={() => gotoPackagePage()}>
-    <h1>{pkg.full_name}</h1>
+    <h1>{pkg.name}</h1>
     <p class="line-clamp-2 text-xs">{pkg.short_description}</p>
   </header>
   <aside>
