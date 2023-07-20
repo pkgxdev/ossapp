@@ -46,10 +46,10 @@
       );
     },
     [SideMenuOptions.recently_updated]: (pkg: GUIPackage) => {
-      return moment(pkg.last_modified).isAfter(moment().subtract(30, "days"));
+      return moment(pkg.updated_at).isAfter(moment().subtract(30, "days"));
     },
     [SideMenuOptions.new_packages]: (pkg: GUIPackage) => {
-      return moment(pkg.created).isAfter(moment().subtract(30, "days"));
+      return moment(pkg.created_at).isAfter(moment().subtract(30, "days"));
     },
     [SideMenuOptions.made_by_tea]: (pkg: GUIPackage) => pkg.full_name.includes("tea.xyz"),
     [SideMenuOptions.local]: (pkg: GUIPackage) => !!pkg.is_local

@@ -13,8 +13,8 @@ export interface Package {
   name: string;
   maintainer: string;
   homepage: string;
-  last_modified: Date | string;
-  created: Date | string;
+  updated_at: Date | string;
+  created_at: Date | string;
   dl_count: number;
   installs: number;
   reviews?: Review[];
