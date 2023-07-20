@@ -49,10 +49,10 @@ const dev = isDev();
 
 const packageMap = writable<Packages>({ version: "0", packages: {} });
 const packageList = derived(packageMap, ($packages) =>
-  Object.values($packages.packages).sort((a, b) => {
-    // implement default sort by last_modified > descending
-    const aDate = new Date(a.last_modified);
-    const bDate = new Date(b.last_modified);
+  Object.values($packages.packages).sort((a: GUIPackage, b: GUIPackage) => {
+    // implement default sort by update_at > descending
+    const aDate = new Date(a.updated_at);
+    const bDate = new Date(b.updated_at);
     return +bDate - +aDate;
   })
 );
