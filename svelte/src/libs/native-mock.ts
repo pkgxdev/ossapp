@@ -225,50 +225,6 @@ export async function getPackages(): Promise<GUIPackage[]> {
   });
 }
 
-export async function getFeaturedPackages(): Promise<Package[]> {
-  await delay(2000);
-  return packages.slice(0, 4);
-}
-
-export async function getPackageReviews(full_name: string): Promise<Review[]> {
-  console.log(`generating reviews for ${full_name}`);
-
-  const reviewCount = _.random(9, 21);
-  const reviews: Review[] = [];
-
-  for (let i = 0; i < reviewCount; i++) {
-    const title = loremIpsum({
-      count: _.random(2, 5),
-      format: "plain",
-      paragraphLowerBound: 3,
-      paragraphUpperBound: 7,
-      random: Math.random,
-      sentenceLowerBound: 5,
-      sentenceUpperBound: 15,
-      units: "words"
-    });
-    const comment = loremIpsum({
-      count: 2,
-      format: "plain",
-      paragraphLowerBound: 3,
-      paragraphUpperBound: 7,
-      random: Math.random,
-      sentenceLowerBound: 5,
-      sentenceUpperBound: 15,
-      units: "sentences"
-    });
-    const rating = _.random(0, 5);
-    reviews.push({
-      title,
-      comment,
-      rating
-    });
-  }
-
-  await delay(2000);
-  return reviews;
-}
-
 export async function installPackage(pkg: GUIPackage, version?: string) {
   console.log("installing: ", pkg.full_name, version);
   await delay(10000);

@@ -8,32 +8,7 @@
   import NoSearchResults from "./no-search-results.svelte";
 
   const { searching, packagesSearch } = searchStore;
-  // import type { AirtablePost } from '$libs/types';
   let term: string;
-  // let articles: AirtablePost[] = []; // news, blogs, etc
-  // let workshops: AirtablePost[] = []; // workshops, course
-  // let loading = true;
-
-  // searchStore.packagesSearch.subscribe((pkgs) => {
-  // 	packages = pkgs;
-  // });
-  // searchStore.postsSearch.subscribe((posts) => {
-  // 	let partialArticles: AirtablePost[] = [];
-  // 	let partialWorkshops: AirtablePost[] = [];
-  // 	for (let post of posts) {
-  // 		if (post.tags.includes('news')) {
-  // 			partialArticles.push(post);
-  // 		}
-  // 		if (post.tags.includes('course') || post.tags.includes('featured_course')) {
-  // 			partialWorkshops.push(post);
-  // 		}
-  // 	}
-
-  // 	articles = partialArticles;
-  // 	workshops = partialWorkshops;
-  // });
-
-  // searchStore.searching.subscribe((v) => (loading = v));
 
   const onClose = () => {
     term = "";
@@ -99,20 +74,6 @@
         {:else}
           <NoSearchResults />
         {/if}
-        <!-- <header class="text-primary p-4 text-lg">
-					Top Article Results ({articles.length})
-				</header>
-
-				<header class="text-primary p-4 text-lg">
-					Top Workshop Results ({workshops.length})
-				</header>
-				{#if workshops.length}
-					<Posts posts={workshops} linkTarget="_blank" />
-				{:else if loading}
-					<section class="border-gray h-64 border bg-black p-4">
-						<Preloader />
-					</section>
-				{/if} -->
       </div>
     {:else}
       <div class="flex h-full w-full flex-col justify-center bg-black">

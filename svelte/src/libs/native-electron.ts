@@ -75,19 +75,6 @@ export async function getPackages(): Promise<GUIPackage[]> {
   });
 }
 
-export async function getFeaturedPackages(): Promise<Package[]> {
-  const packages = await mock.getFeaturedPackages();
-  return packages;
-}
-
-export async function getPackageReviews(full_name: string): Promise<Review[]> {
-  console.log(`getting reviews for ${full_name}`);
-  const reviews: Review[] =
-    (await apiGet<Review[]>(`packages/${full_name.replaceAll("/", ":")}/reviews`)) ?? [];
-
-  return reviews;
-}
-
 export async function installPackage(pkg: GUIPackage, version?: string) {
   const latestVersion = pkg.version;
   const specificVersion = version || latestVersion;
