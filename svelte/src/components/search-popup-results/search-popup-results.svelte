@@ -2,17 +2,18 @@
   import { packagesStore, searchStore } from "$libs/stores";
   import SearchInput from "$components/search-input/search-input.svelte";
   import { t } from "$libs/translations";
-  import { PackageStates } from "$libs/types";
+  import { PackageStates, type GUIPackage } from "$libs/types";
   import PackageResult from "./package-search-result.svelte";
 
   import NoSearchResults from "./no-search-results.svelte";
 
-  const { searching, packagesSearch } = searchStore;
+  const { searching } = searchStore;
+  let packages: GUIPackage[] = [];
   let term: string;
 
   const onClose = () => {
     term = "";
-    searchStore.searching.set(false);
+    searching.set(false);
   };
 </script>
 
@@ -30,7 +31,7 @@
           placeholder={$t("store-search-placeholder")}
           onSearch={(search) => {
             term = search;
-            searchStore.search(search);
+            packages = packagesStore.search(search);
           }}
         />
         <div class="absolute right-4 top-1 flex items-center gap-1 pt-[1px] opacity-50">
@@ -45,12 +46,12 @@
     </header>
     {#if term}
       <div class="z-20 bg-black">
-        {#if $packagesSearch.length > 0}
+        {#if packages.length > 0}
           <header class="text-gray p-4 text-lg">
-            packages ({$packagesSearch.length})
+            packages ({packages.length})
           </header>
           <ul class="flex flex-col gap-2 p-2">
-            {#each $packagesSearch as pkg}
+            {#each packages as pkg}
               <div class={pkg.state === PackageStates.INSTALLING ? "animate-pulse" : ""}>
                 <PackageResult
                   {pkg}
