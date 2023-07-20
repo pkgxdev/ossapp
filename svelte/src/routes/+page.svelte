@@ -54,58 +54,76 @@
   });
 </script>
 
-<div id="content" class="flex flex-col">
-  <NotificationBar />
-  <article class="relative h-auto w-full flex-grow overflow-hidden">
-    <ul class="px-2">
-      {#if sideMenuOption == SideMenuOptions.discover}
-        <DiscoverPackages bind:scrollY={packagesScrollY} />
-      {:else}
-        <Packages packageFilter={sideMenuOption} bind:scrollY={packagesScrollY} bind:packageCount />
-      {/if}
-    </ul>
-    <header class="z-30 flex items-center justify-between" class:scrolling={packagesScrollY > 150}>
-      {#if packageCount > 0}
-        <h1 class="font-mona text-primary pl-3 text-2xl font-bold">
-          {$t(`side-menu-title.${sideMenuOption}`).toLowerCase()}
-        </h1>
-      {/if}
-      <!-- 
-			<section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">
-				
-				we might bring it back?
-				<SortingButtons onSort={(prop, dir) => {
-					sortBy = prop;
-					sortDirection = dir;
-				}} />
-			</section>
-			 -->
-      {#if needsUpdateCount && sideMenuOption === SideMenuOptions.installed_updates_available}
-        <!-- 22px right margin to account for the scrollbar on the package cards -->
-        <div class="mr-[22px] flex items-center justify-end text-sm">
-          {#if currentUpdatingPkg}
-            <p class="text-gray px-2 font-mono">{updatingMessage}</p>
-          {/if}
-          <div>
-            <Button
-              class="h-8 min-w-[125px] p-2 text-xs"
-              loading={updating}
-              type="plain"
-              color="secondary"
-              onClick={updateAll}
-            >
-              {$t(`package.update-all`)} [{needsUpdateCount}]
-            </Button>
+<div class="content-container">
+  <div id="content" class="flex flex-col">
+    <NotificationBar />
+    <article class="relative h-auto w-full flex-grow overflow-hidden">
+      <ul class="px-2">
+        {#if sideMenuOption == SideMenuOptions.discover}
+          <DiscoverPackages bind:scrollY={packagesScrollY} />
+        {:else}
+          <Packages
+            packageFilter={sideMenuOption}
+            bind:scrollY={packagesScrollY}
+            bind:packageCount
+          />
+        {/if}
+      </ul>
+      <header
+        class="z-30 flex items-center justify-between"
+        class:scrolling={packagesScrollY > 150}
+      >
+        {#if packageCount > 0}
+          <h1 class="font-mona text-primary pl-3 text-2xl font-bold">
+            {$t(`side-menu-title.${sideMenuOption}`).toLowerCase()}
+          </h1>
+        {/if}
+        <!-- 
+        <section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">
+          
+          we might bring it back?
+          <SortingButtons onSort={(prop, dir) => {
+            sortBy = prop;
+            sortDirection = dir;
+          }} />
+        </section>
+        -->
+        {#if needsUpdateCount && sideMenuOption === SideMenuOptions.installed_updates_available}
+          <!-- 22px right margin to account for the scrollbar on the package cards -->
+          <div class="mr-[22px] flex items-center justify-end text-sm">
+            {#if currentUpdatingPkg}
+              <p class="text-gray px-2 font-mono">{updatingMessage}</p>
+            {/if}
+            <div>
+              <Button
+                class="h-8 min-w-[125px] p-2 text-xs"
+                loading={updating}
+                type="plain"
+                color="secondary"
+                onClick={updateAll}
+              >
+                {$t(`package.update-all`)} [{needsUpdateCount}]
+              </Button>
+            </div>
           </div>
-        </div>
-      {/if}
-    </header>
-  </article>
+        {/if}
+      </header>
+    </article>
+  </div>
+
+  <SideMenu bind:activeOption={sideMenuOption} />
 </div>
 
-<SideMenu bind:activeOption={sideMenuOption} />
-
 <style>
+  .content-container {
+    height: auto;
+    overflow-y: hidden;
+    padding-left: 4px;
+    padding-right: 4px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
   #content {
     width: calc(100vw - 211px);
     margin-left: 205px;
@@ -135,5 +153,26 @@
 
   header.scrolling h1 {
     padding-top: 0px;
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #272626;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #949494;
+    border-radius: 4px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: white;
   }
 </style>
