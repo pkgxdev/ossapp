@@ -2,42 +2,18 @@
   import { packagesStore, searchStore } from "$libs/stores";
   import SearchInput from "$components/search-input/search-input.svelte";
   import { t } from "$libs/translations";
-  import { PackageStates } from "$libs/types";
+  import { PackageStates, type GUIPackage } from "$libs/types";
   import PackageResult from "./package-search-result.svelte";
 
   import NoSearchResults from "./no-search-results.svelte";
 
-  const { searching, packagesSearch } = searchStore;
-  // import type { AirtablePost } from '$libs/types';
+  const { searching } = searchStore;
+  let packages: GUIPackage[] = [];
   let term: string;
-  // let articles: AirtablePost[] = []; // news, blogs, etc
-  // let workshops: AirtablePost[] = []; // workshops, course
-  // let loading = true;
-
-  // searchStore.packagesSearch.subscribe((pkgs) => {
-  // 	packages = pkgs;
-  // });
-  // searchStore.postsSearch.subscribe((posts) => {
-  // 	let partialArticles: AirtablePost[] = [];
-  // 	let partialWorkshops: AirtablePost[] = [];
-  // 	for (let post of posts) {
-  // 		if (post.tags.includes('news')) {
-  // 			partialArticles.push(post);
-  // 		}
-  // 		if (post.tags.includes('course') || post.tags.includes('featured_course')) {
-  // 			partialWorkshops.push(post);
-  // 		}
-  // 	}
-
-  // 	articles = partialArticles;
-  // 	workshops = partialWorkshops;
-  // });
-
-  // searchStore.searching.subscribe((v) => (loading = v));
 
   const onClose = () => {
     term = "";
-    searchStore.searching.set(false);
+    searching.set(false);
   };
 </script>
 
@@ -55,7 +31,7 @@
           placeholder={$t("store-search-placeholder")}
           onSearch={(search) => {
             term = search;
-            searchStore.search(search);
+            packages = packagesStore.search(search);
           }}
         />
         <div class="absolute right-4 top-1 flex items-center gap-1 pt-[1px] opacity-50">
@@ -70,12 +46,12 @@
     </header>
     {#if term}
       <div class="z-20 bg-black">
-        {#if $packagesSearch.length > 0}
+        {#if packages.length > 0}
           <header class="text-gray p-4 text-lg">
-            packages ({$packagesSearch.length})
+            packages ({packages.length})
           </header>
           <ul class="flex flex-col gap-2 p-2">
-            {#each $packagesSearch as pkg}
+            {#each packages as pkg}
               <div class={pkg.state === PackageStates.INSTALLING ? "animate-pulse" : ""}>
                 <PackageResult
                   {pkg}
@@ -99,20 +75,6 @@
         {:else}
           <NoSearchResults />
         {/if}
-        <!-- <header class="text-primary p-4 text-lg">
-					Top Article Results ({articles.length})
-				</header>
-
-				<header class="text-primary p-4 text-lg">
-					Top Workshop Results ({workshops.length})
-				</header>
-				{#if workshops.length}
-					<Posts posts={workshops} linkTarget="_blank" />
-				{:else if loading}
-					<section class="border-gray h-64 border bg-black p-4">
-						<Preloader />
-					</section>
-				{/if} -->
       </div>
     {:else}
       <div class="flex h-full w-full flex-col justify-center bg-black">
