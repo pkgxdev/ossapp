@@ -10,8 +10,9 @@ import { DeviceAuth } from "../../svelte/src/libs/types";
 import { notifyMainWindow } from "../electron";
 import { InitWatcher } from "./initialize";
 import { baseURL } from "./v1-client";
+import { isDev } from "./auto-updater";
 
-const sessionFilePath = path.join(getTeaPath(), "tea.xyz/gui/tmp.dat");
+const sessionFilePath = path.join(getTeaPath(), `tea.xyz/gui/${isDev() ? "dev.dat" : "tmp.dat"}`);
 const sessionFolder = path.join(getTeaPath(), "tea.xyz/gui");
 
 export interface Session {
