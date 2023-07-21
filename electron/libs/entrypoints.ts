@@ -94,17 +94,7 @@ export async function openPackageEntrypointInTerminal(
 
   ptyproc.onData((out) => {
     ptys[project].output.push(out);
-
-    if (out.startsWith('{"xyz.tea":')) {
-      //FIXME bit flakey (this system)
-      const json = JSON.parse(out);
-      const url = json["xyz.tea"]?.["gui"];
-      if (url) {
-        ptys[project].guiURL = url;
-        notifyMainWindow("pty.out", { project, type: "enable-gui", guiURL: url });
-      }
-    }
-
+    checkForGUIUrl(project, out, notifyMainWindow);
     notifyMainWindow("pty.out", {
       project,
       pid: ptyproc.pid,
@@ -136,4 +126,23 @@ export async function openPackageEntrypointInTerminal(
   ipcMain.addListener("pty.in", inputListener);
 
   ptys[project] = { pty: ptyproc, output: [] };
+}
+
+function checkForGUIUrl(project: string, out: string, notifyMainWindow: MainWindowNotifier) {
+  try {
+    out
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.startsWith('{"xyz.tea":'))
+      .forEach((line) => {
+        const json = JSON.parse(line);
+        const url = json["xyz.tea"]?.["gui"];
+        if (url) {
+          ptys[project].guiURL = url;
+          notifyMainWindow("pty.out", { project, type: "enable-gui", guiURL: url });
+        }
+      });
+  } catch (e) {
+    log.error("Error checking for GUI URL:", e);
+  }
 }
