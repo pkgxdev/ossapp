@@ -19,12 +19,12 @@
 
   const url = $page.url;
 
-  let sideMenuOption = (url.searchParams.get("tab") as SideMenuOptions) || SideMenuOptions.discover;
+  $: sideMenuOption = (url.searchParams.get("tab") as SideMenuOptions) || SideMenuOptions.discover;
 
   let updating = false;
 
   let packagesScrollY = 0;
-  let packageCount = 0;
+  $: packageCount = 0;
   $: currentUpdatingPkg = $packageList.find((p) => p.state === PackageStates.UPDATING);
   $: updatingMessage = `updating ${currentUpdatingPkg?.full_name} (${formatPercent(
     currentUpdatingPkg?.install_progress_percentage
@@ -73,11 +73,9 @@
         class="z-30 flex items-center justify-between"
         class:scrolling={packagesScrollY > 150}
       >
-        {#if packageCount > 0}
-          <h1 class="font-mona text-primary pl-3 text-2xl font-bold">
-            {$t(`side-menu-title.${sideMenuOption}`).toLowerCase()}
-          </h1>
-        {/if}
+        <h1 class="font-mona text-primary pl-3 text-2xl font-bold">
+          {$t(`side-menu-title.${sideMenuOption}`).toLowerCase()}
+        </h1>
         <!-- 
         <section class="border-gray mt-4 mr-4 h-10 w-48 border rounded-sm">
           
