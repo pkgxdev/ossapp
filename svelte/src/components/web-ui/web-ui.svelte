@@ -5,6 +5,11 @@
 
 {#if pty && pty.guiURL}
   <div class="h-full w-full">
-    <iframe id="webui" title="{pty.project} web UI" src={pty.guiURL} class="h-full w-full" />
+    <iframe
+      id="webui"
+      title="{pty.project} web UI"
+      src={pty.guiURL}
+      class="h-full w-full bg-white"
+    />
   </div>
 {/if}
