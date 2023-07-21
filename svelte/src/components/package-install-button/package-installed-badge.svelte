@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { getPackageBadgeText } from "$libs/packages/pkg-utils";
+  import { t } from "$libs/translations";
+  import { getPackageBadgeTextKey } from "$libs/packages/pkg-utils";
   import type { GUIPackage } from "$libs/types";
 
   export let pkg: GUIPackage;
@@ -7,7 +8,7 @@
 
 <div class="container relative h-full" data-testid={`install-badge-${pkg?.slug}`}>
   <div class="content flex items-center justify-center gap-2 p-2">
-    <div class="text-xs">{getPackageBadgeText(pkg)}</div>
+    <div class="text-xs">{$t(getPackageBadgeTextKey(pkg))}</div>
     <div class="rounded-sm bg-white px-1 text-[10px] leading-[12px] text-black">
       v{pkg?.installed_versions?.[0]}
     </div>

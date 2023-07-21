@@ -1,7 +1,8 @@
 <script lang="ts">
+  import { t } from "$libs/translations";
   import { PackageStates, type GUIPackage } from "$libs/types";
   import Button from "$components/button/button.svelte";
-  import { getPackageBadgeText } from "$libs/packages/pkg-utils";
+  import { getPackageBadgeTextKey } from "$libs/packages/pkg-utils";
 
   export let buttonSize: "small" | "large" = "small";
 
@@ -43,8 +44,6 @@
   };
 
   const hasVersionSelectorDropdown = !!$$slots.selector;
-
-  $: ctaLabel = getPackageBadgeText(pkg);
 </script>
 
 <Button
@@ -63,7 +62,7 @@
           : 'justify-center'}"
       >
         <div class="flex items-center gap-x-2" data-testid={`install-badge-${pkg?.slug}`}>
-          <div>{ctaLabel}</div>
+          <div>{$t(getPackageBadgeTextKey(pkg))}</div>
           <div class="version-label {badgeClass[pkg.state]}">v{getVersion(pkg)}</div>
         </div>
         {#if hasVersionSelectorDropdown}
