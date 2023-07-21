@@ -89,6 +89,12 @@ export const getPackageBadgeText = (pkg: GUIPackage) => {
   return t.get(`package.cta-${state}`);
 };
 
+export const getPackageBadgeTextKey = (pkg: GUIPackage) => {
+  // UPDATED is a "pseudo-state" that overrides other states
+  const state = packageWasUpdated(pkg) ? "UPDATED" : pkg.state;
+  return `package.cta-${state}`;
+};
+
 export const newLocalPackage = (
   full_name: string,
   installed_versions: string[],
