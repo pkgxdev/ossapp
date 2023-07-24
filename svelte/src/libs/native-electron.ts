@@ -25,7 +25,7 @@ const { ipcRenderer, shell } = window.require("electron");
 export async function getDistPackages(): Promise<Package[]> {
   let pkgs: Package[] = [];
   try {
-    const pkgs = await withRetry(async () => {
+    pkgs = await withRetry(async () => {
       const packages = await apiGet<Package[]>("packages");
       log.info("packages received:", packages?.length);
       return packages || [];

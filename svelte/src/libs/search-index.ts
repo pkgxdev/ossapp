@@ -5,6 +5,7 @@ import log from "$libs/logger";
 let packagesIndex: Fuse<GUIPackage>;
 
 export function indexPackages(packages: GUIPackage[]) {
+  log.info("indexing with fuse packages:", packages?.length);
   try {
     packagesIndex = new Fuse(packages, {
       keys: [
