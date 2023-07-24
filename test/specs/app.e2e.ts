@@ -1,5 +1,6 @@
 import { browser } from "wdio-electron-service";
 import { setupUtils } from "./utils.ts";
+import { sleep } from "./waitutils.js";
 
 type utilType = ReturnType<typeof setupUtils>;
 
@@ -13,6 +14,9 @@ describe("basic smoke test", () => {
     utils = setupUtils(browser);
     await utils.goHome();
     await (await utils.screen.findByText(disoverText)).waitForExist();
+
+    // fuse indexing takes time
+    await sleep(3000);
   });
 
   it("install brewkit from the made by tea tab", async () => {
@@ -59,7 +63,7 @@ describe("basic smoke test", () => {
     await utils.verifyInstalledBadge(createDmgSlug);
   });
 
-  it.skip("should be able to install specific version", async () => {
+  it("should be able to install specific version", async () => {
     const { screen, searchTerm } = utils!;
     const slug = "gnu_org_grep";
 
