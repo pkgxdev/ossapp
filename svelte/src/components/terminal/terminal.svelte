@@ -25,8 +25,8 @@
     terminal.open(document.getElementById("terminal")!);
     fitAddon.fit();
 
-    terminal.onKey((e) => {
-      sendStdInToPty({ project, data: e.key });
+    terminal.onData((data: string) => {
+      sendStdInToPty({ project, data });
     });
 
     unsubscribe = ptys.subscribeToSubprocess(project, (ptyouts: TeaSubprocess) => {
