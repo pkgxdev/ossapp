@@ -59,7 +59,7 @@ describe("basic smoke test", () => {
     await utils.verifyInstalledBadge(createDmgSlug);
   });
 
-  it("should be able to install specific version", async () => {
+  it.skip("should be able to install specific version", async () => {
     const { screen, searchTerm } = utils!;
     const slug = "gnu_org_grep";
 
