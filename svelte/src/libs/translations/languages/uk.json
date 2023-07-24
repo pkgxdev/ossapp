@@ -1,0 +1,96 @@
+{
+  "id": "uk",
+  "label": "Українська",
+  "translations": {
+    "store-search-placeholder": "пошук пакетів",
+    "action": {
+      "update": "оновити",
+      "cancel": "скасувати"
+    },
+    "package": {
+      "update-all": "ОНОВИТИ ВСЕ",
+      "cta-AVAILABLE": "ВСТАНОВИТИ",
+      "cta-INSTALLED": "ВСТАНОВЛЕНО",
+      "cta-INSTALLING": "ВСТАНОВЛЕННЯ",
+      "cta-UNINSTALLED": "ПЕРЕВСТАНОВИТИ",
+      "cta-UNINSTALL": "ВИДАЛИТИ",
+      "cta-NEEDS_UPDATE": "ОНОВИТИ",
+      "cta-UPDATING": "ОНОВЛЕННЯ",
+      "cta-UPDATED": "ОНОВИТИ",
+      "cta-PRUNE": "ОЧИСТИТИ",
+      "cta-PRUNING": "ОЧИЩЕННЯ",
+      "open": "ВІДКРИТИ",
+      "open-in-terminal": "ВІДКРИТИ В ТЕРМІНАЛІ",
+      "local-package": "локальний пакет",
+      "not-in-pantry": "ще не додано до комори"
+    },
+    "footer": {
+      "quick-links-title": "швидкі посилання",
+      "about-tea-store": "про tea store",
+      "report-a-problem": "повідомити про проблему",
+      "visit-website": "відвідати tea.xyz",
+      "terms-services": "умови та послуги",
+      "privacy-policy": "політика конфіденційності"
+    },
+    "documentation": {
+      "title": "документація",
+      "workshops": "майстерні"
+    },
+    "view-all": "дивитися все",
+    "sorting": {
+      "label": "Сортувати",
+      "popularity": "Найпопулярніші",
+      "most-recent": "Найновіші"
+    },
+    "common": {
+      "home": "головна",
+      "all": "Все",
+      "articles": "Статті",
+      "workshops": "Майстерні",
+      "metadata": "Метадані",
+      "homepage": "Головна",
+      "documentation": "Документація",
+      "github-repository": "Github Репозитарій",
+      "contributors": "Учасники",
+      "view-on-github": "ДИВИТИСЯ НА GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "оновити tea/gui до {{version}}?",
+      "gui-restarting": "Продовження призведе до перезапуску програми після завершення. Будь ласка, переконайтеся, що у вас не запущено жодних операцій. Ви бажаєте продовжити?",
+      "gui-restart": "перезапуск"
+    },
+    "side-menu-title": {
+      "discover": "дізнатися",
+      "all": "Всі пакети",
+      "installed": "Встановлені пакети",
+      "installed_updates_available": "Доступні Оновлення",
+      "recently_updated": "Нещодавно Оновлено",
+      "new_packages": "Нові Пакети",
+      "popular": "Популярні",
+      "featured": "Рекомендовані",
+      "essentials": "Важливі",
+      "starstruck": "Зіркові Важковаговики",
+      "made_by_tea": "виготовлено tea",
+      "local_packages": "Локальні Пакети"
+    },
+    "tags": {
+      "discover": "дізнатися",
+      "all": "всі пакети",
+      "installed": "встановлено",
+      "installed_updates_available": "Доступні оновлення",
+      "recently_updated": "Нещодавно оновлено",
+      "new_packages": "Нові пакети",
+      "popular": "Популярні",
+      "featured": "Рекомендовані",
+      "essentials": "Важливі",
+      "starstruck": "Важковаговики",
+      "made_by_tea": "Виготовлено tea",
+      "local_packages": "Локальні пакети"
+    }
+  }
+}
