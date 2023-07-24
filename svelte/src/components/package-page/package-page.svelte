@@ -10,7 +10,7 @@
   $: readme = pkg?.readme || ({ data: "", type: "md" } as { data: string; type: "md" | "rst" });
 </script>
 
-<div class="w-3/4 pr-4">
+<div class="flex w-3/4 flex-col justify-stretch pr-4">
   <PackageBanner on:openterminal {pkg} />
   <hr class="border-top border-gray" />
   <Markdown source={readme} hook={useDefaultBrowser} />

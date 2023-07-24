@@ -5,6 +5,7 @@
   import "./styles.css";
   import { onMount } from "svelte";
   import { tokenizeMarkdown } from "./md";
+  import Preloader from "$components/preloader/preloader.svelte";
 
   export let source: { data: string; type: "md" | "rst" };
 
@@ -44,12 +45,14 @@
   });
 </script>
 
-<section use:hook class="markdown-body py-4">
-  {#if source.type === "md"}
+<section use:hook class="markdown-body flex w-full justify-stretch py-4">
+  {#if source.type === "md" && source.data}
     <div bind:this={markDownRoot}>
       <SvelteMarkdown source={tokenizeMarkdown(source.data)} {renderers} />
     </div>
-  {:else if source.type === "rst"}
+  {:else if source.type === "rst" && html}
     {@html html}
+  {:else}
+    <Preloader />
   {/if}
 </section>
