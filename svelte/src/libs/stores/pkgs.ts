@@ -163,9 +163,11 @@ const init = async function () {
   log.info("packages store: try initialize");
 
   if (!initialized) {
-    const cachedPkgs: Packages = await loadPackageCache();
-    log.info(`Loaded ${Object.keys(cachedPkgs.packages).length} packages from cache`);
-    packageMap.set(cachedPkgs);
+    const cachedPkgs = await loadPackageCache();
+    if (cachedPkgs) {
+      log.info(`Loaded ${Object.keys(cachedPkgs.packages).length} packages from cache`);
+      packageMap.set(cachedPkgs);
+    }
 
     await refreshPackages();
     await monitorTeaDir();

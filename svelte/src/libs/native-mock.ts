@@ -216,15 +216,6 @@ export async function getInstalledVersionsForPackage(full_name: string): Promise
   }) as Package;
 }
 
-export async function getPackages(): Promise<GUIPackage[]> {
-  return packages.map((pkg) => {
-    return {
-      ...pkg,
-      state: PackageStates.AVAILABLE
-    };
-  });
-}
-
 export async function installPackage(pkg: GUIPackage, version?: string) {
   console.log("installing: ", pkg.full_name, version);
   await delay(10000);

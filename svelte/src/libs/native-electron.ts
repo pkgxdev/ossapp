@@ -11,11 +11,11 @@
  *  - connect to a local platform api and returns a data
  */
 
-import type { Package, Review, AirtablePost } from "$libs/types";
+import type { Package, AirtablePost } from "$libs/types";
 import type { GUIPackage, Session, Packages, AutoUpdateStatus } from "./types";
 
 import * as mock from "./native-mock";
-import { PackageStates, type InstalledPackage } from "./types";
+import type { InstalledPackage } from "./types";
 
 import { get as apiGet } from "$libs/v1-client";
 import withRetry from "./utils/retry";
@@ -23,16 +23,24 @@ import log from "./logger";
 const { ipcRenderer, shell } = window.require("electron");
 
 export async function getDistPackages(): Promise<Package[]> {
+  let pkgs: Package[] = [];
   try {
-    return withRetry(async () => {
+    const pkgs = await withRetry(async () => {
       const packages = await apiGet<Package[]>("packages");
       log.info("packages received:", packages?.length);
       return packages || [];
     });
   } catch (error) {
     log.error("getDistPackagesList:", error);
-    return [];
+
+    // rebuild packages[] from cache
+    const cachedPkgs = await loadPackageCache();
+    if (cachedPkgs?.packages) {
+      pkgs = Object.values(cachedPkgs.packages);
+    }
   }
+
+  return pkgs;
 }
 
 export async function getInstalledPackages(): Promise<InstalledPackage[]> {
@@ -54,25 +62,6 @@ export async function getInstalledVersionsForPackage(fullName: string): Promise<
     throw result;
   }
   return result as InstalledPackage;
-}
-
-export async function getPackages(): Promise<GUIPackage[]> {
-  const [packages, installedPackages] = await Promise.all([
-    getDistPackages(),
-    ipcRenderer.invoke("get-installed-packages") as InstalledPackage[]
-  ]);
-
-  // NOTE: its not ideal to get bottles or set package states here maybe do it async in the package store init
-  // --- it has noticeable slowness
-  log.info(`native: installed ${installedPackages.length} out of ${(packages || []).length}`);
-  return (packages || []).map((pkg) => {
-    const installedPkg = installedPackages.find((p) => p.full_name === pkg.full_name);
-    return {
-      ...pkg,
-      state: installedPkg ? PackageStates.INSTALLED : PackageStates.AVAILABLE,
-      installed_versions: installedPkg?.installed_versions || []
-    };
-  });
 }
 
 export async function installPackage(pkg: GUIPackage, version?: string) {
@@ -231,7 +220,7 @@ export const deletePackage = async (args: { fullName: string; version: string })
   }
 };
 
-export const loadPackageCache = async () => {
+export const loadPackageCache = async (): Promise<Packages | void> => {
   try {
     return await ipcRenderer.invoke("load-package-cache");
   } catch (error) {
