@@ -1,7 +1,11 @@
 import { browser } from "wdio-electron-service";
 import { setupUtils } from "./utils.ts";
+import { sleep } from "./waitutils.js";
 
 type utilType = ReturnType<typeof setupUtils>;
+
+// might need to update this from time to time
+const disoverText = "GPT Engineer";
 
 describe("basic smoke test", () => {
   let utils: utilType;
@@ -9,7 +13,10 @@ describe("basic smoke test", () => {
   beforeEach(async () => {
     utils = setupUtils(browser);
     await utils.goHome();
-    await (await utils.screen.findByText("Stable Diffusion web UI")).waitForExist();
+    await (await utils.screen.findByText(disoverText)).waitForExist();
+
+    // fuse indexing takes time
+    await sleep(3000);
   });
 
   it("install brewkit from the made by tea tab", async () => {
@@ -18,7 +25,7 @@ describe("basic smoke test", () => {
     const slug = "tea_xyz_brewkit";
 
     // app launches to discover screen by default - make sure Stable Diffusion is there
-    await expect(await screen.findByText("Stable Diffusion web UI")).toExist();
+    await expect(await screen.findByText(disoverText)).toExist();
 
     // navigate to "made by tea" page
     const btn = await utils.findButton("made by tea");

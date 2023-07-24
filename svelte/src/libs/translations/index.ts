@@ -6,6 +6,7 @@ import type { Config } from "@sveltekit-i18n/parser-default";
 import en from "./languages/en.json";
 import de from "./languages/de.json";
 import ru from "./languages/ru.json";
+import uk from "./languages/uk.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -16,7 +17,7 @@ type Translation = typeof en.translations & {
 };
 
 // add new language json object here
-const languages = [en, de, ru];
+const languages = [en, de, ru, uk];
 
 const langs: { [lang: string]: string } = {};
 languages.forEach((lang) => {
