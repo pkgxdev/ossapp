@@ -9,6 +9,7 @@
   import type { TeaSubprocess } from "$libs/stores/ptys";
 
   export let project: string;
+  const fitAddon = new FitAddon();
 
   let terminal: Terminal;
 
@@ -20,13 +21,12 @@
 
   onMount(() => {
     terminal = new Terminal();
-    const fitAddon = new FitAddon();
     terminal.loadAddon(fitAddon);
     terminal.open(document.getElementById("terminal")!);
     fitAddon.fit();
 
     terminal.onData((data: string) => {
-      sendStdInToPty({ project, data });
+      sendStdInToPty({ project, data, rows: terminal.rows, cols: terminal.cols });
     });
 
     unsubscribe = ptys.subscribeToSubprocess(project, (ptyouts: TeaSubprocess) => {
@@ -45,6 +45,7 @@
     // Detect when the containing div is resized and resize the terminal
     const resizeObserver = new ResizeObserver((entries) => {
       fitAddon.fit();
+      sendStdInToPty({ project, data: "", rows: terminal.rows, cols: terminal.cols });
     });
     resizeObserver.observe(terminalDiv);
 
@@ -70,6 +71,6 @@
   });
 </script>
 
-<div class="h-full w-full bg-[#000000] pl-4">
-  <div bind:this={terminalDiv} id="terminal" class="h-full w-full" />
+<div class="relative block h-full w-full bg-[#000000] pl-4">
+  <div bind:this={terminalDiv} id="terminal" class="relative block h-full w-full" />
 </div>

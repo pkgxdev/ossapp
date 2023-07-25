@@ -154,7 +154,12 @@ export const updateSession = async (session: Partial<Session>) => {
   }
 };
 
-export const sendStdInToPty = async (opts: { data: string; project: string }) => {
+export const sendStdInToPty = async (opts: {
+  data: string;
+  project: string;
+  cols?: number;
+  rows?: number;
+}) => {
   try {
     await ipcRenderer.send("pty.in", opts);
   } catch (error) {

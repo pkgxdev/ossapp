@@ -103,9 +103,16 @@ export async function openPackageEntrypointInTerminal(
     });
   });
 
-  const inputListener = (event, { data, project: incoming_project }) => {
+  interface InputDetail {
+    data: string;
+    project: string;
+    cols: number;
+    rows: number;
+  }
+  const inputListener = (event, { data, project: incoming_project, cols, rows }: InputDetail) => {
     if (project === incoming_project) {
       ptyproc.write(data);
+      if (cols && rows) ptyproc.resize(cols, rows);
     }
   };
 
