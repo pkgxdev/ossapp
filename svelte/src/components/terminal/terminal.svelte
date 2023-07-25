@@ -54,6 +54,7 @@
       // resize the terminal, but only after a delay allowing it to fully render or else the fitAddon will get the wrong size
       setTimeout(() => {
         fitAddon.fit();
+        terminal.focus();
       }, 10);
     });
     visibilityObserver.observe(terminalDiv);
