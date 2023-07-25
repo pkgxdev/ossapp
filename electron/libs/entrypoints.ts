@@ -111,7 +111,6 @@ export async function openPackageEntrypointInTerminal(
   }
   const inputListener = (event, { data, project: incoming_project, cols, rows }: InputDetail) => {
     if (project === incoming_project) {
-      log.info("sending input to pty:", data);
       ptyproc.write(data);
       if (cols && rows) ptyproc.resize(cols, rows);
     }

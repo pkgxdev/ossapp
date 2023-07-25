@@ -8,8 +8,6 @@
   import { sendStdInToPty } from "$libs/native-electron";
   import type { TeaSubprocess } from "$libs/stores/ptys";
 
-  import log from "$libs/logger";
-
   export let project: string;
   const fitAddon = new FitAddon();
 
