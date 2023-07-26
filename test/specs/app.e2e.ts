@@ -16,7 +16,7 @@ describe("basic smoke test", () => {
     await (await utils.screen.findByText(disoverText)).waitForExist();
 
     // fuse indexing takes time
-    await sleep(3000);
+    await sleep(4000);
   });
 
   it("install brewkit from the made by tea tab", async () => {
