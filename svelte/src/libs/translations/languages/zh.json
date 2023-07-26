@@ -68,7 +68,7 @@
       "discover": "发现",
       "all": "所有软件包",
       "installed": "已安装的软件包",
-      "installed_updates_available": "可用更新",
+      "installed_updates_available": "可更新",
       "recently_updated": "最近更新的软件包",
       "new_packages": "新软件包",
       "popular": "最受欢迎的软件包",
@@ -82,14 +82,14 @@
       "discover": "发现",
       "all": "所有软件包",
       "installed": "已安装",
-      "installed_updates_available": "可用更新",
+      "installed_updates_available": "可更新",
       "recently_updated": "最近更新的软件包",
       "new_packages": "新软件包",
       "popular": "最受欢迎的软件包",
       "featured": "精选软件包",
       "essentials": "必备软件包",
       "starstruck": "重量级软件包",
-      "made_by_tea": "由茶仓开发的软件包",
+      "made_by_tea": "由 tea 制造",
       "local_packages": "本地软件包"
     }
   }
