@@ -110,6 +110,7 @@
     "chokidar": "^3.5.3",
     "custom-electron-titlebar": "4.2.0-beta.0",
     "dayjs": "^1.11.7",
+    "decimal.js": "^10.4.3",
     "electron-context-menu": "^3.6.1",
     "electron-log": "^4.4.8",
     "electron-serve": "^1.1.0",
