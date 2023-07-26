@@ -113,7 +113,7 @@
   }
   ul > li {
     border-top: gray 1px solid;
-    height: 36px;
+    min-height: 36px;
     padding-top: 10px;
   }
 </style>

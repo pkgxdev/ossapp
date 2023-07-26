@@ -47,7 +47,7 @@
 
 <section use:hook class="markdown-body flex w-full justify-stretch py-4">
   {#if source.type === "md" && source.data}
-    <div bind:this={markDownRoot}>
+    <div class="w-full" bind:this={markDownRoot}>
       <SvelteMarkdown source={tokenizeMarkdown(source.data)} {renderers} />
     </div>
   {:else if source.type === "rst" && html}

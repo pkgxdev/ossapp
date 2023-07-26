@@ -66,7 +66,7 @@
   <header
     class="text-gray flex h-[52px] items-center justify-between border border-x-0 border-t-0 px-16"
   >
-    <div>
+    <div class="overflow-hidden text-ellipsis whitespace-nowrap">
       <a class="hover:text-white hover:opacity-80" href="/">{$t("common.home")}</a>
       ›
       <a class="hover:text-white hover:opacity-80" href="/?tab={tab || 'discover'}"
