@@ -1,0 +1,96 @@
+{
+  "id": "zh",
+  "label": "中文",
+  "translations": {
+    "store-search-placeholder": "搜索软件包",
+    "action": {
+      "update": "更新",
+      "cancel": "取消"
+    },
+    "package": {
+      "update-all": "全部更新",
+      "cta-AVAILABLE": "安装",
+      "cta-INSTALLED": "已安装",
+      "cta-INSTALLING": "正在安装",
+      "cta-UNINSTALLED": "重新安装",
+      "cta-UNINSTALL": "卸载",
+      "cta-NEEDS_UPDATE": "更新",
+      "cta-UPDATING": "更新中",
+      "cta-UPDATED": "已更新",
+      "cta-PRUNE": "清理",
+      "cta-PRUNING": "清理中",
+      "open": "打开",
+      "open-in-terminal": "在终端中打开",
+      "local-package": "本地软件包",
+      "not-in-pantry": "尚未添加到软件包管理器"
+    },
+    "footer": {
+      "quick-links-title": "快速链接",
+      "about-tea-store": "关于茶仓",
+      "report-a-problem": "报告问题",
+      "visit-website": "访问 tea.xyz",
+      "terms-services": "条款和服务",
+      "privacy-policy": "隐私政策"
+    },
+    "documentation": {
+      "title": "文档",
+      "workshops": "教程"
+    },
+    "view-all": "查看所有",
+    "sorting": {
+      "label": "排序方式",
+      "popularity": "最受欢迎",
+      "most-recent": "最近更新"
+    },
+    "common": {
+      "home": "首页",
+      "all": "全部",
+      "articles": "文章",
+      "workshops": "教程",
+      "metadata": "元数据",
+      "homepage": "主页",
+      "documentation": "文档",
+      "github-repository": "Github 仓库",
+      "contributors": "贡献者",
+      "view-on-github": "在 Github 上查看"
+    },
+    "tabs": {
+      "details": "软件包",
+      "cli": "命令行",
+      "gui": "图形界面"
+    },
+    "notification": {
+      "update-header": "更新 tea/gui 到 {{version}} 吗？",
+      "gui-restarting": "继续操作将会导致应用程序在完成后重启。请确保您没有任何正在进行的操作。是否要继续？",
+      "gui-restart": "重启"
+    },
+    "side-menu-title": {
+      "discover": "发现",
+      "all": "所有软件包",
+      "installed": "已安装的软件包",
+      "installed_updates_available": "可用更新",
+      "recently_updated": "最近更新的软件包",
+      "new_packages": "新软件包",
+      "popular": "最受欢迎的软件包",
+      "featured": "精选软件包",
+      "essentials": "必备软件包",
+      "starstruck": "重量级软件包",
+      "made_by_tea": "由茶仓开发的软件包",
+      "local_packages": "本地软件包"
+    },
+    "tags": {
+      "discover": "发现",
+      "all": "所有软件包",
+      "installed": "已安装",
+      "installed_updates_available": "可用更新",
+      "recently_updated": "最近更新的软件包",
+      "new_packages": "新软件包",
+      "popular": "最受欢迎的软件包",
+      "featured": "精选软件包",
+      "essentials": "必备软件包",
+      "starstruck": "重量级软件包",
+      "made_by_tea": "由茶仓开发的软件包",
+      "local_packages": "本地软件包"
+    }
+  }
+}
