@@ -5,7 +5,7 @@
 <div class="group relative">
   <slot name="target" />
   <div
-    class="tooltip border-gray invisible absolute left-1/2 top-full mt-4 w-full min-w-max translate-x-[-50%] border bg-black transition-all group-hover:visible"
+    class="tooltip border-gray invisible absolute left-1/2 top-full z-50 mt-4 w-full min-w-max translate-x-[-50%] border bg-black transition-all group-hover:visible"
   >
     <div class="px-6 py-2">
       <slot name="tooltip-content" />
