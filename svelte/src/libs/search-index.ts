@@ -30,7 +30,9 @@ export function indexPackages(packages: GUIPackage[]) {
         }
       ],
       minMatchCharLength: 3,
-      threshold: 0.3
+      threshold: 0.3,
+      includeScore: true,
+      shouldSort: true
     });
     log.info("refreshed packages fuse index");
   } catch (error) {
