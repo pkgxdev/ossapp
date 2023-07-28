@@ -6,11 +6,13 @@
   import PackageResult from "./package-search-result.svelte";
 
   import NoSearchResults from "./no-search-results.svelte";
+  import Spinner from "$components/spinner/spinner.svelte";
 
   const { searching } = searchStore;
   let packages: GUIPackage[] = [];
   let term: string;
 
+  let loading = false;
   const onClose = () => {
     term = "";
     searching.set(false);
@@ -29,9 +31,14 @@
           size="small"
           autofocus={true}
           placeholder={$t("store-search-placeholder")}
-          onSearch={(search) => {
-            term = search;
-            packages = packagesStore.search(search);
+          onSearch={async (search) => {
+            try {
+              loading = true;
+              term = search;
+              packages = await packagesStore.search(search);
+            } finally {
+              loading = false;
+            }
           }}
         />
         <div class="absolute right-4 top-1 flex items-center gap-1 pt-[1px] opacity-50">
@@ -45,7 +52,7 @@
       <button class="mr-2" on:click={onClose}>&#x2715</button>
     </header>
     {#if term}
-      <div class="z-20 bg-black">
+      <div class="z-20 w-full bg-black">
         {#if packages.length > 0}
           <header class="text-gray p-4 text-lg">
             packages ({packages.length})
@@ -72,6 +79,10 @@
               </div>
             {/each}
           </ul>
+        {:else if loading}
+          <div class="flex h-full w-full items-center justify-center" data-testid="is-searching">
+            <Spinner />
+          </div>
         {:else}
           <NoSearchResults />
         {/if}

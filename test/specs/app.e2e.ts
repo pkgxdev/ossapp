@@ -14,9 +14,6 @@ describe("basic smoke test", () => {
     utils = setupUtils(browser);
     await utils.goHome();
     await (await utils.screen.findByText(disoverText)).waitForExist();
-
-    // fuse indexing takes time
-    await sleep(4000);
   });
 
   it("install brewkit from the made by tea tab", async () => {

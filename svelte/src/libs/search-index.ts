@@ -2,7 +2,10 @@ import type { GUIPackage } from "./types";
 import Fuse from "fuse.js";
 import log from "$libs/logger";
 
+// TODO: move this to backend
+
 let packagesIndex: Fuse<GUIPackage>;
+let ready = false;
 
 export function indexPackages(packages: GUIPackage[]) {
   try {
@@ -40,10 +43,27 @@ export function indexPackages(packages: GUIPackage[]) {
   }
 }
 
-export function searchPackages(term: string, limit = 5): GUIPackage[] {
+export async function searchPackages(term: string, limit = 5): Promise<GUIPackage[]> {
+  await isIndexReady();
   if (!term || !packagesIndex) return [];
   // TODO: if online, use algolia else use Fuse
   const res = packagesIndex.search(term, { limit });
   const matchingPackages: GUIPackage[] = res.map((v) => v.item);
   return matchingPackages;
+}
+
+export async function isIndexReady(): Promise<boolean> {
+  if (ready) return true;
+  return new Promise((resolve) => {
+    const intervalCancel = setInterval(() => {
+      if (packagesIndex) {
+        const [grep] = packagesIndex.search("grep");
+        if (grep) {
+          clearInterval(intervalCancel);
+          ready = true;
+          resolve(true);
+        }
+      }
+    }, 1000);
+  });
 }
