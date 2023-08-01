@@ -215,3 +215,5 @@ export type AutoUpdateStatus = {
   status: "up-to-date" | "available" | "ready";
   version?: string;
 };
+
+export const defaultImgUrl = "/images/default-thumb.jpg";

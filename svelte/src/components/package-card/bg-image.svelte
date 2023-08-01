@@ -1,92 +1,35 @@
 <script lang="ts">
-  import type { GUIPackage } from "$libs/types";
-  import { packagesStore } from "$libs/stores";
+  import { defaultImgUrl, type GUIPackage } from "$libs/types";
+  import { loadPkgImage } from "./image-loader";
 
   let clazz = "";
   export { clazz as class };
 
   export let layout: "bottom" | "right" | "left" | "none" = "bottom";
 
-  export let pkg: GUIPackage;
-  export let plainImg = false;
+  // pass properties instead of the whole package object to avoid unnecessary re-rendering
+  export let project: string;
+  export let url: string | undefined;
+  export let cachedImageUrl: string | undefined;
+  export let hasImage: boolean;
 
-  const defaultImgUrl = "/images/default-thumb.jpg";
-  $: loadedImg = "";
-  let loaded = false;
-  let lastProcessedPkg: GUIPackage | null = null;
-
-  const loadImage = async (url: string, force = false): Promise<string> => {
-    if (url.includes("cached_images") || force) {
-      loadedImg = url;
-      loaded = true;
-      return url;
-    }
-
-    const image = new Image();
-    image.src = url;
-    return new Promise((resolve, reject) => {
-      image.onload = () => {
-        loadedImg = url;
-        setTimeout(() => {
-          loaded = true;
-        }, 100);
-        resolve(url);
-      };
-      image.onerror = () => {
-        reject(new Error(`file/url does not exist ${url}`));
-        loadedImg = defaultImgUrl;
-      };
-    });
-  };
-
-  const getCache = async () => {
-    if (pkg.image_512_url) {
-      const ts = +new Date();
-      loadImage(pkg.image_512_url + `?ts=${ts}`, true).finally(async () => {
-        const nextImage = await packagesStore.cachePkgImage(pkg);
-        loadImage(nextImage + `?ts=${ts}`, true);
-      });
-    }
-  };
-
-  $: {
-    // #706 issue: invalid image is being loaded on pkg list this is just a test fix
-    const invalidImage =
-      loadedImg && !(loadedImg.includes(pkg.full_name) || loadedImg.includes("localplaceholder"));
-    if ((pkg && pkg?.slug !== lastProcessedPkg?.slug) || invalidImage) {
-      loaded = false;
-      loadedImg = "";
-      lastProcessedPkg = pkg;
-      getCache();
-    }
-  }
+  $: promise = loadPkgImage(project, hasImage, url, cachedImageUrl);
 </script>
 
-{#if plainImg}
-  <img alt={pkg.name} src={loadedImg} />
-{:else}
-  <section class="overflow-hidden bg-black {clazz} {layout}">
-    <i
-      class="logo icon-tea-logo-iconasset-1 text-gray text-3xl {layout}"
-      class:animate-pulse={!pkg.image_added_at}
-    />
-    <div
-      class="opacity-0 transition-all duration-500 {layout}"
-      class:opacity-100={loaded}
-      style="background-image: url({loadedImg})"
-    >
+<section class="overflow-hidden bg-black {clazz} {layout}">
+  {#await promise}
+    <i class="logo icon-tea-logo-iconasset-1 text-gray text-3xl {layout} animate-pulse" />
+  {:then loadedImg}
+    <div class="transition-all duration-500 {layout}" style="background-image: url({loadedImg})">
       <!-- dup image: save processing power instead of computing the blur across all the HTML layers -->
       {#if layout !== "none"}
-        <aside
-          class="blur-sm {layout} opacity-0 transition-all duration-500"
-          class:opacity-100={loaded}
-        >
+        <aside class="blur-sm {layout} transition-all duration-500">
           <figure class={layout} style="background-image: url({loadedImg})" />
         </aside>
       {/if}
     </div>
-  </section>
-{/if}
+  {/await}
+</section>
 
 <style>
   section {

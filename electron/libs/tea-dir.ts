@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { app } from "electron";
 import log from "./logger";
-import type { InstalledPackage } from "../../svelte/src/libs/types";
+import { defaultImgUrl, type InstalledPackage } from "../../svelte/src/libs/types";
 import { mkdirp } from "mkdirp";
 import fetch from "node-fetch";
 import { SemVer, semver } from "@teaxyz/lib";
@@ -217,6 +217,7 @@ export async function cacheImage(url: string): Promise<string> {
       log.info("Image downloaded and cached:", imagePath);
     } catch (error) {
       log.error("Failed to download image:", error);
+      return defaultImgUrl;
     }
   } else {
     log.info("Image already cached:", imagePath);
