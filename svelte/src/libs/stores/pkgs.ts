@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { derived, writable } from "svelte/store";
 import type { GUIPackage, InstalledPackage, Packages } from "$libs/types";
-import { PackageStates, NotificationType } from "$libs/types";
+import { PackageStates, NotificationType, defaultImgUrl } from "$libs/types";
 import {
   getPackage,
   getDistPackages,
@@ -332,17 +332,12 @@ packageMap.subscribe(async (pkgs) => {
   writePackageCacheWithDebounce(pkgs);
 });
 
-const cachePkgImage = async (pkg: GUIPackage): Promise<string> => {
-  let cacheFileURL = "";
-  updatePackage(pkg.full_name, { cached_image_url: "" });
-  if (pkg.image_added_at && pkg.image_512_url) {
-    const result = await cacheImageURL(pkg.image_512_url);
-    if (result) {
-      cacheFileURL = result;
-      updatePackage(pkg.full_name, { cached_image_url: cacheFileURL });
-    }
+const cachePkgImage = async (project: string, url: string, cached_image_url?: string) => {
+  const result = await cacheImageURL(url);
+  if (result && result !== cached_image_url) {
+    updatePackage(project, { cached_image_url: result });
   }
-  return cacheFileURL;
+  return result || defaultImgUrl;
 };
 
 export const getPackageImageURL = async (
