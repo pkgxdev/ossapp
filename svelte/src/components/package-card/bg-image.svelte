@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { defaultImgUrl, type GUIPackage } from "$libs/types";
   import { loadPkgImage } from "./image-loader";
 
   let clazz = "";
