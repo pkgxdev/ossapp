@@ -15,7 +15,13 @@
   <section
     class="border-gray relative box-border h-[340px] w-full border bg-cover transition-all duration-300"
   >
-    <BgImage class="absolute left-0 top-0 h-full w-full" {pkg} />
+    <BgImage
+      class="absolute left-0 top-0 h-full w-full"
+      project={pkg.full_name}
+      url={pkg.image_512_url}
+      cachedImageUrl={pkg.cached_image_url}
+      hasImage={!!pkg.image_added_at}
+    />
 
     <div>
       <div
