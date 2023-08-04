@@ -32,6 +32,7 @@ export function setupUtils(browser: WebdriverIO.Browser) {
 
   // Find a package card on a package list screen
   const findSearchPackageCardBySlug = async (slug: string) => {
+    await waitForNotExist(() => screen.queryByTestId("is-searching"), { timeout: 4000 });
     // Trying to find the anchor tag role doesn't work, so we have to find by test id of the div inside the anchor
     return (await screen.findByTestId(`card-result-${slug}`)) as unknown as HTMLElement;
   };
@@ -87,6 +88,10 @@ export function setupUtils(browser: WebdriverIO.Browser) {
 
     const searchInput = await screen.findByTestId("search-input-popup");
     await searchInput.setValue(term);
+
+    await sleep(1000);
+
+    await waitForNotExist(() => screen.queryByTestId("is-searching"), { timeout: 4000 });
   };
 
   const verifyInstalledBadge = async (

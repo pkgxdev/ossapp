@@ -14,8 +14,6 @@ describe("basic smoke test", () => {
     utils = setupUtils(browser);
     await utils.goHome();
     await (await utils.screen.findByText(disoverText)).waitForExist();
-
-    // fuse indexing takes time
     await sleep(4000);
   });
 
