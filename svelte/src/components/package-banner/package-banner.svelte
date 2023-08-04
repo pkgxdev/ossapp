@@ -11,7 +11,7 @@
   import { packagesStore } from "$libs/stores";
   import { shellOpenExternal } from "@native";
   import { findAvailableVersions, findRecentInstalledVersion } from "$libs/packages/pkg-utils";
-  import PackageImage from "../package-card/bg-image.svelte";
+  import PlainPackageImage from "../package-card/plain-bg-image.svelte";
   import PackageVersionSelector from "$components/package-install-button/package-version-selector.svelte";
   import { getPackageName } from "$libs/packages/pkg-utils";
   import { semverCompare } from "$libs/packages/pkg-utils";
@@ -80,11 +80,12 @@
 <section class="mt-4 bg-black">
   <header class="flex">
     <figure class="grow-1 relative w-1/3">
-      <PackageImage
+      <PlainPackageImage
         class="min-h-[300px] w-full overflow-hidden"
-        {pkg}
-        layout="none"
-        plainImg={true}
+        project={pkg.full_name}
+        url={pkg.image_512_url}
+        cachedImageUrl={pkg.cached_image_url}
+        hasImage={!!pkg.image_added_at}
       />
       {#if pkg.install_progress_percentage && pkg.install_progress_percentage < 100}
         <div class="absolute left-0 top-0 z-40 h-full w-full bg-black bg-opacity-50">

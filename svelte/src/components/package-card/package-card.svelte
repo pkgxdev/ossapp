@@ -33,7 +33,14 @@
     class:active={isActive}
     class:updated={packageWasUpdated(pkg)}
   >
-    <BgImage class="absolute left-0 top-0 h-full w-full" {layout} {pkg} />
+    <BgImage
+      class="absolute left-0 top-0 h-full w-full"
+      {layout}
+      project={pkg.full_name}
+      url={pkg.image_512_url}
+      cachedImageUrl={pkg.cached_image_url}
+      hasImage={!!pkg.image_added_at}
+    />
 
     <a href={link} on:mousedown={activate} on:mouseup={deactivate} on:mouseleave={deactivate}>
       <div

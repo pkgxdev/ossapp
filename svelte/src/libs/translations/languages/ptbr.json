@@ -1,0 +1,96 @@
+{
+  "id": "ptbr",
+  "label": "Portuguese(Brazil)",
+  "translations": {
+    "store-search-placeholder": "buscar pacotes",
+    "action": {
+      "update": "atualizar",
+      "cancel": "cancelar"
+    },
+    "package": {
+      "update-all": "ATUALIZAR TUDO",
+      "cta-AVAILABLE": "INSTALAR",
+      "cta-INSTALLED": "INSTALADO",
+      "cta-INSTALLING": "INSTALANDO",
+      "cta-UNINSTALLED": "REINSTALAR",
+      "cta-UNINSTALL": "DESINSTALAR",
+      "cta-NEEDS_UPDATE": "ATUALIZAR",
+      "cta-UPDATING": "ATUALIZANDO",
+      "cta-UPDATED": "ATUALIZADO",
+      "cta-PRUNE": "ELIMINAR",
+      "cta-PRUNING": "ELIMINANDO",
+      "open": "ABRIR",
+      "open-in-terminal": "ABRIR NO TERMINAL",
+      "local-package": "pacote local",
+      "not-in-pantry": "ainda não adicionado à pantry"
+    },
+    "footer": {
+      "quick-links-title": "links rápidos",
+      "about-tea-store": "sobre a loja tea",
+      "report-a-problem": "relatar um problema",
+      "visit-website": "visite tea.xyz",
+      "terms-services": "termos & serviços",
+      "privacy-policy": "política de privacidade"
+    },
+    "documentation": {
+      "title": "documentação",
+      "workshops": "workshops"
+    },
+    "view-all": "ver tudo",
+    "sorting": {
+      "label": "Organizar por",
+      "popularity": "Mais popular",
+      "most-recent": "Mais recente"
+    },
+    "common": {
+      "home": "início",
+      "all": "Todos",
+      "articles": "Artigos",
+      "workshops": "Workshops",
+      "metadata": "Metadados",
+      "homepage": "Página inicial",
+      "documentation": "Documentação",
+      "github-repository": "Repositório Github",
+      "contributors": "Contribuidores",
+      "view-on-github": "VER NO GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "atualizar tea/gui para {{version}}?",
+      "gui-restarting": "Continuar fará com que o aplicativo reinicie após o término. Por favor, assegure-se de que não possui nenhuma operação em andamento. Deseja continuar?",
+      "gui-restart": "reiniciar"
+    },
+    "side-menu-title": {
+      "discover": "descobrir",
+      "all": "Todos os pacotes",
+      "installed": "Pacotes instalados",
+      "installed_updates_available": "Atualizações disponíveis",
+      "recently_updated": "Atualizados recentemente",
+      "new_packages": "Novos pacotes",
+      "popular": "Popular",
+      "featured": "Destaques",
+      "essentials": "Essenciais",
+      "starstruck": "Pesos pesados Starstruck",
+      "made_by_tea": "feitos por tea",
+      "local_packages": "Pacotes locais"
+    },
+    "tags": {
+      "discover": "descobrir",
+      "all": "todos os pacotes",
+      "installed": "instalados",
+      "installed_updates_available": "Atualizações disponíveis",
+      "recently_updated": "Atualizados recentemente",
+      "new_packages": "Novos pacotes",
+      "popular": "Popular",
+      "featured": "Destaques",
+      "essentials": "Essenciais",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Feitos por tea",
+      "local_packages": "Pacotes locais"
+    }
+  }
+}
