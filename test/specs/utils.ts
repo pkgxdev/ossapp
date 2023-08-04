@@ -88,6 +88,10 @@ export function setupUtils(browser: WebdriverIO.Browser) {
 
     const searchInput = await screen.findByTestId("search-input-popup");
     await searchInput.setValue(term);
+
+    await sleep(1000);
+
+    await waitForNotExist(() => screen.queryByTestId("is-searching"), { timeout: 4000 });
   };
 
   const verifyInstalledBadge = async (
