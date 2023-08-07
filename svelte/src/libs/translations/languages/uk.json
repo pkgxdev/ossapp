@@ -91,6 +91,10 @@
       "starstruck": "Важковаговики",
       "made_by_tea": "Виготовлено tea",
       "local_packages": "Локальні пакети"
+    },
+    "discover": {
+      "featured_title": "місцеві основи штучного інтелекту",
+      "featured_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem sed ultricies aliquam, lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem sed ultricies aliquam"
     }
   }
 }

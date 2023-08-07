@@ -91,6 +91,10 @@
       "starstruck": "Starstruck",
       "made_by_tea": "Сделано tea",
       "local_packages": "Локальные Пакеты"
+    },
+    "discover": {
+      "featured_title": "местные основы искусственного интеллекта",
+      "featured_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem sed ultricies aliquam, lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem sed ultricies aliquam"
     }
   }
 }

@@ -5,7 +5,7 @@ import { sleep } from "./waitutils.js";
 type utilType = ReturnType<typeof setupUtils>;
 
 // might need to update this from time to time
-const disoverText = "GPT Engineer";
+const disoverText = "local AI essentials";
 
 describe("basic smoke test", () => {
   let utils: utilType;

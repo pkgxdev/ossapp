@@ -91,6 +91,10 @@
       "starstruck": "Starstruck",
       "made_by_tea": "Hergestellt von tea",
       "local_packages": "Lokale Pakete"
+    },
+    "discover": {
+      "featured_title": "lokale KI-Grundlagen",
+      "featured_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem sed ultricies aliquam, lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem sed ultricies aliquam"
     }
   }
 }
