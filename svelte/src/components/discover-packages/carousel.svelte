@@ -9,10 +9,12 @@
 
 <Splide
   options={{
-    type: "loop",
+    type: "slide",
     drag: "free",
     perPage: 3,
-    perMove: 1
+    perMove: 1,
+    snap: true,
+    rewind: true
   }}
 >
   {#each pkgs as pkg, index}

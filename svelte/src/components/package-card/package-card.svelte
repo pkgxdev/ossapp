@@ -12,6 +12,7 @@
   export let pkg: GUIPackage;
   export let link: string;
   export let progessLoading = 0;
+  export let tight = false;
 
   export let layout: "bottom" | "right" | "left" = "bottom";
 
@@ -29,7 +30,7 @@
 
 <div class="relative">
   <section
-    class="package-card border-gray relative h-auto border {layout}"
+    class="package-card border-gray relative h-auto border {layout} {tight ? 'tight' : ''}"
     class:active={isActive}
     class:updated={packageWasUpdated(pkg)}
   >
@@ -53,11 +54,15 @@
             <div class="hint-icon"><i class="icon-upward-arrow" /></div>
           </div>
         </div>
-        <div class="content-container absolute bottom-0 w-full {layout}">
+        <div class="content-container absolute bottom-0 w-full {layout} {tight ? 'tight' : ''}">
           <article class="card-thumb-label">
             {#if layout === "bottom"}
               <div class="flex items-center">
-                <h3 class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white">
+                <h3
+                  class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white {tight
+                    ? 'text-1xl'
+                    : ''}"
+                >
                   {getPackageName(pkg)}
                 </h3>
                 {#if pkg.state === PackageStates.INSTALLED}
@@ -69,7 +74,11 @@
               </p>
             {:else}
               <div class="mb-4 flex items-center">
-                <h3 class="text-bold font-mona line-clamp-1 text-3xl font-bold text-white">
+                <h3
+                  class="text-bold font-mona line-clamp-1 {tight
+                    ? 'line-clamp-2'
+                    : ''} text-3xl font-bold"
+                >
                   {getPackageName(pkg)}
                 </h3>
                 {#if pkg.state === PackageStates.INSTALLED}
@@ -166,6 +175,15 @@
     justify-content: center;
   }
 
+  .content-container.tight {
+    color: rgb(14, 14, 14, 0.9);
+    background: linear-gradient(
+      180deg,
+      rgba(224, 224, 224, 0.3) 0%,
+      rgba(224, 224, 224, 0.75) 72.92%
+    );
+  }
+
   .content-container.bottom {
     left: 0px;
   }
@@ -175,6 +193,10 @@
     width: 60%;
     left: 0px;
     padding: 28px 28px;
+  }
+
+  .content-container.left.tight {
+    width: 33%;
   }
 
   .content-container.right {
@@ -224,6 +246,12 @@
     min-width: 550px;
   }
 
+  .package-card.left.tight {
+    min-width: 300px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
   .package-card:hover .hint {
     visibility: visible;
   }
@@ -231,10 +259,6 @@
   .card-thumb-label {
     text-align: left;
     width: 100%;
-  }
-
-  .card-thumb-label p {
-    color: white;
   }
 
   .install-button {

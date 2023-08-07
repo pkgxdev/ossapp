@@ -29,7 +29,7 @@
     {#if packages.length > 0}
       {#if spotlight}
         <div class="z-1 p-1">
-          <Package pkg={spotlight} layout="left" />
+          <Package pkg={spotlight} layout="left" tight={true} />
         </div>
       {/if}
       <article class="mt-5 px-1 pb-4">
@@ -80,5 +80,9 @@
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: white;
+  }
+
+  hr {
+    border-top: 1px solid #5c5c5c;
   }
 </style>
