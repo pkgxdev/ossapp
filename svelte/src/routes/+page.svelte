@@ -6,7 +6,7 @@
   import { afterNavigate } from "$app/navigation";
   import { packagesStore } from "$libs/stores";
   import Packages from "$components/packages/packages.svelte";
-  import DiscoverPackages from "$components/discover-packages/discover-packages.svelte";
+  import DiscoverPackages from "$components/discover-packages/discover-carousel.svelte";
   import { PackageStates, SideMenuOptions, type GUIPackage } from "$libs/types";
   // import SortingButtons from "$components/search-packages/sorting-buttons.svelte";
   import SideMenu from "$components/side-menu/side-menu.svelte";
@@ -73,7 +73,7 @@
         class="z-30 flex items-center justify-between"
         class:scrolling={packagesScrollY > 150}
       >
-        <h1 class="font-mona text-primary pl-3 text-2xl font-bold">
+        <h1 class="font-mona pl-9 text-2xl font-bold text-white">
           {$t(`side-menu-title.${sideMenuOption}`).toLowerCase()}
         </h1>
         <!-- 

@@ -91,6 +91,10 @@
       "starstruck": "Starstruck",
       "made_by_tea": "Made by tea",
       "local_packages": "Local Packages"
+    },
+    "discover": {
+      "featured_title": "local AI essentials",
+      "featured_description": "lorem ipsum dolor sit amet, consectetur adipiscing elit. sed euismod, lorem sed ultricies aliquam, lorem ipsum dolor sit amet, consectetur adipiscing elit. sed euismod, lorem sed ultricies aliquam"
     }
   }
 }

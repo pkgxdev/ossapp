@@ -96,6 +96,7 @@
     "@sentry/electron": "^4.4.0",
     "@sentry/svelte": "^7.47.0",
     "@sentry/vite-plugin": "^0.7.2",
+    "@splidejs/svelte-splide": "^0.2.9",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@teaxyz/lib": "0.6.2",
     "@types/electron": "^1.6.10",
