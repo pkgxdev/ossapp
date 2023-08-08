@@ -1,6 +1,6 @@
 import { browser } from "wdio-electron-service";
 import { setupUtils } from "./utils.ts";
-import { sleep } from "./waitutils.js";
+import { sleep, waitForExist } from "./waitutils.js";
 
 type utilType = ReturnType<typeof setupUtils>;
 
@@ -13,8 +13,6 @@ describe("basic smoke test", () => {
   beforeEach(async () => {
     utils = setupUtils(browser);
     await utils.goHome();
-    await (await utils.screen.findByText(disoverText)).waitForExist();
-    await sleep(4000);
   });
 
   it("install brewkit from the made by tea tab", async () => {
@@ -22,7 +20,6 @@ describe("basic smoke test", () => {
 
     const slug = "tea_xyz_brewkit";
 
-    // app launches to discover screen by default - make sure Stable Diffusion is there
     await expect(await screen.findByText(disoverText)).toExist();
 
     // navigate to "made by tea" page
