@@ -24,8 +24,11 @@
 >
   <ul class="text-gray flex h-10 items-center gap-1 pl-20 align-middle leading-10">
     <a href="/?tab=discover" data-testid="home-button">
-      <div class="home-btn text-gray text-center transition-all">{dev ? "dev" : "beta"}</div>
+      <div class="home-btn w-12 text-center text-2xl">
+        <i class="icon-tea-logo-iconasset-1" />
+      </div>
     </a>
+    <p class="text-gray px-2">{dev ? "dev" : "beta"}</p>
     <button
       on:click={navStore.back}
       class:active={$prevPath}
@@ -73,16 +76,21 @@
     width: 46px;
     line-height: 46px;
     padding-left: 3px;
-    font-size: 10px;
+    background-size: cover;
+    background-position: center center;
+    background-image: url("/images/gradient-bg.png");
+    color: #222222;
   }
 
   .home-btn:hover {
-    background-color: white;
+    color: white;
+  }
+  p {
+    font-size: 10px;
   }
 
   .home-btn:active {
     color: #222222;
-    background-color: gray;
     border: 2px solid #222222;
   }
 
