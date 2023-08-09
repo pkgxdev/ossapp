@@ -157,7 +157,7 @@
               data-testid="uninstall-button"
               class="h-10"
               type="plain"
-              color="blue"
+              color="black"
               onClick={uninstall}
               loading={uninstalling}
             >
@@ -179,7 +179,7 @@
               slot="target"
               class="h-10"
               type="plain"
-              color="blue"
+              color="black"
               onClick={prune}
               loading={uninstalling}
             >
