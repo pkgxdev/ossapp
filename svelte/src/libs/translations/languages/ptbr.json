@@ -91,6 +91,10 @@
       "starstruck": "Starstruck",
       "made_by_tea": "Feitos por tea",
       "local_packages": "Pacotes locais"
+    },
+    "discover": {
+      "featured_title": "essenciais locais de IA",
+      "featured_description": "Explore o reino da IA local. Esta é a sua plataforma para mexer com ferramentas de IA de alto perfil como AutoGPT e Stable Diffusion Web UI, diretamente do seu sistema local. Dê um impulso aos seus projetos de IA enquanto mantém seus dados seguros e protegidos, com a liberdade de ajustar conforme desejar."
     }
   }
 }

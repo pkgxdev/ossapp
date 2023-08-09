@@ -85,15 +85,15 @@
   .home-btn:hover {
     color: white;
   }
+  p {
+    font-size: 10px;
+  }
 
   .home-btn:active {
     color: #222222;
     border: 2px solid #222222;
   }
 
-  p {
-    font-size: 10px;
-  }
   ul button {
     pointer-events: none;
   }

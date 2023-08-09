@@ -91,6 +91,10 @@
       "starstruck": "Starstruck",
       "made_by_tea": "Hergestellt von tea",
       "local_packages": "Lokale Pakete"
+    },
+    "discover": {
+      "featured_title": "lokale KI-Grundlagen",
+      "featured_description": "Erkunde die Welt der lokalen KI. Dies ist Ihre Plattform, um mit hochkarätigen KI-Tools wie AutoGPT und Stable Diffusion Web UI direkt von Ihrem lokalen System aus zu experimentieren. Starten Sie Ihre KI-Projekte, während Sie Ihre Daten sicher und geschützt halten, mit der Freiheit, sie nach Ihren Wünschen zu verfeinern."
     }
   }
 }

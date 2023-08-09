@@ -91,6 +91,10 @@
       "starstruck": "Starstruck",
       "made_by_tea": "Made by tea",
       "local_packages": "Local Packages"
+    },
+    "discover": {
+      "featured_title": "local AI essentials",
+      "featured_description": "Explore the realm of local AI. This is your platform to tinker with high-profile AI tools like AutoGPT and Stable Diffusion Web UI, right from your local system. Jumpstart your AI projects while keeping your data safe and secure, with the freedom to fine-tune as you wish."
     }
   }
 }

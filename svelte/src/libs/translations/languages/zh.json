@@ -91,6 +91,10 @@
       "starstruck": "重量级软件包",
       "made_by_tea": "由 tea 制造",
       "local_packages": "本地软件包"
+    },
+    "discover": {
+      "featured_title": "本地AI基础",
+      "featured_description": "探索本地 AI 领域。这是您使用本地系统直接与高级 AI 工具（如 AutoGPT 和 Stable Diffusion Web UI）进行试验的平台。在保持数据安全的同时启动您的 AI 项目，并根据您的意愿自由进行微调。"
     }
   }
 }

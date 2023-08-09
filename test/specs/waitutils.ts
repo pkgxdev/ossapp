@@ -10,6 +10,13 @@ export const waitForNotExist = async (
   return waitFor(async () => await expect(await query()).not.toExist(), opts);
 };
 
+export const waitForExist = async (
+  query: () => Promise<WebdriverIO.Element | null>,
+  opts: WaitOpts = {}
+) => {
+  return waitFor(async () => await expect(await query()).toExist(), opts);
+};
+
 export const waitFor = async (
   action: () => Promise<void>,
   { interval = 1000, timeout = 5000 }: WaitOpts = {}

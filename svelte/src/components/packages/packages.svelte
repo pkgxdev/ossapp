@@ -99,14 +99,14 @@
 <div class="relative h-full w-full">
   <ul
     bind:this={scrollElement}
-    class="flex flex-wrap content-start bg-black"
+    class="flex flex-wrap content-start bg-black px-6"
     use:watchResize={onResize}
     on:scroll={onScroll}
   >
     {#if packages.length > 0}
       {#each packages as pkg, index}
         {#if index < limit}
-          <div class="card z-1 p-1" class:animate-puls={pkg.state === PackageStates.INSTALLING}>
+          <div class="card z-1 p-1" class:animate-pulse={pkg.state === PackageStates.INSTALLING}>
             <Package tab={packageFilter} {pkg} layout="bottom" />
           </div>
         {/if}
@@ -135,7 +135,6 @@
     height: calc(100vh - 49px);
     overflow-y: scroll;
     overflow-x: hidden;
-    padding-right: 4px;
   }
 
   /* width */

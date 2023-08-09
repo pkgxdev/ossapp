@@ -9,6 +9,8 @@
   export let tab = "all";
   export let pkg: GUIPackage;
   export let layout: "bottom" | "left" | "right" = "bottom";
+
+  export let tight = false;
 </script>
 
 {#if pkg.is_local}
@@ -17,6 +19,7 @@
   <PackageCard
     {pkg}
     {layout}
+    {tight}
     link="/packages/{pkg.slug}?tab={tab}"
     progessLoading={pkg.install_progress_percentage}
     onClickCTA={async () => {
