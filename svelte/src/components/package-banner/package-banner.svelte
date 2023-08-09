@@ -79,9 +79,9 @@
 
 <section class="mt-4 bg-black">
   <header class="flex">
-    <figure class="grow-1 relative w-1/3">
+    <figure class="relative max-w-[240px]">
       <PlainPackageImage
-        class="min-h-[300px] w-full overflow-hidden"
+        class="min-h-[240px] w-full overflow-hidden rounded-lg"
         project={pkg.full_name}
         url={pkg.image_512_url}
         cachedImageUrl={pkg.cached_image_url}
@@ -96,11 +96,9 @@
       {/if}
       <InstallResultOverlay {pkg} />
     </figure>
-    <article class="w-2/3 p-6">
-      <div class="align-center flex items-center gap-2">
-        <h3 data-testid="package-banner-header" class="text-primary text-3xl">
-          {getPackageName(pkg)}
-        </h3>
+
+    <article class="grow-1 flex flex-col justify-center px-4">
+      <nav class="flex gap-2 pb-4">
         <ButtonIcon
           icon="pencil"
           helpText="edit package"
@@ -109,88 +107,94 @@
               `https://github.com/teaxyz/pantry/blob/main/projects/${pkg.full_name}/package.yml`
             )}
         />
+        <ButtonIcon
+          icon="github"
+          helpText="open github repo"
+          on:click={() => {
+            if (pkg.github_url) {
+              shellOpenExternal(pkg.github_url);
+            }
+          }}
+        />
         <ButtonIcon icon="share-1" helpText="share package" on:click={copyPackagePantryLink} />
         {#if copied}
           <p class="text-teal">copied!</p>
         {/if}
-      </div>
+      </nav>
+      <h3 data-testid="package-banner-header" class="text-primary text-3xl">
+        {getPackageName(pkg)}
+      </h3>
       {#if pkg.maintainer}
         <span>{pkg.maintainer}</span>
       {/if}
-      <p class="mt-4 text-sm">{pkg.description}</p>
-      <menu class="mt-4 flex h-fit flex-wrap gap-4 text-xs">
-        <div class="w-fit min-w-[160px]">
-          <PackageVersionSelector
-            buttonSize="large"
-            {pkg}
-            availableVersions={findAvailableVersions(pkg)}
-            onClick={install}
-          />
-        </div>
-        {#if (pkg?.installed_versions?.length || 0) > 0}
-          <div class="min-w-[120px]">
-            <ToolTip>
-              <Button
-                slot="target"
-                data-testid="uninstall-button"
-                class="h-10"
-                type="plain"
-                color="blue"
-                onClick={uninstall}
-                loading={uninstalling}
-              >
-                <div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
-                  <div class="icon-trash" />
-                  <div>{$t("package.cta-UNINSTALL")}</div>
-                </div>
-              </Button>
-              <div slot="tooltip-content" class="flex flex-col items-center">
-                <div>Removes all the versions of the package</div>
-              </div>
-            </ToolTip>
-          </div>
-        {/if}
-        {#if (pkg?.installed_versions?.length || 0) > 1}
-          <div class="min-w-[120px]">
-            <ToolTip>
-              <Button
-                slot="target"
-                class="h-10"
-                type="plain"
-                color="blue"
-                onClick={prune}
-                loading={uninstalling}
-              >
-                <div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
-                  <div class="icon-scissors" />
-                  <div>{$t("package.cta-PRUNE")}</div>
-                </div>
-              </Button>
-              <div slot="tooltip-content" class="flex flex-col items-center">
-                <div>Removes {(pkg.installed_versions?.length || 0) - 1} old versions</div>
-                <div>Keeps latest (v{findRecentInstalledVersion(pkg)})</div>
-              </div>
-            </ToolTip>
-          </div>
-        {/if}
-        {#if pkg.github_url}
-          <button
-            class="border-gray group flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-sm border hover:bg-[#e1e1e1]"
-            on:click={() => {
-              if (pkg.github_url) {
-                shellOpenExternal(pkg.github_url);
-              }
-            }}
-          >
-            <div class="icon-github text-gray flex text-xl group-hover:text-black" />
-          </button>
-        {/if}
-        {#if pkg.installed_versions?.length}
-          <div class="min-w-[160px]">
-            <OpenPackageButton on:openterminal {pkg} buttonSize="large" />
-          </div>
-        {/if}
-      </menu>
     </article>
   </header>
+
+  <p class="mt-4 text-sm">{pkg.description}</p>
+
+  <article class="">
+    <div>
+      {#if pkg.installed_versions?.length}
+        <div class="mt-4 w-[200px]">
+          <OpenPackageButton on:openterminal {pkg} buttonSize="large" />
+        </div>
+      {/if}
+    </div>
+    <menu class="mb-4 mt-4 flex h-fit flex-wrap gap-4 text-xs">
+      <div class="w-fit min-w-[160px]">
+        <PackageVersionSelector
+          buttonSize="large"
+          {pkg}
+          availableVersions={findAvailableVersions(pkg)}
+          onClick={install}
+        />
+      </div>
+      {#if (pkg?.installed_versions?.length || 0) > 0}
+        <div class="min-w-[120px]">
+          <ToolTip>
+            <Button
+              slot="target"
+              data-testid="uninstall-button"
+              class="h-10"
+              type="plain"
+              color="blue"
+              onClick={uninstall}
+              loading={uninstalling}
+            >
+              <div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
+                <div class="icon-trash" />
+                <div>{$t("package.cta-UNINSTALL")}</div>
+              </div>
+            </Button>
+            <div slot="tooltip-content" class="flex flex-col items-center">
+              <div>Removes all the versions of the package</div>
+            </div>
+          </ToolTip>
+        </div>
+      {/if}
+      {#if (pkg?.installed_versions?.length || 0) > 1}
+        <div class="min-w-[120px]">
+          <ToolTip>
+            <Button
+              slot="target"
+              class="h-10"
+              type="plain"
+              color="blue"
+              onClick={prune}
+              loading={uninstalling}
+            >
+              <div class="version-item flex w-full items-center justify-center gap-x-1 text-xs">
+                <div class="icon-scissors" />
+                <div>{$t("package.cta-PRUNE")}</div>
+              </div>
+            </Button>
+            <div slot="tooltip-content" class="flex flex-col items-center">
+              <div>Removes {(pkg.installed_versions?.length || 0) - 1} old versions</div>
+              <div>Keeps latest (v{findRecentInstalledVersion(pkg)})</div>
+            </div>
+          </ToolTip>
+        </div>
+      {/if}
+    </menu>
+  </article>
 </section>
