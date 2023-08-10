@@ -261,7 +261,7 @@
   margin-bottom: 16px;
   font-weight: 600;
   line-height: 1.25;
-  color: #00ffd0;
+  color: rgba(255, 255, 255, 0.97);
 }
 
 .markdown-body h2 {

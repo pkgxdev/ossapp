@@ -101,7 +101,7 @@
   </div>
   {#if pkg}
     <div class="h-full overflow-hidden pr-2" class:hidden={activeTab !== "details"}>
-      <div class="mt-1 flex h-full overflow-y-auto px-16 pl-4 pt-4">
+      <div class="mt-1 flex h-full overflow-y-auto px-16 pt-4">
         <PackagePage on:openterminal={() => (activeTab = "cli")} {pkg} />
       </div>
     </div>

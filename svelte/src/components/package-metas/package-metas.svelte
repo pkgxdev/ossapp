@@ -57,7 +57,7 @@
     <ul class="mb-10 flex flex-col gap-2">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <li on:click={() => shellOpenExternal(pkg.homepage)}>
-        <span class="hover:text-primary cursor-pointer">{pkg.homepage}</span>
+        <span class="hover:text-primary cursor-pointer break-all">{pkg.homepage}</span>
       </li>
     </ul>
   {/if}
