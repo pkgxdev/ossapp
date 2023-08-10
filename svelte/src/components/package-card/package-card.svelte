@@ -59,7 +59,7 @@
             {#if layout === "bottom"}
               <div class="flex items-center">
                 <h3
-                  class="text-bold font-mona line-clamp-1 text-2xl font-bold text-white {tight
+                  class="text-bold font-mona line-clamp-1 break-all text-2xl font-bold text-white {tight
                     ? 'text-1xl'
                     : ''}"
                 >
@@ -75,9 +75,9 @@
             {:else}
               <div class="mb-4 flex items-center">
                 <h3
-                  class="text-bold font-mona line-clamp-1 {tight
-                    ? 'line-clamp-2'
-                    : ''} text-3xl font-bold"
+                  class="text-bold font-mona line-clamp-1 text-3xl font-bold {tight
+                    ? 'line-clamp-3 pt-8 text-2xl'
+                    : ''}"
                 >
                   {getPackageName(pkg)}
                 </h3>
@@ -85,7 +85,11 @@
                   <i class="icon-check-circle-o mb-1 ml-2 flex text-3xl text-[#00ffd0]" />
                 {/if}
               </div>
-              <p class="line-clamp-[8] h-[160px] text-[14px] font-thin lowercase leading-[20px]">
+              <p
+                class="text-[14px] font-thin lowercase leading-[20px] {tight
+                  ? 'line-clamp-[5] h-[120px]'
+                  : 'line-clamp-[8] h-[160px]'}"
+              >
                 {pkg.description ?? ""}
               </p>
             {/if}
