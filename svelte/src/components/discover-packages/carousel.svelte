@@ -11,7 +11,7 @@
   options={{
     type: "slide",
     drag: "free",
-    keyboard: 'global',
+    keyboard: "global",
     perPage: 3,
     perMove: 1,
     snap: false,
@@ -19,7 +19,7 @@
     rewindByDrag: true,
     pagination: false, // This just hides the pagination dots
     wheel: true,
-    waitForTransition: true,
+    waitForTransition: true
   }}
 >
   {#each pkgs as pkg, index}
