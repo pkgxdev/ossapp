@@ -12,14 +12,14 @@
     type: "slide",
     drag: "free",
     perPage: 3,
-    perMove: 1,
-    snap: true,
+    perMove: 3,
+    snap: false,
     rewind: true,
     pagination: false, // This just hides the pagination dots
     wheel: true,
     // Tweak these until it feels "right"
     waitForTransition: true,
-    wheelSleep: 600,
+    wheelSleep: 600
     //flickPower: 300,
     //wheelMinThreshold: 2,
   }}
