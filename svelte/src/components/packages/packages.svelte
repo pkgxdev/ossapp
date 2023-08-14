@@ -107,7 +107,12 @@
       {#each packages as pkg, index}
         {#if index < limit}
           <div class="card z-1 p-1" class:animate-pulse={pkg.state === PackageStates.INSTALLING}>
-            <Package tab={packageFilter} {pkg} layout="bottom" />
+            <Package
+              tab={packageFilter}
+              {pkg}
+              layout="bottom"
+              prioritizeUpdateCta={packageFilter === SideMenuOptions.installed_updates_available}
+            />
           </div>
         {/if}
       {/each}

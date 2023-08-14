@@ -17,6 +17,7 @@
   import PackagePage from "$components/package-page/package-page.svelte";
   import type { GUIPackage } from "$libs/types";
   import Tab from "$components/tabs/tab.svelte";
+  import { afterNavigate } from "$app/navigation";
 
   const { packageList } = packagesStore;
 
@@ -60,6 +61,12 @@
       });
     }
   }
+
+  afterNavigate(({ to }) => {
+    const tab = to?.url.searchParams.get("detail_tab");
+    if (tab && ["gui", "cli", "details"].includes(tab!))
+      activeTab = tab as "details" | "cli" | "gui";
+  });
 </script>
 
 <div class="root">
