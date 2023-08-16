@@ -13,6 +13,7 @@ describe("basic smoke test", () => {
   beforeEach(async () => {
     utils = setupUtils(browser);
     await utils.goHome();
+    await sleep(4000);
   });
 
   it("install brewkit from the made by tea tab", async () => {
@@ -41,22 +42,22 @@ describe("basic smoke test", () => {
     await expect(await screen.findByRole("button", { name: "OPEN IN TERMINAL" })).toExist();
   });
 
-  // it("search and install create-dmg", async () => {
-  //   const { searchTerm } = utils!;
-  //   await searchTerm("create-dmg");
+  it("search and install create-dmg", async () => {
+    const { searchTerm } = utils!;
+    await searchTerm("create-dmg");
 
-  //   const packageFullname = "github.com/create-dmg/create-dmg";
-  //   const createDmgSlug = packageFullname.replace(/[^\w\s]/gi, "_").toLocaleLowerCase();
-  //   const createDmgCard = await utils.findSearchPackageCardBySlug(createDmgSlug);
-  //   await expect(createDmgCard).toExist();
-  //   createDmgCard.click();
+    const packageFullname = "github.com/create-dmg/create-dmg";
+    const createDmgSlug = packageFullname.replace(/[^\w\s]/gi, "_").toLocaleLowerCase();
+    const createDmgCard = await utils.findSearchPackageCardBySlug(createDmgSlug);
+    await expect(createDmgCard).toExist();
+    createDmgCard.click();
 
-  //   await utils.packageDetailsLoaded();
-  //   await utils.uninstallPackageIfNeeded();
+    await utils.packageDetailsLoaded();
+    await utils.uninstallPackageIfNeeded();
 
-  //   await utils.installLatestVersion(createDmgSlug);
-  //   await utils.verifyInstalledBadge(createDmgSlug);
-  // });
+    await utils.installLatestVersion(createDmgSlug);
+    await utils.verifyInstalledBadge(createDmgSlug);
+  });
 
   // it("should be able to install specific version", async () => {
   //   const { screen, searchTerm } = utils!;
