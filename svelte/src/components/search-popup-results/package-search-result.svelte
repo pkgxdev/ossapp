@@ -54,4 +54,8 @@
     min-width: 140px;
     margin-right: 22px;
   }
+
+  header {
+    cursor: pointer;
+  }
 </style>
