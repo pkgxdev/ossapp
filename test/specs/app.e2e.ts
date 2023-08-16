@@ -82,10 +82,11 @@ describe("basic smoke test", () => {
     const header = await screen.findByText("available updates");
     await expect(header).toExist();
 
-    const updateBtn = await utils.findByTestId("install-button-gnu_org_grep");
+    const updateBtn = await utils.findByTestId("install-badge-gnu_org_grep");
     await expect(updateBtn).toExist();
     updateBtn.click();
 
-    await utils.verifyInstalledBadge(slug, "UPDATED");
+    const openBtn = await utils.findByTestId("open-gnu_org_grep");
+    await expect(openBtn).toExist();
   });
 });
