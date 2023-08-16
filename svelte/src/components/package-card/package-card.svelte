@@ -5,7 +5,6 @@
   import { findRecentInstalledVersion, packageWasUpdated } from "$libs/packages/pkg-utils";
   import BgImage from "./bg-image.svelte";
   import PackageInstallButton from "$components/package-install-button/package-install-button.svelte";
-  import PackageInstalledBadge from "$components/package-install-button/package-installed-badge.svelte";
   import { getPackageName } from "$libs/packages/pkg-utils";
   import InstallResultOverlay from "$components/install-result-overlay/install-result-overlay.svelte";
   import OpenPackageButton from "$components/buttons/open-package-button.svelte";
@@ -107,7 +106,7 @@
                       goto(link + "&detail_tab=cli");
                     }}
                     {pkg}
-                    buttonSize="large"
+                    buttonSize="small"
                   />
                 {:else}
                   <PackageInstallButton
