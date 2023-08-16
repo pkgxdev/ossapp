@@ -29,7 +29,7 @@
         class="absolute h-full w-full flex-col justify-between"
       >
         <div
-          class="absolute left-3 top-3 flex h-5 items-center rounded-sm bg-white px-2 text-xs text-black"
+          class="absolute top-3 left-3 flex h-5 items-center rounded-sm bg-white px-2 text-xs text-black"
         >
           {$t("package.local-package").toLowerCase()}
         </div>
