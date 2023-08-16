@@ -20,7 +20,7 @@
 <header
   class="border-gray relative z-20 flex h-12 w-full items-center justify-between border border-x-0 border-t-0 pr-2"
   style="-webkit-app-region: drag"
-  on:dblclick={topbarDoubleClick}
+  on:dblclick|self={() => topbarDoubleClick()}
 >
   <ul class="text-gray flex h-10 items-center gap-1 pl-20 align-middle leading-10">
     <a href="/?tab=discover" data-testid="home-button">
