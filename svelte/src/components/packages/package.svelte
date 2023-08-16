@@ -11,6 +11,7 @@
   export let layout: "bottom" | "left" | "right" = "bottom";
 
   export let tight = false;
+  export let prioritizeUpdateCta = false;
 </script>
 
 {#if pkg.is_local}
@@ -20,6 +21,7 @@
     {pkg}
     {layout}
     {tight}
+    {prioritizeUpdateCta}
     link="/packages/{pkg.slug}?tab={tab}"
     progessLoading={pkg.install_progress_percentage}
     onClickCTA={async () => {

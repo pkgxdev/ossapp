@@ -11,6 +11,7 @@
 </script>
 
 <Button
+  data-testid="open-{pkg.slug}"
   class={buttonSize === "small" ? "h-8 text-xs" : "h-10"}
   type="plain"
   color="black"

@@ -13,6 +13,7 @@ describe("basic smoke test", () => {
   beforeEach(async () => {
     utils = setupUtils(browser);
     await utils.goHome();
+    await sleep(4000);
   });
 
   it("install brewkit from the made by tea tab", async () => {
@@ -37,7 +38,7 @@ describe("basic smoke test", () => {
 
     await utils.installLatestVersion(slug);
 
-    await utils.verifyInstalledBadge(slug);
+    // await utils.verifyInstalledBadge(slug);
     await expect(await screen.findByRole("button", { name: "OPEN IN TERMINAL" })).toExist();
   });
 
@@ -82,10 +83,11 @@ describe("basic smoke test", () => {
     const header = await screen.findByText("available updates");
     await expect(header).toExist();
 
-    const updateBtn = await utils.findByTestId("install-button-gnu_org_grep");
+    const updateBtn = await utils.findByTestId("install-badge-gnu_org_grep");
     await expect(updateBtn).toExist();
     updateBtn.click();
 
-    await utils.verifyInstalledBadge(slug, "UPDATED");
+    const openBtn = await utils.findByTestId("open-gnu_org_grep");
+    await expect(openBtn).toExist();
   });
 });

@@ -8,6 +8,8 @@
   import PackageInstalledBadge from "$components/package-install-button/package-installed-badge.svelte";
   import { getPackageName } from "$libs/packages/pkg-utils";
   import InstallResultOverlay from "$components/install-result-overlay/install-result-overlay.svelte";
+  import OpenPackageButton from "$components/buttons/open-package-button.svelte";
+  import { goto } from "$app/navigation";
 
   export let pkg: GUIPackage;
   export let link: string;
@@ -15,6 +17,8 @@
   export let tight = false;
 
   export let layout: "bottom" | "right" | "left" = "bottom";
+
+  export let prioritizeUpdateCta = false;
 
   export let onClickCTA = async () => {
     console.log("do nothing");
@@ -97,8 +101,14 @@
           <div class="mt-3.5 w-full">
             <div class="flex w-fit flex-col items-center">
               <div class="install-button {layout}" on:mousedown={preventPropagation}>
-                {#if pkg.state === PackageStates.INSTALLED}
-                  <PackageInstalledBadge {pkg} />
+                {#if pkg.state === PackageStates.INSTALLED || (pkg.state === PackageStates.NEEDS_UPDATE && !prioritizeUpdateCta)}
+                  <OpenPackageButton
+                    on:openterminal={() => {
+                      goto(link + "&detail_tab=cli");
+                    }}
+                    {pkg}
+                    buttonSize="large"
+                  />
                 {:else}
                   <PackageInstallButton
                     {pkg}
