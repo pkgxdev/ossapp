@@ -15,7 +15,11 @@
     scrollY = target.scrollTop || 0;
   };
 
-  $: spotlight = $allPackages.find((p) => p.categories.includes("spotlight"));
+  $: spotlights = $allPackages
+    .filter((p) => p.categories.includes("spotlight"))
+    .sort((a, b) => {
+      return a.manual_sorting - b.manual_sorting;
+    });
 
   $: packages = $allPackages
     .filter((p) => p.categories.includes("ai"))
@@ -27,10 +31,12 @@
 <div class="relative h-full w-full">
   <ul class="align-center flex flex-col items-stretch px-6" on:scroll={onScroll}>
     {#if packages.length > 0}
-      {#if spotlight}
-        <div class="z-1 p-1">
-          <Package pkg={spotlight} layout="left" tight={true} />
-        </div>
+      {#if spotlights?.length}
+        {#each spotlights as pkg}
+          <div class="z-1 p-1">
+            <Package {pkg} layout="left" tight={true} />
+          </div>
+        {/each}
       {/if}
       <article class="mt-5 px-1 pb-4">
         <h1 class="font-mona text-2xl">{$t("discover.featured_title")}</h1>
