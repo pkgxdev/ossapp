@@ -59,35 +59,35 @@ describe("basic smoke test", () => {
     await utils.verifyInstalledBadge(createDmgSlug);
   });
 
-  // it("should be able to install specific version", async () => {
-  //   const { screen, searchTerm } = utils!;
-  //   const slug = "gnu_org_grep";
+  it("should be able to install specific version", async () => {
+    const { screen, searchTerm } = utils!;
+    const slug = "gnu_org_grep";
 
-  //   await searchTerm("grep");
-  //   const grepCard = await utils.findSearchPackageCardBySlug(slug);
-  //   await expect(grepCard).toExist();
-  //   grepCard.click();
+    await searchTerm("grep");
+    const grepCard = await utils.findSearchPackageCardBySlug(slug);
+    await expect(grepCard).toExist();
+    grepCard.click();
 
-  //   await utils.uninstallPackageIfNeeded();
-  //   await utils.installSpecificVersion(slug, "3.8.0");
+    await utils.uninstallPackageIfNeeded();
+    await utils.installSpecificVersion(slug, "3.8.0");
 
-  //   // since we're installing an old version verify the badge says UPDATE
-  //   await utils.verifyInstalledBadge(slug, "UPDATE");
+    // since we're installing an old version verify the badge says UPDATE
+    await utils.verifyInstalledBadge(slug, "UPDATE");
 
-  //   // Now test the update
-  //   await utils.goHome();
+    // Now test the update
+    await utils.goHome();
 
-  //   const menuBtn = await screen.findByTestId("menu-button-updates-available");
-  //   menuBtn.click();
+    const menuBtn = await screen.findByTestId("menu-button-updates-available");
+    menuBtn.click();
 
-  //   const header = await screen.findByText("available updates");
-  //   await expect(header).toExist();
+    const header = await screen.findByText("available updates");
+    await expect(header).toExist();
 
-  //   const updateBtn = await utils.findByTestId("install-badge-gnu_org_grep");
-  //   await expect(updateBtn).toExist();
-  //   updateBtn.click();
+    const updateBtn = await utils.findByTestId("install-badge-gnu_org_grep");
+    await expect(updateBtn).toExist();
+    updateBtn.click();
 
-  //   const openBtn = await utils.findByTestId("open-gnu_org_grep");
-  //   await expect(openBtn).toExist();
-  // });
+    const openBtn = await utils.findByTestId("open-gnu_org_grep");
+    await expect(openBtn).toExist();
+  });
 });
