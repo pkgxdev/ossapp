@@ -81,7 +81,7 @@
   <header class="flex">
     <figure class="relative max-w-[240px]">
       <PlainPackageImage
-        class="min-h-[240px] w-full overflow-hidden rounded-lg"
+        class="overflow-hidden rounded-lg"
         project={pkg.full_name}
         url={pkg.image_512_url}
         cachedImageUrl={pkg.cached_image_url}
