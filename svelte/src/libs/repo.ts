@@ -28,7 +28,7 @@ export async function getReadme(
       };
     }
 
-    const repo = repoCloudProvider(pkg.github_url!)
+    const repo = repoCloudProvider(pkg.github_url!);
     const { namespace, projectName } = getNamespaceProject(pkg.github_url!); // TODO: replace with repo_url
 
     if (repo.isGithub) {
@@ -128,6 +128,6 @@ export const getRepoLabel = (repoURL: string) => {
 export const repoCloudProvider = (repoURL: string) => {
   return {
     isGithub: repoURL.includes("github.com"),
-    isGitlab: repoURL.includes("gitlab"),
-  }
-}
+    isGitlab: repoURL.includes("gitlab")
+  };
+};
