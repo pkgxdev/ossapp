@@ -51,6 +51,7 @@
       "homepage": "主页",
       "documentation": "文档",
       "github-repository": "Github 仓库",
+      "repository": "仓库",
       "contributors": "贡献者",
       "view-on-github": "在 Github 上查看"
     },

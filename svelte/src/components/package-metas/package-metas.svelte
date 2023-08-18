@@ -4,6 +4,7 @@
   import dayjs from "dayjs";
   import relativeTime from "dayjs/plugin/relativeTime";
   import { shellOpenExternal } from "@native";
+  import { getRepoLabel } from "$libs/repo";
   dayjs.extend(relativeTime);
 
   export let pkg: Package;
@@ -71,11 +72,11 @@
     </ul>
   {/if}
   {#if pkg.github_url}
-    <h1 class="text-primary">{$t("common.github-repository").toLowerCase()}</h1>
+    <h1 class="text-primary">{$t("common.repository").toLowerCase()}</h1>
     <ul class="mb-10 flex flex-col gap-2">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <li on:click={() => shellOpenExternal(`https://github.com/${pkg.github_url}`)}>
-        <span class="hover:text-primary cursor-pointer">{pkg.github_url}</span>
+      <li on:click={() => shellOpenExternal(pkg.github_url)}>
+        <span class="hover:text-primary cursor-pointer">{getRepoLabel(pkg.github_url)}</span>
       </li>
     </ul>
   {/if}
