@@ -11,17 +11,29 @@ export async function getPackageYaml(pkgYamlUrl: string) {
   return data;
 }
 
-export async function getReadme(
-  owner: string,
-  repo: string
-): Promise<{ data: string; type: "md" | "rst" }> {
-  let type: "md" | "rst" = "md";
+export async function getReadme({
+  owner,
+  repo,
+  project
+}: {
+  owner: string;
+  repo: string;
+  project: string;
+}): Promise<{ data: string; type: "md" | "rst" | "html" }> {
+  let type: "md" | "rst" | "html" = "md";
   let data = "";
-  const req = await axios.get(`https://api.github.com/repos/${owner}/${repo}/readme`);
 
-  if (req.data?.download_url) {
-    type = req.data.name.endsWith(".rst") ? "rst" : "md";
-    const reqDl = await axios.get(req.data.download_url);
+  const [reqGithub, reqHTML] = await Promise.all([
+    axios.get(`https://api.github.com/repos/${owner}/${repo}/readme`),
+    axios.get(`https://gui.tea.xyz/dev/${project}/readme.html`)
+  ]);
+
+  if (reqHTML.status === 200) {
+    type = "html";
+    data = reqHTML.data;
+  } else if (reqGithub.data?.download_url) {
+    type = reqGithub.data.name.endsWith(".rst") ? "rst" : "md";
+    const reqDl = await axios.get(reqGithub.data.download_url);
     data = reqDl.data;
   }
   return { data, type };

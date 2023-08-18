@@ -6,13 +6,13 @@
   import { onMount } from "svelte";
   import { tokenizeMarkdown } from "./md";
   import Preloader from "$components/preloader/preloader.svelte";
+  import { shellOpenExternal } from "@native";
 
-  export let source: { data: string; type: "md" | "rst" };
+  export let source: { data: string; type: "md" | "rst" | "html" };
 
   let markDownRoot: HTMLElement;
 
   export let hook = (node: HTMLElement): { destroy: () => void } => {
-    console.log("hook", node);
     return {
       destroy() {
         console.log("destroy");
@@ -24,7 +24,7 @@
     link: Link
   };
 
-  $: html = source.type === "rst" ? rst2html(source.data) : "";
+  $: html = source.type === "rst" ? rst2html(source.data) : source.data;
 
   onMount(() => {
     // Need to override the height/width STYLE with the old-school height/width ATTRIBUTE to make it work with the markdown
@@ -42,6 +42,18 @@
         }
       });
     }
+
+    if (source.type === "html" && html) {
+      document.querySelectorAll(".html-content a").forEach((element: Element) => {
+        const href = element.getAttribute("href");
+        if (!href?.startsWith("#") && href) {
+          element.addEventListener("click", (e) => {
+            e.preventDefault();
+            shellOpenExternal(href!);
+          });
+        }
+      });
+    }
   });
 </script>
 
@@ -50,8 +62,10 @@
     <div class="w-full" bind:this={markDownRoot}>
       <SvelteMarkdown source={tokenizeMarkdown(source.data)} {renderers} />
     </div>
-  {:else if source.type === "rst" && html}
-    {@html html}
+  {:else if ["html", "rst"].includes(source.type) && html}
+    <div class="html-content w-full">
+      {@html html}
+    </div>
   {:else}
     <Preloader />
   {/if}
