@@ -51,6 +51,7 @@
       "homepage": "Homepage",
       "documentation": "Documentation",
       "github-repository": "Github Repository",
+      "repository": "Repository",
       "contributors": "Contributors",
       "view-on-github": "VIEW ON GITHUB"
     },

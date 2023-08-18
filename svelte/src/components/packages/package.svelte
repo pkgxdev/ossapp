@@ -6,7 +6,7 @@
   import PackageCard from "$components/package-card/package-card.svelte";
   import LocalPackageCard from "$components/package-card/local-package-card.svelte";
 
-  export let tab = "all";
+  export let tab = "discover";
   export let pkg: GUIPackage;
   export let layout: "bottom" | "left" | "right" = "bottom";
 

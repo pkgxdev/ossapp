@@ -21,7 +21,7 @@ import {
   getPantryDetails
 } from "@native";
 
-import { getReadme, getContributors, getRepoAsPackage } from "$libs/github";
+import { getReadme, getContributors, getRepoAsPackage, trimGithubSlug } from "$libs/repo";
 import { trackInstall, trackInstallFailed } from "$libs/analytics";
 import {
   addInstalledVersion,
@@ -30,7 +30,6 @@ import {
   packageWasUpdated
 } from "$libs/packages/pkg-utils";
 import withDebounce from "$libs/utils/debounce";
-import { trimGithubSlug } from "$libs/github";
 import { notificationStore } from "$libs/stores";
 import withRetry from "$libs/utils/retry";
 
@@ -126,7 +125,9 @@ const syncPackageData = async (guiPkg: Partial<GUIPackage> | undefined) => {
 
   const pkg = await getPackage(guiPkg.full_name!); // ATM: pkg only bottles and github:string
   const readmeMd = `# ${guiPkg.full_name} #
-To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
+To read more about this package go to [${guiPkg.homepage || guiPkg.github_url}](${
+    guiPkg.homepage || guiPkg.github_url
+  }).
 		`;
 
   const updatedPackage: Partial<GUIPackage> = {
@@ -135,19 +136,14 @@ To read more about this package go to [${guiPkg.homepage}](${guiPkg.homepage}).
       data: readmeMd,
       type: "md"
     },
-    synced: true,
-    github_url: pkg.github_url
-      ? trimGithubSlug(pkg.github_url)
-      : pkg.full_name?.includes("github.com")
-      ? trimGithubSlug(pkg.full_name.split("github.com/")[1])
-      : ""
+    synced: true
   };
-  if (updatedPackage.github_url) {
-    const [owner, repo] = updatedPackage.github_url.split("/");
+  // TODO: fix this with repo_url
+  if (pkg.github_url) {
     const [readme, contributors, repoData] = await Promise.all([
-      getReadme(owner, repo),
-      getContributors(owner, repo),
-      getRepoAsPackage(owner, repo)
+      getReadme(pkg),
+      getContributors(pkg),
+      getRepoAsPackage(pkg)
     ]);
     if (readme) {
       updatedPackage.readme = readme;
