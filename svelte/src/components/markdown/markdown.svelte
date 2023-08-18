@@ -9,7 +9,6 @@
   import { shellOpenExternal } from "@native";
 
   export let source: { data: string; type: "md" | "rst" | "html" };
-  console.log("source", source);
   let markDownRoot: HTMLElement;
 
   export let hook = (node: HTMLElement): { destroy: () => void } => {
@@ -44,7 +43,6 @@
     }
 
     if (source.type === "html" && html) {
-      console.log("html", html);
       document.querySelectorAll(".html-content a").forEach((element: Element) => {
         const href = element.getAttribute("href");
         if (!href?.startsWith("#") && href) {

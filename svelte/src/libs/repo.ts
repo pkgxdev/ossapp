@@ -28,18 +28,17 @@ export async function getReadme(
       };
     }
 
-    const isGithub = pkg.github_url?.includes("github");
-    const isGitlab = pkg.github_url?.includes("gitlab");
+    const repo = repoCloudProvider(pkg.github_url!)
     const { namespace, projectName } = getNamespaceProject(pkg.github_url!); // TODO: replace with repo_url
 
-    if (isGithub) {
+    if (repo.isGithub) {
       const reqGithub = await axios.get(
         `https://api.github.com/repos/${namespace}/${projectName}/readme`
       );
       type = reqGithub.data.name.endsWith(".rst") ? "rst" : "md";
       const reqDl = await axios.get(reqGithub.data.download_url);
       data = reqDl.data;
-    } else if (isGitlab) {
+    } else if (repo.isGitlab) {
       const gitlabApiUrl = `https://gitlab.com/api/v4/projects/${encodeURIComponent(
         namespace + "/" + projectName
       )}`;
@@ -63,8 +62,8 @@ export async function getContributors(pkg: Pick<GUIPackage, "github_url">): Prom
   // maintainer/repo
   let contributors: Contributor[] = [];
   try {
-    const isGithub = pkg.github_url?.includes("github.com");
-    if (isGithub) {
+    const repo = repoCloudProvider(pkg.github_url!);
+    if (repo.isGithub) {
       const req = await axios.get(
         `https://api.github.com/repos/${namespace}/${projectName}/contributors`
       );
@@ -91,7 +90,8 @@ export async function getRepoAsPackage(
 
   const newPkg: Partial<Package> = {};
   try {
-    if (pkg.github_url?.includes("github.com")) {
+    const repo = repoCloudProvider(pkg.github_url!);
+    if (repo.isGithub) {
       const req = await axios.get(`https://api.github.com/repos/${namespace}/${projectName}`);
       if (req.data) {
         newPkg.license = req.data?.license?.name || "";
@@ -124,3 +124,10 @@ export const getRepoLabel = (repoURL: string) => {
   const { namespace, projectName } = getNamespaceProject(repoURL);
   return `${namespace}/${projectName}`;
 };
+
+export const repoCloudProvider = (repoURL: string) => {
+  return {
+    isGithub: repoURL.includes("github.com"),
+    isGitlab: repoURL.includes("gitlab"),
+  }
+}
