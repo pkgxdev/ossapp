@@ -194,7 +194,11 @@ async function downloadImage(url: string, imagePath: string): Promise<void> {
 
 export async function cacheImage(url: string): Promise<string> {
   const imageFolder = path.join(getGuiPath(), "cached_images");
-  const pkgFilePath = url.split("gui.tea.xyz")[1];
+  let pkgFilePath = url.split("gui.tea.xyz")[1];
+  //unfortunately we have prod in image url so strip it if it's present
+  if (pkgFilePath.startsWith("/prod")) {
+    pkgFilePath = pkgFilePath.replace("/prod", "");
+  }
   const imagePath = path.join(imageFolder, pkgFilePath);
   const fileName = path.basename(imagePath);
   const folderPath = imagePath.replace(fileName, "");
