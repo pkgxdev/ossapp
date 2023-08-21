@@ -13,7 +13,6 @@
   import { packagesStore, scrollStore } from "$libs/stores";
   import { afterUpdate, beforeUpdate } from "svelte";
   import { packageWasUpdated } from "$libs/packages/pkg-utils";
-  import logger from "$libs/logger";
 
   const { packageList: allPackages } = packagesStore;
   export let packageFilter: SideMenuOptions = SideMenuOptions.all;
@@ -99,7 +98,6 @@
   // ...and scroll position after the update
   afterUpdate(() => {
     if (prevFilter !== packageFilter && scrollElement) {
-      logger.info(packages);
       prevFilter = packageFilter;
       const scrollPosition = scrollStore.getScrollPosition(packageFilter);
       scrollElement.scrollTop = scrollPosition;
