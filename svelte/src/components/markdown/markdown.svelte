@@ -28,7 +28,7 @@
   // TODO: support gitlab too
   const changeSrcIfNeeded = (element: HTMLElement | Element) => {
     const src = element.getAttribute("src");
-    const isRelativePath = !src?.startsWith('http');
+    const isRelativePath = !src?.startsWith("http");
     if (isRelativePath && src) {
       const url = new URL(src, "https://github.com");
       element.setAttribute("src", url.toString());
