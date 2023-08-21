@@ -13,6 +13,7 @@
   import { packagesStore, scrollStore } from "$libs/stores";
   import { afterUpdate, beforeUpdate } from "svelte";
   import { packageWasUpdated } from "$libs/packages/pkg-utils";
+  import logger from "$libs/logger";
 
   const { packageList: allPackages } = packagesStore;
   export let packageFilter: SideMenuOptions = SideMenuOptions.all;
@@ -49,10 +50,16 @@
       return moment(pkg.updated_at).isAfter(moment().subtract(30, "days"));
     },
     [SideMenuOptions.new_packages]: (pkg: GUIPackage) => {
-      return moment(pkg.created_at).isAfter(moment().subtract(30, "days"));
+      return moment(pkg.created_at).isAfter(moment().subtract(15, "days"));
     },
     [SideMenuOptions.made_by_tea]: (pkg: GUIPackage) => pkg.full_name.includes("tea.xyz"),
     [SideMenuOptions.local]: (pkg: GUIPackage) => !!pkg.is_local
+  };
+
+  const pkgSorting: { [key: string]: (a: GUIPackage, b: GUIPackage) => number } = {
+    [SideMenuOptions.new_packages]: (a, b) =>
+      moment(b.created_at).unix() - moment(a.created_at).unix(),
+    default: (a, b) => moment(b.updated_at).unix() - moment(a.updated_at).unix()
   };
 
   const onScroll = (e: Event) => {
@@ -61,7 +68,10 @@
     scrollStore.setScrollPosition(packageFilter, scrollY);
   };
 
-  $: packages = $allPackages.filter(pkgFilters[packageFilter] || pkgFilters.all);
+  $: packages = $allPackages
+    .filter(pkgFilters[packageFilter] || pkgFilters.all)
+    .sort(pkgSorting[packageFilter] || pkgSorting["default"]);
+
   $: {
     packageCount = packages.length;
   }
@@ -89,6 +99,7 @@
   // ...and scroll position after the update
   afterUpdate(() => {
     if (prevFilter !== packageFilter && scrollElement) {
+      logger.info(packages);
       prevFilter = packageFilter;
       const scrollPosition = scrollStore.getScrollPosition(packageFilter);
       scrollElement.scrollTop = scrollPosition;
