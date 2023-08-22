@@ -8,7 +8,6 @@
 import type { Package, Review, AirtablePost } from "$libs/types";
 import type { GUIPackage, Session, Packages, AutoUpdateStatus } from "./types";
 import { PackageStates } from "./types";
-import { loremIpsum } from "lorem-ipsum";
 import _ from "lodash";
 
 const packages: Package[] = [

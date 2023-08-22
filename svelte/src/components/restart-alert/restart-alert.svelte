@@ -1,7 +1,7 @@
 <script lang="ts">
   import "$appcss";
   import Button from "$components/button/button.svelte";
-  import { t, l, locale } from "$libs/translations";
+  import { t } from "$libs/translations";
   import { relaunch } from "@native";
   import ModalContainer from "$components/modal-container/modal-container.svelte";
   import { notificationStore, appUpdateStore } from "$libs/stores";

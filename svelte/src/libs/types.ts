@@ -1,4 +1,3 @@
-import type { ComponentType } from "svelte";
 export interface Review {
   title: string;
   comment: string;
