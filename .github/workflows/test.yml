@@ -1,0 +1,68 @@
+name: "test-ci"
+on:
+  push:
+    branches:
+      - metrics-test
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      desktop: ${{steps.desktop.outputs.src}}
+      preview_folder: ${{steps.preview.outputs.folder}}
+      is-fork: ${{steps.check-fork.outputs.is-fork}}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: desktop
+        with:
+          filters: |
+            src:
+              - 'modules/desktop/**'
+              - 'modules/ui/**'
+      - name: get s3 preview folder
+        id: preview
+        run: echo "folder=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
+      - name: Check if PR is from fork
+        id: check-fork
+        run: |
+          echo "is-fork=$(if [ \"${{ github.event.pull_request.head.repo.full_name }}\" != \"${{ github.repository }}\" ]; then echo true; else echo false; fi)" >> $GITHUB_OUTPUT
+        shell: bash
+
+  e2e_test:
+    needs: changes
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        iteration: [1, 2, 3, 4, 5]
+    env:
+      # see: https://github.com/electron-userland/electron-builder/issues/3179
+      USE_HARD_LINKS: false
+    steps:
+      - uses: teaxyz/setup@v0
+        with:
+          version: 0.35.7
+      - uses: actions/checkout@v3
+      - name: cache node_modules build
+        uses: actions/cache@v3
+        with:
+          key: e2e-macos
+          path: ./node_modules
+      - name: env file
+        run: cp .env.example svelte/.env
+      - name: install app dependencies
+        run: tea -E xc setup
+      - name: test build electron main process
+        run: tea -E xc build
+        env:
+          NOTARIZE: "false"
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+          MAC_BUILD_TARGET: "dir"
+      - name: setup dev
+        run: |
+          mkdir -p /Users/runner/.tea/tea.xyz/gui
+          touch /Users/runner/.tea/tea.xyz/gui/dev
+      - name: e2e test
+        run: tea -E xc e2e
+
+  
