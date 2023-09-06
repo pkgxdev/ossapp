@@ -27,7 +27,7 @@ const getLocalSession = async (): Promise<DefaultMixpanelProps> => {
 mixpanel.init(pub.PUBLIC_MIXPANEL_TOKEN, { debug: true });
 
 enum AnalyticsAction {
-  visit_discover = "VISIT_DISCOVERY", // this is also used for tracking home visit and session start
+  visit_home = "VISIT_HOME", // this is also used for tracking home visit and session start
   install = "INSTALL_ACTION",
   install_failed = "INSTALL_ACTION_FAILED",
   search = "SEARCH_ACTION",
@@ -90,5 +90,5 @@ export const trackViewPackagePage = (packageFullname: string, deeplink: boolean)
 };
 
 export const trackInitialVisit = (menu: SideMenuOptions) => {
-  trackAction(AnalyticsAction.visit_discover, { menu });
+  trackAction(AnalyticsAction.visit_home, { menu });
 };
