@@ -38,6 +38,7 @@ enum AnalyticsAction {
 const trackAction = (action: AnalyticsAction, data?: { [key: string]: any }) => {
   getLocalSession()
     .then((props) => {
+      mixpanel.identify(props.device_id);
       mixpanel.track(action, {
         ...(data || {}),
         ...props
