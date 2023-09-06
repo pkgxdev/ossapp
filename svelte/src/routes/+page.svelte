@@ -15,6 +15,8 @@
   import log from "$libs/logger";
   import { formatPercent } from "$components/lib/percent";
 
+  import { trackInitialVisit } from "$libs/analytics";
+
   const { packageList } = packagesStore;
 
   const url = $page.url;
@@ -50,6 +52,7 @@
     if (to?.url?.pathname === "/") {
       const tab = to.url.searchParams.get("tab");
       sideMenuOption = !tab ? SideMenuOptions.discover : (tab as SideMenuOptions);
+      trackInitialVisit(sideMenuOption);
     }
   });
 </script>
