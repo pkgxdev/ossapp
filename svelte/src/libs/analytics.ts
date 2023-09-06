@@ -1,6 +1,7 @@
 import mixpanel from "mixpanel-browser";
 import * as pub from "$env/static/public";
 import { getSession } from "@native";
+import type { SideMenuOptions } from "./types";
 
 type DefaultMixpanelProps = {
   device_id: string;
@@ -26,6 +27,7 @@ const getLocalSession = async (): Promise<DefaultMixpanelProps> => {
 mixpanel.init(pub.PUBLIC_MIXPANEL_TOKEN, { debug: true });
 
 enum AnalyticsAction {
+  visit_home = "VISIT_HOME", // this is also used for tracking home visit and session start
   install = "INSTALL_ACTION",
   install_failed = "INSTALL_ACTION_FAILED",
   search = "SEARCH_ACTION",
@@ -36,6 +38,7 @@ enum AnalyticsAction {
 const trackAction = (action: AnalyticsAction, data?: { [key: string]: any }) => {
   getLocalSession()
     .then((props) => {
+      mixpanel.identify(props.device_id);
       mixpanel.track(action, {
         ...(data || {}),
         ...props
@@ -85,4 +88,8 @@ export const trackViewPackagePage = (packageFullname: string, deeplink: boolean)
     pkg: packageFullname,
     deeplink
   });
+};
+
+export const trackInitialVisit = (menu: SideMenuOptions) => {
+  trackAction(AnalyticsAction.visit_home, { menu });
 };

@@ -58,10 +58,13 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
 
   ipcMain.handle("get-session", async () => {
     try {
-      log.info("getting session");
       const session = await readSessionData();
       log.debug(session ? "found session data" : "no session data found");
-      return session;
+      return {
+        // be able to filter mixpanel data correctly
+        device_id: process.env.NODE_ENV === "test" ? "test-device-id" : session?.device_id,
+        ...session
+      };
     } catch (error) {
       log.error(error);
       return {};
