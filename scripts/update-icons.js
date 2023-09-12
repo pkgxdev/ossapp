@@ -1,11 +1,13 @@
 import https from "https";
 import fs from "fs";
 import path from "path";
+import mkdirp from "mkdirp";
 
 const fontasticDownloadURI = "https://file.myfontastic.com/Fd33ifaooDVpESwnDXETgR/icons.css";
 // i tried the zip dl unfortunately its auth protected so have to hack our way into the resources
 
 const downloadFileTo = async (uri, path) => {
+  mkdirp.sync(path.split("/").slice(0, -1).join("/"));
   return new Promise((resolve) => {
     const file = fs.createWriteStream(path);
     https.get(uri, (res) => {
@@ -40,6 +42,8 @@ async function main() {
   const newCssFile = cssFile
     .replaceAll("https://file.myfontastic.com/Fd33ifaooDVpESwnDXETgR/", "")
     .replaceAll(fileVersion, "tea-icons");
+
+  mkdirp.sync(iconsFolder);
   await fs.writeFileSync(path.join(iconsFolder, "icons.css"), newCssFile, { encoding: "utf-8" });
 }
 
