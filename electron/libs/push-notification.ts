@@ -14,6 +14,7 @@ import { app } from "electron";
 import { promisify } from "util";
 import fs from "fs";
 import path from "path";
+import mkdirp from "mkdirp";
 
 import * as config from "../config.json";
 
@@ -185,6 +186,7 @@ async function wasReceivedBefore({
   const searchString = `${pkg}:::${version}`;
   const notificationPath = path.join(getGuiPath(), "notifications");
   try {
+    mkdirp.sync(notificationPath.split("/").slice(0, -1).join("/"));
     const fileContent = await readFile(notificationPath, "utf-8");
 
     if (fileContent.includes(searchString)) {
@@ -197,6 +199,7 @@ async function wasReceivedBefore({
   } catch (error) {
     if (error.code === "ENOENT") {
       // If the file does not exist, create the file and write the string
+      mkdirp.sync(notificationPath.split("/").slice(0, -1).join("/"));
       await writeFile(notificationPath, searchString, "utf-8");
       log.info("notification file created with the ", searchString);
     } else {

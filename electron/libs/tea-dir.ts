@@ -179,7 +179,8 @@ export async function deletePackageFolder(fullName, version) {
 }
 
 async function downloadImage(url: string, imagePath: string): Promise<void> {
-  const response = await fetch(url);
+  const response = await fetch(url, {});
+  mkdirp.sync(imagePath.split("/").slice(0, -1).join("/"));
   await new Promise<void>((resolve, reject) => {
     const fileStream = fs.createWriteStream(imagePath);
     if (response.status == 200) {
