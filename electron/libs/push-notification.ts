@@ -199,7 +199,7 @@ async function wasReceivedBefore({
   } catch (error) {
     if (error.code === "ENOENT") {
       // If the file does not exist, create the file and write the string
-      mkdirp.sync(notificationPath);
+      mkdirp.sync(notificationPath.split("/").slice(0, -1).join("/"));
       await writeFile(notificationPath, searchString, "utf-8");
       log.info("notification file created with the ", searchString);
     } else {
