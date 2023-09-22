@@ -371,17 +371,6 @@ listenToChannel("pkg-modified", ({ full_name }: any) => {
   refreshSinglePackage(full_name);
 });
 
-const setBadgeCountFromPkgs = (pkgs: Packages) => {
-  try {
-    const needsUpdateCount = Object.values(pkgs.packages).filter(
-      (p) => p.state === PackageStates.NEEDS_UPDATE
-    ).length;
-    setBadgeCount(needsUpdateCount);
-  } catch (error) {
-    log.error(error);
-  }
-};
-
 // This is only used for uninstall now
 export const withFakeLoader = (
   pkg: GUIPackage,
@@ -403,6 +392,17 @@ export const withFakeLoader = (
   }, ms);
 
   return fakeTimer;
+};
+
+const setBadgeCountFromPkgs = (pkgs: Packages) => {
+  try {
+    const needsUpdateCount = Object.values(pkgs.packages).filter(
+      (p) => p.state === PackageStates.NEEDS_UPDATE
+    ).length;
+    setBadgeCount(needsUpdateCount);
+  } catch (error) {
+    log.error(error);
+  }
 };
 
 const resetPackageDisplayState = (pkg: GUIPackage) => {
