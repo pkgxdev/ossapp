@@ -166,6 +166,10 @@ const init = async function () {
     await refreshPackages();
     await monitorTeaDir();
     initialized = true;
+
+    setInterval(async () => {
+      await refreshPackages();
+    }, 1000 * 60 * 30);
   }
   log.info("packages store: initialized!");
 };
