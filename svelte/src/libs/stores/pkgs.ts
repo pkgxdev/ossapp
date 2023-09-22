@@ -17,7 +17,8 @@ import {
   monitorTeaDir,
   stopMonitoringTeaDir,
   isDev,
-  getPantryDetails
+  getPantryDetails,
+  setBadgeCount
 } from "@native";
 
 import { getReadme, getContributors, getRepoAsPackage } from "$libs/repo";
@@ -61,7 +62,7 @@ const updateAllPackages = (guiPkgs: GUIPackage[]) => {
       const oldPkg = pkgs.packages[pkg.full_name];
       pkgs.packages[pkg.full_name] = { ...oldPkg, ...pkg };
     });
-
+    setBadgeCountFromPkgs(pkgs);
     return pkgs;
   });
 };
@@ -89,6 +90,7 @@ const updatePackage = (full_name: string, props: Partial<GUIPackage>, newVersion
       updatedPkg.state = getPackageState(updatedPkg);
       pkgs.packages[full_name] = updatedPkg;
     }
+    setBadgeCountFromPkgs(pkgs);
     return pkgs;
   });
 };
@@ -150,6 +152,17 @@ To read more about this package go to [${guiPkg.homepage || guiPkg.github_url}](
   }
 
   updatePackage(guiPkg.full_name!, updatedPackage);
+};
+
+const setBadgeCountFromPkgs = (pkgs: Packages) => {
+  try {
+    const needsUpdateCount = Object.values(pkgs.packages).filter(
+      (p) => p.state === PackageStates.NEEDS_UPDATE
+    ).length;
+    setBadgeCount(needsUpdateCount);
+  } catch (error) {
+    log.error(error);
+  }
 };
 
 const init = async function () {
