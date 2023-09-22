@@ -13,7 +13,7 @@ type AutoUpdateStatus = {
 autoUpdater.logger = log;
 
 let mainWindowNotifier: MainWindowNotifier | null = null;
-let initalized = false;
+let initialed = false;
 let isUpdating = false;
 
 // keep the last status to resend to the window when it's opened becuase the store is destroyed when the window is closed
@@ -26,8 +26,8 @@ export function checkUpdater(notifier: MainWindowNotifier): AppUpdater {
     mainWindowNotifier = notifier;
     checkForUpdates();
 
-    if (!initalized) {
-      initalized = true;
+    if (!initialed) {
+      initialed = true;
 
       setInterval(() => {
         checkForUpdates();

@@ -8,7 +8,6 @@ import {
   getInstalledPackages,
   installPackage,
   deletePackage,
-  setBadgeCount,
   loadPackageCache,
   writePackageCache,
   syncPantry,
@@ -21,7 +20,7 @@ import {
   getPantryDetails
 } from "@native";
 
-import { getReadme, getContributors, getRepoAsPackage, trimGithubSlug } from "$libs/repo";
+import { getReadme, getContributors, getRepoAsPackage } from "$libs/repo";
 import { trackInstall, trackInstallFailed } from "$libs/analytics";
 import {
   addInstalledVersion,
@@ -62,7 +61,7 @@ const updateAllPackages = (guiPkgs: GUIPackage[]) => {
       const oldPkg = pkgs.packages[pkg.full_name];
       pkgs.packages[pkg.full_name] = { ...oldPkg, ...pkg };
     });
-    setBadgeCountFromPkgs(pkgs);
+
     return pkgs;
   });
 };
@@ -89,8 +88,6 @@ const updatePackage = (full_name: string, props: Partial<GUIPackage>, newVersion
 
       updatedPkg.state = getPackageState(updatedPkg);
       pkgs.packages[full_name] = updatedPkg;
-
-      setBadgeCountFromPkgs(pkgs);
     }
     return pkgs;
   });
@@ -392,17 +389,6 @@ export const withFakeLoader = (
   }, ms);
 
   return fakeTimer;
-};
-
-const setBadgeCountFromPkgs = (pkgs: Packages) => {
-  try {
-    const needsUpdateCount = Object.values(pkgs.packages).filter(
-      (p) => p.state === PackageStates.NEEDS_UPDATE
-    ).length;
-    setBadgeCount(needsUpdateCount);
-  } catch (error) {
-    log.error(error);
-  }
 };
 
 const resetPackageDisplayState = (pkg: GUIPackage) => {
