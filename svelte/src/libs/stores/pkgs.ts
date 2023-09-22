@@ -89,8 +89,9 @@ const updatePackage = (full_name: string, props: Partial<GUIPackage>, newVersion
 
       updatedPkg.state = getPackageState(updatedPkg);
       pkgs.packages[full_name] = updatedPkg;
+      setBadgeCountFromPkgs(pkgs);
     }
-    setBadgeCountFromPkgs(pkgs);
+
     return pkgs;
   });
 };
@@ -152,17 +153,6 @@ To read more about this package go to [${guiPkg.homepage || guiPkg.github_url}](
   }
 
   updatePackage(guiPkg.full_name!, updatedPackage);
-};
-
-const setBadgeCountFromPkgs = (pkgs: Packages) => {
-  try {
-    const needsUpdateCount = Object.values(pkgs.packages).filter(
-      (p) => p.state === PackageStates.NEEDS_UPDATE
-    ).length;
-    setBadgeCount(needsUpdateCount);
-  } catch (error) {
-    log.error(error);
-  }
 };
 
 const init = async function () {
@@ -380,6 +370,17 @@ listenToChannel("pkg-modified", ({ full_name }: any) => {
   }
   refreshSinglePackage(full_name);
 });
+
+const setBadgeCountFromPkgs = (pkgs: Packages) => {
+  try {
+    const needsUpdateCount = Object.values(pkgs.packages).filter(
+      (p) => p.state === PackageStates.NEEDS_UPDATE
+    ).length;
+    setBadgeCount(needsUpdateCount);
+  } catch (error) {
+    log.error(error);
+  }
+};
 
 // This is only used for uninstall now
 export const withFakeLoader = (
