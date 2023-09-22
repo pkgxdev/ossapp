@@ -51,7 +51,6 @@
     [SideMenuOptions.new_packages]: (pkg: GUIPackage) => {
       return moment(pkg.created_at).isAfter(moment().subtract(15, "days"));
     },
-    [SideMenuOptions.made_by_tea]: (pkg: GUIPackage) => pkg.full_name.includes("tea.xyz"),
     [SideMenuOptions.local]: (pkg: GUIPackage) => !!pkg.is_local
   };
 

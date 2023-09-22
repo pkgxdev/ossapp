@@ -1,36 +1,9 @@
 <script lang="ts">
   import { authStore } from "$libs/stores";
-  import { getSession } from "@native";
-  import { getBaseURL } from "$libs/v1-client";
-  import { shellOpenExternal, pollDeviceSession } from "@native";
   import mouseLeaveDelay from "$components/lib/mouse-leave-delay";
   const { user } = authStore;
 
-  $: authenticating = false;
-
   $: isLogoutOpen = false;
-
-  const openGithub = async () => {
-    if (!authenticating) {
-      authenticating = true;
-      try {
-        const session = await getSession();
-
-        if (session && session.device_id) {
-          const baseUrl = await getBaseURL();
-          shellOpenExternal(`${baseUrl}/v1/auth/user?device_id=${session.device_id}`);
-          pollDeviceSession();
-        } else {
-          throw new Error("possible no internet connection");
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        authenticating = false;
-      }
-    }
-    isLogoutOpen = false;
-  };
 
   const logout = () => authStore.clearSession();
 
@@ -66,14 +39,14 @@
     </div>
   </div>
 {:else}
-  <button
+  <!-- <button
     class="border-gray text-gray h-[28px] w-[120px] rounded-sm border px-1 text-sm transition-all hover:bg-[#e1e1e1] hover:text-black"
     class:animate-pulse={authenticating}
     on:click={openGithub}
     on:dblclick={preventDoubleClick}
   >
     log in
-  </button>
+  </button> -->
 {/if}
 
 <style>

@@ -204,7 +204,6 @@ export enum SideMenuOptions {
   featured = "featured",
   essentials = "essentials",
   starstruck = "starstruck",
-  made_by_tea = "made_by_tea",
   local = "local_packages"
 }
 

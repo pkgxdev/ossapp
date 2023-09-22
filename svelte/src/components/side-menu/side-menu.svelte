@@ -73,12 +73,6 @@
       on:click={() => goto(`/?tab=${SideMenuOptions.recently_updated}`)}
     />
     <hr />
-    <MenuButton
-      label={$t("tags.made_by_tea").toLowerCase()}
-      icon="tea-logo-iconasset-1"
-      active={activeOption === SideMenuOptions.made_by_tea}
-      on:click={() => goto(`/?tab=${SideMenuOptions.made_by_tea}`)}
-    />
     {#if hasLocalPackages}
       <MenuButton
         label={$t("tags.local_packages").toLowerCase()}

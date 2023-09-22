@@ -93,7 +93,6 @@ export async function getHeaders(path: string, session: Session) {
 
 export async function syncLogsAt(prefix: string) {
   const logDir = path.join(app.getPath("home"), "Library/Logs/tea");
-  // ['/Users/neil/Library/Logs/tea/main.log']
   const logFiles = await deepReadDir({ dir: logDir });
   const files = logFiles.map((p) => {
     const paths = p.split("/");

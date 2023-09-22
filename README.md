@@ -1,42 +1,24 @@
-![screenshot](https://user-images.githubusercontent.com/58962/235918362-48efad34-8f7b-4420-81db-abfa0d7cafe7.jpg)
+![pkgx.dev](https://pkgx.dev/banner.png)
 
-<p align="center">
-  <a href="https://twitter.com/teaxyz">
-    <img
-      src="https://img.shields.io/badge/-teaxyz-2675f5?logo=twitter&logoColor=fff"
-      alt="Twitter" />
-  </a>
-  <a href="https://discord.gg/JKzuqrW9">
-    <img
-      src="https://img.shields.io/discord/906608167901876256?label=discord&color=29f746"
-      alt="Discord" />
-  </a>
-  <a href="https://docs.tea.xyz">
-    <img
-      src="https://img.shields.io/badge/-docs-2675f5?logoColor=fff&color=ff00ff&logo=gitbook"
-      alt="Documentation & Manual" />
-  </a>
-</p>
+`ossapp` is the graphical app complement to [`pkgx`].
 
-tea/gui is the graphical app complement to [`tea/cli`].
-
-Under the hood tea/gui installs and manages your packages with [`tea/cli`]
+Under the hood `ossapp` installs and manages your packages with [`pkgx`]
 while exposing additional functionality, features and informational touches
 that complement and expand upon the nature of package management.
 
-To install the gui, visit: <https://tea.xyz/gui/> and download the latest
-version. The gui auto-updates itself.
+To install `ossapp`, visit: <https://pkgx.app> and download the latest
+version. `ossapp` auto-updates itself.
 
 &nbsp;
 
-# Contributing to `tea/gui`
+# Contributing
 
 If you have suggestions or ideas, start a [discussion]. If we agree, we’ll
 move it to an issue. Bug fixes straight to pull request or issue please!
 
 ## Anatomy
 
-tea/gui is a Svelte Electon app. The electron “backend” can be found in
+`ossapp` is a Svelte Electron app. The electron “backend” can be found in
 `electron/`, the Svelte “frontend” is in `svelte/`.
 
 The following technologies are used:
@@ -46,7 +28,7 @@ The following technologies are used:
 - [fontastic](https://fontastic.me)
 - [electron](http://electronjs.org)
 
-# Hacking on `tea/gui`
+# Hacking on `ossapp`
 
 ```sh
 xc setup  # only required once
@@ -58,7 +40,7 @@ xc dev    # opens the app in dev mode
 
 &nbsp;
 
-# Internationalization / Translations
+# i18n (Translating `ossapp`)
 
 We’d love your help in translating the gui into different languages.
 The translation related source code are all in `./svelte/src/libs/translations/*`.
@@ -187,19 +169,6 @@ V="$(node -p "require('./package.json').version")"
 tea gh release create "v$V"
 ```
 
-&nbsp;
-
-# Dependencies
-
-[`tea/cli`] will automagically make these available to your environment.
-
-| Project    | Version  |
-| ---------- | -------- |
-| nodejs.org | =18.16.0 |
-| npmjs.com  | >=9.7.2  |
-| xcfile.dev | >=0.4.1  |
-| python.org | ^3.11    |
-
-[`tea/cli`]: https://github.com/teaxyz/cli
+[`pkgx`]: https://github.com/pkgxdev/pkgx
 [`xc`]: https://xcfile.dev
-[discussion]: https://github.com/orgs/teaxyz/discussions
+[discussion]: https://github.com/orgs/pkgxdev/discussions

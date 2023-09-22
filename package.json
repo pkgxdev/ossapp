@@ -1,9 +1,9 @@
 {
-  "name": "tea",
-  "version": "0.2.57",
+  "name": "ossapp",
+  "version": "0.3.0",
   "private": true,
-  "description": "tea gui app",
-  "author": "tea.xyz",
+  "description": "The Open Source App Store",
+  "author": "pkgx inc. <hello@pkgx.dev>",
   "main": "electron/dist/electron.cjs",
   "type": "module",
   "scripts": {
@@ -145,6 +145,7 @@
     "xterm-addon-fit": "^0.7.0",
     "yaml": "^2.2.1"
   },
-  "homepage": "https://tea.xyz",
-  "repository": "https://github.com/teaxyz/gui.git"
+  "homepage": "https://pkgx.app",
+  "repository": "https://github.com/pkgxdev/ossapp.git",
+  "tea": "node^18.16 npm^9.7.2 python^3.11 xc make"
 }

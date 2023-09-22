@@ -3,7 +3,6 @@
   import { authStore } from "$libs/stores";
 
   const { user } = authStore;
-  // const authPage = `http://localhost:3000/v1/auth/user?device_id=${authStore.deviceId}`; // https://app.tea.xyz/v1/auth/user?device_id=device_id
 </script>
 
 {#if $user}

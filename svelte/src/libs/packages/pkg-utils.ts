@@ -2,6 +2,7 @@ import log from "$libs/logger";
 import { PackageStates, type GUIPackage } from "$libs/types";
 import SemVer from "@teaxyz/lib/semver";
 import { t } from "$libs/translations";
+import { GUIBaseURL } from "$libs/constants";
 
 // Find a list of available versions for a package based on the bottles
 export const findAvailableVersions = (pkg: Pick<GUIPackage, "bottles" | "version">) => {
@@ -100,7 +101,7 @@ export const newLocalPackage = (
   installed_versions: string[],
   dev: boolean
 ): GUIPackage => {
-  const prefix = `https://gui.tea.xyz/${dev ? "dev" : "prod"}/localplaceholder`;
+  const prefix = `https://${GUIBaseURL}/${dev ? "dev" : "prod"}/localplaceholder`;
 
   return {
     full_name: full_name,

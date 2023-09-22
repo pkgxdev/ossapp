@@ -6,10 +6,10 @@ import { isDev } from "@native";
 
 let dev = false;
 export const getBaseURL = async (): Promise<string> => {
-  if (dev) return "https://app.dev.tea.xyz";
+  if (dev) return "https://app.dev.pkgx.dev";
   const notProd = await isDev();
   dev = notProd;
-  return notProd ? "https://app.dev.tea.xyz" : "https://app.tea.xyz";
+  return notProd ? "https://app.dev.pkgx.dev" : "https://app.pkgx.dev";
 };
 
 export async function get<T>(

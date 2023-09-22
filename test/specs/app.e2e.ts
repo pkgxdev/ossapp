@@ -16,32 +16,6 @@ describe("basic smoke test", () => {
     await sleep(4000);
   });
 
-  it("install brewkit from the made by tea tab", async () => {
-    const { screen } = utils!;
-
-    const slug = "tea_xyz_brewkit";
-
-    await expect(await screen.findByText(disoverText)).toExist();
-
-    // navigate to "made by tea" page
-    const btn = await utils.findButton("made by tea");
-    btn.click();
-
-    // find the brewkit package
-    const pkgCard = await utils.findPackageCardBySlug(slug);
-    pkgCard.click();
-
-    await utils.packageDetailsLoaded();
-
-    // Be nice to devs running this over and over
-    await utils.uninstallPackageIfNeeded();
-
-    await utils.installLatestVersion(slug);
-
-    // await utils.verifyInstalledBadge(slug);
-    await expect(await screen.findByRole("button", { name: "OPEN IN TERMINAL" })).toExist();
-  });
-
   it("search and install create-dmg", async () => {
     const { searchTerm } = utils!;
     await searchTerm("create-dmg");

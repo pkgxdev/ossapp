@@ -3,7 +3,7 @@ import { join } from "path";
 import { getDirname } from "cross-dirname";
 
 const dirname = getDirname();
-const productName = "tea";
+const productName = "ossapp";
 
 process.env.TEST = "true";
 

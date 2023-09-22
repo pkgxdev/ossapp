@@ -37,7 +37,7 @@
   >
     <button
       class="outline-gray hover:bg-gray h-7 w-full p-1 text-left outline-1 hover:bg-opacity-25 hover:outline"
-      on:click={() => shellOpenExternal("https://docs.tea.xyz")}
+      on:click={() => shellOpenExternal("https://docs.pkgx.dev")}
     >
       docs
     </button>

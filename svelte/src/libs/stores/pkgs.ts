@@ -37,6 +37,7 @@ import log from "$libs/logger";
 import { isPackageUpToDate } from "../packages/pkg-utils";
 
 import { indexPackages, searchPackages } from "$libs/search-index";
+import { GUIBaseURL } from "$libs/constants";
 
 const packageRefreshInterval = 1000 * 60 * 60; // 1 hour
 
@@ -178,7 +179,7 @@ const refreshPackages = async () => {
   const pkgs = await getDistPackages();
 
   const guiPkgs: GUIPackage[] = pkgs.map((p) => {
-    const prefix = `https://gui.tea.xyz/${isDev ? "dev" : "prod"}/${p.full_name}`;
+    const prefix = `https://${GUIBaseURL}/${isDev ? "dev" : "prod"}/${p.full_name}`;
     return {
       ...p,
       state: PackageStates.AVAILABLE,
@@ -342,7 +343,7 @@ export const getPackageImageURL = async (
 ): Promise<string> => {
   if (!pkg.image_added_at) return "";
   const isDev = await dev;
-  return `https://gui.tea.xyz/${isDev ? "dev" : "prod"}/${pkg.full_name}/${size}x${size}.webp`;
+  return `https://${GUIBaseURL}/${isDev ? "dev" : "prod"}/${pkg.full_name}/${size}x${size}.webp`;
 };
 
 listenToChannel("install-progress", ({ full_name, progress }: any) => {

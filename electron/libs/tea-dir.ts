@@ -3,6 +3,7 @@ import path from "path";
 import { app } from "electron";
 import log from "./logger";
 import { defaultImgUrl, type InstalledPackage } from "../../svelte/src/libs/types";
+import { GUIBaseURL } from "../../svelte/src/libs/constants";
 import { mkdirp } from "mkdirp";
 import fetch from "node-fetch";
 import { SemVer, semver } from "@teaxyz/lib";
@@ -195,7 +196,7 @@ async function downloadImage(url: string, imagePath: string): Promise<void> {
 
 export async function cacheImage(url: string): Promise<string> {
   const imageFolder = path.join(getGuiPath(), "cached_images");
-  let pkgFilePath = url.split("gui.tea.xyz")[1];
+  let pkgFilePath = url.split(GUIBaseURL)[1] ?? "";
   //unfortunately we have prod in image url so strip it if it's present
   if (pkgFilePath.startsWith("/prod")) {
     pkgFilePath = pkgFilePath.replace("/prod", "");

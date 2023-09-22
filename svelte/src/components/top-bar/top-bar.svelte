@@ -12,9 +12,19 @@
   let { nextPath, prevPath } = navStore;
 
   let dev = false;
+
   onMount(async () => {
     dev = await isDev();
   });
+
+  let imgsrc = "Default";
+
+  function hover() {
+    imgsrc = "Hover";
+  }
+  function mouseout() {
+    imgsrc = "Default";
+  }
 </script>
 
 <header
@@ -25,7 +35,13 @@
   <ul class="text-gray flex h-10 items-center gap-1 pl-20 align-middle leading-10">
     <a href="/?tab=discover" data-testid="home-button">
       <div class="home-btn w-12 text-center text-2xl">
-        <i class="icon-tea-logo-iconasset-1" />
+        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+        <img
+          src="/images/home-btn/State={imgsrc}.svg"
+          alt="home"
+          on:mouseover={hover}
+          on:mouseout={mouseout}
+        />
       </div>
     </a>
     <p class="text-gray px-2">{dev ? "dev" : "beta"}</p>
@@ -76,17 +92,15 @@
     width: 46px;
     line-height: 46px;
     padding-left: 3px;
-    background-size: cover;
-    background-position: center center;
-    background-image: url("/images/gradient-bg.png");
-    color: #222222;
-  }
-
-  .home-btn:hover {
-    color: white;
   }
   p {
     font-size: 10px;
+  }
+  .home-btn img {
+    display: inline;
+  }
+  .home-btn img:hover {
+    display: inline;
   }
 
   .home-btn:active {

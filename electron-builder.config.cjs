@@ -6,7 +6,7 @@ const _ = require("lodash");
 const appBundleId = "xyz.tea.gui";
 module.exports = {
   appId: appBundleId,
-  productName: "tea",
+  productName: "ossapp",
   asar: false,
   directories: { output: "dist" },
   files: ["electron/dist/electron.cjs", { from: "svelte/build", to: "" }],
@@ -22,7 +22,7 @@ module.exports = {
     minimumSystemVersion: "11"
   },
   dmg: {
-    background: "./electron/bg.png",
+    // background: "./electron/bg.png",
     window: {
       width: 684,
       height: 465

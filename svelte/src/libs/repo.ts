@@ -3,6 +3,7 @@ import type { Contributor, GUIPackage, Package } from "$libs/types";
 import yaml from "js-yaml";
 import { isDev } from "@native";
 import log from "./logger";
+import { GUIBaseURL } from "./constants";
 export async function getPackageYaml(pkgYamlUrl: string) {
   const url = pkgYamlUrl.replace("/github.com", "/raw.githubusercontent.com").replace("/blob", "");
 
@@ -20,7 +21,7 @@ export async function getReadme(
   let data = "";
   try {
     const stage = (await isDev()) ? "dev" : "prod";
-    const reqHTML = await axios.get(`https://gui.tea.xyz/${stage}/${pkg.full_name!}/readme.html`);
+    const reqHTML = await axios.get(`https://${GUIBaseURL}/${stage}/${pkg.full_name!}/readme.html`);
     if (reqHTML.status === 200 && reqHTML.data) {
       return {
         data: reqHTML.data,
