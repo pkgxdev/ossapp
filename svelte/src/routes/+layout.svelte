@@ -57,10 +57,6 @@
     await requestSubprocessesSnapshot();
     initSentry();
   });
-
-  onDestroy(() => {
-    packagesStore.destroy();
-  });
 </script>
 
 <div id="main-layout" class="border-gray font-inter rounded-xl border transition-all">
