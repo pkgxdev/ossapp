@@ -38,7 +38,7 @@ import { isPackageUpToDate } from "../packages/pkg-utils";
 
 import { indexPackages, searchPackages } from "$libs/search-index";
 
-const packageRefreshInterval = 1000 * 60 * 60; // 1 hour
+const packageRefreshInterval = 1000*3*60; // 1000 * 60 * 60; // 1 hour
 
 let initialized = false;
 let isDestroyed = false;
@@ -240,7 +240,10 @@ const refreshPackages = async () => {
     }
   }
 
-  refreshTimeoutId = setTimeout(() => refreshPackages(), packageRefreshInterval); // refresh every hour
+  refreshTimeoutId = setTimeout(() => {
+    log.info("refreshing packages...");
+    refreshPackages();
+  }, packageRefreshInterval); // refresh every hour
 };
 
 const refreshSinglePackage = async (fullName: string) => {
