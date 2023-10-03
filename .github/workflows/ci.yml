@@ -36,9 +36,7 @@ jobs:
     needs: changes
     runs-on: macos-latest
     steps:
-      - uses: teaxyz/setup@v0
-        with:
-          version: 0.35.7
+      - uses: pkgxdev/setup@v1
       - uses: actions/checkout@v3
       - name: cache node_modules build
         uses: actions/cache@v3
@@ -67,9 +65,7 @@ jobs:
       # see: https://github.com/electron-userland/electron-builder/issues/3179
       USE_HARD_LINKS: false
     steps:
-      - uses: teaxyz/setup@v0
-        with:
-          version: 0.35.7
+      - uses: pkgxdev/setup@v1
       - uses: actions/checkout@v3
       - name: cache node_modules build
         uses: actions/cache@v3
@@ -97,9 +93,7 @@ jobs:
     needs: changes
     runs-on: macos-latest
     steps:
-      - uses: teaxyz/setup@v0
-        with:
-          version: 0.35.7
+      - uses: pkgxdev/setup@v1
       - uses: actions/checkout@v3
       - name: cache node_modules build
         uses: actions/cache@v3

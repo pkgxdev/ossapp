@@ -28,9 +28,7 @@ jobs:
     outputs:
       is-updated: ${{ steps.check_version.outputs.updated }}
     steps:
-      - uses: teaxyz/setup@v0
-        with:
-          version: 0.35.7
+      - uses: pkgxdev/setup@v1
       - uses: actions/checkout@v3
         with:
           fetch-depth: 5
@@ -69,9 +67,7 @@ jobs:
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
       build-version: ${{ steps.gui-version.outputs.version }}
     steps:
-      - uses: teaxyz/setup@v0
-        with:
-          version: 0.35.7
+      - uses: pkgxdev/setup@v1
       - uses: actions/checkout@v3
 
       - name: cache node_modules build
