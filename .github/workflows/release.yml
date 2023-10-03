@@ -97,18 +97,18 @@ jobs:
       - name: cp latest as previous release
         run: |
           aws s3 cp \
-            s3://dist.tea.xyz/tea.xyz/gui/tea-latest-arm64.dmg \
-            s3://dist.tea.xyz/tea.xyz/gui/tea-previous-arm64.dmg
+            s3://dist.tea.xyz/tea.xyz/gui/ossapp-latest-arm64.dmg \
+            s3://dist.tea.xyz/tea.xyz/gui/ossapp-previous-arm64.dmg
           aws s3 cp \
-            s3://dist.tea.xyz/tea.xyz/gui/tea-latest.dmg \
-            s3://dist.tea.xyz/tea.xyz/gui/tea-previous.dmg
+            s3://dist.tea.xyz/tea.xyz/gui/ossapp-latest.dmg \
+            s3://dist.tea.xyz/tea.xyz/gui/ossapp-previous.dmg
       - name: publish release
         run: |
           cd dist && \
           aws s3 sync . \
             "s3://preview.gui.tea.xyz/release/"
-          aws s3 cp $ARM_URL s3://dist.tea.xyz/tea.xyz/gui/tea-latest-arm64.dmg
-          aws s3 cp $X86_URL s3://dist.tea.xyz/tea.xyz/gui/tea-previous-arm64.dmg
+          aws s3 cp $ARM_URL s3://dist.tea.xyz/tea.xyz/gui/ossapp-latest-arm64.dmg
+          aws s3 cp $X86_URL s3://dist.tea.xyz/tea.xyz/gui/ossapp-previous-arm64.dmg
         env:
           ARM_URL: s3://preview.gui.tea.xyz/release/${{ steps.app_files.outputs.dmg_arm64 }}
           X86_URL: s3://preview.gui.tea.xyz/release/${{ steps.app_files.outputs.dmg_x86 }}
