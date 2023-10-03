@@ -37,7 +37,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: pkgxdev/setup@v1
+      - uses: pkgxdev/dev@v1
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
@@ -47,7 +47,7 @@ jobs:
         run: |
           cp .env.example svelte/.env
       - name: install app dependencies
-        run: pkgx xc setup
+        run: xc setup
       - name: test build electron main process
         run: npm run build:main
       # TODO: fix
@@ -66,7 +66,7 @@ jobs:
       USE_HARD_LINKS: false
     steps:
       - uses: actions/checkout@v3
-      - uses: pkgxdev/setup@v1
+      - uses: pkgxdev/dev@v1
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
@@ -75,9 +75,9 @@ jobs:
       - name: env file
         run: cp .env.example svelte/.env
       - name: install app dependencies
-        run: pkgx xc setup
+        run: xc setup
       - name: test build electron main process
-        run: pkgx xc build
+        run: xc build
         env:
           NOTARIZE: "false"
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
@@ -87,14 +87,14 @@ jobs:
           mkdir -p /Users/runner/.tea/tea.xyz/gui
           touch /Users/runner/.tea/tea.xyz/gui/dev
       - name: e2e test
-        run: pkgx xc e2e
+        run: xc e2e
 
   build_svelte:
     needs: changes
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: pkgxdev/setup@v1
+      - uses: pkgxdev/dev@v1
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
@@ -124,7 +124,7 @@ jobs:
           echo "version=$version$postfix" >> $GITHUB_OUTPUT
 
       - name: build
-        run: pkgx xc build:lite
+        run: xc build:lite
         env:
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           BUILD_FOR: preview
