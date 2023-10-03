@@ -147,5 +147,5 @@
   },
   "homepage": "https://pkgx.app",
   "repository": "https://github.com/pkgxdev/ossapp.git",
-  "tea": "node^18.16 npm^9.7.2 python^3.11 xc make"
+  "pkgx": "node^18.16 npm^9.7.2 python^3.11 xc make"
 }
