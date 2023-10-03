@@ -36,8 +36,8 @@ jobs:
     needs: changes
     runs-on: macos-latest
     steps:
-      - uses: pkgxdev/setup@v1
       - uses: actions/checkout@v3
+      - uses: pkgxdev/setup@v1
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
@@ -47,7 +47,7 @@ jobs:
         run: |
           cp .env.example svelte/.env
       - name: install app dependencies
-        run: tea -E xc setup
+        run: pkgx xc setup
       - name: test build electron main process
         run: npm run build:main
       # TODO: fix
@@ -65,8 +65,8 @@ jobs:
       # see: https://github.com/electron-userland/electron-builder/issues/3179
       USE_HARD_LINKS: false
     steps:
-      - uses: pkgxdev/setup@v1
       - uses: actions/checkout@v3
+      - uses: pkgxdev/setup@v1
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
@@ -75,9 +75,9 @@ jobs:
       - name: env file
         run: cp .env.example svelte/.env
       - name: install app dependencies
-        run: tea -E xc setup
+        run: pkgx xc setup
       - name: test build electron main process
-        run: tea -E xc build
+        run: pkgx xc build
         env:
           NOTARIZE: "false"
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
@@ -87,14 +87,14 @@ jobs:
           mkdir -p /Users/runner/.tea/tea.xyz/gui
           touch /Users/runner/.tea/tea.xyz/gui/dev
       - name: e2e test
-        run: tea -E xc e2e
+        run: pkgx xc e2e
 
   build_svelte:
     needs: changes
     runs-on: macos-latest
     steps:
-      - uses: pkgxdev/setup@v1
       - uses: actions/checkout@v3
+      - uses: pkgxdev/setup@v1
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
@@ -124,7 +124,7 @@ jobs:
           echo "version=$version$postfix" >> $GITHUB_OUTPUT
 
       - name: build
-        run: tea -E xc build:lite
+        run: pkgx xc build:lite
         env:
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           BUILD_FOR: preview

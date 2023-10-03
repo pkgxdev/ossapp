@@ -28,10 +28,10 @@ jobs:
     outputs:
       is-updated: ${{ steps.check_version.outputs.updated }}
     steps:
-      - uses: pkgxdev/setup@v1
       - uses: actions/checkout@v3
         with:
           fetch-depth: 5
+      - uses: pkgxdev/setup@v1
       - name: Check if version in package.json was updated
         id: check_version
         run: |
@@ -67,8 +67,8 @@ jobs:
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
       build-version: ${{ steps.gui-version.outputs.version }}
     steps:
-      - uses: pkgxdev/setup@v1
       - uses: actions/checkout@v3
+      - uses: pkgxdev/setup@v1
 
       - name: cache node_modules build
         # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read
@@ -88,7 +88,7 @@ jobs:
             ./svelte/build
 
       - name: build
-        run: tea -SE xc dist
+        run: pkgx xc dist
         env:
           NOTARIZE: true
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
