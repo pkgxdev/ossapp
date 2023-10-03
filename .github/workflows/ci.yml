@@ -112,7 +112,7 @@ jobs:
       - name: get gui version
         id: gui-version
         run: |
-          tea +stedolan.github.io/jq
+          pkgx +stedolan.github.io/jq
           export version=$(echo $(cat package.json) | jq --raw-output .version)
           export postfix=
           if GIT_DIR=/path/to/repo/.git git rev-parse $1 >/dev/null 2>&1
