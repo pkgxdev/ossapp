@@ -68,7 +68,7 @@ jobs:
       build-version: ${{ steps.gui-version.outputs.version }}
     steps:
       - uses: actions/checkout@v3
-      - uses: pkgxdev/dev@v1
+      - uses: pkgxdev/dev@v0
 
       - name: cache node_modules build
         # TODO: cache issue in our self-hosted macos runner ESPIPE: invalid seek, read

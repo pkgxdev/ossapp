@@ -37,7 +37,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: pkgxdev/dev@v1
+      - uses: pkgxdev/dev@v0
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
@@ -66,7 +66,7 @@ jobs:
       USE_HARD_LINKS: false
     steps:
       - uses: actions/checkout@v3
-      - uses: pkgxdev/dev@v1
+      - uses: pkgxdev/dev@v0
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
@@ -94,7 +94,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: pkgxdev/dev@v1
+      - uses: pkgxdev/dev@v0
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
