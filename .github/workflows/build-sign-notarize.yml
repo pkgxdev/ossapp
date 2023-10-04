@@ -35,6 +35,7 @@ jobs:
           # Get the current version from package.json
           CURRENT_VERSION=$(jq -r .version package.json)
 
+          git fetch origin main:main
           # Get the list of changed files between HEAD and the previous commit
           CHANGED_FILES=$(git diff --name-only main...HEAD)
 
