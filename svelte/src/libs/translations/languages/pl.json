@@ -1,0 +1,101 @@
+{
+  "id": "pl",
+  "label": "Polski",
+  "translations": {
+    "store-search-placeholder": "wyszukiwanie pakietów",
+    "action": {
+      "update": "aktualizacja",
+      "cancel": "anulować"
+    },
+    "package": {
+      "update-all": "AKTUALIZUJ WSZYSTKO",
+      "cta-AVAILABLE": "ZAINSTALOWAĆ",
+      "cta-INSTALLED": "ZAINSTALOWANE",
+      "cta-INSTALLING": "INSTALACJA",
+      "cta-UNINSTALLED": "ZAINSTALUJ PONOWNIE",
+      "cta-UNINSTALL": "USUNĄĆ",
+      "cta-NEEDS_UPDATE": "AKTUALIZACJA",
+      "cta-UPDATING": "ODNOWIENIE",
+      "cta-UPDATED": "AKTUALIZACJA",
+      "cta-PRUNE": "POSPRZĄTAĆ",
+      "cta-PRUNING": "CZYSZCZENIE",
+      "open": "OTWARTY",
+      "open-in-terminal": "OTWARTE W TERMINALU",
+      "local-package": "pakiet lokalny",
+      "not-in-pantry": "jeszcze nie dodane do spiżarni"
+    },
+    "footer": {
+      "quick-links-title": "szybkie linki",
+      "about-tea-store": "o tea store",
+      "report-a-problem": "zgłoś problem",
+      "visit-website": "odwiedzać tea.xyz",
+      "terms-services": "warunki i usługi",
+      "privacy-policy": "polityka prywatności"
+    },
+    "documentation": {
+      "title": "dokumentacja",
+      "workshops": "warsztaty"
+    },
+    "view-all": "oglądaj wszystko",
+    "sorting": {
+      "label": "sortować",
+      "popularity": "najbardziej popularne",
+      "most-recent": "Najnowszy"
+    },
+    "common": {
+      "home": "główny",
+      "all": "Wszystko",
+      "articles": "Artykuły",
+      "workshops": "Warsztaty",
+      "metadata": "Metadane",
+      "homepage": "Główny",
+      "documentation": "Dokumentacja",
+      "github-repository": "Github Repozytorium",
+      "repository": "Repozytorium",
+      "contributors": "Uczestnicy",
+      "view-on-github": "OGLĄDAĆ НА GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "aktualizacja tea/gui до {{version}}?",
+      "gui-restarting": "Kontynuacja spowoduje ponowne uruchomienie programu po zakończeniu. Upewnij się, że nie masz uruchomionych żadnych operacji. Czy chcesz kontynuować?",
+      "gui-restart": "uruchom ponownie"
+    },
+    "side-menu-title": {
+      "discover": "dowiadywać się",
+      "all": "Wszystkie pakiety",
+      "installed": "Zainstalowane pakiety",
+      "installed_updates_available": "Dostępne Aktualizacje",
+      "recently_updated": "Ostatnio Zaktualizowane",
+      "new_packages": "Nowe Pakiety",
+      "popular": "Popularny",
+      "featured": "Zalecana",
+      "essentials": "Ważny",
+      "starstruck": "Gwiazdy Wagi Ciężkiej",
+      "made_by_tea": "zrobiony tea",
+      "local_packages": "Pakiety Lokalne"
+    },
+    "tags": {
+      "discover": "dowiadywać się",
+      "all": "wszystkie pakiety",
+      "installed": "jest ustalony",
+      "installed_updates_available": "Dostępne aktualizacje",
+      "recently_updated": "Ostatnio zaktualizowane",
+      "new_packages": "Nowe pakiety",
+      "popular": "Popularny",
+      "featured": "Zalecana",
+      "essentials": "Ważny",
+      "starstruck": "Ciężcy",
+      "made_by_tea": "Zrobiony tea",
+      "local_packages": "Pakiety lokalne"
+    },
+    "discover": {
+      "featured_title": "lokalne podstawy sztucznej inteligencji",
+      "featured_description": "Poznaj świat lokalnej sztucznej inteligencji. To jest Twoja platforma do eksperymentowania z wysokiej klasy narzędziami AI, takimi jak AutoGPT i Stable Diffusion Web UI, bezpośrednio z systemu lokalnego. Realizuj projekty AI, dbając o bezpieczeństwo danych i możliwość ich dostosowania według własnego uznania."
+    }
+  }
+}
