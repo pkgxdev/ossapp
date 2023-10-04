@@ -9,7 +9,7 @@ import ru from "./languages/ru.json";
 import uk from "./languages/uk.json";
 import zh from "./languages/zh.json";
 import ptbr from "./languages/ptbr.json";
-import pl from "./language/pl.json";
+import pl from "./languages/pl.json";
 
 import * as customModifiers from "./modifiers";
 
