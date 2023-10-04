@@ -19,9 +19,6 @@ on:
       s3-electron-dist-key:
         description: "The S3 build key includes the installer files: [zip, dmg, etc, yml] from electron"
         value: ${{ jobs.build.outputs.s3-artifacts-key }}
-      s3-custom-notarized-installers-key:
-        description: "The S3 build key includes the installer files: [zip, dmg, etc, yml] from notarization strategy done outside of electron"
-        value: ${{ jobs.build.outputs.s3-artifacts-key }}
 jobs:
   verify:
     runs-on: ubuntu-latest
