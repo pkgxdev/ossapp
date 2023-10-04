@@ -126,4 +126,6 @@ jobs:
         run: |
           S3_KEY=$bucket/$prefix/artifacts.tgz
           aws s3 cp artifacts.tgz $S3_KEY
-          echo key=$S3_KEY >> $GITHUB_OUTPUT
+          echo "key=$S3_KEY" >> $GITHUB_OUTPUT
+          echo "$S3_KEY"
+          echo $GITHUB_OUTPUT
