@@ -81,18 +81,35 @@ jobs:
       - name: build
         run: xc dist
         env:
-          NOTARIZE: true
+        #   NOTARIZE: true
+        #   PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
+        #   DEBUG_BUILD: ${{ inputs.debug }}
+        #   PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
+        #   USE_HARD_LINKS: false
+        #   CSC_FOR_PULL_REQUEST: true
+        #   CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+        #   CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+        #   CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+        #   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #   APPLE_ID: ${{ secrets.APPLE_ID }}
+        #   APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        #   PUSHY_APP_ID: ${{ secrets.PUSHY_APP_ID }}
+        #   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        #   APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        #   DEBUG: electron-notarize:notarytool
+        # temp faster build
+          NOTARIZE: false
           PUBLIC_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_PROJECT_TOKEN }}
           DEBUG_BUILD: ${{ inputs.debug }}
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           USE_HARD_LINKS: false
-          CSC_FOR_PULL_REQUEST: true
-          CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
-          CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
-          CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
+          CSC_FOR_PULL_REQUEST: false
+          # CSC_LINK: ${{ secrets.GUI_APPLE_CERTIFICATE }}
+          # CSC_KEY_PASSWORD: ${{ secrets.GUI_APPLE_CERTIFICATE_PASSWORD }}
+          # CSC_NAME: ${{ secrets.APPLE_IDENTITY_NO_PREFIX }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          # APPLE_ID: ${{ secrets.APPLE_ID }}
+          # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           PUSHY_APP_ID: ${{ secrets.PUSHY_APP_ID }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
