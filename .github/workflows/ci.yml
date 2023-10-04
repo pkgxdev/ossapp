@@ -36,10 +36,8 @@ jobs:
     needs: changes
     runs-on: macos-latest
     steps:
-      - uses: teaxyz/setup@v0
-        with:
-          version: 0.35.7
       - uses: actions/checkout@v3
+      - uses: pkgxdev/dev@v0
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
@@ -49,7 +47,7 @@ jobs:
         run: |
           cp .env.example svelte/.env
       - name: install app dependencies
-        run: tea -E xc setup
+        run: xc setup
       - name: test build electron main process
         run: npm run build:main
       # TODO: fix
@@ -67,10 +65,8 @@ jobs:
       # see: https://github.com/electron-userland/electron-builder/issues/3179
       USE_HARD_LINKS: false
     steps:
-      - uses: teaxyz/setup@v0
-        with:
-          version: 0.35.7
       - uses: actions/checkout@v3
+      - uses: pkgxdev/dev@v0
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
@@ -79,9 +75,9 @@ jobs:
       - name: env file
         run: cp .env.example svelte/.env
       - name: install app dependencies
-        run: tea -E xc setup
+        run: xc setup
       - name: test build electron main process
-        run: tea -E xc build
+        run: xc build
         env:
           NOTARIZE: "false"
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
@@ -91,16 +87,14 @@ jobs:
           mkdir -p /Users/runner/.tea/tea.xyz/gui
           touch /Users/runner/.tea/tea.xyz/gui/dev
       - name: e2e test
-        run: tea -E xc e2e
+        run: xc e2e
 
   build_svelte:
     needs: changes
     runs-on: macos-latest
     steps:
-      - uses: teaxyz/setup@v0
-        with:
-          version: 0.35.7
       - uses: actions/checkout@v3
+      - uses: pkgxdev/dev@v0
       - name: cache node_modules build
         uses: actions/cache@v3
         with:
@@ -118,8 +112,7 @@ jobs:
       - name: get gui version
         id: gui-version
         run: |
-          tea +stedolan.github.io/jq
-          export version=$(echo $(cat package.json) | jq --raw-output .version)
+          export version=$(echo $(cat package.json) | pkgx jq --raw-output .version)
           export postfix=
           if GIT_DIR=/path/to/repo/.git git rev-parse $1 >/dev/null 2>&1
           then
@@ -130,7 +123,7 @@ jobs:
           echo "version=$version$postfix" >> $GITHUB_OUTPUT
 
       - name: build
-        run: tea -E xc build:lite
+        run: xc build:lite
         env:
           PUBLIC_VERSION: ${{ steps.gui-version.outputs.version }}
           BUILD_FOR: preview
@@ -232,10 +225,10 @@ jobs:
       - name: cp package images from prod to preview bucket
         env:
           prefix: ${{ needs.changes.outputs.preview_folder }}
+          bucket: ${{ secrets.BUILDS_S3_BUCKET }}
         run: |
           cd dist && \
-          aws s3 sync . \
-            "s3://preview.gui.tea.xyz/$prefix/"
+          aws s3 sync . "$bucket/$prefix/"
 
       - name: comment install for Linux
         if: startsWith(matrix.platform.name, 'linux')
@@ -245,7 +238,7 @@ jobs:
           message: |
             **installer for Linux ${{ matrix.platform.name }} is at**:
             ```bash
-            http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.build_platform.outputs.filename }}
+            ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/${{ needs.changes.outputs.preview_folder }}/${{ steps.build_platform.outputs.filename }}
             ```
             copy-paste into a browser to download
 
@@ -257,7 +250,7 @@ jobs:
           message: |
             **installers for MacOS darwin+aarch64 is at**:
             ```bash
-            http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_arm64 }}
+            ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_arm64 }}
             ```
             copy-paste into a browser to download
       - name: comment install for MacOS
@@ -268,6 +261,6 @@ jobs:
           message: |
             **installers for MacOS darwin+x86-64 is at**:
             ```bash
-            http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_x86 }}
+            ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_x86 }}
             ```
             copy-paste into a browser to download

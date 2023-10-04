@@ -35,7 +35,7 @@ jobs:
           aws-region: us-east-1
       - name: s3 artifact download
         env:
-          S3_INSTALLER_KEY: ${{ needs.build_desktop.outputs.s3-electron-dist-key }}
+          S3_INSTALLER_KEY: ${{ secrets.BUILDS_S3_BUCKET }}/${{ needs.build_desktop.outputs.s3-electron-dist-key }}
         run: aws s3 cp $S3_INSTALLER_KEY dist.tgz
 
       - run: |
@@ -97,22 +97,23 @@ jobs:
       - name: cp latest as previous release
         run: |
           aws s3 cp \
-            s3://dist.tea.xyz/tea.xyz/gui/tea-latest-arm64.dmg \
-            s3://dist.tea.xyz/tea.xyz/gui/tea-previous-arm64.dmg
+            $S3_BUCKET/release/ossapp-latest-arm64.dmg \
+            $S3_BUCKET/release/ossapp-previous-arm64.dmg
           aws s3 cp \
-            s3://dist.tea.xyz/tea.xyz/gui/tea-latest.dmg \
-            s3://dist.tea.xyz/tea.xyz/gui/tea-previous.dmg
+            $S3_BUCKET/release/ossapp-latest.dmg \
+            $S3_BUCKET/release/ossapp-previous.dmg
+        env:
+          S3_BUCKET: ${{ secrets.BUILDS_S3_BUCKET }}
       - name: publish release
         run: |
           cd dist && \
-          aws s3 sync . \
-            "s3://preview.gui.tea.xyz/release/"
-          aws s3 cp $ARM_URL s3://dist.tea.xyz/tea.xyz/gui/tea-latest-arm64.dmg
-          aws s3 cp $X86_URL s3://dist.tea.xyz/tea.xyz/gui/tea-previous-arm64.dmg
+          aws s3 sync . "$S3_BUCKET/release/"
+          aws s3 cp $ARM_URL $S3_BUCKET/release/ossapp-latest-arm64.dmg
+          aws s3 cp $X86_URL $S3_BUCKET/release/ossapp-latest.dmg
         env:
-          ARM_URL: s3://preview.gui.tea.xyz/release/${{ steps.app_files.outputs.dmg_arm64 }}
-          X86_URL: s3://preview.gui.tea.xyz/release/${{ steps.app_files.outputs.dmg_x86 }}
-
+          ARM_URL: ${{ secrets.BUILDS_S3_BUCKET }}/release/${{ steps.app_files.outputs.dmg_arm64 }}
+          X86_URL: ${{ secrets.BUILDS_S3_BUCKET }}/release/${{ steps.app_files.outputs.dmg_x86 }}
+          S3_BUCKET: ${{ secrets.BUILDS_S3_BUCKET }}
       - run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.AWS_GUI_DISTRIBUTION_ID }} \
@@ -128,7 +129,7 @@ jobs:
           PLATFORM: darwin+aarch64
           VERSION: ${{steps.tag.outputs.tag}}
           EXT: "${{ steps.build_platform.outputs.extension }}"
-          DOWNLOAD_URL: http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/${{ steps.app_files.outputs.dmg_arm64 }}
+          DOWNLOAD_URL: ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/release/${{ steps.app_files.outputs.dmg_arm64 }}
 
       - name: Slack Notification X86 Build
         run: ./.github/notify-slack.js
@@ -137,7 +138,7 @@ jobs:
           PLATFORM: darwin+x86-64
           VERSION: ${{steps.tag.outputs.tag}}
           EXT: ${{ steps.build_platform.outputs.extension }}
-          DOWNLOAD_URL: http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/release/${{ steps.app_files.outputs.dmg_x86 }}
+          DOWNLOAD_URL: ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/release/${{ steps.app_files.outputs.dmg_x86 }}
 
       - run: |
           aws cloudfront create-invalidation \
