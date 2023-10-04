@@ -24,7 +24,3 @@ jobs:
 
       - name: remove distribution preview
         run: .github/remove-distribution.sh "${{ github.event.number }}-merge"
-
-      # consider to rm the folder later, maybe someone might need to download the installer
-      # - name: remove s3 folder
-      #   run: aws s3 rm s3://preview.gui.tea.xyz/ --recursive --exclude "*" --include "${{ steps.preview.outputs.folder }}/*"

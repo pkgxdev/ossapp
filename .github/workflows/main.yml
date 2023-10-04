@@ -20,7 +20,7 @@ jobs:
     secrets: inherit
   upload:
     needs: [build_desktop]
-    if: needs.build_desktop.outputs.s3-custom-notarized-installers-key != ''
+    if: needs.build_desktop.outputs.s3-electron-dist-key != ''
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -37,7 +37,7 @@ jobs:
           aws-region: us-east-1
       - name: s3 artifact download
         env:
-          S3_INSTALLER_KEY: ${{ needs.build_desktop.outputs.s3-custom-notarized-installers-key }}
+          S3_INSTALLER_KEY: ${{ secrets.BUILDS_S3_BUCKET }}/${{ needs.build_desktop.outputs.s3-electron-dist-key }}
         run: aws s3 cp $S3_INSTALLER_KEY dist.tgz
 
       - run: |
@@ -97,10 +97,10 @@ jobs:
         env:
           arm64: ${{ steps.app_files.outputs.dmg_arm64 }}
           x86: ${{ steps.app_files.outputs.dmg_x86 }}
+          bucket: ${{ secrets.BUILDS_S3_BUCKET }}
         run: |
           cd dist && \
-          aws s3 sync . \
-            "s3://preview.gui.tea.xyz/dev/"
+          aws s3 sync . "$bucket/dev/"
 
       - uses: actions/setup-node@v3
         with:
@@ -118,7 +118,7 @@ jobs:
           PLATFORM: darwin-aarch64
           EXT: dmg
           VERSION: ${{ steps.get-version.outputs.version }}-dev
-          DOWNLOAD_URL: http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/dev/${{ steps.app_files.outputs.dmg_arm64 }}
+          DOWNLOAD_URL: ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/dev/${{ steps.app_files.outputs.dmg_arm64 }}
 
       - name: Slack Notification X86
         run: ./.github/notify-slack.js
@@ -127,7 +127,7 @@ jobs:
           PLATFORM: darwin-x86+64
           EXT: dmg
           VERSION: ${{ steps.get-version.outputs.version }}-dev
-          DOWNLOAD_URL: http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/dev/${{ steps.app_files.outputs.dmg_x86 }}
+          DOWNLOAD_URL: ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/dev/${{ steps.app_files.outputs.dmg_x86 }}
       - run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.AWS_CF_GUI_RELEASE_ID }} \
