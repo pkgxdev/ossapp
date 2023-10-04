@@ -37,7 +37,7 @@ jobs:
 
           git fetch origin main:main
           # Get the list of changed files between HEAD and the previous commit
-          CHANGED_FILES=$(git diff --name-only main...HEAD)
+          CHANGED_FILES=$(git diff --name-only --first-parent main...HEAD)
 
           # If package.json is in the list of changed files, check the old version
           if echo "$CHANGED_FILES" | grep -q "package.json"; then
