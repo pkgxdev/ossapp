@@ -20,7 +20,7 @@ jobs:
     secrets: inherit
   upload:
     needs: [build_desktop]
-    if: needs.build_desktop.outputs.s3-custom-notarized-installers-key != ''
+    if: needs.build_desktop.outputs.s3-electron-dist-key != ''
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -37,7 +37,7 @@ jobs:
           aws-region: us-east-1
       - name: s3 artifact download
         env:
-          S3_INSTALLER_KEY: ${{ needs.build_desktop.outputs.s3-custom-notarized-installers-key }}
+          S3_INSTALLER_KEY: ${{ secrets.BUILDS_S3_BUCKET }}/${{ needs.build_desktop.outputs.s3-electron-dist-key }}
         run: aws s3 cp $S3_INSTALLER_KEY dist.tgz
 
       - run: |
