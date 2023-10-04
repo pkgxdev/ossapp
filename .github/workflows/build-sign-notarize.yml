@@ -55,6 +55,7 @@ jobs:
     if: needs.verify.outputs.is-updated == 'true'
     runs-on: macos-latest
     outputs:
+      # just the postfix of the key, not the full key, github does not allow output of secrets
       s3-artifacts-key: ${{ steps.s3-artifact-uploader.outputs.key }}
       build-version: ${{ steps.gui-version.outputs.version }}
     steps:
@@ -135,6 +136,4 @@ jobs:
         run: |
           S3_KEY=$bucket/$prefix/artifacts.tgz
           aws s3 cp artifacts.tgz $S3_KEY
-          echo "key=$S3_KEY" >> $GITHUB_OUTPUT
-          echo "$S3_KEY"
-          echo $GITHUB_OUTPUT
+          echo "key=$prefix/artifacts.tgz" >> $GITHUB_OUTPUT
