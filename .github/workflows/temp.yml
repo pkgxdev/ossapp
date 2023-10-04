@@ -1,29 +1,31 @@
+name: "deploy"
+
 on:
   push:
-    tags:
-      - "v*.*.*"
-
+    branches:
+      - pkgx-cicd
 jobs:
   build_desktop:
     strategy:
       matrix:
         platform:
           # X86+64 is built with ARM64 also
-          - darwin+x86-64
+          - darwin+aarch64
     uses: ./.github/workflows/build-sign-notarize.yml
     with:
       platform: ${{ matrix.platform }}
-      s3-prefix: release
-      debug: 0
+      s3-prefix: main
+      debug: 1
+      sync-translation: 1
     secrets: inherit
   upload:
     needs: [build_desktop]
+    if: needs.build_desktop.outputs.s3-custom-notarized-installers-key != ''
     runs-on: ubuntu-latest
     strategy:
       matrix:
         platform:
           # - linux+x86-64
-          # no need for x86 mac
           - darwin+aarch64
           # - linux+aarch64
     steps:
@@ -35,14 +37,14 @@ jobs:
           aws-region: us-east-1
       - name: s3 artifact download
         env:
-          S3_INSTALLER_KEY: ${{ needs.build_desktop.outputs.s3-electron-dist-key }}
+          S3_INSTALLER_KEY: ${{ needs.build_desktop.outputs.s3-custom-notarized-installers-key }}
         run: aws s3 cp $S3_INSTALLER_KEY dist.tgz
 
       - run: |
           mkdir dist
           tar xzf dist.tgz -C dist
 
-      - name: get .zip of arm64 and x86+64
+      - name: get installer filenames of arm64 and x86+64
         id: app_files
         working-directory: ./dist
         run: |
@@ -54,6 +56,10 @@ jobs:
           echo zip_x86=$X86_ZIP >> $GITHUB_OUTPUT
           echo dmg_arm64=$ARM64_DMG >> $GITHUB_OUTPUT
           echo dmg_x86=$X86_DMG >> $GITHUB_OUTPUT
+
+      - name: Get current unix ts - seconds
+        id: date
+        run: echo "unix_seconds=$(date +'%s')" >> $GITHUB_OUTPUT
 
       - name: build platform output
         id: build_platform
@@ -87,67 +93,42 @@ jobs:
           echo "build_platform=$BUILD_PLATFORM" >> $GITHUB_OUTPUT
           echo "extension=$EXTENSION" >> $GITHUB_OUTPUT
 
-      # update and replace latest release bin in s3
-      - name: Set tag
-        id: tag
-        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-
-      # TODO:
-      # - configure correct blockmap and checksum hash on latest-mac.yml
-      - name: cp latest as previous release
-        run: |
-          aws s3 cp \
-            $S3_BUCKET/release/ossapp-latest-arm64.dmg \
-            $S3_BUCKET/release/ossapp-previous-arm64.dmg
-          aws s3 cp \
-            $S3_BUCKET/release/ossapp-latest.dmg \
-            $S3_BUCKET/release/ossapp-previous.dmg
+      - name: cp package images from prod to gui bucket
         env:
-          S3_BUCKET: ${{ secrets.BUILDS_S3_BUCKET }}
-      - name: publish release
+          arm64: ${{ steps.app_files.outputs.dmg_arm64 }}
+          x86: ${{ steps.app_files.outputs.dmg_x86 }}
+          bucket: ${{ secrets.BUILDS_S3_BUCKET }}
         run: |
           cd dist && \
-          aws s3 sync . "$S3_BUCKET/release/"
-          aws s3 cp $ARM_URL $S3_BUCKET/release/ossapp-latest-arm64.dmg
-          aws s3 cp $X86_URL $S3_BUCKET/release/ossapp-latest.dmg
-        env:
-          ARM_URL: ${{ secrets.BUILDS_S3_BUCKET }}/release/${{ steps.app_files.outputs.dmg_arm64 }}
-          X86_URL: ${{ secrets.BUILDS_S3_BUCKET }}/release/${{ steps.app_files.outputs.dmg_x86 }}
-          S3_BUCKET: ${{ secrets.BUILDS_S3_BUCKET }}
-      - run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.AWS_GUI_DISTRIBUTION_ID }} \
-            --paths "/release/*"
+          aws s3 sync . "$bucket/dev/"
 
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Slack Notification ARM64 Build
+
+      - name: get version
+        id: get-version
+        run: |
+          echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Slack Notification ARM64
         run: ./.github/notify-slack.js
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          PLATFORM: darwin+aarch64
-          VERSION: ${{steps.tag.outputs.tag}}
-          EXT: "${{ steps.build_platform.outputs.extension }}"
-          DOWNLOAD_URL: ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/release/${{ steps.app_files.outputs.dmg_arm64 }}
+          PLATFORM: darwin-aarch64
+          EXT: dmg
+          VERSION: ${{ steps.get-version.outputs.version }}-dev
+          DOWNLOAD_URL: ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/dev/${{ steps.app_files.outputs.dmg_arm64 }}
 
-      - name: Slack Notification X86 Build
+      - name: Slack Notification X86
         run: ./.github/notify-slack.js
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          PLATFORM: darwin+x86-64
-          VERSION: ${{steps.tag.outputs.tag}}
-          EXT: ${{ steps.build_platform.outputs.extension }}
-          DOWNLOAD_URL: ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/release/${{ steps.app_files.outputs.dmg_x86 }}
-
+          PLATFORM: darwin-x86+64
+          EXT: dmg
+          VERSION: ${{ steps.get-version.outputs.version }}-dev
+          DOWNLOAD_URL: ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/dev/${{ steps.app_files.outputs.dmg_x86 }}
       - run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.AWS_CF_GUI_RELEASE_ID }} \
             --paths '/*'
-      - name: upload builds
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: |
-            dist/${{ steps.app_files.outputs.dmg_arm64 }}
-            dist/${{ steps.app_files.outputs.dmg_x86 }}

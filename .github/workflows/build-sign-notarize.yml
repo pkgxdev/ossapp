@@ -32,6 +32,8 @@ jobs:
         with:
           fetch-depth: 5
       - uses: pkgxdev/setup@v1
+        with:
+          +: jq
       - name: Check if version in package.json was updated
         id: check_version
         run: |
@@ -123,7 +125,8 @@ jobs:
         id: s3-artifact-uploader
         env:
           prefix: ${{ inputs.s3-prefix }}
+          bucket: ${{ secrets.BUILDS_S3_BUCKET }}
         run: |
-          S3_KEY=s3://preview.gui.tea.xyz/$prefix/artifacts.tgz
+          S3_KEY=$bucket/$prefix/artifacts.tgz
           aws s3 cp artifacts.tgz $S3_KEY
           echo key=$S3_KEY >> $GITHUB_OUTPUT

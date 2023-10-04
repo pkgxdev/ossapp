@@ -112,8 +112,7 @@ jobs:
       - name: get gui version
         id: gui-version
         run: |
-          pkgx +stedolan.github.io/jq
-          export version=$(echo $(cat package.json) | jq --raw-output .version)
+          export version=$(echo $(cat package.json) | pkgx jq --raw-output .version)
           export postfix=
           if GIT_DIR=/path/to/repo/.git git rev-parse $1 >/dev/null 2>&1
           then
@@ -226,10 +225,10 @@ jobs:
       - name: cp package images from prod to preview bucket
         env:
           prefix: ${{ needs.changes.outputs.preview_folder }}
+          bucket: ${{ secrets.BUILDS_S3_BUCKET }}
         run: |
           cd dist && \
-          aws s3 sync . \
-            "s3://preview.gui.tea.xyz/$prefix/"
+          aws s3 sync . "$bucket/$prefix/"
 
       - name: comment install for Linux
         if: startsWith(matrix.platform.name, 'linux')
@@ -239,7 +238,7 @@ jobs:
           message: |
             **installer for Linux ${{ matrix.platform.name }} is at**:
             ```bash
-            http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.build_platform.outputs.filename }}
+            ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/${{ needs.changes.outputs.preview_folder }}/${{ steps.build_platform.outputs.filename }}
             ```
             copy-paste into a browser to download
 
@@ -251,7 +250,7 @@ jobs:
           message: |
             **installers for MacOS darwin+aarch64 is at**:
             ```bash
-            http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_arm64 }}
+            ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_arm64 }}
             ```
             copy-paste into a browser to download
       - name: comment install for MacOS
@@ -262,6 +261,6 @@ jobs:
           message: |
             **installers for MacOS darwin+x86-64 is at**:
             ```bash
-            http://preview.gui.tea.xyz.s3-website-us-east-1.amazonaws.com/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_x86 }}
+            ${{ secrets.BUILDS_S3_PUBLIC_DOMAIN }}/${{ needs.changes.outputs.preview_folder }}/${{ steps.app_files.outputs.dmg_x86 }}
             ```
             copy-paste into a browser to download
