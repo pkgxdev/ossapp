@@ -6,7 +6,7 @@ import {
   cacheImage,
   startMonitoringTeaDir,
   stopMonitoringTeaDir
-} from "./tea-dir";
+} from "./pkgx-dir";
 import { readSessionData, writeSessionData, pollAuth } from "./auth";
 import type { Packages, Session, GUIPackage } from "../../svelte/src/libs/types";
 import log from "./logger";
@@ -246,7 +246,7 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
     }
   });
 
-  ipcMain.handle("monitor-tea-dir", async () => {
+  ipcMain.handle("monitor-pkgx-dir", async () => {
     try {
       await startMonitoringTeaDir(notifyMainWindow);
     } catch (err) {
@@ -255,7 +255,7 @@ export default function initializeHandlers({ notifyMainWindow }: HandlerOptions)
     }
   });
 
-  ipcMain.handle("stop-monitor-tea-dir", async () => {
+  ipcMain.handle("stop-monitor-pkgx-dir", async () => {
     try {
       await stopMonitoringTeaDir();
     } catch (err) {

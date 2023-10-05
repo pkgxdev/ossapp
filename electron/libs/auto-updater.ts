@@ -1,7 +1,7 @@
 import { type AppUpdater, autoUpdater } from "electron-updater";
 import log from "./logger";
 import { MainWindowNotifier } from "./types";
-import { getTeaPath } from "./tea-dir";
+import { getGuiPath, getPkgxPath } from "./pkgx-dir";
 import path from "path";
 import fs from "fs";
 
@@ -109,14 +109,13 @@ autoUpdater.on("update-downloaded", (info) => {
   sendStatusToWindow({ status: "ready", version: info.version });
 });
 
-export const isDev = () => fs.existsSync(path.join(getTeaPath(), "tea.xyz/gui/dev"));
-export const isForceUpdate = () =>
-  fs.existsSync(path.join(getTeaPath(), "tea.xyz/gui/force-auto-update"));
+export const isDev = () => fs.existsSync(path.join(getPkgxPath(), "tea.xyz/gui/dev"));
+export const isForceUpdate = () => fs.existsSync(path.join(getGuiPath(), "force-auto-update"));
 
 async function setPublishURL() {
   try {
     const folder = isForceUpdate() ? "auto-update-test" : isDev() ? "dev" : "release";
-    const feedUrl = `https://gui.tea.xyz/${folder}`;
+    const feedUrl = `https://gui.pkgx.dev/${folder}`;
     log.info(`feedUrl$: ${feedUrl}`);
     autoUpdater.setFeedURL(feedUrl);
   } catch (error) {

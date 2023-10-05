@@ -1,6 +1,6 @@
 import log from "$libs/logger";
 import { PackageStates, type GUIPackage } from "$libs/types";
-import SemVer from "@teaxyz/lib/semver";
+import SemVer from "libpkgx/semver";
 import { t } from "$libs/translations";
 import { GUIBaseURL } from "$libs/constants";
 

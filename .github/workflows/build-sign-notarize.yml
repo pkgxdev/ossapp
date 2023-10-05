@@ -26,6 +26,8 @@ jobs:
       is-updated: ${{ steps.check_version.outputs.updated }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 5
       - uses: pkgxdev/setup@v1
         with:
           +: jq
@@ -35,9 +37,14 @@ jobs:
           # Get the current version from package.json
           CURRENT_VERSION=$(jq -r .version package.json)
 
-          # Fetch the main branch
-          git fetch origin main:main
-          OLD_VERSION=$(git show "main:package.json" | jq -r .version 2>/dev/null)
+          # Get the list of changed files between HEAD and the previous commit
+          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+          # If package.json is in the list of changed files, check the old version
+          if echo "$CHANGED_FILES" | grep -q "package.json"; then
+            OLD_VERSION=$(git show "HEAD^:package.json" | jq -r .version 2>/dev/null)
+          else
+            OLD_VERSION=$CURRENT_VERSION
+          fi
 
           if [[ "$OLD_VERSION" != "$CURRENT_VERSION" ]] && [[ "$CURRENT_VERSION" > "$OLD_VERSION" ]]; then
             echo "updated=true" >> $GITHUB_OUTPUT
