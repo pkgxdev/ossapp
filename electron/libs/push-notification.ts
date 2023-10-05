@@ -9,7 +9,7 @@ import {
   getPackagesInstalledList,
   updatePackageInstalledList,
   getGuiPath
-} from "./tea-dir";
+} from "./pkgx-dir";
 import { app } from "electron";
 import { promisify } from "util";
 import fs from "fs";

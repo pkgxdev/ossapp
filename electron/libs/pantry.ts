@@ -1,4 +1,4 @@
-import { hooks } from "@teaxyz/lib";
+import { hooks } from "libpkgx";
 
 // Fetches the details for a package from the local pantry
 export async function getPantryDetails(full_name: string) {

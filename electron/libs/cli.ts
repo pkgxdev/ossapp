@@ -1,10 +1,10 @@
-import { hooks } from "@teaxyz/lib";
+import { hooks } from "libpkgx";
 
 import log from "./logger";
 import { MainWindowNotifier } from "./types";
-import * as tea from "@teaxyz/lib";
-import { Installation } from "@teaxyz/lib";
-import type { Resolution } from "@teaxyz/lib/script/src/plumbing/resolve";
+import * as tea from "libpkgx";
+import { Installation } from "libpkgx";
+import type { Resolution } from "libpkgx/script/src/plumbing/resolve";
 
 export async function installPackage(
   full_name: string,

@@ -2,7 +2,7 @@ import pty from "node-pty";
 
 import log from "./logger";
 import { MainWindowNotifier } from "./types";
-import * as tea from "@teaxyz/lib";
+import * as tea from "libpkgx";
 import { GUIPackage } from "../../svelte/src/libs/types";
 import { getPantryDetails } from "./pantry";
 import { ipcMain } from "electron";
