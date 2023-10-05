@@ -12,8 +12,8 @@ import { InitWatcher } from "./initialize";
 import { baseURL } from "./v1-client";
 import { isDev } from "./auto-updater";
 
-const sessionFilePath = path.join(getPkgxPath(), `tea.xyz/gui/${isDev() ? "dev.dat" : "tmp.dat"}`);
-const sessionFolder = path.join(getPkgxPath(), "tea.xyz/gui");
+const sessionFilePath = path.join(getPkgxPath(), isDev() ? "dev.dat" : "tmp.dat");
+const sessionFolder = getPkgxPath();
 
 export interface Session {
   device_id?: string;
