@@ -1,7 +1,7 @@
 import { mkdirp } from "mkdirp";
 import path from "path";
 import fs from "fs";
-import { getTeaPath } from "./tea-dir";
+import { getPkgxPath } from "./pkgx-dir";
 import { app } from "electron";
 import log from "./logger";
 import axios from "axios";
@@ -12,8 +12,8 @@ import { InitWatcher } from "./initialize";
 import { baseURL } from "./v1-client";
 import { isDev } from "./auto-updater";
 
-const sessionFilePath = path.join(getTeaPath(), `tea.xyz/gui/${isDev() ? "dev.dat" : "tmp.dat"}`);
-const sessionFolder = path.join(getTeaPath(), "tea.xyz/gui");
+const sessionFilePath = path.join(getPkgxPath(), isDev() ? "dev.dat" : "tmp.dat");
+const sessionFolder = getPkgxPath();
 
 export interface Session {
   device_id?: string;

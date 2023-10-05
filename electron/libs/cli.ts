@@ -1,10 +1,10 @@
-import { hooks } from "@teaxyz/lib";
+import { hooks } from "libpkgx";
 
 import log from "./logger";
 import { MainWindowNotifier } from "./types";
-import * as tea from "@teaxyz/lib";
-import { Installation } from "@teaxyz/lib";
-import type { Resolution } from "@teaxyz/lib/script/src/plumbing/resolve";
+import * as pkgx from "libpkgx";
+import { Installation } from "libpkgx";
+import type { Resolution } from "libpkgx/script/src/plumbing/resolve";
 
 export async function installPackage(
   full_name: string,
@@ -15,7 +15,7 @@ export async function installPackage(
 
   const qualifedPackage = `${full_name}@${version}`;
   log.info(`installing package ${qualifedPackage}`);
-  const result = await tea.porcelain.install(qualifedPackage, notifier);
+  const result = await pkgx.porcelain.install(qualifedPackage, notifier);
   log.info(`successfully installed ${qualifedPackage}`, result);
 }
 

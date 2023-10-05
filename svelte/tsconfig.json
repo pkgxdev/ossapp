@@ -18,7 +18,7 @@
       "@native": ["./src/libs/native-electron.ts"],
       "$components/*": ["./src/components/*"],
       // FIXME:  Ideally we don't have to do this, but something is wrong with module resolution
-      "@teaxyz/lib/semver": ["../node_modules/@teaxyz/lib/esm/src/utils/semver.d.ts"]
+      "libpkgx/semver": ["../node_modules/libpkgx/esm/src/utils/semver.d.ts"]
     },
     "typeRoots": ["./node_modules/@types", "./types"]
   },

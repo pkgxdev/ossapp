@@ -84,8 +84,8 @@ jobs:
           MAC_BUILD_TARGET: "dir"
       - name: setup dev
         run: |
-          mkdir -p /Users/runner/.tea/tea.xyz/gui
-          touch /Users/runner/.tea/tea.xyz/gui/dev
+          mkdir -p /Users/runner/.pkgx/pkgx.app
+          touch /Users/runner/.pkgx/pkgx.app/dev
       - name: e2e test
         run: xc e2e
 
