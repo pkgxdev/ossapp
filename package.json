@@ -1,6 +1,6 @@
 {
   "name": "ossapp",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "private": true,
   "description": "The Open Source App Store",
   "author": "pkgx inc. <hello@pkgx.dev>",
