@@ -26,6 +26,8 @@ jobs:
       is-updated: ${{ steps.check_version.outputs.updated }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 5
       - uses: pkgxdev/setup@v1
         with:
           +: jq
