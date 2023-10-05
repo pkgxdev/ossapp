@@ -2,14 +2,14 @@ import pty from "node-pty";
 
 import log from "./logger";
 import { MainWindowNotifier } from "./types";
-import * as tea from "libpkgx";
+import * as pkgx from "libpkgx";
 import { GUIPackage } from "../../svelte/src/libs/types";
 import { getPantryDetails } from "./pantry";
 import { ipcMain } from "electron";
 
 // the tea cli package is needed to open any other package in the terminal, so make sure it's installed and return the path
 async function installTeaCli() {
-  const installations = await tea.porcelain.install("tea.xyz");
+  const installations = await pkgx.porcelain.install("tea.xyz");
   const install = installations.find((i) => i.pkg.project === "tea.xyz");
   if (!install) {
     throw new Error("installing tea/cli failed");
@@ -59,13 +59,13 @@ export async function openPackageEntrypointInTerminal(
 
   notifyMainWindow("pty.out", { project, type: "reset" });
 
-  const installation = await tea.hooks
+  const installation = await pkgx.hooks
     .useCellar()
-    .resolve({ project, constraint: new tea.semver.Range("*") });
+    .resolve({ project, constraint: new pkgx.semver.Range("*") });
   const shell =
     process.platform === "win32" ? "powershell.exe" : process.platform == "darwin" ? "zsh" : "bash";
-  const wet = await tea.plumbing.hydrate(installation.pkg);
-  const gas = await tea.plumbing.resolve(wet.pkgs);
+  const wet = await pkgx.plumbing.hydrate(installation.pkg);
+  const gas = await pkgx.plumbing.resolve(wet.pkgs);
   if (gas.pending.length) throw new Error("pkg dependencies not installed");
   const cwd = installation.path.string;
 
@@ -76,8 +76,8 @@ export async function openPackageEntrypointInTerminal(
     installations.push(cli);
   }
 
-  const rawenv = await tea.hooks.useShellEnv().map({ installations });
-  const env = tea.hooks.useShellEnv().flatten(rawenv);
+  const rawenv = await pkgx.hooks.useShellEnv().map({ installations });
+  const env = pkgx.hooks.useShellEnv().flatten(rawenv);
   env.PATH += ":/usr/bin:/bin";
   env.TMPDIR ??= process.env.TMPDIR ?? "error";
   env.HOME ??= process.env.HOME ?? "error";
