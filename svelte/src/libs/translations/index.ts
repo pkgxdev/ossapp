@@ -24,6 +24,7 @@ type Translation = typeof en.translations & {
 const languages = [en, zh, de, ru, uk, ptbr, pl, cz];
 
 const langs: { [lang: string]: string } = {};
+languages.forEach((lang) => {
   langs[lang.id] = lang.label;
 });
 
