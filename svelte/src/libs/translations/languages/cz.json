@@ -1,0 +1,101 @@
+{
+  "id": "cz",
+  "label": "Česky",
+  "translations": {
+    "store-search-placeholder": "vyhledávání paketů",
+    "action": {
+      "update": "obnovit",
+      "cancel": "zrušit"
+    },
+    "package": {
+      "update-all": "AKTUALIZACE VŠEHO",
+      "cta-AVAILABLE": "INSTALACE",
+      "cta-INSTALLED": "INSTALOVANÉ",
+      "cta-INSTALLING": "INSTALACE",
+      "cta-UNINSTALLED": "ZPĚTNÁ INSTALACE",
+      "cta-UNINSTALL": "ODSTR",
+      "cta-NEEDS_UPDATE": "AKTUALIZACE",
+      "cta-UPDATING": "UPDATE",
+      "cta-UPDATED": "UPDATE",
+      "cta-PRUNE": "UPDATE",
+      "cta-PRUNING": "ČIŠTĚNÍ",
+      "open": "OTEVŘE",
+      "open-in-terminal": "OTEVŘÍT V TERMINÁLU",
+      "local-package": "místní balíček",
+      "not-in-pantry": "zatím nebyl přidán do spíže"
+    },
+    "footer": {
+      "quick-links-title": "rychlé odkazy",
+      "about-tea-store": "сo obchodě s tea",
+      "report-a-problem": "nahlásit problém",
+      "visit-website": "navštiv tea.xyz",
+      "terms-services": "podmínky",
+      "privacy-policy": "zásady ochrany osobních údajů"
+    },
+    "documentation": {
+      "title": "dokumentace",
+      "workshops": "workshopy"
+    },
+    "view-all": "sledovat vše",
+    "sorting": {
+      "label": "Seřadit podle",
+      "popularity": "Nejoblíbenější",
+      "most-recent": "Nejnovější"
+    },
+    "common": {
+      "home": "hlavní stránka",
+      "all": "Všechny",
+      "articles": "Články",
+      "workshops": "Workshopy",
+      "metadata": "Metadata",
+      "homepage": "Domů",
+      "documentation": "Dokumentace",
+      "github-repository": "Github Úložiště",
+      "repository": "Úložiště",
+      "contributors": "Účastníci",
+      "view-on-github": "PODÍVEJTE SE NA GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "obnovit tea/gui na {{version}}?",
+      "gui-restarting": "Pokračování způsobí, že se aplikace po dokončení restartuje. Ujistěte se, že nemáte spuštěny žádné operace. Přejete si pokračovat?",
+      "gui-restart": "restartovat"
+    },
+    "side-menu-title": {
+      "discover": "zjistit",
+      "all": "Všechny balíčky",
+      "installed": "Nainstalované balíčky",
+      "installed_updates_available": "Dostupné aktualizace",
+      "recently_updated": "Nedávno aktualizované",
+      "new_packages": "Nové balíčky",
+      "popular": "Oblíbené stránky",
+      "featured": "Doporučené stránky",
+      "essentials": "Důležité",
+      "starstruck": "Hvězdné těžké váhy",
+      "made_by_tea": "Vyrobeno tea",
+      "local_packages": "Místní balíčky"
+    },
+    "tags": {
+      "discover": "zjistit",
+      "all": "všechny balíčky",
+      "installed": "zavedené",
+      "installed_updates_available": "Dostupné aktualizace",
+      "recently_updated": "Nedávno aktualizované",
+      "new_packages": "Nové balíčky",
+      "popular": "Oblíbené stránky",
+      "featured": "Doporučené stránky",
+      "essentials": "Důležité",
+      "starstruck": "Těžké váhy",
+      "made_by_tea": "Vyrobil tea",
+      "local_packages": "Místní balíčky"
+    },
+    "discover": {
+      "featured_title": "místní základy umělé inteligence",
+      "featured_description": "Prozkoumejte svět lokální umělé inteligence. Na této platformě můžete experimentovat se špičkovými nástroji AI, jako je AutoGPT a Stable Diffusion Web UI, přímo z lokálního systému. Spusťte své projekty umělé inteligenції, Udržování dat v bezpečí s možností jemného doladění podle vlastního uvážení.."
+    }
+  }
+}
