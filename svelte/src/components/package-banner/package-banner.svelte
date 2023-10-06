@@ -104,7 +104,7 @@
           helpText="edit package"
           on:click={() =>
             shellOpenExternal(
-              `https://github.com/teaxyz/pantry/blob/main/projects/${pkg.full_name}/package.yml`
+              `https://github.com/pkgxdev/pantry/blob/main/projects/${pkg.full_name}/package.yml`
             )}
         />
         <ButtonIcon
