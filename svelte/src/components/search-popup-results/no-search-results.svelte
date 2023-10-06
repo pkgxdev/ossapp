@@ -10,7 +10,7 @@
     <Button
       type="plain"
       color="blue"
-      onClick={() => shellOpenExternal("https://github.com/teaxyz/pantry")}
+      onClick={() => shellOpenExternal("https://github.com/pkgxdev/pantry")}
     >
       <span class="px-12 text-sm">VISIT PANTRY</span>
     </Button>

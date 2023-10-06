@@ -109,7 +109,7 @@ autoUpdater.on("update-downloaded", (info) => {
   sendStatusToWindow({ status: "ready", version: info.version });
 });
 
-export const isDev = () => fs.existsSync(path.join(getPkgxPath(), "tea.xyz/gui/dev"));
+export const isDev = () => fs.existsSync(path.join(getGuiPath(), "dev"));
 export const isForceUpdate = () => fs.existsSync(path.join(getGuiPath(), "force-auto-update"));
 
 async function setPublishURL() {
