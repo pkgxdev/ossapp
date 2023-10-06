@@ -7,11 +7,11 @@
  *      thus saving us so much time
  *
  * primary concerns here are any method that does the following:
- *  - connect to remote api(app.tea.xyz) and returns a data
+ *  - connect to remote api(app.pkgx.dev) and returns a data
  *  - connect to a local platform api and returns a data
  */
 
-import type { Package, Review, AirtablePost } from "$libs/types";
+import type { Package, AirtablePost } from "$libs/types";
 import type { GUIPackage, Session, Packages, AutoUpdateStatus } from "./types";
 
 import * as mock from "./native-mock";
@@ -297,14 +297,14 @@ export const isDev = async () => {
 };
 
 export const monitorTeaDir = async () => {
-  const result = await ipcRenderer.invoke("monitor-tea-dir");
+  const result = await ipcRenderer.invoke("monitor-pkgx-dir");
   if (result instanceof Error) {
     throw result;
   }
 };
 
 export const stopMonitoringTeaDir = async () => {
-  const result = await ipcRenderer.invoke("stop-monitor-tea-dir");
+  const result = await ipcRenderer.invoke("stop-monitor-pkgx-dir");
   if (result instanceof Error) {
     throw result;
   }

@@ -4,14 +4,14 @@ import path from "path";
 import log from "./logger";
 import bcrypt from "bcryptjs";
 import { createReadStream, statSync } from "fs";
-import { deepReadDir } from "./tea-dir";
+import { deepReadDir } from "./pkgx-dir";
 import fetch from "node-fetch";
-import { hooks } from "@teaxyz/lib";
+import { hooks } from "libpkgx";
 import { isDev } from "./auto-updater";
 
 import { readSessionData, type Session } from "./auth";
 
-export const baseURL = isDev() ? "https://app.dev.tea.xyz" : "https://app.tea.xyz";
+export const baseURL = isDev() ? "https://app.dev.pkgx.dev" : "https://app.pkgx.dev";
 const publicHeader = { Authorization: "public" };
 export async function get<T>(urlPath: string) {
   try {

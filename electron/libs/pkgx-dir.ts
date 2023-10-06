@@ -6,38 +6,36 @@ import { defaultImgUrl, type InstalledPackage } from "../../svelte/src/libs/type
 import { GUIBaseURL } from "../../svelte/src/libs/constants";
 import { mkdirp } from "mkdirp";
 import fetch from "node-fetch";
-import { SemVer, semver } from "@teaxyz/lib";
+import { SemVer, semver } from "libpkgx";
 import chokidar from "chokidar";
 import { MainWindowNotifier } from "./types";
-import { hooks } from "@teaxyz/lib";
+import { hooks } from "libpkgx";
 
 type ParsedVersion = { full_name: string; semVer: SemVer };
 
-export const getTeaPath = (): string => {
+export const getPkgxPath = (): string => {
   try {
     return hooks.useConfig().prefix.toString();
   } catch (error) {
     const homePath = app.getPath("home");
     log.info("Could not run tea --prefix. Using default path.");
-    return path.join(homePath, "./.tea");
+    return path.join(homePath, "./.pkgx");
   }
 };
 
-const guiFolder = path.join(getTeaPath(), "tea.xyz/gui");
-
 export const getGuiPath = () => {
-  return path.join(getTeaPath(), "tea.xyz/gui");
+  return path.join(getPkgxPath(), "pkgx.app");
 };
 
 export async function getInstalledVersionsForPackage(fullName: string): Promise<InstalledPackage> {
-  const pkgsPath = path.join(getTeaPath(), fullName);
+  const pkgsPath = path.join(getPkgxPath(), fullName);
   const result = await findInstalledVersions(pkgsPath);
   const pkg = result.find((v) => v.full_name === fullName);
   return pkg ?? { full_name: fullName, installed_versions: [] };
 }
 
 export async function getInstalledPackages(): Promise<InstalledPackage[]> {
-  return findInstalledVersions(getTeaPath());
+  return findInstalledVersions(getPkgxPath());
 }
 
 async function findInstalledVersions(pkgsPath: string): Promise<InstalledPackage[]> {
@@ -50,14 +48,14 @@ async function findInstalledVersions(pkgsPath: string): Promise<InstalledPackage
   const folders = await deepReadDir({
     dir: pkgsPath,
     continueDeeper: (name: string, path: string) => {
-      return !semver.isValid(name) && !name.startsWith(".") && !path.includes("tea.xyz/var");
+      return !semver.isValid(name) && !name.startsWith(".");
     },
-    filter: (name: string) => semver.isValid(name) && name !== ".tea",
+    filter: (name: string) => semver.isValid(name) && name !== ".pkgx",
     maxDepth: 5
   });
 
   const bottles = folders
-    .map((p: string) => p.split(".tea/")[1])
+    .map((p: string) => p.split(".pkgx/")[1])
     .map(parseVersionFromPath)
     .filter((v): v is ParsedVersion => !!v)
     .sort((a, b) => b.semVer.compare(a.semVer));
@@ -144,7 +142,7 @@ export const getPackagesInstalledList = async (): Promise<InstalledPackage[]> =>
       list = JSON.parse(listBuffer.toString()) as InstalledPackage[];
     } else {
       log.info("gui/installed.json does not exists!");
-      await mkdirp(guiFolder);
+      await mkdirp(getGuiPath());
       await updatePackageInstalledList([]);
     }
   } catch (error) {
@@ -156,7 +154,7 @@ export const getPackagesInstalledList = async (): Promise<InstalledPackage[]> =>
 export async function updatePackageInstalledList(list: InstalledPackage[]) {
   try {
     log.info("creating:", listFilePath);
-    await mkdirp(guiFolder);
+    await mkdirp(getGuiPath());
     await fs.writeFileSync(listFilePath, JSON.stringify(list), {
       encoding: "utf-8"
     });
@@ -167,7 +165,7 @@ export async function updatePackageInstalledList(list: InstalledPackage[]) {
 
 export async function deletePackageFolder(fullName, version) {
   try {
-    const foldPath = path.join(getTeaPath(), fullName, `v${version}`);
+    const foldPath = path.join(getPkgxPath(), fullName, `v${version}`);
     log.info("rm:", foldPath);
     fs.rmSync(foldPath, { recursive: true });
   } catch (error) {
@@ -240,7 +238,7 @@ export async function startMonitoringTeaDir(mainWindowNotifier: MainWindowNotifi
     return;
   }
 
-  const dir = path.join(getTeaPath(), "**/v*");
+  const dir = path.join(getPkgxPath(), "**/v*");
   log.info(`Start monitoring tea dir: ${dir}}`);
 
   watcher = chokidar.watch(dir, {
@@ -256,7 +254,7 @@ export async function startMonitoringTeaDir(mainWindowNotifier: MainWindowNotifi
       const dir = path.dirname(pth);
       const version = path.basename(pth);
       if (semver.isValid(version) && !fs.lstatSync(pth).isSymbolicLink()) {
-        const full_name = dir.split(".tea/")[1];
+        const full_name = dir.split(".pkgx/")[1];
         log.info(`Monitor - Added Package: ${full_name} v${version}`);
         mainWindowNotifier("pkg-modified", { full_name, version, type: "add" });
       }
@@ -266,7 +264,7 @@ export async function startMonitoringTeaDir(mainWindowNotifier: MainWindowNotifi
       const dir = path.dirname(pth);
       const version = path.basename(pth);
       if (semver.isValid(version)) {
-        const full_name = dir.split(".tea/")[1];
+        const full_name = dir.split(".pkgx/")[1];
         log.info(`Monitor - Removed Package: ${full_name} v${version}`);
         mainWindowNotifier("pkg-modified", {
           full_name,

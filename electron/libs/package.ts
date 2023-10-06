@@ -2,13 +2,13 @@ import path from "path";
 import { mkdirp } from "mkdirp";
 import fs from "fs";
 import log from "./logger";
-import { getTeaPath } from "./tea-dir";
+import { getPkgxPath } from "./pkgx-dir";
 import { GUIPackage, Packages } from "../../svelte/src/libs/types";
 import { GUIBaseURL } from "../../svelte/src/libs/constants";
 import { isDev } from "./auto-updater";
 
-const pkgsFilePath = path.join(getTeaPath(), "tea.xyz/gui/pkgs.json");
-const pkgsFolder = path.join(getTeaPath(), "tea.xyz/gui");
+const pkgsFilePath = path.join(getPkgxPath(), "tea.xyz/gui/pkgs.json");
+const pkgsFolder = path.join(getPkgxPath(), "tea.xyz/gui");
 const dev = isDev();
 
 export async function writePackageCache(pkgs: Packages) {
@@ -70,7 +70,7 @@ export const nameToSlug = (name: string) => {
 
 export async function isInstalled(project: string, version?: string) {
   if (!version) {
-    const folderPath = path.join(getTeaPath(), project);
+    const folderPath = path.join(getPkgxPath(), project);
     return fs.existsSync(folderPath);
   } else {
     const cache = await loadPackageCache();

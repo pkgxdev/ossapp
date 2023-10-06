@@ -3,9 +3,9 @@
  * may contain fake/mock data
  *
  * TODO:
- *  * make cors work with app.tea.xyz/v1
+ *  * make cors work with app.pkgx.dev/v1
  */
-import type { Package, Review, AirtablePost } from "$libs/types";
+import type { Package, AirtablePost } from "$libs/types";
 import type { GUIPackage, Session, Packages, AutoUpdateStatus } from "./types";
 import { PackageStates } from "./types";
 import _ from "lodash";

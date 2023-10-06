@@ -1,6 +1,6 @@
 {
   "name": "ossapp",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "private": true,
   "description": "The Open Source App Store",
   "author": "pkgx inc. <hello@pkgx.dev>",
@@ -98,7 +98,6 @@
     "@sentry/vite-plugin": "^0.7.2",
     "@splidejs/svelte-splide": "^0.2.9",
     "@tailwindcss/line-clamp": "^0.4.2",
-    "@teaxyz/lib": "0.6.2",
     "@types/electron": "^1.6.10",
     "@types/he": "^1.2.0",
     "@types/mousetrap": "^1.6.11",
@@ -122,6 +121,7 @@
     "is-what": "^4.1.15",
     "js-yaml": "^4.1.0",
     "koffi": "^2.4.2",
+    "libpkgx": "^0.14.0",
     "lodash": "^4.17.21",
     "lorem-ipsum": "^2.0.8",
     "marked": "^5.0.4",
