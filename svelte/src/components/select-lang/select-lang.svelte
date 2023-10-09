@@ -13,7 +13,7 @@
   }));
 
   const openLangugeContributionPage = () => {
-    shellOpenExternal("https://github.com/orgs/teaxyz/discussions/618");
+    shellOpenExternal("https://github.com/orgs/pkgxdev/discussions/618");
   };
 </script>
 
