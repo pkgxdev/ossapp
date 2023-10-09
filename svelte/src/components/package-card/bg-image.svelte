@@ -17,7 +17,7 @@
 
 <section class="overflow-hidden bg-black {clazz} {layout}">
   {#await promise}
-    <i class="logo icon-tea-logo-iconasset-1 text-gray text-3xl {layout} animate-pulse" />
+    <img src="/images/home-btn/State=Active.svg" class="logo animate-pulse grayscale {layout}" alt="ossapp"/>
   {:then loadedImg}
     <div class="transition-all duration-500 {layout}" style="background-image: url({loadedImg})">
       <!-- dup image: save processing power instead of computing the blur across all the HTML layers -->
@@ -39,7 +39,6 @@
   .logo {
     position: absolute;
     width: 30px;
-    height: 30px;
     margin-left: -15px;
   }
   .logo.none {

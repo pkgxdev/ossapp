@@ -5,7 +5,7 @@
 </script>
 
 <figure class="container flex h-full w-full flex-row justify-center bg-black bg-opacity-90 py-8">
-  <i class="icon-tea-logo-iconasset-1 text-gray animate-pulse text-4xl" />
+  <img src="/images/home-btn/State=Active.svg" class="animate-pulse grayscale" alt="ossapp"/>
 </figure>
 
 <style>
