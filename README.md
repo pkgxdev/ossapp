@@ -150,7 +150,7 @@ if [ "$(git rev-parse --abbrev-ref HEAD)" != "main" ]; then
 fi
 
 V=$(node -p "require('./package.json').version")
-V=$(tea semverator bump $V $PRIORITY)
+V=$(pkgx semverator bump $V $PRIORITY)
 
 if ! grep -F "\"version\": \"$V\",$" package.json; then
   sed -i.bak -e "s/\"version\": .*,$/\"version\": \"$V\",/" package.json
@@ -166,7 +166,7 @@ git push origin main
 
 ```sh
 V="$(node -p "require('./package.json').version")"
-tea gh release create "v$V"
+pkgx gh release create "v$V"
 ```
 
 [`pkgx`]: https://github.com/pkgxdev/pkgx
