@@ -17,6 +17,8 @@ jobs:
       debug: 0
     secrets: inherit
   upload:
+    permissions:
+      contents: write
     needs: [build_desktop]
     runs-on: ubuntu-latest
     strategy:
