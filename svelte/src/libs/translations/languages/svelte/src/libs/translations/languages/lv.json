@@ -1,0 +1,101 @@
+{
+  "id": "lv",
+  "label": "latviešu",
+  "translations": {
+    "store-search-placeholder": "paketes meklēšana",
+    "action": {
+      "update": "atjaunināts",
+      "cancel": "atcelšana"
+    },
+    "package": {
+      "update-all": "ATJAUNINĀT VISUS",
+      "cta-AVAILABLE": "UZSTĀDĪT",
+      "cta-INSTALLED": "UZSTĀDĪT",
+      "cta-INSTALLING": "UZSTĀDAS",
+      "cta-UNINSTALLED": "ATKĀRTOTI UZSTĀDĪŠANA",
+      "cta-UNINSTALL": "DZĒST",
+      "cta-NEEDS_UPDATE": "ATJAUNINĀT",
+      "cta-UPDATING": "ATJAUNINĀS",
+      "cta-UPDATED": "ATJAUNINĀTA",
+      "cta-PRUNE": "NOTĪRĪT",
+      "cta-PRUNING": "TĪRĀS",
+      "open": "ATVIERT",
+      "open-in-terminal": "ATVĒRT TERMINĀLĀ",
+      "local-package": "lokala pakete",
+      "not-in-pantry": "vēl nav pievienots pantry"
+    },
+    "footer": {
+      "quick-links-title": "no saites",
+      "about-tea-store": "par veikalu tea",
+      "report-a-problem": "ziņot par problēmu",
+      "visit-website": "apmeklēt tea.xyz",
+      "terms-services": "noteikumi & pakalpojumi",
+      "privacy-policy": "konfidencialitātes politika"
+    },
+    "documentation": {
+      "title": "dokumentācija",
+      "workshops": "darbnīcas"
+    },
+    "view-all": "skatīt visu",
+    "sorting": {
+      "label": "Atlasīt pēc",
+      "popularity": "Vispopulārākais",
+      "most-recent": "Nesenais"
+    },
+    "common": {
+      "home": "māja",
+      "all": "Visi",
+      "articles": "Raksti",
+      "workshops": "Darbnīcas",
+      "metadata": "Metadati",
+      "homepage": "Mājas lapa",
+      "documentation": "Dokumentācija",
+      "github-repository": "Repozitorijs vietnē Github",
+      "repository": "Repozitorijs",
+      "contributors": "Dalībnieki",
+      "view-on-github": "SKATĪTIES UZ GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "atjaunināt tēju/grafisko interfeisu līdz versijai {{version}}?",
+      "gui-restarting": "Turpinot, lietojumprogramma tiks pārstartēta pēc pabeigšanas. Lūdzu, pārliecinieties, ka jums nav neizpildītu darbību. Vai vēlaties turpināt?",
+      "gui-restart": "restartēt"
+    },
+    "side-menu-title": {
+      "discover": "pārskats",
+      "all": "Visas paketes",
+      "installed": "Instalētās paketes",
+      "installed_updates_available": "Pieejamie atjauninājumi",
+      "recently_updated": "Nesen atjaunināts",
+      "new_packages": "Jaunas paketes",
+      "popular": "Populāri",
+      "featured": "Atlasīti",
+      "essentials": "Pamata",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "izdarīts tea",
+      "local_packages": "Lokālās paketes"
+    },
+    "tags": {
+      "discover": "pārskats",
+      "all": "visas paketes",
+      "installed": "Instalētās",
+      "installed_updates_available": "Pieejamie atjauninājumi",
+      "recently_updated": "Nesen atjauninātie",
+      "new_packages": "Jaunas paketes",
+      "popular": "Populārie",
+      "featured": "Izvēlētie",
+      "essentials": "Pamata",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Izdarīts tea",
+      "local_packages": "Lokālās paketes"
+    },
+    "discover": {
+      "featured_title": "vietējie mākslīgā intelekta pamati",
+      "featured_description": "Izpētiet vietējo mākslīgā intelekta pasauli. Šī ir jūsu platforma, lai eksperimentētu ar tādiem augstas klases AI rīkiem kā AutoGPT un Stable Diffusion Web UI tieši no jūsu vietējās sistēmas. Izpildiet savus AI projektus, saglabājot savus datus drošībā un aizsardzībā, ar iespēju tos precīzi pielāgot pēc savām vēlmēm."
+    }
+  }
+}
