@@ -1,33 +1,30 @@
-import { expect, describe, beforeEach, afterEach, test, vi } from 'vitest'
-import withDelay from './delay'
+import { expect, describe, beforeEach, afterEach, test, vi } from "vitest";
+import withDelay from "./delay";
 
-describe('withDelay', () => {
-
+describe("withDelay", () => {
   beforeEach(() => {
-    vi.useFakeTimers()
-  })
+    vi.useFakeTimers();
+  });
 
   afterEach(() => {
-    vi.restoreAllMocks()
-  })
+    vi.restoreAllMocks();
+  });
 
-  test('should delay time to execute callback', async () => {
-    const callback = vi.fn()
+  test("should delay time to execute callback", async () => {
+    const callback = vi.fn();
     const timer = 100;
-    const promise = withDelay(callback, timer)
-    expect(callback).not.toHaveBeenCalled()
-    vi.runAllTimers()
-    await promise
-    expect(callback).toHaveBeenCalled()
-  })
+    const promise = withDelay(callback, timer);
+    expect(callback).not.toHaveBeenCalled();
+    vi.runAllTimers();
+    await promise;
+    expect(callback).toHaveBeenCalled();
+  });
 
-
-  test('should return the result of callback', async () => {
-    const result = 'result'
-    const callback = vi.fn().mockImplementation(() => result)
-    const promise = withDelay(callback, 0)
-    vi.runAllTimers()
-    expect(await promise).toEqual(result)
-  })
-
-})
+  test("should return the result of callback", async () => {
+    const result = "result";
+    const callback = vi.fn().mockImplementation(() => result);
+    const promise = withDelay(callback, 0);
+    vi.runAllTimers();
+    expect(await promise).toEqual(result);
+  });
+});
