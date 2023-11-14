@@ -11,7 +11,7 @@ import zh from "./languages/zh.json";
 import ptbr from "./languages/ptbr.json";
 import pl from "./languages/pl.json";
 import cz from "./languages/cz.json";
-
+import lv from "./languages/lv.json";
 import * as customModifiers from "./modifiers";
 
 type Language = { [lang: string]: string };
