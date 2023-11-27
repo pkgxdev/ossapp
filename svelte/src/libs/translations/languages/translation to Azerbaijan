@@ -1,0 +1,101 @@
+{
+  "id": "en",
+"label": "English",
+"translations": {
+    "store-search-placeholder":"Paket axtarışı",
+"action": {
+      "update":"Update",
+"cancel":"Ləğv et"
+    },
+"Paket": {
+      "hamısını yeniləyin":"hamısını yeniləyin",
+"cta-mövcuddur":"quraşdırın",
+"CTA-quraşdırılıb": "quraşdırılıb",
+"CTA-quraşdırma": "quraşdırma",
+"cta-silindi": "yenidən quraşdırın",
+"cta-silmə":"sil",
+"CTA-NEEDS_UPDATE": "yeniləmə",
+"cta-UPDATİNG": "yeniləmə",
+"cta-UPDATED":"Yenilənib",
+"CTA-PRUNE": "məhsul",
+"CTA-PRUNİNG": "Budama",
+      "açıq":"açıq",
+"open-in-terminal": "terminalda aç",
+"yerli paket": "yerli paket",
+"not-in-pantry": "hələ pantry-yə əlavə edilməyib"
+    },
+"altbilgi": {
+      "Quick links-adı": "Quick links",
+"çay mağazası haqqında":"çay mağazası haqqında",
+"Problemi bildirin":"Problemi bildirin",
+"veb saytını ziyarət edin": "çay ziyarət edin.xyz",
+"Xidmət Şərtləri": "şərtlər və xidmətlər",
+"məxfilik siyasəti":"Məxfilik Siyasəti"
+    },
+"sənədlər": {
+      "Başlıq": "sənədlər",
+"seminarlar": "seminarlar"
+    },
+"Hamısına bax":"Hamısına bax",
+"çeşidləmə": {
+      "etiket": "sırala",
+"Populyarlıq" :" ən populyar",
+"ən son": "ən son"
+    },
+"ümumi": {
+      "home": "Ana səhifə",
+"all":"All",
+"articles":"Məqalələr",
+"seminar": "seminarlar",
+"metadata": "metadata",
+"Ana səhifə": "Ana səhifə",
+"sənədlər":"sənədlər",
+"github deposu": "Github deposu",
+"depo":"Depo",
+"iştirakçılar": "əmanətçilər",
+"GitHub-da bax": "GitHub-da bax"
+    },
+"nişanlar": {
+      "ətraflı": "pkg",
+"cli": "cli",
+"guı": "qrafik istifadəçi interfeysi"
+    },
+"bildiriş": {
+      "update-header": "çay/guı-ni {{versiyalar}} - ə yeniləyin?",
+"guı-yenidən başladın": "davam tamamlandıqdan sonra tətbiqin yenidən başlamasına səbəb olacaq. Zəhmət olmasa heç bir əməliyyat keçirmədiyinizə əmin olun. Davam etmək istəyirsən?",
+"guı-restart":"yenidən başladın"
+    },
+"yan menyu-başlıq": {
+      "kəşf et":"kəşf et",
+"all": "bütün Paketlər",
+"ınstalled": "quraşdırılmış paketlər",
+"ınstalled_updates_available": "mövcud yeniləmələr",
+"recently_updated": "bu yaxınlarda yeniləndi",
+"yeni paketlər":"yeni paketlər",
+"populyar": "populyar",
+"tövsiyə olunan": "Tövsiyə olunan",
+      "essentials":"əsas ehtiyaclar",
+"starstruck":"Starstruck ağır çəkilər",
+"made_by_tea":"çayla hazırlanmışdır",
+"local_packages": "yerli paketlər"
+    },
+"etiketlər": {
+      "kəşf et":"kəşf et",
+"all": "bütün Paketlər",
+"quraşdırılmış":"quraşdırılmış",
+"ınstalled_updates_available": "mövcud yeniləmələr",
+"recently_updated": "bu yaxınlarda yeniləndi",
+"yeni paketlər":"yeni paketlər",
+"populyar": "populyar",
+"tövsiyə olunan": "Tövsiyə olunan",
+"essentials":"əsaslar",
+"starstruck": "ulduz zərbəsi",
+"made_by_tea":"çayla hazırlanmışdır",
+      "local_packages": "yerli paketlər"
+    },
+"discover": {
+      "featured_title": "yerli süni intellektin əsasları",
+"featured_description": "yerli süni intellekt sahəsini araşdırın. AutoGPT və Diffusion sabit veb interfeysi kimi yüksək peşəkar AI alətləri ilə birbaşa yerli sisteminizdən işləmək üçün platformanızdır. Məlumatlarınızı qoruyarkən və istədiyiniz kimi dəqiq tənzimləmə azadlığını qoruyarkən süni intellekt layihələrinizi işə salın."
+    }
+  }
+}
