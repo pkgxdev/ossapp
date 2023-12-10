@@ -12,6 +12,7 @@ import ptbr from "./languages/ptbr.json";
 import pl from "./languages/pl.json";
 import cz from "./languages/cz.json";
 import lv from "./languages/lv.json";
+import ro from "./languages/ro.json";
 
 import * as customModifiers from "./modifiers";
 
