@@ -1,0 +1,101 @@
+{
+  "id": "ro",
+  "label": "Română",
+  "translations": {
+    "store-search-placeholder": "căutarea pachete",
+    "action": {
+      "update": "actualizare",
+      "cancel": "anulare"
+    },
+    "package": {
+      "update-all": "ACTUALIZAȚI TOTUL",
+      "cta-AVAILABLE": "INSTALAȚI",
+      "cta-INSTALLED": "INSTALAT",
+      "cta-INSTALLING": "INSTALARE",
+      "cta-UNINSTALLED": "REINSTALARE",
+      "cta-UNINSTALL": "DEZINSTALARE",
+      "cta-NEEDS_UPDATE": "ACTUALIZARE",
+      "cta-UPDATING": "ACTUALIZARE",
+      "cta-UPDATED": "ACTUALIZAT",
+      "cta-PRUNE": "CURĂȚAȚI",
+      "cta-PRUNING": "CURĂȚARE",
+      "open": "DESCHIDE",
+      "open-in-terminal": "DESCHIDE ÎN TERMINAL",
+      "local-package": "pachet local",
+      "not-in-pantry": "încă nu a fost adăugat în pantry"
+    },
+    "footer": {
+      "quick-links-title": "linkuri rapide",
+      "about-tea-store": "despre magazinul tea",
+      "report-a-problem": "raportă o problemă",
+      "visit-website": "vizită tea.xyz",
+      "terms-services": "termeni și servicii",
+      "privacy-policy": "politica de confidențialitate"
+    },
+    "documentation": {
+      "title": "documentație",
+      "workshops": "ateliere"
+    },
+    "view-all": "vezi toate",
+    "sorting": {
+      "label": "Sortează după",
+      "popularity": "Cel mai popular",
+      "most-recent": "Cel mai recent"
+    },
+    "common": {
+      "home": "acasă",
+      "all": "Toate",
+      "articles": "Articole",
+      "workshops": "Ateliere",
+      "metadata": "Metadata",
+      "homepage": "Pagina de start",
+      "documentation": "Documentație",
+      "github-repository": "Depozitul Github",
+      "repository": "Depozit",
+      "contributors": "Contribuitori",
+      "view-on-github": "VEZI PE GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "actualizează tea/gui la {{version}}?",
+      "gui-restarting": "Continuarea va determina repornirea aplicației la finalizarea acesteia. Vă rugăm să vă asigurați că nu aveți nicio operațiune în desfășurare. Doriți să continuați?",
+      "gui-restart": "reporniți"
+    },
+    "side-menu-title": {
+      "discover": "descoperă",
+      "all": "Toate Pachetele",
+      "installed": "Pachete Instalate",
+      "installed_updates_available": "Actualizări Disponibile",
+      "recently_updated": "Actualizate Recent",
+      "new_packages": "Pachete Noi",
+      "popular": "Popular",
+      "featured": "Recomandate",
+      "essentials": "Esențiale",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "realizat de tea",
+      "local_packages": "Pachete Locale"
+    },
+    "tags": {
+      "discover": "descoperă",
+      "all": "toate pachetele",
+      "installed": "instalate",
+      "installed_updates_available": "Actualizări disponibile",
+      "recently_updated": "Actualizate recent",
+      "new_packages": "Pachete noi",
+      "popular": "Popular",
+      "featured": "Recomandate",
+      "essentials": "Esențiale",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Realizat de tea",
+      "local_packages": "Pachete locale"
+    },
+    "discover": {
+      "featured_title": "esențiale AI locale",
+      "featured_description": "Explorați domeniul AI local. Aceasta este platforma dvs. pentru a vă juca cu instrumente de inteligență artificială de profil înalt, cum ar fi AutoGPT și Stable Diffusion Web UI, direct din sistemul dvs. local. Dați startul proiectelor dvs. de inteligență artificială, păstrând în același timp datele dvs. în siguranță și securitate, cu libertatea de a face reglaje fine așa cum doriți."
+    }
+  }
+}
