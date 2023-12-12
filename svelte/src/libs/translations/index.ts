@@ -12,6 +12,7 @@ import ptbr from "./languages/ptbr.json";
 import pl from "./languages/pl.json";
 import cz from "./languages/cz.json";
 import lv from "./languages/lv.json";
+import ro from "./languages/ro.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -22,7 +23,7 @@ type Translation = typeof en.translations & {
 };
 
 // add new language json object here
-const languages = [en, zh, de, ru, uk, ptbr, pl, cz, lv];
+const languages = [en, zh, de, ru, uk, ptbr, pl, cz, lv, ro];
 
 const langs: { [lang: string]: string } = {};
 languages.forEach((lang) => {
