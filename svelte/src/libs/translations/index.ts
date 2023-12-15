@@ -14,6 +14,7 @@ import cz from "./languages/cz.json";
 import lv from "./languages/lv.json";
 import ro from "./languages/ro.json";
 import it from "./languages/it.json";
+import se from "./languages/se.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -24,7 +25,7 @@ type Translation = typeof en.translations & {
 };
 
 // add new language json object here
-const languages = [en, zh, de, ru, uk, ptbr, pl, cz, lv, ro, it];
+const languages = [en, zh, de, ru, uk, ptbr, pl, cz, lv, ro, it, se];
 
 const langs: { [lang: string]: string } = {};
 languages.forEach((lang) => {
