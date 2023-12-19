@@ -1,0 +1,101 @@
+{
+  "id": "se",
+  "label": "Svenska",
+  "translations": {
+    "store-search-placeholder": "Sökning efter paket",
+    "action": {
+      "update": "uppdatering",
+      "cancel": "avbryta"
+    },
+    "package": {
+      "update-all": "UPPDATERA ALLA",
+      "cta-AVAILABLE": "INSTALLERA",
+      "cta-INSTALLED": "INSTALLERAD",
+      "cta-INSTALLING": "INSTALLATION",
+      "cta-UNINSTALLED": "ÅTERINSTALLERA",
+      "cta-UNINSTALL": "AVINSTALLERA",
+      "cta-NEEDS_UPDATE": "UPPDATERING",
+      "cta-UPDATING": "UPPDATERING",
+      "cta-UPDATED": "UPPDATERAD",
+      "cta-PRUNE": "BESKÄRA",
+      "cta-PRUNING": "BESKÄRNING",
+      "open": "ÖPPEN",
+      "open-in-terminal": "ÖPPEN I TERMINAL",
+      "local-package": "lokalt paket",
+      "not-in-pantry": "har ännu inte lagts till i pantry"
+    },
+    "footer": {
+      "quick-links-title": "Snabba länkar",
+      "about-tea-store": "om tea-butiken",
+      "report-a-problem": "rapportera ett problem",
+      "visit-website": "besök tea.xyz",
+      "terms-services": "villkor och tjänster",
+      "privacy-policy": "integritetspolicy"
+    },
+    "documentation": {
+      "title": "dokumentation",
+      "workshops": "verkstäder"
+    },
+    "view-all": "Visa alla",
+    "sorting": {
+      "label": "Sortera efter",
+      "popularity": "Mest populära",
+      "most-recent": "Den senaste"
+    },
+    "common": {
+      "home": "hem",
+      "all": "Alla",
+      "articles": "Artiklar",
+      "workshops": "Verkstäder",
+      "metadata": "Metadata",
+      "homepage": "Startsida",
+      "documentation": "Dokumentation",
+      "github-repository": "Github Repository",
+      "repository": "Repository",
+      "contributors": "Medverkande",
+      "view-on-github": "VISA PÅ GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "uppdatera tea/gui till {{version}}?",
+      "gui-restarting": "Om du fortsätter kommer programmet att startas om när det är klart. Kontrollera att du inte har några pågående operationer. Vill du fortsätta?",
+      "gui-restart": "starta om"
+    },
+    "side-menu-title": {
+      "discover": "upptäcka",
+      "all": "Alla Paket",
+      "installed": "Installerade Paket",
+      "installed_updates_available": "Tillgängliga Uppdateringar",
+      "recently_updated": "Nyligen Uppdaterad",
+      "new_packages": "Nya Paket",
+      "popular": "Populär",
+      "featured": "Utvalda",
+      "essentials": "Grundläggande",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "tillverkad av tea",
+      "local_packages": "Lokala Paket"
+    },
+    "tags": {
+      "discover": "upptäcka",
+      "all": "alla paket",
+      "installed": "installerad",
+      "installed_updates_available": "Tillgängliga uppdateringar",
+      "recently_updated": "Nyligen uppdaterad",
+      "new_packages": "Nya paket",
+      "popular": "Populär",
+      "featured": "Utvalda",
+      "essentials": "Grundläggande",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Tillverkad av tea",
+      "local_packages": "Lokala Paket"
+    },
+    "discover": {
+      "featured_title": "lokala AI-väsentligheter",
+      "featured_description": "Utforska området för lokal AI. Detta är din plattform för att experimentera med högprofilerade AI-verktyg som AutoGPT och Stable Diffusion Web UI, direkt från ditt lokala system. Starta dina AI-projekt samtidigt som dina data är trygga och säkra, med friheten att finjustera som du vill."
+    }
+  }
+}
