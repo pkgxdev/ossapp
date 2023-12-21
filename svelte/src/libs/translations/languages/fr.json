@@ -1,102 +1,100 @@
 {
-    "id": "fr",
-    "label": "French",
-    "translations": {
-      "store-search-placeholder": "rechercher des packages",
-      "action": {
-        "update": "mettre à jour",
-        "cancel": "annuler"
-      },
-      "package": {
-        "update-all": "TOUT METTRE À JOUR",
-        "cta-AVAILABLE": "INSTALLER",
-        "cta-INSTALLED": "INSTALLÉ",
-        "cta-INSTALLING": "INSTALLATION EN COURS",
-        "cta-UNINSTALLED": "RÉINSTALLER",
-        "cta-UNINSTALL": "DÉSINSTALLER",
-        "cta-NEEDS_UPDATE": "METTRE À JOUR",
-        "cta-UPDATING": "MISE À JOUR EN COURS",
-        "cta-UPDATED": "À JOUR",
-        "cta-PRUNE": "ÉLAGUER",
-        "cta-PRUNING": "ÉLAGAGE EN COURS",
-        "open": "OUVRIR",
-        "open-in-terminal": "OUVRIR DANS LE TERMINAL",
-        "local-package": "package local",
-        "not-in-pantry": "pas encore ajouté à la réserve"
-      },
-      "footer": {
-        "quick-links-title": "liens rapides",
-        "about-tea-store": "à propos du magasin de thé",
-        "report-a-problem": "signaler un problème",
-        "visit-website": "visiter tea.xyz",
-        "terms-services": "conditions générales",
-        "privacy-policy": "politique de confidentialité"
-      },
-      "documentation": {
-        "title": "documentation",
-        "workshops": "ateliers"
-      },
-      "view-all": "voir tout",
-      "sorting": {
-        "label": "Trier par",
-        "popularity": "Les plus populaires",
-        "most-recent": "Les plus récents"
-      },
-      "common": {
-        "home": "accueil",
-        "all": "Tous",
-        "articles": "Articles",
-        "workshops": "Ateliers",
-        "metadata": "Métadonnées",
-        "homepage": "Page d'accueil",
-        "documentation": "Documentation",
-        "github-repository": "Dépôt GitHub",
-        "repository": "Dépôt",
-        "contributors": "Contributeurs",
-        "view-on-github": "VOIR SUR GITHUB"
-      },
-      "tabs": {
-        "details": "détails du pkg",
-        "cli": "cli",
-        "gui": "gui"
-      },
-      "notification": {
-        "update-header": "mettre à jour tea/gui vers {{version}}?",
-        "gui-restarting": "La poursuite entraînera le redémarrage de l'application une fois terminée. Veuillez vous assurer de ne pas avoir d'opérations en cours. Voulez-vous continuer?",
-        "gui-restart": "redémarrer"
-      },
-      "side-menu-title": {
-        "discover": "découvrir",
-        "all": "Tous les packages",
-        "installed": "Packages installés",
-        "installed_updates_available": "Mises à jour disponibles",
-        "recently_updated": "Récemment mis à jour",
-        "new_packages": "Nouveaux packages",
-        "popular": "Populaires",
-        "featured": "En vedette",
-        "essentials": "Essentiels",
-        "starstruck": "Grands poids lourds",
-        "made_by_tea": "fabriqué par tea",
-        "local_packages": "Packages locaux"
-      },
-      "tags": {
-        "discover": "découvrir",
-        "all": "tous les packages",
-        "installed": "installé",
-        "installed_updates_available": "Mises à jour disponibles",
-        "recently_updated": "Récemment mis à jour",
-        "new_packages": "Nouveaux packages",
-        "popular": "Populaires",
-        "featured": "En vedette",
-        "essentials": "Essentiels",
-        "starstruck": "Impressionnant",
-        "made_by_tea": "Fabriqué par tea",
-        "local_packages": "Packages locaux"
-      },
-      "discover": {
-        "featured_title": "essentiels locaux en IA",
-        "featured_description": "Explorez le monde de l'IA locale. C'est votre plateforme pour bricoler avec des outils d'IA de haut niveau comme AutoGPT et Stable Diffusion Web UI, directement depuis votre système local. Lancez vos projets d'IA tout en gardant vos données en sécurité, avec la liberté de les ajuster comme bon vous semble."
-      }
+  "id": "fr",
+  "label": "French",
+  "translations": {
+    "store-search-placeholder": "rechercher des packages",
+    "action": {
+      "update": "mettre à jour",
+      "cancel": "annuler"
+    },
+    "package": {
+      "update-all": "TOUT METTRE À JOUR",
+      "cta-AVAILABLE": "INSTALLER",
+      "cta-INSTALLED": "INSTALLÉ",
+      "cta-INSTALLING": "INSTALLATION EN COURS",
+      "cta-UNINSTALLED": "RÉINSTALLER",
+      "cta-UNINSTALL": "DÉSINSTALLER",
+      "cta-NEEDS_UPDATE": "METTRE À JOUR",
+      "cta-UPDATING": "MISE À JOUR EN COURS",
+      "cta-UPDATED": "À JOUR",
+      "cta-PRUNE": "ÉLAGUER",
+      "cta-PRUNING": "ÉLAGAGE EN COURS",
+      "open": "OUVRIR",
+      "open-in-terminal": "OUVRIR DANS LE TERMINAL",
+      "local-package": "package local",
+      "not-in-pantry": "pas encore ajouté à la réserve"
+    },
+    "footer": {
+      "quick-links-title": "liens rapides",
+      "about-tea-store": "à propos du magasin de thé",
+      "visit-website": "visiter tea.xyz",
+      "terms-services": "conditions générales",
+      "privacy-policy": "politique de confidentialité"
+    },
+    "documentation": {
+      "title": "documentation",
+      "workshops": "ateliers"
+    },
+    "view-all": "voir tout",
+    "sorting": {
+      "label": "Trier par",
+      "popularity": "Les plus populaires",
+      "most-recent": "Les plus récents"
+    },
+    "common": {
+      "home": "accueil",
+      "all": "Tous",
+      "articles": "Articles",
+      "workshops": "Ateliers",
+      "metadata": "Métadonnées",
+      "homepage": "Page d'accueil",
+      "documentation": "Documentation",
+      "github-repository": "Dépôt GitHub",
+      "repository": "Dépôt",
+      "contributors": "Contributeurs",
+      "view-on-github": "VOIR SUR GITHUB"
+    },
+    "tabs": {
+      "details": "détails du pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "mettre à jour tea/gui vers {{version}}?",
+      "gui-restarting": "La poursuite entraînera le redémarrage de l'application une fois terminée. Veuillez vous assurer de ne pas avoir d'opérations en cours. Voulez-vous continuer?",
+      "gui-restart": "redémarrer"
+    },
+    "side-menu-title": {
+      "discover": "découvrir",
+      "all": "Tous les packages",
+      "installed": "Packages installés",
+      "installed_updates_available": "Mises à jour disponibles",
+      "recently_updated": "Récemment mis à jour",
+      "new_packages": "Nouveaux packages",
+      "popular": "Populaires",
+      "featured": "En vedette",
+      "essentials": "Essentiels",
+      "starstruck": "Grands poids lourds",
+      "made_by_tea": "fabriqué par tea",
+      "local_packages": "Packages locaux"
+    },
+    "tags": {
+      "discover": "découvrir",
+      "all": "tous les packages",
+      "installed": "installé",
+      "installed_updates_available": "Mises à jour disponibles",
+      "recently_updated": "Récemment mis à jour",
+      "new_packages": "Nouveaux packages",
+      "popular": "Populaires",
+      "featured": "En vedette",
+      "essentials": "Essentiels",
+      "starstruck": "Impressionnant",
+      "made_by_tea": "Fabriqué par tea",
+      "local_packages": "Packages locaux"
+    },
+    "discover": {
+      "featured_title": "essentiels locaux en IA",
+      "featured_description": "Explorez le monde de l'IA locale. C'est votre plateforme pour bricoler avec des outils d'IA de haut niveau comme AutoGPT et Stable Diffusion Web UI, directement depuis votre système local. Lancez vos projets d'IA tout en gardant vos données en sécurité, avec la liberté de les ajuster comme bon vous semble."
     }
   }
-  
+}
