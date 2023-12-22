@@ -18,6 +18,11 @@ module.exports = {
       gray: "var(--oss-app-color-gray)"
     },
     extend: {
+      colors: {},
+      borderRadius: {},
+      keyframes: {},
+      animation: {},
+      boxShadow: {},
       fontFamily: {
         inter: ["inter", "sans-serif"],
         mona: ["mona-sans", "sans-serif"]
