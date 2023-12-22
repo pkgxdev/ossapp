@@ -8,6 +8,7 @@ svelte/.svelte-kit
 
 # Ignore files for PNPM, NPM and YARN
 package-lock.json
+pnpm-lock.yaml
 dist
 coverage/*
 **/*.plist

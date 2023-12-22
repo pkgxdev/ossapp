@@ -4,8 +4,6 @@
 @import url(./styles/components.css);
 @import url(./styles/utilities.css);
 
-
-
 @font-face {
   font-family: "mona-sans";
   src: url("/fonts/mona-sans-bold.woff2");
