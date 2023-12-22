@@ -1,8 +1,10 @@
 @import url(./icons/icons.css);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url(./styles/base.css);
+@import url(./styles/conponents.css);
+@import url(./styles/utilities.css);
+
+
 
 @font-face {
   font-family: "mona-sans";
