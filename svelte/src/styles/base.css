@@ -14,3 +14,25 @@
         --oss-app-color-blue: #013B99;
     }
 }
+
+/* base theme.  CSS variables with business meaning*/
+@layer base {
+    :root {
+        --oss-app-color-primary: var(--oss-app-color-teal);
+        --oss-app-color-secondary: var(--oss-app-color-purple);
+        --oss-app-fill-primary: var(--oss-app-color-black);
+    }
+
+    /* if needed? */
+    [data-theme='dark'] {
+        --oss-app-color-primary: var(--oss-app-color-teal);
+        --oss-app-color-secondary: var(--oss-app-color-purple);
+        --oss-app-fill-primary: var(--oss-app-color-black);
+
+    }
+}
+
+/* base sizes */
+@layer base {
+    :root {}
+}
