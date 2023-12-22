@@ -1,28 +1,21 @@
-const teal = "#00ffd0";
-const black = "#1a1a1a";
-const white = "#fff";
-const gray = "#949494";
-const purple = "#8000FF";
-const green = "#00A517";
-const blue = "#013B99";
-
 module.exports = {
+  // darkMode: ['class', '[data-theme="dark"]'],
   content: ["./src/**/*.{html,svelte,ts,js}", "../ui/src/**/*.{html,svelte,ts,js}"],
   theme: {
     colors: {
-      primary: teal,
-      secondary: purple,
-      accent: purple,
-      green,
-      teal,
-      blue,
+      primary: "var(--oss-app-color-teal)",
+      secondary: "var(--oss-app-color-purple)",
+      accent: "var(--oss-app-color-purple)",
+      green: "var(--oss-app-color-green)",
+      teal: "var(--oss-app-color-teal)",
+      blue: "var(--oss-app-color-blue)",
       purple: {
-        700: purple,
-        900: "#B076EC"
+        700: "var(--oss-app-color-purple)",
+        900: "var(--oss-app-color-purple-900)"
       },
-      black,
-      white,
-      gray
+      black: "var(--oss-app-color-black)",
+      white: "var(--oss-app-color-white)",
+      gray: "var(--oss-app-color-gray)"
     },
     extend: {
       fontFamily: {
@@ -40,5 +33,9 @@ module.exports = {
         }
       }
     }
-  }
+  },
+  plugins: [
+    // require('tailwindcss-animate'),
+    require("@tailwindcss/line-clamp")
+  ]
 };
