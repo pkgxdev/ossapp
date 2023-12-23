@@ -1,0 +1,101 @@
+{
+  "id": "tr",
+  "label": "Türkçe",
+  "translations": {
+    "store-search-placeholder": "paketleri ara",
+    "action": {
+      "update": "güncelle",
+      "cancel": "iptal et"
+    },
+    "package": {
+      "update-all": "TÜMÜNÜ GÜNCELLE",
+      "cta-AVAILABLE": "YÜKLE",
+      "cta-INSTALLED": "YÜKLENDİ",
+      "cta-INSTALLING": "YÜKLENİYOR",
+      "cta-UNINSTALLED": "TEKRAR YÜKLE",
+      "cta-UNINSTALL": "KALDIR",
+      "cta-NEEDS_UPDATE": "GÜNCELLE",
+      "cta-UPDATING": "GÜNCELLENİYOR",
+      "cta-UPDATED": "GÜNCELLENDİ",
+      "cta-PRUNE": "TEMİZLE",
+      "cta-PRUNING": "TEMİZLENİYOR",
+      "open": "AÇ",
+      "open-in-terminal": "TERMİNALDE AÇ",
+      "local-package": "yerel paket",
+      "not-in-pantry": "henüz paket yöneticisine eklenmedi"
+    },
+    "footer": {
+      "quick-links-title": "hızlı bağlantılar",
+      "about-tea-store": "tea mağazası hakkında",
+      "report-a-problem": "sorun bildir",
+      "visit-website": "tea.xyz'i ziyaret edin",
+      "terms-services": "şartlar ve hizmetler",
+      "privacy-policy": "gizlilik politikası"
+    },
+    "documentation": {
+      "title": "dokümantasyon",
+      "workshops": "çalıştaylar"
+    },
+    "view-all": "hepsini görüntüle",
+    "sorting": {
+      "label": "Sıralama Ölçütü",
+      "popularity": "En popüler",
+      "most-recent": "En yeni"
+    },
+    "common": {
+      "home": "giriş",
+      "all": "Hepsi",
+      "articles": "Makaleler",
+      "workshops": "Çalıştaylar",
+      "metadata": "Meta veriler",
+      "homepage": "Ana sayfa",
+      "documentation": "Dokümantasyon",
+      "github-repository": "Github deposu",
+      "repository": "Depo",
+      "contributors": "Katkıda bulunanlar",
+      "view-on-github": "GITHUB'DA GÖRÜNTÜLE"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "Tea/gui {{sürüm}} sürümüne güncellensin mi?",
+      "gui-restarting": "Devam etmek, uygulamanın tamamlandıktan sonra yeniden başlatılmasına neden olacaktır. Lütfen devam eden herhangi bir işleminizin olmadığından emin olun. Devam etmek istiyor musunuz?",
+      "gui-restart": "yeniden başlat"
+    },
+    "side-menu-title": {
+      "discover": "keşfet",
+      "all": "Tüm Paketler",
+      "installed": "Yüklü Paketler",
+      "installed_updates_available": "Yüklü Güncellemeler Mevcut",
+      "recently_updated": "Yeni Güncellenenler",
+      "new_packages": "Yeni Paketler",
+      "popular": "Popüler",
+      "featured": "Öne Çıkan",
+      "essentials": "Ana Hatlar",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "tea tarafından yapıldı",
+      "local_packages": "Yerel Paketler"
+    },
+    "tags": {
+      "discover": "keşfet",
+      "all": "tüm paketler",
+      "installed": "yüklenenler",
+      "installed_updates_available": "Yüklü güncellemeler mevcut",
+      "recently_updated": "Yeni güncellenenler",
+      "new_packages": "Yeni paketler",
+      "popular": "Popüler",
+      "featured": "Öne Çıkan",
+      "essentials": "Ana Hatlar",
+      "starstruck": "Starstruck",
+      "made_by_tea": "tea tarafından yapıldı",
+      "local_packages": "Yerel Paketler"
+    },
+    "discover": {
+      "featured_title": "yerel yapay zekanın temelleri",
+      "featured_description": "Yerel yapay zeka alanını keşfedin. Bu, AutoGPT ve Stable Diffusion Web Kullanıcı Arayüzü gibi yüksek profilli yapay zeka araçlarını doğrudan yerel sisteminizden kurabileceğiniz bir platformdur. Dilediğiniz gibi ince ayar yapma özgürlüğüyle, verilerinizi güvende tutarken yapay zeka projelerinize hızlı bir başlangıç yapın."
+    }
+  }
+}
