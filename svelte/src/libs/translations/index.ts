@@ -18,7 +18,6 @@ import se from "./languages/se.json";
 import fr from "./languages/fr.json";
 import tr from "./languages/tr.json";
 
-
 import * as customModifiers from "./modifiers";
 
 type Language = { [lang: string]: string };
