@@ -15,7 +15,7 @@ import lv from "./languages/lv.json";
 import ro from "./languages/ro.json";
 import it from "./languages/it.json";
 import se from "./languages/se.json";
-import se from "./languages/tr.json";
+import tr from "./languages/tr.json";
 
 import * as customModifiers from "./modifiers";
 
