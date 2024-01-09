@@ -16,7 +16,7 @@ import ro from "./languages/ro.json";
 import it from "./languages/it.json";
 import se from "./languages/se.json";
 import tr from "./languages/tr.json";
-
+import az from "./languages/az.json";
 import * as customModifiers from "./modifiers";
 
 type Language = { [lang: string]: string };
