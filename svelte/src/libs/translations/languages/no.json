@@ -1,0 +1,101 @@
+{
+  "id": "no",
+  "label": "Norwegian",
+  "translations": {
+    "store-search-placeholder": "søkepakker",
+    "action": {
+      "update": "Oppdater",
+      "cancel": "Avbryt"
+    },
+    "package": {
+      "update-all": "OPPDATER ALT",
+      "cta-AVAILABLE": "INSTALLERE",
+      "cta-INSTALLED": "INSTALLERT",
+      "cta-INSTALLING": "INSTALLERER",
+      "cta-UNINSTALLED": "AVINSTALLERT",
+      "cta-UNINSTALL": "AVINSTALLER",
+      "cta-NEEDS_UPDATE": "OPPDATER",
+      "cta-UPDATING": "OPPDATERING",
+      "cta-UPDATED": "OPPDATERT",
+      "cta-PRUNE": "SVISKE",
+      "cta-PRUNING": "BESKISKING",
+      "open": "ÅPEN",
+      "open-in-terminal": "ÅPEN I TERMINAL",
+      "local-package": "lokal pakke",
+      "not-in-pantry": "ennå ikke lagt til pantry"
+    },
+    "footer": {
+      "quick-links-title": "Hurtigkoblinger",
+      "about-tea-store": "om tea lager",
+      "report-a-problem": "rapporter et problem",
+      "visit-website": "besøk tea.xyz",
+      "terms-services": "vilkår og tjenester",
+      "privacy-policy": "personvernerklæring"
+    },
+    "documentation": {
+      "title": "dokumentasjon",
+      "workshops": "verksteder"
+    },
+    "view-all": "se alt",
+    "sorting": {
+      "label": "Sorter etter",
+      "popularity": "Mest populær",
+      "most-recent": "Senest"
+    },
+    "common": {
+      "home": "hjemme",
+      "all": "alle",
+      "articles": "Artikler",
+      "workshops": "Verksteder",
+      "metadata": "Metadata",
+      "homepage": "Hjemmeside",
+      "documentation": "Dokumentasjon",
+      "github-repository": "Github Oppbevaringssted",
+      "repository": "Oppbevaringssted",
+      "contributors": "Bidragsytere",
+      "view-on-github": "SE PÅ GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "oppdatere te/gui til {{version}}?",
+      "gui-restarting": "Hvis du fortsetter, vil applikasjonen starte på nytt når den er fullført. Sørg for at du ikke har noen operasjoner i gang. Vil du fortsette?",
+      "gui-restart": "omstart"
+    },
+    "side-menu-title": {
+      "discover": "oppdage",
+      "all": "Alle pakker",
+      "installed": "Installerte pakker",
+      "installed_updates_available": "Tilgjengelige oppdateringer",
+      "recently_updated": "Nylig oppdatert",
+      "new_packages": "Nye pakker",
+      "popular": "Populær",
+      "featured": "Utvalgte",
+      "essentials": "Essensielle",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "laget av te",
+      "local_packages": "Lokale pakker"
+    },
+    "tags": {
+      "discover": "oppdage",
+      "all": "alle pakker",
+      "installed": "installert",
+      "installed_updates_available": "Oppdateringer tilgjengelig",
+      "recently_updated": "Nylig oppdatert",
+      "new_packages": "Nye pakker",
+      "popular": "Populær",
+      "featured": "Utvalgte",
+      "essentials": "Essensielle",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Laget av tea",
+      "local_packages": "Lokale pakker"
+    },
+    "discover": {
+      "featured_title": "lokale AI-nødvendigheter",
+      "featured_description": "Utforsk riket til lokal AI. Dette er din plattform for å fikse med høyprofilerte AI-verktøy som AutoGPT og Stable Diffusion Web UI, rett fra ditt lokale system. Kom i gang med AI-prosjektene dine mens du holder dataene dine trygge og sikre, med friheten til å finjustere som du ønsker."
+    }
+  }
+}
