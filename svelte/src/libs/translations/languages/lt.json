@@ -1,0 +1,101 @@
+{
+  "id": "lt",
+  "label": "Lithuanian",
+  "translations": {
+    "store-search-placeholder": "ieškoti paketų",
+    "action": {
+      "update": "atnaujinti",
+      "cancel": "atšaukti"
+    },
+    "package": {
+      "update-all": "ATNAUJINTI VISKĄ",
+      "cta-AVAILABLE": "DIEGTI",
+      "cta-INSTALLED": "ĮDIEGTA",
+      "cta-INSTALLING": "MONTAVIMAS",
+      "cta-UNINSTALLED": "Įdiekite iš naujo",
+      "cta-UNINSTALL": "PAŠALINTI",
+      "cta-NEEDS_UPDATE": "ATNAUJINTI",
+      "cta-UPDATING": "ATNAUJINAMA",
+      "cta-UPDATED": "ATNAUJINTA",
+      "cta-PRUNE": "SLYVYNĖS",
+      "cta-PRUNING": "GENĖJIMAS",
+      "open": "ATVIRAS",
+      "open-in-terminal": "ATIDARYTI TERMINALE",
+      "local-package": "vietinis paketas",
+      "not-in-pantry": "dar neįdėta į sandėliuką"
+    },
+    "footer": {
+      "quick-links-title": "Greitos nuorodos",
+      "about-tea-store": "apie tea parduotuvę",
+      "report-a-problem": "Pranešti apie problemą",
+      "visit-website": "aplankykite tea.xyz",
+      "terms-services": "sąlygos ir paslaugos",
+      "privacy-policy": "Privatumo politika"
+    },
+    "documentation": {
+      "title": "dokumentacija",
+      "workshops": "dirbtuvės"
+    },
+    "view-all": "Peržiūrėti visus",
+    "sorting": {
+      "label": "Rūšiuoti pagal",
+      "popularity": "Populiariausias",
+      "most-recent": "Naujausias"
+    },
+    "common": {
+      "home": "namai",
+      "all": "Visi",
+      "articles": "Straipsniai",
+      "workshops": "dirbtuvės",
+      "metadata": "Metadata",
+      "homepage": "Pagrindinis puslapis",
+      "documentation": "Dokumentacija",
+      "github-repository": "Github saugykla",
+      "repository": "Saugykla",
+      "contributors": "Pagalbininkai",
+      "view-on-github": "PERŽIŪRĖTI GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "atnaujinti tea/gui į {{version}}?",
+      "gui-restarting": "Tęsiant programa bus paleista iš naujo, kai bus baigta. Įsitikinkite, kad nevykdote jokių operacijų. Ar norite testi?",
+      "gui-restart": "perkrauti"
+    },
+    "side-menu-title": {
+      "discover": "atrasti",
+      "all": "Visi paketai",
+      "installed": "Įdiegti paketai",
+      "installed_updates_available": "Galimi atnaujinimai",
+      "recently_updated": "Neseniai atnaujinta",
+      "new_packages": "Nauji paketai",
+      "popular": "Populiarus",
+      "featured": "Teminiai",
+      "essentials": "Essentials",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "pagaminta iš tea",
+      "local_packages": "Vietiniai paketai"
+    },
+    "tags": {
+      "discover": "atrasti",
+      "all": "visos pakuotės",
+      "installed": "įdiegta",
+      "installed_updates_available": "Galimi atnaujinimai",
+      "recently_updated": "Neseniai atnaujinta",
+      "new_packages": "Naujos pakuotės",
+      "popular": "Populiarus",
+      "featured": "Teminiai",
+      "essentials": "Essentials",
+      "starstruck": "Starstruck",
+      "made_by_tea": "pagaminta iš tea",
+      "local_packages": "Vietiniai paketai"
+    },
+    "discover": {
+      "featured_title": "vietiniai AI esminiai dalykai",
+      "featured_description": "Naršykite vietinio AI sritį. Tai jūsų platforma, skirta dirbti su aukšto lygio AI įrankiais, tokiais kaip AutoGPT ir stabilios difuzijos žiniatinklio vartotojo sąsaja, tiesiai iš vietinės sistemos. Greitai pradėkite dirbtinio intelekto projektus, tuo pačiu užtikrindami duomenų saugumą ir laisvę koreguoti, kaip norite."
+    }
+  }
+}
