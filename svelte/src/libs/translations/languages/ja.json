@@ -50,10 +50,10 @@
       "metadata": "メタデータ",
       "homepage": "ホームページ",
       "documentation": "ドキュメント",
-      "github-repository": "Githubのレポジトリー",
+      "github-repository": "GitHubのレポジトリー",
       "repository": "レポジトリー",
       "contributors": "コントリビューター",
-      "view-on-github": "GITHUBを観る"
+      "view-on-github": "GitHubで観る"
     },
     "tabs": {
       "details": "pkg",
