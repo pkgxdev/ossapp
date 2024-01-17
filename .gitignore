@@ -5,6 +5,5 @@ yarn-error.log
 target
 copy.json
 electron/dist
-package-lock.json
 dist
 .env
