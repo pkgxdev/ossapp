@@ -1,0 +1,101 @@
+{
+  "id": "ja",
+  "label": "Japanese",
+  "translations": {
+    "store-search-placeholder": "パッケージを検索",
+    "action": {
+      "update": "更新",
+      "cancel": "キャンセル"
+    },
+    "package": {
+      "update-all": "全てを更新",
+      "cta-AVAILABLE": "インストール",
+      "cta-INSTALLED": "インストール完了",
+      "cta-INSTALLING": "インストール中",
+      "cta-UNINSTALLED": "再インストール",
+      "cta-UNINSTALL": "アンインストール",
+      "cta-NEEDS_UPDATE": "更新",
+      "cta-UPDATING": "更新中",
+      "cta-UPDATED": "更新完了",
+      "cta-PRUNE": "最新版以外を削除",
+      "cta-PRUNING": "最新版以外を削除中",
+      "open": "開く",
+      "open-in-terminal": "ターミナルで開く",
+      "local-package": "ローカルパッケージ",
+      "not-in-pantry": "まだ収納棚に追加されていません"
+    },
+    "footer": {
+      "quick-links-title": "クイックリンク",
+      "about-tea-store": "Teaストアについて",
+      "report-a-problem": "問題を報告",
+      "visit-website": "tea.xyzに飛ぶ",
+      "terms-services": "利用規約",
+      "privacy-policy": "プライバシーポリシー"
+    },
+    "documentation": {
+      "title": "ドキュメント",
+      "workshops": "ワークショップ"
+    },
+    "view-all": "全てを観る",
+    "sorting": {
+      "label": "ソート",
+      "popularity": "人気順",
+      "most-recent": "新着順"
+    },
+    "common": {
+      "home": "ホーム",
+      "all": "全て",
+      "articles": "記事",
+      "workshops": "ワークショップ",
+      "metadata": "メタデータ",
+      "homepage": "ホームページ",
+      "documentation": "ドキュメント",
+      "github-repository": "Githubのレポジトリー",
+      "repository": "レポジトリー",
+      "contributors": "コントリビューター",
+      "view-on-github": "GITHUBを観る"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "tea/guiを{{version}}に更新しますか?",
+      "gui-restarting": "続けると、完了時にアプリケーションが再起動されます。進行中の操作が行われていないことを確認してください。続行しますか?",
+      "gui-restart": "リスタート"
+    },
+    "side-menu-title": {
+      "discover": "探す",
+      "all": "全てのパッケージ",
+      "installed": "インストール済み",
+      "installed_updates_available": "更新可能",
+      "recently_updated": "最近の更新",
+      "new_packages": "新規パッケージ",
+      "popular": "人気",
+      "featured": "ハイライト",
+      "essentials": "必需品",
+      "starstruck": "素晴らしい物",
+      "made_by_tea": "Teaが作成したもの",
+      "local_packages": "ローカルパッケージ"
+    },
+    "tags": {
+      "discover": "探す",
+      "all": "全てのパッケージ",
+      "installed": "インストール済み",
+      "installed_updates_available": "更新可能",
+      "recently_updated": "最近の更新",
+      "new_packages": "新規パッケージ",
+      "popular": "人気",
+      "featured": "ハイライト",
+      "essentials": "必需品",
+      "starstruck": "素晴らしい物",
+      "made_by_tea": "Teaの作成",
+      "local_packages": "ローカルパッケージ"
+    },
+    "discover": {
+      "featured_title": "ローカルAIの必需品",
+      "featured_description": "ローカルAIの領域を探索してください。これは「AutoGPT」や「Stable Diffusion Web UI」などの注目度の高いAIツールをローカルから直接操作するためのプラットフォームです。データを安全に保ちながら、必要に応じて自由に微調整できるため、AIプロジェクトを迅速に開始できます。"
+    }
+  }
+}
