@@ -1,0 +1,101 @@
+{
+  "id": "ee",
+  "label": "Estonian",
+  "translations": {
+    "store-search-placeholder": "otsi pakette",
+    "action": {
+      "update": "värskendada",
+      "cancel": "tühistada"
+    },
+    "package": {
+      "update-all": "VÄRSKENDA KÕIK",
+      "cta-AVAILABLE": "PAIGALDA",
+      "cta-INSTALLED": "PAIGALDATUD",
+      "cta-INSTALLING": "PAIGALDAMINE",
+      "cta-UNINSTALLED": "TAAS PAIGALDAMINE",
+      "cta-UNINSTALL": "DESINSTALLIMINE",
+      "cta-NEEDS_UPDATE": "VÄRSKENDA",
+      "cta-UPDATING": "VÄRSKENDAMINE",
+      "cta-UPDATED": "VÄRSKENDATUD",
+      "cta-PRUNE": "KUIVATATUD PLOOM",
+      "cta-PRUNING": "PÕRGAMINE",
+      "open": "AVATUD",
+      "open-in-terminal": "AVATUD TERMINALIS",
+      "local-package": "kohalik pakett",
+      "not-in-pantry": "pole veel sahvrisse lisatud"
+    },
+    "footer": {
+      "quick-links-title": "kiirlingid",
+      "about-tea-store": "tea poe kohta",
+      "report-a-problem": "Teavita probleemist",
+      "visit-website": "külastage tea.xyz",
+      "terms-services": "tingimused ja teenused",
+      "privacy-policy": "privaatsuspoliitika"
+    },
+    "documentation": {
+      "title": "dokumentatsioon",
+      "workshops": "töötoad"
+    },
+    "view-all": "Vaata kõiki",
+    "sorting": {
+      "label": "Sorteerima",
+      "popularity": "Populaarseim",
+      "most-recent": "Kõige värskem"
+    },
+    "common": {
+      "home": "Kodu",
+      "all": "Kõik",
+      "articles": "Artiklid",
+      "workshops": "töötoad",
+      "metadata": "Metadata",
+      "homepage": "Koduleht",
+      "documentation": "Dokumentatsioon",
+      "github-repository": "Githubi hoidla",
+      "repository": "Hoidla",
+      "contributors": "Kaastöölised",
+      "view-on-github": "VAATA GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "Kas uuendada tea/gui versioonile {{version}}?",
+      "gui-restarting": "Kui jätkate, käivitub rakendus pärast lõpetamist uuesti. Veenduge, et teil pole pooleli mingeid toiminguid. Kas soovite jätkata?",
+      "gui-restart": "Taaskäivita"
+    },
+    "side-menu-title": {
+      "discover": "avastada",
+      "all": "Kõik paketid",
+      "installed": "Paigaldatud paketid",
+      "installed_updates_available": "Saadaolevad värskendused",
+      "recently_updated": "Hiljuti värskendatud",
+      "new_packages": "Uued paketid",
+      "popular": "Populaarne",
+      "featured": "Esiletõstetud",
+      "essentials": "Essentials",
+      "starstruck": "Starstrucki raskekaallased",
+      "made_by_tea": "valmistatud tea",
+      "local_packages": "Kohalikud paketid"
+    },
+    "tags": {
+      "discover": "avastada",
+      "all": "kõik paketid",
+      "installed": "paigaldatud",
+      "installed_updates_available": "Saadaval on värskendused",
+      "recently_updated": "Hiljuti värskendatud",
+      "new_packages": "Uued paketid",
+      "popular": "Populaarne",
+      "featured": "Esiletõstetud",
+      "essentials": "Essentials",
+      "starstruck": "Starstruck",
+      "made_by_tea": "valmistatud tea",
+      "local_packages": "Kohalikud paketid"
+    },
+    "discover": {
+      "featured_title": "kohalik tehisintellekt",
+      "featured_description": "Avastage kohaliku AI valdkonda. See on teie platvorm kõrgetasemeliste AI-tööriistade (nt AutoGPT ja Stable Diffusion Web UI) kallal nokitsemiseks otse oma kohalikust süsteemist. Käivitage oma tehisintellekti projekte, hoides samal ajal oma andmeid turvaliselt ja vabadusega oma soovi järgi peenhäälestada."
+    }
+  }
+}
