@@ -20,7 +20,7 @@ import no from "./languages/no.json";
 import hr from "./languages/hr.json";
 import ja from "./languages/ja.json";
 import lt from "./languages/lt.json";
-import lt from "./languages/nl.json";
+import nl from "./languages/nl.json";
 
 import * as customModifiers from "./modifiers";
 
