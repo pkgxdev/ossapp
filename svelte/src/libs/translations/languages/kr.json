@@ -1,0 +1,101 @@
+{
+  "id": "kr",
+  "label": "한국어",
+  "translations": {
+    "store-search-placeholder": "패키지 검색",
+    "action": {
+      "update": "업데이트",
+      "cancel": "취소"
+    },
+    "package": {
+      "update-all": "모두 업데이트",
+      "cta-AVAILABLE": "설치",
+      "cta-INSTALLED": "설치됨",
+      "cta-INSTALLING": "설치 중",
+      "cta-UNINSTALLED": "다시 설치",
+      "cta-UNINSTALL": "제거",
+      "cta-NEEDS_UPDATE": "업데이트 필요",
+      "cta-UPDATING": "업데이트 중",
+      "cta-UPDATED": "업데이트됨",
+      "cta-PRUNE": "가지치기",
+      "cta-PRUNING": "가지치기 중",
+      "open": "열기",
+      "open-in-terminal": "터미널에서 열기",
+      "local-package": "로컬 패키지",
+      "not-in-pantry": "아직 창고에 추가되지 않음"
+    },
+    "footer": {
+      "quick-links-title": "빠른 링크",
+      "about-tea-store": "티 스토어 소개",
+      "report-a-problem": "문제 신고",
+      "visit-website": "tea.xyz 방문",
+      "terms-services": "이용 약관",
+      "privacy-policy": "개인 정보 정책"
+    },
+    "documentation": {
+      "title": "문서",
+      "workshops": "워크샵"
+    },
+    "view-all": "전체 보기",
+    "sorting": {
+      "label": "정렬 기준",
+      "popularity": "가장 인기 있는 순",
+      "most-recent": "가장 최근 순"
+    },
+    "common": {
+      "home": "홈",
+      "all": "모두",
+      "articles": "글",
+      "workshops": "워크샵",
+      "metadata": "메타데이터",
+      "homepage": "홈페이지",
+      "documentation": "문서",
+      "github-repository": "Github 저장소",
+      "repository": "저장소",
+      "contributors": "기여자",
+      "view-on-github": "Github에서 보기"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "{{version}}로 tea/gui를 업데이트 하시겠습니까?",
+      "gui-restarting": "진행하면 응용 프로그램이 완료되면 다시 시작됩니다. 진행 중인 작업이 없는지 확인하십시오. 계속 진행하시겠습니까?",
+      "gui-restart": "다시 시작"
+    },
+    "side-menu-title": {
+      "discover": "발견",
+      "all": "모든 패키지",
+      "installed": "설치된 패키지",
+      "installed_updates_available": "사용 가능한 업데이트",
+      "recently_updated": "최근 업데이트됨",
+      "new_packages": "새로운 패키지",
+      "popular": "인기 있는",
+      "featured": "추천",
+      "essentials": "필수",
+      "starstruck": "스타스트럭 헤비웨이츠",
+      "made_by_tea": "티에서 제작",
+      "local_packages": "로컬 패키지"
+    },
+    "tags": {
+      "discover": "발견",
+      "all": "모든 패키지",
+      "installed": "설치됨",
+      "installed_updates_available": "사용 가능한 업데이트",
+      "recently_updated": "최근 업데이트됨",
+      "new_packages": "새로운 패키지",
+      "popular": "인기 있는",
+      "featured": "추천",
+      "essentials": "필수",
+      "starstruck": "스타스트럭",
+      "made_by_tea": "티에서 제작",
+      "local_packages": "로컬 패키지"
+    },
+    "discover": {
+      "featured_title": "로컬 AI 필수품",
+      "featured_description": "로컬 AI의 영역을 탐험하세요. AutoGPT와 Stable Diffusion Web UI와 같은 고급 AI 도구를 로컬 시스템에서 직접 조작하는 플랫폼입니다. 데이터를 안전하고 보호된 상태로 유지하면서 원하는 대로 세부 조정할 수 있습니다. AI 프로젝트를 시작하고 발전시켜보세요."
+    }
+  }
+}
