@@ -61,7 +61,7 @@
       "gui": "gui"
     },
     "notification": {
-      "update-header": "Tea/gui {{sürüm}} sürümüne güncellensin mi?",
+      "update-header": "Tea/gui {{version}} sürümüne güncellensin mi?",
       "gui-restarting": "Devam etmek, uygulamanın tamamlandıktan sonra yeniden başlatılmasına neden olacaktır. Lütfen devam eden herhangi bir işleminizin olmadığından emin olun. Devam etmek istiyor musunuz?",
       "gui-restart": "yeniden başlat"
     },
@@ -95,7 +95,7 @@
     },
     "discover": {
       "featured_title": "yerel yapay zekanın temelleri",
-      "featured_description": "Yerel yapay zeka alanını keşfedin. Bu, AutoGPT ve Stable Diffusion Web Kullanıcı Arayüzü gibi yüksek profilli yapay zeka araçlarını doğrudan yerel sisteminizden kurabileceğiniz bir platformdur. Dilediğiniz gibi ince ayar yapma özgürlüğüyle, verilerinizi güvende tutarken yapay zeka projelerinize hızlı bir başlangıç yapın."
+      "featured_description": "Yerel yapay zeka alanını keşfedin. Bu, AutoGPT ve Stable Diffusion Web UI gibi yüksek profilli yapay zeka araçlarını doğrudan yerel sisteminizden kurabileceğiniz bir platformdur. Dilediğiniz gibi ince ayar yapma özgürlüğüyle, verilerinizi güvende tutarken yapay zeka projelerinize hızlı bir başlangıç yapın."
     }
   }
 }

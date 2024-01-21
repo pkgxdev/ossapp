@@ -15,3 +15,4 @@ build/*
 dist/*
 electron/dist/*
 svelte/build/*
+pnpm-lock.yaml
