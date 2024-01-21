@@ -1,0 +1,37 @@
+@tailwind base;
+
+/* base colors */
+@layer base {
+  :root {
+    --oss-app-color-teal: #00ffd0;
+    --oss-app-color-black: #1a1a1a;
+    --oss-app-color-white: #fff;
+    --oss-app-color-gray: #949494;
+    --oss-app-color-purple: #8000ff;
+    --oss-app-color-purple-900: #b076ec;
+    --oss-app-color-green: #00a517;
+    --oss-app-color-blue: #013b99;
+  }
+}
+
+/* base theme.  CSS variables with business meaning*/
+@layer base {
+  :root {
+    --oss-app-color-primary: var(--oss-app-color-teal);
+    --oss-app-color-secondary: var(--oss-app-color-purple);
+    --oss-app-fill-primary: var(--oss-app-color-black);
+  }
+
+  /* if needed? */
+  [data-theme="dark"] {
+    --oss-app-color-primary: var(--oss-app-color-teal);
+    --oss-app-color-secondary: var(--oss-app-color-purple);
+    --oss-app-fill-primary: var(--oss-app-color-black);
+  }
+}
+
+/* base sizes */
+@layer base {
+  :root {
+  }
+}

@@ -8,3 +8,4 @@ electron/dist
 electrin/config.json
 dist
 .env
+.idea
