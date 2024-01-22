@@ -20,6 +20,7 @@ import no from "./languages/no.json";
 import hr from "./languages/hr.json";
 import ja from "./languages/ja.json";
 import lt from "./languages/lt.json";
+import kr from "./languages/kr.json";
 import ee from "./languages/ee.json";
 
 
@@ -32,7 +33,7 @@ type Translation = typeof en.translations & {
 };
 
 // add new language json object here
-const languages = [en, zh, de, ru, uk, ptbr, pl, cz, lv, ro, it, se, tr, no, hr, ja, lt, ee];
+const languages = [en, zh, de, ru, uk, ptbr, pl, cz, lv, ro, it, se, tr, no, hr, ja, lt, kr, ee];
 
 const langs: { [lang: string]: string } = {};
 languages.forEach((lang) => {
