@@ -33,7 +33,7 @@ type Translation = typeof en.translations & {
 };
 
 // add new language json object here
-const languages = [en, zh, de, ru, uk, ptbr, pl, cz, lv, ro, it, se, fr, tr, no, hr, ja, lt, kr, nl]; 
+const languages = [en, zh, de, ru, uk, ptbr, pl, cz, lv, ro, it, se, fr, tr, no, hr, ja, lt, kr, nl];
 
 const langs: { [lang: string]: string } = {};
 languages.forEach((lang) => {
