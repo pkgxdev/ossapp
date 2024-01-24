@@ -22,6 +22,7 @@ import hr from "./languages/hr.json";
 import ja from "./languages/ja.json";
 import lt from "./languages/lt.json";
 import kr from "./languages/kr.json";
+import ee from "./languages/ee.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -32,7 +33,28 @@ type Translation = typeof en.translations & {
 };
 
 // add new language json object here
-const languages = [en, zh, de, ru, uk, ptbr, pl, cz, lv, ro, it, se, fr, tr, no, hr, ja, lt, kr];
+const languages = [
+  en,
+  zh,
+  de,
+  ru,
+  uk,
+  ptbr,
+  pl,
+  cz,
+  lv,
+  ro,
+  it,
+  se,
+  fr,
+  tr,
+  no,
+  hr,
+  ja,
+  lt,
+  kr,
+  ee
+];
 
 const langs: { [lang: string]: string } = {};
 languages.forEach((lang) => {
