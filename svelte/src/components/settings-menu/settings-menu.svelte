@@ -44,7 +44,7 @@
     <hr />
     <UpdateButton />
     <hr />
-    <button class="min-h-8 focus:bg-secondary w-full text-left transition-all">
+    <button class="focus:bg-secondary min-h-8 w-full text-left transition-all">
       <SelectLang />
     </button>
   </nav>
