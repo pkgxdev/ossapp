@@ -1,0 +1,5 @@
+@tailwind components;
+
+@layer components {
+  /* Define common component styles here */
+}
