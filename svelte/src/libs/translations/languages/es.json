@@ -1,0 +1,101 @@
+{
+  "id": "es",
+  "label": "Español",
+  "translations": {
+    "store-search-placeholder": "buscar paquetes",
+    "action": {
+      "update": "actualizar",
+      "cancel": "cancelar"
+    },
+    "package": {
+      "update-all": "ACTUALIZAR TODO",
+      "cta-AVAILABLE": "INSTALAR",
+      "cta-INSTALLED": "INSTALADO",
+      "cta-INSTALLING": "INSTALANDO",
+      "cta-UNINSTALLED": "REINSTALAR",
+      "cta-UNINSTALL": "DESINSTALAR",
+      "cta-NEEDS_UPDATE": "ACTUALIZAR",
+      "cta-UPDATING": "ACTUALIZANDO",
+      "cta-UPDATED": "ACTUALIZADO",
+      "cta-PRUNE": "PODAR",
+      "cta-PRUNING": "PODANDO",
+      "open": "ABRIR",
+      "open-in-terminal": "ABRIR EN TERMINAL",
+      "local-package": "paquete local",
+      "not-in-pantry": "aún no agregado a la despensa"
+    },
+    "footer": {
+      "quick-links-title": "enlaces rápidos",
+      "about-tea-store": "sobre la tienda de té",
+      "report-a-problem": "informar un problema",
+      "visit-website": "visitar tea.xyz",
+      "terms-services": "términos y servicios",
+      "privacy-policy": "política de privacidad"
+    },
+    "documentation": {
+      "title": "documentación",
+      "workshops": "talleres"
+    },
+    "view-all": "ver todo",
+    "sorting": {
+      "label": "Ordenar por",
+      "popularity": "Más popular",
+      "most-recent": "Más reciente"
+    },
+    "common": {
+      "home": "inicio",
+      "all": "Todos",
+      "articles": "Artículos",
+      "workshops": "Talleres",
+      "metadata": "Metadatos",
+      "homepage": "Página de inicio",
+      "documentation": "Documentación",
+      "github-repository": "Repositorio de Github",
+      "repository": "Repositorio",
+      "contributors": "Contribuidores",
+      "view-on-github": "VER EN GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "¿Actualizar tea/gui a la versión {{version}}?",
+      "gui-restarting": "Continuar causará que la aplicación se reinicie al completarse. Asegúrate de no tener ninguna operación en progreso. ¿Quieres continuar?",
+      "gui-restart": "reiniciar"
+    },
+    "side-menu-title": {
+      "discover": "descubrir",
+      "all": "Todos los paquetes",
+      "installed": "Paquetes instalados",
+      "installed_updates_available": "Actualizaciones disponibles",
+      "recently_updated": "Actualizado recientemente",
+      "new_packages": "Nuevos paquetes",
+      "popular": "Popular",
+      "featured": "Destacados",
+      "essentials": "Esenciales",
+      "starstruck": "Peso pesado Starstruck",
+      "made_by_tea": "hecho por tea",
+      "local_packages": "Paquetes locales"
+    },
+    "tags": {
+      "discover": "descubrir",
+      "all": "todos los paquetes",
+      "installed": "instalado",
+      "installed_updates_available": "Actualizaciones disponibles",
+      "recently_updated": "Actualizado recientemente",
+      "new_packages": "Nuevos paquetes",
+      "popular": "Popular",
+      "featured": "Destacados",
+      "essentials": "Esenciales",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Hecho por tea",
+      "local_packages": "Paquetes locales"
+    },
+    "discover": {
+      "featured_title": "esenciales locales de IA",
+      "featured_description": "Explora el mundo de la inteligencia artificial local. Esta es tu plataforma para experimentar con herramientas de IA de alto perfil como AutoGPT y Stable Diffusion Web UI, directamente desde tu sistema local. Inicia tus proyectos de IA manteniendo tus datos seguros, con la libertad de ajustar como desees."
+    }
+  }
+}
