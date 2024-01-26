@@ -1,0 +1,101 @@
+{
+  "id": "fi",
+  "label": "Finnish",
+  "translations": {
+    "store-search-placeholder": "etsi paketteja",
+    "action": {
+      "update": "päivitä",
+      "cancel": "peruuta"
+    },
+    "package": {
+      "update-all": "PÄIVITÄ KAIKKI",
+      "cta-AVAILABLE": "ASENNA",
+      "cta-INSTALLED": "ASENNETTU",
+      "cta-INSTALLING": "ASENNETAAN",
+      "cta-UNINSTALLED": "UUDELLEENASENNA",
+      "cta-UNINSTALL": "POISTA ASENNUS",
+      "cta-NEEDS_UPDATE": "PÄIVITÄ",
+      "cta-UPDATING": "PÄIVITTÄÄN",
+      "cta-UPDATED": "PÄIVITETTY",
+      "cta-PRUNE": "SIIVOTA",
+      "cta-PRUNING": "SIIVOAMINEN",
+      "open": "AVAA",
+      "open-in-terminal": "AVAA TERMINAALISSA",
+      "local-package": "paikallinen paketti",
+      "not-in-pantry": "ei vielä lisätty kaappiin"
+    },
+    "footer": {
+      "quick-links-title": "pikalinkit",
+      "about-tea-store": "tea-kaupasta",
+      "report-a-problem": "raportoi ongelma",
+      "visit-website": "vieraile tea.xyz:ssa",
+      "terms-services": "käyttöehdot",
+      "privacy-policy": "tietosuojakäytäntö"
+    },
+    "documentation": {
+      "title": "dokumentaatio",
+      "workshops": "työpajat"
+    },
+    "view-all": "näytä kaikki",
+    "sorting": {
+      "label": "Lajittele",
+      "popularity": "Suosituimmat",
+      "most-recent": "Viimeisimmät"
+    },
+    "common": {
+      "home": "koti",
+      "all": "Kaikki",
+      "articles": "Artikkelit",
+      "workshops": "Työpajat",
+      "metadata": "Metadata",
+      "homepage": "Kotisivu",
+      "documentation": "Dokumentaatio",
+      "github-repository": "GitHub-varasto",
+      "repository": "Varasto",
+      "contributors": "Avustajat",
+      "view-on-github": "NÄYTÄ GITHUBISSA"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "päivitä tea/gui versioon {{version}}?",
+      "gui-restarting": "Jatkaminen aiheuttaa sovelluksen uudelleenkäynnistyksen valmistuttua. Varmista, ettei sinulla ole keskeneräisiä toimintoja. Haluatko jatkaa?",
+      "gui-restart": "käynnistä uudelleen"
+    },
+    "side-menu-title": {
+      "discover": "löydä",
+      "all": "Kaikki Paketit",
+      "installed": "Asennetut Paketit",
+      "installed_updates_available": "Saatavilla olevat päivitykset",
+      "recently_updated": "Äskettäin päivitetty",
+      "new_packages": "Uudet Paketit",
+      "popular": "Suositut",
+      "featured": "Esittelyssä",
+      "essentials": "Välttämättömät",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "tea:n valmistama",
+      "local_packages": "Paikalliset Paketit"
+    },
+    "tags": {
+      "discover": "löydä",
+      "all": "kaikki paketit",
+      "installed": "asennettu",
+      "installed_updates_available": "Päivityksiä saatavilla",
+      "recently_updated": "Äskettäin päivitetty",
+      "new_packages": "Uudet paketit",
+      "popular": "Suositut",
+      "featured": "Esittelyssä",
+      "essentials": "Välttämättömät",
+      "starstruck": "Starstruck",
+      "made_by_tea": "tea:n valmistama",
+      "local_packages": "Paikalliset Paketit"
+    },
+    "discover": {
+      "featured_title": "paikalliset AI-olennaisuudet",
+      "featured_description": "Tutustu paikallisen tekoälyn maailmaan. Tämä on alustasi korkean profiilin tekoälytyökalujen kuten AutoGPT ja Stable Diffusion Web UI kokeiluun suoraan paikallisesta järjestelmästäsi. Käynnistä tekoälyprojektisi pitäen samalla tietosi turvassa ja vapaudella säätää niitä haluamallasi tavalla."
+    }
+  }
+}
