@@ -23,6 +23,7 @@ import ja from "./languages/ja.json";
 import lt from "./languages/lt.json";
 import kr from "./languages/kr.json";
 import es from "./languages/es.json";
+import fi from "./languages/fi.json";
 import nl from "./languages/nl.json";
 
 import * as customModifiers from "./modifiers";
@@ -55,6 +56,7 @@ const languages = [
   lt,
   kr,
   es,
+  fi,
   nl
 ];
 
