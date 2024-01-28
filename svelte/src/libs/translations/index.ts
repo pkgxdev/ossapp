@@ -24,6 +24,7 @@ import lt from "./languages/lt.json";
 import kr from "./languages/kr.json";
 import es from "./languages/es.json";
 import fi from "./languages/fi.json";
+import si from "./languages/si.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -55,7 +56,8 @@ const languages = [
   lt,
   kr,
   es,
-  fi
+  fi,
+  si
 ];
 
 const langs: { [lang: string]: string } = {};
