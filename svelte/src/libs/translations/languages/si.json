@@ -1,0 +1,101 @@
+{
+  "id": "en",
+  "label": "සිංහල",
+  "translations": {
+    "store-search-placeholder": "පැකේජ සොයන්න",
+    "action": {
+      "update": "යාවත්කාලීන",
+      "cancel": "අවලංගු"
+    },
+    "package": {
+      "update-all": "සියල්ල යාවත්කාලීන",
+      "cta-AVAILABLE": "ස්ථාපනය කරන්න",
+      "cta-INSTALLED": "ස්ථාපිත",
+      "cta-INSTALLING": "ස්ථාපනය කරමින්",
+      "cta-UNINSTALLED": "ප්‍රති-ස්ථාපනය",
+      "cta-UNINSTALL": "ඉවත් කරන්න",
+      "cta-NEEDS_UPDATE": "යාවත්කාලීන",
+      "cta-UPDATING": "යාවත්කාලීන කරමින්",
+      "cta-UPDATED": "යාවත්කාලීන කළා",
+      "cta-PRUNE": "කප්පාදු",
+      "cta-PRUNING": "කප්පාදු කරමින්",
+      "open": "විවෘත",
+      "open-in-terminal": "ටර්මිනලය තුල විවෘත",
+      "local-package": "දේශීය පැකේජ",
+      "not-in-pantry": "මෙතෙක් පැන්ට්‍රියට එක්කර නැත"
+    },
+    "footer": {
+      "quick-links-title": "ඉක්මන් සබැඳි",
+      "about-tea-store": "ටී ගබඩාව පිළිබඳ",
+      "report-a-problem": "ප්‍රශ්නයක් වාර්තාකරන්න",
+      "visit-website": "tea.xyz වෙත යන්න",
+      "terms-services": "නීති සහ සේවා",
+      "privacy-policy": "පුද්ගලිකත්ව ප්‍රතිපත්තිය"
+    },
+    "documentation": {
+      "title": "ලිපිගොනු",
+      "workshops": "වැඩපල"
+    },
+    "view-all": "සියල්ල බලන්න",
+    "sorting": {
+      "label": "පෙළගැස්ම",
+      "popularity": "වඩාත් ජනප්‍රිය",
+      "most-recent": "වඩාත් මෑත"
+    },
+    "common": {
+      "home": "නිවස",
+      "all": "සියලු",
+      "articles": "ලිපි",
+      "workshops": "වැඩපල",
+      "metadata": "මෙටා දත්ත",
+      "homepage": "මුල්පිටුව",
+      "documentation": "ලිපිගොනු",
+      "github-repository": "ගිට්හබ් රිපොසිටරි",
+      "repository": "රිපොසිටරි",
+      "contributors": "දායකයින්",
+      "view-on-github": "ගිට්හබ් මත බලන්න"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "tea/gui {{version}} වෙත යාවත්කාලීන කරන්නද?",
+      "gui-restarting": "ඉදිරියට යාම යෙදුම නැවත ආරම්භ කිරීමට හේතු වේ. කරුණාකර කිසිදු මෙහෙයුමක් සිදු නොවන බවට සහතික වන්න. ඔබට ඉදිරියට යාමට අවශ්‍යද?",
+      "gui-restart": "යළි අරඹන්න"
+    },
+    "side-menu-title": {
+      "discover": "ගවේෂනය",
+      "all": "සියලු පැකේජ",
+      "installed": "ස්ථාපිත",
+      "installed_updates_available": "යාවත්කාලීන ඇති",
+      "recently_updated": "මෑතදී යාවත්කාලීන කළ",
+      "new_packages": "නව පැකේජ",
+      "popular": "ජනප්‍රිය",
+      "featured": "විශේෂාංගගත",
+      "essentials": "අත්‍යාවශ්‍ය",
+      "starstruck": "තරු පහර",
+      "made_by_tea": "ටී විසින් නිපැයූ",
+      "local_packages": "දේශීය පැකේජ"
+    },
+    "tags": {
+      "discover": "ගවේෂනය",
+      "all": "සියලු පැකේජ",
+      "installed": "ස්ථාපිත",
+      "installed_updates_available": "යාවත්කාලීන ඇති",
+      "recently_updated": "මෑතදී යාවත්කාලීන කළ",
+      "new_packages": "නව පැකේජ",
+      "popular": "ජනප්‍රිය",
+      "featured": "විශේෂාංගගත",
+      "essentials": "අත්‍යාවශ්‍ය",
+      "starstruck": "තරු පහර",
+      "made_by_tea": "ටී විසින් නිපැයූ",
+      "local_packages": "දේශීය පැකේජ"
+    },
+    "discover": {
+      "featured_title": "දේශීය අත්‍යාවශ්‍ය",
+      "featured_description": "දේශීය AI ක්ෂේත්‍රය ගවේෂණය කරන්න. මෙය ඔබේ ප්‍රාදේශීය පද්ධතියේ සිටම, AutoGPT සහ Stable Diffusion වෙබ් UI වැනි උසස් AI මෙවලම් සමඟ ගැටීමට ඔබේ වේදිකාවයි. ඔබට අවශ්‍ය පරිදි සියුම් ලෙස සකස් කර ගැනීමේ නිදහස සමඟින් ඔබේ දත්ත සුරක්ෂිතව සහ සුරක්ෂිතව තබා ගනිමින් ඔබේ AI ව්‍යාපෘති ආරම්භ කරන්න."
+    }
+  }
+}
