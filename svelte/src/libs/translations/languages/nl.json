@@ -1,0 +1,101 @@
+{
+  "id": "nl",
+  "label": "Nederlands",
+  "translations": {
+    "store-search-placeholder": "zoek pakketten",
+    "action": {
+      "update": "bijwerken",
+      "cancel": "annuleren"
+    },
+    "package": {
+      "update-all": "ALLE UPDATEN",
+      "cta-AVAILABLE": "INSTALLEREN",
+      "cta-INSTALLED": "GEÏNSTALLEERD",
+      "cta-INSTALLING": "INSTALLEREN",
+      "cta-UNINSTALLED": "OPNIEUW INSTALLEREN",
+      "cta-UNINSTALL": "DEÏSTALLEREN",
+      "cta-NEEDS_UPDATE": "BIJWERKEN",
+      "cta-UPDATING": "BEZIG MET UPDATEN",
+      "cta-UPDATED": "GEÜPDATET",
+      "cta-PRUNE": "SNOEIEN",
+      "cta-PRUNING": "BEZIG MET SNOEIEN",
+      "open": "OPENEN",
+      "open-in-terminal": "OPENEN IN TERMINAL",
+      "local-package": "lokaal pakket",
+      "not-in-pantry": "nog niet toegevoegd aan voorraadkast"
+    },
+    "footer": {
+      "quick-links-title": "snelle links",
+      "about-tea-store": "over de theewinkel",
+      "report-a-problem": "probleem melden",
+      "visit-website": "bezoek tea.xyz",
+      "terms-services": "algemene voorwaarden",
+      "privacy-policy": "privacybeleid"
+    },
+    "documentation": {
+      "title": "documentatie",
+      "workshops": "workshops"
+    },
+    "view-all": "alles bekijken",
+    "sorting": {
+      "label": "Sorteren op",
+      "popularity": "Meest populair",
+      "most-recent": "Meest recent"
+    },
+    "common": {
+      "home": "thuis",
+      "all": "Alle",
+      "articles": "Artikelen",
+      "workshops": "Workshops",
+      "metadata": "Metadata",
+      "homepage": "Startpagina",
+      "documentation": "Documentatie",
+      "github-repository": "Github Repository",
+      "repository": "Repository",
+      "contributors": "Bijdragers",
+      "view-on-github": "BEKIJK OP GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "thee/gui bijwerken naar {{version}}?",
+      "gui-restarting": "Het uitvoeren hiervan zal de toepassing opnieuw starten bij voltooiing. Zorg ervoor dat er geen lopende bewerkingen zijn. Wil je doorgaan?",
+      "gui-restart": "herstarten"
+    },
+    "side-menu-title": {
+      "discover": "ontdekken",
+      "all": "Alle pakketten",
+      "installed": "Geïnstalleerde pakketten",
+      "installed_updates_available": "Beschikbare updates",
+      "recently_updated": "Recent bijgewerkt",
+      "new_packages": "Nieuwe pakketten",
+      "popular": "Populair",
+      "featured": "Uitgelicht",
+      "essentials": "Essentieel",
+      "starstruck": "Zwaargewichten",
+      "made_by_tea": "gemaakt door tea",
+      "local_packages": "Lokale pakketten"
+    },
+    "tags": {
+      "discover": "ontdekken",
+      "all": "alle pakketten",
+      "installed": "geïnstalleerd",
+      "installed_updates_available": "Updates beschikbaar",
+      "recently_updated": "Recent bijgewerkt",
+      "new_packages": "Nieuwe pakketten",
+      "popular": "Populair",
+      "featured": "Uitgelicht",
+      "essentials": "Essentieel",
+      "starstruck": "Onder de indruk",
+      "made_by_tea": "Gemaakt door tea",
+      "local_packages": "Lokale pakketten"
+    },
+    "discover": {
+      "featured_title": "lokale AI essentials",
+      "featured_description": "Verken de wereld van lokale AI. Dit is jouw platform om te experimenteren met hoogwaardige AI-tools zoals AutoGPT en Stable Diffusion Web UI, direct vanaf je lokale systeem. Begin met je AI-projecten terwijl je jouw gegevens veilig en beveiligd houdt, met de vrijheid om naar wens bij te stellen."
+    }
+  }
+}
