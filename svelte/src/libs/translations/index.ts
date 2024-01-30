@@ -26,6 +26,7 @@ import es from "./languages/es.json";
 import fi from "./languages/fi.json";
 import nl from "./languages/nl.json";
 import bg from "./languages/bg.json";
+import vi from "./languages/vi.json";
 import by from "./languages/by.json";
 
 import * as customModifiers from "./modifiers";
@@ -61,6 +62,7 @@ const languages = [
   fi,
   nl,
   bg,
+  vi,
   by
 ];
 
