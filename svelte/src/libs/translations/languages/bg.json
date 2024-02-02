@@ -1,0 +1,101 @@
+{
+  "id": "bg",
+  "label": "Bulgarian",
+  "translations": {
+    "store-search-placeholder": "търсене на пакети",
+    "action": {
+      "update": "актуализация",
+      "cancel": "анулиране"
+    },
+    "package": {
+      "update-all": "АКТУАЛИЗИРАЙ ВСИЧКИ",
+      "cta-AVAILABLE": "ИНСТАЛИРАЙ",
+      "cta-INSTALLED": "ИНСТАЛИРАНА",
+      "cta-INSTALLING": "ИНСТАЛИРАНЕ",
+      "cta-UNINSTALLED": "ПРЕИНСТАЛИРАЙТЕ",
+      "cta-UNINSTALL": "ДЕИНСТАЛИРАНЕ",
+      "cta-NEEDS_UPDATE": "АКТУАЛИЗИРАНЕ",
+      "cta-UPDATING": "АКТУАЛИЗИРАНЕ",
+      "cta-UPDATED": "АКТУАЛИЗИРАН",
+      "cta-PRUNE": "ПОДРЕЖЕТЕ",
+      "cta-PRUNING": "РЕЗИТБА",
+      "open": "OPEN",
+      "open-in-terminal": "ОТВОРИ В ТЕРМИНАЛА",
+      "local-package": "локален пакет",
+      "not-in-pantry": "все още не е добавено в килера"
+    },
+    "footer": {
+      "quick-links-title": "бързи връзки",
+      "about-tea-store": "за магазина за чай",
+      "report-a-problem": "Съобщете за проблем",
+      "visit-website": "посетете tea.xyz",
+      "terms-services": "условия и услуги",
+      "privacy-policy": "политика за поверителност"
+    },
+    "documentation": {
+      "title": "документация",
+      "workshops": "работилници"
+    },
+    "view-all": "виж всички",
+    "sorting": {
+      "label": "Сортирай по",
+      "popularity": "Най - известен",
+      "most-recent": "Най-скорошен"
+    },
+    "common": {
+      "home": "У дома",
+      "all": "всичко",
+      "articles": "Статии",
+      "workshops": "Работилници",
+      "metadata": "Метадата",
+      "homepage": "Начална страница",
+      "documentation": "Документация",
+      "github-repository": "Github хранилище",
+      "repository": "Хранилище",
+      "contributors": "Сътрудници",
+      "view-on-github": "ПРЕГЛЕД В GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "актуализиране на tea/gui до {{version}}?",
+      "gui-restarting": "Продължаването ще накара приложението да се рестартира след приключване. Моля, уверете се, че нямате текущи операции. Искаш ли да продължиш?",
+      "gui-restart": "рестартирам"
+    },
+    "side-menu-title": {
+      "discover": "откривам",
+      "all": "Всички Пакети",
+      "installed": "Инсталирани пакети",
+      "installed_updates_available": "Налични актуализации",
+      "recently_updated": "Наскоро актуализиран",
+      "new_packages": "Нови Пакети",
+      "popular": "Популярен",
+      "featured": "Представено",
+      "essentials": "Основни неща",
+      "starstruck": "звезден Тежка категория",
+      "made_by_tea": "направено от чай",
+      "local_packages": "Местни пакети"
+    },
+    "tags": {
+      "discover": "откривам",
+      "all": "всички пакети",
+      "installed": "инсталиран",
+      "installed_updates_available": "Налични актуализации",
+      "recently_updated": "Наскоро актуализиран",
+      "new_packages": "Нови пакети",
+      "popular": "Популярен",
+      "featured": "Представено",
+      "essentials": "Основни неща",
+      "starstruck": "звезден",
+      "made_by_tea": "направено от чай",
+      "local_packages": "Местни пакети"
+    },
+    "discover": {
+      "featured_title": "основни местни AI",
+      "featured_description": "Изследвайте царството на местния AI. Това е вашата платформа за работа с високопрофилни AI инструменти като AutoGPT и Stable Diffusion Web UI, направо от вашата локална система. Стартирайте бързо вашите AI проекти, като същевременно пазите вашите данни в безопасност и сигурност, със свободата да прецизирате, както желаете."
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "id": "by",
+  "label": "Беларускі",
+  "translations": {
+    "store-search-placeholder": "пошук пакетаў",
+    "action": {
+      "update": "абнаўленне",
+      "cancel": "адмяніць"
+    },
+    "package": {
+      "update-all": "АБНАВІЦЬ УСЕ",
+      "cta-AVAILABLE": "УСТАНАВІЦЬ",
+      "cta-INSTALLED": "УСТАНОВЛЕНЫ",
+      "cta-INSTALLING": "УСТАНОВКА",
+      "cta-UNINSTALLED": "ПЕРАЎСТАЛІЦЬ",
+      "cta-UNINSTALL": "ВЫДАЛІЦЬ",
+      "cta-NEEDS_UPDATE": "АБНАЎЛЕННЕ",
+      "cta-UPDATING": "АБНАЎЛЕННЕ",
+      "cta-UPDATED": "АБНАЎЛЕНА",
+      "cta-PRUNE": "ЧАСНАЎ",
+      "cta-PRUNING": "АБРЫЗАННЕ",
+      "open": "АДКРЫТАЯ",
+      "open-in-terminal": "АДКРЫЦЬ У ТЭРМІНАЛЕ",
+      "local-package": "мясцовы пакет",
+      "not-in-pantry": "яшчэ не дададзены ў кладоўку"
+    },
+    "footer": {
+      "quick-links-title": "хуткія спасылкі",
+      "about-tea-store": "пра чайную",
+      "report-a-problem": "паведаміць аб праблеме",
+      "visit-website": "наведайце tea.xyz",
+      "terms-services": "ўмовы і паслугі",
+      "privacy-policy": "Палітыка прыватнасці"
+    },
+    "documentation": {
+      "title": "дакументацыя",
+      "workshops": "майстэрняў"
+    },
+    "view-all": "прагледзець усе",
+    "sorting": {
+      "label": "Сартаваць па",
+      "popularity": "Самая папулярная",
+      "most-recent": "Самы апошні"
+    },
+    "common": {
+      "home": "дадому",
+      "all": "Усе",
+      "articles": "Артыкулы",
+      "workshops": "Майстэрні",
+      "metadata": "Метадата",
+      "homepage": "Хатняя старонка",
+      "documentation": "Дакументацыя",
+      "github-repository": "Рэпазітар Github",
+      "repository": "Рэпазітар",
+      "contributors": "Укладальнікі",
+      "view-on-github": "ГЛЯДЗЕЦЬ НА GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "абнавіць tea/gui да {{version}}?",
+      "gui-restarting": "Працяг прывядзе да перазапуску праграмы пасля завяршэння. Упэўніцеся, што ў вас не выконваюцца якія-небудзь аперацыі. Вы хочаце працягнуць?",
+      "gui-restart": "перазапуск"
+    },
+    "side-menu-title": {
+      "discover": "выявіць",
+      "all": "Усе пакеты",
+      "installed": "Усталяваныя пакеты",
+      "installed_updates_available": "Даступныя абнаўленні",
+      "recently_updated": "Нядаўна абноўлены",
+      "new_packages": "Новыя пакеты",
+      "popular": "папулярны",
+      "featured": "Рэкамендаваны",
+      "essentials": "прадметы першай неабходнасці",
+      "starstruck": "зоркі цяжкавагавікі",
+      "made_by_tea": "зроблены з tea",
+      "local_packages": "Лакальныя пакеты"
+    },
+    "tags": {
+      "discover": "выявіць",
+      "all": "усе пакеты",
+      "installed": "усталяваны",
+      "installed_updates_available": "Даступныя абнаўленні",
+      "recently_updated": "Нядаўна абноўлены",
+      "new_packages": "Новыя пакеты",
+      "popular": "папулярны",
+      "featured": "Рэкамендаваны",
+      "essentials": "прадметы першай неабходнасці",
+      "starstruck": "зоркі",
+      "made_by_tea": "зроблены з tea",
+      "local_packages": "Лакальныя пакеты"
+    },
+    "discover": {
+      "featured_title": "мясцовыя асновы штучнага інтэлекту",
+      "featured_description": "Даследуйце сферу мясцовага штучнага інтэлекту. Гэта ваша платформа для працы з высокапрафільнымі інструментамі AI, такімі як AutoGPT і Stable Diffusion Web UI, прама з лакальнай сістэмы. Хутка пачынайце свае праекты штучнага інтэлекту, захоўваючы вашы даныя ў бяспецы і абароне, са свабодай тонкай налады па сваім жаданні."
+    }
+  }
+}

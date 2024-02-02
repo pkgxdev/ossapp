@@ -1,0 +1,101 @@
+{
+  "id": "vi",
+  "label": "Tiếng Việt",
+  "translations": {
+    "store-search-placeholder": "tìm kiếm gói",
+    "action": {
+      "update": "cập nhật",
+      "cancel": "hủy"
+    },
+    "package": {
+      "update-all": "CẬP NHẬT TẤT CẢ",
+      "cta-AVAILABLE": "CÀI ĐẶT",
+      "cta-INSTALLED": "ĐÃ CÀI ĐẶT",
+      "cta-INSTALLING": "ĐANG CÀI ĐẶT",
+      "cta-UNINSTALLED": "CÀI ĐẶT LẠI",
+      "cta-UNINSTALL": "GỠ CÀI ĐẶT",
+      "cta-NEEDS_UPDATE": "CẦN CẬP NHẬT",
+      "cta-UPDATING": "ĐANG CẬP NHẬT",
+      "cta-UPDATED": "ĐÃ CẬP NHẬT",
+      "cta-PRUNE": "CẮT BỚT",
+      "cta-PRUNING": "ĐANG CẮT BỚT",
+      "open": "MỞ",
+      "open-in-terminal": "MỞ TRONG TERMINAL",
+      "local-package": "gói địa phương",
+      "not-in-pantry": "chưa thêm vào kho"
+    },
+    "footer": {
+      "quick-links-title": "liên kết nhanh",
+      "about-tea-store": "về cửa hàng trà",
+      "report-a-problem": "báo cáo vấn đề",
+      "visit-website": "truy cập tea.xyz",
+      "terms-services": "điều khoản & dịch vụ",
+      "privacy-policy": "chính sách bảo mật"
+    },
+    "documentation": {
+      "title": "tài liệu",
+      "workshops": "hội thảo"
+    },
+    "view-all": "xem tất cả",
+    "sorting": {
+      "label": "Sắp xếp theo",
+      "popularity": "Phổ biến nhất",
+      "most-recent": "Mới nhất"
+    },
+    "common": {
+      "home": "trang chủ",
+      "all": "Tất cả",
+      "articles": "Bài viết",
+      "workshops": "Hội thảo",
+      "metadata": "Dữ liệu mô tả",
+      "homepage": "Trang chủ",
+      "documentation": "Tài liệu",
+      "github-repository": "Kho GitHub",
+      "repository": "Kho",
+      "contributors": "Đóng góp viên",
+      "view-on-github": "XEM TRÊN GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "cập nhật tea/gui lên phiên bản {{version}}?",
+      "gui-restarting": "Thực hiện sẽ khiến ứng dụng khởi động lại khi hoàn thành. Vui lòng đảm bảo rằng bạn không có bất kỳ thao tác nào đang diễn ra. Bạn có muốn tiếp tục không?",
+      "gui-restart": "khởi động lại"
+    },
+    "side-menu-title": {
+      "discover": "khám phá",
+      "all": "Tất cả các Gói",
+      "installed": "Các Gói Đã Cài Đặt",
+      "installed_updates_available": "Cập Nhật Có Sẵn",
+      "recently_updated": "Gần Đây Đã Cập Nhật",
+      "new_packages": "Gói Mới",
+      "popular": "Phổ biến",
+      "featured": "Nổi bật",
+      "essentials": "Cần thiết",
+      "starstruck": "Những Đối Thủ Nặng Ký",
+      "made_by_tea": "sản xuất bởi tea",
+      "local_packages": "Gói Địa Phương"
+    },
+    "tags": {
+      "discover": "khám phá",
+      "all": "tất cả các gói",
+      "installed": "đã cài đặt",
+      "installed_updates_available": "Cập nhật có sẵn",
+      "recently_updated": "gần đây đã cập nhật",
+      "new_packages": "gói mới",
+      "popular": "phổ biến",
+      "featured": "nổi bật",
+      "essentials": "cần thiết",
+      "starstruck": "Starstruck",
+      "made_by_tea": "sản xuất bởi tea",
+      "local_packages": "Gói Địa Phương"
+    },
+    "discover": {
+      "featured_title": "các yếu tố trí tuệ nhân tạo địa phương",
+      "featured_description": "Khám phá thế giới của trí tuệ nhân tạo địa phương. Đây là nền tảng của bạn để thử nghiệm các công cụ trí tuệ nhân tạo nổi tiếng như AutoGPT và Giao diện người dùng Stable Diffusion Web UI, ngay từ hệ thống địa phương của bạn. Bắt đầu nhanh chóng các dự án trí tuệ nhân tạo của bạn trong khi giữ cho dữ liệu của bạn an toàn và bảo mật, với sự tự do để điều chỉnh theo ý muốn của bạn."
+    }
+  }
+}
