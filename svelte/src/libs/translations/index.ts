@@ -28,6 +28,7 @@ import nl from "./languages/nl.json";
 import bg from "./languages/bg.json";
 import vi from "./languages/vi.json";
 import by from "./languages/by.json";
+import ie from "./languages/ie.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -63,7 +64,8 @@ const languages = [
   nl,
   bg,
   vi,
-  by
+  by,
+  ie
 ];
 
 const langs: { [lang: string]: string } = {};
