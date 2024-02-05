@@ -1,0 +1,101 @@
+{
+  "id": "ie",
+  "label": "Éireann",
+  "translations": {
+    "store-search-placeholder": "pacáistí cuardaigh",
+    "action": {
+      "update": "nuashonrú",
+      "cancel": "ceal"
+    },
+    "package": {
+      "update-all": "NUASHONRAIGH GACH",
+      "cta-AVAILABLE": "SUITEÁIL",
+      "cta-INSTALLED": "SUITEAILTE",
+      "cta-INSTALLING": "SÁSÁIL",
+      "cta-UNINSTALLED": "ATH-SHUITEÁIL",
+      "cta-UNINSTALL": "DHÍSHUITEÁIL",
+      "cta-NEEDS_UPDATE": "NUASHONRUITHE",
+      "cta-UPDATING": "NUASHONRUITHE",
+      "cta-UPDATED": "NUASHONRAITHE",
+      "cta-PRUNE": "PRUNE",
+      "cta-PRUNING": "PRAGHADH",
+      "open": "OSCAILTE",
+      "open-in-terminal": "OSCAILTE I DTEIRMEOIR",
+      "local-package": "pacáiste áitiúil",
+      "not-in-pantry": "nár cuireadh leis an pantry fós"
+    },
+    "footer": {
+      "quick-links-title": "naisc tapaidh",
+      "about-tea-store": "faoin siopa tea",
+      "report-a-problem": "fadhb a thuairisciú",
+      "visit-website": "tabhair cuairt ar tea.xyz",
+      "terms-services": "téarmaí & seirbhísí",
+      "privacy-policy": "Beartas Príobháideachais"
+    },
+    "documentation": {
+      "title": "doiciméadú",
+      "workshops": "ceardlanna"
+    },
+    "view-all": "amharc ar fad",
+    "sorting": {
+      "label": "Sórtáil de réir",
+      "popularity": "Is cáiliúla",
+      "most-recent": "Is déanaí"
+    },
+    "common": {
+      "home": "abhaile",
+      "all": "Gach",
+      "articles": "Ailt",
+      "workshops": "Ceardlanna",
+      "metadata": "Tá sé meta",
+      "homepage": "Leathanach baile",
+      "documentation": "Doiciméadúchán",
+      "github-repository": "Stór Github",
+      "repository": "Stór",
+      "contributors": "Rannpháirtithe",
+      "view-on-github": "FÉACH AR GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "nuashonraigh tea/gui chuig {{version}}?",
+      "gui-restarting": "Má chuirtear ar aghaidh é, déanfar an t-iarratas a atosú nuair a bheidh sé críochnaithe. Cinntigh le do thoil nach bhfuil aon oibríochtaí idir lámha agat. Ar mhaith leat dul ar aghaidh?",
+      "gui-restart": "Tosaigh arís"
+    },
+    "side-menu-title": {
+      "discover": "amach",
+      "all": "Gach Pacáistí",
+      "installed": "Pacáistí Suiteáilte",
+      "installed_updates_available": "Nuashonruithe ar Fáil",
+      "recently_updated": "Nuashonraithe Le Déanaí",
+      "new_packages": "Pacáistí Nua",
+      "popular": "Coitianta",
+      "featured": "Réadmhaoin",
+      "essentials": "Bunúsacha",
+      "starstruck": "Starstruck",
+      "made_by_tea": "déanta ag tea",
+      "local_packages": "Pacáistí Áitiúla"
+    },
+    "tags": {
+      "discover": "amach",
+      "all": "Gach Pacáistí",
+      "installed": "Pacáistí Suiteáilte",
+      "installed_updates_available": "Nuashonruithe ar Fáil",
+      "recently_updated": "Nuashonraithe Le Déanaí",
+      "new_packages": "Pacáistí Nua",
+      "popular": "Coitianta",
+      "featured": "Réadmhaoin",
+      "essentials": "Bunúsacha",
+      "starstruck": "Starstruck",
+      "made_by_tea": "déanta ag tea",
+      "local_packages": "Pacáistí Áitiúla"
+    },
+    "discover": {
+      "featured_title": "bunriachtanais áitiúla AI",
+      "featured_description": "Déan iniúchadh ar réimse an AI áitiúil. Is é seo an t-ardán atá agat chun uirlisí AI ardphróifíle a úsáid mar AutoGPT agus Chomhéadain Gréasáin Idirleata Cobhsaí, díreach ó do chóras áitiúil. Cuir tús le do thionscadail AI agus tú ag coinneáil do shonraí sábháilte agus slán, leis an tsaoirse chun mionchoigeartú a dhéanamh de réir mar is mian leat."
+    }
+  }
+}
