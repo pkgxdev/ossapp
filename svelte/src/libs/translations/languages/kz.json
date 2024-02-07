@@ -1,0 +1,101 @@
+{
+  "id": "kz",
+  "label": "қазақ",
+  "translations": {
+    "store-search-placeholder": "іздеу пакеттері",
+    "action": {
+      "update": "жаңарту",
+      "cancel": "бас тарту"
+    },
+    "package": {
+      "update-all": "БАРЛЫҒЫН ЖАҢАРТУ",
+      "cta-AVAILABLE": "ОРНАТУ",
+      "cta-INSTALLED": "ОРНАТУ",
+      "cta-INSTALLING": "ОРНАТУ",
+      "cta-UNINSTALLED": "ҚАЙТА ОРНАТУ",
+      "cta-UNINSTALL": "ОРНАТУ",
+      "cta-NEEDS_UPDATE": "ЖАҢАРТУ",
+      "cta-UPDATING": "ЖАҢАРТУ",
+      "cta-UPDATED": "ЖАҢАРТЫЛДЫ",
+      "cta-PRUNE": "АЛХОРЫ",
+      "cta-PRUNING": "ОРУДАУ",
+      "open": "АШЫҚ",
+      "open-in-terminal": "ТЕРМИНАЛДА АШЫЛУ",
+      "local-package": "жергілікті пакет",
+      "not-in-pantry": "қоймаға әлі қосылмаған"
+    },
+    "footer": {
+      "quick-links-title": "жылдам сілтемелер",
+      "about-tea-store": "дүкен tea туралы",
+      "report-a-problem": "мәселені хабарлаңыз",
+      "visit-website": "tea.xyz сайтына кіріңіз",
+      "terms-services": "шарттар мен қызметтер",
+      "privacy-policy": "құпиялылық саясаты"
+    },
+    "documentation": {
+      "title": "құжаттама",
+      "workshops": "шеберханалар"
+    },
+    "view-all": "барлығын көру",
+    "sorting": {
+      "label": "Бойынша сұрыптау",
+      "popularity": "Ең танымал",
+      "most-recent": "Ең соңғы"
+    },
+    "common": {
+      "home": "үй",
+      "all": "Барлық",
+      "articles": "Мақалалар",
+      "workshops": "Семинарлар",
+      "metadata": "Бұл мета",
+      "homepage": "Негізгі бет",
+      "documentation": "Құжаттама",
+      "github-repository": "Github репозиторийі",
+      "repository": "Репозиторийi",
+      "contributors": "Қатысушылар",
+      "view-on-github": "GITHUB КӨРСЕТУ"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "tea/gui нұсқасын {{version}}?",
+      "gui-restarting": "Жалғастыру қолданбаны аяқтағаннан кейін қайта бастауға әкеледі. Сізде орындалып жатқан операциялардың жоқтығына көз жеткізіңіз. Жалғастырғыңыз келе ме?",
+      "gui-restart": "қайтадан қосу"
+    },
+    "side-menu-title": {
+      "discover": "ашу",
+      "all": "Барлық пакеттер",
+      "installed": "Орнатылған пакеттер",
+      "installed_updates_available": "Қолжетімді жаңартулар",
+      "recently_updated": "Жақында жаңартылған",
+      "new_packages": "Жаңа пакеттер",
+      "popular": "Танымал",
+      "featured": "Таңдаулы",
+      "essentials": "Негіздер",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "жасаған tea",
+      "local_packages": "Жергілікті пакеттер"
+    },
+    "tags": {
+      "discover": "ашу",
+      "all": "барлық пакеттер",
+      "installed": "орнатылған",
+      "installed_updates_available": "Жаңартулар қолжетімді",
+      "recently_updated": "Жақында жаңартылды",
+      "new_packages": "Жаңа пакеттер",
+      "popular": "Танымал",
+      "featured": "Таңдаулы",
+      "essentials": "Негіздер",
+      "starstruck": "Starstruck",
+      "made_by_tea": "жасаған tea",
+      "local_packages": "Жергілікті пакеттер"
+    },
+    "discover": {
+      "featured_title": "жергілікті AI негізгі құралдары",
+      "featured_description": "Жергілікті AI саласын зерттеңіз. Бұл сіздің жергілікті жүйеңізден AutoGPT және Stable Diffusion Web UI сияқты жоғары профильді AI құралдарымен жұмыс істеуге арналған платформаңыз. Деректерді қауіпсіз және қауіпсіз сақтай отырып, өз қалауыңыз бойынша дәл реттеу еркіндігімен AI жобаларын жылдам іске қосыңыз."
+    }
+  }
+}
