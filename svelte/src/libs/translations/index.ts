@@ -30,6 +30,7 @@ import vi from "./languages/vi.json";
 import by from "./languages/by.json";
 import ie from "./languages/ie.json";
 import th from "./languages/th.json";
+import kz from "./languages/kz.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -67,7 +68,8 @@ const languages = [
   vi,
   by,
   ie,
-  th
+  th,
+  kz
 ];
 
 const langs: { [lang: string]: string } = {};
