@@ -1,0 +1,101 @@
+{
+  "id": "th",
+  "label": "Thai",
+  "translations": {
+    "store-search-placeholder": "ค้นหาแพ็คเกจ",
+    "action": {
+      "update": "อัพเดท",
+      "cancel": "ยกเลิก"
+    },
+    "package": {
+      "update-all": "อัพเดททั้งหมด",
+      "cta-AVAILABLE": "ติดตั้ง",
+      "cta-INSTALLED": "ติดตั้งแล้ว",
+      "cta-INSTALLING": "กำลังติดตั้ง",
+      "cta-UNINSTALLED": "ติดตั้งใหม่",
+      "cta-UNINSTALL": "ถอนการติดตั้ง",
+      "cta-NEEDS_UPDATE": "อัพเดท",
+      "cta-UPDATING": "กำลังอัพเดท",
+      "cta-UPDATED": "อัพเดทแล้ว",
+      "cta-PRUNE": "ตัดแต่ง",
+      "cta-PRUNING": "กำลังตัดแต่ง",
+      "open": "เปิด",
+      "open-in-terminal": "เปิดในทีเอ็ม",
+      "local-package": "แพ็คเกจในเครื่อง",
+      "not-in-pantry": "ยังไม่ได้เพิ่มเข้าเส้นทาง"
+    },
+    "footer": {
+      "quick-links-title": "ลิงก์ด่วน",
+      "about-tea-store": "เกี่ยวกับร้านชา",
+      "report-a-problem": "รายงานปัญหา",
+      "visit-website": "เข้าชมเว็บไซต์ของ Tea.xyz",
+      "terms-services": "ข้อกำหนดและเงื่อนไขการให้บริการ",
+      "privacy-policy": "นโยบายความเป็นส่วนตัว"
+    },
+    "documentation": {
+      "title": "เอกสารประกอบ",
+      "workshops": "เวิร์กช็อป"
+    },
+    "view-all": "ดูทั้งหมด",
+    "sorting": {
+      "label": "เรียงลำดับตาม",
+      "popularity": "ยอดนิยม",
+      "most-recent": "ล่าสุด"
+    },
+    "common": {
+      "home": "หน้าแรก",
+      "all": "ทั้งหมด",
+      "articles": "บทความ",
+      "workshops": "เวิร์กช็อป",
+      "metadata": "Metadata",
+      "homepage": "หน้าหลัก",
+      "documentation": "เอกสารประกอบ",
+      "github-repository": "Github Repository",
+      "repository": "Repository",
+      "contributors": "ผู้สนับสนุน",
+      "view-on-github": "ดูบน GitHub"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "อัปเดท tea/gui เป็น {{version}}?",
+      "gui-restarting": "การดำเนินการนี้จะทำให้แอปพลิเคชันรีสตาร์ทเมื่อเสร็จสิ้น โปรดตรวจสอบให้แน่ใจว่าคุณไม่มีการดำเนินการใดๆ กำลังดำเนินอยู่ คุณต้องการดำเนินการต่อหรือไม่?",
+      "gui-restart": "รีสตาร์ท"
+    },
+    "side-menu-title": {
+      "discover": "ค้นพบ",
+      "all": "แพ็คเกจทั้งหมด",
+      "installed": "แพ็คเกจที่ติดตั้ง",
+      "installed_updates_available": "การอัปเดตที่มี",
+      "recently_updated": "อัปเดตล่าสุด",
+      "new_packages": "แพ็คเกจใหม่",
+      "popular": "ยอดนิยม",
+      "featured": "แนะนำ",
+      "essentials": "เครื่องมือพื้นฐาน",
+      "starstruck": "ดาวรุ่งใจหนัก",
+      "made_by_tea": "ทำโดย Tea",
+      "local_packages": "แพ็คเกจในเครื่อง"
+    },
+    "tags": {
+      "discover": "ค้นพบ",
+      "all": "ทุกแพ็คเกจ",
+      "installed": "ติดตั้งแล้ว",
+      "installed_updates_available": "มีการอัปเดต",
+      "recently_updated": "อัปเดตล่าสุด",
+      "new_packages": "แพ็คเกจใหม่",
+      "popular": "ยอดนิยม",
+      "featured": "แนะนำ",
+      "essentials": "เครื่องมือพื้นฐาน",
+      "starstruck": "Starstruck",
+      "made_by_tea": "ทำโดย Tea",
+      "local_packages": "แพ็คเกจในเครื่อง"
+    },
+    "discover": {
+      "featured_title": "เครื่องมือสำคัญสำหรับ AI ภายในประเทศ",
+      "featured_description": "สำรวจอาณาเขตของ AI ระดับภูมิภาค นี่คือแพลตฟอร์มของคุณในการปรับแต่งเครื่องมือ AI ระดับสูงเช่น AutoGPT และ Stable Diffusion Web UI โดยตรงจากระบบท้องถิ่นของคุณ เริ่มต้นโปรเจค AI ของคุณในขณะที่รักษาข้อมูลของคุณให้ปลอดภัยและมั่นคง ด้วยเสรีภาพในการปรับแต่งตามที่คุณต้องการ"
+    }
+  }
+}
