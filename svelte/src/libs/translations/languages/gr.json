@@ -1,0 +1,101 @@
+{
+  "id": "gr",
+  "label": "Ελληνικά",
+  "translations": {
+    "store-search-placeholder": "πακέτα αναζήτησης",
+    "action": {
+      "update": "εκσυγχρονίζω",
+      "cancel": "Ματαίωση"
+    },
+    "package": {
+      "update-all": "ΕΝΗΜΕΡΩΣΗ ΟΛΩΝ",
+      "cta-AVAILABLE": "ΕΓΚΑΘΙΣΤΩ",
+      "cta-INSTALLED": "ΕΓΚΑΤΑΣΤΑΘΗΚΕ",
+      "cta-INSTALLING": "ΕΓΚΑΤΑΣΤΑΣΗ",
+      "cta-UNINSTALLED": "ΕΓΚΑΘΙΔΡΥΩ ΠΑΛΙ",
+      "cta-UNINSTALL": "ΚΑΤΑΚΤΗΣΗ",
+      "cta-NEEDS_UPDATE": "ΕΚΣΥΓΧΡΟΝΙΖΩ",
+      "cta-UPDATING": "ΕΝΗΜΕΡΩΣΗ",
+      "cta-UPDATED": "ΕΠΙΚΑΙΡΟΠΟΙΗΜΕΝΟ",
+      "cta-PRUNE": "ΚΛΑΔΕΥΩ",
+      "cta-PRUNING": "ΚΛΑΔΕΜΑ",
+      "open": "ΑΝΟΙΞΕ",
+      "open-in-terminal": "ΑΝΟΙΧΤΟ ΣΤΟ ΤΕΡΜΑΤΙΚΟ",
+      "local-package": "τοπικό πακέτο",
+      "not-in-pantry": "δεν έχει προστεθεί ακόμη στο ντουλάπι"
+    },
+    "footer": {
+      "quick-links-title": "γρήγορες συνδέσεις",
+      "about-tea-store": "σχετικά με tea κατάστημα τσαγιού",
+      "report-a-problem": "αναφέρω ένα πρόβλημα",
+      "visit-website": "επισκεφθείτε το tea.xyz",
+      "terms-services": "όρους & υπηρεσίες",
+      "privacy-policy": "πολιτική απορρήτου"
+    },
+    "documentation": {
+      "title": "τεκμηρίωση",
+      "workshops": "εργαστήρια"
+    },
+    "view-all": "προβολή όλων",
+    "sorting": {
+      "label": "Ταξινόμηση κατά",
+      "popularity": "Most popular",
+      "most-recent": "Most recent"
+    },
+    "common": {
+      "home": "Σπίτι",
+      "all": "Ολα",
+      "articles": "Άρθρα",
+      "workshops": "Εργαστήρια",
+      "metadata": "Μεταδεδομένα",
+      "homepage": "Αρχική σελίδα",
+      "documentation": "Τεκμηρίωση",
+      "github-repository": "Αποθετήριο Github",
+      "repository": "Αποθετήριο",
+      "contributors": "Συνεισφέροντες",
+      "view-on-github": "ΠΡΟΒΟΛΗ ΣΤΟ GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "ενημέρωση του tea/gui σε {{version}};",
+      "gui-restarting": "Εάν συνεχίσετε, η εφαρμογή θα επανεκκινηθεί μετά την ολοκλήρωση. Βεβαιωθείτε ότι δεν έχετε καμία λειτουργία σε εξέλιξη. Θέλετε να συνεχίσετε?",
+      "gui-restart": "επανεκκίνηση"
+    },
+    "side-menu-title": {
+      "discover": "ανακαλύπτω",
+      "all": "Όλα τα πακέτα",
+      "installed": "Εγκατεστημένα πακέτα",
+      "installed_updates_available": "Διαθέσιμες ενημερώσεις",
+      "recently_updated": "Πρόσφατα Ενημερώθηκε",
+      "new_packages": "Νέα πακέτα",
+      "popular": "Δημοφιλής",
+      "featured": "Προτεινόμενα",
+      "essentials": "Είδη πρώτης ανάγκης",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "φτιαγμένο με tea",
+      "local_packages": "Τοπικά πακέτα"
+    },
+    "tags": {
+      "discover": "ανακαλύπτω",
+      "all": "όλα τα πακέτα",
+      "installed": "εγκατασταθεί",
+      "installed_updates_available": "Διαθέσιμες ενημερώσεις",
+      "recently_updated": "Ενημερώθηκε πρόσφατα",
+      "new_packages": "Νέα πακέτα",
+      "popular": "Δημοφιλής",
+      "featured": "Προτεινόμενα",
+      "essentials": "Είδη πρώτης ανάγκης",
+      "starstruck": "Αστρικό",
+      "made_by_tea": "Φτιαγμένο με tea",
+      "local_packages": "Τοπικά πακέτα"
+    },
+    "discover": {
+      "featured_title": "τοπικά βασικά στοιχεία τεχνητής νοημοσύνης",
+      "featured_description": "Εξερευνήστε το βασίλειο της τοπικής AI. Αυτή είναι η πλατφόρμα σας για να βελτιωθείτε με εργαλεία τεχνητής νοημοσύνης υψηλού προφίλ, όπως το AutoGPT και το Stable Diffusion Web UI, απευθείας από το τοπικό σας σύστημα. Ξεκινήστε τα έργα σας με τεχνητή νοημοσύνη, διατηρώντας τα δεδομένα σας ασφαλή και ασφαλή, με την ελευθερία να βελτιστοποιείτε όπως θέλετε."
+    }
+  }
+}
