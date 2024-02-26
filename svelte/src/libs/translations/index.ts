@@ -32,6 +32,7 @@ import ie from "./languages/ie.json";
 import th from "./languages/th.json";
 import kz from "./languages/kz.json";
 import gr from "./languages/gr.json";
+import pt from "./languages/pt.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -50,6 +51,7 @@ const languages = [
   uk,
   ptbr,
   pl,
+  pt,
   cz,
   lv,
   ro,
