@@ -1,0 +1,101 @@
+{
+  "id": "id",
+  "label": "Bahasa Indonesia",
+  "translations": {
+    "store-search-placeholder": "cari paket",
+    "action": {
+      "update": "perbarui",
+      "cancel": "batalkan"
+    },
+    "package": {
+      "update-all": "PERBARUI SEMUA",
+      "cta-AVAILABLE": "PASANG",
+      "cta-INSTALLED": "TERPASANG",
+      "cta-INSTALLING": "SEDANG MEMASANG",
+      "cta-UNINSTALLED": "PASANG ULANG",
+      "cta-UNINSTALL": "BONGKAR",
+      "cta-NEEDS_UPDATE": "PERBARUI",
+      "cta-UPDATING": "SEDANG MEMPERBARUI",
+      "cta-UPDATED": "TERBARU",
+      "cta-PRUNE": "POTONG",
+      "cta-PRUNING": "SEDANG MEMOTONG",
+      "open": "BUKA",
+      "open-in-terminal": "BUKA DI TERMINAL",
+      "local-package": "paket lokal",
+      "not-in-pantry": "belum ditambahkan ke pantry"
+    },
+    "footer": {
+      "quick-links-title": "tautan cepat",
+      "about-tea-store": "tentang toko teh",
+      "report-a-problem": "laporkan masalah",
+      "visit-website": "kunjungi tea.xyz",
+      "terms-services": "syarat & layanan",
+      "privacy-policy": "kebijakan privasi"
+    },
+    "documentation": {
+      "title": "dokumentasi",
+      "workshops": "workshop"
+    },
+    "view-all": "lihat semua",
+    "sorting": {
+      "label": "Urutkan berdasarkan",
+      "popularity": "Paling populer",
+      "most-recent": "Paling baru"
+    },
+    "common": {
+      "home": "beranda",
+      "all": "Semua",
+      "articles": "Artikel",
+      "workshops": "Workshop",
+      "metadata": "Metadata",
+      "homepage": "Halaman Utama",
+      "documentation": "Dokumentasi",
+      "github-repository": "Repositori Github",
+      "repository": "Repositori",
+      "contributors": "Kontributor",
+      "view-on-github": "LIHAT DI GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "perbarui tea/gui ke {{version}}?",
+      "gui-restarting": "Melanjutkan akan menyebabkan aplikasi restart setelah selesai. Pastikan Anda tidak memiliki operasi apa pun yang sedang berlangsung. Apakah Anda ingin melanjutkan?",
+      "gui-restart": "mulai ulang"
+    },
+    "side-menu-title": {
+      "discover": "temukan",
+      "all": "Semua Paket",
+      "installed": "Paket Terpasang",
+      "installed_updates_available": "Pembaruan Tersedia",
+      "recently_updated": "Baru Diperbarui",
+      "new_packages": "Paket Baru",
+      "popular": "Populer",
+      "featured": "Unggulan",
+      "essentials": "Esensial",
+      "starstruck": "Karya Berat Starstruck",
+      "made_by_tea": "dibuat oleh tea",
+      "local_packages": "Paket Lokal"
+    },
+    "tags": {
+      "discover": "temukan",
+      "all": "semua paket",
+      "installed": "terpasang",
+      "installed_updates_available": "Pembaruan tersedia",
+      "recently_updated": "Baru diperbarui",
+      "new_packages": "Paket baru",
+      "popular": "Populer",
+      "featured": "Unggulan",
+      "essentials": "Esensial",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Dibuat oleh tea",
+      "local_packages": "Paket Lokal"
+    },
+    "discover": {
+      "featured_title": "esensial AI lokal",
+      "featured_description": "Jelajahi dunia AI lokal. Ini adalah platform Anda untuk bereksperimen dengan alat AI terkenal seperti AutoGPT dan Stable Diffusion Web UI, langsung dari sistem lokal Anda. Mulailah proyek AI Anda sambil menjaga data Anda tetap aman dan terjamin, dengan kebebasan untuk menyesuaikan sesuai keinginan Anda."
+    }
+  }
+}
