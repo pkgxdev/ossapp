@@ -24,6 +24,7 @@ import lt from "./languages/lt.json";
 import kr from "./languages/kr.json";
 import es from "./languages/es.json";
 import fi from "./languages/fi.json";
+import si from "./languages/si.json";
 import nl from "./languages/nl.json";
 import bg from "./languages/bg.json";
 import vi from "./languages/vi.json";
@@ -65,6 +66,7 @@ const languages = [
   kr,
   es,
   fi,
+  si,
   nl,
   bg,
   vi,
