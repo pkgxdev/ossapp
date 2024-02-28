@@ -1,6 +1,6 @@
 {
   "id": "sk",
-  "label": "Slovenský",
+  "label": "Slovenčina",
   "translations": {
     "store-search-placeholder": "vyhľadávať balíky",
     "action": {
@@ -10,35 +10,35 @@
     "package": {
       "update-all": "AKTUALIZOVAŤ VŠETKO",
       "cta-AVAILABLE": "INŠTALOVAŤ",
-      "cta-INSTALLED": "INŠTALOVANÝ",
+      "cta-INSTALLED": "INŠTALOVANÉ",
       "cta-INSTALLING": "INŠTALUJE SA",
-      "cta-UNINSTALLED": "ZNOWU INŠTALOVAŤ",
+      "cta-UNINSTALLED": "ZNOVA INŠTALOVAŤ",
       "cta-UNINSTALL": "ODINŠTALOVAŤ",
       "cta-NEEDS_UPDATE": "AKTUALIZOVAŤ",
       "cta-UPDATING": "AKTUALIZUJE SA",
-      "cta-UPDATED": "AKTUALIZOVANÝ",
+      "cta-UPDATED": "AKTUALIZOVANÉ",
       "cta-PRUNE": "OREZAŤ",
-      "cta-PRUNING": "OHRÝZA SA",
+      "cta-PRUNING": "OREZÁVA SA",
       "open": "OTVORIŤ",
       "open-in-terminal": "OTVORIŤ V TERMINÁLI",
-      "local-package": "miestny balík",
-      "not-in-pantry": "ešte nie je pridaný do špajze"
+      "local-package": "lokálny balík",
+      "not-in-pantry": "ešte nepridané do špajze"
     },
     "footer": {
       "quick-links-title": "rýchle odkazy",
-      "about-tea-store": "o obchode s čajom",
+      "about-tea-store": "o čajovni",
       "report-a-problem": "nahlásiť problém",
       "visit-website": "navštíviť tea.xyz",
       "terms-services": "podmienky služby",
-      "privacy-policy": "ochrana osobných údajov"
+      "privacy-policy": "zásady ochrany osobných údajov"
     },
     "documentation": {
       "title": "dokumentácia",
-      "workshops": "workshopy"
+      "workshops": "semináre"
     },
     "view-all": "zobraziť všetko",
     "sorting": {
-      "label": "Zoradiť podľa",
+      "label": "Usporiadať podľa",
       "popularity": "Najpopulárnejšie",
       "most-recent": "Najnovšie"
     },
@@ -46,23 +46,23 @@
       "home": "domov",
       "all": "Všetko",
       "articles": "Články",
-      "workshops": "Workshopy",
+      "workshops": "Semináre",
       "metadata": "Metadáta",
       "homepage": "Domovská stránka",
       "documentation": "Dokumentácia",
-      "github-repository": "Github Repozitár",
-      "repository": "Repozitár",
+      "github-repository": "Github úložisko",
+      "repository": "Úložisko",
       "contributors": "Prispievatelia",
-      "view-on-github": "ZOBRAZIŤ NA GITHUB"
+      "view-on-github": "ZOBRAZIŤ NA GITHUBE"
     },
     "tabs": {
-      "details": "pkg",
+      "details": "balík",
       "cli": "cli",
       "gui": "gui"
     },
     "notification": {
       "update-header": "aktualizovať tea/gui na {{version}}?",
-      "gui-restarting": "Pokračovanie spôsobí reštartovanie aplikácie po ukončení. Uistite sa, že nemáte žiadne prebiehajúce operácie. Chcete pokračovať?",
+      "gui-restarting": "Pokračovanie spôsobí reštartovanie aplikácie po dokončení. Uistite sa, že nemáte žiadne operácie v priebehu. Chcete pokračovať?",
       "gui-restart": "reštartovať"
     },
     "side-menu-title": {
@@ -73,11 +73,11 @@
       "recently_updated": "Nedávno aktualizované",
       "new_packages": "Nové balíky",
       "popular": "Populárne",
-      "featured": "Odporúčané",
-      "essentials": "Essentials",
-      "starstruck": "Starstruck Heavyweights",
+      "featured": "Vybrané",
+      "essentials": "Základné",
+      "starstruck": "Starstruck",
       "made_by_tea": "vyrobené tea",
-      "local_packages": "Miestne balíky"
+      "local_packages": "Lokálne balíky"
     },
     "tags": {
       "discover": "objaviť",
@@ -87,15 +87,15 @@
       "recently_updated": "Nedávno aktualizované",
       "new_packages": "Nové balíky",
       "popular": "Populárne",
-      "featured": "Predstavené",
-      "essentials": "Základy",
-      "starstruck": "ohromený hviezdami",
-      "made_by_tea": "vyrobené čajom",
+      "featured": "Vybrané",
+      "essentials": "Základné",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Vyrobené tea",
       "local_packages": "Lokálne balíky"
     },
     "discover": {
-      "featured_title": "Základné lokálne AI",
-      "featured_description": "Preskúmajte oblasť lokálnej umelej inteligencie. Toto je vaša platforma na prácu s vysoko profilovanými nástrojmi AI, ako sú AutoGPT a Stable Diffusion Web UI, priamo z vášho lokálneho systému. Spustite svoje projekty v oblasti umelej inteligencie, pričom zároveň udržiavate svoje údaje v bezpečí a so slobodou nastavovať ich podľa svojho uváženia."
-     }
+      "featured_title": "lokálne AI esenciály",
+      "featured_description": "Preskúmajte svet lokálnej umelej inteligencie. Toto je vaša platforma na experimentovanie s vysokoprofilovými nástrojmi AI, ako sú AutoGPT a Stable Diffusion Web UI, priamo z vášho lokálneho systému. Rozbehnite svoje projekty AI a zároveň si udržujte údaje v bezpečí a slobodu na jemné ladenie, ako si prajete."
+    }
   }
 }
