@@ -1,0 +1,101 @@
+{
+  "id": "ms",
+  "label": "Malay",
+  "translations": {
+    "store-search-placeholder": "cari pakej",
+    "action": {
+      "update": "kemaskini",
+      "cancel": "batal"
+    },
+    "package": {
+      "update-all": "KEMASKINI SEMUA",
+      "cta-AVAILABLE": "PASANG",
+      "cta-INSTALLED": "TERPASANG",
+      "cta-INSTALLING": "SEDANG MEMASANG",
+      "cta-UNINSTALLED": "PASANG SEMULA",
+      "cta-UNINSTALL": "BUANG PAKAIAN",
+      "cta-NEEDS_UPDATE": "KEMASKINI",
+      "cta-UPDATING": "SEDANG MEMERBARUI",
+      "cta-UPDATED": "Dikemaskini",
+      "cta-PRUNE": "MENYEMPURNAKAN",
+      "cta-PRUNING": "MENYEMPURNAKAN",
+      "open": "BUKA",
+      "open-in-terminal": "BUKA DALAM TERMINAL",
+      "local-package": "pakej tempatan",
+      "not-in-pantry": "belum ditambah ke stor"
+    },
+    "footer": {
+      "quick-links-title": "pautan cepat",
+      "about-tea-store": "tentang kedai teh",
+      "report-a-problem": "laporkan masalah",
+      "visit-website": "lawati tea.xyz",
+      "terms-services": "terma & perkhidmatan",
+      "privacy-policy": "polisi privasi"
+    },
+    "documentation": {
+      "title": "dokumentasi",
+      "workshops": "bengkel"
+    },
+    "view-all": "lihat semua",
+    "sorting": {
+      "label": "Susun mengikut",
+      "popularity": "Paling popular",
+      "most-recent": "Paling baru"
+    },
+    "common": {
+      "home": "rumah",
+      "all": "Semua",
+      "articles": "Artikel",
+      "workshops": "Bengkel",
+      "metadata": "Metadata",
+      "homepage": "Laman utama",
+      "documentation": "Dokumentasi",
+      "github-repository": "Repositori Github",
+      "repository": "Repositori",
+      "contributors": "Penyumbang",
+      "view-on-github": "LIHAT DI GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "Kemaskini teh/gui ke {{version}}?",
+      "gui-restarting": "Meneruskan akan menyebabkan aplikasi restart selepas selesai. Pastikan anda tidak mempunyai sebarang operasi sedang berjalan. Adakah anda ingin meneruskan?",
+      "gui-restart": "mulakan semula"
+    },
+    "side-menu-title": {
+      "discover": "cari",
+      "all": "Semua Pakej",
+      "installed": "Pakej Dipasang",
+      "installed_updates_available": "Pembaruan Tersedia",
+      "recently_updated": "Baru Dikemaskini",
+      "new_packages": "Pakej Baru",
+      "popular": "Popular",
+      "featured": "Utama",
+      "essentials": "Asas",
+      "starstruck": "Berkilau",
+      "made_by_tea": "dibuat oleh teh",
+      "local_packages": "Pakej Tempatan"
+    },
+    "tags": {
+      "discover": "cari",
+      "all": "semua pakej",
+      "installed": "dipasang",
+      "installed_updates_available": "Pembaruan Tersedia",
+      "recently_updated": "Baru Dikemaskini",
+      "new_packages": "Pakej Baru",
+      "popular": "Popular",
+      "featured": "Utama",
+      "essentials": "Asas",
+      "starstruck": "Berkilau",
+      "made_by_tea": "Dibuat oleh Teh",
+      "local_packages": "Pakej Tempatan"
+    },
+    "discover": {
+      "featured_title": "asas kecerdasan buatan tempatan",
+      "featured_description": "Teroka ranah kecerdasan buatan tempatan. Inilah platform anda untuk bereksperimen dengan alat kecerdasan buatan terkenal seperti AutoGPT dan Antara Muka Web Difusi Stabil, langsung dari sistem tempatan anda. Mulakan projek kecerdasan buatan anda sambil menjaga data anda selamat dan terjamin, dengan kebebasan untuk menyesuaikan mengikut kehendak anda."
+    }
+  }
+}
