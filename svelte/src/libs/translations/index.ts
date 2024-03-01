@@ -35,6 +35,7 @@ import kz from "./languages/kz.json";
 import gr from "./languages/gr.json";
 import ms from "./languages/ms.json";
 import id from "./languages/id.json";
+import tet from "./languages/tet.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -77,7 +78,8 @@ const languages = [
   kz,
   gr,
   ms,
-  id
+  id,
+  tet
 ];
 
 const langs: { [lang: string]: string } = {};
