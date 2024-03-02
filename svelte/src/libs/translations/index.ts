@@ -35,6 +35,7 @@ import kz from "./languages/kz.json";
 import gr from "./languages/gr.json";
 import ms from "./languages/ms.json";
 import id from "./languages/id.json";
+import hu from "./languages/hu.json";
 
 import * as customModifiers from "./modifiers";
 
