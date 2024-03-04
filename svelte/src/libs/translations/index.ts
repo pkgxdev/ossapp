@@ -35,6 +35,7 @@ import kz from "./languages/kz.json";
 import gr from "./languages/gr.json";
 import ms from "./languages/ms.json";
 import id from "./languages/id.json";
+import ar from "./languages/ar.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -78,6 +79,7 @@ const languages = [
   gr,
   ms,
   id
+  ar
 ];
 
 const langs: { [lang: string]: string } = {};
