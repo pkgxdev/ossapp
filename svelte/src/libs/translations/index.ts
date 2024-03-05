@@ -32,6 +32,7 @@ import by from "./languages/by.json";
 import ie from "./languages/ie.json";
 import th from "./languages/th.json";
 import kz from "./languages/kz.json";
+import bn from "./languages/bn.json";
 import gr from "./languages/gr.json";
 import ms from "./languages/ms.json";
 import id from "./languages/id.json";
@@ -76,6 +77,7 @@ const languages = [
   ie,
   th,
   kz,
+  bn,
   gr,
   ms,
   id,
