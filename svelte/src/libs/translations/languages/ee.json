@@ -1,0 +1,101 @@
+{
+  "id": "ee",
+  "label": "Eesti",
+  "translations": {
+    "store-search-placeholder": "otsi pakette",
+    "action": {
+      "update": "uuenda",
+      "cancel": "tühista"
+    },
+    "package": {
+      "update-all": "UUENDA KÕIK",
+      "cta-AVAILABLE": "PAIGALDA",
+      "cta-INSTALLED": "PAIGALDATUD",
+      "cta-INSTALLING": "PAIGALDAMINE",
+      "cta-UNINSTALLED": "UUESTI PAIGALDA",
+      "cta-UNINSTALL": "EEMALDA",
+      "cta-NEEDS_UPDATE": "UUENDA",
+      "cta-UPDATING": "UUENDAMINE",
+      "cta-UPDATED": "UUENDATUD",
+      "cta-PRUNE": "KÄRBI",
+      "cta-PRUNING": "KÄRBIMINE",
+      "open": "AVA",
+      "open-in-terminal": "AVA TERMINAALIS",
+      "local-package": "kohalik pakett",
+      "not-in-pantry": "veel riiulile lisamata"
+    },
+    "footer": {
+      "quick-links-title": "kiirlingid",
+      "about-tea-store": "tee poest",
+      "report-a-problem": "teata probleemist",
+      "visit-website": "külasta tea.xyz",
+      "terms-services": "tingimused ja teenused",
+      "privacy-policy": "privaatsuspoliitika"
+    },
+    "documentation": {
+      "title": "dokumentatsioon",
+      "workshops": "töötoad"
+    },
+    "view-all": "vaata kõiki",
+    "sorting": {
+      "label": "Sorteeri",
+      "popularity": "Kõige populaarsem",
+      "most-recent": "Kõige uuem"
+    },
+    "common": {
+      "home": "kodu",
+      "all": "Kõik",
+      "articles": "Artiklid",
+      "workshops": "Töötoad",
+      "metadata": "Metadata",
+      "homepage": "Avaleht",
+      "documentation": "Dokumentatsioon",
+      "github-repository": "Github hoidla",
+      "repository": "Hoidla",
+      "contributors": "Kaasautorid",
+      "view-on-github": "VAATA GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "uuenda tea/gui versioonile {{version}}?",
+      "gui-restarting": "Jätkamine põhjustab rakenduse taaskäivitamise pärast lõpetamist. Veenduge, et teil ei ole käimasolevaid toiminguid. Kas soovite jätkata?",
+      "gui-restart": "taaskäivita"
+    },
+    "side-menu-title": {
+      "discover": "avasta",
+      "all": "Kõik Paketid",
+      "installed": "Paigaldatud Paketid",
+      "installed_updates_available": "Saadaolevad uuendused",
+      "recently_updated": "Hiljuti uuendatud",
+      "new_packages": "Uued paketid",
+      "popular": "Populaarne",
+      "featured": "Esiletõstetud",
+      "essentials": "Olulised",
+      "starstruck": "starstruck",
+      "made_by_tea": "Valmistatud tea poolt",
+      "local_packages": "Kohalikud Paketid"
+    },
+    "tags": {
+      "discover": "avasta",
+      "all": "kõik paketid",
+      "installed": "paigaldatud",
+      "installed_updates_available": "Saadaolevad uuendused",
+      "recently_updated": "Hiljuti uuendatud",
+      "new_packages": "Uued paketid",
+      "popular": "Populaarne",
+      "featured": "Esiletõstetud",
+      "essentials": "Olulised",
+      "starstruck": "starstruck",
+      "made_by_tea": "Valmistatud tea poolt",
+      "local_packages": "Kohalikud Paketid"
+    },
+    "discover": {
+      "featured_title": "kohalikud AI põhitõed",
+      "featured_description": "Uurige kohaliku AI maailma. See on teie platvorm kõrgetasemeliste AI tööriistadega nagu AutoGPT ja Stable Diffusion Web UI katsetamiseks otse teie kohalikus süsteemis. Alustage oma AI projekte, hoides samal ajal oma andmeid turvalisena ja vabadusega neid soovi korral häälestada."
+    }
+  }
+}
