@@ -1,0 +1,101 @@
+{
+  "id": "mt",
+  "label": "Malti",
+  "translations": {
+    "store-search-placeholder": "tfittxija tal-pakkett",
+    "action": {
+      "update": "aġġornament",
+      "cancel": "tikkanċella"
+    },
+    "package": {
+      "update-all": "AĠĠORNA KOLLHA",
+      "cta-AVAILABLE": "INSTALLA",
+      "cta-INSTALLED": "INSTALLAT",
+      "cta-INSTALLING": "INSTALLAZZJONI",
+      "cta-UNINSTALLED": "INSTALLA mill-ġdid",
+      "cta-UNINSTALL": "NEĦĦI",
+      "cta-NEEDS_UPDATE": "AĠĠORNAMENT",
+      "cta-UPDATING": "TIĠDID",
+      "cta-UPDATED": "AĠĠORNAMENT",
+      "cta-PRUNE": "NADDAF",
+      "cta-PRUNING": "TINDIF",
+      "open": "Miftuħa",
+      "open-in-terminal": "MITUĦ FIT-TERMINAL",
+      "local-package": "pakkett lokali",
+      "not-in-pantry": "għadu mhux miżjud mal-pantry"
+    },
+    "footer": {
+      "quick-links-title": "links ta' malajr",
+      "about-tea-store": "dwar il-maħżen tat-te",
+      "report-a-problem": "tirrapporta problema",
+      "visit-website": "żur tea.xyz",
+      "terms-services": "termini u servizzi",
+      "privacy-policy": "regoli tal-privatezza"
+    },
+    "documentation": {
+      "title": "dokumentazzjoni",
+      "workshops": "workshops"
+    },
+    "view-all": "tara kollox",
+    "sorting": {
+      "label": "Issortja",
+      "popularity": "L-aktar popolari",
+      "most-recent": "L-aktar ġdid"
+    },
+    "common": {
+      "home": "il-prinċipali",
+      "all": "Kollha",
+      "articles": "Artikoli",
+      "workshops": "Workshops",
+      "metadata": "Metadata",
+      "homepage": "Prinċipali",
+      "documentation": "Dokumentazzjoni",
+      "github-repository": "Repożitorju Github",
+      "repository": "Repożitorju",
+      "contributors": "Parteċipanti",
+      "view-on-github": "ARA FUQ GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "aġġorna te/gui għal {{verżjoni}}?",
+      "gui-restarting": "Il-kontinwazzjoni tikkawża li l-programm jerġa' jibda wara t-tlestija. Jekk jogħġbok kun żgur li m'għandekx xi operazzjonijiet għaddejjin. Inti tixtieq tkompli?",
+      "gui-restart": "erġa ibda"
+    },
+    "side-menu-title": {
+      "discover": "ssib",
+      "all": "Il-pakketti kollha",
+      "installed": "Pakketti installati",
+      "installed_updates_available": "Aġġornamenti disponibbli",
+      "recently_updated": "Aġġornata riċentement",
+      "new_packages": "Pakketti ġodda",
+      "popular": "Popolari",
+      "featured": "Irrakkomandat",
+      "essentials": "Importanti",
+      "starstruck": "Star Heavyweights",
+      "made_by_tea": "magħmula tè",
+      "local_packages": "Pakketti Lokali"
+    },
+    "tags": {
+      "discover": "ssib",
+      "all": "il-pakketti kollha",
+      "installed": "hija stabbilita",
+      "installed_updates_available": "Aġġornamenti disponibbli",
+      "recently_updated": "Aġġornata riċentement",
+      "new_packages": "Pakketti ġodda",
+      "popular": "Popolari",
+      "featured": "Irrakkomandat",
+      "essentials": "Importanti",
+      "starstruck": "Piż tqal",
+      "made_by_tea": "Magħmul tè",
+      "local_packages": "Pakketti lokali"
+    },
+    "discover": {
+      "featured_title": "pedamenti lokali tal-intelliġenza artifiċjali",
+      "featured_description": "Esplora d-dinja tal-intelliġenza artifiċjali lokalment. Hija l-pjattaforma tiegħek biex tesperimenta b'għodod AI high-end bħal AutoGPT u Stable Diffusion Web UI direttament fis-sistema lokali tiegħek. Mexxi l-proġetti AI tiegħek filwaqt li żżomm id-dejta tiegħek sigura u sigura, bil-kapaċità li tirfina kif jidhirlek xieraq."
+    }
+  }
+}
