@@ -1,0 +1,103 @@
+{
+  "id": "sl",
+  "label": "Slovenščina",
+  "translations": {
+    "store-search-placeholder": "Iskanje paketov",
+    "action": {
+      "update": "Posodobi",
+      "cancel": "Prekliči"
+    },
+    "package": {
+      "update-all": "POSLUŽITEV VSEH",
+      "cta-AVAILABLE": "Namesti",
+      "cta-INSTALLED": "Nameščeno",
+      "cta-INSTALLING": "Namestitev",
+      "cta-UNINSTALLED": "Odstrani",
+      "cta-UNINSTALL": "Odstrani",
+      "cta-NEEDS_UPDATE": "Potrebuje posodobitev",
+      "cta-UPDATING": "Posodabljanje",
+      "cta-UPDATED": "Posodobljeno",
+      "cta-PRUNE": "Pobriši",
+      "cta-PRUNING": "Pobrisano",
+      "open": "Odpri",
+      "open-in-terminal": "Odpri v terminalu",
+      "local-package": "Lokalni paket",
+      "not-in-pantry": "Še ni dodano v shrambo"
+    }
+  }
+}
+{
+  "footer": {
+    "quick-links-title": "Hitre povezave",
+    "about-tea-store": "O trgovini s čajem",
+    "report-a-problem": "Prijavi težavo",
+    "visit-website": "Obišči tea.xyz",
+    "terms-services": "Pogoji storitve",
+    "privacy-policy": "Pravilnik o zasebnosti"
+  },
+  "documentation": {
+    "title": "Dokumentacija",
+    "workshops": "Delavnice"
+  },
+  "view-all": "Ogled vsega",
+  "sorting": {
+    "label": "Razvrščanje",
+    "popularity": "Najbolj priljubljeno",
+    "most-recent": "Najnovejše"
+  },
+  "common": {
+    "home": "Domov",
+    "all": "Vse",
+    "articles": "Članki",
+    "workshops": "Delavnice",
+    "metadata": "Metapodatki",
+    "homepage": "Domača stran",
+    "documentation": "Dokumentacija",
+    "github-repository": "Github repozitorij",
+    "repository": "Repozitorij",
+    "contributors": "Sodelavci",
+    "view-on-github": "Ogled na Githubu"
+  },
+  "tabs": {
+    "details": "Pkg",
+    "cli": "Cli",
+    "gui": "Grafični vmesnik"
+  },
+  "notification": {
+    "update-header": "Posodobiti tea/gui na {{version}}?",
+    "gui-restarting": "Nadaljevanje bo povzročilo ponovni zagon aplikacije po končanju. Prosimo, preverite, ali nimate aktivnih operacij. Želite nadaljevati?",
+    "gui-restart": "Ponovni zagon"
+  },
+  "side-menu-title": {
+    "discover": "Odkrijte",
+    "all": "Vsi paketi",
+    "installed": "Nameščeni paketi",
+    "installed_updates_available": "Na voljo so posodobitve",
+    "recently_updated": "Nedavno posodobljeno",
+    "new_packages": "Novi paketi",
+    "popular": "Priljubljeni",
+    "featured": "Priporočeni",
+    "essentials": "Osnovno",
+    "starstruck": "Zvezdni izdelki",
+    "made_by_tea": "Izdelano s čajem",
+    "local_packages": "Lokalni paketi"
+  },
+  "tags": {
+    "discover": "Odkrijte",
+    "all": "Vsi paketi",
+    "installed": "Nameščeno",
+    "installed_updates_available": "Na voljo so posodobitve",
+    "recently_updated": "Nedavno posodobljeno",
+    "new_packages": "Novi paketi",
+    "popular": "Priljubljeni",
+    "featured": "Priporočeni",
+    "essentials": "Osnovno",
+    "starstruck": "Zvezdni izdelki",
+    "made_by_tea": "Izdelano s čajem",
+    "local_packages": "Lokalni paketi"
+  },
+  "discover": {
+    "featured_title": "Lokalne osnove umetne inteligence",
+    "featured_description": "Raziščite svet umetne inteligence lokalno. To je vaša platforma za eksperimentiranje z naprednimi orodji AI, kot sta AutoGPT in Stable Diffusion Web UI, neposredno v vašem lokalnem sistemu. Zaženite svoje AI projekte, ohranjajte svoje podatke varne in celovite ter jih prilagodite po svojem okusu."
+  }
+}
