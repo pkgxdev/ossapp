@@ -37,6 +37,7 @@ import ms from "./languages/ms.json";
 import id from "./languages/id.json";
 import sk from "./languages/sk.json";
 import ee from "./languages/ee.json";
+import is from "./languages/is.json";
 import lo from "./languages/lo.json";
 
 import * as customModifiers from "./modifiers";
@@ -83,6 +84,7 @@ const languages = [
   id,
   sk,
   ee,
+  is,
   lo
 ];
 
