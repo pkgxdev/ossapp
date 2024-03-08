@@ -1,0 +1,101 @@
+{
+  "id": "hu",
+  "label": "Magyar",
+  "translations": {
+    "store-search-placeholder": "csomagok keresése",
+    "action": {
+      "update": "frissítés",
+      "cancel": "mégse"
+    },
+    "package": {
+      "update-all": "MINDEN FRISÍTÉSE",
+      "cta-AVAILABLE": "TELEPÍTÉS",
+      "cta-INSTALLED": "TELEPÍTVE",
+      "cta-INSTALLING": "TELEPÍTÉS FOLYAMATBAN",
+      "cta-UNINSTALLED": "ÚJRA TELEPÍTÉS",
+      "cta-UNINSTALL": "ELTÁVOLÍTÁS",
+      "cta-NEEDS_UPDATE": "FRISÍTÉS SZÜKSÉGES",
+      "cta-UPDATING": "FRISÍTÉS FOLYAMATBAN",
+      "cta-UPDATED": "FRISÍTVE",
+      "cta-PRUNE": "NYÍRÁS",
+      "cta-PRUNING": "NYÍRÁS FOLYAMATBAN",
+      "open": "NYITÁS",
+      "open-in-terminal": "NYITÁS TERMINÁLBAN",
+      "local-package": "helyi csomag",
+      "not-in-pantry": "még nem hozzáadva a kamrához"
+    },
+    "footer": {
+      "quick-links-title": "gyors linkek",
+      "about-tea-store": "a tea áruházról",
+      "report-a-problem": "probléma bejelentése",
+      "visit-website": "látogass el a tea.xyz weboldalra",
+      "terms-services": "feltételek és szolgáltatások",
+      "privacy-policy": "adatvédelmi irányelvek"
+    },
+    "documentation": {
+      "title": "dokumentáció",
+      "workshops": "műhelyek"
+    },
+    "view-all": "összes megtekintése",
+    "sorting": {
+      "label": "Rendezés",
+      "popularity": "Legnépszerűbb",
+      "most-recent": "Legújabb"
+    },
+    "common": {
+      "home": "Kezdőlap",
+      "all": "Összes",
+      "articles": "Cikkek",
+      "workshops": "Műhelyek",
+      "metadata": "Metaadatok",
+      "homepage": "Kezdőlap",
+      "documentation": "Dokumentáció",
+      "github-repository": "Github Tároló",
+      "repository": "Tároló",
+      "contributors": "Hozzájárulók",
+      "view-on-github": "MEGTEKINTÉS A GITHUBON"
+    },
+    "tabs": {
+      "details": "csomag",
+      "cli": "cli",
+      "gui": "grafikus felhasználói felület"
+    },
+    "notification": {
+      "update-header": "frissítsd a tea/gui-t erre: {{version}}?",
+      "gui-restarting": "A folytatás után az alkalmazás újraindul a befejezés után. Kérlek, győződj meg róla, hogy nincs folyamatban lévő műveleted. Folytatod?",
+      "gui-restart": "újraindítás"
+    },
+    "side-menu-title": {
+      "discover": "felfedezés",
+      "all": "Minden csomag",
+      "installed": "Telepített csomagok",
+      "installed_updates_available": "Elérhető frissítések",
+      "recently_updated": "Legutóbb frissített",
+      "new_packages": "Új csomagok",
+      "popular": "Népszerű",
+      "featured": "Kiemelt",
+      "essentials": "Alapvető",
+      "starstruck": "Csillagászati Nehézségek",
+      "made_by_tea": "a tea készítette",
+      "local_packages": "Helyi csomagok"
+    },
+    "tags": {
+      "discover": "felfedezés",
+      "all": "összes csomag",
+      "installed": "telepítve",
+      "installed_updates_available": "Frissítések elérhetőek",
+      "recently_updated": "Frissítve",
+      "new_packages": "Új csomagok",
+      "popular": "Népszerű",
+      "featured": "Kiemelt",
+      "essentials": "Alapvető",
+      "starstruck": "Csillagászati",
+      "made_by_tea": "Készítette a tea",
+      "local_packages": "Helyi csomagok"
+    },
+    "discover": {
+      "featured_title": "helyi AI alapok",
+      "featured_description": "Fedezze fel a helyi AI világát. Ez az Ön platformja a nagy profilú AI eszközök, mint például az AutoGPT és a Stable Diffusion Web UI, tinkeringjére, közvetlenül a helyi rendszeréből. Indítsa el AI projektjeit, miközben az adatait biztonságban és biztonságban tartja, azzal a szabadsággal, hogy finomhangolhat, amint azt kívánja."
+    }
+  }
+}
