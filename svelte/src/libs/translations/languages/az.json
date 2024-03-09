@@ -1,0 +1,101 @@
+{
+  "id": "az",
+  "label": "Azərbaycanca",
+  "translations": {
+    "store-search-placeholder": "paketləri axtar",
+    "action": {
+      "update": "yenilə",
+      "cancel": "ləğv et"
+    },
+    "package": {
+      "update-all": "HAMISINI YENİLƏ",
+      "cta-AVAILABLE": "QURAŞDIR",
+      "cta-INSTALLED": "QURAŞDIRILMIŞ",
+      "cta-INSTALLING": "QURAŞDIRILİR",
+      "cta-UNINSTALLED": "YENİDƏN QURAŞDIR",
+      "cta-UNINSTALL": "QURAŞDIRMA",
+      "cta-NEEDS_UPDATE": "YENİLƏ",
+      "cta-UPDATING": "YENİLƏNİR",
+      "cta-UPDATED": "YENİLƏNDİ",
+      "cta-PRUNE": "PENSİYALANDIR",
+      "cta-PRUNING": "PENSİYALANDIRILIR",
+      "open": "AÇ",
+      "open-in-terminal": "TERMINALDA AÇ",
+      "local-package": "yerli paket",
+      "not-in-pantry": "hələ dərmanxanaya əlavə edilməyib"
+    },
+    "footer": {
+      "quick-links-title": "sürətli bağlantılar",
+      "about-tea-store": "çay mağazası haqqında",
+      "report-a-problem": "problem bildirin",
+      "visit-website": "tea.xyz saytına keçin",
+      "terms-services": "şərtlər və xidmətlər",
+      "privacy-policy": "gizlilik siyasəti"
+    },
+    "documentation": {
+      "title": "sənədlər",
+      "workshops": "workshops"
+    },
+    "view-all": "hamısını gör",
+    "sorting": {
+      "label": "Sırala",
+      "popularity": "Ən məşhur",
+      "most-recent": "Ən son"
+    },
+    "common": {
+      "home": "ana səhifə",
+      "all": "Hamısı",
+      "articles": "Məqalələr",
+      "workshops": "Workshops",
+      "metadata": "Metadata",
+      "homepage": "Ana səhifə",
+      "documentation": "Sənədlər",
+      "github-repository": "Github Depo",
+      "repository": "Depo",
+      "contributors": "Əməydaşlar",
+      "view-on-github": "GITHUBDA GÖRÜNTÜLƏ"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "tea/gui-ni {{version}} yenilə?",
+      "gui-restarting": "Davam etmək proqramın bitməsindən sonra yenidən başlamağa səbəb olacaq. Zəhmət olmasa, hal-hazırda hər hansı bir əməliyyatınızın olmadığından əmin olun. Davam etmək istəyirsiniz?",
+      "gui-restart": "yenidən başlamaq"
+    },
+    "side-menu-title": {
+      "discover": "aşkar et",
+      "all": "Bütün Paketlər",
+      "installed": "Quraşdırılmış Paketlər",
+      "installed_updates_available": "Mövcud Yeniliklər",
+      "recently_updated": "Son Zamanlarda Yenilənmiş",
+      "new_packages": "Yeni Paketlər",
+      "popular": "Məşhur",
+      "featured": "Xüsusi",
+      "essentials": "Əsaslar",
+      "starstruck": "Starstruck",
+      "made_by_tea": "tea tərəfindən hazırlanmış",
+      "local_packages": "Yerli Paketlər"
+    },
+    "tags": {
+      "discover": "aşkar et",
+      "all": "bütün paketlər",
+      "installed": "quraşdırılmış",
+      "installed_updates_available": "Yeniliklər mövcuddur",
+      "recently_updated": "Son zamanlarda yenilənmiş",
+      "new_packages": "Yeni paketlər",
+      "popular": "Məşhur",
+      "featured": "Xüsusi",
+      "essentials": "Əsaslar",
+      "starstruck": "Starstruck",
+      "made_by_tea": "tea tərəfindən hazırlanmış",
+      "local_packages": "Yerli Paketlər"
+    },
+    "discover": {
+      "featured_title": "yerli AI əsasları",
+      "featured_description": "Yerli AI aləmini araşdırın. Bu, yüksək profil AI alətləri ilə, avtomatik GPT və Stabil Difuziya Web İstifadəçi Arayüzü kimi, öz yerli sistemindən doğrudan yüksək profilli AI alətləri ilə oynama platformunuzdur. Verilənlərinizi təhlil etməklə AI layihələrinizi həyata keçirin, məlumatlarınızı təhlükəsiz və təhlükəsiz saxlayaraq istədiyiniz kimi tənzimləyin."
+    }
+  }
+}
