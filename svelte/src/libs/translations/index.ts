@@ -39,6 +39,7 @@ import hu from "./languages/hu.json";
 import sk from "./languages/sk.json";
 import ee from "./languages/ee.json";
 import is from "./languages/is.json";
+import az from "./languages/az.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -85,7 +86,8 @@ const languages = [
   hu,
   sk,
   ee,
-  is
+  is,
+  az
 ];
 
 const langs: { [lang: string]: string } = {};
