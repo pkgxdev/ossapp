@@ -1,0 +1,101 @@
+{
+  "id": "is",
+  "label": "íslenska",
+  "translations": {
+    "store-search-placeholder": "leita að pökkum",
+    "action": {
+      "update": "uppfæra",
+      "cancel": "hætta við"
+    },
+    "package": {
+      "update-all": "UPPFÆRA ALLT",
+      "cta-AVAILABLE": "SETJA UPP",
+      "cta-INSTALLED": "SETT UPP",
+      "cta-INSTALLING": "SETUR UPP",
+      "cta-UNINSTALLED": "ENDURSETJA UPP",
+      "cta-UNINSTALL": "AFSETJA",
+      "cta-NEEDS_UPDATE": "UPPFÆRA",
+      "cta-UPDATING": "UPPFÆRIR",
+      "cta-UPDATED": "UPPFÆRT",
+      "cta-PRUNE": "SKERA AF",
+      "cta-PRUNING": "SKER AF",
+      "open": "OPNA",
+      "open-in-terminal": "OPNA Í SKIPULEGGJANDA",
+      "local-package": "staðbundinn pakki",
+      "not-in-pantry": "ekki bætt við í skápinn enn"
+    },
+    "footer": {
+      "quick-links-title": "hrapp tenglar",
+      "about-tea-store": "um teverslunina",
+      "report-a-problem": "tilkynna vandamál",
+      "visit-website": "heimsækja tea.xyz",
+      "terms-services": "skilmálar og skilmálaþjónusta",
+      "privacy-policy": "persónuverndarstefna"
+    },
+    "documentation": {
+      "title": "handbók",
+      "workshops": "verkstæði"
+    },
+    "view-all": "sýna allt",
+    "sorting": {
+      "label": "Raða eftir",
+      "popularity": "Mest vinsælt",
+      "most-recent": "Nýlegast"
+    },
+    "common": {
+      "home": "heim",
+      "all": "Allt",
+      "articles": "Greinar",
+      "workshops": "Verkstæði",
+      "metadata": "Gögn um gögn",
+      "homepage": "Heimasíða",
+      "documentation": "Handbók",
+      "github-repository": "Github Geymsla",
+      "repository": "Geymsla",
+      "contributors": "Hjálparfólk",
+      "view-on-github": "SÝNA Á GITHUB"
+    },
+    "tabs": {
+      "details": "pkk",
+      "cli": "skiparakerfi",
+      "gui": "grafísk notandaviðmót"
+    },
+    "notification": {
+      "update-header": "uppfæra tea/gui í {{version}}?",
+      "gui-restarting": "Framsetning mun valda endurræsingu forritsins þegar lokið er. Vinsamlegast tryggið að þið hafið engin starfsemi í gangi. Viltu halda áfram?",
+      "gui-restart": "endurræsa"
+    },
+    "side-menu-title": {
+      "discover": "finna",
+      "all": "Allir pakkarnir",
+      "installed": "Sett upp pakkarnir",
+      "installed_updates_available": "Í boði eru uppfærslur",
+      "recently_updated": "Nýlega uppfærð",
+      "new_packages": "Ný pakkaherping",
+      "popular": "Vinsælt",
+      "featured": "Í sératriði",
+      "essentials": "Nauðsynleg",
+      "starstruck": "Starstruck Heimsfræðingar",
+      "made_by_tea": "gert af te",
+      "local_packages": "Staðbundnir pakkar"
+    },
+    "tags": {
+      "discover": "finna",
+      "all": "allir pakkarnir",
+      "installed": "sett upp",
+      "installed_updates_available": "Uppfærslur í boði",
+      "recently_updated": "Nýlega uppfærð",
+      "new_packages": "Ný pakkaherping",
+      "popular": "Vinsælt",
+      "featured": "Í sératriði",
+      "essentials": "Nauðsynleg",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Gert af te",
+      "local_packages": "Staðbundnir pakkar"
+    },
+    "discover": {
+      "featured_title": "veraldleg nauðsynjar í gagnlega staðnum",
+      "featured_description": "Kynntu þér heim gagnfræðilegrar sjálfstjórnar. Þetta er þitt verkfærumiðstöð til að leika þér með hávirka gagnfræðileg verkfæri eins og AutoGPT og Stöðug Diffúsjón Web UI, beint frá þínu staðbundna kerfi. Hefja AI verkefni þín með því að halda gögnum þínum öruggum og öruggum, með frelsi til að feina stilla eins og þér sýnist."
+    }
+  }
+}
