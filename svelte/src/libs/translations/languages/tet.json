@@ -1,0 +1,101 @@
+{
+  "id": "tet",
+  "label": "Tetum",
+  "translations": {
+    "store-search-placeholder": "buka pakote",
+    "action": {
+      "update": "atualiza",
+      "cancel": "kansela"
+    },
+    "package": {
+      "update-all": "ATUALIZA HOTU",
+      "cta-AVAILABLE": "INSTALLA",
+      "cta-INSTALLED": "INSTALADU",
+      "cta-INSTALLING": "INSTALANDU",
+      "cta-UNINSTALLED": "RE-INSTALLA",
+      "cta-UNINSTALL": "DE-INSTALA",
+      "cta-NEEDS_UPDATE": "ATUALIZA",
+      "cta-UPDATING": "ATUALIZANDU",
+      "cta-UPDATED": "ATUALIZADU",
+      "cta-PRUNE": "PRUNE",
+      "cta-PRUNING": "PRUNING",
+      "open": "ABRI",
+      "open-in-terminal": "ABRI IHA TERMINAL",
+      "local-package": "pakote lokal",
+      "not-in-pantry": "ainda la tau iha banak"
+    },
+    "footer": {
+      "quick-links-title": "ligasaun ki'ik",
+      "about-tea-store": "kona ba loja cha",
+      "report-a-problem": "haforsa problema",
+      "visit-website": "vizita tea.xyz",
+      "terms-services": "termu & servisu",
+      "privacy-policy": "privacidade-politika"
+    },
+    "documentation": {
+      "title": "dokumentasaun",
+      "workshops": "workshops"
+    },
+    "view-all": "hare hotu",
+    "sorting": {
+      "label": "Sorteia liu husi",
+      "popularity": "Populares liu",
+      "most-recent": "Recente liu"
+    },
+    "common": {
+      "home": "uma",
+      "all": "Hotu",
+      "articles": "Artigu",
+      "workshops": "Workshops",
+      "metadata": "Metadadus",
+      "homepage": "Foho-in",
+      "documentation": "Dokumentasaun",
+      "github-repository": "Repositoriu GitHub",
+      "repository": "Repositoriu",
+      "contributors": "Kontribuidor",
+      "view-on-github": "Hare iha GitHub"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "atualiza cha/gui ba {{version}}?",
+      "gui-restarting": "Atu kontinua sei hasai aplikasaun molok remata. Favor asegura katak la iha operasaun hodi halakon. Ita hakarak kontinua?",
+      "gui-restart": "remata"
+    },
+    "side-menu-title": {
+      "discover": "deskobre",
+      "all": "Hotu Pakote",
+      "installed": "Pakote Instaladu",
+      "installed_updates_available": "Atualizasaun Disponivel",
+      "recently_updated": "Atualiza Foin",
+      "new_packages": "Pakote Foun",
+      "popular": "Populares",
+      "featured": "Destaka",
+      "essentials": "Fundamental",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "fatin husi cha",
+      "local_packages": "Pakote Lokal"
+    },
+    "tags": {
+      "discover": "deskobre",
+      "all": "hotu pakote",
+      "installed": "instaladu",
+      "installed_updates_available": "Atualizasaun Disponivel",
+      "recently_updated": "Atualiza Foin",
+      "new_packages": "pakote foun",
+      "popular": "populares",
+      "featured": "destaka",
+      "essentials": "fundamental",
+      "starstruck": "starstruck",
+      "made_by_tea": "fatin husi cha",
+      "local_packages": "pakote lokal"
+    },
+    "discover": {
+      "featured_title": "esensiai AI lokal",
+      "featured_description": "Deskobre rai AI lokal nian. Ita nia plataforma ida atu foka ho instrumentu AI ne'ebé hanesan AutoGPT no Stable Diffusion Web UI, diretamente husi sistema lokal ita nian. Inisia ita nia projetu AI hodi mantein ita nia dadus seguru no proteje, ho liberdade atu ajusta hanesan ita hakarak."
+    }
+  }
+}
