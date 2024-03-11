@@ -1,0 +1,101 @@
+{
+  "id":"sr",
+  "label":"Српски",
+  "translations":{
+     "store-search-placeholder":"претражи пакете",
+     "action":{
+        "update":"ажурирај",
+        "cancel":"откажи"
+     },
+     "package":{
+        "update-all":"АЖУРИРАЈ СВЕ",
+        "cta-AVAILABLE":"ИНСТАЛИРАЈ",
+        "cta-INSTALLED":"ИНСТАЛИРАНО",
+        "cta-INSTALLING":"ИНСТАЛИРА СЕ",
+        "cta-UNINSTALLED":"ПОНОВО ИНСТАЛИРАЈ",
+        "cta-UNINSTALL":"ДЕИНСТАЛИРАЈ",
+        "cta-NEEDS_UPDATE":"АЖУРИРАЈ",
+        "cta-UPDATING":"АЖУРИРА СЕ",
+        "cta-UPDATED":"АЖУРИРАНО",
+        "cta-PRUNE":"ОРЕЗИ",
+        "cta-PRUNING":"ОРЕЗУЈЕ СЕ",
+        "open":"ОТВОРИ",
+        "open-in-terminal":"ОТВОРИ У ТЕРМИНАЛУ",
+        "local-package":"локални пакет",
+        "not-in-pantry":"још није додат у шпејзу"
+     },
+     "footer":{
+        "quick-links-title":"брзи линкови",
+        "about-tea-store":"о чајони",
+        "report-a-problem":"пријави проблем",
+        "visit-website":"посети tea.xyz",
+        "terms-services":"услови коришћења",
+        "privacy-policy":"политика приватности"
+     },
+     "documentation":{
+        "title":"документација",
+        "workshops":"радионице"
+     },
+     "view-all":"прикажи све",
+     "sorting":{
+        "label":"Сортирај према",
+        "popularity":"Најпопуларнији",
+        "most-recent":"Најновији"
+     },
+     "common":{
+        "home":"почетна",
+        "all":"Све",
+        "articles":"Чланци",
+        "workshops":"Радионице",
+        "metadata":"Метаподаци",
+        "homepage":"Почетна страна",
+        "documentation":"Документација",
+        "github-repository":"Github репозиторијум",
+        "repository":"Репозиторијум",
+        "contributors":"Доприносиоци",
+        "view-on-github":"ПРИКАЖИ НА ГИТХУБУ"
+     },
+     "tabs":{
+        "details":"пакет",
+        "cli":"cli",
+        "gui":"gui"
+     },
+     "notification":{
+        "update-header":"ажурирај tea/gui на {{version}}?",
+        "gui-restarting":"Наставак ће узроковати рестартовање апликације након завршетка. Побрините се да немате ниједну операцију у току. Да ли желите да наставите?",
+        "gui-restart":"рестартуј"
+     },
+     "side-menu-title":{
+        "discover":"откриј",
+        "all":"Сви пакети",
+        "installed":"Инсталирани пакети",
+        "installed_updates_available":"Доступна ажурирања",
+        "recently_updated":"Недавно ажурирано",
+        "new_packages":"Нови пакети",
+        "popular":"Популарно",
+        "featured":"Истакнуто",
+        "essentials":"Основно",
+        "starstruck":"Starstruck",
+        "made_by_tea":"направљено од стране чаја",
+        "local_packages":"Локални пакети"
+     },
+     "tags":{
+        "discover":"откриј",
+        "all":"сви пакети",
+        "installed":"инсталирано",
+        "installed_updates_available":"Доступна ажурирања",
+        "recently_updated":"Недавно ажурирано",
+        "new_packages":"Нови пакети",
+        "popular":"Популарно",
+        "featured":"Истакнуто",
+        "essentials":"Основно",
+        "starstruck":"Starstruck",
+        "made_by_tea":"Направљено од стране чаја",
+        "local_packages":"Локални пакети"
+     },
+     "discover":{
+        "featured_title":"локалне AI есенције",
+        "featured_description":"Истражујте свет локалне вештачке интелигенције. Ово је ваша платформа за експериментисање са високопрофилним алатима AI, као што су AutoGPT и Stable Diffusion Web UI, директно са вашег локалног система. Покрените своје пројекте AI и истовремено задржите своје податке у безбедности и слободи за фино подешавање, како желите."
+     }
+  }
+}
