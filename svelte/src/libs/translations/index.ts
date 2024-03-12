@@ -40,6 +40,7 @@ import hu from "./languages/hu.json";
 import sk from "./languages/sk.json";
 import ee from "./languages/ee.json";
 import is from "./languages/is.json";
+import srb from "./languages/is.json";
 import ar from "./languages/ar.json";
 
 import * as customModifiers from "./modifiers";
@@ -88,6 +89,7 @@ const languages = [
   hu,
   sk,
   ee,
+  srb,
   is,
   ar
 ];
