@@ -39,8 +39,8 @@ import tet from "./languages/tet.json";
 import hu from "./languages/hu.json";
 import sk from "./languages/sk.json";
 import ee from "./languages/ee.json";
+import srb from "./languages/srb.json";
 import is from "./languages/is.json";
-import srb from "./languages/is.json";
 import ar from "./languages/ar.json";
 
 import * as customModifiers from "./modifiers";
