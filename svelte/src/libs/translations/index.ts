@@ -92,7 +92,6 @@ const languages = [
   is,
   srb,
   bn
-
 ];
 
 const langs: { [lang: string]: string } = {};
