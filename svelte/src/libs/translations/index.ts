@@ -7,7 +7,8 @@ import en from "./languages/en.json";
 import de from "./languages/de.json";
 import ru from "./languages/ru.json";
 import uk from "./languages/uk.json";
-import zh from "./languages/zh.json";
+import zhhans from "./languages/zhhans.json";
+import zhhant from "./languages/zhhant.json";
 import ptbr from "./languages/ptbr.json";
 import pl from "./languages/pl.json";
 import cz from "./languages/cz.json";
@@ -53,7 +54,8 @@ type Translation = typeof en.translations & {
 // add new language json object here
 const languages = [
   en,
-  zh,
+  zhhans,
+  zhhant,
   de,
   ru,
   uk,
