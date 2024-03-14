@@ -7,7 +7,8 @@ import en from "./languages/en.json";
 import de from "./languages/de.json";
 import ru from "./languages/ru.json";
 import uk from "./languages/uk.json";
-import zh from "./languages/zh.json";
+import zhhans from "./languages/zhhans.json";
+import zhhant from "./languages/zhhant.json";
 import ptbr from "./languages/ptbr.json";
 import pl from "./languages/pl.json";
 import cz from "./languages/cz.json";
@@ -39,6 +40,7 @@ import tet from "./languages/tet.json";
 import hu from "./languages/hu.json";
 import sk from "./languages/sk.json";
 import ee from "./languages/ee.json";
+import srb from "./languages/srb.json";
 import is from "./languages/is.json";
 import sr from "./languages/sr.json";
 
@@ -53,7 +55,8 @@ type Translation = typeof en.translations & {
 // add new language json object here
 const languages = [
   en,
-  zh,
+  zhhans,
+  zhhant,
   de,
   ru,
   uk,
@@ -88,6 +91,7 @@ const languages = [
   hu,
   sk,
   ee,
+  srb,
   is
 ];
 
