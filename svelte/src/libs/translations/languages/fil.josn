@@ -1,0 +1,101 @@
+{
+  "id": "fil",
+  "label": "Filipino",
+  "translations": {
+    "store-search-placeholder": "Maghanap ng package",
+    "action": {
+      "update": "I-update",
+      "cancel": "Kanselahin"
+    },
+    "package": {
+      "update-all": "I-update lahat",
+      "cta-AVAILABLE": "I-install",
+      "cta-INSTALLED": "Nai-install na",
+      "cta-INSTALLING": "Nag-i-install",
+      "cta-UNINSTALLED": "I-reinstall",
+      "cta-UNINSTALL": "I-uninstall",
+      "cta-NEEDS_UPDATE": "I-update",
+      "cta-UPDATING": "Nag-u-update",
+      "cta-UPDATED": "Nai-update na",
+      "cta-PRUNE": "Mag-linis",
+      "cta-PRUNING": "Naglilinis",
+      "open": "Buksan",
+      "open-in-terminal": "Buksan sa terminal",
+      "local-package": "Lokal na package",
+      "not-in-pantry": "Hindi pa idinagdag sa pantry"
+    },
+    "footer": {
+      "quick-links-title": "Mabilis na mga link",
+      "about-tea-store": "Tungkol sa tea store",
+      "report-a-problem": "I-ulat ang isang problema",
+      "visit-website": "Pumunta sa tea.xyz",
+      "terms-services": "Mga Tuntunin at Serbisyo",
+      "privacy-policy": "Patakaran sa Pagkapribado"
+    },
+    "documentation": {
+      "title": "Dokumentasyon",
+      "workshops": "Mga workshop"
+    },
+    "view-all": "Tingnan lahat",
+    "sorting": {
+      "label": "Paraan ng pag-ayos",
+      "popularity": "Pinakapopular",
+      "most-recent": "Pinakabagong update"
+    },
+    "common": {
+      "home": "Tahanan",
+      "all": "Lahat",
+      "articles": "Mga Artikulo",
+      "workshops": "Mga workshop",
+      "metadata": "Metadata",
+      "homepage": "Tahanan",
+      "documentation": "Dokumentasyon",
+      "github-repository": "Github Repository",
+      "repository": "Repository",
+      "contributors": "Mga Nagambag",
+      "view-on-github": "Tingnan sa Github"
+    },
+    "tabs": {
+      "details": "Package",
+      "cli": "Command Line",
+      "gui": "Graphic User Interface"
+    },
+    "notification": {
+      "update-header": "I-update ang tea/gui sa {{version}}?",
+      "gui-restarting": "Ang pagpapatuloy ay magreresulta sa pag-restart ng aplikasyon pagkatapos ng pagtatapos. Mangyaring tiyakin na wala kang mga kasalukuyang gawain. Gusto mo bang magpatuloy?",
+      "gui-restart": "I-restart"
+    },
+    "side-menu-title": {
+      "discover": "Tuklasin",
+      "all": "Lahat ng mga package",
+      "installed": "Nai-install na mga package",
+      "installed_updates_available": "Mga available na update",
+      "recently_updated": "Kamakailan in-update na mga package",
+      "new_packages": "Mga bagong package",
+      "popular": "Pinakapopular na mga package",
+      "featured": "Pinipiling mga package",
+      "essentials": "Mahahalagang mga package",
+      "starstruck": "Mga importanteng package",
+      "made_by_tea": "Gawa ng tea",
+      "local_packages": "Lokal na mga package"
+    },
+    "tags": {
+      "discover": "Tuklasin",
+      "all": "Lahat ng mga package",
+      "installed": "Nai-install",
+      "installed_updates_available": "Mga available na update",
+      "recently_updated": "Kamakailan in-update",
+      "new_packages": "Mga bagong package",
+      "popular": "Pinakapopular",
+      "featured": "Pinipiling mga package",
+      "essentials": "Mahahalagang mga package",
+      "starstruck": "Mga importanteng package",
+      "made_by_tea": "Gawa ng tea",
+      "local_packages": "Lokal na mga package"
+    },
+    "discover": {
+      "featured_title": "Pamamahala sa AI sa Lokal",
+      "featured_description": "Tuklasin ang lokal na larangan ng AI. Ito ang platform para sa iyong mga eksperimento sa mga advanced na AI tool (tulad ng AutoGPT at Stable Diffusion Web UI) gamit ang iyong lokal na sistema. Magsimula sa iyong mga proyekto sa AI nang walang pangamba sa seguridad ng data at may kalayaang i-customize ayon sa iyong kagustuhan."
+    }
+  }
+}
