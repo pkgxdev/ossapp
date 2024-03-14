@@ -92,7 +92,8 @@ const languages = [
   sk,
   ee,
   srb,
-  is
+  is,
+  sr
 ];
 
 const langs: { [lang: string]: string } = {};
