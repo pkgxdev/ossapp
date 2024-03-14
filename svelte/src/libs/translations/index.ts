@@ -42,6 +42,7 @@ import sk from "./languages/sk.json";
 import ee from "./languages/ee.json";
 import srb from "./languages/srb.json";
 import is from "./languages/is.json";
+import fil from "./languages/fil.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -92,6 +93,7 @@ const languages = [
   ee,
   srb,
   is
+  fil
 ];
 
 const langs: { [lang: string]: string } = {};
