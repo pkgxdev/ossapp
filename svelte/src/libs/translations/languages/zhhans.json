@@ -1,6 +1,6 @@
 {
-  "id": "zh",
-  "label": "中文",
+  "id": "zhhans",
+  "label": "简体中文",
   "translations": {
     "store-search-placeholder": "搜索软件包",
     "action": {
@@ -26,7 +26,7 @@
     },
     "footer": {
       "quick-links-title": "快速链接",
-      "about-tea-store": "关于茶仓",
+      "about-tea-store": "关于 tea store",
       "report-a-problem": "报告问题",
       "visit-website": "访问 tea.xyz",
       "terms-services": "条款和服务",
