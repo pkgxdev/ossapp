@@ -1,0 +1,101 @@
+{
+  "id": "zhhant",
+  "label": "繁體中文",
+  "translations": {
+    "store-search-placeholder": "搜尋軟件包",
+    "action": {
+      "update": "更新",
+      "cancel": "取消"
+    },
+    "package": {
+      "update-all": "全部更新",
+      "cta-AVAILABLE": "安裝",
+      "cta-INSTALLED": "已安裝",
+      "cta-INSTALLING": "正在安裝",
+      "cta-UNINSTALLED": "重新安裝",
+      "cta-UNINSTALL": "移除",
+      "cta-NEEDS_UPDATE": "更新",
+      "cta-UPDATING": "更新中",
+      "cta-UPDATED": "已更新",
+      "cta-PRUNE": "清理",
+      "cta-PRUNING": "清理中",
+      "open": "開啟",
+      "open-in-terminal": "在終端中打開",
+      "local-package": "本機軟件包",
+      "not-in-pantry": "尚未增加到軟件包管理器"
+    },
+    "footer": {
+      "quick-links-title": "快速連結",
+      "about-tea-store": "關於 tea store",
+      "report-a-problem": "回報問題",
+      "visit-website": "瀏覽 tea.xyz",
+      "terms-services": "條款和服務",
+      "privacy-policy": "私隱政策"
+    },
+    "documentation": {
+      "title": "文檔",
+      "workshops": "教學"
+    },
+    "view-all": "瀏覽所有",
+    "sorting": {
+      "label": "排序方式",
+      "popularity": "最受歡迎",
+      "most-recent": "最近更新"
+    },
+    "common": {
+      "home": "首頁",
+      "all": "全部",
+      "articles": "文章",
+      "workshops": "教學",
+      "metadata": "元數據",
+      "homepage": "首頁",
+      "documentation": "文檔",
+      "github-repository": "Github 倉庫",
+      "repository": "倉庫",
+      "contributors": "貢獻者",
+      "view-on-github": "在 Github 上查看"
+    },
+    "tabs": {
+      "details": "軟件包",
+      "cli": "命令列",
+      "gui": "圖形界面"
+    },
+    "notification": {
+      "update-header": "更新 tea/gui 到 {{version}} 嗎？",
+      "gui-restarting": "繼續操作將會導致應用程式在完成後重啓。請確認您沒有任何正在進行中的操作。是否要繼續？",
+      "gui-restart": "重啓"
+    },
+    "side-menu-title": {
+      "discover": "發現",
+      "all": "所有軟件包",
+      "installed": "已安裝的軟件包",
+      "installed_updates_available": "可更新",
+      "recently_updated": "最近更新的軟件包",
+      "new_packages": "新軟件包",
+      "popular": "最受歡迎的軟件包",
+      "featured": "精選軟件包",
+      "essentials": "必備軟件包",
+      "starstruck": "重量級軟件包",
+      "made_by_tea": "由 tea 製造",
+      "local_packages": "本機軟件包"
+    },
+    "tags": {
+      "discover": "發現",
+      "all": "所有軟件包",
+      "installed": "已安裝",
+      "installed_updates_available": "可更新",
+      "recently_updated": "最近更新的軟件包",
+      "new_packages": "新軟件包",
+      "popular": "最受歡迎的軟件包",
+      "featured": "精選軟件包",
+      "essentials": "必備軟件包",
+      "starstruck": "重量級軟件包",
+      "made_by_tea": "由 tea 製造",
+      "local_packages": "本地軟件包"
+    },
+    "discover": {
+      "featured_title": "本機 AI 基礎",
+      "featured_description": "探索本機 AI 領域。使用您本機的系統直接與高級 AI 工具（如 AutoGPT 和 Stable Diffusion Web UI）進行試驗的平台。在保持資料安全的同時啓動您的 AI 項目，並根據您的意願自由地微調。"
+    }
+  }
+}
