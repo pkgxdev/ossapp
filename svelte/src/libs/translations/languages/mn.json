@@ -1,0 +1,102 @@
+{
+    "id": "mn",
+    "label": "Монгол",
+    "translations": {
+      "store-search-placeholder": "пакет хайх",
+      "action": {
+        "update": "шинэчлэх",
+        "cancel": "цуцлах"
+      },
+      "package": {
+        "update-all": "Бүгдийг ШИНЭЧЛЭХ",
+        "cta-AVAILABLE": "СУУЛГАХ",
+        "cta-INSTALLED": "СУУЛГАГДСАН",
+        "cta-INSTALLING": "СУУЛГАЖ БАЙНА",
+        "cta-UNINSTALLED": "ДАХИН СУУЛГАХ",
+        "cta-UNINSTALL": "СУУЛГАХ",
+        "cta-NEEDS_UPDATE": "ШИНЭЧЛЭХ ШАЙДАН ХОХИРОХ",
+        "cta-UPDATING": "ШИНЭЧЛЭГДЭХ",
+        "cta-UPDATED": "ШИНЭЧЛЭГДСЭН",
+        "cta-PRUNE": "ЦЭВЭРЛЭХ",
+        "cta-PRUNING": "ЦЭВЭРЛЭГДЭХ",
+        "open": "НЭЭХ",
+        "open-in-terminal": "ТЕРМИНАЛД НЭЭХ",
+        "local-package": "газар дахь пакет",
+        "not-in-pantry": "одоогоор ажиллаагүй"
+      },
+      "footer": {
+        "quick-links-title": "хурдасгагч холбоосууд",
+        "about-tea-store": "цааш тийм бүлгийг",
+        "report-a-problem": "ашиглахад алдаа барьх",
+        "visit-website": "цаг тийм бүлгийг",
+        "terms-services": "нөхцөл ба үйлчилгээ",
+        "privacy-policy": "хувийн мэдээллийн бодлого"
+      },
+      "documentation": {
+        "title": "баримт бичиг",
+        "workshops": "ажлын сургалтууд"
+      },
+      "view-all": "бүгдийг үзэх",
+      "sorting": {
+        "label": "Эрэмбэлэх",
+        "popularity": "Хамгийн их сонголт",
+        "most-recent": "Сүүлийн үеийн"
+      },
+      "common": {
+        "home": "нүүр хуудас",
+        "all": "Бүгд",
+        "articles": "Мэдээлэл",
+        "workshops": "Ажлын сургалтууд",
+        "metadata": "Мета мэдээлэл",
+        "homepage": "Нүүр хуудас",
+        "documentation": "Баримт бичиг",
+        "github-repository": "Github хадгаламж",
+        "repository": "Хадгаламж",
+        "contributors": "Орлогчид",
+        "view-on-github": "GITHUB-Д ҮЗЭХ"
+      },
+      "tabs": {
+        "details": "pkg",
+        "cli": "cli",
+        "gui": "gui"
+      },
+      "notification": {
+        "update-header": "tea/gui-г {{version}} тохиргоо хийх уу?",
+        "gui-restarting": "Төлөвлөлт дуусахад програм дахин эхлүүлэх болно. Та ажлын гүйцэтгэлтэй байхыг анхаарна уу. Үүнийг хийхийг хүсч байна уу?",
+        "gui-restart": "дахин эхлүүлэх"
+      },
+      "side-menu-title": {
+        "discover": "хайх",
+        "all": "Бүх пакетууд",
+        "installed": "Суулгасан пакетууд",
+        "installed_updates_available": "Боломжит Шинэчлэлтүүд",
+        "recently_updated": "Сүүлд Шинэчлэгдсэн",
+        "new_packages": "Шинэ пакетууд",
+        "popular": "Танынх",
+        "featured": "Үзэл бодлогууд",
+        "essentials": "Үндсэн зүйлс",
+        "starstruck": "Шилдэг хөнгөлөлттэй",
+        "made_by_tea": "цааш тийм тэтгэлэг",
+        "local_packages": "газар дахь пакетууд"
+      },
+      "tags": {
+        "discover": "хайх",
+        "all": "бүх пакетууд",
+        "installed": "суулгасан",
+        "installed_updates_available": "Шинэчлэлтүүд байна",
+        "recently_updated": "Сүүлд Шинэчлэгдсэн",
+        "new_packages": "Шинэ пакетууд",
+        "popular": "Танынх",
+        "featured": "Үзэл бодлогууд",
+        "essentials": "Үндсэн зүйлс",
+        "starstruck": "Шилдэг хөнгөлөлттэй",
+        "made_by_tea": "цааш тийм тэтгэлэг",
+        "local_packages": "газар дахь пакетууд"
+      },
+      "discover": {
+        "featured_title": "газар дотор AI үнэцүүд",
+        "featured_description": "Газар дотор AI-г зохицуулах албан тушаал. Энэ нь Local Diffusion Web UI, Автомат ГПТ зэрэг гарын том байгууламжийн AI ашиглах платформ бөгөөд, таны мэдээллийг аюулгүй байдлыг хадгалж, таны эрсдэлийг хүчинтэй болгох эрхийг олгодог. AI багын ажлуудыг эхлүүлж, хүлээх зүйлсээ шаарддаг зорилгоор ашиглаарай."
+      }
+    }
+  }
+  
