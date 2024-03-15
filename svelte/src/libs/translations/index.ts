@@ -45,6 +45,7 @@ import is from "./languages/is.json";
 import ar from "./languages/ar.json";
 import az from "./languages/az.json";
 import bn from "./languages/bn.json";
+import eu from "./languages/eu.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -97,7 +98,8 @@ const languages = [
   is,
   ar,
   az,
-  bn
+  bn,
+  eu
 ];
 
 const langs: { [lang: string]: string } = {};
