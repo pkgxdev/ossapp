@@ -1,102 +1,101 @@
 {
-    "id": "eu",
-    "label": "Euskara",
-    "translations": {
-      "store-search-placeholder": "bilatu paketeak",
-      "action": {
-        "update": "eguneratu",
-        "cancel": "utzi"
-      },
-      "package": {
-        "update-all": "GUZTIA EGUNERATU",
-        "cta-AVAILABLE": "INSTALATU",
-        "cta-INSTALLED": "INSTALATUTA",
-        "cta-INSTALLING": "INSTALATZEN",
-        "cta-UNINSTALLED": "BERRI-INSTALATU",
-        "cta-UNINSTALL": "DESINSTALATU",
-        "cta-NEEDS_UPDATE": "EGUNERATZEKO",
-        "cta-UPDATING": "EGUNERATZEN",
-        "cta-UPDATED": "EGUNERATUTA",
-        "cta-PRUNE": "TXERTATUTAKOAK EZABATU",
-        "cta-PRUNING": "EZABATZEN",
-        "open": "IREKI",
-        "open-in-terminal": "IREKI TERMINALEAN",
-        "local-package": "lokala",
-        "not-in-pantry": "oraindik gatzatik kentzeko"
-      },
-      "footer": {
-        "quick-links-title": "estekak azkar",
-        "about-tea-store": "tegiaren gaineko informazioa",
-        "report-a-problem": "arazo bat salatu",
-        "visit-website": "bisitatu tea.xyz",
-        "terms-services": "zerbitzu-baldintzak",
-        "privacy-policy": "pribatutasun-politika"
-      },
-      "documentation": {
-        "title": "dokumentazioa",
-        "workshops": "tailerrak"
-      },
-      "view-all": "ikusi guztia",
-      "sorting": {
-        "label": "Ordenatu",
-        "popularity": "Gehien gustatutakoa",
-        "most-recent": "Berrienak"
-      },
-      "common": {
-        "home": "etxeko orria",
-        "all": "Guztiak",
-        "articles": "Artikuluak",
-        "workshops": "Tailerrak",
-        "metadata": "Metadatuak",
-        "homepage": "Etxeko orria",
-        "documentation": "Dokumentazioa",
-        "github-repository": "Github Biltegia",
-        "repository": "Biltegia",
-        "contributors": "Laguntzaileak",
-        "view-on-github": "GITHUBEN IKUSI"
-      },
-      "tabs": {
-        "details": "pkg",
-        "cli": "cli",
-        "gui": "gui"
-      },
-      "notification": {
-        "update-header": "tei/gui-a {{version}}-ra eguneratu nahi duzu?",
-        "gui-restarting": "Jarraitzeko aplikazioa berrabiaraziko du. Ondo ziurtatu ez duzula operazio batzuk ari.",
-        "gui-restart": "berrabiarazi"
-      },
-      "side-menu-title": {
-        "discover": "aurkitu",
-        "all": "Pakete guztiak",
-        "installed": "Instalatuta dauden paketeak",
-        "installed_updates_available": "Eguneratzeak eskuragarri",
-        "recently_updated": "Berriki eguneratutakoak",
-        "new_packages": "Pakete berriak",
-        "popular": "Arrakastatsuak",
-        "featured": "Nabarmenak",
-        "essentials": "Oinarrizkoak",
-        "starstruck": "Izarrak",
-        "made_by_tea": "Tei-ek egina",
-        "local_packages": "Lokal Paketeak"
-      },
-      "tags": {
-        "discover": "aurkitu",
-        "all": "pakete guztiak",
-        "installed": "instalatuta",
-        "installed_updates_available": "Eguneratzeak eskuragarri",
-        "recently_updated": "berriki eguneratuta",
-        "new_packages": "pakete berriak",
-        "popular": "Arrakastatsuak",
-        "featured": "Nabarmenak",
-        "essentials": "Oinarrizkoak",
-        "starstruck": "Izarrak",
-        "made_by_tea": "Tei-ek egina",
-        "local_packages": "Lokal Paketeak"
-      },
-      "discover": {
-        "featured_title": "Lokal AI oinarrizkoak",
-        "featured_description": "Hazi-IAaren eremuan esploratu. Hau da zure plataforma AutoGPT eta Stable Diffusion Web UI bezalako gailu AI handiak zure sistema lokaltik zuzenean probatzeko. Hasi zure IA proiektuak datuak seguru eta seguruan mantentzen, nahi duzun moduan zehaztu."
-      }
+  "id": "eu",
+  "label": "Euskara",
+  "translations": {
+    "store-search-placeholder": "bilatu paketeak",
+    "action": {
+      "update": "eguneratu",
+      "cancel": "utzi"
+    },
+    "package": {
+      "update-all": "GUZTIA EGUNERATU",
+      "cta-AVAILABLE": "INSTALATU",
+      "cta-INSTALLED": "INSTALATUTA",
+      "cta-INSTALLING": "INSTALATZEN",
+      "cta-UNINSTALLED": "BERRI-INSTALATU",
+      "cta-UNINSTALL": "DESINSTALATU",
+      "cta-NEEDS_UPDATE": "EGUNERATZEKO",
+      "cta-UPDATING": "EGUNERATZEN",
+      "cta-UPDATED": "EGUNERATUTA",
+      "cta-PRUNE": "TXERTATUTAKOAK EZABATU",
+      "cta-PRUNING": "EZABATZEN",
+      "open": "IREKI",
+      "open-in-terminal": "IREKI TERMINALEAN",
+      "local-package": "lokala",
+      "not-in-pantry": "oraindik gatzatik kentzeko"
+    },
+    "footer": {
+      "quick-links-title": "estekak azkar",
+      "about-tea-store": "tegiaren gaineko informazioa",
+      "report-a-problem": "arazo bat salatu",
+      "visit-website": "bisitatu tea.xyz",
+      "terms-services": "zerbitzu-baldintzak",
+      "privacy-policy": "pribatutasun-politika"
+    },
+    "documentation": {
+      "title": "dokumentazioa",
+      "workshops": "tailerrak"
+    },
+    "view-all": "ikusi guztia",
+    "sorting": {
+      "label": "Ordenatu",
+      "popularity": "Gehien gustatutakoa",
+      "most-recent": "Berrienak"
+    },
+    "common": {
+      "home": "etxeko orria",
+      "all": "Guztiak",
+      "articles": "Artikuluak",
+      "workshops": "Tailerrak",
+      "metadata": "Metadatuak",
+      "homepage": "Etxeko orria",
+      "documentation": "Dokumentazioa",
+      "github-repository": "Github Biltegia",
+      "repository": "Biltegia",
+      "contributors": "Laguntzaileak",
+      "view-on-github": "GITHUBEN IKUSI"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "tei/gui-a {{version}}-ra eguneratu nahi duzu?",
+      "gui-restarting": "Jarraitzeko aplikazioa berrabiaraziko du. Ondo ziurtatu ez duzula operazio batzuk ari.",
+      "gui-restart": "berrabiarazi"
+    },
+    "side-menu-title": {
+      "discover": "aurkitu",
+      "all": "Pakete guztiak",
+      "installed": "Instalatuta dauden paketeak",
+      "installed_updates_available": "Eguneratzeak eskuragarri",
+      "recently_updated": "Berriki eguneratutakoak",
+      "new_packages": "Pakete berriak",
+      "popular": "Arrakastatsuak",
+      "featured": "Nabarmenak",
+      "essentials": "Oinarrizkoak",
+      "starstruck": "Izarrak",
+      "made_by_tea": "Tei-ek egina",
+      "local_packages": "Lokal Paketeak"
+    },
+    "tags": {
+      "discover": "aurkitu",
+      "all": "pakete guztiak",
+      "installed": "instalatuta",
+      "installed_updates_available": "Eguneratzeak eskuragarri",
+      "recently_updated": "berriki eguneratuta",
+      "new_packages": "pakete berriak",
+      "popular": "Arrakastatsuak",
+      "featured": "Nabarmenak",
+      "essentials": "Oinarrizkoak",
+      "starstruck": "Izarrak",
+      "made_by_tea": "Tei-ek egina",
+      "local_packages": "Lokal Paketeak"
+    },
+    "discover": {
+      "featured_title": "Lokal AI oinarrizkoak",
+      "featured_description": "Hazi-IAaren eremuan esploratu. Hau da zure plataforma AutoGPT eta Stable Diffusion Web UI bezalako gailu AI handiak zure sistema lokaltik zuzenean probatzeko. Hasi zure IA proiektuak datuak seguru eta seguruan mantentzen, nahi duzun moduan zehaztu."
     }
   }
-  
+}

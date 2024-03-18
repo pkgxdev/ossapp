@@ -1,102 +1,101 @@
 {
-    "id": "bn",
-    "label": "বাংলা",
-    "translations": {
-      "store-search-placeholder": "প্যাকেজ অনুসন্ধান",
-      "action": {
-        "update": "আপডেট",
-        "cancel": "বাতিল করুন"
-      },
-      "package": {
-        "update-all": "সব আপডেট করুন",
-        "cta-AVAILABLE": "ইনস্টল করুন",
-        "cta-INSTALLED": "ইনস্টল করা হয়েছে",
-        "cta-INSTALLING": "ইনস্টল হচ্ছে",
-        "cta-UNINSTALLED": "পুনরায় ইনস্টল করুন",
-        "cta-UNINSTALL": "আনইনস্টল করুন",
-        "cta-NEEDS_UPDATE": "আপডেট করুন",
-        "cta-UPDATING": "আপডেট করা হচ্ছে",
-        "cta-UPDATED": "আপডেট হয়েছে",
-        "cta-PRUNE": "প্রুন",
-        "cta-PRUNING": "প্রুন হচ্ছে",
-        "open": "খোলুন",
-        "open-in-terminal": "টার্মিনালে খোলুন",
-        "local-package": "স্থানীয় প্যাকেজ",
-        "not-in-pantry": "প্যান্ট্রিতে যোগ করা হয়নি"
-      },
-      "footer": {
-        "quick-links-title": "দ্রুত লিংকসমূহ",
-        "about-tea-store": "চা স্টোর সম্পর্কে",
-        "report-a-problem": "সমস্যা রিপোর্ট করুন",
-        "visit-website": "ওয়েবসাইট দেখুন",
-        "terms-services": "শর্তাবলী এবং সেবা",
-        "privacy-policy": "গোপনীয়তা নীতি"
-      },
-      "documentation": {
-        "title": "ডকুমেন্টেশন",
-        "workshops": "ওয়ার্কশপ"
-      },
-      "view-all": "সব দেখুন",
-      "sorting": {
-        "label": "সাজানো হালকা",
-        "popularity": "সবচেয়ে জনপ্রিয়",
-        "most-recent": "সবচেয়ে সাম্প্রতিক"
-      },
-      "common": {
-        "home": "হোম",
-        "all": "সব",
-        "articles": "লেখা",
-        "workshops": "ওয়ার্কশপ",
-        "metadata": "মেটাডেটা",
-        "homepage": "হোমপেজ",
-        "documentation": "ডকুমেন্টেশন",
-        "github-repository": "গিটহাব সংগ্রহস্থল",
-        "repository": "সংগ্রহস্থল",
-        "contributors": "অবদানকারীগণ",
-        "view-on-github": "গিটহাবে দেখুন"
-      },
-      "tabs": {
-        "details": "প্যাকেজ",
-        "cli": "সিএলআই",
-        "gui": "গ্রাফিকাল ইউজার ইন্টারফেস"
-      },
-      "notification": {
-        "update-header": "{{version}} ভার্সনে চা/গ্রাফিকাল ইউজার ইন্টারফেস আপডেট করতে চান?",
-        "gui-restarting": "প্রসেস সমাপ্তির পর অ্যাপ্লিকেশন পুনরায় চালু হবে। দয়া করে নিশ্চিত করুন যে আপনার কোনও অপারেশন চলমান নেই। আপনি কি অগ্রসর হতে চান?",
-        "gui-restart": "রিস্টার্ট"
-      },
-      "side-menu-title": {
-        "discover": "আবিষ্কার করুন",
-        "all": "সব প্যাকেজ",
-        "installed": "ইনস্টল করা হয়েছে",
-        "installed_updates_available": "উন্নতির জন্য উন্নতি প্রাপ্ত",
-        "recently_updated": "সাম্প্রতিকভাবে আপডেট",
-        "new_packages": "নতুন প্যাকেজগুলি",
-        "popular": "জনপ্রিয়",
-        "featured": "বৈশিষ্ট্যযুক্ত",
-        "essentials": "প্রয়োজনীয়",
-        "starstruck": "তারকা",
-        "made_by_tea": "চা দ্বারা তৈরি",
-        "local_packages": "স্থানীয় প্যাকেজ"
-      },
-      "tags": {
-        "discover": "আবিষ্কার করুন",
-        "all": "সমস্ত প্যাকেজ",
-        "installed": "ইনস্টল করা হয়েছে",
-        "installed_updates_available": "আপডেট উন্নতি প্রাপ্ত",
-        "recently_updated": "সাম্প্রতিকভাবে আপডেট",
-        "new_packages": "নতুন প্যাকেজগুলি",
-        "popular": "জনপ্রিয়",
-        "featured": "বৈশিষ্ট্যযুক্ত",
-        "essentials": "প্রয়োজনীয়",
-        "starstruck": "তারকা",
-        "made_by_tea": "চা দ্বারা তৈরি",
-        "local_packages": "স্থানীয় প্যাকেজ"
-      },
-      "discover": {
-        "featured_title": "স্থানীয় এআই প্রয়োজনীয়",
-        "featured_description": "স্থানীয় এআই এর প্রস্থান অনুসন্ধান করুন। এটা আপনার লোকাল সিস্টেম থেকে AutoGPT এবং Stable Diffusion Web UI এর মতো উচ্চ প্রোফাইল এআই টুলস দিয়ে খেলাড়ি খেলা করার জন্য আপনার প্ল্যাটফর্ম। আপনার ডেটা নিরাপদ এবং সুরক্ষিত রেখে আপনার এআই প্রকল্পগুলি উচ্চমাত্রায় শুরু করুন, আপনার ইচ্ছামত ভাবে ফাইন-টিউন করার সাথে মিলিয়ে।"
-      }
+  "id": "bn",
+  "label": "বাংলা",
+  "translations": {
+    "store-search-placeholder": "প্যাকেজ অনুসন্ধান",
+    "action": {
+      "update": "আপডেট",
+      "cancel": "বাতিল করুন"
+    },
+    "package": {
+      "update-all": "সব আপডেট করুন",
+      "cta-AVAILABLE": "ইনস্টল করুন",
+      "cta-INSTALLED": "ইনস্টল করা হয়েছে",
+      "cta-INSTALLING": "ইনস্টল হচ্ছে",
+      "cta-UNINSTALLED": "পুনরায় ইনস্টল করুন",
+      "cta-UNINSTALL": "আনইনস্টল করুন",
+      "cta-NEEDS_UPDATE": "আপডেট করুন",
+      "cta-UPDATING": "আপডেট করা হচ্ছে",
+      "cta-UPDATED": "আপডেট হয়েছে",
+      "cta-PRUNE": "প্রুন",
+      "cta-PRUNING": "প্রুন হচ্ছে",
+      "open": "খোলুন",
+      "open-in-terminal": "টার্মিনালে খোলুন",
+      "local-package": "স্থানীয় প্যাকেজ",
+      "not-in-pantry": "প্যান্ট্রিতে যোগ করা হয়নি"
+    },
+    "footer": {
+      "quick-links-title": "দ্রুত লিংকসমূহ",
+      "about-tea-store": "চা স্টোর সম্পর্কে",
+      "report-a-problem": "সমস্যা রিপোর্ট করুন",
+      "visit-website": "ওয়েবসাইট দেখুন",
+      "terms-services": "শর্তাবলী এবং সেবা",
+      "privacy-policy": "গোপনীয়তা নীতি"
+    },
+    "documentation": {
+      "title": "ডকুমেন্টেশন",
+      "workshops": "ওয়ার্কশপ"
+    },
+    "view-all": "সব দেখুন",
+    "sorting": {
+      "label": "সাজানো হালকা",
+      "popularity": "সবচেয়ে জনপ্রিয়",
+      "most-recent": "সবচেয়ে সাম্প্রতিক"
+    },
+    "common": {
+      "home": "হোম",
+      "all": "সব",
+      "articles": "লেখা",
+      "workshops": "ওয়ার্কশপ",
+      "metadata": "মেটাডেটা",
+      "homepage": "হোমপেজ",
+      "documentation": "ডকুমেন্টেশন",
+      "github-repository": "গিটহাব সংগ্রহস্থল",
+      "repository": "সংগ্রহস্থল",
+      "contributors": "অবদানকারীগণ",
+      "view-on-github": "গিটহাবে দেখুন"
+    },
+    "tabs": {
+      "details": "প্যাকেজ",
+      "cli": "সিএলআই",
+      "gui": "গ্রাফিকাল ইউজার ইন্টারফেস"
+    },
+    "notification": {
+      "update-header": "{{version}} ভার্সনে চা/গ্রাফিকাল ইউজার ইন্টারফেস আপডেট করতে চান?",
+      "gui-restarting": "প্রসেস সমাপ্তির পর অ্যাপ্লিকেশন পুনরায় চালু হবে। দয়া করে নিশ্চিত করুন যে আপনার কোনও অপারেশন চলমান নেই। আপনি কি অগ্রসর হতে চান?",
+      "gui-restart": "রিস্টার্ট"
+    },
+    "side-menu-title": {
+      "discover": "আবিষ্কার করুন",
+      "all": "সব প্যাকেজ",
+      "installed": "ইনস্টল করা হয়েছে",
+      "installed_updates_available": "উন্নতির জন্য উন্নতি প্রাপ্ত",
+      "recently_updated": "সাম্প্রতিকভাবে আপডেট",
+      "new_packages": "নতুন প্যাকেজগুলি",
+      "popular": "জনপ্রিয়",
+      "featured": "বৈশিষ্ট্যযুক্ত",
+      "essentials": "প্রয়োজনীয়",
+      "starstruck": "তারকা",
+      "made_by_tea": "চা দ্বারা তৈরি",
+      "local_packages": "স্থানীয় প্যাকেজ"
+    },
+    "tags": {
+      "discover": "আবিষ্কার করুন",
+      "all": "সমস্ত প্যাকেজ",
+      "installed": "ইনস্টল করা হয়েছে",
+      "installed_updates_available": "আপডেট উন্নতি প্রাপ্ত",
+      "recently_updated": "সাম্প্রতিকভাবে আপডেট",
+      "new_packages": "নতুন প্যাকেজগুলি",
+      "popular": "জনপ্রিয়",
+      "featured": "বৈশিষ্ট্যযুক্ত",
+      "essentials": "প্রয়োজনীয়",
+      "starstruck": "তারকা",
+      "made_by_tea": "চা দ্বারা তৈরি",
+      "local_packages": "স্থানীয় প্যাকেজ"
+    },
+    "discover": {
+      "featured_title": "স্থানীয় এআই প্রয়োজনীয়",
+      "featured_description": "স্থানীয় এআই এর প্রস্থান অনুসন্ধান করুন। এটা আপনার লোকাল সিস্টেম থেকে AutoGPT এবং Stable Diffusion Web UI এর মতো উচ্চ প্রোফাইল এআই টুলস দিয়ে খেলাড়ি খেলা করার জন্য আপনার প্ল্যাটফর্ম। আপনার ডেটা নিরাপদ এবং সুরক্ষিত রেখে আপনার এআই প্রকল্পগুলি উচ্চমাত্রায় শুরু করুন, আপনার ইচ্ছামত ভাবে ফাইন-টিউন করার সাথে মিলিয়ে।"
     }
   }
-  
+}
