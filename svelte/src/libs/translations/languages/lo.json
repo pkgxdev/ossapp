@@ -1,0 +1,101 @@
+{
+  "id": "lo",
+  "label": "Lao",
+  "translations": {
+    "store-search-placeholder": "ຄົ້ນຫາ​ການ​ຕິດ​ຕັ້ງ",
+    "action": {
+      "update": "ປັບ​ປ່ຽນ",
+      "cancel": "ຍົກເລີກ"
+    },
+    "package": {
+      "update-all": "ປັບ​ປ່ຽນ​ທັງ​ຫມົດ",
+      "cta-AVAILABLE": "ຕິດ​ຕັ້ງ",
+      "cta-INSTALLED": "ຕິດ​ຕັ້ງ​ແລ້ວ",
+      "cta-INSTALLING": "ກຳ​ລັງ​ຕິດ​ຕັ້ງ",
+      "cta-UNINSTALLED": "ຕິດ​ຕັ້ງ​ຄືນ",
+      "cta-UNINSTALL": "ຍົກ​ລັບ",
+      "cta-NEEDS_UPDATE": "ປັບ​ປ່ຽນ",
+      "cta-UPDATING": "ກຳ​ລັງ​ປັບ​ປ່ຽນ",
+      "cta-UPDATED": "ປັບ​ປ່ຽນ​ແລ້ວ",
+      "cta-PRUNE": "ບັນ​ດາຍ",
+      "cta-PRUNING": "ກຳ​ລັງ​ບັນ​ດາຍ",
+      "open": "ສິນ​ສຸດ",
+      "open-in-terminal": "ສິນ​ສຸດ​ຢາກ​ໃຊ້​ເຄື່ອງ​ດື່ມ",
+      "local-package": "ການຕິດຕັ້ງໃນໂຄງການອາຊີບິດ",
+      "not-in-pantry": "ບໍ່ຖືກເພີ່ມໄປຫາຄຸນນະພາບຄືນທີ່"
+    },
+    "footer": {
+      "quick-links-title": "ລິ້ງລາຍການດ່ວນຫຼຸດ",
+      "about-tea-store": "ກ່ຽວກັບຮ້ານຊື້ຊາຍ",
+      "report-a-problem": "ລາຍງານບາດຜິດພາດ",
+      "visit-website": "ເຂົ້າໜ້າເວັບອີລ",
+      "terms-services": "ເງື່ອນໄຂ & ບໍລິການ",
+      "privacy-policy": "ຂໍ້ມູນທົດສອບລະບົບສະຫຼັບການຂໍຂອບໃຈ"
+    },
+    "documentation": {
+      "title": "ເອກະສານລາຍຊື່",
+      "workshops": "ສະຖິຕິວຽກ"
+    },
+    "view-all": "ເບິ່ງທັງໝົດ",
+    "sorting": {
+      "label": "ລຽງລຳດັບຕາມ",
+      "popularity": "ສຳລັບຜູ້ເລືອກປະສົບການດີທີ່ສຳພັນສົມບັດ",
+      "most-recent": "ສຳລັບການຫຼາຍໃຫມ່ທີ່ປະຈຳ"
+    },
+    "common": {
+      "home": "ໜ້າຫຼັກ",
+      "all": "ທັງໝົດ",
+      "articles": "ບົດຄວາມ",
+      "workshops": "ສະຫງວນການ",
+      "metadata": "ເລືອກບົດຄວາມ",
+      "homepage": "ໜ້າທຳອິດ",
+      "documentation": "ເອກະສານ",
+      "github-repository": "Github Repository",
+      "repository": "ບ່ອນເກັບຂໍ້ມູນ",
+      "contributors": "ຜູ້ສ້າງວຽກ",
+      "view-on-github": "ເບິ່ງໃນ GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "ປັບປຸງ tea/gui ເຂົ້າຮ່ວມກັບ {{version}}?",
+      "gui-restarting": "ການປັບປຸງກັບການປາກຫຼັງການຈັດການແປງສຳລັບສ່ວນອື່ນຫຼາຍແມ່ນ. ກະລຸນາວ່າທ່ານບໍ່ມີຂໍ້ມູນທີ່ຍັງກຳລັງປະຕິບັດ. ທ່ານຕ້ອງຕົກລົງບໍ? ",
+      "gui-restart": "ປາກຫຼັງ"
+    },
+    "side-menu-title": {
+      "discover": "ຊອກຫາ",
+      "all": "ທັງໝົດຂອງການຕິດຕັ້ງ",
+      "installed": "ຕິດຕັ້ງແລ້ວລະບົບ",
+      "installed_updates_available": "ມີການປັບປຸງທີ່ມີຢູ່",
+      "recently_updated": "ປັບປຸງໃໝ່ວັນນີ້",
+      "new_packages": "ແຜນຫຼັງໃໝ່",
+      "popular": "ທີ່ຖືກຕິດຕັ້ງ",
+      "featured": "ສະແດງຄຸນນະພາບ",
+      "essentials": "ສິ່ງທີ່ກວດສອບໄວ້",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "ຜະລິດຂອງ tea",
+      "local_packages": "ແຜນຫຼັງຂອງເມືອງ"
+    },
+    "tags": {
+      "discover": "ຊອກຫາ",
+      "all": "ທັງໝົດຂອງການຕິດຕັ້ງ",
+      "installed": "ຕິດ​ຕັ້ງ​ແລ້ວ",
+      "installed_updates_available": "ມີການປັບປຸງທີ່ມີຢູ່",
+      "recently_updated": "ປັບປຸງໃໝ່ວັນນີ້",
+      "new_packages": "ແຜນຫຼັງໃໝ່",
+      "popular": "ທີ່ຖືກຕິດຕັ້ງຫຼາຍກວ່າຄ່າ",
+      "featured": "ສະແດງຄຸນສຳລັບ",
+      "essentials": "ສິ່ງທີ່ກໍາຫນ່ວຍ",
+      "starstruck": "starstruck",
+      "made_by_tea": "ຜະລິດຂອງ tea",
+      "local_packages": "ແຜນຫຼັງພະຍາຍາມ"
+    },
+    "discover": {
+      "featured_title": "ການເຮັດວຽກອັງກິດ AI ຢູ່ຕາມບັນດາ",
+      "featured_description": "ການສຳຫຼັບຕົວຢ່າງຂອງ AI ຕາມບັນດາ. ນັກຮົບຜົນດ້ວຍຄວາມຮູ້ສຶກສາຂອງ AI ສູງສຸດເຊິ່ງ AutoGPT ແລະ Stable Diffusion Web UI, ຈາກລະບົບຂອງທ່ານຕາມຕົວຢ່າງ. ການເລີ່ມຕົ້ນຂອງການປະກອບ AI ແລະສະຫງວນຂໍ້ມູນຂອງທ່ານເປັນຄວາມປອດໄພແລະປົກກະຕິໃນການຕັ້ງຄ່າສາມາດ. ມັນມີຄວາມທາງລະບຸໄປທີ່ທ່ານຈະຈະກວດສອບໄດ້."
+    }
+  }
+}
