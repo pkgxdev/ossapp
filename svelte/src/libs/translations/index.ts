@@ -43,7 +43,7 @@ import ee from "./languages/ee.json";
 import srb from "./languages/srb.json";
 import is from "./languages/is.json";
 import lo from "./languages/lo.json";
-import ger from "./languages/ger.json";
+import deu from "./languages/deu.json";
 
 import * as customModifiers from "./modifiers";
 
@@ -95,7 +95,7 @@ const languages = [
   srb,
   is,
   lo,
-  ger
+  deu
 ];
 
 const langs: { [lang: string]: string } = {};
