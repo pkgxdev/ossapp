@@ -1,0 +1,101 @@
+{
+  "id": "ger",
+  "label": "Germany",
+  "translations": {
+    "store-search-placeholder": "Paketsuche",
+    "action": {
+      "update": "aktualisieren",
+      "cancel": "kündigen"
+    },
+    "package": {
+      "update-all": "ALLE AKTUALISIEREN",
+      "cta-AVAILABLE": "INSTALLIEREN",
+      "cta-INSTALLED": "EINGEBAUT",
+      "cta-INSTALLING": "INSTALLIERT",
+      "cta-UNINSTALLED": "ERSETZEN",
+      "cta-UNINSTALL": "ENTLADEN",
+      "cta-NEEDS_UPDATE": "AKTUALISIERUNG",
+      "cta-UPDATING": "WIRD AKTUALISIERT",
+      "cta-UPDATED": "NEUESTE",
+      "cta-PRUNE": "SCHNITT",
+      "cta-PRUNING": "SCHNEIDET",
+      "open": "ÖFFNEN",
+      "open-in-terminal": "AM TERMINAL GEÖFFNET",
+      "local-package": "lokale pakete",
+      "not-in-pantry": "noch nicht in die Speisekammer aufgenommen"
+    },
+    "footer": {
+      "quick-links-title": "Schnellverbindung",
+      "about-tea-store": "über den Teeladen",
+      "report-a-problem": "ein Problem melden",
+      "visit-website": "Siehe tea.xyz",
+      "terms-services": "Bedingungen & Dienstleistungen",
+      "privacy-policy": "Datenschutzbestimmungen"
+    },
+    "documentation": {
+      "title": "dokumentation",
+      "workshops": "Werkstatt"
+    },
+    "view-all": "siehe alle",
+    "sorting": {
+      "label": "Sortieren nach",
+      "popularity": "Am beliebtesten",
+      "most-recent": "Jüngste"
+    },
+    "common": {
+      "home": "Homepage",
+      "all": "Alle",
+      "articles": "Artikel",
+      "workshops": "Werkstatt",
+      "metadata": "Metadata",
+      "homepage": "Start Seite",
+      "documentation": "dokumentation",
+      "github-repository": "Repositorium Github",
+      "repository": "Repositorium",
+      "contributors": "Beitragende",
+      "view-on-github": "SEHEN AUF GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "aktualisieren tea/gui ke {{version}}?",
+      "gui-restarting": "Wenn Sie fortfahren, wird die Anwendung neu gestartet, sobald sie beendet ist. Vergewissern Sie sich, dass keine Vorgänge im Gange sind. Möchten Sie fortfahren?",
+      "gui-restart": "Neustart"
+    },
+    "side-menu-title": {
+      "discover": "Herausfinden",
+      "all": "Alle Pakete",
+      "installed": "Installiertes Paket",
+      "installed_updates_available": "Aktualisierungen verfügbar",
+      "recently_updated": "Neu aktualisiert",
+      "new_packages": "Neues Paket",
+      "popular": "Populär",
+      "featured": "Ausgewählt",
+      "essentials": "Wesentlich",
+      "starstruck": "Starstruck Schweres Werk",
+      "made_by_tea": "Gemacht von tea",
+      "local_packages": "Lokale Pakete"
+    },
+    "tags": {
+      "discover": "Herausfinden",
+      "all": "Alle Pakete",
+      "installed": "Installiert",
+      "installed_updates_available": "Aktualisierungen verfügbar",
+      "recently_updated": "Neu aktualisiert",
+      "new_packages": "Neues Paket",
+      "popular": "Populär",
+      "featured": "Ausgewählt",
+      "essentials": "Wesentlich",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Gemacht von tea",
+      "local_packages": "Lokale Pakete"
+    },
+    "discover": {
+      "featured_title": "wesentliche lokale AI",
+      "featured_description": "Erkunden Sie die Welt der lokalen KI. Dies ist Ihre Plattform, um mit bekannten KI-Tools wie AutoGPT und Stable Diffusion Web UI zu experimentieren, direkt von Ihrem lokalen System aus. Starten Sie Ihr KI-Projekt, während Ihre Daten sicher und geschützt sind und Sie die Freiheit haben, sie nach Belieben anzupassen.."
+    }
+  }
+}
