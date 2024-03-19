@@ -138,7 +138,7 @@
     "svelte-markdown": "^0.2.3",
     "svelte-watch-resize": "^1.0.3",
     "sveltekit-i18n": "^2.2.2",
-    "undici": "^5.22.1",
+    "undici": "^5.26.2",
     "upath": "^2.0.1",
     "vite-plugin-static-copy": "^0.13.1",
     "xterm": "^5.2.1",
