@@ -1,4 +1,5 @@
 import log from "$libs/logger";
+import { wait } from "./delay";
 
 export type RetryOptions = {
   // Number of times to retry. default 10
@@ -30,5 +31,3 @@ export default async function withRetry<T>(
   }
   throw new Error(`Failed after ${maxRetries} retries`);
 }
-
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
