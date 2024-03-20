@@ -43,6 +43,7 @@ import ee from "./languages/ee.json";
 import srb from "./languages/srb.json";
 import is from "./languages/is.json";
 import lo from "./languages/lo.json";
+import dk from "./languages/dk.json";
 import ar from "./languages/ar.json";
 import az from "./languages/az.json";
 import bn from "./languages/bn.json";
@@ -99,7 +100,8 @@ const languages = [
   ee,
   srb,
   is,
-  lo
+  lo,
+  dk,
   ar,
   az,
   bn,
