@@ -1,0 +1,101 @@
+{
+  "id": "ug",
+  "label": "Uyghur",
+  "translations": {
+    "store-search-placeholder": "پاكەتلىرنى ئىزدەش",
+    "action": {
+      "update": "يېڭىلاندۇرۇش",
+      "cancel": "بىكار قىلىش"
+    },
+    "package": {
+      "update-all": "ھەممىنى يېڭىلا",
+      "cta-AVAILABLE": "ئورنىتىش",
+      "cta-INSTALLED": "ئورنىتىلدى",
+      "cta-INSTALLING": "ئورنىتىلىۋاتىدۇ",
+      "cta-UNINSTALLED": "قايتا ئورنىتىش",
+      "cta-UNINSTALL": "ئۆچۈرۈش",
+      "cta-NEEDS_UPDATE": "يېڭىلاندۇرۇش",
+      "cta-UPDATING": "يېڭىلاندۇرۇۋاتىدۇ",
+      "cta-UPDATED": "يېڭىلاندى",
+      "cta-PRUNE": "تازىلاش",
+      "cta-PRUNING": "تازىلىۋاتىدۇ",
+      "open": "ئېچىش",
+      "open-in-terminal": "تېرمىنالدا ئېچىش",
+      "local-package": "مەخپىي پاكەت",
+      "not-in-pantry": "ھېنىڭچە ئىلگىلىمىغان"
+    },
+    "footer": {
+      "quick-links-title": "تىزلىك باغلانما",
+      "about-tea-store": "چاي دۇكانى تەڭدىكىلى",
+      "report-a-problem": "ماساھات خەت ئېلىش",
+      "visit-website": "tea.xyz زىيارەت قىلىش",
+      "terms-services": "شەرت-شەرەپ",
+      "privacy-policy": "مەخپىيلىك پالىسىسى"
+    },
+    "documentation": {
+      "title": "سندۇقلاش",
+      "workshops": "ئەمەلگە شاملانغان دەرسلىر"
+    },
+    "view-all": "ھەممىنى كۆرۈش",
+    "sorting": {
+      "label": "تەرتىپلەش",
+      "popularity": "ئەڭ ئېگىلىشىش",
+      "most-recent": "ئەڭ يېڭى"
+    },
+    "common": {
+      "home": "باش بەت",
+      "all": "ھەممە",
+      "articles": "ماقالەلەر",
+      "workshops": "ئەمەلگە شاملانغان دەرسلىر",
+      "metadata": "مەلۇماتلار",
+      "homepage": "باش بەت",
+      "documentation": "سندۇقلاش",
+      "github-repository": "Github ساقلاش",
+      "repository": "ساقلاش",
+      "contributors": "ئەمەلگە شاملانغانلار",
+      "view-on-github": "Github دا كۆرۈش"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "چاي/gui نى {{version}} غى قىلىشى كېرەك؟",
+      "gui-restarting": "ئەمەلنى ئاخىرلاپ بولغاندىن كېيىن ئەپنى قايتا ئۆچۈرىدۇ. ئەمەل ئىجرالىتىشىڭىزگە ئېنىقلىق قانچە مۇشۇ يولدا قوناقتىرىڭ. سىز داۋاملىقلىشمەكچىمۇ؟",
+      "gui-restart": "قايتا بىرىڭ"
+    },
+    "side-menu-title": {
+      "discover": "تاپشۇرۇش",
+      "all": "بارلىق پاكەتلەر",
+      "installed": "ئورنىتىلگەن پاكەتلەر",
+      "installed_updates_available": "يېڭىلانغان مۇساپىز",
+      "recently_updated": "يېڭىلانغان",
+      "new_packages": "يېڭى پاكەتلەر",
+      "popular": "ئەڭ ئېگىلىشىش",
+      "featured": "ئەڭ ياقتۇرغان",
+      "essentials": "ئىجازەتلىك",
+      "starstruck": "يۇلۇغلانغان قوشۇن",
+      "made_by_tea": "چايدىن ئېلىنغان",
+      "local_packages": "مەخپىي پاكەتلەر"
+    },
+    "tags": {
+      "discover": "تاپشۇرۇش",
+      "all": "بارلىق پاكەتلەر",
+      "installed": "ئورنىتىلدى",
+      "installed_updates_available": "يېڭىلانغان مۇساپىز",
+      "recently_updated": "يېڭىلانغان",
+      "new_packages": "يېڭى پاكەتلەر",
+      "popular": "ئەڭ ئېگىلىشىش",
+      "featured": "ئەڭ ياقتۇرغان",
+      "essentials": "ئىجازەتلىك",
+      "starstruck": "يۇلۇغلانغان قوشۇن",
+      "made_by_tea": "چايدىن ئېلىنغان",
+      "local_packages": "مەخپىي پاكەتلەر"
+    },
+    "discover": {
+      "featured_title": "يېرلىك ئۆز ئېسىرلەر",
+      "featured_description": "مەخپىي يېرلەردىكى ئۆز ئېسىرلىرىڭىزنى زىيارەت قىلۇڭ. بۇ، يېرلىك تىزىملىكتىن AutoGPT ۋە Stable Diffusion Web UI غىبى يۇقىرى مەشھۇر ئېسىرلىر بىلەن بىلگىلەنگەن يۇقىرى دەرىجىلىك يېرلىك ئەسكەرتمىلەرى بىلەن ئېسىرلەرنى ھازىرقى ئۆزگىچە ئىلگىرىسىڭىز. ئۆزىڭىزنىڭ سانى-ئۇنسىيىسى بىلەن ئېسىرلەرىڭىزنى بايقۇتلاپ ئېسىرىشنى باشلاڭ."
+    }
+  }
+}
