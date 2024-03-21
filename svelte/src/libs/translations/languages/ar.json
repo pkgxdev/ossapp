@@ -1,0 +1,101 @@
+{
+  "id": "ar",
+  "label": "عربي",
+  "translations": {
+    "store-search-placeholder": "البحث عن الحزم",
+    "action": {
+      "update": "تحديث",
+      "cancel": "إلغاء"
+    },
+    "package": {
+      "update-all": "تحديث الكل",
+      "cta-AVAILABLE": "تثبيت",
+      "cta-INSTALLED": "مثبتة",
+      "cta-INSTALLING": "جار التثبيت",
+      "cta-UNINSTALLED": "إعادة التثبيت",
+      "cta-UNINSTALL": "إلغاء التثبيت",
+      "cta-NEEDS_UPDATE": "تحديث",
+      "cta-UPDATING": "جار التحديث",
+      "cta-UPDATED": "مُحدّث",
+      "cta-PRUNE": "تنظيف",
+      "cta-PRUNING": "جار التنظيف",
+      "open": "فتح",
+      "open-in-terminal": "فتح في الطرفية",
+      "local-package": "حزمة محلية",
+      "not-in-pantry": "لم يتم إضافته بعد إلى المخزن"
+    },
+    "footer": {
+      "quick-links-title": "روابط سريعة",
+      "about-tea-store": "حول متجر الشاي",
+      "report-a-problem": "الإبلاغ عن مشكلة",
+      "visit-website": "زيارة tea.xyz",
+      "terms-services": "البنود والخدمات",
+      "privacy-policy": "سياسة الخصوصية"
+    },
+    "documentation": {
+      "title": "التوثيق",
+      "workshops": "ورش العمل"
+    },
+    "view-all": "عرض الكل",
+    "sorting": {
+      "label": "الترتيب حسب",
+      "popularity": "الأكثر شيوعًا",
+      "most-recent": "الأحدث"
+    },
+    "common": {
+      "home": "الرئيسية",
+      "all": "الكل",
+      "articles": "المقالات",
+      "workshops": "ورش العمل",
+      "metadata": "البيانات الوصفية",
+      "homepage": "الصفحة الرئيسية",
+      "documentation": "التوثيق",
+      "github-repository": "مستودع Github",
+      "repository": "المستودع",
+      "contributors": "المساهمون",
+      "view-on-github": "العرض على GitHub"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "هل ترغب في تحديث الشاي/gui إلى {{version}}؟",
+      "gui-restarting": "سيؤدي المتابعة إلى إعادة تشغيل التطبيق عند الانتهاء. يرجى التأكد من عدم وجود أي عمليات قيد التنفيذ. هل ترغب في المتابعة؟",
+      "gui-restart": "إعادة التشغيل"
+    },
+    "side-menu-title": {
+      "discover": "اكتشاف",
+      "all": "جميع الحزم",
+      "installed": "الحزم المثبتة",
+      "installed_updates_available": "التحديثات المتاحة",
+      "recently_updated": "تم التحديث مؤخرًا",
+      "new_packages": "حزم جديدة",
+      "popular": "شائع",
+      "featured": "مميز",
+      "essentials": "أساسيات",
+      "starstruck": "الثقالين المشهورين",
+      "made_by_tea": "من صنع الشاي",
+      "local_packages": "الحزم المحلية"
+    },
+    "tags": {
+      "discover": "اكتشاف",
+      "all": "جميع الحزم",
+      "installed": "المثبتة",
+      "installed_updates_available": "التحديثات المتاحة",
+      "recently_updated": "تم التحديث مؤخرًا",
+      "new_packages": "حزم جديدة",
+      "popular": "شائع",
+      "featured": "مميز",
+      "essentials": "أساسيات",
+      "starstruck": "الثقالين المشهورين",
+      "made_by_tea": "من صنع الشاي",
+      "local_packages": "الحزم المحلية"
+    },
+    "discover": {
+      "featured_title": "أساسيات الذكاء الصناعي المحلي",
+      "featured_description": "استكشف مجال الذكاء الصناعي المحلي. هذه هي منصتك للتلاعب بأدوات الذكاء الاصطناعي عالية المستوى مثل AutoGPT وواجهة مستخلص الانتشار المستقرة على الويب، مباشرةً من نظامك المحلي. ابدأ مشاريعك في مجال الذكاء الاصطناعي مع الحفاظ على بياناتك آمنة ومؤمنة، مع الحرية في ضبطها حسب رغبتك."
+    }
+  }
+}
