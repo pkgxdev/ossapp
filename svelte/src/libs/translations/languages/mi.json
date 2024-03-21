@@ -1,0 +1,101 @@
+{
+  "id": "mi",
+  "label": "Maori",
+  "translations": {
+    "store-search-placeholder": "rapu pakete",
+    "action": {
+      "update": "whakahou",
+      "cancel": "whakakore"
+    },
+    "package": {
+      "update-all": "WHAKAHOUMAI KATOATIA",
+      "cta-AVAILABLE": "WAIHANGA",
+      "cta-INSTALLED": "KUA WHAKATUHINGA",
+      "cta-INSTALLING": "TE TAKAI",
+      "cta-UNINSTALLED": "WHAKATUHI ANA",
+      "cta-UNINSTALL": "WHAKATUHI",
+      "cta-NEEDS_UPDATE": "WHAKAHOUMAI",
+      "cta-UPDATING": "TE WHAKAHOUMAI",
+      "cta-UPDATED": "KUA WHAKAHOUA",
+      "cta-PRUNE": "WHAKAKAPI",
+      "cta-PRUNING": "TE WHAKAKAPI",
+      "open": "WAIHO",
+      "open-in-terminal": "WAIHO I TE PAPAHI",
+      "local-package": "pakete ā-rohe",
+      "not-in-pantry": "kāore anō i tāpiri ki te wharekai"
+    },
+    "footer": {
+      "quick-links-title": "nga hononga tere",
+      "about-tea-store": "mo te toa wharekai",
+      "report-a-problem": "rīpoata he raruraru",
+      "visit-website": "toro mai ki tea.xyz",
+      "terms-services": "nga tikanga me nga ratonga",
+      "privacy-policy": "kaupapahere taiao"
+    },
+    "documentation": {
+      "title": "te tānga",
+      "workshops": "wharekai"
+    },
+    "view-all": "whakakite katoa",
+    "sorting": {
+      "label": "Tārā hōhonu",
+      "popularity": "he kāore e nui",
+      "most-recent": "Ko te Maha o te Wā"
+    },
+    "common": {
+      "home": "kainga",
+      "all": "Katoa",
+      "articles": "Ngā Āpure",
+      "workshops": "Wharekai",
+      "metadata": "metadata",
+      "homepage": "kaupae kāinga",
+      "documentation": "te tānga",
+      "github-repository": "Kōnae Github",
+      "repository": "Tūnga",
+      "contributors": "Kaiwhakarato",
+      "view-on-github": "Tirohia ki te Github"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "Whakahoutea te tea / rārangi ki te {{version}}?",
+      "gui-restarting": "Ka mutu te haere i tika ka whakamahi i te taipitopito i te mutunga. Me āta tiakina kia kāore he mahi e mahi ana. Me haere tonu koe?",
+      "gui-restart": "tīmata anō"
+    },
+    "side-menu-title": {
+      "discover": "tīmata",
+      "all": "Katoa nga Pakihi",
+      "installed": "Ngā pakete kua whakatūhia",
+      "installed_updates_available": "Ngā Whakahoutanga kua waihangahia",
+      "recently_updated": "Kua whakahoutia i te Wā",
+      "new_packages": "Pakihi Hōu",
+      "popular": "Whakahirahira",
+      "featured": "Kua tautoko",
+      "essentials": "Ngā mea hiahia",
+      "starstruck": "Nga Taonga Pūai",
+      "made_by_tea": "hangaia e te ti",
+      "local_packages": "Pakihi ā-rohe"
+    },
+    "tags": {
+      "discover": "tīmata",
+      "all": "katoa nga pakihi",
+      "installed": "kua whakatūhia",
+      "installed_updates_available": "Whakahoutanga waihangahia",
+      "recently_updated": "Kua whakahoutia i te wā",
+      "new_packages": "Pakihi hōu",
+      "popular": "Whakahirahira",
+      "featured": "Kua tautoko",
+      "essentials": "Ngā mea hiahia",
+      "starstruck": "Nga taonga pūai",
+      "made_by_tea": "Hangaia e te ti",
+      "local_packages": "Pakihi ā-rohe"
+    },
+    "discover": {
+      "featured_title": "nga hiahia AI whenua",
+      "featured_description": "Whaiwhakaaro i te ao o nga hiahia AI whenua. Ko tenei te wahi hei whakatapiri i nga taputapu AI matua e penei ana me te AutoGPT me te Stable Diffusion Web UI, tau ana i to waahi whenua. Timatahia ou momo mahi AI me te tiaki i ou raraunga ki te haumaru, ki te piri hoki ki te whakatika i nga tikanga e hiahia ana koe."
+    }
+  }
+}
