@@ -56,9 +56,9 @@
       "view-on-github": "العرض على GitHub"
     },
     "tabs": {
-      "details": "حزمة",
-      "cli": "واجهة سطر الأوامر",
-      "gui": "واجهة رسومية"
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
     },
     "notification": {
       "update-header": "هل ترغب في تحديث الشاي/gui إلى {{version}}؟",
