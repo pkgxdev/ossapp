@@ -1,0 +1,101 @@
+{
+  "id": "ku",
+  "label": "Kurdish",
+  "translations": {
+    "store-search-placeholder": "بگەڕێ بۆ پاکێجەکان",
+    "action": {
+      "update": "نوێکردنەوە",
+      "cancel": "پەشیمانبوون"
+    },
+    "package": {
+      "update-all": "هەموو نوێکردنەوە",
+      "cta-AVAILABLE": "دامەزراندن",
+      "cta-INSTALLED": "دامەزراو",
+      "cta-INSTALLING": "دامەزراوە",
+      "cta-UNINSTALLED": "دووبارە دامەزراو",
+      "cta-UNINSTALL": "دامەزراندنەوە لابردن",
+      "cta-NEEDS_UPDATE": "نوێکردنەوە",
+      "cta-UPDATING": "نوێکردنەوە",
+      "cta-UPDATED": "نوێکرایەوە",
+      "cta-PRUNE": "بەرزکردن",
+      "cta-PRUNING": "بەرزکردن",
+      "open": "کردنەوە",
+      "open-in-terminal": "کردنەوە لە تێرمینال",
+      "local-package": "پاکێجی گوندی",
+      "not-in-pantry": "هێنا نەکراوە بۆ پانتری"
+    },
+    "footer": {
+      "quick-links-title": "بەستەرەکانی خێرا",
+      "about-tea-store": "دەربارەی دوکانی چای",
+      "report-a-problem": "ڕاپۆرت کردنی ھەڵە",
+      "visit-website": "سەردانی tea.xyz",
+      "terms-services": "وەشان و خزمەتگوزاری",
+      "privacy-policy": "سیاستی تایبەتی"
+    },
+    "documentation": {
+      "title": "نوسین",
+      "workshops": "کۆکراوەکان"
+    },
+    "view-all": "هەموو بینین",
+    "sorting": {
+      "label": "ڕیزکردن بەپێی",
+      "popularity": "بەشداربوونی زۆرتر",
+      "most-recent": "نوێترین"
+    },
+    "common": {
+      "home": "ماڵ",
+      "all": "هەموو",
+      "articles": "نووسینەکان",
+      "workshops": "کۆکراوەکان",
+      "metadata": "مێتا داتا",
+      "homepage": "ماڵپەڕ",
+      "documentation": "نوسین",
+      "github-repository": "ماڵپەڕی گیتهەب",
+      "repository": "ماڵپەڕ",
+      "contributors": "بەشداربووکان",
+      "view-on-github": "سەردان لە گیتهەب"
+    },
+    "tabs": {
+      "details": "پاکێج",
+      "cli": "CLI",
+      "gui": "GUI"
+    },
+    "notification": {
+      "update-header": "نوێکردنەوەی چای/گوند بۆ {{version}}؟",
+      "gui-restarting": "ئەگەر دووبارە بکات، پەیوەندی بە دەستی گوتی پێدا بدات. تکایە دڵنیابن کە هیچ کارەکانی تر لە پەیشاندا نیە. دەتەوێت دووبارە بکەیت؟",
+      "gui-restart": "دووبارە دەستپێبکە"
+    },
+    "side-menu-title": {
+      "discover": "دۆزینەوە",
+      "all": "هەموو پاکێجەکان",
+      "installed": "پاکێجەکانی دامەزراو",
+      "installed_updates_available": "نوێکراوی دامەزراو",
+      "recently_updated": "دوایین نوێکرایەوە",
+      "new_packages": "پاکێجەکانی نوێ",
+      "popular": "بەشداربوو",
+      "featured": "ھەڵبژاردن",
+      "essentials": "ھەریمە",
+      "starstruck": "بەشداربوو",
+      "made_by_tea": "دامەزراوە لە لایەن چای",
+      "local_packages": "پاکێجەکانی نیشتمانی"
+    },
+    "tags": {
+      "discover": "دۆزینەوە",
+      "all": "هەموو پاکێجەکان",
+      "installed": "دامەزراو",
+      "installed_updates_available": "نوێکراوی دامەزراو",
+      "recently_updated": "دوایین نوێکرایەوە",
+      "new_packages": "پاکێجەکانی نوێ",
+      "popular": "بەشداربوو",
+      "featured": "ھەڵبژاردن",
+      "essentials": "ھەریمە",
+      "starstruck": "بەشداربوو",
+      "made_by_tea": "دامەزراوە لە لایەن چای",
+      "local_packages": "پاکێجەکانی نیشتمانی"
+    },
+    "discover": {
+      "featured_title": "دەرەوەی ھەریمەی هومەنگاڵ",
+      "featured_description": "دەربارەی دەرەوەی ھەریمەی هومەنگاڵ توێژینەوە. ئەمە پلاتفۆرمێکەیە بۆ کارکردنی توولەی AI یەکەتیەکانی زۆر باش و باشەییەکان وەکو AutoGPT و Stable Diffusion Web UI، لە داڕێژەی نیشتمانی خۆتان. پڕۆژەی AI یەکەتان دەستپێبکەرەوە لەگەڵ پاراستنی زانیاریەکانی خۆتان و پارێزبەندین، بە ئەو مافەیە کە دەتوانن بزانن."
+    }
+  }
+}
