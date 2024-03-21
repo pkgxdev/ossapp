@@ -1,0 +1,101 @@
+{
+  "id": "am",
+  "label": "አማርኛ",
+  "translations": {
+    "store-search-placeholder": "ፍለጋ ፕሮግራም ይፈልጋሉ",
+    "action": {
+      "update": "አዘምን",
+      "cancel": "ይቅር"
+    },
+    "package": {
+      "update-all": "ሁሉንም አዘምን",
+      "cta-AVAILABLE": "አቅርብ",
+      "cta-INSTALLED": "ተጠቃሚ",
+      "cta-INSTALLING": "እርስዎ ውስጥ ያጋሩ",
+      "cta-UNINSTALLED": "ከላይ አይሁን",
+      "cta-UNINSTALL": "አይሁን",
+      "cta-NEEDS_UPDATE": "አዘምን",
+      "cta-UPDATING": "ያዘምኑት",
+      "cta-UPDATED": "የተዘረዘሩ",
+      "cta-PRUNE": "ጠቅላላ አዋቂ",
+      "cta-PRUNING": "አዋቂ አስኪያ",
+      "open": "ክፈት",
+      "open-in-terminal": "ተግባራው ውስጥ ክፈት",
+      "local-package": "አነስተኛ ፕሮግራም",
+      "not-in-pantry": "የእርስዎ ቤትን አክብሮ አልተመለከተም"
+    },
+    "footer": {
+      "quick-links-title": "በትክክል ስም",
+      "about-tea-store": "ስለ ሻይ አስተካክለሁ",
+      "report-a-problem": "ግብር አሰራሁ",
+      "visit-website": "ይመዝገቡ tea.xyz",
+      "terms-services": "ውል እና አጠቃላይ ጊዜ",
+      "privacy-policy": "ፕሬዚዳንስ ፖሊሲ"
+    },
+    "documentation": {
+      "title": "መጽሐፍ",
+      "workshops": "ወርቅነህ"
+    },
+    "view-all": "ሁሉንም ይመልከቱ",
+    "sorting": {
+      "label": "ቅንብሮ",
+      "popularity": "ብዙ አማራጭ",
+      "most-recent": "ትናንት በታች"
+    },
+    "common": {
+      "home": "መገናኛ",
+      "all": "ሁሉም",
+      "articles": "ምሽትዎን",
+      "workshops": "ወርቅነህ",
+      "metadata": "መረጃ",
+      "homepage": "መገናኛ",
+      "documentation": "መጽሐፍ",
+      "github-repository": "ጂብሪ መተግበሪያ",
+      "repository": "መተግበሪያ",
+      "contributors": "ሰሞኑዎች",
+      "view-on-github": "ጂብሪውን ይመልከቱ"
+    },
+    "tabs": {
+      "details": "ፒኪ",
+      "cli": "ኪሊ",
+      "gui": "ግዕ"
+    },
+    "notification": {
+      "update-header": "ከነዚህ tea/gui ወደ {{version}} አዘምን?",
+      "gui-restarting": "ተጨማሪ ለመጠበቂያ ከተወጋ እስከ መጠን እንዲሁም የሚገኝ የተለመዱ ሁኔታዎች አንድም አይኖርም። እባኮት ከአንድ እስከ ሁለት ድረስ እንዳይሆን መልካም፣ እባኮት ለመጠበቂያ እንዳይሆን ለመመለስ እንችላለን?",
+      "gui-restart": "ይጠብቁ"
+    },
+    "side-menu-title": {
+      "discover": "ማሳወቂያ",
+      "all": "ሁሉም ፕሮግራምዎች",
+      "installed": "ተጠቃሚ ፕሮግራምዎች",
+      "installed_updates_available": "የተጠቃሚ ፕሮግራምዎች እንደሆኑ ያገኙ",
+      "recently_updated": "የቅርብ ቀን የተዘረዘሩት",
+      "new_packages": "አዲስ ፕሮግራምዎች",
+      "popular": "ተከታታይ",
+      "featured": "ተዛብረው",
+      "essentials": "አጠቃቀም ያለውዎች",
+      "starstruck": "አስደናቂ ተዛብሮች",
+      "made_by_tea": "በቴ እንዲያለው ፕሮግራሞች",
+      "local_packages": "በቦታ የተገኘ ፕሮግራሞች"
+    },
+    "tags": {
+      "discover": "ማሳወቂያ",
+      "all": "ሁሉም ፕሮግራሞች",
+      "installed": "ተጠቃሚ",
+      "installed_updates_available": "የተጠቃሚ አድራሻዎች ያገኙ",
+      "recently_updated": "የቅርብ ቀን የተዘረዘሩት",
+      "new_packages": "አዲስ ፕሮግራሞች",
+      "popular": "ተከታታይ",
+      "featured": "ተዛብረው",
+      "essentials": "አጠቃቀም ያለውዎች",
+      "starstruck": "አስደናቂ",
+      "made_by_tea": "ቴ በሚያለው",
+      "local_packages": "በቦታ የተገኘ ፕሮግራሞች"
+    },
+    "discover": {
+      "featured_title": "የበለጠ ኤኢ አስታወቂዎች",
+      "featured_description": "የበለጠ ኤኢን እንዴት እንደሚከተለው ያለውን ማህበራዊ የኤኢን ውይይት አስታወቂያ ይምረጡ። ይህ ለመንገድዎ እንዴት የተከበረውን እናውቃለን። ከእኛ ያለው በለጠ የኤኢ እናዝን የተለያዩ መረጃዎች እናመሰግናለን። የምርትዎን ምንዛሬ ይሞክሩ፣ የተወሰነውን አንደኛ ደምበኛ የሆነ ከሆነ፣ ከእኛ በተንቀሳቃሽ ይምረጡ"
+    }
+  }
+}
