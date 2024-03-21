@@ -1,0 +1,101 @@
+{
+  "id": "he",
+  "label": "עִברִית",
+  "translations": {
+    "store-search-placeholder": "חפש חבילות",
+    "action": {
+      "update": "עדכן",
+      "cancel": "בטל"
+    },
+    "package": {
+      "update-all": "עדכן הכול",
+      "cta-AVAILABLE": "התקן",
+      "cta-INSTALLED": "מותקן",
+      "cta-INSTALLING": "מתקין",
+      "cta-UNINSTALLED": "התקן מחדש",
+      "cta-UNINSTALL": "הסר התקנה",
+      "cta-NEEDS_UPDATE": "עדכן",
+      "cta-UPDATING": "מעדכן",
+      "cta-UPDATED": "מעודכן",
+      "cta-PRUNE": "זרוק",
+      "cta-PRUNING": "מנקה",
+      "open": "פתח",
+      "open-in-terminal": "פתח בטרמינל",
+      "local-package": "חבילה מקומית",
+      "not-in-pantry": "עדיין לא נוסף למחסן"
+    },
+    "footer": {
+      "quick-links-title": "קישורים מהירים",
+      "about-tea-store": "אודות חנות התה",
+      "report-a-problem": "דווח על בעיה",
+      "visit-website": "בקר באתר tea.xyz",
+      "terms-services": "תנאים והגבלות",
+      "privacy-policy": "מדיניות פרטיות"
+    },
+    "documentation": {
+      "title": "תיעוד",
+      "workshops": "סדנאות"
+    },
+    "view-all": "הצג הכול",
+    "sorting": {
+      "label": "מיין לפי",
+      "popularity": "הכי פופולרי",
+      "most-recent": "הכי רלוונטי"
+    },
+    "common": {
+      "home": "בית",
+      "all": "הכול",
+      "articles": "מאמרים",
+      "workshops": "סדנאות",
+      "metadata": "מטא נתונים",
+      "homepage": "דף הבית",
+      "documentation": "תיעוד",
+      "github-repository": "מאגר GitHub",
+      "repository": "מאגר",
+      "contributors": "תורמים",
+      "view-on-github": "צפה ב-GitHub"
+    },
+    "tabs": {
+      "details": "פרטים",
+      "cli": "CLI",
+      "gui": "ממשק גרפי"
+    },
+    "notification": {
+      "update-header": "לעדכן tea/gui לגרסה {{version}}?",
+      "gui-restarting": "המשך יגרום לאפליקציה להתחל מחדש לאחר השלמת התהליך. נא לוודא שאין פעולות פעילות. האם ברצונך להמשיך?",
+      "gui-restart": "אתחל"
+    },
+    "side-menu-title": {
+      "discover": "גלה",
+      "all": "כל החבילות",
+      "installed": "חבילות שהותקנו",
+      "installed_updates_available": "עדכונים זמינים",
+      "recently_updated": "עודכן לאחרונה",
+      "new_packages": "חבילות חדשות",
+      "popular": "פופולריות",
+      "featured": "מומלצות",
+      "essentials": "חיוניות",
+      "starstruck": "ממשקיעי כוכב",
+      "made_by_tea": "עשוי על ידי תה",
+      "local_packages": "חבילות מקומיות"
+    },
+    "tags": {
+      "discover": "גלישה",
+      "all": "כל החבילות",
+      "installed": "מותקנות",
+      "installed_updates_available": "עדכונים זמינים",
+      "recently_updated": "עודכנו לאחרונה",
+      "new_packages": "חבילות חדשות",
+      "popular": "פופולריות",
+      "featured": "מומלצות",
+      "essentials": "חיוניות",
+      "starstruck": "מרשימות",
+      "made_by_tea": "נוצרו על ידי תה",
+      "local_packages": "חבילות מקומיות"
+    },
+    "discover": {
+      "featured_title": "יסודות חשובים של AI מקומי",
+      "featured_description": "גלו את תחום ה-AI המקומי. זוהי הפלטפורמה שלך לשינוי עם כלים מתקדמים של AI כמו AutoGPT ו- Stable Diffusion Web UI, ישירות מהמערכת המקומית שלך. התחילו להפעיל את פרויקטי ה-AI שלכם בעוד הנתונים שלכם מאובטחים ובטוחים, עם החופש להתאים אותם כפי שתרצו."
+    }
+  }
+}
