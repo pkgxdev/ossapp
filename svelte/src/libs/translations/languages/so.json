@@ -1,0 +1,101 @@
+{
+  "id": "so",
+  "label": "Af-soomaaliga",
+  "translations": {
+    "store-search-placeholder": "raadi paket",
+    "action": {
+      "update": "cusboonaysi",
+      "cancel": "dib u celin"
+    },
+    "package": {
+      "update-all": "CUSBOONAYSII Dhammaan",
+      "cta-AVAILABLE": "INSTAAL",
+      "cta-INSTALLED": "WAXAA LAGU GUULAYSTAY",
+      "cta-INSTALLING": "WAXAA LAGU INSTAALAYAA",
+      "cta-UNINSTALLED": "QUDARAA INSTAAL",
+      "cta-UNINSTALL": "TIRRI",
+      "cta-NEEDS_UPDATE": "CUSBOONAYSII",
+      "cta-UPDATING": "LA CUSBOONAYSIIYAY",
+      "cta-UPDATED": "WAXAA LAGU CUSBOONAYSIIYAY",
+      "cta-PRUNE": "QABIIL",
+      "cta-PRUNING": "QABASHADA",
+      "open": "FUR",
+      "open-in-terminal": "FUR FIIDKII",
+      "local-package": "paketka deegaanka",
+      "not-in-pantry": "hadda aanu ku darayn baradhu"
+    },
+    "footer": {
+      "quick-links-title": "xidhiidhada koronto",
+      "about-tea-store": "ku saabsan dukaanka shayga",
+      "report-a-problem": "sheeg warbixin",
+      "visit-website": "booqo tea.xyz",
+      "terms-services": "shuruudaha & adeegyada",
+      "privacy-policy": "siyaasadka raadinta"
+    },
+    "documentation": {
+      "title": "dokumentashinka",
+      "workshops": "da'wadaha"
+    },
+    "view-all": "fiiri dhammaan",
+    "sorting": {
+      "label": "Xulo",
+      "popularity": "Leedahay badan",
+      "most-recent": "Cusub ee ugu"
+    },
+    "common": {
+      "home": "Guriga",
+      "all": "Dhammaan",
+      "articles": "Maqaallo",
+      "workshops": "Da'wadaha",
+      "metadata": "Metadhadhka",
+      "homepage": "Bogga Boggaga",
+      "documentation": "Dokumentashinka",
+      "github-repository": "Gitehabka Github",
+      "repository": "Gitehabka",
+      "contributors": "Kaambiyuutoorada",
+      "view-on-github": "FIIRI OO GITHUBKA"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "cusboonaysi shay/gui ilaa {{version}}?",
+      "gui-restarting": "Waxaa la soo saarayaa dhamaan qaabka marka la dhameystiro. Fadlan hubi inaad macluumaadka u dhaqaaqdo. Ma rabto inaad sii wadato?",
+      "gui-restart": "Dhameystir"
+    },
+    "side-menu-title": {
+      "discover": "helin",
+      "all": "Dhammaan Paketada",
+      "installed": "Paketada La Gashay",
+      "installed_updates_available": "Diyaarinta Diyaarinta",
+      "recently_updated": "La cusboonaysiiyay Yaa Iska Horreeyay",
+      "new_packages": "Paketada cusub",
+      "popular": "Canshuuraha",
+      "featured": "La soo bandhigay",
+      "essentials": "Essentials",
+      "starstruck": "Starstruck Wargeyga",
+      "made_by_tea": "Waxaa sameeyay shay",
+      "local_packages": "Paketada Degmada"
+    },
+    "tags": {
+      "discover": "hel",
+      "all": "dhammaan paketada",
+      "installed": "la gashay",
+      "installed_updates_available": "diyaarinta diyaarinta",
+      "recently_updated": "la cusboonaysiiyay iska horreeyay",
+      "new_packages": "paketada cusub",
+      "popular": "canshuuraha",
+      "featured": "la soo bandhigay",
+      "essentials": "essentials",
+      "starstruck": "starstruck",
+      "made_by_tea": "waxaa sameeyay shay",
+      "local_packages": "paketada degmada"
+    },
+    "discover": {
+      "featured_title": "miyiga AI deegaanka",
+      "featured_description": "Dabaaldeg goobta AI deegaanka. Tani waa goobkaaga si aad u dayac-tirnayso qalabka AI ee sare ee sida AutoGPT iyo Stable Diffusion Web UI, laakiin kaasoo degmadaada. Bilaab khibradaaga AI iyada oo aad xogtaaga gargaaraysaa iyo xadidka, iyada oo leh xoriyadda inaad ku dayac-tiri doonto sida aad doonaysid."
+    }
+  }
+}
