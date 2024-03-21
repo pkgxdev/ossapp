@@ -1,0 +1,101 @@
+{
+  "id": "fa",
+  "label": "فارسی",
+  "translations": {
+    "store-search-placeholder": "جستجوی بسته‌ها",
+    "action": {
+      "update": "به‌روزرسانی",
+      "cancel": "لغو"
+    },
+    "package": {
+      "update-all": "همه را به‌روزرسانی کن",
+      "cta-AVAILABLE": "نصب",
+      "cta-INSTALLED": "نصب شده",
+      "cta-INSTALLING": "در حال نصب",
+      "cta-UNINSTALLED": "نصب مجدد",
+      "cta-UNINSTALL": "حذف نصب",
+      "cta-NEEDS_UPDATE": "به‌روزرسانی",
+      "cta-UPDATING": "در حال به‌روزرسانی",
+      "cta-UPDATED": "به‌روزرسانی شده",
+      "cta-PRUNE": "باز‌بینی",
+      "cta-PRUNING": "در حال باز‌بینی",
+      "open": "باز کردن",
+      "open-in-terminal": "باز کردن در ترمینال",
+      "local-package": "بسته محلی",
+      "not-in-pantry": "هنوز به پنتری اضافه نشده است"
+    },
+    "footer": {
+      "quick-links-title": "پیوندهای سریع",
+      "about-tea-store": "درباره فروشگاه چای",
+      "report-a-problem": "گزارش مشکل",
+      "visit-website": "بازدید از وب‌سایت چای.xyz",
+      "terms-services": "شرایط و خدمات",
+      "privacy-policy": "سیاست حفظ حریم خصوصی"
+    },
+    "documentation": {
+      "title": "مستندات",
+      "workshops": "کارگاه‌ها"
+    },
+    "view-all": "مشاهده همه",
+    "sorting": {
+      "label": "مرتب‌سازی بر اساس",
+      "popularity": "محبوب‌ترین",
+      "most-recent": "جدیدترین"
+    },
+    "common": {
+      "home": "خانه",
+      "all": "همه",
+      "articles": "مقالات",
+      "workshops": "کارگاه‌ها",
+      "metadata": "فایل‌های پیکربندی",
+      "homepage": "صفحه اصلی",
+      "documentation": "مستندات",
+      "github-repository": "مخزن گیت‌هاب",
+      "repository": "مخزن",
+      "contributors": "مشارکت‌کنندگان",
+      "view-on-github": "مشاهده در گیت‌هاب"
+    },
+    "tabs": {
+      "details": "جزئیات",
+      "cli": "خط فرمان",
+      "gui": "رابط گرافیکی"
+    },
+    "notification": {
+      "update-header": "به‌روزرسانی چای/gui به نسخه {{version}}؟",
+      "gui-restarting": "ادامه دادن باعث راه‌اندازی مجدد برنامه پس از اتمام می‌شود. لطفاً اطمینان حاصل کنید که هیچ عملیاتی در حال انجام نیست. آیا می‌خواهید ادامه دهید؟",
+      "gui-restart": "راه‌اندازی مجدد"
+    },
+    "side-menu-title": {
+      "discover": "کشف",
+      "all": "همه بسته‌ها",
+      "installed": "بسته‌های نصب‌شده",
+      "installed_updates_available": "به‌روزرسانی‌های موجود",
+      "recently_updated": "اخیراً به‌روز شده",
+      "new_packages": "بسته‌های جدید",
+      "popular": "محبوب",
+      "featured": "ویژه",
+      "essentials": "ضروری‌ها",
+      "starstruck": "ثقل‌های ستاره‌ای",
+      "made_by_tea": "ساخته شده توسط چای",
+      "local_packages": "بسته‌های محلی"
+    },
+    "tags": {
+      "discover": "کشف",
+      "all": "همه بسته‌ها",
+      "installed": "نصب‌شده",
+      "installed_updates_available": "به‌روزرسانی‌های موجود",
+      "recently_updated": "اخیراً به‌روز شده",
+      "new_packages": "بسته‌های جدید",
+      "popular": "محبوب",
+      "featured": "ویژه",
+      "essentials": "ضروری‌ها",
+      "starstruck": "ثقل‌های ستاره‌ای",
+      "made_by_tea": "ساخته شده توسط چای",
+      "local_packages": "بسته‌های محلی"
+    },
+    "discover": {
+      "featured_title": "ضروریات هوش مصنوعی محلی",
+      "featured_description": "در حوزه هوش مصنوعی محلی کاوش کنید. این پلتفرم شماست تا با ابزارهای هوش مصنوعی معروف مانند AutoGPT و رابط کاربری پایدار Diffusion Web راست به ازای سیستم محلی خود بازی کنید. پروژه‌های"
+    }
+  }
+}
