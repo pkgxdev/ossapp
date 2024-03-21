@@ -1,0 +1,101 @@
+{
+  "id": "mn",
+  "label": "Монгол",
+  "translations": {
+    "store-search-placeholder": "пакет хайх",
+    "action": {
+      "update": "шинэчлэх",
+      "cancel": "цуцлах"
+    },
+    "package": {
+      "update-all": "Бүгдийг ШИНЭЧЛЭХ",
+      "cta-AVAILABLE": "СУНГАХ",
+      "cta-INSTALLED": "СУНГАГДСАН",
+      "cta-INSTALLING": "СУНГАЖ БАЙНА",
+      "cta-UNINSTALLED": "ДАХИН СУНГАХ",
+      "cta-UNINSTALL": "СУНГАХ",
+      "cta-NEEDS_UPDATE": "ШИНЭЧЛЭХ",
+      "cta-UPDATING": "ШИНЭЧЛЭГДЭХ",
+      "cta-UPDATED": "ШИНЭЧЛЭГДСЭН",
+      "cta-PRUNE": "ЦЭВЭРЛЭХ",
+      "cta-PRUNING": "ЦЭВЭРЛЭХ",
+      "open": "Нээх",
+      "open-in-terminal": "ТЕРМИНАЛООН НЭЭХ",
+      "local-package": "газард байгаа пакет",
+      "not-in-pantry": "өнөөгийн хадгаламжтайгүй"
+    },
+    "footer": {
+      "quick-links-title": "хурдан холбоосууд",
+      "about-tea-store": "цайны дэлгүүр тухай",
+      "report-a-problem": "ашиглалтын асуудал мэдэгдэх",
+      "visit-website": "tea.xyz вэбсайт руу зочлох",
+      "terms-services": "нөхцөл болон үйлчилгээний дүрэм",
+      "privacy-policy": "нууцлалын бодлого"
+    },
+    "documentation": {
+      "title": "баримт бичиг",
+      "workshops": "ажилчид"
+    },
+    "view-all": "бүгдийг үзэх",
+    "sorting": {
+      "label": "Эрэмбэлэх",
+      "popularity": "Хамгийн их ашиглагдсан",
+      "most-recent": "Сүүлийн үе шинэчлэлт"
+    },
+    "common": {
+      "home": "Нүүр хуудас",
+      "all": "Бүгд",
+      "articles": "Мэдээлэл",
+      "workshops": "Ажилчид",
+      "metadata": "Мета мэдээ",
+      "homepage": "Нүүр хуудас",
+      "documentation": "Баримт бичиг",
+      "github-repository": "GitHub хадгаламж",
+      "repository": "Хадгаламж",
+      "contributors": "Оролцогчид",
+      "view-on-github": "GitHub дээр үзэх"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "цай/gui-г {{version}} хувилбар рүү шинэчлэх уу?",
+      "gui-restarting": "Үргэлжлүүлэх нь гар утас дууссаны дараа үйлдэл хийхэд програм хөнгөлөлт хүчинтэй болохыг зөвшөөрч, та ажил явуулах үйл ажиллагааг ажиллахгүй байхыг мэдэх шаардлагатай. Үргэлжлүүлэхийг хүсэж байна уу?",
+      "gui-restart": "дахин эхлэх"
+    },
+    "side-menu-title": {
+      "discover": "хайх",
+      "all": "Бүх Пакетууд",
+      "installed": "Суулгасан Пакетууд",
+      "installed_updates_available": "Боломжит Шинэчлэлтүүд",
+      "recently_updated": "Сүүлийн Шинэчлэлт",
+      "new_packages": "Шинэ Пакетууд",
+      "popular": "Таньд найзууд",
+      "featured": "Онцлох",
+      "essentials": "Үнэт зүйлс",
+      "starstruck": "Сэлэнгэ том шинээр ирсэнүүд",
+      "made_by_tea": "цайнаас бэлэн",
+      "local_packages": "Газард байгаа Пакетууд"
+    },
+    "tags": {
+      "discover": "хайх",
+      "all": "бүх пакетууд",
+      "installed": "суулгасан",
+      "installed_updates_available": "Шинэчлэлт байна",
+      "recently_updated": "Сүүлийн шинэчлэлт",
+      "new_packages": "Шинэ пакетууд",
+      "popular": "Хамгийн анхны",
+      "featured": "Онцлох",
+      "essentials": "Үнэт зүйлс",
+      "starstruck": "Сэлэнгэ том шинээр ирсэн",
+      "made_by_tea": "цайнаас бэлэн",
+      "local_packages": "Газард бай" 
+ },
+    "discover": {
+      "featured_title": "орон нутгийн хиймэл оюун ухаан",
+      "featured_description": "Орон нутгийн хиймэл оюун ухааны хүрээг судлаарай. Энэ бол таны дотоод системээс AutoGPT, Stable Diffusion Web UI зэрэг өндөр түвшний хиймэл оюун ухааны хэрэгслүүдийг ашиглах платформ юм. Өөрийн өгөгдлөө аюулгүй, аюулгүй байлгаж, хүссэнээрээ нарийн тохируулах эрх чөлөөгөөр AI төслүүдээ хурдан эхлүүлээрэй."
+    }
+  }
+} 
