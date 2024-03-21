@@ -1,0 +1,101 @@
+{
+  "id": "tk",
+  "label": "Türkmenler",
+  "translations": {
+    "store-search-placeholder": "paketleri gözle",
+    "action": {
+      "update": "güncelle",
+      "cancel": "iptal et"
+    },
+    "package": {
+      "update-all": "HÄMMI GÜNCELLE",
+      "cta-AVAILABLE": "KUR",
+      "cta-INSTALLED": "KURULDU",
+      "cta-INSTALLING": "KURULÝAR",
+      "cta-UNINSTALLED": "YENIDEN KUR",
+      "cta-UNINSTALL": "KALDIR",
+      "cta-NEEDS_UPDATE": "GÜNCELLE",
+      "cta-UPDATING": "GÜNCELLÄNÝÄR",
+      "cta-UPDATED": "GÜNCELLÄNDI",
+      "cta-PRUNE": "KIRPIŞTIR",
+      "cta-PRUNING": "KIRPIŞTIRYAR",
+      "open": "AÇ",
+      "open-in-terminal": "TERMINALDA AÇ",
+      "local-package": "yerli paket",
+      "not-in-pantry": "heniz dolaba eklenmedi"
+    },
+    "footer": {
+      "quick-links-title": "süratlendirmeler",
+      "about-tea-store": "çay dükkanı hakkında",
+      "report-a-problem": "sorun bildir",
+      "visit-website": "çay.xyz'ı ziyaret et",
+      "terms-services": "şertler ve koşullar",
+      "privacy-policy": "gizlilik politikası"
+    },
+    "documentation": {
+      "title": "belgeler",
+      "workshops": "atölyeler"
+    },
+    "view-all": "hepsini gör",
+    "sorting": {
+      "label": "Sırala",
+      "popularity": "En popüler",
+      "most-recent": "En yeni"
+    },
+    "common": {
+      "home": "ana sayfa",
+      "all": "Hepsi",
+      "articles": "Makaleler",
+      "workshops": "Atölyeler",
+      "metadata": "Meta veri",
+      "homepage": "Ana sayfa",
+      "documentation": "Belgeler",
+      "github-repository": "Github Depo",
+      "repository": "Depo",
+      "contributors": "Katkıda bulunanlar",
+      "view-on-github": "GITHUB'DA GÖRÜNTÜLE"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "çay/gui'yi {{version}} sürümüne güncelle?",
+      "gui-restarting": "Devam etmek, uygulamanın tamamlanmasının ardından yeniden başlatılmasına neden olacaktır. Lütfen devam etmeden önce herhangi bir işlem yapmadığınızdan emin olun. Devam etmek istiyor musunuz?",
+      "gui-restart": "yeniden başlat"
+    },
+    "side-menu-title": {
+      "discover": "keşfet",
+      "all": "Tüm Paketler",
+      "installed": "Kurulu Paketler",
+      "installed_updates_available": "Mevcut Güncellemeler",
+      "recently_updated": "Son Güncellenen",
+      "new_packages": "Yeni Paketler",
+      "popular": "Popüler",
+      "featured": "Öne Çıkan",
+      "essentials": "Temel",
+      "starstruck": "Ağır Sikletler",
+      "made_by_tea": "çay tarafından yapıldı",
+      "local_packages": "Yerel Paketler"
+    },
+    "tags": {
+      "discover": "keşfet",
+      "all": "tüm paketler",
+      "installed": "kurulu",
+      "installed_updates_available": "Güncellemeler mevcut",
+      "recently_updated": "Son güncellenen",
+      "new_packages": "Yeni paketler",
+      "popular": "Popüler",
+      "featured": "Öne çıkan",
+      "essentials": "Gerekli",
+      "starstruck": "Hayran",
+      "made_by_tea": "Çay tarafından yapıldı",
+      "local_packages": "Yerel Paketler"
+    },
+    "discover": {
+      "featured_title": "yerel AI temelleri",
+      "featured_description": "Yerel AI dünyasını keşfedin. Bu, yerel sisteminizden doğrudan AutoGPT ve Stable Diffusion Web UI gibi yüksek profilli AI araçlarıyla oynamanız için platformunuzdur. Verilerinizi güvenli ve güvende tutarken AI projelerinize başlangıç yapın ve istediğiniz gibi ayarlayın."
+    }
+  }
+}
