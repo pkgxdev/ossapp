@@ -1,0 +1,101 @@
+{
+  "id": "lb",
+  "label": "Lëtzebuergesch",
+  "translations": {
+    "store-search-placeholder": "Paketër sichen",
+    "action": {
+      "update": "Aktualiséieren",
+      "cancel": "Ofbriechen"
+    },
+    "package": {
+      "update-all": "ALLE AKTUALISÉIEREN",
+      "cta-AVAILABLE": "INSTALLÉIEREN",
+      "cta-INSTALLED": "INSTALLÉIERT",
+      "cta-INSTALLING": "INSTALLÉIEREN",
+      "cta-UNINSTALLED": "RE-INSTALLÉIEREN",
+      "cta-UNINSTALL": "DEINSTALLÉIEREN",
+      "cta-NEEDS_UPDATE": "AKTUALISÉIEREN",
+      "cta-UPDATING": "AKTUALISÉIERT",
+      "cta-UPDATED": "AKTUALISÉIERT",
+      "cta-PRUNE": "BESCHNEIDEN",
+      "cta-PRUNING": "BESCHNEIDEN",
+      "open": "OPEN",
+      "open-in-terminal": "OPENT AM TERMINAL",
+      "local-package": "lokalt Paket",
+      "not-in-pantry": "bisher net der Pankréas bäigefüügt"
+    },
+    "footer": {
+      "quick-links-title": "schnell Verbindung",
+      "about-tea-store": "iwwer de Tee-Geschäft",
+      "report-a-problem": "eng Probleem mellen",
+      "visit-website": "Besichtegung vun tea.xyz",
+      "terms-services": "Bedingungen & Servicer",
+      "privacy-policy": "Privatsphärpolitik"
+    },
+    "documentation": {
+      "title": "Dokumentatioun",
+      "workshops": "Workshops"
+    },
+    "view-all": "Alles weisen",
+    "sorting": {
+      "label": "Sortéieren no",
+      "popularity": "Am meescht belieft",
+      "most-recent": "Zouletzt"
+    },
+    "common": {
+      "home": "Heem",
+      "all": "Alles",
+      "articles": "Artikelen",
+      "workshops": "Workshops",
+      "metadata": "Metadaten",
+      "homepage": "Homepage",
+      "documentation": "Dokumentatioun",
+      "github-repository": "Github-Depot",
+      "repository": "Depot",
+      "contributors": "Beidréier",
+      "view-on-github": "OP GITHUB WEISEN"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "Tee/gui op {{version}} aktualiséieren?",
+      "gui-restarting": "D'Fortfueren wäert d'Applikatioun nees starten loossen, wann et ofgeschloss ass. Vergewëssert Iech, dass dir keng laafend Aarbechten hutt. Wëllt dir weidermachen?",
+      "gui-restart": "Neistarten"
+    },
+    "side-menu-title": {
+      "discover": "Entdecken",
+      "all": "Alles Paketen",
+      "installed": "Installéiert Paketen",
+      "installed_updates_available": "Verfügbar Aktualisatiounen",
+      "recently_updated": "Zouletzt aktualiséiert",
+      "new_packages": "Nei Paketen",
+      "popular": "Beléift",
+      "featured": "Virdrun",
+      "essentials": "Esemt",
+      "starstruck": "Stäerke Hieb",
+      "made_by_tea": "gemat vun tee",
+      "local_packages": "Lokal Paketen"
+    },
+    "tags": {
+      "discover": "Entdecken",
+      "all": "Alles Paketen",
+      "installed": "Installéiert",
+      "installed_updates_available": "Verfügbar Aktualisatiounen",
+      "recently_updated": "Zouletzt aktualiséiert",
+      "new_packages": "Nei Paketen",
+      "popular": "Beléift",
+      "featured": "Virdrun",
+      "essentials": "Esemt",
+      "starstruck": "Stäerke Hieb",
+      "made_by_tea": "Gemengt vun Tee",
+      "local_packages": "Lokal Paketen"
+    },
+    "discover": {
+      "featured_title": "lokale AI Esemt",
+      "featured_description": "Entdeckt d'Welt vun der lokaler KI. Dat ass Är Plattform fir mat héichprofilierten KI-Wierkzeeg wéi AutoGPT a Stabiler Diffusioun Web UI ze."
+    }
+  }
+}
