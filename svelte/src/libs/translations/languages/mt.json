@@ -1,0 +1,101 @@
+{
+  "id": "mt",
+  "label": "Ilsien Malti",
+  "translations": {
+    "store-search-placeholder": "fittex pakketti",
+    "action": {
+      "update": "aġġornament",
+      "cancel": "ikkanċella"
+    },
+    "package": {
+      "update-all": "AĠĠORNAMENT KOLLU",
+      "cta-AVAILABLE": "INSTALL",
+      "cta-INSTALLED": "INSTALLAT",
+      "cta-INSTALLING": "JINSTALLA",
+      "cta-UNINSTALLED": "RE-INSTALL",
+      "cta-UNINSTALL": "IĦALL",
+      "cta-NEEDS_UPDATE": "AĠĠORNAMENT",
+      "cta-UPDATING": "JAGĦMEL AĠĠORNAMENT",
+      "cta-UPDATED": "AĠĠORNAT",
+      "cta-PRUNE": "TNEĦĦI",
+      "cta-PRUNING": "JITNEĦĦA",
+      "open": "OPEN",
+      "open-in-terminal": "OPEN F' TERMIJN",
+      "local-package": "pakkett lokali",
+      "not-in-pantry": "għadu ma żżiedetx għall-pantry"
+    },
+    "footer": {
+      "quick-links-title": "linki rapidi",
+      "about-tea-store": "dwar il-ħanut tal-tea",
+      "report-a-problem": "irrapporta problema",
+      "visit-website": "żur tea.xyz",
+      "terms-services": "termini u servizzi",
+      "privacy-policy": "politika tal-privatezza"
+    },
+    "documentation": {
+      "title": "dokumentazzjoni",
+      "workshops": "workshops"
+    },
+    "view-all": "ara kollha",
+    "sorting": {
+      "label": "Sortjament skont",
+      "popularity": "Aktar popolari",
+      "most-recent": "L-aktar riċenti"
+    },
+    "common": {
+      "home": "darna",
+      "all": "Kollha",
+      "articles": "Artikli",
+      "workshops": "Workshops",
+      "metadata": "Metadata",
+      "homepage": "Paġna ewlenija",
+      "documentation": "Dokumentazzjoni",
+      "github-repository": "Riżenja ta 'Github",
+      "repository": "Riżenja",
+      "contributors": "Kontributuri",
+      "view-on-github": "ARAH FUQ GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "aġġornament tal-tea/gui għall-{{version}}?",
+      "gui-restarting": "It-tindif se jikkawża l-applikazzjoni tittartagħ meta jkun komplut. Jekk jogħġbok kun żgur li m'għandekx operazzjonijiet ġewwa l-proċess. Tixtieq tkompli?",
+      "gui-restart": "tindif mill-ġdid"
+    },
+    "side-menu-title": {
+      "discover": "iskopri",
+      "all": "Kollha l-Pakketti",
+      "installed": "Pakketti Iffissati",
+      "installed_updates_available": "Aġġornamenti disponibbli",
+      "recently_updated": "Ħin riċenti aġġornat",
+      "new_packages": "Pakketti ġodda",
+      "popular": "Popolari",
+      "featured": "Ispeċjalizzat",
+      "essentials": "Essenzjali",
+      "starstruck": "Starstruck Heavyweights",
+      "made_by_tea": "mkejjel minn te",
+      "local_packages": "Pakketti Lokali"
+    },
+    "tags": {
+      "discover": "iskopri",
+      "all": "kollha l-pakketti",
+      "installed": "iffissati",
+      "installed_updates_available": "Aġġornamenti disponibbli",
+      "recently_updated": "aġġornat riċentement",
+      "new_packages": "pakketti ġodda",
+      "popular": "popolari",
+      "featured": "ispeċjalizzat",
+      "essentials": "essenzjali",
+      "starstruck": "Starstruck",
+      "made_by_tea": "Mkejjel minn te",
+      "local_packages": "pakketti lokali"
+    },
+    "discover": {
+      "featured_title": "essenzjali AI lokali",
+      "featured_description": "Isplora l-realm tal-AI lokali. Dan huwa plettform tiegħek biex tiddabbar ma 'l-għodod ta' AI importanti bħal AutoGPT u l-UI tal-Web ta 'Diffusjoni Stabbli, dritt mill-isistema lokali tiegħek. Ibda l-proġetti AI tiegħek filwaqt li tħares id-data tiegħek sikura u assigurata, b'il-libertà biex tippuntell kif tixtieq."
+    }
+  }
+}
