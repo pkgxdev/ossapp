@@ -1,0 +1,101 @@
+{
+  "id": "hi",
+  "label": "हिंदी",
+  "translations": {
+    "store-search-placeholder": "पैकेज़ खोजें",
+    "action": {
+      "update": "अपडेट",
+      "cancel": "रद्द करें"
+    },
+    "package": {
+      "update-all": "सभी अपडेट करें",
+      "cta-AVAILABLE": "इंस्टॉल",
+      "cta-INSTALLED": "इंस्टॉल किया गया",
+      "cta-INSTALLING": "इंस्टॉल हो रहा है",
+      "cta-UNINSTALLED": "दुबारा इंस्टॉल करें",
+      "cta-UNINSTALL": "अनइंस्टॉल",
+      "cta-NEEDS_UPDATE": "अपडेट करें",
+      "cta-UPDATING": "अपडेट हो रहा है",
+      "cta-UPDATED": "अपडेट किया गया",
+      "cta-PRUNE": "प्रून",
+      "cta-PRUNING": "प्रूनिंग",
+      "open": "ओपन",
+      "open-in-terminal": "टर्मिनल में ओपन करें",
+      "local-package": "स्थानीय पैकेज",
+      "not-in-pantry": "अभी तक पैंट्री में जोड़ा नहीं गया है"
+    },
+    "footer": {
+      "quick-links-title": "त्वरित लिंक",
+      "about-tea-store": "चाय की दुकान के बारे में",
+      "report-a-problem": "समस्या की सूचना दें",
+      "visit-website": "tea.xyz पर जाएं",
+      "terms-services": "शर्तें और सेवाएं",
+      "privacy-policy": "गोपनीयता नीति"
+    },
+    "documentation": {
+      "title": "दस्तावेज़ीकरण",
+      "workshops": "वर्कशॉप"
+    },
+    "view-all": "सभी देखें",
+    "sorting": {
+      "label": "क्रमबद्ध करें",
+      "popularity": "सबसे लोकप्रिय",
+      "most-recent": "सबसे हाल का"
+    },
+    "common": {
+      "home": "होम",
+      "all": "सभी",
+      "articles": "लेख",
+      "workshops": "वर्कशॉप",
+      "metadata": "मेटाडेटा",
+      "homepage": "होमपेज",
+      "documentation": "दस्तावेज़ीकरण",
+      "github-repository": "गिटहब रिपॉजिटरी",
+      "repository": "रिपॉजिटरी",
+      "contributors": "योगदानकर्ता",
+      "view-on-github": "गिटहब पर देखें"
+    },
+    "tabs": {
+      "details": "पैकेज",
+      "cli": "कमांड लाइन इंटरफ़ेस",
+      "gui": "ग्राफिकल यूज़र इंटरफ़ेस"
+    },
+    "notification": {
+      "update-header": "क्या आप {{version}} पर चाय/gui को अपडेट करना चाहते हैं?",
+      "gui-restarting": "जारी रखने पर एप्लिकेशन को पूरा होने पर पुनरारंभ किया जाएगा। कृपया सुनिश्चित करें कि आपके पास कोई चल रहे कार्य नहीं हैं। क्या आप आगे बढ़ना चाहते हैं?",
+      "gui-restart": "पुनः प्रारंभ करें"
+    },
+    "side-menu-title": {
+      "discover": "खोजें",
+      "all": "सभी पैकेज",
+      "installed": "स्थापित पैकेज",
+      "installed_updates_available": "उपलब्ध अपडेट",
+      "recently_updated": "हाल ही में अपडेट किया गया",
+      "new_packages": "नए पैकेज",
+      "popular": "लोकप्रिय",
+      "featured": "विशेष रुप से प्रकट किया गया",
+      "essentials": "आवश्यकताएँ",
+      "starstruck": "भारी वजन वाले",
+      "made_by_tea": "चाय द्वारा बनाई गई",
+      "local_packages": "स्थानीय पैकेज"
+    },
+    "tags": {
+      "discover": "खोजें",
+      "all": "सभी पैकेज",
+      "installed": "स्थापित",
+      "installed_updates_available": "उपलब्ध अपडेट",
+      "recently_updated": "हाल ही में अपडेट किया गया",
+      "new_packages": "नए पैकेज",
+      "popular": "लोकप्रिय",
+      "featured": "विशेष रुप से प्रकट किया गया",
+      "essentials": "आवश्यकताएँ",
+      "starstruck": "भारी वजन वाले",
+      "made_by_tea": "चाय द्वारा बनाई गई",
+      "local_packages": "स्थानीय पैकेज"
+    },
+    "discover": {
+      "featured_title": "स्थानीय एआई महत्वपूर्ण",
+      "featured_description": "स्थानीय एआई के क्षेत्र का अन्वेषण करें। यह आपका मंच है उच्च-प्रोफ़ाइल एआई उपकरणों के साथ खिलवाड़ करने के लिए, जैसे कि ऑटोजीपीटी और स्थिर डिफ्यूजन वेब यूआई, अपने स्थानीय सिस्टम से सीधे। अपने डेटा को सुरक्षित और सुरक्षित रखते हुए, आपके एआई परियोजनाओं को शुरू करें, जिसमें आपको चाहने पर सुधार करने की आजादी मिलती है।"
+    }
+  }
+}
