@@ -1,0 +1,101 @@
+{
+  "id": "ne",
+  "label": "नेपाली",
+  "translations": {
+    "store-search-placeholder": "प्याकेजहरू खोज्नुहोस्",
+    "action": {
+      "update": "अद्यावधिक गर्नुहोस्",
+      "cancel": "रद्द गर्नुहोस्"
+    },
+    "package": {
+      "update-all": "सबै अद्यावधिक गर्नुहोस्",
+      "cta-AVAILABLE": "स्थापना गर्नुहोस्",
+      "cta-INSTALLED": "स्थापित",
+      "cta-INSTALLING": "स्थापना गरिएको छ",
+      "cta-UNINSTALLED": "पुनः स्थापना गर्नुहोस्",
+      "cta-UNINSTALL": "स्थापना छोड्नुहोस्",
+      "cta-NEEDS_UPDATE": "अद्यावधिक गर्नुहोस्",
+      "cta-UPDATING": "अद्यावधिक गरिएको छ",
+      "cta-UPDATED": "अद्यावधिक",
+      "cta-PRUNE": "छाँट्नुहोस्",
+      "cta-PRUNING": "छाँटिएको छ",
+      "open": "खोल्नुहोस्",
+      "open-in-terminal": "टर्मिनलमा खोल्नुहोस्",
+      "local-package": "स्थानीय प्याकेज",
+      "not-in-pantry": "अझै प्यान्ट्रीमा थपिएको छैन"
+    },
+    "footer": {
+      "quick-links-title": "तत्काल लिङ्कहरू",
+      "about-tea-store": "चिया स्टोरको बारेमा",
+      "report-a-problem": "समस्या रिपोर्ट गर्नुहोस्",
+      "visit-website": "tea.xyz भ्रमण गर्नुहोस्",
+      "terms-services": "नियम तथा सेवाहरू",
+      "privacy-policy": "गोपनीयता नीति"
+    },
+    "documentation": {
+      "title": "दस्तावेज़ीकरण",
+      "workshops": "कार्यशालाहरू"
+    },
+    "view-all": "सबै हेर्नुहोस्",
+    "sorting": {
+      "label": "अनुसार व्यवस्थापन गर्नुहोस्",
+      "popularity": "सबैभन्दा लोकप्रिय",
+      "most-recent": "सबैभन्दा हालै"
+    },
+    "common": {
+      "home": "होम",
+      "all": "सबै",
+      "articles": "लेखहरू",
+      "workshops": "कार्यशालाहरू",
+      "metadata": "मेटाडेटा",
+      "homepage": "मुख्य पृष्ठ",
+      "documentation": "दस्तावेज़ीकरण",
+      "github-repository": "गिटहब भण्डार",
+      "repository": "भण्डार",
+      "contributors": "योगदानकर्ताहरू",
+      "view-on-github": "गिटहबमा हेर्नुहोस्"
+    },
+    "tabs": {
+      "details": "प्याकेज",
+      "cli": "सीएलआई",
+      "gui": "जिउआई"
+    },
+    "notification": {
+      "update-header": "चिया/जिउआई {{version}} मा अद्यावधिक गर्नुहोस्?",
+      "gui-restarting": "सम्पन्न हुँदा एप्लिकेशन पुन: सुरु हुनेछ। कृपया सुनिश्चित गर्नुहोस् कि तपाईंको कुनै कार्यहरू प्रगतिमा छैन। के तपाईं अगाडि बढ्न चाहनुहुन्छ?",
+      "gui-restart": "पुन: सुरु गर्नुहोस्"
+    },
+    "side-menu-title": {
+      "discover": "अन्वेषण गर्नुहोस्",
+      "all": "सबै प्याकेजहरू",
+      "installed": "स्थापित प्याकेजहरू",
+      "installed_updates_available": "उपलब्ध अद्यावधिकहरू",
+      "recently_updated": "हालैसम्म अद्यावधिक गरिएको",
+      "new_packages": "नयाँ प्याकेजहरू",
+      "popular": "लोकप्रिय",
+      "featured": "विशेष रुपमा",
+      "essentials": "आवश्यकता",
+      "starstruck": "ताराबाट प्रभावित",
+      "made_by_tea": "चियाले बनाइसकेको",
+      "local_packages": "स्थानीय प्याकेजहरू"
+    },
+    "tags": {
+      "discover": "अन्वेषण गर्नुहोस्",
+      "all": "सबै प्याकेजहरू",
+      "installed": "स्थापित",
+      "installed_updates_available": "उपलब्ध अद्यावधिकहरू",
+      "recently_updated": "हालैसम्म अद्यावधिक गरिएको",
+      "new_packages": "नयाँ प्याकेजहरू",
+      "popular": "लोकप्रिय",
+      "featured": "विशेष रुपमा",
+      "essentials": "आवश्यकता",
+      "starstruck": "ताराबाट प्रभावित",
+      "made_by_tea": "चियाले बनाइसकेको",
+      "local_packages": "स्थानीय प्याकेजहरू"
+    },
+    "discover": {
+      "featured_title": "स्थानिक AI आवश्यकताहरू",
+      "featured_description": "स्थानीय AI क्षेत्र अन्वेषण गर्नुहोस्। यो उच्च प्रोफाइल AI उपकरणहरूको खेलबारको ठाउँ हो, जस्तै कि AutoGPT र Stable Diffusion Web UI, तपाईंको स्थानीय प्रणालीबाट सीधै। आफ्नो AI परियोजनाहरूलाई उद्घाटन गर्नुहोस् जबकि तपाईंको डाटा सुरक्षित र सुरक्षित राख्नुहोस्, तपाईंको इच्छाअनुसार सुधार गर्ने स्वतन्त्रतासहित।"
+    }
+  }
+}
