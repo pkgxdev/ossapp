@@ -56,12 +56,12 @@
       "view-on-github": "ПОГЛЕД НА GITHUB"
     },
     "tabs": {
-      "details": "пакет",
+      "details": "pkg",
       "cli": "CLI",
       "gui": "GUI"
     },
     "notification": {
-      "update-header": "ажурирај чај/gui на {{верзија}}?",
+      "update-header": "ажурирај tea/gui на {{верзија}}?",
       "gui-restarting": "Настапувањето ќе предизвика рестарт на апликацијата по завршување. Ве молиме осигурајте се дека немате никакви операции во тек. Дали сакате да продолжите?",
       "gui-restart": "рестарт"
     },
@@ -90,7 +90,7 @@
       "featured": "истакнати",
       "essentials": "основни",
       "starstruck": "поткрепено",
-      "made_by_tea": "Изработено од чај",
+      "made_by_tea": "Изработено од tea",
       "local_packages": "Локални пакети"
     },
     "discover": {
