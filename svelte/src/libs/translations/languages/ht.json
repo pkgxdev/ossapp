@@ -1,0 +1,101 @@
+{
+  "id": "ht",
+  "label": "kreyòl",
+  "translations": {
+    "store-search-placeholder": "chache pakè",
+    "action": {
+      "update": "aktiyalize",
+      "cancel": "ankile"
+    },
+    "package": {
+      "update-all": "AKTILIZE TOUT",
+      "cta-AVAILABLE": "ENSTALE",
+      "cta-INSTALLED": "ENSTALE",
+      "cta-INSTALLING": "ENSTALE",
+      "cta-UNINSTALLED": "RE-ENSTALE",
+      "cta-UNINSTALL": "DEZENSTALE",
+      "cta-NEEDS_UPDATE": "AKTILIZE",
+      "cta-UPDATING": "AKTILIZASYON",
+      "cta-UPDATED": "AKTILIZE",
+      "cta-PRUNE": "NETWAYE",
+      "cta-PRUNING": "NETWAYE",
+      "open": "OUVÈTI",
+      "open-in-terminal": "OUVÈTI NAN TERMINAL",
+      "local-package": "pake lokal",
+      "not-in-pantry": "pa ankò ajoute nan sèlè"
+    },
+    "footer": {
+      "quick-links-title": "lyen rapid",
+      "about-tea-store": "sou magazen te",
+      "report-a-problem": "rapòte yon pwoblèm",
+      "visit-website": "vizite tea.xyz",
+      "terms-services": "tèm & sèvis",
+      "privacy-policy": "politik sekirite"
+    },
+    "documentation": {
+      "title": "dokimantasyon",
+      "workshops": "atelye"
+    },
+    "view-all": "wè tout",
+    "sorting": {
+      "label": "Twa",
+      "popularity": "Pi popilè",
+      "most-recent": "Pi resan"
+    },
+    "common": {
+      "home": "lakay",
+      "all": "tout",
+      "articles": "Atik",
+      "workshops": "Atelye",
+      "metadata": "Metadata",
+      "homepage": "Paj lakay",
+      "documentation": "Dokimantasyon",
+      "github-repository": "Repositwa Github",
+      "repository": "Repositwa",
+      "contributors": "Kontribitè",
+      "view-on-github": "WÈ SOU GITHUB"
+    },
+    "tabs": {
+      "details": "pakè",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "aktiyalize thé / gui a {{version}}?",
+      "gui-restarting": "Kontinye pral lakòz aplikasyon an kòmanse souvle apre li fini. Tanpri asire w ke ou pa gen okenn operasyon an kou. Èske ou vle kontinye?",
+      "gui-restart": "Rekòmansman"
+    },
+    "side-menu-title": {
+      "discover": "dekouvri",
+      "all": "tout Pakè yo",
+      "installed": "Pakè enstale",
+      "installed_updates_available": "Anstalasyon disponib",
+      "recently_updated": "Dènyèman Aktiyalize",
+      "new_packages": "Nouvo Pakè",
+      "popular": "Popilè",
+      "featured": "Chwazi",
+      "essentials": "Esansyèl",
+      "starstruck": "Gwo Wèl Lourds",
+      "made_by_tea": "fèt pa te",
+      "local_packages": "Pakè lokal"
+    },
+    "tags": {
+      "discover": "dekouvri",
+      "all": "tout pakè yo",
+      "installed": "enstale",
+      "installed_updates_available": "Anstalasyon disponib",
+      "recently_updated": "dènyèman aktiyalize",
+      "new_packages": "Nouvo pakè yo",
+      "popular": "popilè",
+      "featured": "chache",
+      "essentials": "esansyèl",
+      "starstruck": "frape étoil",
+      "made_by_tea": "Fèt pa te",
+      "local_packages": "Pakè lokal"
+    },
+    "discover": {
+      "featured_title": "esansyèl AI lokal",
+      "featured_description": "Eksplwate rejyon AI lokal la. Sa a se platfòm ou a pou fikse ak zouti AI de pi gwo pwofil tankou AutoGPT ak Stabil Diffusion Web UI, tou dousman nan sistèm lokal ou. Kòmanse pwòjè AI ou pandan ou kenbe done ou an an sekirite, ak libète pou fè ajustman jan ou vle."
+    }
+  }
+}
