@@ -58,7 +58,7 @@
     "tabs": {
       "details": "pkg",
       "cli": "cli",
-      "gui": "rārangi"
+      "gui": "gui"
     },
     "notification": {
       "update-header": "Whakahoutea te tea / rārangi ki te {{version}}?",
