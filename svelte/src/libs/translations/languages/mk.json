@@ -1,0 +1,101 @@
+{
+  "id": "mk",
+  "label": "Македонски",
+  "translations": {
+    "store-search-placeholder": "пребарување на пакети",
+    "action": {
+      "update": "ажурирање",
+      "cancel": "откажи"
+    },
+    "package": {
+      "update-all": "АЖУРИРАЈ ГИ СИТЕ",
+      "cta-AVAILABLE": "ИНСТАЛИРАЈ",
+      "cta-INSTALLED": "ИНСТАЛИРАНО",
+      "cta-INSTALLING": "ИНСТАЛИРАЊЕ",
+      "cta-UNINSTALLED": "ПОНОВНО ИНСТАЛИРАЈ",
+      "cta-UNINSTALL": "ДЕИНСТАЛИРАЈ",
+      "cta-NEEDS_UPDATE": "АЖУРИРАЈ",
+      "cta-UPDATING": "СЕ АЖУРИРА",
+      "cta-UPDATED": "АЖУРИРАНО",
+      "cta-PRUNE": "ОРЕЗИ",
+      "cta-PRUNING": "ОРЕЗУВАЊЕ",
+      "open": "ОТВОРИ",
+      "open-in-terminal": "ОТВОРИ ВО ТЕРМИНАЛ",
+      "local-package": "локален пакет",
+      "not-in-pantry": "сè уште не е додадено во пантрит"
+    },
+    "footer": {
+      "quick-links-title": "брзи врски",
+      "about-tea-store": "за чајната продавница",
+      "report-a-problem": "пријави проблем",
+      "visit-website": "посетете tea.xyz",
+      "terms-services": "услови на користење",
+      "privacy-policy": "политика за приватност"
+    },
+    "documentation": {
+      "title": "документација",
+      "workshops": "работилници"
+    },
+    "view-all": "погледни ги сите",
+    "sorting": {
+      "label": "Сортирај според",
+      "popularity": "Најпопуларни",
+      "most-recent": "Најнови"
+    },
+    "common": {
+      "home": "дома",
+      "all": "Сите",
+      "articles": "Статии",
+      "workshops": "Работилници",
+      "metadata": "Метаподатоци",
+      "homepage": "Почетна страница",
+      "documentation": "Документација",
+      "github-repository": "GitHub репозиториум",
+      "repository": "Репозиториум",
+      "contributors": "Соработници",
+      "view-on-github": "ПОГЛЕД НА GITHUB"
+    },
+    "tabs": {
+      "details": "пакет",
+      "cli": "CLI",
+      "gui": "GUI"
+    },
+    "notification": {
+      "update-header": "ажурирај чај/gui на {{верзија}}?",
+      "gui-restarting": "Настапувањето ќе предизвика рестарт на апликацијата по завршување. Ве молиме осигурајте се дека немате никакви операции во тек. Дали сакате да продолжите?",
+      "gui-restart": "рестарт"
+    },
+    "side-menu-title": {
+      "discover": "откриј",
+      "all": "Сите пакети",
+      "installed": "Инсталирани пакети",
+      "installed_updates_available": "Достапни ажурирања",
+      "recently_updated": "Неодамнешно ажурирано",
+      "new_packages": "Нови пакети",
+      "popular": "Популарни",
+      "featured": "Истакнати",
+      "essentials": "Основни",
+      "starstruck": "Тешки калеви",
+      "made_by_tea": "изработено од чај",
+      "local_packages": "Локални пакети"
+    },
+    "tags": {
+      "discover": "откриј",
+      "all": "сите пакети",
+      "installed": "инсталирани",
+      "installed_updates_available": "достапни ажурирања",
+      "recently_updated": "неодамнешно ажурирано",
+      "new_packages": "нови пакети",
+      "popular": "популарни",
+      "featured": "истакнати",
+      "essentials": "основни",
+      "starstruck": "поткрепено",
+      "made_by_tea": "Изработено од чај",
+      "local_packages": "Локални пакети"
+    },
+    "discover": {
+      "featured_title": "локални основи на ИИ",
+      "featured_description": "Истражете го областа на локалната ИИ. Ова е вашата платформа за играње со високопрофилни ИИ алатки како AutoGPT и Стабилна дифузија на веб-кориснички интерфејс, директно од вашиот локален систем. Започнете ги вашите ИИ проекти истражувајќи ги вашите податоци сигурно и безбедно, со слобода да ги приспособите како што сакате."
+    }
+  }
+}
