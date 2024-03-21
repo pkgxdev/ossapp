@@ -1,0 +1,101 @@
+{
+  "id": "ky",
+  "label": "Кыргызча",
+  "translations": {
+    "store-search-placeholder": "пакеттерди издөө",
+    "action": {
+      "update": "жаңыртуу",
+      "cancel": "жокко чыгаруу"
+    },
+    "package": {
+      "update-all": "БААРЫН ЖАҢЫРТУУ",
+      "cta-AVAILABLE": "ОРНОО",
+      "cta-INSTALLED": "ОРНОО",
+      "cta-INSTALLING": "ОРНОО",
+      "cta-UNINSTALLED": "КАЙТА ОРНОО",
+      "cta-UNINSTALL": "КЫЗГАЧАТТЫ ЖОККО ЧЫГАРУУ",
+      "cta-NEEDS_UPDATE": "ЖАҢЫРТУУ",
+      "cta-UPDATING": "Жаңыртылууда",
+      "cta-UPDATED": "ЖАҢЫРТЫЛГАН",
+      "cta-PRUNE": "ЖОККО ЧЫГАРУУ",
+      "cta-PRUNING": "Жокко чыгарууда",
+      "open": "АЧУУ",
+      "open-in-terminal": "ТЕРМИНАЛДА АЧУУ",
+      "local-package": "жерги пакет",
+      "not-in-pantry": "өчүрүлгөн жок"
+    },
+    "footer": {
+      "quick-links-title": "тез тилкелер",
+      "about-tea-store": "tea дүкөнү туралуу",
+      "report-a-problem": "масаланы таратуу",
+      "visit-website": "tea.xyz сайтын коюу",
+      "terms-services": "шарттар жана кызматтар",
+      "privacy-policy": "мемлекеттик бақылау карарлары"
+    },
+    "documentation": {
+      "title": "документация",
+      "workshops": "карга"
+    },
+    "view-all": "баарын көрүү",
+    "sorting": {
+      "label": "сынжыруу",
+      "popularity": "Эң популярдуу",
+      "most-recent": "Эң соңку"
+    },
+    "common": {
+      "home": "башкы бет",
+      "all": "Баары",
+      "articles": "Маалыматтар",
+      "workshops": "Каргалар",
+      "metadata": "Мета маалыматтар",
+      "homepage": "Башкы бет",
+      "documentation": "Документация",
+      "github-repository": "GitHub депоситорийи",
+      "repository": "депоситория",
+      "contributors": "Колдонуучулар",
+      "view-on-github": "GitHub'dа көрүү"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "tea/gui ди {{version}}ке жаңыртуу?",
+      "gui-restarting": "Комплексиялоо болжолдоодо бул аппликацияны кайра иштетет. Кайра иштеп алыштууга аныктанган болсоңуз, өз операцияларыңызды күтүп чыгыңыз. Ушулунундай иштебейликтер жок болсо, өзүнүздүн иштеген операцияларыңызды күтүп чыгыңыз. Ушулунундай иштебейликтер жок болсо, өзүнүздүн операцияларыңыздын күтүүгө карата болот.",
+      "gui-restart": "кайра иштетү"
+    },
+    "side-menu-title": {
+      "discover": "анттар",
+      "all": "Баары пакеттер",
+      "installed": "Орнолгон пакеттер",
+      "installed_updates_available": "Бар адыгыңыздар",
+      "recently_updated": "Акыркы жаңыртылгандар",
+      "new_packages": "Жаңы пакеттер",
+      "popular": "Популярдуу",
+      "featured": "Өзгөртүлгөн",
+      "essentials": "Жеткиликтүү",
+      "starstruck": "Жылкы чачтар",
+      "made_by_tea": "чай ырасталгандар",
+      "local_packages": "Жерги пакеттер"
+    },
+    "tags": {
+      "discover": "анттар",
+      "all": "баары пакеттер",
+      "installed": "орнолгон",
+      "installed_updates_available": "Бар адыгыңыздар",
+      "recently_updated": "акыркы жаңыртылгандар",
+      "new_packages": "Жаңы пакеттер",
+      "popular": "популярдуу",
+      "featured": "өзгөртүлгөн",
+      "essentials": "жеткиликтүү",
+      "starstruck": "жылкы чачтар",
+      "made_by_tea": "чай тарабынан ырасталган",
+      "local_packages": "Жерги пакеттер"
+    },
+    "discover": {
+      "featured_title": "жерги ИИ керектеги",
+      "featured_description": "Жерги ИИ көз алуу. Бул сиздин жерги системинизден дүйнөлүк ИИ алаттары AutoGPT жана Стабил Диффузия Веб UI камтарын жогорку профильдеги ИИ алаттарын тексерүүнүздү мүмкүн кылып түзөтүү жайгашкан. Маалыматтарыңызды сактоо жана көчкөндү түзөтүү мүмкүнчүлүгү бар булардан эле, сиздин ИИ проекттерини баштоо. "
+    }
+  }
+}
