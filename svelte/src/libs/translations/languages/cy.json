@@ -1,0 +1,101 @@
+{
+  "id": "cy",
+  "label": "Welch",
+  "translations": {
+    "store-search-placeholder": "chwilio am becynnau",
+    "action": {
+      "update": "diweddaru",
+      "cancel": "canslo"
+    },
+    "package": {
+      "update-all": "DIWEDDARU POPETH",
+      "cta-AVAILABLE": "GOSOD",
+      "cta-INSTALLED": "GOSODWYD",
+      "cta-INSTALLING": "YN GOSOD",
+      "cta-UNINSTALLED": "AIL-GOSOD",
+      "cta-UNINSTALL": "DIDDYMU",
+      "cta-NEEDS_UPDATE": "DIWEDDARU",
+      "cta-UPDATING": "YN DIWEDDARU",
+      "cta-UPDATED": "WEDI'W DIWEDDARU",
+      "cta-PRUNE": "TANCIO",
+      "cta-PRUNING": "YN TANCIO",
+      "open": "AGOR",
+      "open-in-terminal": "AGOR YN Y TERMINAL",
+      "local-package": "pecyn lleol",
+      "not-in-pantry": "heb ei ychwanegu eto i'r pantre"
+    },
+    "footer": {
+      "quick-links-title": "dolenni cyflym",
+      "about-tea-store": "ynghylch siop de",
+      "report-a-problem": "adrodd problem",
+      "visit-website": "ewch i tea.xyz",
+      "terms-services": "telerau a gwasanaethau",
+      "privacy-policy": "polisi preifatrwydd"
+    },
+    "documentation": {
+      "title": "dogfennau",
+      "workshops": "gweithdai"
+    },
+    "view-all": "gwylio'r holl",
+    "sorting": {
+      "label": "Trefnu yn ôl",
+      "popularity": "Mwyaf poblogaidd",
+      "most-recent": "Y mwyaf diweddar"
+    },
+    "common": {
+      "home": "cartref",
+      "all": "Pob",
+      "articles": "Erthyglau",
+      "workshops": "Gweithdai",
+      "metadata": "Metaddata",
+      "homepage": "Hafan",
+      "documentation": "Dogfennau",
+      "github-repository": "Hendrefni Github",
+      "repository": "Hendrefn",
+      "contributors": "Cyfranwyr",
+      "view-on-github": "GWELD AR GITHUB"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "diweddaru de/chwyddi i {{version}}?",
+      "gui-restarting": "Bydd y broses yn achosi i'r rhaglen ailgychwyn ar ôl cwblhau. Sicrhewch nad oes gennych unrhyw weithrediadau yn mynd rhagddynt. Ydych chi am barhau?",
+      "gui-restart": "ailgychwyn"
+    },
+    "side-menu-title": {
+      "discover": "darganfod",
+      "all": "Pob Pecyn",
+      "installed": "Pecynnau Wedi'u Gosod",
+      "installed_updates_available": "Diweddariadau Ar Gael",
+      "recently_updated": "Diweddarwyd Yn Ddiweddar",
+      "new_packages": "Pecynnau Newydd",
+      "popular": "Poblogaidd",
+      "featured": "Nodweddiadol",
+      "essentials": "Hanfodion",
+      "starstruck": "Ystodau Trwm",
+      "made_by_tea": "wedi'u gwneud gan de",
+      "local_packages": "Pecynnau Lleol"
+    },
+    "tags": {
+      "discover": "darganfod",
+      "all": "pob pecynnau",
+      "installed": "wedi'u gosod",
+      "installed_updates_available": "diweddariadau ar gael",
+      "recently_updated": "diweddarwyd yn ddiweddar",
+      "new_packages": "pecynnau newydd",
+      "popular": "poblogaidd",
+      "featured": "nodweddiadol",
+      "essentials": "hanfodol",
+      "starstruck": "ystodau trwm",
+      "made_by_tea": "Wedi'u gwneud gan de",
+      "local_packages": "Pecynnau Lleol"
+    },
+    "discover": {
+      "featured_title": "hanfodion IA lleol",
+      "featured_description": "Archwiliwch gofod IA lleol. Dyma'ch llwyfan i bwyso â thoffiau uchel proffil fel AutoGPT a Stable Diffusion Web UI, yn syth o'ch system leol. Dechrau ar eich prosiectau IA gan gadw eich data'n ddiogel ac yn sicr, gyda'r rhyddid i'w haddasu fel y dymunwch."
+    }
+  }
+}
