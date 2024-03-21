@@ -1,0 +1,101 @@
+{
+  "id": "sq",
+  "label": "shqiptare",
+  "translations": {
+    "store-search-placeholder": "kerko paketat",
+    "action": {
+      "update": "përditëso",
+      "cancel": "anulo"
+    },
+    "package": {
+      "update-all": "PËRDITËSOJI TË GJITHA",
+      "cta-AVAILABLE": "INSTALLO",
+      "cta-INSTALLED": "INSTALUAR",
+      "cta-INSTALLING": "DUKE INSTALUAR",
+      "cta-UNINSTALLED": "RË-INSTALO",
+      "cta-UNINSTALL": "Ç'INSTALO",
+      "cta-NEEDS_UPDATE": "PËRDITËSO",
+      "cta-UPDATING": "DUKE PËRDITËSUAR",
+      "cta-UPDATED": "PËRDITËSUAR",
+      "cta-PRUNE": "PËRISNI",
+      "cta-PRUNING": "DUKE PËRISUR",
+      "open": "HAPUR",
+      "open-in-terminal": "HAPUR NË TERMINAL",
+      "local-package": "paketë lokale",
+      "not-in-pantry": " ende nuk është shtuar në kuzhinë"
+    },
+    "footer": {
+      "quick-links-title": "lidhje të shpejta",
+      "about-tea-store": "rreth dyqanit të çajit",
+      "report-a-problem": "njofto një problem",
+      "visit-website": "vizito tea.xyz",
+      "terms-services": "termat dhe shërbimet",
+      "privacy-policy": "politika e privatësisë"
+    },
+    "documentation": {
+      "title": "dokumentacion",
+      "workshops": "workshops"
+    },
+    "view-all": "shiko të gjitha",
+    "sorting": {
+      "label": "Rendit sipas",
+      "popularity": "Më e popullarizuar",
+      "most-recent": "Më e reja"
+    },
+    "common": {
+      "home": "kryefaqe",
+      "all": "Të gjitha",
+      "articles": "Artikuj",
+      "workshops": "Workshop-e",
+      "metadata": "Metadata",
+      "homepage": "Kryefaqja",
+      "documentation": "Dokumentacion",
+      "github-repository": "Depoja Github",
+      "repository": "Depo",
+      "contributors": "Kontribuesit",
+      "view-on-github": "SHIKOJNË NË GITHUB"
+    },
+    "tabs": {
+      "details": "paketë",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "përditëso çaj/gui në {{version}}?",
+      "gui-restarting": "Vazhdimi do të shkaktojë ri-startimin e aplikacionit pas përfundimit. Ju lutemi sigurohuni që nuk keni asnjë operacion në proces. Dëshironi të vazhdoni?",
+      "gui-restart": "ri-start"
+    },
+    "side-menu-title": {
+      "discover": "zbulim",
+      "all": "Të Gjitha Paketat",
+      "installed": "Paketat e Instaluara",
+      "installed_updates_available": "Përditësime të disponueshme",
+      "recently_updated": "Sapo të Përditësuar",
+      "new_packages": "Paketat e Reja",
+      "popular": "Popullore",
+      "featured": "Në fokus",
+      "essentials": "Esenciale",
+      "starstruck": "Hiper-të mahnitur",
+      "made_by_tea": "bërë nga çaji",
+      "local_packages": "Paketat Lokale"
+    },
+    "tags": {
+      "discover": "zbulim",
+      "all": "të gjitha paketat",
+      "installed": "instaluar",
+      "installed_updates_available": "Përditësime të disponueshme",
+      "recently_updated": "Sapo të përditësuar",
+      "new_packages": "Paketat e reja",
+      "popular": "Popullore",
+      "featured": "Në fokus",
+      "essentials": "Esenciale",
+      "starstruck": "Hiper-të mahnitur",
+      "made_by_tea": "Bërë nga çaji",
+      "local_packages": "Paketat Lokale"
+    },
+    "discover": {
+      "featured_title": "esencialet vendase të AI-së",
+      "featured_description": "Eksploroni botën e AI-së vendase. Ky është platforma juaj për të eksperimentuar me mjete AI të njohura si AutoGPT dhe Stable Diffusion Web UI, drejtpërdrejt nga sistemi juaj lokal. Nisni projektet tuaja të AI-së duke mbajtur të dhënat tuaja të sigurta dhe të mbrojtura, me lirinë për të përshtatur siç dëshironi."
+    }
+  }
+}
