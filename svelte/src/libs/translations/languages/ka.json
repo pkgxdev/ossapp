@@ -1,0 +1,101 @@
+{
+  "id": "ka",
+  "label": "ქართული",
+  "translations": {
+    "store-search-placeholder": "პაკეტების ძიება",
+    "action": {
+      "update": "განახლება",
+      "cancel": "გაუქმება"
+    },
+    "package": {
+      "update-all": "ყველას განახლება",
+      "cta-AVAILABLE": "ინსტალაცია",
+      "cta-INSTALLED": "ინსტალირებული",
+      "cta-INSTALLING": "ინსტალაცია",
+      "cta-UNINSTALLED": "რე-ინსტალაცია",
+      "cta-UNINSTALL": "წაშლა",
+      "cta-NEEDS_UPDATE": "განახლება",
+      "cta-UPDATING": "განახლება",
+      "cta-UPDATED": "განახლებული",
+      "cta-PRUNE": "გაწარმოება",
+      "cta-PRUNING": "გაწარმოება",
+      "open": "გახსნა",
+      "open-in-terminal": "გახსნა ტერმინალში",
+      "local-package": "ლოკალური პაკეტი",
+      "not-in-pantry": "ჯერ არ დაემატა გარემოში"
+    },
+    "footer": {
+      "quick-links-title": "სწრაფი ბმულები",
+      "about-tea-store": "ჩაი მაღაზიის შესახებ",
+      "report-a-problem": "პრობლემის შეტყობა",
+      "visit-website": "შეეხეთ tea.xyz",
+      "terms-services": "საიდუმლო პირობები",
+      "privacy-policy": "პირადი წესები"
+    },
+    "documentation": {
+      "title": "დოკუმენტაცია",
+      "workshops": "სასწრაფო კურსები"
+    },
+    "view-all": "ყველას ნახვა",
+    "sorting": {
+      "label": "დალაგება მიხედვით",
+      "popularity": "ყველაზე პოპულარული",
+      "most-recent": "უახლესი"
+    },
+    "common": {
+      "home": "მთავარი",
+      "all": "ყველა",
+      "articles": "სტატიები",
+      "workshops": "სასწრაფო კურსები",
+      "metadata": "მეტამანია",
+      "homepage": "მთავარი გვერდი",
+      "documentation": "დოკუმენტაცია",
+      "github-repository": "GitHub რეპოზიტორი",
+      "repository": "რეპოზიტორი",
+      "contributors": "მომხმარებლები",
+      "view-on-github": "ნახვა GitHub-ზე"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "განახლება tea/gui-ს {{version}}?",
+      "gui-restarting": "განახლების გამოშვების შემდეგ აპლიკაცია გადაიტვირთება. გთხოვთ დარწმუნდეთ, რომ არ გაქვთ არსებული ნებისმიერი ოპერაციები. გსურთ განაგრძოთ?",
+      "gui-restart": "გადარესტარტება"
+    },
+    "side-menu-title": {
+      "discover": "განისაზღვრე",
+      "all": "ყველა პაკეტი",
+      "installed": "დაყენებული პაკეტები",
+      "installed_updates_available": "განახლებები ხელმისაწვდომია",
+      "recently_updated": "ბოლოს განახლებული",
+      "new_packages": "ახალი პაკეტები",
+      "popular": "პოპულარული",
+      "featured": "გამორჩეული",
+      "essentials": "საჭირო",
+      "starstruck": "ვარსკვლავედი პაკეტები",
+      "made_by_tea": "გამოყენებით tea",
+      "local_packages": "ლოკალური პაკეტები"
+    },
+    "tags": {
+      "discover": "განისაზღვრე",
+      "all": "ყველა პაკეტი",
+      "installed": "დაყენებული",
+      "installed_updates_available": "ხელმისაწვდომი განახლებები",
+      "recently_updated": "ბოლოს განახლებული",
+      "new_packages": "ახალი პაკეტები",
+      "popular": "პოპულარული",
+      "featured": "გამორჩეული",
+      "essentials": "საჭირო",
+      "starstruck": "ვარსკვლავედი",
+      "made_by_tea": "tea-მან შექმნილი",
+      "local_packages": "ლოკალური პაკეტები"
+    },
+    "discover": {
+      "featured_title": "ლოკალური AI საჭიროებები",
+      "featured_description": "განაგრძე ლოკალური AI-ს მსოფლიოში. ეს არის თქვენი პლატფორმა სწავლოთ უმაღლესი პროფილის AI ინსტრუმენტებით როგორებიცაა AutoGPT და Stable Diffusion Web UI, თქვენი ლოკალური სისტემიდან მართავს. გაუკეთეთ თქვ"
+    }
+  }
+}
