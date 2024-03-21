@@ -1,0 +1,101 @@
+{
+  "id": "tg",
+  "label": "Тоҷикӣ",
+  "translations": {
+    "store-search-placeholder": "ҷустуҷӯи пакетҳо",
+    "action": {
+      "update": "Навсозӣ",
+      "cancel": "Бекор кардан"
+    },
+    "package": {
+      "update-all": "НАВСОЗӢ ҲАМАГӢ",
+      "cta-AVAILABLE": "НАСБ КАРДАН",
+      "cta-INSTALLED": "НАСБШУДА",
+      "cta-INSTALLING": "НАСБ КАРДА МЕШАВАД",
+      "cta-UNINSTALLED": "ПУНКТИ ХОҶАНДАН",
+      "cta-UNINSTALL": "ПУНКТИ ХОҶАНДАН",
+      "cta-NEEDS_UPDATE": "НАВСОЗӢ",
+      "cta-UPDATING": "НАВСОЗӢ КАРДА МЕШАВАД",
+      "cta-UPDATED": "НАВСОЗӢ ШУДА",
+      "cta-PRUNE": "ҶУЗЪ КАРДАН",
+      "cta-PRUNING": "ҶУЗЪ КАРДА МЕШАВАД",
+      "open": "КУШОДАН",
+      "open-in-terminal": "КУШОДАН ДАР ТЕРМИНАЛ",
+      "local-package": "пакети маҳалли",
+      "not-in-pantry": "ҳангом дар пантри нашудааст"
+    },
+    "footer": {
+      "quick-links-title": "ҳамкорӣ",
+      "about-tea-store": "дар бораи фурушгоҳи ҷойхо",
+      "report-a-problem": "хабарномаи мушкилот",
+      "visit-website": "сайти tea.xyz-ро баровардан",
+      "terms-services": "шартҳо ва хизматрасонҳо",
+      "privacy-policy": "сиёсати муфаввитӣ"
+    },
+    "documentation": {
+      "title": "ҳужҷатҳо",
+      "workshops": "корҳои амалиётӣ"
+    },
+    "view-all": "ҳамаи намоиш",
+    "sorting": {
+      "label": "Сорт барасони",
+      "popularity": "Оммавӣ андозӣ",
+      "most-recent": "Ақирин"
+    },
+    "common": {
+      "home": "Асосӣ",
+      "all": "Ҳама",
+      "articles": "Мақолаҳо",
+      "workshops": "Корҳои амалиётӣ",
+      "metadata": "Метадон",
+      "homepage": "Саҳифаи асосӣ",
+      "documentation": "ҳужҷатҳо",
+      "github-repository": "Гитхабгоҳ",
+      "repository": "Депо",
+      "contributors": "Иштиноккунандаҳо",
+      "view-on-github": "НАМОИШ ДАР ГИТХАБ"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "Навсозӣ tea/gui то {{version}}?",
+      "gui-restarting": "Идомаи амалиёт ба иҷро вақт аён карда мешавад. Лутфан, муайян кунед, ки дар ҳолати амал, ҳеч ягон амалиётҳо дар ҳодиса нашудаанд. Оё шумо мехоҳед идома карда шавед?",
+      "gui-restart": "рестарт"
+    },
+    "side-menu-title": {
+      "discover": "ҳуруф кардан",
+      "all": "Ҳамаи пакетҳо",
+      "installed": "Пакетҳои насбшуда",
+      "installed_updates_available": "Навсозии дастӣ",
+      "recently_updated": "Ахирин насбшудаҳо",
+      "new_packages": "Пакетҳои нав",
+      "popular": "Машҳур",
+      "featured": "Маҳсулотҳои иштирокӣ",
+      "essentials": "Ҷуддӣ",
+      "starstruck": "Ба маҳсулотҳои машҳур",
+      "made_by_tea": "Насбшуда аз чой",
+      "local_packages": "Пакетҳои маҳаллӣ"
+    },
+    "tags": {
+      "discover": "ҳуруф кардан",
+      "all": "ҳамаи пакетҳо",
+      "installed": "насбшуда",
+      "installed_updates_available": "Навсозии дастӣ",
+      "recently_updated": "Ахирин насбшудаҳо",
+      "new_packages": "Пакетҳои нав",
+      "popular": "Машҳур",
+      "featured": "Маҳсулотҳои иштирокӣ",
+      "essentials": "Ҷуддӣ",
+      "starstruck": "Ба маҳсулотҳои машҳур",
+      "made_by_tea": "Насбшуда аз чой",
+      "local_packages": "Пакетҳои маҳаллӣ"
+    },
+    "discover": {
+      "featured_title": "маҳсулотҳои асосии ИИ дар маҳалла",
+      "featured_description": "Алоҳидаи мавзеъҳои ИИ-ро кашф кунед. Ин ҷой барои игтисодии тарҷумаи интихобҳои ИИ мебошад, мазкур маҳсулотро шумо аз низоми маҳаллии худ дар маҳаллаи шахсии худ истифода бурда метавонед. Аҳамияти ИИ-и шуморо ба сабт кардани пешрафтҳои шумо дар соҳаи ИИ, бо ҳифзи маълумотҳои шумо, бо свободаи таҳрир кардан, пайваст мекунед."
+    }
+  }
+}
