@@ -4,21 +4,21 @@
   "translations": {
     "store-search-placeholder": "cari paket",
     "action": {
-      "update": "perbarui",
+      "update": "pembaruan",
       "cancel": "batalkan"
     },
     "package": {
       "update-all": "PERBARUI SEMUA",
-      "cta-AVAILABLE": "PASANG",
+      "cta-AVAILABLE": "TERSEDIA",
       "cta-INSTALLED": "TERPASANG",
-      "cta-INSTALLING": "SEDANG MEMASANG",
-      "cta-UNINSTALLED": "PASANG ULANG",
-      "cta-UNINSTALL": "BONGKAR",
-      "cta-NEEDS_UPDATE": "PERBARUI",
+      "cta-INSTALLING": "MEMASANG",
+      "cta-UNINSTALLED": "COPOT PEMASANGAN",
+      "cta-UNINSTALL": "COPOT",
+      "cta-NEEDS_UPDATE": "BUTUH PEMBARUAN",
       "cta-UPDATING": "SEDANG MEMPERBARUI",
       "cta-UPDATED": "TERBARU",
-      "cta-PRUNE": "POTONG",
-      "cta-PRUNING": "SEDANG MEMOTONG",
+      "cta-PRUNE": "PANGKAS",
+      "cta-PRUNING": "PEMANGKASAN",
       "open": "BUKA",
       "open-in-terminal": "BUKA DI TERMINAL",
       "local-package": "paket lokal",
@@ -26,7 +26,7 @@
     },
     "footer": {
       "quick-links-title": "tautan cepat",
-      "about-tea-store": "tentang toko teh",
+      "about-tea-store": "tentang toko tea",
       "report-a-problem": "laporkan masalah",
       "visit-website": "kunjungi tea.xyz",
       "terms-services": "syarat & layanan",
@@ -75,7 +75,7 @@
       "popular": "Populer",
       "featured": "Unggulan",
       "essentials": "Esensial",
-      "starstruck": "Karya Berat Starstruck",
+      "starstruck": "Starstruck Heavy Works",
       "made_by_tea": "dibuat oleh tea",
       "local_packages": "Paket Lokal"
     },
