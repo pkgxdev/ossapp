@@ -1,0 +1,101 @@
+{
+  "id": "bsn",
+  "label": "jezik bosna",
+  "translations": {
+    "store-search-placeholder": "tražim pakete",
+    "action": {
+      "update": "ažurirati",
+      "cancel": "otkaži"
+    },
+    "package": {
+      "update-all": "AŽURIRAJ SVE",
+      "cta-AVAILABLE": "DOSTUPNO",
+      "cta-INSTALLED": "INSTALIRAN",
+      "cta-INSTALLING": "INSTALIRANJE",
+      "cta-UNINSTALLED": "DEINSTALIRAN",
+      "cta-UNINSTALL": "DEINSTALIRATI",
+      "cta-NEEDS_UPDATE": "POTREBNO AŽURIRANJE",
+      "cta-UPDATING": "AŽURIRANJE",
+      "cta-UPDATED": "AŽURIRANO",
+      "cta-PRUNE": "ŠLJIVE",
+      "cta-PRUNING": "OREZIVANJE",
+      "open": "OTVOREN",
+      "open-in-terminal": "OTVOREN U TERMINALU",
+      "local-package": "lokalni paket",
+      "not-in-pantry": "ne u ostavi"
+    },
+    "footer": {
+      "quick-links-title": "brze veze malo",
+      "about-tea-store": "o prodavnici čaja",
+      "report-a-problem": "prijaviti problem",
+      "visit-website": "posjetite web stranicu",
+      "terms-services": "uslovi usluge",
+      "privacy-policy": "politika privatnosti"
+    },
+    "documentation": {
+      "title": "malo",
+      "workshops": "radionice"
+    },
+    "view-all": "vidi sve",
+    "sorting": {
+      "label": "etiketa",
+      "popularity": "popularnost",
+      "most-recent": "najnovije"
+    },
+    "common": {
+      "home": "Dom",
+      "all": "sve",
+      "articles": "članci",
+      "workshops": "radionice",
+      "metadata": "metapodaci",
+      "homepage": "glavna stranica",
+      "documentation": "dokumentaciju",
+      "github-repository": "github repozitorij",
+      "repository": "repozitorij",
+      "contributors": "saradnici",
+      "view-on-github": "pogled na github"
+    },
+    "tabs": {
+      "details": "pkg",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "ažurirati tea/gui na {{version}}?",
+      "gui-restarting": "Nastavak će dovesti do ponovnog pokretanja aplikacije po završetku. Uvjerite se da nemate nikakvih operacija u toku. Želite li nastaviti?",
+      "gui-restart": "ponovno pokretanje"
+    },
+    "side-menu-title": {
+      "discover": "otkriti",
+      "all": "sve",
+      "installed": "instalirani paketi",
+      "installed_updates_available": "dostupna instalirana ažuriranja",
+      "recently_updated": "nedavno ažurirati",
+      "new_packages": "novi paketi",
+      "popular": "popularan",
+      "featured": "istaknuto",
+      "essentials": "osnovne stvari",
+      "starstruck": "Naporno Raditi Starstruck",
+      "made_by_tea": "napravljen od čaja",
+      "local_packages": "lokalni paketi"
+    },
+    "tags": {
+      "discover": "otkriti",
+      "all": "sve",
+      "installed": "instaliran",
+      "installed_updates_available": "dostupna instalirana ažuriranja",
+      "recently_updated": "nedavno ažurirati",
+      "new_packages": "novi paketi",
+      "popular": "papularan",
+      "featured": "istaknuto",
+      "essentials": "osnovne stvari",
+      "starstruck": "Starstruck",
+      "made_by_tea": "napravljen od čaja",
+      "local_packages": "lokalni paketi"
+    },
+    "discover": {
+      "featured_title": "osnove AI lokalno",
+      "featured_description": "Istražite svijet lokalne umjetne inteligencije. Ovo je vaša platforma za eksperimentisanje sa dobro poznatim AI alatima kao što su AutoGPT i Stable Diffusion Web UI, direktno iz vašeg lokalnog sistema. Započnite sa svojim AI projektom, istovremeno čuvajući svoje podatke sigurnim i sigurnim, uz slobodu prilagođavanja kako vam odgovara."
+    }
+  }
+}
