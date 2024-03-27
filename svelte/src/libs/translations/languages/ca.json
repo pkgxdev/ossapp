@@ -1,0 +1,101 @@
+{
+  "id": "ca",
+  "label": "Català",
+  "translations": {
+    "store-search-placeholder": "cerca de paquets",
+    "action": {
+      "update": "actualitzar",
+      "cancel": "cancel·lar"
+    },
+    "package": {
+      "update-all": "ACTUALITZA-HO TOT",
+      "cta-AVAILABLE": "INSTAL·LA",
+      "cta-INSTALLED": "INSTAL·LAT",
+      "cta-INSTALLING": "INSTAL·LANT",
+      "cta-UNINSTALLED": "REINSTAL·LA",
+      "cta-UNINSTALL": "DESINSTAL·LA",
+      "cta-NEEDS_UPDATE": "ACTUALITZA",
+      "cta-UPDATING": "ACTUALITZANT",
+      "cta-UPDATED": "ACTUALITZAT",
+      "cta-PRUNE": "ESBORRA",
+      "cta-PRUNING": "ESBORRANT",
+      "open": "OBRE",
+      "open-in-terminal": "OBRE EN TERMINAL",
+      "local-package": "paquet local",
+      "not-in-pantry": "encara no afegit al rebost"
+    },
+    "footer": {
+      "quick-links-title": "enllaços ràpids",
+      "about-tea-store": "sobre la botiga de te",
+      "report-a-problem": "informa d'un problema",
+      "visit-website": "visita tea.xyz",
+      "terms-services": "termes i serveis",
+      "privacy-policy": "política de privacitat"
+    },
+    "documentation": {
+      "title": "documentació",
+      "workshops": "tallers"
+    },
+    "view-all": "veure-ho tot",
+    "sorting": {
+      "label": "Ordena per",
+      "popularity": "Més popular",
+      "most-recent": "Més recent"
+    },
+    "common": {
+      "home": "inici",
+      "all": "Tot",
+      "articles": "Articles",
+      "workshops": "Tallers",
+      "metadata": "Metadades",
+      "homepage": "Pàgina d'inici",
+      "documentation": "Documentació",
+      "github-repository": "Repositori de Github",
+      "repository": "Repositori",
+      "contributors": "Col·laboradors",
+      "view-on-github": "VEURE AL GITHUB"
+    },
+    "tabs": {
+      "details": "detalls",
+      "cli": "cli",
+      "gui": "gui"
+    },
+    "notification": {
+      "update-header": "actualitzar te/gui a {{version}}?",
+      "gui-restarting": "Si continues, l'aplicació es reiniciarà un cop finalitzada l'operació. Assegura't de no tenir cap operació en curs. Vols continuar?",
+      "gui-restart": "reinicia"
+    },
+    "side-menu-title": {
+      "discover": "descobreix",
+      "all": "Tots els paquets",
+      "installed": "Paquets instal·lats",
+      "installed_updates_available": "Actualitzacions disponibles",
+      "recently_updated": "Actualitzat recentment",
+      "new_packages": "Paquets nous",
+      "popular": "Popular",
+      "featured": "Destacats",
+      "essentials": "Essencials",
+      "starstruck": "Pes pesat",
+      "made_by_tea": "fet per tea",
+      "local_packages": "Paquets locals"
+    },
+    "tags": {
+      "discover": "descobreix",
+      "all": "tots els paquets",
+      "installed": "instal·lat",
+      "installed_updates_available": "Actualitzacions disponibles",
+      "recently_updated": "Actualitzat recentment",
+      "new_packages": "Paquets nous",
+      "popular": "Popular",
+      "featured": "Destacats",
+      "essentials": "Essencials",
+      "starstruck": "Destacats",
+      "made_by_tea": "Fet per tea",
+      "local_packages": "Paquets locals"
+    },
+    "discover": {
+      "featured_title": "essencials locals d'IA",
+      "featured_description": "Explora el món de la IA local. Aquesta és la teva plataforma per jugar amb eines d'IA de primer nivell com AutoGPT i Interfície d'Usuari de Difusió Estable, directament des del teu sistema local. Inicia els teus projectes d'IA mentre conserves les teves dades segures, amb la llibertat de personalitzar com vulguis."
+    }
+  }
+}
