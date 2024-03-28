@@ -3,6 +3,7 @@ import parser from "@sveltekit-i18n/parser-default";
 import type { Config } from "@sveltekit-i18n/parser-default";
 
 // import new languages json here
+import bur from "./languages/bur.json"
 import en from "./languages/en.json";
 import de from "./languages/de.json";
 import ru from "./languages/ru.json";
@@ -62,6 +63,7 @@ type Translation = typeof en.translations & {
 // add new language json object here
 const languages = [
   en,
+  bur,
   zhhans,
   zhhant,
   de,
