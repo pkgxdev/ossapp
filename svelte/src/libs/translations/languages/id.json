@@ -22,7 +22,7 @@
       "open": "BUKA",
       "open-in-terminal": "BUKA DI TERMINAL",
       "local-package": "paket lokal",
-      "not-in-pantry": "belum ditambahkan ke pantry"
+      "not-in-pantry": "belum ditambahkan ke tempat penyimpanan"
     },
     "footer": {
       "quick-links-title": "tautan cepat",
@@ -75,7 +75,7 @@
       "popular": "Populer",
       "featured": "Unggulan",
       "essentials": "Esensial",
-      "starstruck": "Karya Berat Starstruck",
+      "starstruck": "Starstruck Heavyweights",
       "made_by_tea": "dibuat oleh tea",
       "local_packages": "Paket Lokal"
     },
