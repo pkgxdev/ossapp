@@ -49,7 +49,7 @@ export function indexPackages(packages: GUIPackage[]) {
 export async function searchPackages(term: string, limit = 5): Promise<GUIPackage[]> {
   await isIndexReady();
   if (!term || !packagesIndex) return [];
-  
+
   // Use try-catch to catch exceptions in asynchronous operations
   try {
     // Set timeout using Promise.race
@@ -57,11 +57,11 @@ export async function searchPackages(term: string, limit = 5): Promise<GUIPackag
       packagesIndex.search(term, { limit }), // TODO: if online, use algolia else use Fuse
       new Promise((resolve) => setTimeout(resolve, SEARCH_TIMEOUT_MS))
     ]);
-    
+
     // Return matching packages
     return matchingPackages.map((v) => v.item);
   } catch (error) {
-    console.error('Error searching packages:', error);
+    console.error("Error searching packages:", error);
     return [];
   }
 }
@@ -69,7 +69,7 @@ export async function searchPackages(term: string, limit = 5): Promise<GUIPackag
 export async function isIndexReady(): Promise<void> {
   // If the index is ready, return immediately
   if (ready) return;
-  
+
   // Set a timer to check whether the index is ready every second
   await new Promise((resolve) => {
     const interval = setInterval(() => {
