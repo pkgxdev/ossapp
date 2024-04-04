@@ -9,7 +9,7 @@
     },
     "package": {
       "update-all": "AŽURIRAJ SVE",
-      "cta-AVAILABLE": "INSTALIRAJ",
+      "cta-AVAILABLE": "DOSTUVAN",
       "cta-INSTALLED": "INSTALIRANO",
       "cta-INSTALLING": "INSTALIRANJE",
       "cta-UNINSTALLED": "DEINSTALIRANO",
@@ -67,7 +67,7 @@
     },
     "side-menu-title": {
       "discover": "otkrij",
-      "all": "Svi Paketi",
+      "all": "Sve Paketi",
       "installed": "Instalirani Paketi",
       "installed_updates_available": "Dostupna Ažuriranja",
       "recently_updated": "Nedavno Ažurirano",
@@ -80,8 +80,8 @@
       "local_packages": "Lokalni Paketi"
     },
     "tags": {
-      "discover": "otkrijte",
-      "all": "svi paketi",
+      "discover": "otkrij",
+      "all": "sve paketi",
       "installed": "instalirano",
       "installed_updates_available": "Dostupna su ažuriranja",
       "recently_updated": "Nedavno ažurirano",
